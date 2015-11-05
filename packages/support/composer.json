@@ -18,7 +18,8 @@
     "require": {
         "php" : ">=5.5.9",
         "illuminate/support": "~5.1",
-        "edvinaskrucas/notification": "5.*"
+        "edvinaskrucas/notification": "5.*",
+        "spatie/activitylog": "2.*",
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*"
