@@ -1,0 +1,38 @@
+{
+    "name": "laravolt/semantic-form",
+    "description": "Semantic-UI form helpers",
+    "keywords": [
+        "laravolt",
+        "semantic-form"
+    ],
+    "homepage": "https://github.com/laravolt/semantic-form",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com",
+            "homepage": "http://id-laravel.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.5.0",
+        "illuminate/support": "~5.1",
+        "laravelcollective/html": "5.1.*",
+        "adamwathan/form": "~0.7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "mockery/mockery": "0.9.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\SemanticForm\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laravolt\\SemanticForm\\Test\\": "tests"
+        }
+    }
+}
