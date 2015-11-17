@@ -33,6 +33,11 @@ class SemanticForm
         return $this->builder->open()->addClass('ui form');
     }
 
+    public function close()
+    {
+        return $this->builder->close();
+    }
+
     public function text($name, $label = null, $value = null)
     {
         $control = $this->builder->text($name)->defaultValue($value);
