@@ -41,6 +41,7 @@ class SemanticForm
     public function text($name, $label = null, $value = null)
     {
         $control = $this->builder->text($name)->defaultValue($value);
+
         return $this->formGroup($label, $name, $control);
     }
 
@@ -94,11 +95,11 @@ class SemanticForm
         $checked = collect($checked);
 
         $checkboxGroup = [];
-        foreach($options as $value => $text) {
+        foreach ($options as $value => $text) {
 
             $checkbox = $this->checkbox($name, $value, $text);
 
-            if($checked->search($value) !== false) {
+            if ($checked->search($value) !== false) {
                 $checkbox->check();
             }
 
@@ -253,7 +254,7 @@ class SemanticForm
 
     protected function getLabelTitle($label, $name)
     {
-        if (! is_null($label)) {
+        if (!is_null($label)) {
             return $label;
         }
 
