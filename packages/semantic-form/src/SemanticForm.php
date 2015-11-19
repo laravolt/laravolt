@@ -1,7 +1,6 @@
 <?php
 namespace Laravolt\SemanticForm;
 
-use Illuminate\Support\Facades\Lang;
 use AdamWathan\Form\FormBuilder;
 use Illuminate\Translation\Translator;
 use Laravolt\SemanticForm\Elements\CheckboxField;
