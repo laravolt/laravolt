@@ -11,3 +11,17 @@ if (!function_exists('sui_pagination')) {
         return new \Laravolt\Support\Pagination\SemanticUiPagination($collection);
     }
 }
+
+if (!function_exists('render')) {
+
+    /**
+     * @param null $view
+     * @param array $data
+     * @param array $mergeData
+     * @return string
+     */
+    function render($view = null, $data = [], $mergeData = [])
+    {
+        return view($view, $data, $mergeData)->render();
+    }
+}
