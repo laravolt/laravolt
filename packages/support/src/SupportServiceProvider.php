@@ -39,6 +39,9 @@ class SupportServiceProvider extends ServiceProvider {
         // activity log
         $this->app->register('Spatie\Activitylog\ActivitylogServiceProvider');
         AliasLoader::getInstance()->alias('Activity', 'Spatie\Activitylog\ActivitylogFacade');
+
+        // timezone
+        $this->app->bind(Contracts\TimezoneRepository::class, Repositories\TimezoneRepositoryArray::class);
     }
 
     /**
