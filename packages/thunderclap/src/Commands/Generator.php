@@ -48,8 +48,7 @@ class Generator extends Command
     {
 
         $tables = $this->DBHelper->listTables();
-        //$table = $this->choice('Choose table:', $tables, null);
-        $table = 'uji_publik';
+        $table = $this->choice('Choose table:', $tables, null);
 
         $columns = collect($this->DBHelper->listColumns($table));
         $columns = $columns->except(config('thunderclap.columns.except'));
@@ -75,7 +74,7 @@ class Generator extends Command
 
         // 3. copy module skeleton
         $stubs = __DIR__ . '/../../stubs';
-        $this->info('Copying module skeleton from ' . $stubs . ' into ' . $modulePath);
+        $this->info('Copying module skeleton into ' . $modulePath);
         File::copyDirectory($stubs, $modulePath);
 
         // 4. rename file and replace common string
