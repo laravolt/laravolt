@@ -1,0 +1,3 @@
+<?php
+
+$router->resource(':module-name:', \Modules\:ModuleName:\Http\Controllers\Controller::class);

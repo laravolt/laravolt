@@ -1,0 +1,13 @@
+<?php
+
+namespace Modules\:ModuleName:\Repositories;
+
+use Prettus\Repository\Contracts\RepositoryInterface as BaseRepositoryInterface;
+
+/**
+ * Interface RepositoryInterface
+ */
+interface RepositoryInterface extends BaseRepositoryInterface
+{
+    //
+}

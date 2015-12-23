@@ -1,0 +1,19 @@
+<?php
+
+namespace Modules\:ModuleName:;
+
+use Illuminate\Database\Eloquent\Model as BaseModel;
+use Prettus\Repository\Contracts\Presentable;
+use Prettus\Repository\Traits\PresentableTrait;
+
+class Model extends BaseModel implements Presentable
+{
+	use PresentableTrait;
+
+	public $table = ":module_name:";
+
+	public $fillable = [
+
+	];
+
+}

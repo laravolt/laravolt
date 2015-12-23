@@ -1,0 +1,14 @@
+@extends('layouts.frontend')
+
+@section('content')
+    <div class="ui container">
+        <h2>Create :Module Name:</h2>
+
+        {!! SemanticForm::open()->action(route(':module-name:.store'))->post() !!}
+        {!! SemanticForm::text('name', 'Nama') !!}
+        {!! SemanticForm::submit('Simpan') !!}
+        {!! SemanticForm::close() !!}
+
+
+    </div>
+@endsection
