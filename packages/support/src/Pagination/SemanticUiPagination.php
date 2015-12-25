@@ -48,7 +48,7 @@ class SemanticUiPagination extends BootstrapThreePresenter implements Presenter
             $to = $total;
         }
 
-        if($total > 0) {
+        if ($total > 0) {
             return trans('support::pagination.summary', compact('from', 'to', 'total'));
         }
 
@@ -61,5 +61,14 @@ class SemanticUiPagination extends BootstrapThreePresenter implements Presenter
         $total = ceil($this->paginator->total() / $this->paginator->perPage());
 
         return trans('support::pagination.pager', compact('page', 'total'));
+    }
+
+    public function sequence($item)
+    {
+        $collections = collect($this->paginator->items());
+        $index = $collections->search($item) + 1;
+        $start = (request('page', 1) - 1) * $this->paginator->perPage();
+
+        return $start + $index;
     }
 }
