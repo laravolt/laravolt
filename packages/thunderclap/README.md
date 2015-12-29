@@ -1,4 +1,8 @@
-# laravolt/thunderclap
+# Thunderclap
+Laravel CRUD generator that utilizing the following libraries:
+
+* [l5-repository](https://github.com/andersao/l5-repository) to interact with database.
+* [Semantic-UI](http://semantic-ui.com/) to built beautiful interface.
 
 ## Installation
 
