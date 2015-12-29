@@ -52,7 +52,7 @@
         </div>
         <div class="ui menu bottom attached">
             <div class="item borderless">
-                <small>{!! sui_pagination($collection)->pager() !!}</small>
+                <small>{!! sui_pagination($collection->appends(['search' => request('search')]))->pager() !!}</small>
             </div>
             {!! sui_pagination($collection)->render('attached bottom right') !!}
         </div>
