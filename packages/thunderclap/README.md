@@ -27,13 +27,19 @@ php artisan clap
 - [x] Database based generator
 - [ ] JSON file based generator
 - [ ] Relationship
-- [ ] Field Type
+- Field Type
 	- [x] Text
 	- [ ] Textarea
 	- [ ] Select
 	- [ ] Checkbox
 	- [ ] Date
 	- [ ] Datetime
+- Table
+	- [ ] Multiple delete
+	- [ ] Confirm on delete
+- Form
+	- [ ] Inline error message
+	- [ ] Mark required field
 - [ ] Custom template
 - [ ] API generator
 - [ ] API documentation
