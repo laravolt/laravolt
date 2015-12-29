@@ -2,13 +2,17 @@
 
 @section('content')
     <div class="ui container">
-        <h2>Create :Module Name:</h2>
+        <div class="ui grid centered">
+            <div class="ten wide column">
+                <div class="ui segment very padded">
+                    <h2 class="ui header">Create :Module Name:</h2>
 
-        {!! SemanticForm::open()->action(route(':module-name:.store'))->post() !!}
-        {!! SemanticForm::text('name', 'Nama') !!}
-        {!! SemanticForm::submit('Simpan') !!}
-        {!! SemanticForm::close() !!}
-
-
+                    {!! SemanticForm::open()->action(route('uji-publik.store'))->post() !!}
+:FORM_CREATE_FIELDS:
+                    {!! SemanticForm::submit('Simpan') !!}
+                    {!! SemanticForm::close() !!}
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

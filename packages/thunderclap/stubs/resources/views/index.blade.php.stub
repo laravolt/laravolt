@@ -2,10 +2,11 @@
 
 @section('content')
     <div class="ui container">
-        <h2>:Module Name:</h2>
-
         <div class="ui top attached menu">
             <div class="menu">
+                <div class="item borderless">
+                    <h4>:Module Name:</h4>
+                </div>
                 <div class="item borderless">
                     <small>{!! sui_pagination($collection)->summary() !!}</small>
                 </div>
@@ -14,7 +15,7 @@
                 <div class="ui right aligned item">
                     <form action="">
                         <div class="ui transparent icon input">
-                            <input class="prompt" name="search" value="{{ request('search') }}" type="text" placeholder="Cari Uji Publik...">
+                            <input class="prompt" name="search" value="{{ request('search') }}" type="text" placeholder="Cari :Module Name:...">
                             <i class="search link icon"></i>
                         </div>
                     </form>
@@ -22,19 +23,19 @@
             </div>
         </div>
         <div class="ui segment attached fitted">
-            <table class="ui very compact table bottom small">
+            <table class="ui table bottom small">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>No</th>
+:TABLE_HEADERS:
                     <th>&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($collection as $item)
+                @foreach($collection as $item)
                     <tr>
-                        <td>{{ $item->present('id') }}</td>
-                        <td>{{ $item->present('name') }}</td>
+                        <td class="sequence">{{ sui_pagination($collection)->sequence($item) }}</td>
+:TABLE_FIELDS:
                         <td class="center aligned">
                             <div class="ui mini icon basic buttons">
                                 <a href="{{ route(':module-name:.show', $item->id) }}" class="ui button"><i class="file icon"></i></a>
@@ -45,11 +46,7 @@
                             </div>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="1" class="warning center aligned" style="font-size: 1.5rem;padding:40px;font-style: italic">Data tidak tersedia</td>
-                    </tr>
-                @endforelse
+                @endforeach
                 </tbody>
             </table>
         </div>

@@ -2,13 +2,18 @@
 
 @section('content')
     <div class="ui container">
-        <h2>Edit :Module Name:</h2>
+        <div class="ui grid centered">
+            <div class="ten wide column">
+                <div class="ui segment very padded">
+                    <h2 class="ui header">Edit :Module Name:</h2>
 
-        {!! SemanticForm::open()->action(route(':module-name:.update', $item->id))->put() !!}
-        {!! SemanticForm::bind($item) !!}
-        {!! SemanticForm::text('name', 'Nama') !!}
-        {!! SemanticForm::submit('Simpan') !!}
-        {!! SemanticForm::close() !!}
-
+                    {!! SemanticForm::open()->action(route('uji-publik.update'))->put() !!}
+                    {!! SemanticForm::bind($item) !!}
+:FORM_EDIT_FIELDS:
+                    {!! SemanticForm::submit('Simpan') !!}
+                    {!! SemanticForm::close() !!}
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

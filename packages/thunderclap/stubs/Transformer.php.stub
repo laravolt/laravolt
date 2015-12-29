@@ -12,9 +12,7 @@ class Transformer extends TransformerAbstract
     public function transform(Model $model)
     {
         return [
-            'id'         => (int)$model->id,
-            'created_at' => format_localized($model->created_at),
-            'updated_at' => format_localized($model->updated_at),
+:TRANSFORMER_FIELDS:
         ];
     }
 

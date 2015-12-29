@@ -5,6 +5,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Laravolt\Packer\PackerHelper;
+use Laravolt\Thunderclap\ColumnsTransformer;
 use Laravolt\Thunderclap\DBHelper;
 
 class Generator extends Command
@@ -23,24 +24,21 @@ class Generator extends Command
      */
     protected $description = 'Generate basic CRUD';
 
-    /**
-     * @var Helper
-     */
     protected $DBHelper;
 
-    /**
-     * @var PackerHelper
-     */
     protected $packerHelper;
+
+    protected $transformer;
 
     /**
      * Generator constructor.
      */
-    public function __construct(DBHelper $DBHelper, PackerHelper $packerHelper)
+    public function __construct(DBHelper $DBHelper, PackerHelper $packerHelper, ColumnsTransformer $transformer)
     {
         parent::__construct();
         $this->DBHelper = $DBHelper;
         $this->packerHelper = $packerHelper;
+        $this->transformer = $transformer;
     }
 
 
@@ -51,7 +49,7 @@ class Generator extends Command
         $table = $this->choice('Choose table:', $tables, null);
 
         $columns = collect($this->DBHelper->listColumns($table));
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $this->transformer->setColumns($columns);
 
         $moduleName = str_replace('_', '', title_case($table));
         $containerPath = base_path('modules');
@@ -78,14 +76,39 @@ class Generator extends Command
         File::copyDirectory($stubs, $modulePath);
 
         // 4. rename file and replace common string
-        $search = [':module_name:', ':module-name:', ':module name:', ':Module Name:', ':moduleName:', ':ModuleName:'];
+        $search = [
+            ':module_name:',
+            ':module-name:',
+            ':module name:',
+            ':Module Name:',
+            ':moduleName:',
+            ':ModuleName:',
+            ':FILLABLE:',
+            ':TRANSFORMER_FIELDS:',
+            ':VALIDATION_RULES:',
+            ':LANG_FIELDS:',
+            ':TABLE_HEADERS:',
+            ':TABLE_FIELDS:',
+            ':DETAIL_FIELDS:',
+            ':FORM_CREATE_FIELDS:',
+            ':FORM_EDIT_FIELDS:',
+        ];
         $replace = [
             snake_case($table),
             str_replace('_', '-', $table),
             str_replace('_', ' ', strtolower($table)),
             ucwords(str_replace('_', ' ', $table)),
             str_replace('_', '', camel_case($table)),
-            str_replace('_', '', title_case($table))
+            str_replace('_', '', title_case($table)),
+            $this->transformer->toFillableFields(),
+            $this->transformer->toTransformerFields(),
+            $this->transformer->toValidationRules(),
+            $this->transformer->toLangFields(),
+            $this->transformer->toTableHeaders(),
+            $this->transformer->toTableFields(),
+            $this->transformer->toDetailFields(),
+            $this->transformer->toFormCreateFields(),
+            $this->transformer->toFormUpdateFields(),
         ];
 
         foreach (File::allFiles($modulePath) as $file) {

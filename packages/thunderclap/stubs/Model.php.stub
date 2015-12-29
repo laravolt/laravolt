@@ -12,8 +12,6 @@ class Model extends BaseModel implements Presentable
 
 	public $table = ":module_name:";
 
-	public $fillable = [
-
-	];
+	public $fillable = [:FILLABLE:];
 
 }

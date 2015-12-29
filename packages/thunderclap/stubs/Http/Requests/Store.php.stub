@@ -24,7 +24,7 @@ class Store extends Request {
     public function rules()
     {
         return [
-
+:VALIDATION_RULES:
         ];
     }
 
