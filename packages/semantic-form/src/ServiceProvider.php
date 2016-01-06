@@ -11,15 +11,12 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  * Class PackageServiceProvider
  *
  * @package Laravolt\SemanticForm
- * @see http://laravel.com/docs/5.1/packages#service-providers
- * @see http://laravel.com/docs/5.1/providers
  */
 class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
      *
-     * @see http://laravel.com/docs/5.1/providers#deferred-providers
      * @var bool
      */
     protected $defer = false;
@@ -27,12 +24,11 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Register the service provider.
      *
-     * @see http://laravel.com/docs/5.1/providers#the-register-method
      * @return void
      */
     public function register()
     {
-        $this->app->bindShared('semantic-form', function ($app) {
+        $this->app->singleton('semantic-form', function ($app) {
 
             $builder = new FormBuilder();
             $builder->setToken($app['session.store']->token());
@@ -46,28 +42,11 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Application is booting
      *
-     * @see http://laravel.com/docs/5.1/providers#the-boot-method
      * @return void
      */
     public function boot()
     {
-        $this->registerConfigurations();
-    }
 
-    /**
-     * Register the package configurations
-     *
-     * @see http://laravel.com/docs/5.1/packages#configuration
-     * @return void
-     */
-    protected function registerConfigurations()
-    {
-        $this->mergeConfigFrom(
-            $this->packagePath('config/config.php'), 'semantic-form'
-        );
-        $this->publishes([
-            $this->packagePath('config/config.php') => config_path('semantic-form.php'),
-        ], 'config');
     }
 
     /**
@@ -78,16 +57,5 @@ class ServiceProvider extends BaseServiceProvider
     public function provides()
     {
         return ['semantic-form'];
-    }
-
-    /**
-     * Loads a path relative to the package base directory
-     *
-     * @param string $path
-     * @return string
-     */
-    protected function packagePath($path = '')
-    {
-        return sprintf("%s/../%s", __DIR__, $path);
     }
 }
