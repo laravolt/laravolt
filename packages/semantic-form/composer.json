@@ -19,8 +19,8 @@
     ],
     "require": {
         "php" : ">=5.5.0",
-        "illuminate/support": "~5.1",
-        "laravelcollective/html": "5.1.*",
+        "illuminate/support": "~5.2",
+        "laravelcollective/html": "5.2.*",
         "adamwathan/form": "~0.7.1"
     },
     "require-dev": {
