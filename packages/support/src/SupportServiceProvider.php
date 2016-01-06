@@ -1,7 +1,5 @@
 <?php namespace Laravolt\Support;
 
-
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class SupportServiceProvider extends ServiceProvider {
@@ -32,14 +30,6 @@ class SupportServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        // notification
-        $this->app->register('Krucas\Notification\NotificationServiceProvider');
-        AliasLoader::getInstance()->alias('Notification', 'Krucas\Notification\Facades\Notification');
-
-        // activity log
-        $this->app->register('Spatie\Activitylog\ActivitylogServiceProvider');
-        AliasLoader::getInstance()->alias('Activity', 'Spatie\Activitylog\ActivitylogFacade');
-
         // timezone
         $this->app->bind(Contracts\TimezoneRepository::class, Repositories\TimezoneRepositoryArray::class);
     }

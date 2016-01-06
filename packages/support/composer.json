@@ -2,6 +2,7 @@
     "name": "laravolt/support",
     "description": "Laravolt support",
     "keywords": [
+        "laravel",
         "laravolt",
         "support"
     ],
@@ -17,9 +18,7 @@
     ],
     "require": {
         "php" : ">=5.5.9",
-        "illuminate/support": "~5.1",
-        "edvinaskrucas/notification": "5.*",
-        "spatie/activitylog": "2.*"
+        "illuminate/support": "~5.2"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*"
