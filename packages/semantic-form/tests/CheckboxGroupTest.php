@@ -56,7 +56,7 @@ class CheckboxGroupTest extends PHPUnit_Framework_TestCase
     {
         $oldInput = Mockery::mock(\AdamWathan\Form\OldInput\IlluminateOldInputProvider::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
-        $oldInput->shouldReceive('getOldInput')->with('fruit')->andReturn(['apple']);
+        $oldInput->shouldReceive('getOldInput')->with('fruit[]')->andReturn('apple');
 
         $this->builder->setOldInputProvider($oldInput);
 

@@ -96,7 +96,7 @@ class SemanticForm
         $checkboxGroup = [];
         foreach ($options as $value => $text) {
 
-            $checkbox = $this->checkbox($name, $value, $text);
+            $checkbox = $this->checkbox($name . "[$value]", $value, $text);
 
             if ($checked->search($value) !== false) {
                 $checkbox->check();
