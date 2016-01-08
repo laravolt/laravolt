@@ -75,7 +75,7 @@ class SemanticForm
 
     public function select($name, $options = array(), $label = null)
     {
-        $control = $this->builder->select($name, $options);
+        $control = $this->builder->select($name, $options)->addClass('ui dropdown search');
 
         return $this->formGroup($label, $name, $control);
     }
