@@ -1,5 +1,16 @@
 <?php
 
+if (!function_exists('format_localized')) {
+    function format_localized($date)
+    {
+        if($date instanceof \Carbon\Carbon) {
+            return $date->formatLocalized('%d %B %Y');
+        }
+
+        return $date;
+    }
+}
+
 if (!function_exists('sui_pagination')) {
 
     /**
