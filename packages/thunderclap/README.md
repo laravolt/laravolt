@@ -20,7 +20,7 @@ Laravolt\Thunderclap\ServiceProvider::class,
 ## Usage
 
 ```bash
-php artisan clap
+php artisan laravolt:clap
 ```
 
 :clap: clap your hand twice, and follow the magic...
