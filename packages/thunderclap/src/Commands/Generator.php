@@ -15,7 +15,7 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "clap";
+    protected $signature = "laravolt:clap";
 
     /**
      * The console command description.
