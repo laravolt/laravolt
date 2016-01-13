@@ -1,7 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
-use AdamWathan\Form\Elements\Element;
-use AdamWathan\Form\Elements\Label;
+use Laravolt\SemanticForm\Elements\Element;
+use Laravolt\SemanticForm\Elements\Label;
 
 class CheckboxGroup extends Element
 {

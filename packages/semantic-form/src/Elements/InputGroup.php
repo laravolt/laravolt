@@ -1,6 +1,6 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
-use AdamWathan\Form\Elements\Text;
+use Laravolt\SemanticForm\Elements\Text;
 
 class InputGroup extends Text
 {

@@ -1,6 +1,6 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
-use AdamWathan\Form\Elements\Element;
+use Laravolt\SemanticForm\Elements\Element;
 
 class HelpBlock extends Element
 {
