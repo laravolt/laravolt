@@ -270,4 +270,13 @@ class TextTest extends PHPUnit_Framework_TestCase
 		$result = $text->render();
 		$this->assertEquals($expected, $result);
 	}
+
+	public function testCanHaveLabel()
+	{
+		$text = (new Text('email'))->label('Email');
+
+		$expected = '<div class="field"><label>Email</label><input type="text" name="email"></div>';
+		$result = $text->render();
+		$this->assertEquals($expected, $result);
+	}
 }

@@ -4,7 +4,13 @@ abstract class Input extends FormControl
 {
     public function render()
     {
-        $result  = '<input';
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+            return (new Field($this->label, $element))->render();
+        }
+
+        $result = '<input';
 
         $result .= $this->renderAttributes();
 
@@ -16,12 +22,14 @@ abstract class Input extends FormControl
     public function value($value)
     {
         $this->setValue($value);
+
         return $this;
     }
 
     protected function setValue($value)
     {
         $this->setAttribute('value', $value);
+
         return $this;
     }
 }

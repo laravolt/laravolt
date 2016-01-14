@@ -4,11 +4,11 @@ class Label extends Element
 {
     private $element;
     private $labelBefore;
-    private $label;
+    private $text;
 
-    public function __construct($label)
+    public function __construct($text)
     {
-        $this->label = $label;
+        $this->text = $text;
     }
 
     public function render()
@@ -18,13 +18,13 @@ class Label extends Element
         $result .= '>';
 
         if ($this->labelBefore) {
-            $result .= $this->label;
+            $result .= $this->text;
         }
 
         $result .= $this->renderElement();
 
         if (! $this->labelBefore) {
-            $result .= $this->label;
+            $result .= $this->text;
         }
 
         $result .= '</label>';

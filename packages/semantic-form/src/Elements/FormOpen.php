@@ -5,6 +5,7 @@ class FormOpen extends Element
     protected $attributes = array(
         'method' => 'POST',
         'action' => '',
+        'class'  => 'ui form',
     );
 
     protected $token;
@@ -12,7 +13,7 @@ class FormOpen extends Element
 
     public function render()
     {
-        $result  = '<form';
+        $result = '<form';
         $result .= $this->renderAttributes();
         $result .= '>';
 
@@ -40,12 +41,14 @@ class FormOpen extends Element
     public function post()
     {
         $this->setMethod('POST');
+
         return $this;
     }
 
     public function get()
     {
         $this->setMethod('GET');
+
         return $this;
     }
 
@@ -68,6 +71,7 @@ class FormOpen extends Element
     {
         $this->token = new Hidden('_token');
         $this->token->value($token);
+
         return $this;
     }
 
@@ -76,24 +80,28 @@ class FormOpen extends Element
         $this->setMethod('POST');
         $this->hiddenMethod = new Hidden('_method');
         $this->hiddenMethod->value($method);
+
         return $this;
     }
 
     public function setMethod($method)
     {
         $this->setAttribute('method', $method);
+
         return $this;
     }
 
     public function action($action)
     {
         $this->setAttribute('action', $action);
+
         return $this;
     }
 
     public function encodingType($type)
     {
         $this->setAttribute('enctype', $type);
+
         return $this;
     }
 

@@ -1,38 +1,52 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+namespace Laravolt\SemanticForm\Elements;
 
-use Laravolt\SemanticForm\Elements\Element;
-use Laravolt\SemanticForm\Elements\Label;
-
-class CheckboxGroup extends Element
+class CheckboxGroup extends Wrapper
 {
-    protected $label;
-    protected $controls;
 
-    public function __construct(Label $label, $controls)
+    protected $attributes = [
+        'class' => 'grouped fields'
+    ];
+
+    protected $controls = [];
+
+    /**
+     * RadioGroup constructor.
+     */
+    public function __construct()
     {
-        $this->label = $label;
-        $this->controls = $controls;
-        $this->addClass('fields grouped');
+        if (func_num_args() == 1 && is_array(func_get_arg(0))) {
+            $this->controls = func_get_arg(0);
+        } else {
+            $this->controls = func_get_args();
+        }
     }
 
     public function render()
     {
-        $html  = '<div';
+        $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
-        $html .=  $this->label;
 
-        foreach($this->controls as $control) {
-            $html .=  $control;
+        if ($this->label) {
+            $html .= $this->label;
         }
+
+        foreach ($this->controls as $control) {
+            $html .= $control;
+        }
+
+        $html .= $this->renderHelpBlock();
 
         $html .= '</div>';
 
         return $html;
     }
 
-    public function label()
+    public function inline()
     {
-        return $this->label;
+        $this->setAttribute('class', 'inline fields');
+
+        return $this;
     }
 }

@@ -4,6 +4,8 @@ abstract class Element
 {
     protected $attributes = array();
 
+    protected $label = false;
+
     protected function setAttribute($attribute, $value = null)
     {
         if (is_null($value)) {
@@ -80,6 +82,13 @@ abstract class Element
     protected function setId($id)
     {
         $this->setAttribute('id', $id);
+    }
+
+    public function label($label)
+    {
+        $this->label = new Label($label);
+
+        return $this;
     }
 
     abstract public function render();

@@ -13,6 +13,12 @@ class TextArea extends FormControl
 
     public function render()
     {
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+            return (new Field($this->label, $element))->render();
+        }
+
         $result = '<textarea';
         $result .= $this->renderAttributes();
         $result .= '>';

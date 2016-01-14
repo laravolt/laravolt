@@ -6,6 +6,10 @@ class Select extends FormControl
     private $options;
     private $selected;
 
+    protected $attributes = array(
+        'class' => 'ui dropdown',
+    );
+
     public function __construct($name, $options = array())
     {
         $this->setName($name);
@@ -31,6 +35,12 @@ class Select extends FormControl
 
     public function render()
     {
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+            return (new Field($this->label, $element))->render();
+        }
+
         $result = '<select';
         $result .= $this->renderAttributes();
         $result .= '>';

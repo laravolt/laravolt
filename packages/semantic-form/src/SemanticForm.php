@@ -1,6 +1,7 @@
 <?php
 namespace Laravolt\SemanticForm;
 
+use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Text;
 use Laravolt\SemanticForm\Elements\Password;
 use Laravolt\SemanticForm\Elements\Checkbox;
@@ -135,6 +136,23 @@ class SemanticForm
         return $checkbox;
     }
 
+    public function checkboxGroup($name, $options)
+    {
+        $controls = [];
+        $oldValue = $this->getValueFor($name);
+
+        foreach($options as $value => $label) {
+            $radio = (new Checkbox($name . "[$value]", $value))->label($label);
+            if ($value == $oldValue) {
+                $radio->check();
+            }
+
+            $controls[] = $radio;
+        }
+
+        return new CheckboxGroup($controls);
+    }
+
     public function radio($name, $value = null)
     {
         $value = is_null($value) ? $name : $value;
@@ -148,6 +166,23 @@ class SemanticForm
         }
 
         return $radio;
+    }
+
+    public function radioGroup($name, $options)
+    {
+        $controls = [];
+        $oldValue = $this->getValueFor($name);
+
+        foreach($options as $value => $label) {
+            $radio = (new RadioButton($name, $value))->label($label);
+            if ($value == $oldValue) {
+                $radio->check();
+            }
+
+            $controls[] = $radio;
+        }
+
+        return new CheckboxGroup($controls);
     }
 
     public function button($value, $name = null)
