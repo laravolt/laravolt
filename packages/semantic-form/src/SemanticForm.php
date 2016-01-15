@@ -198,12 +198,14 @@ class SemanticForm
         return $submit;
     }
 
-    public function select($name, $options = array())
+    public function select($name, $options = array(), $defaultValue = null)
     {
         $select = new Select($name, $options);
 
         $selected = $this->getValueFor($name);
         $select->select($selected);
+
+        $select->defaultValue($defaultValue);
 
         return $select;
     }

@@ -233,6 +233,10 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $expected = '<select class="ui dropdown" name="fruit"><option value="apple">Granny Smith</option><option value="berry">Blueberry</option></select>';
         $result = (string)$this->form->select('fruit', array('apple' => 'Granny Smith', 'berry' => 'Blueberry'));
         $this->assertEquals($expected, $result);
+
+        $expected = '<select class="ui dropdown" name="fruit"><option value="apple" selected>Granny Smith</option><option value="berry">Blueberry</option></select>';
+        $result = (string)$this->form->select('fruit', array('apple' => 'Granny Smith', 'berry' => 'Blueberry'), 'apple');
+        $this->assertEquals($expected, $result);
     }
 
     public function testSelectWithLabel()
