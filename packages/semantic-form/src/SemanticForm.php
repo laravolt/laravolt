@@ -15,6 +15,7 @@ use Laravolt\SemanticForm\Elements\Hidden;
 use Laravolt\SemanticForm\Elements\File;
 use Laravolt\SemanticForm\Elements\Date;
 use Laravolt\SemanticForm\Elements\Email;
+use Laravolt\SemanticForm\Elements\Wrapper;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
 use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
 
@@ -319,23 +320,33 @@ class SemanticForm
         $this->model = null;
     }
 
-    public function selectMonth($name)
+    public function selectMonth($name, $format = '%B')
     {
-        $options = array(
-            "1"  => "January",
-            "2"  => "February",
-            "3"  => "March",
-            "4"  => "April",
-            "5"  => "May",
-            "6"  => "June",
-            "7"  => "July",
-            "8"  => "August",
-            "9"  => "September",
-            "10" => "October",
-            "11" => "November",
-            "12" => "December",
-        );
+        $months = [];
+        foreach (range(1, 12) as $month) {
+            $months[$month] = strftime($format, mktime(0, 0, 0, $month, 1));
+        }
 
-        return $this->select($name, $options);
+        return $this->select($name, $months);
+    }
+
+    public function selectRange($name, $begin, $end)
+    {
+        $range = array_combine($range = range($begin, $end), $range);
+
+        return $this->select($name, $range);
+    }
+
+    public function selectDate($name, $beginYear = 1900, $endYear = null)
+    {
+        if (!$endYear) {
+            $endYear = date('Y') + 10;
+        }
+
+        $date = (new Wrapper($this->selectRange('_' . $name . '[date]', 1, 31)->addClass('compact')))->addClass('field');
+        $month = (new Wrapper($this->selectMonth('_' . $name . '[month]')->addClass('compact')))->addClass('field');
+        $year = (new Wrapper($this->selectRange('_' . $name . '[year]', $beginYear, $endYear)->addClass('compact')))->addClass('field');
+
+        return (new Wrapper($date, $month, $year))->addClass('inline fields');
     }
 }

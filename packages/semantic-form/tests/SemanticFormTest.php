@@ -529,6 +529,62 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testSelectRange()
+    {
+        $expected = '<select class="ui dropdown" name="age"><option value="1">1</option><option value="2">2</option></select>';
+        $result = (string)$this->form->selectRange('age', 1, 2);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSelectDate()
+    {
+        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact');
+        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact');
+
+        $expected = '<div class="inline fields">';
+        $expected .= '<div class="field">';
+        $expected .= $date;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $month;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $year;
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $result = (string)$this->form->selectDate('birthdate', 2001, 2010);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSelectDateWithLabel()
+    {
+        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact');
+        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact');
+
+        $expected = '<div class="field">';
+        $expected .= '<label>Birthdate</label>';
+        $expected .= '<div class="inline fields">';
+        $expected .= '<div class="field">';
+        $expected .= $date;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $month;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $year;
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $result = (string)$this->form->selectDate('birthdate', 2001, 2010)->label('Birthdate');
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCanBindObject()
     {
         $this->assertTrue(method_exists($this->form, 'bind'));

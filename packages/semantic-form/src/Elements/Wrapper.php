@@ -12,6 +12,13 @@ class Wrapper extends Element
 
     public function render()
     {
+
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+            return (new Field($this->label, $element))->render();
+        }
+
         $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
