@@ -1,5 +1,7 @@
 # Semantic Form
-Semantic UI form builder, for Laravel.
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7378998a-4d74-43aa-841a-d85b74579734/big.png)](https://insight.sensiolabs.com/projects/7378998a-4d74-43aa-841a-d85b74579734)
+
+[Semantic UI](http://semantic-ui.com/) form builder, for Laravel.
 
 ## Installation
 
