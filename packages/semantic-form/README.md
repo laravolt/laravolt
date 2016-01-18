@@ -55,15 +55,25 @@ SemanticForm::email($name, $value)->label('Email Address');
 SemanticForm::textarea($name, $value)->label('Note');
 ```
 
-### Redactor
-``` php
-SemanticForm::redactor($name, $value)->label('Post Body');
-```
-
 ### Select Box (Dropdown)
 ``` php
 SemanticForm::select($name, $options)->label('Choose Country');
 SemanticForm::select($name, $options, $selected)->label('Choose Country');
+```
+
+### Select Date
+``` php
+SemanticForm::selectDate($name, $startYear, $endYear)->label('Birth Date');
+```
+
+### Select Range
+``` php
+SemanticForm::selectRange($name, $begin, $end)->label('Number of child');
+```
+
+### Select Month
+``` php
+SemanticForm::selectMonth($name, $format = '%B')->label('Month');
 ```
 
 ### Radio
@@ -71,6 +81,7 @@ SemanticForm::select($name, $options, $selected)->label('Choose Country');
 $checked = true;
 SemanticForm::radio($name, $value, $checked)->label('Item Label');
 ```
+
 ### Radio Group
 ``` php
 $values = ['apple' => 'Apple', 'banana' => 'Banana'];
@@ -94,14 +105,20 @@ SemanticForm::checkboxGroup($name, $values, $checkedValue)->label('Select Fruit'
 ``` php
 SemanticForm::file($name);
 ```
-### Image
+
+### Image (Not Yet Implemented)
 ``` php
 SemanticForm::image($name);
 ```
 
-### Datepicker
+### Datepicker (Not Yet Implemented)
 ``` php
 SemanticForm::datepicker($name, $value, $format);
+```
+
+### Redactor (Not Yet Implemented)
+``` php
+SemanticForm::redactor($name, $value)->label('Post Body');
 ```
 
 ### Hidden
