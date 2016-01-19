@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\:ModuleName:;
+namespace :Namespace:\:ModuleName:;
 
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Prettus\Repository\Contracts\Presentable;

@@ -1,3 +1,5 @@
 <?php
 
-$router->resource(':module-name:', \Modules\:ModuleName:\Http\Controllers\Controller::class);
+$router->group(['prefix' => ':route-prefix:', 'middleware' => [:route-middleware:]], function () use ($router){
+    $router->resource(':module-name:', \:Namespace:\:ModuleName:\Http\Controllers\Controller::class);
+});

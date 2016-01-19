@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\:ModuleName:\Http\Requests;
+namespace :Namespace:\:ModuleName:\Http\Requests;
 
 use App\Http\Requests\Request;
 

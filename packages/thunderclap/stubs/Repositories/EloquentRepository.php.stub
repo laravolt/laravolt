@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\:ModuleName:\Repositories;
+namespace :Namespace:\:ModuleName:\Repositories;
 
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
-use Modules\:ModuleName:\Model;
-use Modules\:ModuleName:\Presenter;
+use :Namespace:\:ModuleName:\Model;
+use :Namespace:\:ModuleName:\Presenter;
 
 class EloquentRepository extends BaseRepository implements RepositoryInterface
 {

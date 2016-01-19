@@ -38,9 +38,9 @@
 :TABLE_FIELDS:
                         <td class="center aligned">
                             <div class="ui mini icon basic buttons">
-                                <a href="{{ route(':module-name:.show', $item->id) }}" class="ui button"><i class="file icon"></i></a>
-                                <a href="{{ route(':module-name:.edit', $item->id) }}" class="ui button"><i class="edit icon"></i></a>
-                                {!! SemanticForm::open()->action(route(':module-name:.destroy', $item->id))->delete() !!}
+                                <a href="{{ route(':route-url-prefix:.show', $item->id) }}" class="ui button"><i class="file icon"></i></a>
+                                <a href="{{ route(':route-url-prefix:.edit', $item->id) }}" class="ui button"><i class="edit icon"></i></a>
+                                {!! SemanticForm::open()->action(route(':route-url-prefix:.destroy', $item->id))->delete() !!}
                                 <button type="submit" class="ui button"><i class="delete icon"></i></button>
                                 {!! SemanticForm::close() !!}
                             </div>

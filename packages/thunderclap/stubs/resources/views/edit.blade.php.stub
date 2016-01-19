@@ -7,7 +7,7 @@
                 <div class="ui segment very padded">
                     <h2 class="ui header">Edit :Module Name:</h2>
 
-                    {!! SemanticForm::open()->action(route(':module-name:.update', $item->id))->put() !!}
+                    {!! SemanticForm::open()->action(route(':route-url-prefix:.update', $item->id))->put() !!}
                     {!! SemanticForm::bind($item) !!}
 :FORM_EDIT_FIELDS:
                     {!! SemanticForm::submit('Simpan') !!}

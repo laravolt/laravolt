@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\:ModuleName:\Repositories;
+namespace :Namespace:\:ModuleName:\Repositories;
 
 use Prettus\Repository\Contracts\RepositoryInterface as BaseRepositoryInterface;
 

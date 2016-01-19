@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\:ModuleName:\Http\Controllers;
+namespace :Namespace:\:ModuleName:\Http\Controllers;
 
 use App\Http\Controllers\Controller as BaseController;
-use Modules\:ModuleName:\Http\Requests\Store;
-use Modules\:ModuleName:\Http\Requests\Update;
-use Modules\:ModuleName:\Repositories\RepositoryInterface;
+use :Namespace:\:ModuleName:\Http\Requests\Store;
+use :Namespace:\:ModuleName:\Http\Requests\Update;
+use :Namespace:\:ModuleName:\Repositories\RepositoryInterface;
 use Notification;
 
 class Controller extends BaseController

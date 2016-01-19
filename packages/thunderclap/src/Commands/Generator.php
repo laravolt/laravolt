@@ -15,7 +15,7 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap";
+    protected $signature = "laravolt:clap {--table= : table you want to generate the code skeleton}";
 
     /**
      * The console command description.
@@ -44,20 +44,22 @@ class Generator extends Command
 
     public function handle(PackerHelper $helper)
     {
-
-        $tables = $this->DBHelper->listTables();
-        $table = $this->choice('Choose table:', $tables, null);
+        if (($table = $this->option('table')) === null) {
+            $tables = $this->DBHelper->listTables();
+            $table = $this->choice('Choose table:', $tables, null);
+        }
 
         $columns = collect($this->DBHelper->listColumns($table));
         $this->transformer->setColumns($columns);
 
+        $namespace = config('thunderclap.namespace');
         $moduleName = str_replace('_', '', title_case($table));
-        $containerPath = base_path('modules');
+        $containerPath = config('thunderclap.target_dir', base_path('modules'));
         $modulePath = $containerPath . DIRECTORY_SEPARATOR . $moduleName;
 
         // 1. check existing module
         if (is_dir($modulePath)) {
-            $overwrite = $this->confirm("Module {$moduleName} already exist, do you want to overwrite it?");
+            $overwrite = $this->confirm("Folder {$modulePath} already exist, do you want to overwrite it?");
             if ($overwrite) {
                 File::deleteDirectory($modulePath);
             } else {
@@ -75,8 +77,14 @@ class Generator extends Command
         $this->info('Copying module skeleton into ' . $modulePath);
         File::copyDirectory($stubs, $modulePath);
 
+        $templates = [
+            'module-name'  => str_replace('_', '-', $table),
+            'route-prefix' => config('thunderclap.routes.prefix'),
+        ];
+
         // 4. rename file and replace common string
         $search = [
+            ':Namespace:',
             ':module_name:',
             ':module-name:',
             ':module name:',
@@ -92,10 +100,14 @@ class Generator extends Command
             ':DETAIL_FIELDS:',
             ':FORM_CREATE_FIELDS:',
             ':FORM_EDIT_FIELDS:',
+            ':route-prefix:',
+            ':route-middleware:',
+            ':route-url-prefix:',
         ];
         $replace = [
+            $namespace,
             snake_case($table),
-            str_replace('_', '-', $table),
+            $templates['module-name'],
             str_replace('_', ' ', strtolower($table)),
             ucwords(str_replace('_', ' ', $table)),
             str_replace('_', '', camel_case($table)),
@@ -109,6 +121,9 @@ class Generator extends Command
             $this->transformer->toDetailFields(),
             $this->transformer->toFormCreateFields(),
             $this->transformer->toFormUpdateFields(),
+            $templates['route-prefix'],
+            $this->toArrayElement(config('thunderclap.routes.middleware')),
+            $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
         ];
 
         foreach (File::allFiles($modulePath) as $file) {
@@ -127,8 +142,24 @@ class Generator extends Command
                 }
             }
         }
-
-        // 4. inject generated code skeleton
     }
 
+    protected function toArrayElement($array)
+    {
+        $str = "";
+        foreach ($array as $val) {
+            $str .= "'$val'" . ",";
+        }
+
+        return substr($str, 0, -1);
+    }
+
+    protected function getRouteUrlPrefix($routePrefix, $module)
+    {
+        if ($routePrefix) {
+            return $routePrefix . '.' . $module;
+        }
+
+        return $module;
+    }
 }

@@ -7,7 +7,7 @@
                 <div class="ui segment very padded">
                     <h2 class="ui header">Create :Module Name:</h2>
 
-                    {!! SemanticForm::open()->action(route('uji-publik.store'))->post() !!}
+                    {!! SemanticForm::open()->action(route(':route-url-prefix:.store'))->post() !!}
 :FORM_CREATE_FIELDS:
                     {!! SemanticForm::submit('Simpan') !!}
                     {!! SemanticForm::close() !!}

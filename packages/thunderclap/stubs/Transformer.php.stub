@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\:ModuleName:;
+namespace :Namespace:\:ModuleName:;
 
 use League\Fractal\TransformerAbstract;
 

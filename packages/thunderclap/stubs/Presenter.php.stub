@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\:ModuleName:;
+namespace :Namespace:\:ModuleName:;
 
 use Prettus\Repository\Presenter\FractalPresenter;
 

@@ -85,7 +85,7 @@ TEMPLATE;
 
         $template =
             <<<TEMPLATE
-                    {!! SemanticForm::text('%s', '%s') !!}
+                    {!! SemanticForm::text('%s')->label('%s') !!}
 TEMPLATE;
 
         return $columns

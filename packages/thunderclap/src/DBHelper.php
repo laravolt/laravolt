@@ -6,11 +6,19 @@ use Illuminate\Support\Facades\DB;
 
 class DBHelper
 {
-    public function listTables()
+
+    /**
+     * DBHelper constructor.
+     */
+    public function __construct()
     {
         $platform = DB::getDoctrineConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', Type::STRING);
 
+    }
+
+    public function listTables()
+    {
         $tables = DB::getDoctrineSchemaManager()->listTables();
 
         $data = [];
