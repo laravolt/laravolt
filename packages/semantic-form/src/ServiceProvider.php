@@ -35,7 +35,7 @@ class ServiceProvider extends BaseServiceProvider
             $builder->setErrorStore(new IlluminateErrorStore($app['session.store']));
             $builder->setOldInputProvider(new IlluminateOldInputProvider($app['session.store']));
 
-            return new SemanticForm($builder, $app['translator']);
+            return $builder;
         });
     }
 
