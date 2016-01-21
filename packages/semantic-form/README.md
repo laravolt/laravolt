@@ -141,6 +141,17 @@ SemanticForm::submit($value);
 SemanticForm::bind($model);
 ```
 
+### General Function
+For every form element, you can call and chaining following methods:
+* id($string)
+* addClass($string)
+* removeClass($string)
+* attribute($name, $value)
+* data($name, $value)
+``` php
+SemanticForm::text($name, $value)->label('Username')->id('username')->addClass('foo');
+SemanticForm::text($name, $value)->label('Username')->data('url', 'http://id-laravel.com');
+```
 
 ## Credits
 SemanticForm built on top of awesome form builder by AdamWathan\Form.
