@@ -97,9 +97,10 @@ class SemanticForm
         return $email;
     }
 
-    public function hidden($name)
+    public function hidden($name, $value = null)
     {
         $hidden = new Hidden($name);
+        $hidden->value($value);
 
         if (!is_null($value = $this->getValueFor($name))) {
             $hidden->value($value);
