@@ -2,6 +2,8 @@
 namespace Laravolt\SemanticForm;
 
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
+use Laravolt\SemanticForm\Elements\Field;
+use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\Text;
 use Laravolt\SemanticForm\Elements\Password;
 use Laravolt\SemanticForm\Elements\Checkbox;
@@ -344,10 +346,10 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Wrapper($this->selectRange('_' . $name . '[date]', 1, 31)->addClass('compact')))->addClass('field');
-        $month = (new Wrapper($this->selectMonth('_' . $name . '[month]')->addClass('compact')))->addClass('field');
-        $year = (new Wrapper($this->selectRange('_' . $name . '[year]', $beginYear, $endYear)->addClass('compact')))->addClass('field');
+        $date = (new Field($this->selectRange('_' . $name . '[date]', 1, 31)->addClass('compact')));
+        $month = (new Field($this->selectMonth('_' . $name . '[month]')->addClass('compact')));
+        $year = (new Field($this->selectRange('_' . $name . '[year]', $beginYear, $endYear)->addClass('compact')));
 
-        return (new Wrapper($date, $month, $year))->addClass('inline fields');
+        return new SelectDateWrapper($date, $month, $year);
     }
 }

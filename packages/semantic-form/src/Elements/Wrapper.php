@@ -1,5 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Arr;
+
 class Wrapper extends Element
 {
     protected $controls = [];
@@ -53,10 +55,8 @@ class Wrapper extends Element
         return '';
     }
 
-    public function __call($method, $parameters)
+    public function getControl($key)
     {
-        call_user_func_array(array($this->control, $method), $parameters);
-
-        return $this;
+        return Arr::get($this->controls, $key, null);
     }
 }
