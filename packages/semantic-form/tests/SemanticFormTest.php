@@ -246,6 +246,34 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testSelectCanPrependOption()
+    {
+        $expected = '<select class="ui dropdown" name="color"><option value="">First</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->prependOption('', 'First');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSelectCanHavePlaceholder()
+    {
+        $expected = '<select class="ui dropdown" name="color"><option value="">Please Select</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->placeholder('Please Select');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSelectCanHavePlaceholderWithDefaultLabel()
+    {
+        $expected = '<select class="ui dropdown" name="color"><option value="">-- Select --</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->placeholder();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSelectCanAppendOption()
+    {
+        $expected = '<select class="ui dropdown" name="color"><option value="red">Red</option><option value="blue">Blue</option><option value="">Last</option></select>';
+        $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->appendOption('', 'Last');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testTextArea()
     {
         $expected = '<textarea name="bio" rows="10" cols="50"></textarea>';

@@ -59,6 +59,9 @@ SemanticForm::textarea($name, $value)->label('Note');
 ``` php
 SemanticForm::select($name, $options)->label('Choose Country');
 SemanticForm::select($name, $options, $selected)->label('Choose Country');
+SemanticForm::select($name, $options)->placeholder('--Select--');
+SemanticForm::select($name, $options)->appendOption($key, $label);
+SemanticForm::select($name, $options)->prependOption($key, $label);
 ```
 
 ### Select Date
@@ -143,15 +146,18 @@ SemanticForm::bind($model);
 
 ### General Function
 For every form element, you can call and chaining following methods:
+
 * id($string)
 * addClass($string)
 * removeClass($string)
 * attribute($name, $value)
 * data($name, $value)
+
+#### Example
 ``` php
 SemanticForm::text($name, $value)->label('Username')->id('username')->addClass('foo');
 SemanticForm::text($name, $value)->label('Username')->data('url', 'http://id-laravel.com');
 ```
 
 ## Credits
-SemanticForm built on top of awesome form builder by AdamWathan\Form.
+SemanticForm built on top of awesome form builder by [AdamWathan\Form](https://github.com/adamwathan/form).

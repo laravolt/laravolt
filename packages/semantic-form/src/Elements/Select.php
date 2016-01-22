@@ -1,5 +1,8 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+
 class Select extends FormControl
 {
 
@@ -12,6 +15,10 @@ class Select extends FormControl
 
     public function __construct($name, $options = array())
     {
+        if($options instanceof Collection) {
+            $options = $options->toArray();
+        }
+
         $this->setName($name);
         $this->setOptions($options);
     }
@@ -95,6 +102,24 @@ class Select extends FormControl
     {
         $this->options[$value] = $label;
         return $this;
+    }
+
+    public function prependOption($value, $label)
+    {
+        $this->options = Arr::prepend($this->options, $label, $value);
+        return $this;
+    }
+
+    public function appendOption($value, $label)
+    {
+        $this->options = Arr::add($this->options, $value, $label);
+
+        return $this;
+    }
+
+    public function placeholder($label = '-- Select --')
+    {
+        return $this->prependOption('', $label);
     }
 
     public function defaultValue($value)
