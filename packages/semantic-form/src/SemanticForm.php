@@ -18,7 +18,6 @@ use Laravolt\SemanticForm\Elements\Hidden;
 use Laravolt\SemanticForm\Elements\File;
 use Laravolt\SemanticForm\Elements\Date;
 use Laravolt\SemanticForm\Elements\Email;
-use Laravolt\SemanticForm\Elements\Wrapper;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
 use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
 
