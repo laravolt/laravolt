@@ -1,5 +1,6 @@
 # Semantic Form
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7378998a-4d74-43aa-841a-d85b74579734/big.png)](https://insight.sensiolabs.com/projects/7378998a-4d74-43aa-841a-d85b74579734)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/7378998a-4d74-43aa-841a-d85b74579734.svg)](https://insight.sensiolabs.com/projects/7378998a-4d74-43aa-841a-d85b74579734)
+[![Travis](https://img.shields.io/travis/laravolt/semantic-form.svg)](https://travis-ci.org/laravolt/semantic-form)
 
 [Semantic UI](http://semantic-ui.com/) form builder, for Laravel.
 
