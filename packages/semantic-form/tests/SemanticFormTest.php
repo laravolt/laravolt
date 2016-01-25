@@ -566,9 +566,9 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectDate()
     {
-        $date = $this->form->selectRange('birthdate[date]', 1, 31)->addClass('compact');
-        $month = $this->form->selectMonth('birthdate[month]')->addClass('compact');
-        $year = $this->form->selectRange('birthdate[year]', 2001, 2010)->addClass('compact');
+        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact');
+        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact');
 
         $expected = '<div class="inline fields">';
         $expected .= '<div class="field">';
@@ -589,9 +589,9 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectDateWithLabel()
     {
-        $date = $this->form->selectRange('birthdate[date]', 1, 31)->addClass('compact');
-        $month = $this->form->selectMonth('birthdate[month]')->addClass('compact');
-        $year = $this->form->selectRange('birthdate[year]', 2001, 2010)->addClass('compact');
+        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact');
+        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact');
 
         $expected = '<div class="field">';
         $expected .= '<label>Birthdate</label>';
@@ -615,9 +615,9 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectDateCanHaveValue()
     {
-        $date = $this->form->selectRange('birthdate[date]', 1, 31)->addClass('compact')->select(2);
-        $month = $this->form->selectMonth('birthdate[month]')->addClass('compact')->select(3);
-        $year = $this->form->selectRange('birthdate[year]', 2001, 2010)->addClass('compact')->select(2004);
+        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact')->select(2);
+        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact')->select(3);
+        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact')->select(2004);
 
         $expected = '<div class="inline fields">';
         $expected .= '<div class="field">';
@@ -632,6 +632,45 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $expected .= '</div>';
 
         $result = (string)$this->form->selectDate('birthdate', 2001, 2010)->value('2004-3-2');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSelectDateTime()
+    {
+        $date = $this->form->selectRange('_schedule[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('_schedule[month]')->addClass('compact');
+        $year = $this->form->selectRange('_schedule[year]', 2001, 2010)->addClass('compact');
+
+        $timeOptions = [];
+        foreach(range(0, 23) as $hour) {
+            if(strlen($hour) == 1) {
+                $hour = '0' . $hour;
+            }
+            $key = $val = sprintf('%s:%s', $hour, '00');
+            $timeOptions[$key] = $val;
+
+            $key = $val = sprintf('%s:%s', $hour, 30);
+            $timeOptions[$key] = $val;
+        }
+        $time = $this->form->select('_schedule[time]', $timeOptions)->addClass('compact');
+
+        $expected = '<div class="inline fields">';
+        $expected .= '<div class="field">';
+        $expected .= $date;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $month;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $year;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $time;
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $result = (string)$this->form->selectDateTime('schedule', 2001, 2010, 30);
 
         $this->assertEquals($expected, $result);
     }

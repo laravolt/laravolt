@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Middleware;
 use Carbon\Carbon;
 use Closure;
 
-class SelectDateMiddleware
+class SelectDateTimeMiddleware
 {
     /**
      * Handle an incoming request.
@@ -31,7 +31,7 @@ class SelectDateMiddleware
 
     protected function formatDate($dates)
     {
-        return sprintf('%s-%s-%s', $dates['year'], $dates['month'], $dates['date']);
+        return sprintf('%s-%s-%s %s:00', $dates['year'], $dates['month'], $dates['date'], $dates['time']);
     }
 
 }

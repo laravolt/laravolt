@@ -1,6 +1,7 @@
 <?php
 namespace Laravolt\SemanticForm;
 
+use Carbon\Carbon;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
@@ -346,10 +347,43 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Field($this->selectRange($name . '[date]', 1, 31)->addClass('compact')));
-        $month = (new Field($this->selectMonth($name . '[month]')->addClass('compact')));
-        $year = (new Field($this->selectRange($name . '[year]', $beginYear, $endYear)->addClass('compact')));
+        $date = (new Field($this->selectRange('_'.$name . '[date]', 1, 31)->addClass('compact')));
+        $month = (new Field($this->selectMonth('_'.$name . '[month]')->addClass('compact')));
+        $year = (new Field($this->selectRange('_'.$name . '[year]', $beginYear, $endYear)->addClass('compact')));
 
         return new SelectDateWrapper($date, $month, $year);
+    }
+
+    public function selectDateTime($name, $beginYear = 1900, $endYear = null, $interval = 30)
+    {
+        if (!$endYear) {
+            $endYear = date('Y') + 10;
+        }
+
+        $date = (new Field($this->selectRange('_'.$name . '[date]', 1, 31)->addClass('compact')));
+        $month = (new Field($this->selectMonth('_'.$name . '[month]')->addClass('compact')));
+        $year = (new Field($this->selectRange('_'.$name . '[year]', $beginYear, $endYear)->addClass('compact')));
+
+        $timeOptions = $this->getTimeOptions($interval);
+
+        $time = (new Field($this->select('_'.$name . '[time]', $timeOptions)->addClass('compact')));
+
+        return new SelectDateWrapper($date, $month, $year, $time);
+    }
+
+    protected function getTimeOptions($interval)
+    {
+        $times = [];
+        $today = Carbon::create(1970, 01, 01, 0, 0, 0);
+        $tomorrow = (clone $today)->addDay(1);
+
+        while($today < $tomorrow) {
+            $key = $val = sprintf('%s:%s', $today->format('H'), $today->format('i'));
+            $times[$key] = $val;
+
+            $today->addMinutes($interval);
+        }
+
+        return $times;
     }
 }
