@@ -69,6 +69,11 @@ SemanticForm::select($name, $options)->prependOption($key, $label);
 SemanticForm::selectDate($name, $startYear, $endYear)->label('Birth Date');
 ```
 
+### Select Date Time
+``` php
+SemanticForm::selectDateTime($name, $startYear, $endYear, $intervalInMinute)->label('Schedule');
+```
+
 ### Select Range
 ``` php
 SemanticForm::selectRange($name, $begin, $end)->label('Number of child');
@@ -158,6 +163,12 @@ For every form element, you can call and chaining following methods:
 SemanticForm::text($name, $value)->label('Username')->id('username')->addClass('foo');
 SemanticForm::text($name, $value)->label('Username')->data('url', 'http://id-laravel.com');
 ```
+
+### Middleware
+
+* \Laravolt\SemanticForm\Middleware\SelectDateMiddleware
+* \Laravolt\SemanticForm\Middleware\SelectDateTimeMiddleware
+
 
 ## Credits
 SemanticForm built on top of awesome form builder by [AdamWathan\Form](https://github.com/adamwathan/form).
