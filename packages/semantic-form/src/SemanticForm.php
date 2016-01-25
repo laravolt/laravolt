@@ -375,7 +375,8 @@ class SemanticForm
     {
         $times = [];
         $today = Carbon::create(1970, 01, 01, 0, 0, 0);
-        $tomorrow = (clone $today)->addDay(1);
+        $tomorrow = clone $today;
+        $tomorrow->addDay(1);
 
         while($today < $tomorrow) {
             $key = $val = sprintf('%s:%s', $today->format('H'), $today->format('i'));
