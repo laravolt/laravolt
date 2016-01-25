@@ -346,9 +346,9 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Field($this->selectRange('_' . $name . '[date]', 1, 31)->addClass('compact')));
-        $month = (new Field($this->selectMonth('_' . $name . '[month]')->addClass('compact')));
-        $year = (new Field($this->selectRange('_' . $name . '[year]', $beginYear, $endYear)->addClass('compact')));
+        $date = (new Field($this->selectRange($name . '[date]', 1, 31)->addClass('compact')));
+        $month = (new Field($this->selectMonth($name . '[month]')->addClass('compact')));
+        $year = (new Field($this->selectRange($name . '[year]', $beginYear, $endYear)->addClass('compact')));
 
         return new SelectDateWrapper($date, $month, $year);
     }

@@ -566,9 +566,9 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectDate()
     {
-        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact');
-        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact');
-        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact');
+        $date = $this->form->selectRange('birthdate[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('birthdate[month]')->addClass('compact');
+        $year = $this->form->selectRange('birthdate[year]', 2001, 2010)->addClass('compact');
 
         $expected = '<div class="inline fields">';
         $expected .= '<div class="field">';
@@ -589,9 +589,9 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectDateWithLabel()
     {
-        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact');
-        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact');
-        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact');
+        $date = $this->form->selectRange('birthdate[date]', 1, 31)->addClass('compact');
+        $month = $this->form->selectMonth('birthdate[month]')->addClass('compact');
+        $year = $this->form->selectRange('birthdate[year]', 2001, 2010)->addClass('compact');
 
         $expected = '<div class="field">';
         $expected .= '<label>Birthdate</label>';
@@ -615,9 +615,9 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectDateCanHaveValue()
     {
-        $date = $this->form->selectRange('_birthdate[date]', 1, 31)->addClass('compact')->select(2);
-        $month = $this->form->selectMonth('_birthdate[month]')->addClass('compact')->select(3);
-        $year = $this->form->selectRange('_birthdate[year]', 2001, 2010)->addClass('compact')->select(2004);
+        $date = $this->form->selectRange('birthdate[date]', 1, 31)->addClass('compact')->select(2);
+        $month = $this->form->selectMonth('birthdate[month]')->addClass('compact')->select(3);
+        $year = $this->form->selectRange('birthdate[year]', 2001, 2010)->addClass('compact')->select(2004);
 
         $expected = '<div class="inline fields">';
         $expected .= '<div class="field">';
