@@ -3,6 +3,7 @@
 namespace Laravolt\SemanticForm\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class SelectDateTimeMiddleware
 {
@@ -13,7 +14,7 @@ class SelectDateTimeMiddleware
      * @param  \Closure                 $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
 
         $fields = array_slice(func_get_args(), 2);
