@@ -2,7 +2,6 @@
 
 namespace Laravolt\SemanticForm\Middleware;
 
-use Carbon\Carbon;
 use Closure;
 
 class SelectDateMiddleware
