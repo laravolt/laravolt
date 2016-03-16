@@ -8,6 +8,8 @@ class SelectDateWrapper extends Wrapper
         'class' => 'inline fields'
     ];
 
+    protected $format = 'Y-m-d';
+
     public function value($value)
     {
 
@@ -24,6 +26,10 @@ class SelectDateWrapper extends Wrapper
         return $this;
     }
 
+    public function defaultValue($value)
+    {
+        return $this->value($value);
+    }
 
     /**
      * @param $value
@@ -52,7 +58,7 @@ class SelectDateWrapper extends Wrapper
             return Carbon::createFromTimestamp($value);
         }
 
-        return Carbon::createFromFormat('Y-m-d', $value)->startOfDay();
+        return Carbon::createFromFormat($this->format, $value)->startOfDay();
 
     }
 }
