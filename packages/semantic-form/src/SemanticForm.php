@@ -67,7 +67,7 @@ class SemanticForm
         return '</form>';
     }
 
-    public function text($name)
+    public function text($name, $defaultValue = null)
     {
         $text = new Text($name);
 
@@ -75,10 +75,12 @@ class SemanticForm
             $text->value($value);
         }
 
+        $text->defaultValue($defaultValue);
+
         return $text;
     }
 
-    public function date($name)
+    public function date($name, $defaultValue = null)
     {
         $date = new Date($name);
 
@@ -86,16 +88,20 @@ class SemanticForm
             $date->value($value);
         }
 
+        $text->defaultValue($defaultValue);
+
         return $date;
     }
 
-    public function email($name)
+    public function email($name, $defaultValue = null)
     {
         $email = new Email($name);
 
         if (!is_null($value = $this->getValueFor($name))) {
             $email->value($value);
         }
+
+        $email->defaultValue($defaultValue);
 
         return $email;
     }
@@ -112,13 +118,15 @@ class SemanticForm
         return $hidden;
     }
 
-    public function textarea($name)
+    public function textarea($name, $defaultValue = null)
     {
         $textarea = new TextArea($name);
 
         if (!is_null($value = $this->getValueFor($name))) {
             $textarea->value($value);
         }
+
+        $textarea->defaultValue($defaultValue);
 
         return $textarea;
     }
