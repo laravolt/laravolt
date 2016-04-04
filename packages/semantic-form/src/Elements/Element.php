@@ -25,6 +25,11 @@ abstract class Element
         return $this->attributes[$attribute];
     }
 
+    public function hasAttribute($attribute)
+    {
+        return isset($this->attributes[$attribute]);
+    }
+
     public function data($attribute, $value)
     {
         $this->setAttribute('data-'.$attribute, $value);
