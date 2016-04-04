@@ -88,7 +88,7 @@ class SemanticForm
             $date->value($value);
         }
 
-        $text->defaultValue($defaultValue);
+        $date->defaultValue($defaultValue);
 
         return $date;
     }
