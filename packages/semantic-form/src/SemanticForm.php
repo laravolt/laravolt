@@ -77,6 +77,10 @@ class SemanticForm
 
         $text->defaultValue($defaultValue);
 
+        if($this->hasError($name)) {
+            $text->setError();
+        }
+
         return $text;
     }
 
@@ -90,6 +94,10 @@ class SemanticForm
 
         $date->defaultValue($defaultValue);
 
+        if($this->hasError($name)) {
+            $date->setError();
+        }
+
         return $date;
     }
 
@@ -102,6 +110,10 @@ class SemanticForm
         }
 
         $email->defaultValue($defaultValue);
+
+        if($this->hasError($name)) {
+            $email->setError();
+        }
 
         return $email;
     }
@@ -128,12 +140,22 @@ class SemanticForm
 
         $textarea->defaultValue($defaultValue);
 
+        if($this->hasError($name)) {
+            $textarea->setError();
+        }
+
         return $textarea;
     }
 
     public function password($name)
     {
-        return new Password($name);
+        $password = new Password($name);
+
+        if($this->hasError($name)) {
+            $password->setError();
+        }
+
+        return $password;
     }
 
     public function checkbox($name, $value = 1)
