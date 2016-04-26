@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends(':VIEW_EXTENDS:')
 
 @section('content')
     <div class="ui container">
