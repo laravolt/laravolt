@@ -144,6 +144,8 @@ class Generator extends Command
                 }
             }
         }
+
+        $this->warn('Add following service provider to config/app.php ====> ' . $namespace . '\\' . ucwords(str_replace('_', ' ', $table)) . '\\ServiceProvider::class,');
     }
 
     protected function toArrayElement($array)
