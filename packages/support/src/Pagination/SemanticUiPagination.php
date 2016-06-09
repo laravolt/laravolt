@@ -58,7 +58,7 @@ class SemanticUiPagination extends BootstrapThreePresenter implements Presenter
     public function pager()
     {
         $page = $this->paginator->currentPage();
-        $total = ceil($this->paginator->total() / $this->paginator->perPage());
+        $total = max(1, ceil($this->paginator->total() / $this->paginator->perPage()));
 
         return trans('support::pagination.pager', compact('page', 'total'));
     }
