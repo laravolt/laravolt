@@ -42,7 +42,7 @@ class Generator extends Command
     }
 
 
-    public function handle(PackerHelper $helper)
+    public function handle()
     {
         if (($table = $this->option('table')) === null) {
             $tables = $this->DBHelper->listTables();
@@ -131,17 +131,15 @@ class Generator extends Command
         foreach (File::allFiles($modulePath) as $file) {
             if (is_file($file)) {
 
-                $newFile = false;
+                $newFile = $deleteOriginal = false;
 
                 if (Str::endsWith($file, '.stub')) {
                     $newFile = Str::substr($file, 0, -5);
+                    $deleteOriginal = true;
                 }
 
-                $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile);
+                $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile, $deleteOriginal);
 
-                if ($newFile) {
-                    File::delete($file);
-                }
             }
         }
 

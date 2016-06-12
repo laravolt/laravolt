@@ -21,7 +21,7 @@
         "php" : ">=5.5.0",
         "illuminate/support": "~5.2",
         "danielstjules/stringy": "~2.2",
-        "laravolt/packer":"^0.1.1"
+        "laravolt/packer":"1.*"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*"
