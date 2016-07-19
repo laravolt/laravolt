@@ -36,6 +36,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->registerViews();
         $this->registerConfigurations();
+        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/lang'), 'suitable');
     }
 
     /**
