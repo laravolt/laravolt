@@ -8,6 +8,8 @@ class Builder
 
     protected $collection = null;
 
+    protected $id = null;
+
     protected $headers = [];
 
     protected $fields = [];
@@ -23,11 +25,19 @@ class Builder
      */
     public function __construct()
     {
+        $this->id = str_random();
     }
 
     public function source($collection)
     {
         $this->collection = $collection;
+
+        return $this;
+    }
+
+    public function id($id)
+    {
+        $this->id = $id;
 
         return $this;
     }
@@ -67,11 +77,12 @@ class Builder
     {
         $data = [
             'collection' => $this->collection,
+            'id'         => $this->id,
             'headers'    => $this->headers,
             'fields'     => $this->fields,
             'title'      => $this->title,
             'toolbars'   => $this->toolbars,
-            'builder'   => $this
+            'builder'    => $this
         ];
 
         return view('suitable::table', $data)->render();

@@ -41,31 +41,17 @@
                             }
                         });
 
-                        // change multiple delete form action, based on selected ids
-                        var form = $('form[data-type="delete-multiple"]');
-                        if (form.length > 0) {
-                            var url = $('form[data-type="delete-multiple"]').attr('action');
-                            var replaceStartFrom = url.lastIndexOf('/');
-                            var newUrl = url.substr(0, replaceStartFrom) + '/' + ids.join(',');
-                            $('form[data-type="delete-multiple"]').attr('action', newUrl);
-                        }
-
                         // set parent checkbox state, but dont trigger its onChange callback
                         if (allChecked) {
                             $parentCheckbox.checkbox('set checked');
-                            form.find('[type="submit"]').removeClass('disabled');
-                            //form.css('visibility', 'visible');
                         }
                         else if (allUnchecked) {
                             $parentCheckbox.checkbox('set unchecked');
-                            form.find('[type="submit"]').addClass('disabled');
-                            //form.css('visibility', 'hidden');
                         }
                         else {
                             $parentCheckbox.checkbox('set indeterminate');
-                            form.find('[type="submit"]').removeClass('disabled');
-                            //form.css('visibility', 'visible');
                         }
+                        $('#{{ $id }}').trigger('suitable.checkall.change', [ids]);
                     }
                 })
             ;

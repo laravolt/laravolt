@@ -1,4 +1,4 @@
-<section class="section-audit-trails">
+<div id="suitable1">
 
     <div class="ui menu top attached">
         @if($title)
@@ -7,7 +7,7 @@
         </div>
         @endif
         <div class="item borderless">
-            <small>{!! sui_pagination($collection)->summary() !!}</small>
+
         </div>
         <div class="right menu">
             <div class="ui right aligned item">
@@ -60,14 +60,14 @@
 
     <div class="ui menu bottom attached">
         <div class="item borderless">
-            <small>{!! sui_pagination($collection)->pager() !!}</small>
+            <small>{!! sui_pagination($collection)->summary() !!}</small>
         </div>
         @if(!$collection->isEmpty())
             {!! sui_pagination($collection)->render('attached bottom right') !!}
         @endif
     </div>
-</section>
+</div>
 
 @push(config('suitable.script_placeholder'))
-    @include('suitable::checkall.script')
+    @include('suitable::checkall.script', compact('id'))
 @endpush
