@@ -90,6 +90,10 @@ class Builder
 
     public function renderCell($field, $data)
     {
+        if(array_has($field, 'raw') && $field['raw'] instanceof \Closure) {
+            return call_user_func($field['raw'], $data);
+        }
+
         if(array_has($field, 'field')) {
             return $data[$field['field']];
         }
