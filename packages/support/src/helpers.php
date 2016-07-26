@@ -19,7 +19,7 @@ if (!function_exists('sui_pagination')) {
      */
     function sui_pagination($collection)
     {
-        return new \Laravolt\Support\Pagination\SemanticUiPagination($collection);
+        return new \Laravolt\Support\Pagination\SemanticUiPaginator($collection);
     }
 }
 

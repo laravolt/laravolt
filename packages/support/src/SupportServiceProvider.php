@@ -21,6 +21,7 @@ class SupportServiceProvider extends ServiceProvider {
         $this->registerBladeExtensions();
         $this->registerTranslations();
         $this->registerConfigurations();
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'support');
     }
 
     /**
@@ -54,7 +55,7 @@ class SupportServiceProvider extends ServiceProvider {
     /**
      * Register the package translations
      *
-     * @see http://laravel.com/docs/5.1/packages#translations
+     * @see http://laravel.com/docs/master/packages#translations
      * @return void
      */
     protected function registerTranslations()
@@ -65,7 +66,7 @@ class SupportServiceProvider extends ServiceProvider {
     /**
      * Register the package configurations
      *
-     * @see http://laravel.com/docs/5.1/packages#configuration
+     * @see http://laravel.com/docs/master/packages#configuration
      * @return void
      */
     protected function registerConfigurations()

@@ -1,40 +1,34 @@
 <?php namespace Laravolt\Support\Pagination;
 
-use Illuminate\Contracts\Pagination\Presenter;
-use Illuminate\Pagination\BootstrapThreePresenter;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class SemanticUiPagination extends BootstrapThreePresenter implements Presenter
+class SemanticUiPaginator
 {
+    /**
+     * @var LengthAwarePaginator
+     */
+    protected $paginator;
 
-    protected function getActivePageWrapper($text)
+    /**
+     * The default pagination view.
+     *
+     * @var string
+     */
+    public static $defaultView = 'support::pagination.semantic-ui';
+
+    /**
+     * SemanticUiPaginator constructor.
+     * @param LengthAwarePaginator $paginator
+     */
+    public function __construct(LengthAwarePaginator $paginator)
     {
-        return '<div class="active item">' . $text . '</div>';
-    }
 
-    protected function getDisabledTextWrapper($text)
-    {
-        return '<div class="disabled item">' . $text . '</div>';
-    }
-
-    protected function getAvailablePageWrapper($url, $page, $rel = null)
-    {
-
-        return '<a class="item" href="' . htmlentities($url) . '">' . $page . '</a>';
-
-        return '<li><a href="' . htmlentities($url) . '"' . $rel . '>' . $page . '</a></li>';
+        $this->paginator = $paginator;
     }
 
     public function render($class = null)
     {
-        if ($this->hasPages()) {
-            return sprintf(
-                '<div class="menu %s">%s</div>',
-                $class,
-                $this->getLinks()
-            );
-        }
-
-        return '';
+        return $this->paginator->render(static::$defaultView);
     }
 
     public function summary()
