@@ -25,7 +25,7 @@ class Builder
      */
     public function __construct()
     {
-        $this->id = str_random();
+        $this->id = 'suitable'.str_random();
     }
 
     public function source($collection)
@@ -133,4 +133,40 @@ class Builder
 
         return false;
     }
+
+    public function summary()
+    {
+        $from = (($this->collection->currentPage() - 1) * $this->collection->perPage()) + 1;
+        $total = $this->collection->total();
+
+        if ($this->collection->hasMorePages()) {
+            $to = $from + $this->collection->perPage() - 1;
+        } else {
+            $to = $total;
+        }
+
+        if ($total > 0) {
+            return trans('suitable::pagination.summary', compact('from', 'to', 'total'));
+        }
+
+        return trans('suitable::pagination.empty');
+    }
+
+    public function pager()
+    {
+        $page = $this->collection->currentPage();
+        $total = max(1, ceil($this->collection->total() / $this->collection->perPage()));
+
+        return trans('suitable::pagination.pager', compact('page', 'total'));
+    }
+
+    public function sequence($item)
+    {
+        $collections = collect($this->collection->items());
+        $index = $collections->search($item) + 1;
+        $start = (request('page', 1) - 1) * $this->collection->perPage();
+
+        return $start + $index;
+    }
+
 }

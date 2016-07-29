@@ -20,8 +20,7 @@
     ],
     "require": {
         "php" : ">=5.5.9",
-        "illuminate/support": "~5.2",
-        "laravolt/support": "^1.1"
+        "illuminate/support": "~5.2"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*"
