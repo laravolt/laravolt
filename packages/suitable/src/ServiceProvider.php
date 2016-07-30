@@ -37,7 +37,6 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerViews();
         $this->registerConfigurations();
         $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'suitable');
-        $this->registerBladeExtensions();
     }
 
     /**
@@ -83,22 +82,5 @@ class ServiceProvider extends BaseServiceProvider
     protected function packagePath($path = '')
     {
         return sprintf("%s/../%s", __DIR__, $path);
-    }
-
-    /**
-     * Register Blade extensions.
-     *
-     * @return void
-     */
-    protected function registerBladeExtensions()
-    {
-
-        $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
-
-        $blade->directive('sortable', function ($expression)
-        {
-            return "<?php echo \Laravolt\Suitable\Sortable::link(array {$expression});?>";
-        });
-
     }
 }
