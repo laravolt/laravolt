@@ -36,8 +36,12 @@
     <table class="ui table attached">
         <thead>
         <tr>
-            @foreach($headers as $text)
-                <th>{!! $text !!}</th>
+            @foreach($headers as $header)
+                @if($header->isSortable())
+                    {!! $header->getHtml() !!}
+                @else
+                    <th>{!! $header->getHtml() !!}</th>
+                @endif
             @endforeach
         </tr>
         </thead>
@@ -63,7 +67,7 @@
             <div class="item borderless">
                 <small>{{ $builder->summary() }}</small>
             </div>
-            {!! $collection->links('suitable::pagination') !!}
+            {!! $collection->appends(request()->input())->links('suitable::pagination') !!}
         @endif
     </div>
 </div>

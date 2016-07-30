@@ -91,24 +91,25 @@ class Builder
 
     public function renderCell($field, $data)
     {
-        if(array_has($field, 'raw') && $field['raw'] instanceof \Closure) {
+        if (array_has($field, 'raw') && $field['raw'] instanceof \Closure) {
             return call_user_func($field['raw'], $data);
         }
 
-        if(array_has($field, 'field')) {
+        if (array_has($field, 'field')) {
             return $data[$field['field']];
         }
 
-        if(array_has($field, 'present')) {
+        if (array_has($field, 'present')) {
             return $data->present($field['present']);
         }
 
-        if(array_has($field, 'view')) {
+        if (array_has($field, 'view')) {
             return render($field['view'], compact('data'));
         }
 
-        if($field instanceof Component) {
+        if ($field instanceof Component) {
             $field->boot($this);
+
             return $field->cell($data);
         }
 
@@ -117,19 +118,28 @@ class Builder
 
     protected function getHeader($column)
     {
-        if(is_array($column)) {
-            return array_get($column, 'header', '');
+        $header = new Header();
+
+        $sortable = array_get($column, 'sortable', false);
+        if ($sortable) {
+            unset($column['sortable']);
+            $html = Sortable::link([array_get($column, 'field', ''), array_get($column, 'header', '')]);
+        } elseif (is_array($column)) {
+            $html = array_get($column, 'header', '');
+        } elseif ($column instanceof Component) {
+            $html = $column->header();
         }
 
-        if ($column instanceof Component) {
-            return $column->header();
-        }
+        $header->setSortable($sortable);
+        $header->setHtml($html);
+
+        return $header;
     }
 
     public function getRoute($verb, $param = null)
     {
-        if($this->baseRoute) {
-            return route($this->baseRoute . '.' . $verb, $param);
+        if ($this->baseRoute) {
+            return route($this->baseRoute.'.'.$verb, $param);
         }
 
         return false;
