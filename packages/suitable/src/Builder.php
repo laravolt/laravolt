@@ -1,6 +1,7 @@
 <?php
 namespace Laravolt\Suitable;
 
+use Illuminate\Support\Facades\View;
 use Laravolt\Suitable\Contracts\Component;
 
 class Builder
@@ -85,7 +86,7 @@ class Builder
             'builder'    => $this
         ];
 
-        return view('suitable::table', $data)->render();
+        return View::make('suitable::table', $data)->render();
     }
 
     public function renderCell($field, $data)

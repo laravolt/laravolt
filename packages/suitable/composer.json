@@ -6,7 +6,8 @@
         "laravolt",
         "table",
         "crud",
-        "suitable"
+        "suitable",
+        "semantic UI"
     ],
     "homepage": "https://github.com/laravolt/suitable",
     "license": "MIT",
@@ -23,7 +24,8 @@
         "illuminate/support": "~5.2"
     },
     "require-dev": {
-        "phpunit/phpunit" : "4.*"
+        "phpunit/phpunit" : "~5.0",
+        "orchestra/testbench": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -34,8 +36,5 @@
         "psr-4": {
             "Laravolt\\Suitable\\Test\\": "tests"
         }
-    },
-    "scripts": {
-        "test": "phpunit"
     }
 }
