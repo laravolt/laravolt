@@ -1,4 +1,4 @@
-<div id="suitable1">
+<div id="{{ $id }}">
 
     <div class="ui menu top attached">
         @if($title)
@@ -61,9 +61,9 @@
     <div class="ui menu bottom attached">
         @if(!$collection->isEmpty())
             <div class="item borderless">
-                <small>{!! sui_pagination($collection)->summary() !!}</small>
+                <small>{{ $builder->summary() }}</small>
             </div>
-            {!! sui_pagination($collection)->render('attached bottom right') !!}
+            {!! $collection->links('suitable::pagination') !!}
         @endif
     </div>
 </div>
