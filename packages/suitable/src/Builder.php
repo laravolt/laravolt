@@ -21,6 +21,8 @@ class Builder
 
     protected $baseRoute = null;
 
+    protected $showSearch = true;
+
     /**
      * Builder constructor.
      */
@@ -60,6 +62,13 @@ class Builder
         return $this;
     }
 
+    public function search($showSearch)
+    {
+        $this->showSearch = $showSearch;
+
+        return $this;
+    }
+
     public function addToolbar($html)
     {
         $this->toolbars[] = $html;
@@ -82,6 +91,7 @@ class Builder
             'headers'    => $this->headers,
             'fields'     => $this->fields,
             'title'      => $this->title,
+            'showSearch' => $this->showSearch,
             'toolbars'   => $this->toolbars,
             'builder'    => $this
         ];

@@ -10,14 +10,9 @@
 
         </div>
         <div class="right menu">
-            <div class="ui right aligned item">
-                <form method="GET" action="">
-                    <div class="ui transparent icon input">
-                        <input class="prompt" name="search" value="{{ request('search') }}" type="text" placeholder="@lang('suitable::suitable.search_placeholder')">
-                        <i class="search link icon"></i>
-                    </div>
-                </form>
-            </div>
+            @if($showSearch)
+                @include('suitable::toolbars.search')
+            @endif
         </div>
     </div>
 
