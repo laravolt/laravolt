@@ -10,8 +10,8 @@ class Sortable
 
     public static function link($parameters)
     {
-        $sortByKey = config('suitable.sort_by_key');
-        $sortDirectionKey = config('suitable.sort_direction_key');
+        $sortByKey = config('suitable.query_string.sort_by');
+        $sortDirectionKey = config('suitable.query_string.sort_direction');
 
         if (count($parameters) == 1) {
             $parameters[1] = ucfirst($parameters[0]);
