@@ -4,6 +4,8 @@ namespace Laravolt\Suitable\Tests;
 
 use Illuminate\Database\Eloquent\Collection;
 use Laravolt\Suitable\Builder;
+use Laravolt\Suitable\Components\Action;
+use Laravolt\Suitable\Components\Checkall;
 
 class BuilderTest extends \Orchestra\Testbench\TestCase
 {
@@ -45,5 +47,36 @@ class BuilderTest extends \Orchestra\Testbench\TestCase
 
         $html = $builder->source($collection)->render();
 
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_can_render_checkall_column()
+    {
+        $builder = new Builder();
+        $collection = new Collection();
+
+        $builder->source($collection)
+                ->columns([
+                    new Checkall(),
+                ])
+                ->render();
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_render_rest_action_column()
+    {
+        $builder = new Builder();
+        $collection = new Collection();
+
+        $builder->source($collection)
+                ->columns([
+                    new Action(),
+                ])
+                ->render();
     }
 }

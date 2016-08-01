@@ -1,11 +1,9 @@
 <?php
-namespace Laravolt\Suitable\Components;
+namespace Laravolt\Suitable\Columns;
 
 use Illuminate\Support\Facades\View;
-use Laravolt\Suitable\Components\Component as BaseComponent;
-use Laravolt\Suitable\Contracts\Component;
 
-class Checkall extends BaseComponent implements Component
+class Checkall implements ColumnInterface
 {
     public function header()
     {

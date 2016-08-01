@@ -3,7 +3,7 @@ namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\View;
-use Laravolt\Suitable\Contracts\Component;
+use Laravolt\Suitable\Columns\ColumnInterface;
 
 class Builder
 {
@@ -125,9 +125,7 @@ class Builder
             return render($field['view'], compact('data'));
         }
 
-        if ($field instanceof Component) {
-            $field->boot($this);
-
+        if ($field instanceof ColumnInterface) {
             return $field->cell($data);
         }
 
@@ -144,23 +142,16 @@ class Builder
             $html = Sortable::link([array_get($column, 'field', ''), array_get($column, 'header', '')]);
         } elseif (is_array($column)) {
             $html = array_get($column, 'header', '');
-        } elseif ($column instanceof Component) {
+        } elseif ($column instanceof ColumnInterface) {
             $html = $column->header();
+        } else {
+            throw new \Exception('Invalid header value');
         }
 
         $header->setSortable($sortable);
         $header->setHtml($html);
 
         return $header;
-    }
-
-    public function getRoute($verb, $param = null)
-    {
-        if ($this->baseRoute) {
-            return route($this->baseRoute.'.'.$verb, $param);
-        }
-
-        return false;
     }
 
     public function summary()

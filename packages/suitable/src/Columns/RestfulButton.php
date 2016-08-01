@@ -1,18 +1,26 @@
 <?php
-namespace Laravolt\Suitable\Components;
+namespace Laravolt\Suitable\Columns;
 
-use Laravolt\Suitable\Components\Component as BaseComponent;
-use Laravolt\Suitable\Contracts\Component as ComponentContract;
-
-class Action extends BaseComponent implements ComponentContract
+class RestfulButton implements ColumnInterface
 {
 
     protected $buttons = ['view', 'edit', 'delete'];
 
+    protected $baseRoute;
+
+    /**
+     * RestfulButton constructor.
+     * @param $baseRoute
+     */
+    public function __construct($baseRoute)
+    {
+        $this->baseRoute = $baseRoute;
+    }
+
 
     public function header()
     {
-        return 'Aksi';
+        return '';
     }
 
     public function cell($data)
@@ -36,7 +44,7 @@ class Action extends BaseComponent implements ComponentContract
     protected function getViewUrl($data)
     {
         if (in_array('view', $this->buttons)) {
-            return $this->builder->getRoute('show', $data->id);
+            return $this->getRoute('show', $data->id);
         }
 
         return false;
@@ -45,7 +53,7 @@ class Action extends BaseComponent implements ComponentContract
     protected function getEditUrl($data)
     {
         if (in_array('edit', $this->buttons)) {
-            return $this->builder->getRoute('edit', $data->id);
+            return $this->getRoute('edit', $data->id);
         }
 
         return false;
@@ -54,7 +62,16 @@ class Action extends BaseComponent implements ComponentContract
     protected function getDeleteUrl($data)
     {
         if (in_array('delete', $this->buttons)) {
-            return $this->builder->getRoute('destroy', $data->id);
+            return $this->getRoute('destroy', $data->id);
+        }
+
+        return false;
+    }
+
+    protected function getRoute($verb, $param = null)
+    {
+        if ($this->baseRoute) {
+            return route($this->baseRoute.'.'.$verb, $param);
         }
 
         return false;
