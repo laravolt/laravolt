@@ -70,5 +70,5 @@
 </div>
 
 @push(config('suitable.script_placeholder'))
-@include('suitable::checkall.script', compact('id'))
+@include('suitable::columns.checkall.script', compact('id'))
 @endpush

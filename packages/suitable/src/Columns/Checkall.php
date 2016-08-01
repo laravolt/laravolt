@@ -7,11 +7,11 @@ class Checkall implements ColumnInterface
 {
     public function header()
     {
-        return View::make('suitable::checkall.header')->render();
+        return View::make('suitable::columns.checkall.header')->render();
     }
 
     public function cell($data)
     {
-        return View::make('suitable::checkall.cell', compact('data'))->render();
+        return View::make('suitable::columns.checkall.cell', compact('data'))->render();
     }
 }
