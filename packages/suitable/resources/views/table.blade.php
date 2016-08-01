@@ -57,6 +57,7 @@
         </tbody>
     </table>
 
+    @if($showPagination)
     <div class="ui menu bottom attached">
         @if(!$collection->isEmpty())
             <div class="item borderless">
@@ -65,6 +66,7 @@
             {!! $collection->appends(request()->input())->links('suitable::pagination') !!}
         @endif
     </div>
+    @endif
 </div>
 
 @push(config('suitable.script_placeholder'))

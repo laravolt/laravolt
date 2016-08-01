@@ -1,6 +1,7 @@
 <?php
 namespace Laravolt\Suitable;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\View;
 use Laravolt\Suitable\Contracts\Component;
 
@@ -23,6 +24,8 @@ class Builder
 
     protected $showSearch = true;
 
+    protected $showPagination = false;
+
     /**
      * Builder constructor.
      */
@@ -34,6 +37,10 @@ class Builder
     public function source($collection)
     {
         $this->collection = $collection;
+
+        if ($collection instanceof LengthAwarePaginator) {
+            $this->showPagination = true;
+        }
 
         return $this;
     }
@@ -86,14 +93,15 @@ class Builder
     public function render()
     {
         $data = [
-            'collection' => $this->collection,
-            'id'         => $this->id,
-            'headers'    => $this->headers,
-            'fields'     => $this->fields,
-            'title'      => $this->title,
-            'showSearch' => $this->showSearch,
-            'toolbars'   => $this->toolbars,
-            'builder'    => $this
+            'collection'     => $this->collection,
+            'id'             => $this->id,
+            'headers'        => $this->headers,
+            'fields'         => $this->fields,
+            'title'          => $this->title,
+            'showSearch'     => $this->showSearch,
+            'showPagination' => $this->showPagination,
+            'toolbars'       => $this->toolbars,
+            'builder'        => $this
         ];
 
         return View::make('suitable::table', $data)->render();
