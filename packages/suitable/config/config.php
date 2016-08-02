@@ -4,7 +4,9 @@
  */
 return [
     'script_placeholder' => 'script.foot',
-    'sort_by_key'        => 'sort',
-    'sort_direction_key' => 'direction',
-    'search_key'         => 'search',
+    'query_string'       => [
+        'sort_by'        => 'sort',
+        'sort_direction' => 'direction',
+        'search'         => 'search',
+    ],
 ];

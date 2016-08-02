@@ -1,6 +1,8 @@
 <?php
 namespace Laravolt\Suitable\Columns;
 
+use Illuminate\Support\Facades\View;
+
 class RestfulButton implements ColumnInterface
 {
 
@@ -30,7 +32,7 @@ class RestfulButton implements ColumnInterface
         $delete = $this->getDeleteUrl($data);
         $buttons = $this->buttons;
 
-        return render('suitable::buttons.action', compact('view', 'edit', 'delete', 'data', 'buttons'));
+        return View::make('suitable::columns.restful_button', compact('view', 'edit', 'delete', 'data', 'buttons'))->render();
     }
 
     public function only($buttons)

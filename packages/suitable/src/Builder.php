@@ -113,6 +113,10 @@ class Builder
             return call_user_func($field['raw'], $data);
         }
 
+        if ($view = array_get($field, 'view')) {
+            return View::make($view, compact('data'))->render();
+        }
+
         if (array_has($field, 'field')) {
             return $data[$field['field']];
         }
