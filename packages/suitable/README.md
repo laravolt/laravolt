@@ -1,7 +1,12 @@
 # SUI-TABLE
 Semantic-UI table builder for Laravel.
 
-> **Please note**, this package is still in early development phase and not recommended to be used in production. Things will changes, things will breaks, until the release of version 1.
+## Version Compatibility
+
+ Laravel  | Suitable
+:---------|:----------
+ 5.2.x    | 1.x
+ 5.3.x    | 2.x
 
 ## Installation
 
