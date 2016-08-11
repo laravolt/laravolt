@@ -171,15 +171,23 @@ class SemanticForm
         return $checkbox;
     }
 
-    public function checkboxGroup($name, $options)
+    public function checkboxGroup($name, $options, $checked = [])
     {
+        $checked = (array)$checked;
         $controls = [];
         $oldValue = $this->getValueFor($name);
 
         foreach($options as $value => $label) {
             $radio = (new Checkbox($name . "[$value]", $value))->label($label);
-            if ($value == $oldValue) {
-                $radio->check();
+
+            if($oldValue !== null) {
+                if (in_array($value, $oldValue)) {
+                    $radio->check();
+                }
+            } else {
+                if (in_array($value, $checked)) {
+                    $radio->check();
+                }
             }
 
             $controls[] = $radio;
@@ -203,17 +211,17 @@ class SemanticForm
         return $radio;
     }
 
-    public function radioGroup($name, $options)
+    public function radioGroup($name, $options, $checked = null)
     {
         $controls = [];
         $oldValue = $this->getValueFor($name);
 
         foreach($options as $value => $label) {
             $radio = (new RadioButton($name, $value))->label($label);
-            if ($value == $oldValue) {
+
+            if (($oldValue !== null && $value == $oldValue) || ($oldValue === null && $value == $checked)) {
                 $radio->check();
             }
-
             $controls[] = $radio;
         }
 

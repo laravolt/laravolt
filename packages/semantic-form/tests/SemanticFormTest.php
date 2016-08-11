@@ -128,6 +128,59 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testRadioGroupWithValue()
+    {
+        $expected = '<div class="grouped fields">';
+        $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui radio checkbox">';
+        $expected .= '<input type="radio" name="fruit" value="orange">';
+        $expected .= '<label>Orange</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui radio checkbox">';
+        $expected .= '<input type="radio" name="fruit" value="banana" checked="checked">';
+        $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $options = ['orange' => 'Orange', 'banana'=>'Banana'];
+        $result = (string)$this->form->radioGroup('fruit', $options, 'banana')->label('Fruit');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testRadioGroupWithValueAndOldInput()
+    {
+        $oldInput = Mockery::mock('Laravolt\SemanticForm\OldInput\OldInputInterface');
+        $oldInput->shouldReceive('hasOldInput')->andReturn(true);
+        $oldInput->shouldReceive('getOldInput')->with('fruit')->andReturn('orange');
+
+        $this->form->setOldInputProvider($oldInput);
+
+
+        $expected = '<div class="grouped fields">';
+        $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui radio checkbox">';
+        $expected .= '<input type="radio" name="fruit" value="orange" checked="checked">';
+        $expected .= '<label>Orange</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui radio checkbox">';
+        $expected .= '<input type="radio" name="fruit" value="banana">';
+        $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $options = ['orange' => 'Orange', 'banana'=>'Banana'];
+        $result = (string)$this->form->radioGroup('fruit', $options, 'banana')->label('Fruit');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testRadioGroupInline()
     {
         $expected = '<div class="inline fields">';
@@ -174,6 +227,64 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
         $options = ['orange' => 'Orange', 'banana'=>'Banana'];
         $result = (string)$this->form->checkboxGroup('fruit', $options)->label('Fruit');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCheckboxGroupWithValue()
+    {
+        $expected = '<div class="grouped fields">';
+        $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui checkbox">';
+        $expected .= '<input type="checkbox" name="fruit[orange]" value="orange">';
+        $expected .= '<label>Orange</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui checkbox">';
+        $expected .= '<input type="checkbox" name="fruit[banana]" value="banana" checked="checked">';
+        $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $options = ['orange' => 'Orange', 'banana'=>'Banana'];
+        $result = (string)$this->form->checkboxGroup('fruit', $options, ['banana'])->label('Fruit');
+        $this->assertEquals($expected, $result);
+
+        $result = (string)$this->form->checkboxGroup('fruit', $options, 'banana')->label('Fruit');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCheckboxGroupWithValueAndOldInput()
+    {
+        $oldInput = Mockery::mock('Laravolt\SemanticForm\OldInput\OldInputInterface');
+        $oldInput->shouldReceive('hasOldInput')->andReturn(true);
+        $oldInput->shouldReceive('getOldInput')->with('fruit')->andReturn(['orange' => 'orange']);
+
+        $this->form->setOldInputProvider($oldInput);
+
+        $expected = '<div class="grouped fields">';
+        $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui checkbox">';
+        $expected .= '<input type="checkbox" name="fruit[orange]" value="orange" checked="checked">';
+        $expected .= '<label>Orange</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= '<div class="ui checkbox">';
+        $expected .= '<input type="checkbox" name="fruit[banana]" value="banana">';
+        $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $options = ['orange' => 'Orange', 'banana'=>'Banana'];
+        $result = (string)$this->form->checkboxGroup('fruit', $options, ['banana'])->label('Fruit');
+        $this->assertEquals($expected, $result);
+
+        $result = (string)$this->form->checkboxGroup('fruit', $options, 'banana')->label('Fruit');
         $this->assertEquals($expected, $result);
     }
 
