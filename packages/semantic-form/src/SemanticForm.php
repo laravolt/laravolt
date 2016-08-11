@@ -77,7 +77,7 @@ class SemanticForm
 
         $text->defaultValue($defaultValue);
 
-        if($this->hasError($name)) {
+        if ($this->hasError($name)) {
             $text->setError();
         }
 
@@ -94,7 +94,7 @@ class SemanticForm
 
         $date->defaultValue($defaultValue);
 
-        if($this->hasError($name)) {
+        if ($this->hasError($name)) {
             $date->setError();
         }
 
@@ -111,7 +111,7 @@ class SemanticForm
 
         $email->defaultValue($defaultValue);
 
-        if($this->hasError($name)) {
+        if ($this->hasError($name)) {
             $email->setError();
         }
 
@@ -140,7 +140,7 @@ class SemanticForm
 
         $textarea->defaultValue($defaultValue);
 
-        if($this->hasError($name)) {
+        if ($this->hasError($name)) {
             $textarea->setError();
         }
 
@@ -151,7 +151,7 @@ class SemanticForm
     {
         $password = new Password($name);
 
-        if($this->hasError($name)) {
+        if ($this->hasError($name)) {
             $password->setError();
         }
 
@@ -177,10 +177,10 @@ class SemanticForm
         $controls = [];
         $oldValue = $this->getValueFor($name);
 
-        foreach($options as $value => $label) {
-            $radio = (new Checkbox($name . "[$value]", $value))->label($label);
+        foreach ($options as $value => $label) {
+            $radio = (new Checkbox($name."[$value]", $value))->label($label);
 
-            if($oldValue !== null) {
+            if ($oldValue !== null) {
                 if (in_array($value, $oldValue)) {
                     $radio->check();
                 }
@@ -216,7 +216,7 @@ class SemanticForm
         $controls = [];
         $oldValue = $this->getValueFor($name);
 
-        foreach($options as $value => $label) {
+        foreach ($options as $value => $label) {
             $radio = (new RadioButton($name, $value))->label($label);
 
             if (($oldValue !== null && $value == $oldValue) || ($oldValue === null && $value == $checked)) {
@@ -385,9 +385,9 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Field($this->selectRange('_'.$name . '[date]', 1, 31)->addClass('compact')));
-        $month = (new Field($this->selectMonth('_'.$name . '[month]')->addClass('compact')));
-        $year = (new Field($this->selectRange('_'.$name . '[year]', $beginYear, $endYear)->addClass('compact')));
+        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)->addClass('compact')));
+        $month = (new Field($this->selectMonth('_'.$name.'[month]')->addClass('compact')));
+        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)->addClass('compact')));
 
         return new SelectDateWrapper($date, $month, $year);
     }
@@ -398,13 +398,13 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Field($this->selectRange('_'.$name . '[date]', 1, 31)->addClass('compact')));
-        $month = (new Field($this->selectMonth('_'.$name . '[month]')->addClass('compact')));
-        $year = (new Field($this->selectRange('_'.$name . '[year]', $beginYear, $endYear)->addClass('compact')));
+        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)->addClass('compact')));
+        $month = (new Field($this->selectMonth('_'.$name.'[month]')->addClass('compact')));
+        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)->addClass('compact')));
 
         $timeOptions = $this->getTimeOptions($interval);
 
-        $time = (new Field($this->select('_'.$name . '[time]', $timeOptions)->addClass('compact')));
+        $time = (new Field($this->select('_'.$name.'[time]', $timeOptions)->addClass('compact')));
 
         return new SelectDateTimeWrapper($date, $month, $year, $time);
     }
@@ -416,7 +416,7 @@ class SemanticForm
         $tomorrow = clone $today;
         $tomorrow->addDay(1);
 
-        while($today < $tomorrow) {
+        while ($today < $tomorrow) {
             $key = $val = sprintf('%s:%s', $today->format('H'), $today->format('i'));
             $times[$key] = $val;
 
