@@ -4,6 +4,8 @@ namespace Laravolt\SemanticForm;
 use Carbon\Carbon;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Field;
+use Laravolt\SemanticForm\Elements\Icon;
+use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\Text;
@@ -99,6 +101,24 @@ class SemanticForm
         }
 
         return $date;
+    }
+
+    public function datepicker($name, $defaultValue = null)
+    {
+        $input = new Text($name);
+
+        if (!is_null($value = $this->getValueFor($name))) {
+            $input->value($value);
+        }
+
+        $input->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $input->setError();
+        }
+
+        $icon = (new Icon())->addClass('calendar');
+        return (new InputWrapper($input, $icon))->addClass('icon calendar date');
     }
 
     public function email($name, $defaultValue = null)
