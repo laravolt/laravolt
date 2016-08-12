@@ -118,7 +118,7 @@ class SemanticForm
         }
 
         $icon = (new Icon())->addClass('calendar');
-        return (new InputWrapper($input, $icon))->addClass('icon calendar date');
+        return (new InputWrapper($input, $icon))->addClass('left icon calendar date');
     }
 
     public function email($name, $defaultValue = null)
