@@ -83,6 +83,10 @@ abstract class Element
 
     public function addClass($class)
     {
+        if (!$class) {
+            return $this;
+        }
+
         if (isset($this->attributes['class'])) {
             $class = $this->attributes['class'].' '.$class;
         }
