@@ -15,8 +15,9 @@ class Field extends Wrapper
         foreach ($this->controls as $control) {
             $controls .= $control;
 
+            if($control->hasAttribute('required')) $required = true;
+
             if($control instanceof FormControl) {
-                if($control->hasAttribute('required')) $required = true;
                 if($control->hasError()) $hasError = true;
             }
         }

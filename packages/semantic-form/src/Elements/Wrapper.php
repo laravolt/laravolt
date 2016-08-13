@@ -18,6 +18,7 @@ class Wrapper extends Element
         if ($this->label) {
             $element = clone $this;
             $element->label = false;
+
             return (new Field($this->label, $element))->render();
         }
 
@@ -58,5 +59,28 @@ class Wrapper extends Element
     public function getControl($key)
     {
         return Arr::get($this->controls, $key, null);
+    }
+
+    public function getPrimaryControl()
+    {
+        foreach ($this->controls as $control) {
+            if ($control instanceof FormControl) {
+                return $control;
+            }
+        }
+
+        return false;
+    }
+
+    public function required()
+    {
+        $this->setAttribute('required', 'required');
+
+        $control = $this->getPrimaryControl();
+        if($control) {
+            $control->required();
+        }
+
+        return $this;
     }
 }
