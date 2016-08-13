@@ -6,6 +6,32 @@ abstract class Element
 
     protected $label = false;
 
+    protected $fieldWidth;
+
+    protected $widthTranslation = [
+        1 => 'one',
+        'two',
+        'three',
+        'four',
+        'five',
+        'six',
+        'seven',
+        'eight',
+        'nine',
+        'ten',
+        'eleven',
+        'twelve',
+        'thirteen',
+        'fourteen',
+        'fiveteen',
+        'sizteen'
+    ];
+
+    protected function getPrimaryControl()
+    {
+        return $this;
+    }
+
     protected function setAttribute($attribute, $value = null)
     {
         if (is_null($value)) {
@@ -33,54 +59,61 @@ abstract class Element
     public function data($attribute, $value)
     {
         $this->setAttribute('data-'.$attribute, $value);
+
         return $this;
     }
 
     public function attribute($attribute, $value)
     {
         $this->setAttribute($attribute, $value);
+
         return $this;
     }
 
     public function clear($attribute)
     {
-        if (! isset($this->attributes[$attribute])) {
+        if (!isset($this->attributes[$attribute])) {
             return $this;
         }
 
         $this->removeAttribute($attribute);
+
         return $this;
     }
 
     public function addClass($class)
     {
         if (isset($this->attributes['class'])) {
-            $class = $this->attributes['class'] . ' ' . $class;
+            $class = $this->attributes['class'].' '.$class;
         }
 
         $this->setAttribute('class', $class);
+
         return $this;
     }
 
     public function removeClass($class)
     {
-        if (! isset($this->attributes['class'])) {
+        if (!isset($this->attributes['class'])) {
             return $this;
         }
 
         $class = trim(str_replace($class, '', $this->attributes['class']));
         if ($class == '') {
             $this->removeAttribute('class');
+
             return $this;
         }
 
         $this->setAttribute('class', $class);
+
         return $this;
     }
 
     public function id($id)
     {
         $this->setId($id);
+
         return $this;
     }
 
@@ -92,6 +125,13 @@ abstract class Element
     public function label($label)
     {
         $this->label = new Label($label);
+
+        return $this;
+    }
+
+    public function fieldWidth($width)
+    {
+        $this->getPrimaryControl()->fieldWidth = $this->normalizeWidth($width);
 
         return $this;
     }
@@ -114,11 +154,25 @@ abstract class Element
         return $result;
     }
 
+    protected function normalizeWidth($width)
+    {
+        if (is_string($width)) {
+            return $width.' wide';
+        }
+
+        if (is_numeric($width) && isset($this->widthTranslation[$width])) {
+            return $this->widthTranslation[$width].' wide';
+        }
+
+        return null;
+    }
+
     public function __call($method, $params)
     {
         $params = count($params) ? $params : array($method);
         $params = array_merge(array($method), $params);
         call_user_func_array(array($this, 'attribute'), $params);
+
         return $this;
     }
 }

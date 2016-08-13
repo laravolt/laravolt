@@ -19,7 +19,7 @@ class Wrapper extends Element
             $element = clone $this;
             $element->label = false;
 
-            return (new Field($this->label, $element))->render();
+            return (new Field($this->label, $element))->addClass($element->getPrimaryControl()->fieldWidth)->render();
         }
 
         $html = '<div';

@@ -4,6 +4,7 @@ namespace Laravolt\SemanticForm;
 use Carbon\Carbon;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Field;
+use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\Icon;
 use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
@@ -427,6 +428,16 @@ class SemanticForm
         $time = (new Field($this->select('_'.$name.'[time]', $timeOptions)->addClass('compact')));
 
         return new SelectDateTimeWrapper($date, $month, $year, $time);
+    }
+
+    public function openFields()
+    {
+        return new FieldsOpen();
+    }
+
+    public function closeFields()
+    {
+        return '</div>';
     }
 
     protected function getTimeOptions($interval)
