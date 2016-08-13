@@ -3,6 +3,7 @@ namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
+use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\Icon;
@@ -106,7 +107,7 @@ class SemanticForm
 
     public function datepicker($name, $defaultValue = null)
     {
-        $input = new Text($name);
+        $input = new Datepicker($name);
 
         if (!is_null($value = $this->getValueFor($name))) {
             $input->value($value);
