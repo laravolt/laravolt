@@ -3,6 +3,7 @@
 class Datepicker extends Text
 {
     protected $attributes = array(
+        'type' => 'date',
         'readonly' => 'readonly',
     );
 
