@@ -1,7 +1,5 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
-use Illuminate\Support\Arr;
-
 class InputWrapper extends Wrapper
 {
     protected $attributes = [
@@ -41,6 +39,22 @@ class InputWrapper extends Wrapper
 
         $this->addClass('icon');
         $this->controlsRight = array_prepend($this->controlsRight, new Icon($icon));
+
+        return $this;
+    }
+
+    public function prependLabel($text, $class = null)
+    {
+        $this->addClass('labeled');
+        $this->controlsLeft = array_prepend($this->controlsLeft, (new UiLabel($text))->addClass($class));
+
+        return $this;
+    }
+
+    public function appendLabel($text, $class = null)
+    {
+        $this->addClass('right labeled');
+        $this->controlsRight = array_prepend($this->controlsRight, (new UiLabel($text))->addClass($class));
 
         return $this;
     }

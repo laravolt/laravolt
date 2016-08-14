@@ -50,4 +50,42 @@ class InputWrapperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
 	}
 
+    public function testCanRenderInputWithLabel()
+    {
+        $input = new InputWrapper();
+        $input->prependLabel('http://');
+
+        $expected = '<div class="ui input labeled"><div class="ui label">http://</div><input type="text" name=""></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+        $input = new InputWrapper();
+        $input->prependLabel('http://', 'basic');
+
+        $expected = '<div class="ui input labeled"><div class="ui label basic">http://</div><input type="text" name=""></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+        $input = new InputWrapper();
+        $input->appendLabel('kg');
+
+        $expected = '<div class="ui input right labeled"><input type="text" name=""><div class="ui label">kg</div></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+        $input = new InputWrapper();
+        $input->prependLabel('http://')->appendLabel('kg');
+
+        $expected = '<div class="ui input labeled right"><div class="ui label">http://</div><input type="text" name=""><div class="ui label">kg</div></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+        $input = new InputWrapper();
+        $input->appendLabel('kg')->prependLabel('http://');
+
+        $expected = '<div class="ui input right labeled"><div class="ui label">http://</div><input type="text" name=""><div class="ui label">kg</div></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+    }
 }
