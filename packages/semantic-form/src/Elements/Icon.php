@@ -6,6 +6,16 @@ class Icon extends Element
         'class' => 'icon',
     ];
 
+    /**
+     * Icon constructor.
+     * @param string icon name
+     */
+    public function __construct($icon)
+    {
+        $this->addClass($icon);
+    }
+
+
     public function render()
     {
 

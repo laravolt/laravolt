@@ -88,7 +88,12 @@ abstract class Element
         }
 
         if (isset($this->attributes['class'])) {
-            $class = $this->attributes['class'].' '.$class;
+
+            $existingClasses = explode(' ', $this->attributes['class']);
+            $newClasses = explode(' ', $class);
+
+            $class = implode(' ', array_unique(array_merge($existingClasses, $newClasses)));
+
         }
 
         $this->setAttribute('class', $class);
@@ -145,6 +150,11 @@ abstract class Element
     public function __toString()
     {
         return $this->render();
+    }
+
+    protected function beforeRender()
+    {
+        return true;
     }
 
     protected function renderAttributes()

@@ -15,6 +15,8 @@ class Wrapper extends Element
     public function render()
     {
 
+        $this->beforeRender();
+
         if ($this->label) {
             $element = clone $this;
             $element->label = false;

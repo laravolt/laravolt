@@ -17,5 +17,5 @@ class DatepickerTest extends PHPUnit_Framework_TestCase
 		$result = $text->render();
 		$this->assertEquals($expected, $result);
 	}
-    
+
 }
