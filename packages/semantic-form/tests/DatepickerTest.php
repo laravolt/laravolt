@@ -13,7 +13,7 @@ class DatepickerTest extends PHPUnit_Framework_TestCase
 	{
 		$text = new Datepicker('birthdate');
 
-		$expected = '<input type="date" readonly="readonly" name="birthdate">';
+		$expected = '<input type="text" readonly="readonly" name="birthdate">';
 		$result = $text->render();
 		$this->assertEquals($expected, $result);
 	}
