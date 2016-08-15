@@ -284,6 +284,13 @@ class SemanticForm
         return new File($name);
     }
 
+    public function input($name, $defaultValue=null)
+    {
+        $text = $this->text($name, $defaultValue);
+
+        return (new InputWrapper($text));
+    }
+
     public function token()
     {
         $token = $this->hidden('_token');

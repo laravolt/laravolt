@@ -12,7 +12,8 @@ class InputWrapper extends Wrapper
 
     public function __construct()
     {
-        parent::__construct();
+        $this->controls = func_get_args();
+
         if (empty($this->controls)) {
             $this->controls[] = new Text('');
         }
@@ -55,6 +56,13 @@ class InputWrapper extends Wrapper
     {
         $this->addClass('right labeled');
         $this->controlsRight = array_prepend($this->controlsRight, (new UiLabel($text))->addClass($class));
+
+        return $this;
+    }
+
+    public function placeholder($placeholder)
+    {
+        $this->getPrimaryControl()->placeholder($placeholder);
 
         return $this;
     }

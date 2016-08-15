@@ -786,6 +786,24 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testInputWrapper()
+    {
+        $result = (string)$this->form->input('search');
+        $expected = '<div class="ui input"><input type="text" name="search"></div>';
+
+        $this->assertEquals($expected, $result);
+
+        $result = (string)$this->form->input('search')->appendIcon('search');
+        $expected = '<div class="ui input icon"><input type="text" name="search"><i class="icon search"></i></div>';
+
+        $this->assertEquals($expected, $result);
+
+        $result = (string)$this->form->input('search')->placeholder('Search...');
+        $expected = '<div class="ui input"><input type="text" name="search" placeholder="Search..."></div>';
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCanBindObject()
     {
         $this->assertTrue(method_exists($this->form, 'bind'));

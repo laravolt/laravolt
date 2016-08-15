@@ -114,16 +114,26 @@ SemanticForm::checkboxGroup($name, $values, $checkedValue)->label('Select Fruit'
 ``` php
 SemanticForm::file($name);
 ```
+### Input Wrapper
+``` php
+SemanticForm::input($name, $defaultvalue);
+SemanticForm::input($name, $defaultvalue)->appendIcon('search');
+SemanticForm::input($name, $defaultvalue)->prependIcon('users');
+SemanticForm::input($name, $defaultvalue)->appendLabel($label);
+SemanticForm::input($name, $defaultvalue)->prependLabel($label);
+```
+Reference: http://semantic-ui.com/elements/input.html
 
 ### Image (Not Yet Implemented)
 ``` php
 SemanticForm::image($name);
 ```
 
-### Datepicker (Not Yet Implemented)
+### Datepicker (experimental)
 ``` php
 SemanticForm::datepicker($name, $value, $format);
 ```
+See https://github.com/Semantic-Org/Semantic-UI/pull/3256 for further discussion.
 
 ### Redactor (Not Yet Implemented)
 ``` php
