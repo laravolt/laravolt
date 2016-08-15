@@ -65,14 +65,26 @@ SemanticForm::select($name, $options)->appendOption($key, $label);
 SemanticForm::select($name, $options)->prependOption($key, $label);
 ```
 
-### Select Date
+### Select Date & Date Time
 ``` php
-SemanticForm::selectDate($name, $startYear, $endYear)->label('Birth Date');
+SemanticForm::selectDate('myDate', $startYear, $endYear)->label('Birth Date');
+SemanticForm::selectDateTime('myDate', $startYear, $endYear, $intervalInMinute)->label('Schedule');
 ```
 
-### Select Date Time
-``` php
-SemanticForm::selectDateTime($name, $startYear, $endYear, $intervalInMinute)->label('Schedule');
+By default, selectDate and selectDateTime will post request as `_myDate` with `['date'=>4, 'month'=>5, 'year'=>2016]` for example.
+To get `2016-5-4` format, you need to register middleware and use it in the routes.
+
+```php
+protected $routeMiddleware = [
+    'selectdate' => \Laravolt\SemanticForm\Middleware\SelectDateMiddleware::class,
+    'selectdatetime' => \Laravolt\SemanticForm\Middleware\SelectDateTimeMiddleware::class
+];
+```
+
+```php
+Route::post('myForm', ['middleware' => ['web', 'selectdate:myDate'], function (\Illuminate\Http\Request $request) {
+	dd($request->input('myDate')); // Will output 2016-5-4
+}]);
 ```
 
 ### Select Range
