@@ -19,7 +19,7 @@ $dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 's
 
 $months = [];
 foreach ($monthKeys as $key) {
-    $months[] = $translator->trans($key);
+    $months[] = $translator->transChoice($key, 0);
 }
 
 $days = [];
@@ -37,7 +37,7 @@ $days = json_encode($days, JSON_UNESCAPED_UNICODE);
             elm = $(elm);
             var format = elm.data('datepicker-format');
 
-            if(!format) {
+            if (!format) {
                 format = 'YYYY/MM/DD';
             }
 
