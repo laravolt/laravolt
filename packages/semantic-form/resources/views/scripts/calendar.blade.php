@@ -1,5 +1,5 @@
 <?php
-$catalogue = \Jenssegers\Date\Date::getTranslator()->getCatalogue();
+$translator = \Jenssegers\Date\Date::getTranslator();
 
 $monthKeys = [
         'january',
@@ -19,16 +19,16 @@ $dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 's
 
 $months = [];
 foreach ($monthKeys as $key) {
-    $months[] = $catalogue->get($key);
+    $months[] = $translator->trans($key);
 }
 
 $days = [];
 foreach ($dayKeys as $key) {
-    $days[] = strtoupper(substr($catalogue->get($key), 0, 1));
+    $days[] = mb_strtoupper(mb_substr($translator->trans($key), 0, 1));
 }
 
-$months = json_encode($months);
-$days = json_encode($days);
+$months = json_encode($months, JSON_UNESCAPED_UNICODE);
+$days = json_encode($days, JSON_UNESCAPED_UNICODE);
 ?>
 
 <script>
