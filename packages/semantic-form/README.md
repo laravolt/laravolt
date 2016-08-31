@@ -143,9 +143,24 @@ SemanticForm::image($name);
 
 ### Datepicker (experimental)
 ``` php
+// somewhere in view
 SemanticForm::datepicker($name, $value, $format);
+
+// don't forget to put this somewhere on your view
+@include('semantic-form::scripts.calendar')
+
+// Valid $format are:
+// DD -> two digit date
+// MM -> two digit month number
+// MMMM -> month name (localized)
+// YY -> two digit year
+// YYYY -> full year
+
+// To convert localized format to standard (SQL) datetime format, you can use Jenssegers\Date\Date library (already included):
+// Jenssegers\Date\Date::createFromFormat('d F Y', '12 februari 2000')->startOfDay()->toDateTimeString();
+// Jenssegers\Date\Date::createFromFormat('d F Y', '12 februari 2000')->startOfDay()->toDateString();
 ```
-See https://github.com/Semantic-Org/Semantic-UI/pull/3256 for further discussion.
+See https://github.com/Semantic-Org/Semantic-UI/pull/3256 for further discussion. Remember, you must include calendar.js and calendar.css on your own.
 
 ### Redactor (Not Yet Implemented)
 ``` php
