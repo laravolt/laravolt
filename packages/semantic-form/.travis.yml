@@ -1,28 +1,45 @@
 language: php
 
+sudo: false
+
 php:
-  - 5.5
   - 5.6
   - 7.0
+  - hhvm
 
-matrix:
-  allow_failures:
-    - php: 7.0
-  include:
-    - php: 5.6
-      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+env:
+  global:
+    - setup=basic
+    - coverage=no
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer update --prefer-source $PREFER_LOWEST
-  - printf "\n" | pecl install imagick
+  - composer config discard-changes true
+  - if [[ $setup = 'basic' ]]; then travis_retry composer install --prefer-dist --no-interaction; fi
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
+  - if [[ $setup = 'coveralls' ]]; then travis_retry composer require "satooshi/php-coveralls" --prefer-dist --no-interaction --dev; fi
 
 script:
-  - phpunit --coverage-text --coverage-clover=coverage.clover
+  - if [[ $coverage = 'yes' ]]; then ./vendor/bin/phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml; fi
+  - if [[ $coverage = 'no' ]]; then ./vendor/bin/phpunit -c phpunit.xml; fi
 
 after_script:
-  - php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/coveralls -v; fi
 
-branches:
-  only:
-    - master
+matrix:
+  include:
+#    - php: 5.6
+#      env: setup=lowest
+    - php: 5.6
+      env: setup=stable
+    - php: 5.6
+      env: setup=coveralls coverage=yes
+  allow_failures:
+    - env: setup=stable
+    - env: setup=coveralls coverage=yes
+  fast_finish: true
+
+notifications:
+    on_success: never
+    on_failure: always
