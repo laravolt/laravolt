@@ -7,6 +7,8 @@ class Header
 
     protected $html;
 
+    protected $attributes;
+
     /**
      * @return boolean
      */
@@ -39,5 +41,25 @@ class Header
         $this->html = $html;
     }
 
+    /**
+     * @param array $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
+     * @return string HTML
+     */
+    public function renderAttributes()
+    {
+        $html = '';
+        foreach ($this->attributes as $attribute => $value) {
+            $html .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $html;
+    }
 
 }

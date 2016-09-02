@@ -136,6 +136,18 @@ class Builder
         return false;
     }
 
+    public function renderCellAttributes($field, $data)
+    {
+        $html = '';
+        if ($attributes = array_get($field, 'cellAttributes')) {
+            foreach ($attributes as $attribute => $value) {
+                $html .= " {$attribute}=\"{$value}\"";
+            }
+        }
+
+        return $html;
+    }
+
     protected function getHeader($column)
     {
         $header = new Header();
@@ -154,6 +166,7 @@ class Builder
 
         $header->setSortable($sortable);
         $header->setHtml($html);
+        $header->setAttributes(array_get($column, 'headerAttributes'));
 
         return $header;
     }

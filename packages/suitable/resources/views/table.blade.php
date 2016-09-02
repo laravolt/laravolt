@@ -35,7 +35,7 @@
                 @if($header->isSortable())
                     {!! $header->getHtml() !!}
                 @else
-                    <th>{!! $header->getHtml() !!}</th>
+                    <th {!! $header->renderAttributes() !!}>{!! $header->getHtml() !!}</th>
                 @endif
             @endforeach
         </tr>
@@ -44,7 +44,7 @@
         @forelse($collection as $data)
             <tr>
                 @foreach($fields as $field)
-                    <td>{!! $builder->renderCell($field, $data) !!}</td>
+                    <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data) !!}</td>
                 @endforeach
             </tr>
         @empty
