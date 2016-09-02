@@ -52,7 +52,7 @@ class ServiceProvider extends BaseServiceProvider
 
         // allow views to be published to the storage directory
         $this->publishes([
-            $this->packagePath('resources/views') => base_path('resources/views/laravolt/suitable'),
+            $this->packagePath('resources/views') => base_path('resources/views/vendor/suitable'),
         ], 'views');
     }
 
