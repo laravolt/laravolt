@@ -27,6 +27,11 @@ class Dropdown implements ColumnInterface
         return '';
     }
 
+    public function headerAttributes()
+    {
+        return null;
+    }
+
     public function cell($cell)
     {
         $data['text'] = $this->text;

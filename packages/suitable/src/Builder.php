@@ -151,6 +151,7 @@ class Builder
     protected function getHeader($column)
     {
         $header = new Header();
+        $headerAttributes = array_get($column, 'headerAttributes');
 
         $sortable = array_get($column, 'sortable', false);
         if ($sortable) {
@@ -160,13 +161,15 @@ class Builder
             $html = array_get($column, 'header', '');
         } elseif ($column instanceof ColumnInterface) {
             $html = $column->header();
+            $headerAttributes = $column->headerAttributes();
         } else {
             throw new \Exception('Invalid header value');
         }
 
         $header->setSortable($sortable);
         $header->setHtml($html);
-        $header->setAttributes(array_get($column, 'headerAttributes'));
+
+        $header->setAttributes($headerAttributes);
 
         return $header;
     }
