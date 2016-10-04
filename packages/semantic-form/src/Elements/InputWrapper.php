@@ -24,22 +24,26 @@ class InputWrapper extends Wrapper
         $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
     }
 
-    public function prependIcon($icon)
+    public function prependIcon($icon, $class = null)
     {
         $this->clearRightIcon();
 
+        $icon = (new Icon($icon))->addClass($class);
+
         $this->addClass('left icon');
-        $this->controlsLeft = array_prepend($this->controlsLeft, new Icon($icon));
+        $this->controlsLeft = array_prepend($this->controlsLeft, $icon);
 
         return $this;
     }
 
-    public function appendIcon($icon)
+    public function appendIcon($icon, $class = null)
     {
         $this->clearLeftIcon();
 
+        $icon = (new Icon($icon))->addClass($class);
+
         $this->addClass('icon');
-        $this->controlsRight = array_prepend($this->controlsRight, new Icon($icon));
+        $this->controlsRight = array_prepend($this->controlsRight, $icon);
 
         return $this;
     }
@@ -54,7 +58,7 @@ class InputWrapper extends Wrapper
 
     public function appendLabel($text, $class = null)
     {
-        $this->addClass('right labeled');
+        $this->removeClass('labeled')->addClass('right labeled');
         $this->controlsRight = array_prepend($this->controlsRight, (new UiLabel($text))->addClass($class));
 
         return $this;
