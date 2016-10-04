@@ -76,7 +76,7 @@ class InputWrapperTest extends PHPUnit_Framework_TestCase
         $input = new InputWrapper();
         $input->prependLabel('http://')->appendLabel('kg');
 
-        $expected = '<div class="ui input labeled right"><div class="ui label">http://</div><input type="text" name=""><div class="ui label">kg</div></div>';
+        $expected = '<div class="ui input right labeled"><div class="ui label">http://</div><input type="text" name=""><div class="ui label">kg</div></div>';
         $result = $input->render();
         $this->assertEquals($expected, $result);
 

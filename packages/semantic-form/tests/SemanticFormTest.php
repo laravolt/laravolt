@@ -337,50 +337,50 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelect()
     {
-        $expected = '<select class="ui dropdown" name="color"><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'));
         $this->assertEquals($expected, $result);
 
-        $expected = '<select class="ui dropdown" name="fruit"><option value="apple">Granny Smith</option><option value="berry">Blueberry</option></select>';
+        $expected = '<select class="ui dropdown search" name="fruit"><option value="apple">Granny Smith</option><option value="berry">Blueberry</option></select>';
         $result = (string)$this->form->select('fruit', array('apple' => 'Granny Smith', 'berry' => 'Blueberry'));
         $this->assertEquals($expected, $result);
 
-        $expected = '<select class="ui dropdown" name="fruit"><option value="apple" selected>Granny Smith</option><option value="berry">Blueberry</option></select>';
+        $expected = '<select class="ui dropdown search" name="fruit"><option value="apple" selected>Granny Smith</option><option value="berry">Blueberry</option></select>';
         $result = (string)$this->form->select('fruit', array('apple' => 'Granny Smith', 'berry' => 'Blueberry'), 'apple');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectWithLabel()
     {
-        $expected = '<div class="field"><label>Color</label><select class="ui dropdown" name="color"><option value="red">Red</option><option value="blue">Blue</option></select></div>';
+        $expected = '<div class="field"><label>Color</label><select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue">Blue</option></select></div>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->label('Color');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanPrependOption()
     {
-        $expected = '<select class="ui dropdown" name="color"><option value="">First</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search" name="color"><option value="">First</option><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->prependOption('', 'First');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanHavePlaceholder()
     {
-        $expected = '<select class="ui dropdown" name="color"><option value="">Please Select</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search" name="color"><option value="">Please Select</option><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->placeholder('Please Select');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanHavePlaceholderWithDefaultLabel()
     {
-        $expected = '<select class="ui dropdown" name="color"><option value="">-- Select --</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search" name="color"><option value="">-- Select --</option><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->placeholder();
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanAppendOption()
     {
-        $expected = '<select class="ui dropdown" name="color"><option value="red">Red</option><option value="blue">Blue</option><option value="">Last</option></select>';
+        $expected = '<select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue">Blue</option><option value="">Last</option></select>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'))->appendOption('', 'Last');
         $this->assertEquals($expected, $result);
     }
@@ -461,7 +461,7 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
         $this->form->setOldInputProvider($oldInput);
 
-        $expected = '<select class="ui dropdown" name="color"><option value="red">Red</option><option value="blue" selected>Blue</option></select>';
+        $expected = '<select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue" selected>Blue</option></select>';
         $result = (string)$this->form->select('color', array('red' => 'Red', 'blue' => 'Blue'));
         $this->assertEquals($expected, $result);
     }
@@ -663,14 +663,14 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSelectMonth()
     {
-        $expected = '<select class="ui dropdown" name="month"><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select>';
+        $expected = '<select class="ui dropdown search" name="month"><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select>';
         $result = (string)$this->form->selectMonth('month');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectRange()
     {
-        $expected = '<select class="ui dropdown" name="age"><option value="1">1</option><option value="2">2</option></select>';
+        $expected = '<select class="ui dropdown search" name="age"><option value="1">1</option><option value="2">2</option></select>';
         $result = (string)$this->form->selectRange('age', 1, 2);
         $this->assertEquals($expected, $result);
     }
@@ -849,7 +849,7 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
     {
         $object = $this->getStubObject();
         $this->form->bind($object);
-        $expected = '<select class="ui dropdown" name="gender"><option value="male" selected>Male</option><option value="female">Female</option></select>';
+        $expected = '<select class="ui dropdown search" name="gender"><option value="male" selected>Male</option><option value="female">Female</option></select>';
         $result = (string)$this->form->select('gender', array('male' => 'Male', 'female' => 'Female'));
         $this->assertEquals($expected, $result);
     }

@@ -10,7 +10,7 @@ class Select extends FormControl
     private $selected;
 
     protected $attributes = array(
-        'class' => 'ui dropdown',
+        'class' => 'ui dropdown search',
     );
 
     public function __construct($name, $options = array())
