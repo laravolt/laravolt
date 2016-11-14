@@ -59,7 +59,7 @@ class SelectDateWrapper extends Wrapper
             return Carbon::createFromTimestamp($value);
         }
 
-        return Carbon::createFromFormat($this->format, $value)->startOfDay();
+        return Carbon::createFromFormat($this->format, $value);
 
     }
 }

@@ -786,6 +786,45 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testSelectDateTimeCanHaveValue()
+    {
+        $date = $this->form->selectRange('_schedule[date]', 1, 31)->addClass('compact')->select(10);
+        $month = $this->form->selectMonth('_schedule[month]')->addClass('compact')->select(11);
+        $year = $this->form->selectRange('_schedule[year]', 2001, 2010)->addClass('compact')->select(2004);
+
+        $timeOptions = [];
+        foreach(range(0, 23) as $hour) {
+            if(strlen($hour) == 1) {
+                $hour = '0' . $hour;
+            }
+            $key = $val = sprintf('%s:%s', $hour, '00');
+            $timeOptions[$key] = $val;
+
+            $key = $val = sprintf('%s:%s', $hour, 30);
+            $timeOptions[$key] = $val;
+        }
+        $time = $this->form->select('_schedule[time]', $timeOptions)->addClass('compact')->defaultValue('12:00');
+
+        $expected = '<div class="inline fields">';
+        $expected .= '<div class="field">';
+        $expected .= $date;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $month;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $year;
+        $expected .= '</div>';
+        $expected .= '<div class="field">';
+        $expected .= $time;
+        $expected .= '</div>';
+        $expected .= '</div>';
+
+        $result = (string)$this->form->selectDateTime('schedule', 2001, 2010, 30)->defaultValue('2004-11-10 12:00:00');
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testInputWrapper()
     {
         $result = (string)$this->form->input('search');
