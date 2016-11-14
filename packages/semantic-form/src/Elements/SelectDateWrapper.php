@@ -9,6 +9,8 @@ class SelectDateWrapper extends Wrapper
         'class' => 'inline fields'
     ];
 
+    protected $value = null;
+
     protected $format = 'Y-m-d';
 
     public function value($value)
@@ -24,12 +26,18 @@ class SelectDateWrapper extends Wrapper
         $this->getControl(1)->getControl(0)->select($date->month);
         $this->getControl(2)->getControl(0)->select($date->year);
 
+        $this->value = $value;
+
         return $this;
     }
 
     public function defaultValue($value)
     {
-        return $this->value($value);
+        if(!$this->hasValue()) {
+            return $this->value($value);
+        }
+
+        return $this;
     }
 
     /**
@@ -61,5 +69,10 @@ class SelectDateWrapper extends Wrapper
 
         return Carbon::createFromFormat($this->format, $value);
 
+    }
+
+    protected function hasValue()
+    {
+        return $this->value !== null;
     }
 }

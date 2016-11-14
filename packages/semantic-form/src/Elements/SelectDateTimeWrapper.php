@@ -18,6 +18,8 @@ class SelectDateTimeWrapper extends SelectDateWrapper
         $this->getControl(2)->getControl(0)->select($date->year);
         $this->getControl(3)->getControl(0)->select($date->format('H:i'));
 
+        $this->value = $value;
+
         return $this;
     }
 

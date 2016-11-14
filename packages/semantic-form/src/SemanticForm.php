@@ -433,7 +433,13 @@ class SemanticForm
 
         $time = (new Field($this->select('_'.$name.'[time]', $timeOptions)->addClass('compact')));
 
-        return new SelectDateTimeWrapper($date, $month, $year, $time);
+        $control = new SelectDateTimeWrapper($date, $month, $year, $time);
+
+        if (!is_null($value = $this->getValueFor($name))) {
+            $control->value($value);
+        }
+
+        return $control;
     }
 
     public function openFields()
