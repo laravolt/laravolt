@@ -28,34 +28,36 @@
         </div>
     @endif
 
-    <table class="ui table attached">
-        <thead>
-        <tr>
-            @foreach($headers as $header)
-                @if($header->isSortable())
-                    {!! $header->getHtml() !!}
-                @else
-                    <th {!! $header->renderAttributes() !!}>{!! $header->getHtml() !!}</th>
-                @endif
-            @endforeach
-        </tr>
-        </thead>
-        <tbody class="collection">
-        @forelse($collection as $data)
+    <div class="ui segment attached basic" style="padding: 0; overflow-y: auto">
+        <table class="ui table attached {{ $tableClass }}" style="border-top: 0 none; border-bottom: 0 none">
+            <thead>
             <tr>
-                @foreach($fields as $field)
-                    <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data) !!}</td>
+                @foreach($headers as $header)
+                    @if($header->isSortable())
+                        {!! $header->getHtml() !!}
+                    @else
+                        <th {!! $header->renderAttributes() !!}>{!! $header->getHtml() !!}</th>
+                    @endif
                 @endforeach
             </tr>
-        @empty
-            <tr>
-                <td colspan="{{ count($fields) }}" class="warning center aligned">
-                    <div class="ui segment very padded basic">@lang('suitable::suitable.empty_message')</div>
-                </td>
-            </tr>
-        @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="collection">
+            @forelse($collection as $data)
+                <tr>
+                    @foreach($fields as $field)
+                        <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data) !!}</td>
+                    @endforeach
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="{{ count($fields) }}" class="warning center aligned">
+                        <div class="ui segment very padded basic">@lang('suitable::suitable.empty_message')</div>
+                    </td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
 
     @if($showPagination)
     <div class="ui menu bottom attached">
