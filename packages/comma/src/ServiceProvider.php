@@ -36,9 +36,14 @@ class ServiceProvider extends BaseServiceProvider
 
         $this->registerMigrations();
         $this->registerConfigurations();
+        $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'comma');
 
-        if (!$this->app->routesAreCached() && config('laravolt.comma.routes')) {
+        if (!$this->app->routesAreCached() && config('laravolt.comma.route.enabled')) {
             $this->registerRoutes();
+        }
+
+        if (config('laravolt.comma.menu.enabled')) {
+            $this->registerMenu();
         }
     }
 
@@ -64,13 +69,27 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerConfigurations()
     {
         $this->mergeConfigFrom(
-            $this->packagePath('config/config.php'), 'comma'
+            $this->packagePath('config/config.php'), 'laravolt.comma'
         );
         $this->publishes([
             $this->packagePath('config/config.php') => config_path('laravolt/comma.php'),
         ], 'config');
     }
 
+    protected function registerMenu()
+    {
+        if ($this->app->bound('laravolt.menu')) {
+            $menu = $this->app['laravolt.menu']->add('CMS')->data('icon', 'copy');
+            $menu->add(trans('comma::menu.posts'), route('comma::posts.index'));
+            $menu->add(trans('comma::menu.categories'), route('comma::categories.index'));
+        }
+    }
+
+    protected function registerRoutes()
+    {
+        $router = $this->app['router'];
+        require $this->packagePath('routes/web.php');
+    }
     /**
      * Loads a path relative to the package base directory
      * @param string $path
