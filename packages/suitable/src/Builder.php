@@ -128,7 +128,7 @@ class Builder
         }
 
         if (array_has($field, 'field')) {
-            return $data[$field['field']];
+            return array_get($data, $field['field']);
         }
 
         if (array_has($field, 'present')) {
