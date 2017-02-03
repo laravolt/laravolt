@@ -27,6 +27,7 @@ Laravolt\SemanticForm\ServiceProvider::class,
 
 ### Opening Form
 ``` php
+SemanticForm::open('search'); // action="search"
 SemanticForm::open()->get();
 SemanticForm::open()->post();
 SemanticForm::open()->put();
@@ -34,6 +35,8 @@ SemanticForm::open()->patch();
 SemanticForm::open()->delete();
 SemanticForm::open(); // default to method="GET"
 SemanticForm::open()->action('search');
+SemanticForm::open()->url('search'); // alias for action()
+SemanticForm::open()->route('route.name');
 SemanticForm::open()->post()->action(route('comment.store'));
 
 ```

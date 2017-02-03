@@ -26,6 +26,13 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testFormOpenWithAction()
+    {
+        $expected = '<form method="POST" action="submit" class="ui form">';
+        $result = (string)$this->form->open('submit');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCanCloseForm()
     {
         $expected = '</form>';

@@ -47,9 +47,9 @@ class SemanticForm
         $this->csrfToken = $token;
     }
 
-    public function open()
+    public function open($action = null)
     {
-        $open = new FormOpen;
+        $open = new FormOpen($action);
 
         if ($this->hasToken()) {
             $open->token($this->csrfToken);

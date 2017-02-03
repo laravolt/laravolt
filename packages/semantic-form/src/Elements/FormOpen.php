@@ -1,5 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Facades\URL;
+
 class FormOpen extends Element
 {
     protected $attributes = array(
@@ -10,6 +12,16 @@ class FormOpen extends Element
 
     protected $token;
     protected $hiddenMethod;
+
+    /**
+     * FormOpen constructor.
+     */
+    public function __construct($action = null)
+    {
+        $this->action($action);
+
+        return $this;
+    }
 
     public function render()
     {
@@ -96,6 +108,16 @@ class FormOpen extends Element
         $this->setAttribute('action', $action);
 
         return $this;
+    }
+
+    public function route($route, $parameters = [], $absolute = true)
+    {
+        return $this->action(URL::route($route, $parameters, $absolute));
+    }
+
+    public function url($url)
+    {
+        return $this->action($url);
     }
 
     public function encodingType($type)
