@@ -37,6 +37,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerMigrations();
         $this->registerConfigurations();
         $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'comma');
+        $this->loadViewsFrom($this->packagePath('resources/views'), 'comma');
 
         if (!$this->app->routesAreCached() && config('laravolt.comma.route.enabled')) {
             $this->registerRoutes();
@@ -90,6 +91,7 @@ class ServiceProvider extends BaseServiceProvider
         $router = $this->app['router'];
         require $this->packagePath('routes/web.php');
     }
+
     /**
      * Loads a path relative to the package base directory
      * @param string $path

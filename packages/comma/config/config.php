@@ -14,4 +14,5 @@ return [
     'menu'  => [
         'enabled' => true,
     ],
+    'default_type' => 'post',
 ];

@@ -9,9 +9,11 @@ use Laravolt\Comma\Models\Post;
 class Comma
 {
 
-    public function makePost(Model $author, $title, $content, $category, $type)
+    public function makePost(Model $author, $title, $content, $category, $tags = null, $type = null)
     {
-        DB::transaction(function () use ($author, $title, $content, $category, $type) {
+        $type = $type ?? config('laravolt.comma.default_type');
+
+        DB::transaction(function () use ($author, $title, $content, $category, $tags, $type) {
 
             $category = $this->normalizeCategory($category);
 
@@ -20,11 +22,15 @@ class Comma
             return $post;
         });
     }
-    
+
     protected function normalizeCategory($category)
     {
         if ($category instanceof Category) {
             return $category;
+        }
+
+        if ($model = Category::find($category)) {
+            return $model;
         }
 
         return Category::firstOrCreate(['name' => $category]);
