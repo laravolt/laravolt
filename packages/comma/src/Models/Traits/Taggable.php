@@ -6,6 +6,12 @@ use Laravolt\Comma\Models\Tag;
 
 trait Taggable
 {
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'cms_posts_tags');
+    }
+
     public function tag($tags)
     {
         $existingTagIds = $this->tags->pluck('id', 'id');
@@ -17,6 +23,8 @@ trait Taggable
                 $this->tags()->attach($tag);
             }
         }
+
+        $this->load('tags');
 
         return $this;
     }
@@ -33,6 +41,7 @@ trait Taggable
         }
 
         $this->tags()->sync($ids);
+        $this->load('tags');
 
         return $this;
     }
@@ -45,6 +54,8 @@ trait Taggable
                 $this->tags()->detach($tag);
             }
         }
+
+        $this->load('tags');
 
         return $this;
     }
