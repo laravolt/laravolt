@@ -60,6 +60,16 @@ trait Taggable
         return $this;
     }
 
+    public function getTagListAttribute()
+    {
+        return $this->tags->implode('name', ', ');
+    }
+
+    public function getTagArrayAttribute()
+    {
+        return $this->tags->pluck('name')->toArray();
+    }
+
     protected function normalizeTag($tag)
     {
         if ($tag instanceof Tag) {

@@ -2,8 +2,6 @@
 
 namespace Laravolt\Comma\Tests;
 
-use Laravolt\Comma\Models\Category;
-use Laravolt\Comma\Models\Post;
 use Laravolt\Comma\Models\Tag;
 
 class TaggableTest extends TestCase
@@ -40,11 +38,11 @@ class TaggableTest extends TestCase
         $this->post->tag(['tag 1', 'tag 2']);
 
         $this->assertDatabaseHas(app(Tag::class)->getTable(), [
-            'name' => 'tag 1'
+            'name' => 'tag 1',
         ]);
 
         $this->assertDatabaseHas(app(Tag::class)->getTable(), [
-            'name' => 'tag 2'
+            'name' => 'tag 2',
         ]);
 
         $this->assertCount(2, $this->post->tags);
@@ -59,7 +57,6 @@ class TaggableTest extends TestCase
         $this->post->retag(['tag 3', 'tag 4', 'tag 5']);
 
         $this->assertCount(3, $this->post->tags);
-
     }
 
     /**
@@ -76,7 +73,26 @@ class TaggableTest extends TestCase
         // untag string
         $this->post->untag('tag 2');
         $this->assertCount(0, $this->post->tags);
+    }
 
+    /**
+     * @test
+     */
+    public function it_can_display_tag_as_list()
+    {
+        $this->post->tag(['tag 1', 'tag 2']);
+
+        $this->assertEquals('tag 1, tag 2', $this->post->tagList);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_display_tag_as_array()
+    {
+        $this->post->tag(['tag 1', 'tag 2']);
+
+        $this->assertEquals(['tag 1', 'tag 2'], $this->post->tagArray);
     }
 
 }
