@@ -13,11 +13,13 @@ class Comma
     {
         $type = $type ?? config('laravolt.comma.default_type');
 
-        DB::transaction(function () use ($author, $title, $content, $category, $tags, $type) {
+        return DB::transaction(function () use ($author, $title, $content, $category, $tags, $type) {
 
             $category = $this->normalizeCategory($category);
 
             $post = $this->savePost($title, $content, $type, $category, $author);
+
+            $post->tag($tags);
 
             return $post;
         });

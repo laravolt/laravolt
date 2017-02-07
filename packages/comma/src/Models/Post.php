@@ -3,12 +3,13 @@ namespace Laravolt\Comma\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Comma\Models\Traits\Taggable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model
 {
-    use HasSlug;
+    use HasSlug, Taggable;
 
     protected $table = 'cms_posts';
 
@@ -53,4 +54,5 @@ class Post extends Model
 
         return $this->save();
     }
+
 }

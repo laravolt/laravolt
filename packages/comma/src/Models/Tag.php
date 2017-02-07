@@ -11,7 +11,7 @@ class Tag extends Model
 
     protected $table = 'cms_tags';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug'];
 
     public function getSlugOptions(): SlugOptions
     {

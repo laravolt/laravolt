@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Laravolt\Comma\Models\Category;
 use Laravolt\Comma\Models\Post;
 use Laravolt\Comma\Http\Requests\StorePost;
+use Laravolt\Comma\Models\Tag;
 
 class PostController extends Controller
 {
@@ -20,7 +21,9 @@ class PostController extends Controller
     {
         $categories = Category::all()->pluck('name');
 
-        return view('comma::posts.create', compact('categories'));
+        $tags = Tag::all()->pluck('name', 'name');
+
+        return view('comma::posts.create', compact('categories', 'tags'));
     }
 
     public function store(StorePost $request)
@@ -31,11 +34,13 @@ class PostController extends Controller
                     auth()->user(),
                     $request->get('title'),
                     $request->get('content'),
-                    $request->get('category_id')
+                    $request->get('category_id'),
+                    $request->get('tags')
                 );
 
             return redirect()->route('comma::posts.index')->withSuccess(trans('comma::post.message.create_success'));
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
     }
