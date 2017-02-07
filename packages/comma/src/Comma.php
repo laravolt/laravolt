@@ -19,7 +19,7 @@ class Comma
 
             $post = $this->savePost($title, $content, $type, $category, $author);
 
-            $post->tag($tags);
+            $post->tag($tags)->load('tags');
 
             return $post;
         });
