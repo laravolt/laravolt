@@ -9,6 +9,7 @@ use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
+use Laravolt\SemanticForm\Elements\SelectMultiple;
 use Laravolt\SemanticForm\Elements\Text;
 use Laravolt\SemanticForm\Elements\Password;
 use Laravolt\SemanticForm\Elements\Checkbox;
@@ -261,7 +262,7 @@ class SemanticForm
         return $submit;
     }
 
-    public function select($name, $options = array(), $defaultValue = null)
+    public function select($name, $options = [], $defaultValue = null)
     {
         $select = new Select($name, $options);
 
@@ -269,6 +270,16 @@ class SemanticForm
         $select->select($selected);
 
         $select->defaultValue($defaultValue);
+
+        return $select;
+    }
+
+    public function selectMultiple($name, $options = [])
+    {
+        $select = new SelectMultiple($name, $options);
+
+        $selected = $this->getValueFor($name);
+        $select->select($selected);
 
         return $select;
     }
@@ -283,7 +294,7 @@ class SemanticForm
         return new File($name);
     }
 
-    public function input($name, $defaultValue=null)
+    public function input($name, $defaultValue = null)
     {
         $text = $this->text($name, $defaultValue);
 
@@ -336,6 +347,8 @@ class SemanticForm
 
     public function getValueFor($name)
     {
+        $name = $this->normalizeName($name);
+
         if ($this->hasOldInput()) {
             return $this->getOldInput($name);
         }
@@ -467,5 +480,14 @@ class SemanticForm
         }
 
         return $times;
+    }
+
+    protected function normalizeName($name)
+    {
+        if (substr($name, -2) == '[]') {
+            return substr($name, 0, -2);
+        }
+
+        return $name;
     }
 }

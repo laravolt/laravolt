@@ -124,7 +124,7 @@ class Select extends FormControl
 
     public function defaultValue($value)
     {
-        if (isset($this->selected)) {
+        if ($this->selected !== null) {
             return $this;
         }
 
@@ -141,6 +141,7 @@ class Select extends FormControl
 
         $this->setName($name);
         $this->setAttribute('multiple', 'multiple');
+
         return $this;
     }
 }
