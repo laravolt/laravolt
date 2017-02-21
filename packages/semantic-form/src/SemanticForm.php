@@ -274,12 +274,16 @@ class SemanticForm
         return $select;
     }
 
-    public function selectMultiple($name, $options = [])
+    public function selectMultiple($name, $options = [], $defaultValue = null)
     {
         $select = new SelectMultiple($name, $options);
 
         $selected = $this->getValueFor($name);
         $select->select($selected);
+
+        if ($defaultValue) {
+            $select->defaultValue($defaultValue);
+        }
 
         return $select;
     }
