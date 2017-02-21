@@ -25,6 +25,25 @@ class Comma
         });
     }
 
+    public function updatePost(Post $post, Model $author, $title, $content, $category, $tags = null)
+    {
+
+        return DB::transaction(function () use ($post, $author, $title, $content, $category, $tags) {
+
+            $category = $this->normalizeCategory($category);
+
+            $post->title = $title;
+            $post->content = $content;
+            $post->category()->associate($category);
+            $post->author()->associate($author);
+
+            $post->save();
+
+            return $post;
+
+        });
+    }
+
     protected function normalizeCategory($category)
     {
         if ($category instanceof Category) {
