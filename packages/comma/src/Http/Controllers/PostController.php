@@ -2,6 +2,7 @@
 
 namespace Laravolt\Comma\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravolt\Comma\Http\Requests\UpdatePost;
 use Laravolt\Comma\Models\Category;
@@ -11,9 +12,9 @@ use Laravolt\Comma\Models\Tag;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest()->paginate();
+        $posts = Post::latest()->search($request->get('search'))->paginate();
 
         return view('comma::posts.index', compact('posts'));
     }

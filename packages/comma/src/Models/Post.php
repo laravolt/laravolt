@@ -33,6 +33,25 @@ class Post extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function scopeSearch($query, $keyword)
+    {
+        if ($keyword) {
+            return $query->where(
+                function ($q) use ($keyword) {
+                    $q->where('title', 'like', "%$keyword%")->orWhereHas(
+                        'category', function ($q2) use ($keyword) {
+                        $q2->where('name', 'like', "%$keyword%");
+                    }
+                    )->orWhereHas(
+                        'author', function ($q2) use ($keyword) {
+                        $q2->where('name', 'like', "%$keyword%");
+                    }
+                    );
+                }
+            );
+        }
+    }
+
     public function publish()
     {
         if ($this->status === 'draft') {
