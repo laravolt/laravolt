@@ -27,7 +27,6 @@ class Comma
 
     public function updatePost(Post $post, Model $author, $title, $content, $category, $tags = null)
     {
-
         return DB::transaction(function () use ($post, $author, $title, $content, $category, $tags) {
 
             $category = $this->normalizeCategory($category);
@@ -36,6 +35,7 @@ class Comma
             $post->content = $content;
             $post->category()->associate($category);
             $post->author()->associate($author);
+            $post->retag($tags);
 
             $post->save();
 
