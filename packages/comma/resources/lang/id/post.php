@@ -4,6 +4,7 @@ return [
     'header'     => [
         'index'  => 'Post',
         'create' => 'Tulis Konten Baru',
+        'edit'   => 'Edit Konten',
     ],
     'action'     => [
         'create' => 'Buat Postingan Baru',
