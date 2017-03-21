@@ -11,6 +11,7 @@ return [
     ],
     'message'    => [
         'create_success' => 'Postingan baru berhasil disimpan',
+        'update_success' => 'Postingan baru berhasil diperbarui',
     ],
     'attributes' => [
         'title'    => 'Judul',

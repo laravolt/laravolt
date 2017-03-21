@@ -18,4 +18,10 @@ class Category extends Model
         return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
     }
 
+    public function scopeSearch($query, $keyword)
+    {
+        if ($keyword) {
+            return $query->where('name', 'like', "%$keyword%");
+        }
+    }
 }
