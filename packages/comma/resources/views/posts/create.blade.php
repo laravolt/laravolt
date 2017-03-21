@@ -31,7 +31,13 @@
     $(function () {
         $('#postContent').redactor({
             minHeight: 500,
-            toolbarFixedTopOffset: 60
+            toolbarFixedTopOffset: 60,
+            imageUpload: '{{ route('comma::media.store') }}',
+            imageResizable: true,
+            imagePosition: true,
+            imageUploadFields: {
+                '_token': '{{ csrf_token() }}',
+            }
         });
     });
 </script>

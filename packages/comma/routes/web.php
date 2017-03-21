@@ -13,4 +13,5 @@ Route::group(
 
         Route::resource('posts', 'PostController');
         Route::resource('categories', 'CategoryController');
+        Route::resource('media', 'MediaController', ['only' => ['index', 'store']]);
     });
