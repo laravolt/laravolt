@@ -320,25 +320,26 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
     public function testSubmit()
     {
-        $expected = '<button type="submit" class="ui button">Sign In</button>';
-        $result = (string)$this->form->submit('Sign In');
+        $expected = '<button type="submit" class="ui button" name="submit">Sign In</button>';
+        $result = (string)$this->form->submit('Sign In', 'submit');
         $this->assertEquals($expected, $result);
     }
 
     /**
      * @dataProvider buttonProvider
      */
-    public function testButton($value, $name, $expected)
+    public function testButton($label, $name, $value, $expected)
     {
-        $result = (string)$this->form->button($value, $name);
+        $result = (string)$this->form->button($label, $name)->value($value);
         $this->assertEquals($expected, $result);
     }
 
     public function buttonProvider()
     {
         return array(
-            array('Click Me', 'click-me', '<button type="button" class="ui button" name="click-me">Click Me</button>'),
-            array('Click Me', null, '<button type="button" class="ui button">Click Me</button>')
+            array('Click Me', 'click-me', 'save', '<button type="button" class="ui button" name="click-me" value="save">Click Me</button>'),
+            array('Click Me', null, 'save', '<button type="button" class="ui button" value="save">Click Me</button>'),
+            array('Click Me', null, null, '<button type="button" class="ui button">Click Me</button>')
         );
     }
 

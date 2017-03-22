@@ -3,17 +3,17 @@
 class Button extends FormControl
 {
 
-    protected $attributes = array(
+    protected $attributes = [
         'type'  => 'button',
         'class' => 'ui button',
-    );
+    ];
 
-    protected $value;
+    protected $label;
 
-    public function __construct($value, $name = null)
+    public function __construct($label, $name)
     {
         parent::__construct($name);
-        $this->value($value);
+        $this->label($label);
     }
 
     public function render()
@@ -21,14 +21,23 @@ class Button extends FormControl
         $result = '<button';
         $result .= $this->renderAttributes();
         $result .= '>';
-        $result .= $this->value;
+        $result .= $this->label;
         $result .= '</button>';
 
         return $result;
     }
 
+    public function label($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
     public function value($value)
     {
-        $this->value = $value;
+        $this->setAttribute('value', $value);
+
+        return $this;
     }
 }
