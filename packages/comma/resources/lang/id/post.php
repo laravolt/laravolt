@@ -4,11 +4,14 @@ return [
     'header'     => [
         'index'  => 'Post',
         'create' => 'Tulis Konten Baru',
-        'edit'   => 'Edit Konten',
+        'edit'   => 'Tulis Konten',
     ],
     'action'     => [
-        'create' => 'Buat Postingan Baru',
-        'submit' => 'Simpan',
+        'create'        => 'Buat Postingan Baru',
+        'publish'       => 'Publikasikan',
+        'unpublish'     => 'Unpublish',
+        'save_as_draft' => 'Simpan sebagai draft',
+        'save'          => 'Simpan',
     ],
     'message'    => [
         'create_success' => 'Postingan baru berhasil disimpan',
@@ -20,6 +23,7 @@ return [
         'category' => 'Kategori',
         'author'   => 'Penulis',
         'tags'     => 'Tag',
+        'status'   => 'Status',
         'date'     => 'Tanggal',
     ],
 ];

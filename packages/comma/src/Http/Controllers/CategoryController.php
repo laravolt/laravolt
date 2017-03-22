@@ -62,13 +62,22 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
-            Category::find($id)->delete();
+
+            $category = Category::findOrFail($id);
+
+            if ($category->name === config('laravolt.comma.default_category')) {
+                return redirect()->route('comma::categories.index')->withError(
+                    trans('comma::category.message.cannot_delete_default_category')
+                );
+            }
+
+            $category->delete();
 
             return redirect()->route('comma::categories.index')->withSuccess(
                 trans('comma::category.message.delete_success')
             );
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
+            return redirect()->back()->withError($e->getMessage())->withInput();
         }
     }
 }

@@ -3,16 +3,18 @@
  * Set specific configuration variables here
  */
 return [
-    'route' => [
+    'route'            => [
         'enabled'    => true,
         'middleware' => ['web', 'auth'],
         'prefix'     => 'cms',
     ],
-    'view'  => [
+    'view'             => [
         'layout' => 'layouts.base',
     ],
-    'menu'  => [
+    'menu'             => [
         'enabled' => true,
     ],
-    'default_type' => 'post',
+    'default_title'    => 'Untitled',
+    'default_type'     => 'post',
+    'default_category' => 'Uncategorized',
 ];

@@ -3,6 +3,7 @@ namespace Laravolt\Comma\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Comma\Models\Scopes\VisibleScope;
 use Laravolt\Comma\Models\Traits\Taggable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
@@ -17,12 +18,19 @@ class Post extends Model implements HasMedia
 
     protected $with = ['category', 'tags', 'author'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new VisibleScope);
+    }
+
     /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions(): SlugOptions
     {
-        return SlugOptions::create()->generateSlugsFrom('title')->saveSlugsTo('slug');
+        return SlugOptions::create()->generateSlugsFrom('title')->saveSlugsTo('slug')->doNotGenerateSlugsOnCreate();
     }
 
     public function author()
@@ -69,6 +77,33 @@ class Post extends Model implements HasMedia
         $this->status = 'unpublished';
 
         return $this->save();
+    }
+
+    public function saveAsDraft()
+    {
+        $this->status = 'draft';
+
+        return $this->save();
+    }
+
+    public function isSession()
+    {
+        return $this->status === 'session';
+    }
+
+    public function isDraft()
+    {
+        return $this->status === 'draft';
+    }
+
+    public function isPublished()
+    {
+        return $this->status === 'published';
+    }
+
+    public function isUnpublished()
+    {
+        return $this->status === 'unpublished';
     }
 
 }

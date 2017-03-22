@@ -11,7 +11,7 @@ Route::group(
 
         Route::get('/', ['uses' => 'DefaultController@index', 'as' => 'index']);
 
-        Route::resource('posts', 'PostController');
+        Route::resource('posts', 'PostController', ['except' => ['store']]);
         Route::resource('categories', 'CategoryController');
         Route::resource('media', 'MediaController', ['only' => ['index', 'store']]);
     });

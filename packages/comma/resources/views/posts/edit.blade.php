@@ -9,7 +9,25 @@
         {!! SemanticForm::select('category_id', $categories, $post->category_id)->label(trans('comma::post.attributes.category')) !!}
         {!! SemanticForm::textarea('content', $post->content)->label(trans('comma::post.attributes.content'))->id('postContent') !!}
         {!! SemanticForm::selectMultiple('tags[]', $tags, old('tags', $post->tagList))->placeholder('')->label(trans('comma::post.attributes.tags')) !!}
-        {!! SemanticForm::submit(trans('comma::post.action.submit'))->addClass('primary') !!}
+
+        <div class="ui divider hidden"></div>
+
+        @if($post->isSession())
+            {!! SemanticForm::submit(trans('comma::post.action.publish'), 'action')->value('publish')->addClass('primary') !!}
+            {!! SemanticForm::submit(trans('comma::post.action.save_as_draft'), 'action')->value('draft')->addClass('basic primary') !!}
+        @elseif($post->isDraft())
+            {!! SemanticForm::submit(trans('comma::post.action.publish'), 'action')->value('publish')->addClass('primary') !!}
+            {!! SemanticForm::submit(trans('comma::post.action.save'), 'action')->value('draft')->addClass('basic primary') !!}
+        @elseif($post->isPublished())
+            {!! SemanticForm::submit(trans('comma::post.action.save'), 'action')->value('publish')->addClass('primary') !!}
+            {!! SemanticForm::submit(trans('comma::post.action.unpublish'), 'action')->value('unpublish')->addClass('basic primary') !!}
+        @elseif($post->isUnpublished())
+            {!! SemanticForm::submit(trans('comma::post.action.save'), 'action')->value('save')->addClass('primary') !!}
+            {!! SemanticForm::submit(trans('comma::post.action.publish'), 'action')->value('publish')->addClass('basic primary') !!}
+        @else
+            {!! SemanticForm::submit(trans('comma::post.action.save'), 'action')->value('save')->addClass('primary') !!}
+        @endif
+
         {!! SemanticForm::close() !!}
     </div>
 @endsection

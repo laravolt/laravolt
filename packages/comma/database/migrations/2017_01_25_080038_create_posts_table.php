@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('author_id');
             $table->unsignedInteger('category_id');
-            $table->string('type', 255)->default('blog');
+            $table->string('type', 255)->default(config('laravolt.comma.default_type'));
             $table->string('title', 255);
             $table->string('slug', 255)->unique()->nullable();
             $table->text('content');

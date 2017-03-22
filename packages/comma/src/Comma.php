@@ -5,9 +5,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Comma\Models\Category;
 use Laravolt\Comma\Models\Post;
+use Laravolt\Comma\Models\Scopes\VisibleScope;
 
 class Comma
 {
+
+    public function getDefaultPost(Model $author)
+    {
+        $post = Post::withoutGlobalScope(VisibleScope::class)->whereStatus('session')->where('author_id', '=', $author->getKey())->first();
+
+        if (!$post) {
+            $post = $this->makePost($author, config('laravolt.comma.default_title'), "", "");
+        }
+
+        return $post;
+    }
 
     public function makePost(Model $author, $title, $content, $category, $tags = null, $type = null)
     {
@@ -54,6 +66,10 @@ class Comma
             return $model;
         }
 
+        if (!$category) {
+            $category = config('laravolt.comma.default_category');
+        }
+
         return Category::firstOrCreate(['name' => $category]);
     }
 
@@ -63,6 +79,7 @@ class Comma
         $post->title = $title;
         $post->content = $content;
         $post->type = $type;
+        $post->status = 'session';
         $post->category()->associate($category);
         $post->author()->associate($author);
 
