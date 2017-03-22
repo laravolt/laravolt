@@ -4,6 +4,7 @@ namespace Laravolt\Comma\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Laravolt\Comma\Models\Post;
 
 class MediaController extends Controller
 {
@@ -13,11 +14,22 @@ class MediaController extends Controller
 
     public function store(Request $request)
     {
-        return response()->json(
-            [
-                'url' => asset('img/logo.png'),
-                'id'  => rand(1, 99999),
-            ]
-        );
+        try {
+            $post = Post::findOrFail($request->get('post_id'));
+            $media = $post->addMediaFromRequest('file')->toMediaLibrary();
+
+            return response()->json(
+                [
+                    'url' => $media->getFullUrl(),
+                    'id'  => $media->getKey(),
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'error' => $e->getMessage(),
+                ]
+            );
+        }
     }
 }

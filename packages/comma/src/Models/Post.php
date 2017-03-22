@@ -4,12 +4,14 @@ namespace Laravolt\Comma\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Comma\Models\Traits\Taggable;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
-    use HasSlug, Taggable;
+    use HasSlug, Taggable, HasMediaTrait;
 
     protected $table = 'cms_posts';
 
