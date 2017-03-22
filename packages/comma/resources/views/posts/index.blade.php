@@ -15,7 +15,9 @@
         ['header' => trans('comma::post.attributes.author'), 'field' => 'author.name'],
         ['header' => trans('comma::post.attributes.category'), 'field' => 'category.name'],
         ['header' => trans('comma::post.attributes.status'), 'field' => 'status'],
-        ['header' => trans('comma::post.attributes.date'), 'field' => 'created_at'],
+        ['header' => trans('comma::post.attributes.date'), 'raw' => function($item){
+            return $item->displayDate();
+        }],
         with(new \Laravolt\Suitable\Columns\RestfulButton('comma::posts'))->only(['edit', 'delete'])
     ])
     ->render() !!}

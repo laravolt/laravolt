@@ -18,6 +18,8 @@ class Post extends Model implements HasMedia
 
     protected $with = ['category', 'tags', 'author'];
 
+    protected $dates = ['published_at'];
+
     protected static function boot()
     {
         parent::boot();
@@ -64,7 +66,7 @@ class Post extends Model implements HasMedia
 
     public function publish()
     {
-        if ($this->status === 'draft') {
+        if (!$this->published_at) {
             $this->published_at = new Carbon();
         }
         $this->status = 'published';
@@ -106,4 +108,18 @@ class Post extends Model implements HasMedia
         return $this->status === 'unpublished';
     }
 
+    public function displayDate()
+    {
+        switch ($this->status) {
+            case 'draft':
+                return 'Last edited '.$this->updated_at->diffForHumans();
+                break;
+            case 'published':
+                return 'Published '.$this->published_at->diffForHumans();
+                break;
+            case 'unpublished':
+                return 'Last edited '.$this->updated_at->diffForHumans();
+                break;
+        }
+    }
 }
