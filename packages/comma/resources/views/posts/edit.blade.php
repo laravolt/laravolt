@@ -34,6 +34,7 @@
 
 @push('head')
 <link rel="stylesheet" href="{{ asset('lib/redactor/redactor.css') }}">
+<link rel="stylesheet" href="{{ asset('lib/redactor/plugins/alignment/alignment.css') }}">
 <style>
     body {
         overflow-x: initial;
@@ -43,9 +44,16 @@
 
 @push('body')
 <script src="{{ asset('lib/redactor/redactor.min.js') }}"></script>
+<script src="{{ asset('lib/redactor/plugins/alignment/alignment.js') }}"></script>
+<script src="{{ asset('lib/redactor/plugins/fontcolor.js') }}"></script>
+<script src="{{ asset('lib/redactor/plugins/source.js') }}"></script>
+<script src="{{ asset('lib/redactor/plugins/table.js') }}"></script>
+
 <script>
     $(function () {
         $('#postContent').redactor({
+            buttons: ['format', 'bold', 'italic', 'ol', 'ul', 'link', 'image'],
+            plugins: ['source', 'table', 'alignment','fontcolor'],
             minHeight: 500,
             toolbarFixedTopOffset: 60,
             imageUpload: '{{ route('comma::media.store') }}',
