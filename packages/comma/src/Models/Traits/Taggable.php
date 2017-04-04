@@ -9,7 +9,7 @@ trait Taggable
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'cms_posts_tags');
+        return $this->belongsToMany(Tag::class, 'cms_posts_tags', 'post_id');
     }
 
     public function tag($tags)
