@@ -25,6 +25,18 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton('laravolt.comma', function () {
             return new Comma();
         });
+
+        $this->app->bind('laravolt.comma.models.category', function() {
+            return $this->app->make(config('laravolt.comma.models.category'));
+        });
+
+        $this->app->bind('laravolt.comma.models.post', function() {
+            return $this->app->make(config('laravolt.comma.models.post'));
+        });
+
+        $this->app->bind('laravolt.comma.models.tag', function() {
+            return $this->app->make(config('laravolt.comma.models.tag'));
+        });
     }
 
     /**

@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravolt\Comma\Http\Requests\Category\Store;
 use Laravolt\Comma\Http\Requests\Category\Update;
-use Laravolt\Comma\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::latest()->search($request->get('search'))->paginate();
+        $categories = app('laravolt.comma.models.category')->latest()->search($request->get('search'))->paginate();
 
         return view('comma::categories.index', compact('categories'));
     }
@@ -26,7 +25,7 @@ class CategoryController extends Controller
     {
         try {
 
-            Category::create($request->only(['name']));
+            app('laravolt.comma.models.category')->create($request->only(['name']));
 
             return redirect()->route('comma::categories.index')->withSuccess(
                 trans('comma::category.message.create_success')
@@ -40,7 +39,7 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $category = app('laravolt.comma.models.category')->findOrFail($id);
 
         return view('comma::categories.edit', compact('category'));
     }
@@ -48,7 +47,7 @@ class CategoryController extends Controller
     public function update(Update $request, $id)
     {
         try {
-            $category = Category::findOrFail($id);
+            $category = app('laravolt.comma.models.category')->findOrFail($id);
             $category->update($request->only(['name']));
 
             return redirect()->route('comma::categories.index')->withSuccess(
@@ -63,7 +62,7 @@ class CategoryController extends Controller
     {
         try {
 
-            $category = Category::findOrFail($id);
+            $category = app('laravolt.comma.models.category')->findOrFail($id);
 
             if ($category->name === config('laravolt.comma.default_category')) {
                 return redirect()->route('comma::categories.index')->withError(
