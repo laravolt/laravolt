@@ -30,6 +30,9 @@
         "orchestra/database": "~3.2.0|~3.3.0|~3.4.0@dev",
         "mockery/mockery": "~0.9.4"
     },
+    "suggest": {
+        "laravel/scout": "Required to utilize Searchable Post"
+    },
     "autoload": {
         "psr-4": {
             "Laravolt\\Comma\\": "src"
