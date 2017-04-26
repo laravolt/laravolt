@@ -15,6 +15,9 @@ class Checkall implements ColumnInterface
     }
 
     private function isChecked($data){
+        if (!$this->filldata) {
+            return false;
+        }
         return in_array($data->id, $this->filldata);
     }
 
