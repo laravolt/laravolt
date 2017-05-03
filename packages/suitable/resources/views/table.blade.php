@@ -10,8 +10,8 @@
 
         </div>
         <div class="right menu">
-            @if($showSearch)
-                @include('suitable::toolbars.search')
+            @if($search)
+                @include('suitable::toolbars.search', compact('search'))
             @endif
         </div>
     </div>

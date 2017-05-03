@@ -22,7 +22,7 @@ class Builder
 
     protected $baseRoute = null;
 
-    protected $showSearch = true;
+    protected $search = null;
 
     protected $showPagination = false;
 
@@ -34,6 +34,7 @@ class Builder
     public function __construct()
     {
         $this->id = 'suitable'.str_random();
+        $this->search = config('suitable.query_string.search');
     }
 
     public function source($collection)
@@ -78,9 +79,9 @@ class Builder
         return $this;
     }
 
-    public function search($showSearch)
+    public function search($search)
     {
-        $this->showSearch = $showSearch;
+        $this->search = $search;
 
         return $this;
     }
@@ -107,7 +108,7 @@ class Builder
             'headers'        => $this->headers,
             'fields'         => $this->fields,
             'title'          => $this->title,
-            'showSearch'     => $this->showSearch,
+            'search'         => $this->search,
             'showPagination' => $this->showPagination,
             'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
