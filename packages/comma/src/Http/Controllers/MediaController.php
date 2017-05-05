@@ -16,7 +16,7 @@ class MediaController extends Controller
     {
         try {
             $post = app('laravolt.comma.models.post')->withoutGlobalScope(VisibleScope::class)->findOrFail($request->get('post_id'));
-            $media = $post->addMediaFromRequest('file')->toMediaLibrary();
+            $media = $post->addMediaFromRequest('file')->toMediaCollection('default');
 
             return response()->json(
                 [

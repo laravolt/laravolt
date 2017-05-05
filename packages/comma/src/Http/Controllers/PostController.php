@@ -33,8 +33,9 @@ class PostController extends Controller
         $post = app('laravolt.comma.models.post')->withoutGlobalScope(VisibleScope::class)->findOrFail($id);
         $categories = app('laravolt.comma.models.category')->all()->pluck('name', 'id');
         $tags = app('laravolt.comma.models.tag')->all()->pluck('name', 'name');
+        $featuredImageUrl = $post->getFirstMedia('featured')->getUrl();
 
-        return view('comma::posts.edit', compact('post', 'categories', 'tags'));
+        return view('comma::posts.edit', compact('post', 'categories', 'tags', 'featuredImageUrl'));
     }
 
     public function update(UpdatePost $request, $id)
@@ -52,6 +53,11 @@ class PostController extends Controller
                     $request->get('tags')
                 );
 
+            if ($request->hasFile('featured_image')) {
+                $post->clearMediaCollection('featured');
+                $post->addMediaFromRequest('featured_image')->toMediaCollection('featured');
+            }
+
             switch ($request->get('action')) {
                 case 'publish':
                     $post->publish();
@@ -67,7 +73,7 @@ class PostController extends Controller
                     break;
             }
 
-            return redirect()->route('comma::posts.index')->withSuccess(trans('comma::post.message.update_success'));
+            return redirect()->back()->withSuccess(trans('comma::post.message.update_success'));
         } catch (\Exception $e) {
 
             return redirect()->back()->withErrors($e->getMessage())->withInput();
