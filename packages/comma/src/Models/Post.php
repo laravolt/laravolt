@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Comma\Models;
 
 use Carbon\Carbon;
@@ -121,5 +122,14 @@ class Post extends Model implements HasMedia
                 return 'Last edited '.$this->updated_at->diffForHumans();
                 break;
         }
+    }
+
+    public function featuredImageUrl()
+    {
+        if ($featuredImage = $this->getFirstMedia('featured')) {
+            return $featuredImage->getUrl();
+        }
+
+        return false;
     }
 }

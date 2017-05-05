@@ -33,7 +33,7 @@ class PostController extends Controller
         $post = app('laravolt.comma.models.post')->withoutGlobalScope(VisibleScope::class)->findOrFail($id);
         $categories = app('laravolt.comma.models.category')->all()->pluck('name', 'id');
         $tags = app('laravolt.comma.models.tag')->all()->pluck('name', 'name');
-        $featuredImageUrl = $post->getFirstMedia('featured')->getUrl();
+        $featuredImageUrl = $post->featuredImageUrl();
 
         return view('comma::posts.edit', compact('post', 'categories', 'tags', 'featuredImageUrl'));
     }
