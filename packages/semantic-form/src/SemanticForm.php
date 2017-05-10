@@ -271,6 +271,10 @@ class SemanticForm
 
         $select->defaultValue($defaultValue);
 
+        if ($this->hasError($name)) {
+            $select->setError();
+        }
+
         return $select;
     }
 
@@ -283,6 +287,10 @@ class SemanticForm
 
         if ($defaultValue) {
             $select->defaultValue($defaultValue);
+        }
+
+        if ($this->hasError($name)) {
+            $select->setError();
         }
 
         return $select;
