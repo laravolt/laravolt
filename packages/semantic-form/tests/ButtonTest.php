@@ -18,10 +18,10 @@ class ButtonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanChangeLabel()
+    public function testCanChangeText()
     {
         $button = new Button('Button', null);
-        $button->label('Click Me');
+        $button->text('Click Me');
         $expected = '<button type="button" class="ui button">Click Me</button>';
         $result = $button->render();
 
@@ -33,6 +33,17 @@ class ButtonTest extends PHPUnit_Framework_TestCase
         $button = new Button('Button', null);
         $button->value('save');
         $expected = '<button type="button" class="ui button" value="save">Button</button>';
+        $result = $button->render();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCanHaveLabel()
+    {
+        $button = new Button('Button', null);
+        $button->label('Label');
+
+        $expected = '<div class="field"><label>Label</label><button type="button" class="ui button">Button</button></div>';
         $result = $button->render();
 
         $this->assertEquals($expected, $result);

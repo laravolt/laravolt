@@ -8,28 +8,35 @@ class Button extends FormControl
         'class' => 'ui button',
     ];
 
-    protected $label;
+    protected $text;
 
-    public function __construct($label, $name)
+    public function __construct($text, $name)
     {
         parent::__construct($name);
-        $this->label($label);
+        $this->text($text);
     }
 
     public function render()
     {
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+
+            return (new Field($this->label, $element))->addClass($this->fieldWidth)->render();
+        }
+
         $result = '<button';
         $result .= $this->renderAttributes();
         $result .= '>';
-        $result .= $this->label;
+        $result .= $this->text;
         $result .= '</button>';
 
         return $result;
     }
 
-    public function label($label)
+    public function text($text)
     {
-        $this->label = $label;
+        $this->text = $text;
 
         return $this;
     }
