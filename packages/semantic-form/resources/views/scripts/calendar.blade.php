@@ -38,7 +38,7 @@ $days = json_encode($days, JSON_UNESCAPED_UNICODE);
             var format = elm.data('datepicker-format');
 
             if (!format) {
-                format = 'YYYY/MM/DD';
+                format = 'YYYY-MM-DD';
             }
 
             elm.calendar({

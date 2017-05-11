@@ -105,7 +105,7 @@ class SemanticForm
         return $date;
     }
 
-    public function datepicker($name, $defaultValue = null)
+    public function datepicker($name, $defaultValue = null, $format = 'YYYY-MM-DD')
     {
         $input = new Datepicker($name);
 
@@ -119,7 +119,7 @@ class SemanticForm
             $input->setError();
         }
 
-        return (new InputWrapper($input))->prependIcon('calendar')->addClass('calendar date');
+        return (new InputWrapper($input))->data('datepicker-format', $format)->appendIcon('calendar')->addClass('calendar date');
     }
 
     public function email($name, $defaultValue = null)
