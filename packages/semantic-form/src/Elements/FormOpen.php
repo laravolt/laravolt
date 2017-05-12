@@ -60,6 +60,7 @@ class FormOpen extends Element
     public function get()
     {
         $this->setMethod('GET');
+        $this->token(false);
 
         return $this;
     }
@@ -81,6 +82,12 @@ class FormOpen extends Element
 
     public function token($token)
     {
+        if ($token === false) {
+            unset($this->token);
+
+            return $this;
+        }
+
         $this->token = new Hidden('_token');
         $this->token->value($token);
 
