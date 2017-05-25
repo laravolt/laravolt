@@ -31,6 +31,8 @@ class Builder
 
     protected $tableClass = null;
 
+    protected $row;
+
     /**
      * Builder constructor.
      */
@@ -116,6 +118,15 @@ class Builder
         return $this;
     }
 
+    public function row($view)
+    {
+        if (view()->exists($view)) {
+            $this->row = $view;
+        }
+
+        return $this;
+    }
+
     public function render()
     {
         $data = [
@@ -129,6 +140,7 @@ class Builder
             'paginationView' => $this->paginationView,
             'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
+            'row'            => $this->row,
             'builder'        => $this,
         ];
 

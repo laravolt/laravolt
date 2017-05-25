@@ -43,17 +43,17 @@
             </thead>
             <tbody class="collection">
             @forelse($collection as $data)
-                <tr>
-                    @foreach($fields as $field)
-                        <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data) !!}</td>
-                    @endforeach
-                </tr>
+                @if($row)
+                    @include($row)
+                @else
+                    <tr>
+                        @foreach($fields as $field)
+                            <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data) !!}</td>
+                        @endforeach
+                    </tr>
+                @endif
             @empty
-                <tr>
-                    <td colspan="{{ count($fields) }}" class="warning center aligned">
-                        <div class="ui segment very padded basic">@lang('suitable::suitable.empty_message')</div>
-                    </td>
-                </tr>
+                @include('suitable::empty')
             @endforelse
             </tbody>
         </table>
