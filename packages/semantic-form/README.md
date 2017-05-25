@@ -38,7 +38,16 @@ SemanticForm::open()->action('search');
 SemanticForm::open()->url('search'); // alias for action()
 SemanticForm::open()->route('route.name');
 SemanticForm::open()->post()->action(route('comment.store'));
+```
 
+### Opening Form (Short Syntax, Since 1.10)
+``` php
+SemanticForm::open('search'); // action="search" method=POST
+SemanticForm::get('search'); // action="search" method=GET
+SemanticForm::post('search'); // action="search" method=POST
+SemanticForm::put('search'); // action="search" method=POST _method=PUT
+SemanticForm::patch('search'); // action="search" method=POST _method=PATCH
+SemanticForm::delete('search'); // action="search" method=POST _method=DELETE
 ```
 
 ### Input Text
@@ -199,7 +208,7 @@ For every form element, you can call and chaining following methods:
 * removeClass($string)
 * attribute($name, $value)
 * data($name, $value)
-* hint($text)
+* hint($text) (Since 1.10)
 
 #### Example
 ``` php

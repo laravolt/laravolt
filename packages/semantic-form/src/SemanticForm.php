@@ -59,6 +59,31 @@ class SemanticForm
         return $open;
     }
 
+    public function get($url = null)
+    {
+        return $this->open($url)->get();
+    }
+
+    public function post($url = null)
+    {
+        return $this->open($url)->post();
+    }
+
+    public function put($url = null)
+    {
+        return $this->open($url)->put();
+    }
+
+    public function patch($url = null)
+    {
+        return $this->open($url)->patch();
+    }
+
+    public function delete($url = null)
+    {
+        return $this->open($url)->delete();
+    }
+
     protected function hasToken()
     {
         return isset($this->csrfToken);

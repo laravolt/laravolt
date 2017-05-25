@@ -26,6 +26,41 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testFormGet()
+    {
+        $expected = '<form method="GET" action="localhost" class="ui form">';
+        $result = (string)$this->form->get('localhost');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFormPost()
+    {
+        $expected = '<form method="POST" action="localhost" class="ui form">';
+        $result = (string)$this->form->post('localhost');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFormPut()
+    {
+        $expected = '<form method="POST" action="localhost" class="ui form"><input type="hidden" name="_method" value="PUT">';
+        $result = (string)$this->form->put('localhost');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFormPatch()
+    {
+        $expected = '<form method="POST" action="localhost" class="ui form"><input type="hidden" name="_method" value="PATCH">';
+        $result = (string)$this->form->patch('localhost');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFormDelete()
+    {
+        $expected = '<form method="POST" action="localhost" class="ui form"><input type="hidden" name="_method" value="DELETE">';
+        $result = (string)$this->form->delete('localhost');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testFormOpenWithAction()
     {
         $expected = '<form method="POST" action="submit" class="ui form">';
