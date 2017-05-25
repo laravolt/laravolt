@@ -26,7 +26,7 @@ class Builder
 
     protected $showPagination = false;
 
-    protected $paginationView = 'suitable::pagination';
+    protected $paginationView = 'suitable::pagination.simple';
 
     protected $tableClass = null;
 

@@ -6,7 +6,7 @@
         <a class="item" href="{{ $paginator->previousPageUrl() }}" rel="prev">@lang('suitable::pagination.previous')</a>
     @endif
 
-<!-- Pagination Elements -->
+    <!-- Pagination Elements -->
     @foreach ($elements as $element)
     <!-- "Three Dots" Separator -->
         @if (is_string($element))
@@ -25,7 +25,7 @@
         @endif
     @endforeach
 
-<!-- Next Page Link -->
+    <!-- Next Page Link -->
     @if ($paginator->hasMorePages())
         <a class="item" href="{{ $paginator->nextPageUrl() }}" rel="next">@lang('suitable::pagination.next')</a>
     @else
