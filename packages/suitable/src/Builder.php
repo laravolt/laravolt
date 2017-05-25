@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -26,7 +27,7 @@ class Builder
 
     protected $showPagination = false;
 
-    protected $paginationView = 'suitable::pagination.simple';
+    protected $paginationView = 'suitable::pagination.full';
 
     protected $tableClass = null;
 
@@ -37,6 +38,10 @@ class Builder
     {
         $this->id = 'suitable'.str_random();
         $this->search = config('suitable.query_string.search');
+
+        if (view()->exists($view = config('suitable.pagination_view'))) {
+            $this->paginationView = $view;
+        }
     }
 
     public function source($collection)
@@ -104,7 +109,9 @@ class Builder
 
     public function paginationView($view)
     {
-        $this->paginationView = $view;
+        if (view()->exists($view)) {
+            $this->paginationView = $view;
+        }
 
         return $this;
     }
@@ -122,7 +129,7 @@ class Builder
             'paginationView' => $this->paginationView,
             'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
-            'builder'        => $this
+            'builder'        => $this,
         ];
 
         return View::make('suitable::table', $data)->render();

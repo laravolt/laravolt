@@ -9,4 +9,5 @@ return [
         'sort_direction' => 'direction',
         'search'         => 'search',
     ],
+    'pagination_view'    => 'suitable::pagination.full',
 ];
