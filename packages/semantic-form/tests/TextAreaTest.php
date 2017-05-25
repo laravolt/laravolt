@@ -84,6 +84,17 @@ class TextAreaTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+    public function testRenderWithHint()
+    {
+        $textarea = new TextArea('bio');
+        $textarea->hint('Hint');
+
+        $expected = '<textarea name="bio" rows="5" cols="50"></textarea><div class="hint">Hint</div>';
+        $result = $textarea->rows(5)->render();
+
+        $this->assertEquals($expected, $result);
+    }
+
 	public function testDefaultValue()
 	{
 		$textarea = new TextArea('bio');

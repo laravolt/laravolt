@@ -53,6 +53,7 @@ class Select extends FormControl
         $result .= '>';
         $result .= $this->renderOptions();
         $result .= '</select>';
+        $result .= $this->renderHint();
 
         return $result;
     }

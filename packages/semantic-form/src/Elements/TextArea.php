@@ -24,6 +24,7 @@ class TextArea extends FormControl
         $result .= '>';
         $result .= $this->value;
         $result .= '</textarea>';
+        $result .= $this->renderHint();
 
         return $result;
     }

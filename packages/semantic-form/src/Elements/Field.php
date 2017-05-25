@@ -28,11 +28,7 @@ class Field extends Wrapper
         $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
-
         $html .= $controls;
-
-        $html .= $this->renderHelpBlock();
-
         $html .= '</div>';
 
         return $html;

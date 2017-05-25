@@ -52,7 +52,18 @@ class SelectTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $result);
 	}
 
-	public function testCanAddOption()
+    public function testCanRenderWithHint()
+    {
+        $select = new Select('birth_year');
+        $select->hint('Hint');
+
+        $expected = '<select class="ui dropdown search" name="birth_year"></select><div class="hint">Hint</div>';
+        $result = $select->render();
+        $this->assertEquals($expected, $result);
+
+    }
+
+    public function testCanAddOption()
 	{
 		$select = new Select('color', array('red' => 'Red'));
 		$select->addOption('blue', 'Blue');

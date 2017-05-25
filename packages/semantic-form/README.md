@@ -199,11 +199,13 @@ For every form element, you can call and chaining following methods:
 * removeClass($string)
 * attribute($name, $value)
 * data($name, $value)
+* hint($text)
 
 #### Example
 ``` php
 SemanticForm::text($name, $value)->label('Username')->id('username')->addClass('foo');
 SemanticForm::text($name, $value)->label('Username')->data('url', 'http://id-laravel.com');
+SemanticForm::password($name, $value)->label('Password')->hint('Minimum 6 characters');
 ```
 
 ### Middleware

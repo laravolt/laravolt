@@ -18,36 +18,42 @@ abstract class FormControl extends Element
     public function required()
     {
         $this->setAttribute('required', 'required');
+
         return $this;
     }
 
     public function optional()
     {
         $this->removeAttribute('required');
+
         return $this;
     }
 
     public function disable()
     {
         $this->setAttribute('disabled', 'disabled');
+
         return $this;
     }
 
     public function enable()
     {
         $this->removeAttribute('disabled');
+
         return $this;
     }
 
     public function autofocus()
     {
         $this->setAttribute('autofocus', 'autofocus');
+
         return $this;
     }
 
     public function unfocus()
     {
         $this->removeAttribute('autofocus');
+
         return $this;
     }
 
@@ -62,4 +68,5 @@ abstract class FormControl extends Element
     {
         return $this->hasError;
     }
+
 }

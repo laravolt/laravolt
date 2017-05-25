@@ -8,6 +8,8 @@ abstract class Element
 
     protected $fieldWidth;
 
+    protected $hint = false;
+
     protected $widthTranslation = [
         1 => 'one',
         'two',
@@ -145,6 +147,13 @@ abstract class Element
         return $this;
     }
 
+    public function hint($text)
+    {
+        $this->hint = $text;
+
+        return $this;
+    }
+
     abstract public function render();
 
     public function __toString()
@@ -160,12 +169,21 @@ abstract class Element
     protected function renderAttributes()
     {
         $result = '';
-
         foreach ($this->attributes as $attribute => $value) {
             $result .= " {$attribute}=\"{$value}\"";
         }
 
         return $result;
+    }
+
+    protected function renderHint()
+    {
+        $output = "";
+        if ($this->hint) {
+            $output .= "<div class=\"hint\">{$this->hint}</div>";
+        }
+
+        return $output;
     }
 
     protected function normalizeWidth($width)

@@ -5,7 +5,6 @@ use Illuminate\Support\Arr;
 class Wrapper extends Element
 {
     protected $controls = [];
-    protected $helpBlock;
 
     public function __construct()
     {
@@ -37,30 +36,10 @@ class Wrapper extends Element
             $html .= $control;
         }
 
-        $html .= $this->renderHelpBlock();
-
         $html .= '</div>';
+        $html .= $this->renderHint();
 
         return $html;
-    }
-
-    public function helpBlock($text)
-    {
-        if (isset($this->helpBlock)) {
-            return;
-        }
-        $this->helpBlock = new HelpBlock($text);
-
-        return $this;
-    }
-
-    protected function renderHelpBlock()
-    {
-        if ($this->helpBlock) {
-            return $this->helpBlock->render();
-        }
-
-        return '';
     }
 
     public function getControl($key)
@@ -84,10 +63,11 @@ class Wrapper extends Element
         $this->setAttribute('required', 'required');
 
         $control = $this->getPrimaryControl();
-        if($control) {
+        if ($control) {
             $control->required();
         }
 
         return $this;
     }
+
 }

@@ -12,10 +12,9 @@ abstract class Input extends FormControl
         }
 
         $result = '<input';
-
         $result .= $this->renderAttributes();
-
         $result .= '>';
+        $result .= $this->renderHint();
 
         return $result;
     }
