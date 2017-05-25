@@ -65,7 +65,7 @@
             <div class="item borderless">
                 <small>{{ $builder->summary() }}</small>
             </div>
-            {!! $collection->appends(request()->input())->links('suitable::pagination') !!}
+            {!! $collection->appends(request()->input())->links($paginationView) !!}
         @endif
     </div>
     @endif

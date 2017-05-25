@@ -26,6 +26,8 @@ class Builder
 
     protected $showPagination = false;
 
+    protected $paginationView = 'suitable::pagination';
+
     protected $tableClass = null;
 
     /**
@@ -100,6 +102,13 @@ class Builder
         return $this;
     }
 
+    public function paginationView($view)
+    {
+        $this->paginationView = $view;
+
+        return $this;
+    }
+
     public function render()
     {
         $data = [
@@ -110,6 +119,7 @@ class Builder
             'title'          => $this->title,
             'search'         => $this->search,
             'showPagination' => $this->showPagination,
+            'paginationView' => $this->paginationView,
             'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
             'builder'        => $this
