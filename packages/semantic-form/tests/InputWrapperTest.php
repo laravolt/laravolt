@@ -89,12 +89,22 @@ class InputWrapperTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testCanInputWithHint()
+    public function testCanRenderInputWithHint()
     {
         $input = new InputWrapper();
         $input->hint('Hint');
 
         $expected = '<div class="ui input"><input type="text" name=""></div><div class="hint">Hint</div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCanOverrideType()
+    {
+        $input = new InputWrapper();
+        $input->type('password');
+
+        $expected = '<div class="ui input"><input type="password" name=""></div>';
         $result = $input->render();
         $this->assertEquals($expected, $result);
     }

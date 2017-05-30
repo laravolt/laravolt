@@ -71,6 +71,13 @@ class InputWrapper extends Wrapper
         return $this;
     }
 
+    public function type($type)
+    {
+        $this->getPrimaryControl()->type($type);
+
+        return $this;
+    }
+
     protected function clearLeftIcon()
     {
         $this->removeClass('left icon');
