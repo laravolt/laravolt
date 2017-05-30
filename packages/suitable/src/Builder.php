@@ -136,6 +136,10 @@ class Builder
             'fields'         => $this->fields,
             'title'          => $this->title,
             'search'         => $this->search,
+
+            // @deprecated, use search above
+            'showSearch'     => $this->search,
+
             'showPagination' => $this->showPagination,
             'paginationView' => $this->paginationView,
             'toolbars'       => $this->toolbars,
