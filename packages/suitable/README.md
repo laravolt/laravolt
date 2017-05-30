@@ -39,5 +39,6 @@ $ composer require laravolt/suitable
     ['header' => 'Nama', 'field' => 'name'],
     ['header' => 'Email', 'field' => 'email'],
 ])
+->row('my_custom_row_view')
 ->render() !!}
 ```
