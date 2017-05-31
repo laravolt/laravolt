@@ -212,7 +212,7 @@ For every form element, you can call and chaining following methods:
 * hint($text) (Since 1.10.0)
 * hint($text, $class = "hint") (Since 1.10.2)
 
-#### Override Hint class globally
+#### Override Hint class globally (Since 1.10.2)
 ``` php
 // Put this on every request, e.g. in AppServiceProvider
 Laravolt\SemanticForm\Elements\Hint::$defaultClass = 'custom-class';
@@ -223,6 +223,7 @@ Laravolt\SemanticForm\Elements\Hint::$defaultClass = 'custom-class';
 SemanticForm::text($name, $value)->label('Username')->id('username')->addClass('foo');
 SemanticForm::text($name, $value)->label('Username')->data('url', 'http://id-laravel.com');
 SemanticForm::password($name, $value)->label('Password')->hint('Minimum 6 characters');
+SemanticForm::password($name, $value)->label('Password')->hint('Minimum 6 characters', 'my-custom-css-class');
 ```
 
 ### Middleware
