@@ -146,6 +146,7 @@ SemanticForm::input($name, $defaultvalue)->appendIcon('search');
 SemanticForm::input($name, $defaultvalue)->prependIcon('users');
 SemanticForm::input($name, $defaultvalue)->appendLabel($label);
 SemanticForm::input($name, $defaultvalue)->prependLabel($label);
+SemanticForm::input($name, $defaultvalue)->type("password");
 ```
 Reference: http://semantic-ui.com/elements/input.html
 
@@ -208,7 +209,14 @@ For every form element, you can call and chaining following methods:
 * removeClass($string)
 * attribute($name, $value)
 * data($name, $value)
-* hint($text) (Since 1.10)
+* hint($text) (Since 1.10.0)
+* hint($text, $class = "hint") (Since 1.10.2)
+
+#### Override Hint class globally
+``` php
+// Put this on every request, e.g. in AppServiceProvider
+Laravolt\SemanticForm\Elements\Hint::$defaultClass = 'custom-class';
+```
 
 #### Example
 ``` php

@@ -147,9 +147,9 @@ abstract class Element
         return $this;
     }
 
-    public function hint($text)
+    public function hint($text, $class = null)
     {
-        $this->hint = $text;
+        $this->hint = new Hint($text, $class);
 
         return $this;
     }
@@ -179,8 +179,8 @@ abstract class Element
     protected function renderHint()
     {
         $output = "";
-        if ($this->hint) {
-            $output .= "<div class=\"hint\">{$this->hint}</div>";
+        if ($this->hint instanceof Hint) {
+            $output .= $this->hint->render();
         }
 
         return $output;
