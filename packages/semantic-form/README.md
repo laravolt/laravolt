@@ -57,7 +57,7 @@ SemanticForm::text($name, $value)->label('Username');
 
 ### Password
 ``` php
-SemanticForm::text($name, $value)->label('Password');
+SemanticForm::password($name)->label('Password');
 ```
 
 ### Email
