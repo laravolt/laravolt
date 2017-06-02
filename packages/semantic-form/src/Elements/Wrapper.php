@@ -14,8 +14,6 @@ class Wrapper extends Element
     public function render()
     {
 
-        $this->beforeRender();
-
         if ($this->label) {
             $element = clone $this;
             $element->label = false;
@@ -27,6 +25,8 @@ class Wrapper extends Element
 
             return $field->render();
         }
+
+        $this->beforeRender();
 
         $html = '<div';
         $html .= $this->renderAttributes();
