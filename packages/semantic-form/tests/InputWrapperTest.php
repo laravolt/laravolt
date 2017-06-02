@@ -18,6 +18,16 @@ class InputWrapperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testCanRenderWithValue()
+    {
+        $input = new InputWrapper();
+        $input->value('foo');
+
+        $expected = '<div class="ui input"><input type="text" name="" value="foo"></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCanRenderInputWithIcon()
     {
         $input = new InputWrapper();

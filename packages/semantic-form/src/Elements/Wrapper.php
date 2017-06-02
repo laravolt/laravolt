@@ -70,4 +70,15 @@ class Wrapper extends Element
         return $this;
     }
 
+    public function value($value)
+    {
+        $control = $this->getPrimaryControl();
+        if ($control instanceof Input) {
+            $control->value($value);
+        } else {
+            $this->value($value);
+        }
+
+        return $this;
+    }
 }
