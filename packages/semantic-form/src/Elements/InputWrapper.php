@@ -78,6 +78,48 @@ class InputWrapper extends Wrapper
         return $this;
     }
 
+    public function required()
+    {
+        $this->getPrimaryControl()->required();
+
+        return $this;
+    }
+
+    public function optional()
+    {
+        $this->getPrimaryControl()->optional();
+
+        return $this;
+    }
+
+    public function disable()
+    {
+        $this->getPrimaryControl()->disable();
+
+        return $this;
+    }
+
+    public function enable()
+    {
+        $this->getPrimaryControl()->enable();
+
+        return $this;
+    }
+
+    public function autofocus()
+    {
+        $this->getPrimaryControl()->autofocus();
+
+        return $this;
+    }
+
+    public function unfocus()
+    {
+        $this->getPrimaryControl()->unfocus();
+
+        return $this;
+    }
+
     protected function clearLeftIcon()
     {
         $this->removeClass('left icon');

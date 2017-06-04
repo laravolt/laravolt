@@ -135,4 +135,54 @@ class InputWrapperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testCanSetPlaceholder()
+    {
+        $input = new InputWrapper();
+        $input->placeholder("Fullname...");
+
+        $expected = '<div class="ui input"><input type="text" name="" placeholder="Fullname..."></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFocus()
+    {
+        $input = new InputWrapper();
+        $input->autofocus();
+
+        $expected = '<div class="ui input"><input type="text" name="" autofocus="autofocus"></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testUnfocus()
+    {
+        $input = new InputWrapper();
+        $input->autofocus()->unfocus();
+
+        $expected = '<div class="ui input"><input type="text" name=""></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testDisable()
+    {
+        $input = new InputWrapper();
+        $input->disable();
+
+        $expected = '<div class="ui input"><input type="text" name="" disabled="disabled"></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testEnable()
+    {
+        $input = new InputWrapper();
+        $input->disable()->enable();
+
+        $expected = '<div class="ui input"><input type="text" name=""></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
 }
