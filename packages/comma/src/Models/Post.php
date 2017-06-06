@@ -21,6 +21,10 @@ class Post extends Model implements HasMedia
 
     protected $dates = ['published_at'];
 
+    protected $casts = [
+        'meta' => 'array',
+    ];
+    
     protected static function boot()
     {
         parent::boot();
