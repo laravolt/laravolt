@@ -17,6 +17,11 @@ class Field extends Wrapper
 
             if($control->hasAttribute('required')) $required = true;
 
+            if($control instanceof InputWrapper) {
+                if($control->isRequired()) $required = true;
+                if($control->hasError()) $hasError = true;
+            }
+
             if($control instanceof FormControl) {
                 if($control->hasError()) $hasError = true;
             }

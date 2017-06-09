@@ -22,6 +22,10 @@ class InputWrapper extends Wrapper
     protected function beforeRender()
     {
         $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
+
+        if($this->getPrimaryControl()->hasError()) {
+            $this->addClass('error');
+        }
     }
 
     public function prependIcon($icon, $class = null)
@@ -118,6 +122,16 @@ class InputWrapper extends Wrapper
         $this->getPrimaryControl()->unfocus();
 
         return $this;
+    }
+
+    public function isRequired()
+    {
+        return $this->getPrimaryControl()->hasAttribute('required');
+    }
+
+    public function hasError()
+    {
+        return $this->getPrimaryControl()->hasError();
     }
 
     protected function clearLeftIcon()

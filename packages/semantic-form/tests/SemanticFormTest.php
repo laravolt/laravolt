@@ -574,6 +574,23 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testInputWrapperHasError()
+    {
+        $errorStore = Mockery::mock('Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface');
+        $errorStore->shouldReceive('hasError')->andReturn(true);
+        $errorStore->shouldReceive('getError')->with('email')->andReturn('The e-mail address is invalid.');
+
+        $this->form->setErrorStore($errorStore);
+
+        $expected = '<div class="ui input error"><input type="text" name="email"></div>';
+        $result = $this->form->input('email')->render();
+        $this->assertEquals($expected, $result);
+
+        $expected = '<div class="field error"><label>Email</label><div class="ui input error"><input type="text" name="email"></div></div>';
+        $result = $this->form->input('email')->label('Email')->render();
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCanRetrieveFormattedErrorMessage()
     {
         $errorStore = Mockery::mock('Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface');

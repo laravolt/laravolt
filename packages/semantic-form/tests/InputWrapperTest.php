@@ -185,4 +185,24 @@ class InputWrapperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testRequired()
+    {
+        $input = new InputWrapper();
+        $input->required()->label('Username');
+
+        $expected = '<div class="field required"><label>Username</label><div class="ui input"><input type="text" name="" required="required"></div></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testHasError()
+    {
+        $input = new InputWrapper();
+        $input->required()->label('Username');
+
+        $expected = '<div class="field required"><label>Username</label><div class="ui input"><input type="text" name="" required="required"></div></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
 }
