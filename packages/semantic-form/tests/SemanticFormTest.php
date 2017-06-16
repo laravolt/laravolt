@@ -122,6 +122,13 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testCheckboxChecked()
+    {
+        $expected = '<input type="checkbox" name="terms" value="agree" checked="checked">';
+        $result = (string)$this->form->checkbox('terms', 'agree', true);
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCheckboxWithLabel()
     {
         $expected = '<div class="field"><div class="ui checkbox"><input type="checkbox" name="terms" value="1"><label>Term</label></div></div>';
@@ -137,6 +144,13 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
 
         $expected = '<input type="radio" name="terms" value="agree">';
         $result = (string)$this->form->radio('terms', 'agree');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testRadioChecked()
+    {
+        $expected = '<input type="radio" name="terms" value="agree" checked="checked">';
+        $result = (string)$this->form->radio('terms', 'agree', true);
         $this->assertEquals($expected, $result);
     }
 

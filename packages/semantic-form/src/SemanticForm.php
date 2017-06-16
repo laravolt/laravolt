@@ -204,7 +204,7 @@ class SemanticForm
         return $password;
     }
 
-    public function checkbox($name, $value = 1)
+    public function checkbox($name, $value = 1, $checked = false)
     {
         $checkbox = new Checkbox($name, $value);
 
@@ -213,6 +213,8 @@ class SemanticForm
         if ($value == $oldValue) {
             $checkbox->check();
         }
+
+        $checkbox->defaultCheckedState($checked);
 
         return $checkbox;
     }
@@ -242,7 +244,7 @@ class SemanticForm
         return new CheckboxGroup($controls);
     }
 
-    public function radio($name, $value = null)
+    public function radio($name, $value = null, $checked = false)
     {
         $value = is_null($value) ? $name : $value;
 
@@ -253,6 +255,8 @@ class SemanticForm
         if ($value == $oldValue) {
             $radio->check();
         }
+
+        $radio->defaultCheckedState($checked);
 
         return $radio;
     }
