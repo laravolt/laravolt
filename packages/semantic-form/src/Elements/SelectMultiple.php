@@ -33,6 +33,7 @@ class SelectMultiple extends Select
         $result .= '>';
         $result .= $this->renderOptions();
         $result .= '</select>';
+        $result .= $this->renderHint();
 
         return $result;
     }
