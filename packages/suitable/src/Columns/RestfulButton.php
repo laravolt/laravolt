@@ -10,6 +10,8 @@ class RestfulButton implements ColumnInterface
 
     protected $baseRoute;
 
+    protected $deleteConfirmation;
+
     /**
      * RestfulButton constructor.
      * @param $baseRoute
@@ -17,6 +19,7 @@ class RestfulButton implements ColumnInterface
     public function __construct($baseRoute)
     {
         $this->baseRoute = $baseRoute;
+        $this->deleteConfirmation = config('suitable.restul_button.delete_message');
     }
 
 
@@ -35,15 +38,23 @@ class RestfulButton implements ColumnInterface
         $view = $this->getViewUrl($data);
         $edit = $this->getEditUrl($data);
         $delete = $this->getDeleteUrl($data);
+        $deleteConfirmation = $this->buildDeleteConfirmation($data);
         $buttons = $this->buttons;
 
-        return View::make('suitable::columns.restful_button', compact('view', 'edit', 'delete', 'data', 'buttons'))->render();
+        return View::make('suitable::columns.restful_button', compact('view', 'edit', 'delete', 'data', 'buttons', 'deleteConfirmation'))->render();
     }
 
     public function only($buttons)
     {
         $buttons = is_array($buttons) ? $buttons : func_get_args();
         $this->buttons = array_intersect($buttons, $this->buttons);
+
+        return $this;
+    }
+
+    public function deleteConfirmation($message)
+    {
+        $this->deleteConfirmation = $message;
 
         return $this;
     }
@@ -84,4 +95,16 @@ class RestfulButton implements ColumnInterface
         return false;
     }
 
+    protected function buildDeleteConfirmation($data)
+    {
+        if (is_string($this->deleteConfirmation)) {
+            return $this->deleteConfirmation;
+        }
+
+        if ($this->deleteConfirmation instanceof \Closure) {
+            return call_user_func($this->deleteConfirmation, $data);
+        }
+
+        return config('suitable.restful_button.delete_confirmation');
+    }
 }

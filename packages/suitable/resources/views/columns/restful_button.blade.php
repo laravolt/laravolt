@@ -11,7 +11,7 @@
             @endif
 
             @if($delete)
-                <form role="form" action="{{ $delete }}" method="POST" onsubmit="return confirm('Anda yakin?')">
+                <form role="form" action="{{ $delete }}" method="POST" onsubmit="return confirm('{{ $deleteConfirmation }}')">
                     <input type="hidden" name="_method" value="DELETE">
                     {{ csrf_field() }}
                     <button type="submit" class="ui button icon mini basic"><i class="delete icon"></i></button>

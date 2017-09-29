@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Set specific configuration variables here
  */
@@ -10,4 +11,7 @@ return [
         'search'         => 'search',
     ],
     'pagination_view'    => 'suitable::pagination.full',
+    'restful_button'     => [
+        'delete_confirmation' => 'Are you sure you want to delete this item?',
+    ],
 ];
