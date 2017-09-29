@@ -105,6 +105,16 @@ class RestfulButton implements ColumnInterface
             return call_user_func($this->deleteConfirmation, $data);
         }
 
+        if ($message = config('suitable.restful_button.delete_confirmation_auto')) {
+            $fields = config('suitable.restful_button.delete_confirmation_fields');
+
+            foreach ($fields as $field) {
+                if($value = array_get($data, $field)) {
+                    return str_replace(':item', $value, $message);
+                }
+            }
+        }
+
         return config('suitable.restful_button.delete_confirmation');
     }
 }
