@@ -233,4 +233,4 @@ SemanticForm::password($name, $value)->label('Password')->hint('Minimum 6 charac
 
 
 ## Credits
-SemanticForm built on top of awesome form builder by [AdamWathan\Form](https://github.com/adamwathan/form).
+SemanticForm inspired by [AdamWathan\Form](https://github.com/adamwathan/form).
