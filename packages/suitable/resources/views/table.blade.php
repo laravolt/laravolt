@@ -1,5 +1,6 @@
 <div id="{{ $id }}">
 
+    @if($title || $search)
     <div class="ui menu top attached">
         @if($title)
             <div class="item borderless">
@@ -15,6 +16,15 @@
             @endif
         </div>
     </div>
+    @endif
+
+    @foreach($prepends as $prepend)
+        @if(view()->exists($prepend))
+            @include($prepend)
+        @else
+            {!! $prepend !!}
+        @endif
+    @endforeach
 
     @if(!empty($toolbars))
         <div class="ui menu attached">
@@ -28,8 +38,8 @@
         </div>
     @endif
 
-    <div class="ui segment attached basic" style="padding: 0; overflow-y: auto">
-        <table class="ui table attached {{ $tableClass }}" style="border-top: 0 none; border-bottom: 0 none">
+    <div class="ui segment {{ (!$title && !$search) ? 'top':'' }} attached" style="padding: 0; overflow-y: auto">
+        <table class="ui table attached {{ $tableClass }}" style="border: 0 none;">
             <thead>
             <tr>
                 @foreach($headers as $header)

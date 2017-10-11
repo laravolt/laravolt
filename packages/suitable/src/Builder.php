@@ -8,12 +8,13 @@ use Laravolt\Suitable\Columns\ColumnInterface;
 
 class Builder
 {
-
     protected $collection = null;
 
     protected $id = null;
 
     protected $headers = [];
+
+    protected $prepends = [];
 
     protected $fields = [];
 
@@ -38,7 +39,7 @@ class Builder
      */
     public function __construct()
     {
-        $this->id = 'suitable'.str_random();
+        $this->id = 'suitable' . str_random();
         $this->search = config('suitable.query_string.search');
 
         if (view()->exists($view = config('suitable.pagination_view'))) {
@@ -127,18 +128,26 @@ class Builder
         return $this;
     }
 
+    public function prepend($view)
+    {
+        $this->prepends[] = $view;
+
+        return $this;
+    }
+
     public function render()
     {
         $data = [
-            'collection'     => $this->collection,
-            'id'             => $this->id,
-            'headers'        => $this->headers,
-            'fields'         => $this->fields,
-            'title'          => $this->title,
-            'search'         => $this->search,
+            'collection' => $this->collection,
+            'id'         => $this->id,
+            'headers'    => $this->headers,
+            'prepends'   => $this->prepends,
+            'fields'     => $this->fields,
+            'title'      => $this->title,
+            'search'     => $this->search,
 
             // @deprecated, use search above
-            'showSearch'     => $this->search,
+            'showSearch' => $this->search,
 
             'showPagination' => $this->showPagination,
             'paginationView' => $this->paginationView,
@@ -252,5 +261,4 @@ class Builder
 
         return $start + $index;
     }
-
 }
