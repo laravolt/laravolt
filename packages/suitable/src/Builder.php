@@ -209,7 +209,12 @@ class Builder
         $sortable = array_get($column, 'sortable', false);
         if ($sortable) {
             unset($column['sortable']);
-            $html = Sortable::link([array_get($column, 'field', ''), array_get($column, 'header', '')]);
+            $field = array_get($column, 'field', '');
+            if (is_string($sortable)) {
+                $field = $sortable;
+            }
+
+            $html = Sortable::link([$field, array_get($column, 'header', '')]);
         } elseif (is_array($column)) {
             $html = array_get($column, 'header', '');
         } elseif ($column instanceof ColumnInterface) {
