@@ -7,5 +7,7 @@ interface ColumnInterface
 
     public function headerAttributes();
 
-    public function cell($cell);
+    public function cell($cell, $collection, $loop);
+
+    public function cellAttributes($cell);
 }

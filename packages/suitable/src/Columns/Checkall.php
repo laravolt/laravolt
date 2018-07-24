@@ -31,9 +31,14 @@ class Checkall implements ColumnInterface
         return $this->headerAttributes;
     }
 
-    public function cell($data)
+    public function cell($data, $collection, $loop)
     {
         $checked = $this->isChecked($data);
         return View::make('suitable::columns.checkall.cell', compact('data', 'checked'))->render();
+    }
+
+    public function cellAttributes($cell)
+    {
+        return null;
     }
 }

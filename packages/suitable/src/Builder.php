@@ -160,7 +160,7 @@ class Builder
         return View::make('suitable::table', $data)->render();
     }
 
-    public function renderCell($field, $data)
+    public function renderCell($field, $data, $collection, $loop)
     {
         if (array_has($field, 'raw') && $field['raw'] instanceof \Closure) {
             return call_user_func($field['raw'], $data);
@@ -183,7 +183,7 @@ class Builder
         }
 
         if ($field instanceof ColumnInterface) {
-            return $field->cell($data);
+            return $field->cell($data, $collection, $loop);
         }
 
         return false;
@@ -192,7 +192,14 @@ class Builder
     public function renderCellAttributes($field, $data)
     {
         $html = '';
-        if ($attributes = array_get($field, 'cellAttributes')) {
+
+        if ($field instanceof ColumnInterface) {
+            $attributes = $field->cellAttributes($data);
+        } else {
+            $attributes = array_get($field, 'cellAttributes', []);
+        }
+
+        if (is_array($attributes)) {
             foreach ($attributes as $attribute => $value) {
                 $html .= " {$attribute}=\"{$value}\"";
             }

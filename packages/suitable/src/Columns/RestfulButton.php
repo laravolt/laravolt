@@ -33,7 +33,7 @@ class RestfulButton implements ColumnInterface
         return null;
     }
 
-    public function cell($data)
+    public function cell($data, $collection, $loop)
     {
         $view = $this->getViewUrl($data);
         $edit = $this->getEditUrl($data);
@@ -42,6 +42,11 @@ class RestfulButton implements ColumnInterface
         $buttons = $this->buttons;
 
         return View::make('suitable::columns.restful_button', compact('view', 'edit', 'delete', 'data', 'buttons', 'deleteConfirmation'))->render();
+    }
+
+    public function cellAttributes($cell)
+    {
+        return null;
     }
 
     public function only($buttons)

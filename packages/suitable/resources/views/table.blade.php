@@ -53,12 +53,13 @@
             </thead>
             <tbody class="collection">
             @forelse($collection as $data)
+                @php($outerLoop = $loop)
                 @if($row)
                     @include($row)
                 @else
                     <tr>
                         @foreach($fields as $field)
-                            <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data) !!}</td>
+                            <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data, $collection, $outerLoop) !!}</td>
                         @endforeach
                     </tr>
                 @endif

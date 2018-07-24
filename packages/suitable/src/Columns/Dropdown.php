@@ -32,13 +32,18 @@ class Dropdown implements ColumnInterface
         return null;
     }
 
-    public function cell($cell)
+    public function cell($cell, $collection, $loop)
     {
         $data['text'] = $this->text;
         $data['menus'] = $this->menus->roots();
         $data['direction'] = $this->direction;
 
         return View::make('suitable::columns.dropdown.cell', $data)->render();
+    }
+
+    public function cellAttributes($cell)
+    {
+        return null;
     }
 
     public function setDirection($direction)
