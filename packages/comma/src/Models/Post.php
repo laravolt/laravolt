@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Comma\Models\Scopes\VisibleScope;
 use Laravolt\Comma\Models\Traits\Taggable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -24,7 +24,7 @@ class Post extends Model implements HasMedia
     protected $casts = [
         'meta' => 'array',
     ];
-    
+
     protected static function boot()
     {
         parent::boot();
