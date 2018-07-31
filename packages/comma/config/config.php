@@ -9,7 +9,7 @@ return [
         'prefix'     => 'cms',
     ],
     'view'             => [
-        'layout' => 'layouts.base',
+        'layout' => 'ui::layouts.app',
     ],
     'menu'             => [
         'enabled' => true,

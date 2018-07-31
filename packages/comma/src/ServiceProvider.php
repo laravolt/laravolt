@@ -22,21 +22,29 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('laravolt.comma', function () {
+        $this->app->singleton(
+            'laravolt.comma', function () {
             return new Comma();
-        });
+        }
+        );
 
-        $this->app->bind('laravolt.comma.models.category', function() {
+        $this->app->bind(
+            'laravolt.comma.models.category', function () {
             return $this->app->make(config('laravolt.comma.models.category'));
-        });
+        }
+        );
 
-        $this->app->bind('laravolt.comma.models.post', function() {
+        $this->app->bind(
+            'laravolt.comma.models.post', function () {
             return $this->app->make(config('laravolt.comma.models.post'));
-        });
+        }
+        );
 
-        $this->app->bind('laravolt.comma.models.tag', function() {
+        $this->app->bind(
+            'laravolt.comma.models.tag', function () {
             return $this->app->make(config('laravolt.comma.models.tag'));
-        });
+        }
+        );
     }
 
     /**
@@ -45,7 +53,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-
         $this->registerMigrations();
         $this->registerConfigurations();
         $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'comma');
@@ -66,13 +73,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerMigrations()
     {
-        if (version_compare($this->app->version(), '5.3.0', '>=')) {
-            $this->loadMigrationsFrom($this->packagePath('database/migrations'));
-        } else {
-            $this->publishes([
-                $this->packagePath('database/migrations') => database_path('/migrations'),
-            ], 'migrations');
-        }
+        $this->loadMigrationsFrom($this->packagePath('database/migrations'));
     }
 
     /**
@@ -84,17 +85,23 @@ class ServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom(
             $this->packagePath('config/config.php'), 'laravolt.comma'
         );
-        $this->publishes([
-            $this->packagePath('config/config.php') => config_path('laravolt/comma.php'),
-        ], 'config');
+        $this->publishes(
+            [
+                $this->packagePath('config/config.php') => config_path('laravolt/comma.php'),
+            ], 'config'
+        );
     }
 
     protected function registerMenu()
     {
         if ($this->app->bound('laravolt.menu')) {
             $menu = $this->app['laravolt.menu']->add('CMS')->data('icon', 'copy');
-            $menu->add(trans('comma::menu.posts'), route('comma::posts.index'));
-            $menu->add(trans('comma::menu.categories'), route('comma::categories.index'));
+            $menu->add(trans('comma::menu.posts'), route('comma::posts.index'))
+                 ->active('cms/posts')
+                 ->data('icon', 'newspaper outline');
+            $menu->add(trans('comma::menu.categories'), route('comma::categories.index'))
+                 ->active('cms/categories')
+                 ->data('icon', 'folder outline');
         }
     }
 
