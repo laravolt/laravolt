@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Comma\Models\Scopes\VisibleScope;
 use Laravolt\Comma\Models\Traits\Taggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
@@ -13,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model implements HasMedia
 {
-    use HasSlug, Taggable, HasMediaTrait;
+    use HasSlug, Taggable, HasMediaTrait, LogsActivity;
 
     protected $table = 'cms_posts';
 
@@ -24,6 +25,8 @@ class Post extends Model implements HasMedia
     protected $casts = [
         'meta' => 'array',
     ];
+
+    protected static $logAttributes = ['title', 'content', 'status', 'category_id'];
 
     protected static function boot()
     {
