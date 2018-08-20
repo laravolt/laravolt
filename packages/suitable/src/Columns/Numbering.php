@@ -6,7 +6,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class Numbering implements ColumnInterface
 {
-    protected $headerAttributes = ['class' => 'numbering'];
+    protected $headerAttributes = ['class' => 'numbering center aligned'];
     protected $cellAttributes = ['class' => 'numbering'];
     protected $header = '';
 
