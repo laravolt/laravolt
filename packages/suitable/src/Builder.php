@@ -221,7 +221,7 @@ class Builder
                 $field = $sortable;
             }
 
-            $html = Sortable::link([$field, array_get($column, 'header', '')]);
+            $html = SortableLink::make([$field, array_get($column, 'header', '')]);
         } elseif (is_array($column)) {
             $html = array_get($column, 'header', '');
         } elseif ($column instanceof ColumnInterface) {
