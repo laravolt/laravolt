@@ -38,7 +38,7 @@
         </div>
     @endif
 
-    <div class="ui segment {{ (!$title && !$search) ? 'top':'' }} attached" style="padding: 0; overflow-y: auto">
+    <div class="ui segment {{ (!$title && !$search) ? 'top':'' }} {{ (!$showPagination) ? 'bottom':'' }} attached" style="padding: 0; overflow-y: auto">
         <table class="ui table {{ $tableClass }}" style="border: 0 none;">
             <thead>
             <tr>
