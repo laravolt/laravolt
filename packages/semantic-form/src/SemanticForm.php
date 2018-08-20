@@ -2,6 +2,7 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\Field;
@@ -28,6 +29,8 @@ use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
 
 class SemanticForm
 {
+    use Macroable;
+
     private $oldInput;
     private $errorStore;
     private $csrfToken;
