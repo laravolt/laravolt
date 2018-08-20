@@ -174,6 +174,10 @@ class Builder
             return array_get($data, $field['field']);
         }
 
+        if (array_has($field, 'data')) {
+            return data_get($data, $field['data']);
+        }
+
         if (array_has($field, 'present')) {
             return $data->present($field['present']);
         }
