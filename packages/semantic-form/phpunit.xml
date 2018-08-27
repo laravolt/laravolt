@@ -7,4 +7,7 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="SESSION_DRIVER" value="array"/>
+    </php>
 </phpunit>

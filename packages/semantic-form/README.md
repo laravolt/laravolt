@@ -50,6 +50,14 @@ SemanticForm::patch('search'); // action="search" method=POST _method=PATCH
 SemanticForm::delete('search'); // action="search" method=POST _method=DELETE
 ```
 
+### CSRF Token
+CSRF token will automatically generated if current form method is `POST`. To prevent token generation, 
+you can call `withoutToken()` when opening a form.
+
+``` php
+SemanticForm::post('search')->withoutToken();
+```
+
 ### Input Text
 ``` php
 SemanticForm::text($name, $value)->label('Username');
@@ -199,6 +207,10 @@ SemanticForm::submit($value);
 ### Model Binding
 ``` php
 SemanticForm::bind($model);
+```
+### Macro
+```php
+
 ```
 
 ### General Function

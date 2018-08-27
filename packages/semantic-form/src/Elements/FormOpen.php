@@ -1,5 +1,6 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
 class FormOpen extends Element
@@ -10,7 +11,7 @@ class FormOpen extends Element
         'class'  => 'ui form',
     );
 
-    protected $token;
+    protected $withToken = true;
 
     protected $hiddenMethod;
 
@@ -30,9 +31,9 @@ class FormOpen extends Element
         $result .= $this->renderAttributes();
         $result .= '>';
 
-        if ($this->hasToken()) {
+        if ($this->withToken) {
             $tokenField = new Hidden('_token');
-            $tokenField->value($this->token);
+            $tokenField->value(Session::token());
 
             $result .= $tokenField->render();
         }
@@ -67,7 +68,7 @@ class FormOpen extends Element
     public function get()
     {
         $this->setMethod('GET');
-        $this->token(false);
+        $this->withoutToken();
 
         return $this;
     }
@@ -87,9 +88,9 @@ class FormOpen extends Element
         return $this->setHiddenMethod('DELETE');
     }
 
-    public function token($token)
+    public function withoutToken()
     {
-        $this->token = $token;
+        $this->withToken = false;
 
         return $this;
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Session;
 use Laravolt\SemanticForm\SemanticForm;
 
 class SemanticFormTest extends PHPUnit_Framework_TestCase
@@ -22,7 +23,7 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
     public function testFormOpen()
     {
         $expected = '<form method="POST" action="" class="ui form">';
-        $result = (string)$this->form->open();
+        $result = (string)$this->form->open()->withoutToken();
         $this->assertEquals($expected, $result);
     }
 
@@ -36,35 +37,35 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
     public function testFormPost()
     {
         $expected = '<form method="POST" action="localhost" class="ui form">';
-        $result = (string)$this->form->post('localhost');
+        $result = (string)$this->form->post('localhost')->withoutToken();
         $this->assertEquals($expected, $result);
     }
 
     public function testFormPut()
     {
         $expected = '<form method="POST" action="localhost" class="ui form"><input type="hidden" name="_method" value="PUT">';
-        $result = (string)$this->form->put('localhost');
+        $result = (string)$this->form->put('localhost')->withoutToken();
         $this->assertEquals($expected, $result);
     }
 
     public function testFormPatch()
     {
         $expected = '<form method="POST" action="localhost" class="ui form"><input type="hidden" name="_method" value="PATCH">';
-        $result = (string)$this->form->patch('localhost');
+        $result = (string)$this->form->patch('localhost')->withoutToken();
         $this->assertEquals($expected, $result);
     }
 
     public function testFormDelete()
     {
         $expected = '<form method="POST" action="localhost" class="ui form"><input type="hidden" name="_method" value="DELETE">';
-        $result = (string)$this->form->delete('localhost');
+        $result = (string)$this->form->delete('localhost')->withoutToken();
         $this->assertEquals($expected, $result);
     }
 
     public function testFormOpenWithAction()
     {
         $expected = '<form method="POST" action="submit" class="ui form">';
-        $result = (string)$this->form->open('submit');
+        $result = (string)$this->form->open('submit')->withoutToken();
         $this->assertEquals($expected, $result);
     }
 
@@ -713,24 +714,11 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetCsrfToken()
+    public function testTokenIsRenderedAutomatically()
     {
-        $this->form->setToken('12345');
-    }
+        Session::shouldReceive('token')->once()->andReturn('999');
 
-    public function testCanRenderCsrfToken()
-    {
-        $this->form->setToken('12345');
-
-        $expected = '<input type="hidden" name="_token" value="12345">';
-        $result = (string)$this->form->token();
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testTokenIsRenderedAutomaticallyOnOpenIfSet()
-    {
-        $this->form->setToken('12345');
-        $expected = '<form method="POST" action="" class="ui form"><input type="hidden" name="_token" value="12345">';
+        $expected = '<form method="POST" action="" class="ui form"><input type="hidden" name="_token" value="999">';
         $result = (string)$this->form->open();
         $this->assertEquals($expected, $result);
     }

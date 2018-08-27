@@ -2,6 +2,7 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Datepicker;
@@ -46,18 +47,9 @@ class SemanticForm
         $this->errorStore = $errorStore;
     }
 
-    public function setToken($token)
-    {
-        $this->csrfToken = $token;
-    }
-
     public function open($action = null)
     {
         $open = new FormOpen($action);
-
-        if ($this->hasToken()) {
-            $open->token($this->csrfToken);
-        }
 
         return $open;
     }
@@ -85,11 +77,6 @@ class SemanticForm
     public function delete($url = null)
     {
         return $this->open($url)->delete();
-    }
-
-    protected function hasToken()
-    {
-        return isset($this->csrfToken);
     }
 
     public function close()
@@ -343,17 +330,6 @@ class SemanticForm
         $text = $this->text($name, $defaultValue);
 
         return (new InputWrapper($text));
-    }
-
-    public function token()
-    {
-        $token = $this->hidden('_token');
-
-        if (isset($this->csrfToken)) {
-            $token->value($this->csrfToken);
-        }
-
-        return $token;
     }
 
     public function hasError($name)

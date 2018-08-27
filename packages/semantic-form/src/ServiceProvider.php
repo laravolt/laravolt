@@ -2,7 +2,6 @@
 
 namespace Laravolt\SemanticForm;
 
-use Laravolt\SemanticForm\SemanticForm;
 use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 use Laravolt\SemanticForm\OldInput\IlluminateOldInputProvider;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -31,7 +30,6 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton('semantic-form', function ($app) {
 
             $builder = new SemanticForm();
-            $builder->setToken($app['session.store']->token());
             $builder->setErrorStore(new IlluminateErrorStore($app['session.store']));
             $builder->setOldInputProvider(new IlluminateOldInputProvider($app['session.store']));
 
