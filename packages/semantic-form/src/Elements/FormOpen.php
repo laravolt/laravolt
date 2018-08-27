@@ -11,6 +11,7 @@ class FormOpen extends Element
     );
 
     protected $token;
+
     protected $hiddenMethod;
 
     /**
@@ -30,11 +31,17 @@ class FormOpen extends Element
         $result .= '>';
 
         if ($this->hasToken()) {
-            $result .= $this->token->render();
+            $tokenField = new Hidden('_token');
+            $tokenField->value($this->token);
+
+            $result .= $tokenField->render();
         }
 
         if ($this->hasHiddenMethod()) {
-            $result .= $this->hiddenMethod->render();
+            $hiddenField = new Hidden('_method');
+            $hiddenField->value($this->hiddenMethod);
+
+            $result .= $hiddenField->render();
         }
 
         return $result;
@@ -42,12 +49,12 @@ class FormOpen extends Element
 
     protected function hasToken()
     {
-        return isset($this->token);
+        return (bool)$this->token;
     }
 
     protected function hasHiddenMethod()
     {
-        return isset($this->hiddenMethod);
+        return (bool)$this->hiddenMethod;
     }
 
     public function post()
@@ -82,14 +89,7 @@ class FormOpen extends Element
 
     public function token($token)
     {
-        if ($token === false) {
-            unset($this->token);
-
-            return $this;
-        }
-
-        $this->token = new Hidden('_token');
-        $this->token->value($token);
+        $this->token = $token;
 
         return $this;
     }
@@ -97,8 +97,7 @@ class FormOpen extends Element
     protected function setHiddenMethod($method)
     {
         $this->setMethod('POST');
-        $this->hiddenMethod = new Hidden('_method');
-        $this->hiddenMethod->value($method);
+        $this->hiddenMethod = $method;
 
         return $this;
     }
