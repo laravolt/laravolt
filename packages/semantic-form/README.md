@@ -209,10 +209,21 @@ SemanticForm::submit($value);
 SemanticForm::bind($model);
 ```
 ### Macro
+Macro definition, put it anywhere within your application, e.g. AppServiceProvider:
 ```php
-
+SemanticForm::macro('trix', function ($id, $name, $value = null) {
+    return sprintf(
+        "%s %s", 
+        SemanticForm::hidden($name, $defaultValue)->id($id), 
+        "<trix-editor input='{$id}'></trix-editor>"
+    );
+});
 ```
 
+And then call it like any other method:
+```php
+SemanticForm::trix('contentId', 'content', '<b>some content</b>');
+```
 ### General Function
 For every form element, you can call and chaining following methods:
 
