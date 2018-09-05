@@ -1,0 +1,37 @@
+{
+    "name": "laravolt/epilog",
+    "description": "Epic Laravel log viewer",
+    "keywords": [
+        "laravel",
+        "laravolt",
+        "log",
+        "viewer"
+    ],
+    "homepage": "https://github.com/laravolt/epilog",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com",
+            "homepage": "http://id-laravel.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "pulse00/monolog-parser": "^0.0.3",
+        "league/flysystem": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\Epilog\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Epilog\\ServiceProvider"
+            ]
+        }
+    }
+}
