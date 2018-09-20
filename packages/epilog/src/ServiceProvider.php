@@ -47,7 +47,7 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         if ($this->app->bound('laravolt.acl')) {
-            $this->app['laravolt.acl']->registerPermission(Permission::values());
+            $this->app['laravolt.acl']->registerPermission(Permission::toArray());
         }
     }
 
