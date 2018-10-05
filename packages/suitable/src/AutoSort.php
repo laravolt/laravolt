@@ -27,8 +27,6 @@ trait AutoSort
             } else {
                 $query->orderBy($column, $direction);
             }
-        } else {
-            $query->latest();
         }
     }
 }
