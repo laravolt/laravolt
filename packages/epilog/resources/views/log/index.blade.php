@@ -1,4 +1,4 @@
-@extends(config('laravolt.cockpit.view.layout'))
+@extends(config('laravolt.epilog.view.layout'))
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <i class="dropdown icon"></i>
         <div class="menu">
             @foreach($files as $file)
-                <a data-value="{{ $selectedFile }}" href="{{ route('cockpit::log.index', ['file' => urlencode($file['path'])]) }}" class="item">{{ $file['basename'] }}</a>
+                <a data-value="{{ $selectedFile }}" href="{{ route('epilog::log.index', ['file' => urlencode($file['path'])]) }}" class="item">{{ $file['basename'] }}</a>
             @endforeach
         </div>
     </div>

@@ -1,4 +1,4 @@
-@extends(config('laravolt.cockpit.view.layout'))
+@extends(config('laravolt.epilog.view.layout'))
 
 @section('content')
 

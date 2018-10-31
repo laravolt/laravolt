@@ -35,14 +35,14 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->registerConfigurations();
-        $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'cockpit');
-        $this->loadViewsFrom($this->packagePath('resources/views'), 'cockpit');
+        $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'epilog');
+        $this->loadViewsFrom($this->packagePath('resources/views'), 'epilog');
 
-        if (!$this->app->routesAreCached() && config('laravolt.cockpit.route.enabled')) {
+        if (!$this->app->routesAreCached() && config('laravolt.epilog.route.enabled')) {
             $this->registerRoutes();
         }
 
-        if (config('laravolt.cockpit.menu.enabled')) {
+        if (config('laravolt.epilog.menu.enabled')) {
             $this->registerMenu();
         }
 
@@ -62,10 +62,10 @@ class ServiceProvider extends BaseServiceProvider
             $this->packagePath(
                 'config/config.php'
             ),
-            'laravolt.cockpit'
+            'laravolt.epilog'
         );
         $this->publishes([
-            $this->packagePath('config/config.php') => config_path('laravolt/cockpit.php'),
+            $this->packagePath('config/config.php') => config_path('laravolt/epilog.php'),
         ], 'config');
     }
 

@@ -6,7 +6,7 @@ return [
     'route'  => [
         'enabled'    => true,
         'middleware' => ['web', 'auth'],
-        'prefix'     => 'cockpit',
+        'prefix'     => 'epilog',
     ],
     'view'   => [
         'layout' => 'ui::layouts.back',

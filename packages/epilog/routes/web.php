@@ -2,10 +2,10 @@
 
 Route::group(
     [
-        'namespace'  => '\Laravolt\Cockpit\Http\Controllers',
-        'prefix'     => config('laravolt.cockpit.route.prefix'),
-        'as'         => 'cockpit::',
-        'middleware' => config('laravolt.cockpit.route.middleware'),
+        'namespace'  => '\Laravolt\Epilog\Http\Controllers',
+        'prefix'     => config('laravolt.epilog.route.prefix'),
+        'as'         => 'epilog::',
+        'middleware' => config('laravolt.epilog.route.middleware'),
     ],
     function () {
 

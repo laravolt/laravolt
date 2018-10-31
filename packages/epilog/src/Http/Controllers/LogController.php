@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Cockpit\Http\Controllers;
+namespace Laravolt\Epilog\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Laravolt\Epilog\Epilog;
@@ -32,6 +32,6 @@ class LogController extends Controller
 
         $logs = $this->epilog->logs($selectedFile);
 
-        return view('cockpit::log.index', compact('files', 'logs', 'selectedFile'));
+        return view('epilog::log.index', compact('files', 'logs', 'selectedFile'));
     }
 }
