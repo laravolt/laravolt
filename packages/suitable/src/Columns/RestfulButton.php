@@ -1,6 +1,8 @@
 <?php
 namespace Laravolt\Suitable\Columns;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 
 class RestfulButton implements ColumnInterface
@@ -35,13 +37,10 @@ class RestfulButton implements ColumnInterface
 
     public function cell($data, $collection, $loop)
     {
-        $view = $this->getViewUrl($data);
-        $edit = $this->getEditUrl($data);
-        $delete = $this->getDeleteUrl($data);
+        $actions = $this->buildActions($data);
         $deleteConfirmation = $this->buildDeleteConfirmation($data);
-        $buttons = $this->buttons;
 
-        return View::make('suitable::columns.restful_button', compact('view', 'edit', 'delete', 'data', 'buttons', 'deleteConfirmation'))->render();
+        return View::make('suitable::columns.restful_button', compact('data', 'actions', 'deleteConfirmation'))->render();
     }
 
     public function cellAttributes($cell)
@@ -62,33 +61,6 @@ class RestfulButton implements ColumnInterface
         $this->deleteConfirmation = $message;
 
         return $this;
-    }
-
-    protected function getViewUrl($data)
-    {
-        if (in_array('view', $this->buttons)) {
-            return $this->getRoute('show', $data->id);
-        }
-
-        return false;
-    }
-
-    protected function getEditUrl($data)
-    {
-        if (in_array('edit', $this->buttons)) {
-            return $this->getRoute('edit', $data->id);
-        }
-
-        return false;
-    }
-
-    protected function getDeleteUrl($data)
-    {
-        if (in_array('delete', $this->buttons)) {
-            return $this->getRoute('destroy', $data->id);
-        }
-
-        return false;
     }
 
     protected function getRoute($verb, $param = null)
@@ -121,5 +93,26 @@ class RestfulButton implements ColumnInterface
         }
 
         return config('suitable.restful_button.delete_confirmation');
+    }
+
+    protected function buildActions($data)
+    {
+        $actions = [
+            'view'   => $this->getRoute('show', $data->getKey()),
+            'edit'   => $this->getRoute('edit', $data->getKey()),
+            'delete' => $this->getRoute('destroy', $data->getKey()),
+        ];
+
+        $class = get_class($data);
+        $policyEnabled = Gate::getPolicyFor($class) !== null;
+
+        $actions = collect($actions)
+            ->reject(
+                function ($url, $action) use ($policyEnabled, $data) {
+                    return ($policyEnabled && Auth::user()->cannot($action, $data)) || !in_array($action, $this->buttons);
+                }
+            );
+
+        return $actions;
     }
 }
