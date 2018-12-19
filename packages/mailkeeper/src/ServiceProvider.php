@@ -19,7 +19,7 @@ class ServiceProvider extends MailServiceProvider
      */
     public function registerSwiftMailer()
     {
-        if ($this->app['config']['mail.driver'] === 'mailkeeper') {
+        if (config('laravolt.mailkeeper.enabled') === true) {
             $this->registerDbMailer();
         } else {
             parent::registerSwiftMailer();
@@ -33,12 +33,33 @@ class ServiceProvider extends MailServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-
+        $this->registerCommands();
+        $this->registerConfig();
     }
 
     private function registerDbMailer() {
         $this->app->singleton('swift.mailer', function () {
             return new Swift_Mailer(new DbTransport());
         });
+    }
+
+    protected function registerCommands()
+    {
+        $this->commands(SendMailCommand::class);
+    }
+
+    protected function registerConfig()
+    {
+        $path = __DIR__.'/../config/mailkeeper.php';
+
+        $this->publishes(
+            [
+                $path => config_path('laravolt/mailkeeper.php'),
+            ]
+        );
+
+        $this->mergeConfigFrom(
+            $path, 'laravolt.mailkeeper'
+        );
     }
 }
