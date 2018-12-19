@@ -19,6 +19,8 @@ class ServiceProvider extends MailServiceProvider
      */
     public function registerSwiftMailer()
     {
+        $this->registerConfig();
+
         if (config('laravolt.mailkeeper.enabled') === true) {
             $this->registerDbMailer();
         } else {
@@ -34,7 +36,6 @@ class ServiceProvider extends MailServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->registerCommands();
-        $this->registerConfig();
     }
 
     private function registerDbMailer() {
