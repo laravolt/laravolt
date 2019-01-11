@@ -1,4 +1,4 @@
-<ul class="menu attached right bottom">
+<div class="menu attached right bottom">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
         <div class="item disabled">@lang('suitable::pagination.previous')</div>
@@ -12,4 +12,4 @@
     @else
         <div class="item disabled">@lang('suitable::pagination.next')</div>
     @endif
-</ul>
+</div>
