@@ -70,9 +70,10 @@ abstract class TableView implements Responsable
     protected function table($format)
     {
         return app('laravolt.suitable')
+            ->format($format)
             ->source($this->source)
             ->columns($this->columns())
-            ->render($format);
+            ->render();
     }
 
     abstract protected function columns();

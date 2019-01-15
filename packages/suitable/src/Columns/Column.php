@@ -57,4 +57,21 @@ abstract class Column
 
         return $this;
     }
+
+    public function except($formats)
+    {
+        $this->showOnly = array_diff($this->showOnly, is_array($formats) ? $formats : func_get_args());
+
+        return $this;
+    }
+
+    public function showOn($format)
+    {
+        return in_array($format, $this->showOnly);
+    }
+
+    public function hideOn($format)
+    {
+        return !$this->showOn($format);
+    }
 }

@@ -34,6 +34,8 @@ class Builder
 
     protected $row;
 
+    protected $format;
+
     /**
      * Builder constructor.
      */
@@ -75,6 +77,10 @@ class Builder
     public function columns(array $columns)
     {
         foreach ($columns as $column) {
+            // filter column based on supported format
+            if (($column instanceof ColumnInterface) && ($column->hideOn($this->format))) {
+                continue;
+            }
             $this->headers[] = $this->getHeader($column);
             $this->fields[] = $column;
         }
@@ -85,6 +91,13 @@ class Builder
     public function title($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function format($format)
+    {
+        $this->format = $format;
 
         return $this;
     }
@@ -135,7 +148,7 @@ class Builder
         return $this;
     }
 
-    public function render($format)
+    public function render()
     {
         $data = [
             'collection' => $this->collection,
@@ -154,7 +167,7 @@ class Builder
             'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
             'row'            => $this->row,
-            'format'         => $format,
+            'format'         => $this->format,
             'builder'        => $this,
         ];
 
