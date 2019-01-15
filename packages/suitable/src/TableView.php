@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Support\Responsable;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 abstract class TableView implements Responsable
 {
@@ -16,8 +17,6 @@ abstract class TableView implements Responsable
 
     /**
      * TableView constructor.
-     * @param string $view
-     * @param array $data
      */
     public function __construct($source)
     {
@@ -26,10 +25,31 @@ abstract class TableView implements Responsable
 
     public function toResponse($request)
     {
-        $view = $this->view ?: 'suitable::layouts.print';
-        $this->data = array_add($this->data, $this->alias, $this->table());
+        return request()
+            ->match(
+                [
+                    'html' => function () {
+                        $view = $this->view ?: 'suitable::layouts.print';
+                        $this->data = array_add($this->data, $this->alias, $this->table());
 
-        return response()->view($view, $this->data);
+                        return response()->view($view, $this->data);
+                    },
+                    'pdf' => function () {
+                        return Pdf
+                            ::loadView('suitable::layouts.pdf', [$this->alias => $this->table()])
+                            ->stream('test.pdf');
+                    },
+                    'csv' => function () {
+                        return fastexcel($this->source)->configureCsv(';', '#', '\n', 'gbk')->download('test.csv');
+                    },
+                    'xls' => function () {
+                        return fastexcel($this->source)->download('test.xls');
+                    },
+                    'xlsx' => function () {
+                        return fastexcel($this->source)->download('test.xlsx');
+                    },
+                ]
+            );
     }
 
     public function view(string $view = '', array $data = [])
