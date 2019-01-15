@@ -17,11 +17,9 @@ abstract class TableView implements Responsable
      * @param string $view
      * @param array $data
      */
-    public function __construct($source, string $view = '', array $data = [])
+    public function __construct($source)
     {
         $this->source = $source;
-        $this->view = $view;
-        $this->data = $data;
     }
 
     public function toResponse($request)
@@ -32,7 +30,7 @@ abstract class TableView implements Responsable
         return response()->view($view, $this->data);
     }
 
-    public function view($view, $data)
+    public function view(string $view = '', array $data = [])
     {
         $this->view = $view;
         $this->data = $data;
