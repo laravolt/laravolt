@@ -67,5 +67,13 @@ abstract class TableView implements Responsable
         return $this;
     }
 
-    abstract protected function table();
+    protected function table()
+    {
+        return app('laravolt.suitable')
+            ->source($this->source)
+            ->columns($this->columns())
+            ->render();
+    }
+
+    abstract protected function columns();
 }
