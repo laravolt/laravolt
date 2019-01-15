@@ -135,7 +135,7 @@ class Builder
         return $this;
     }
 
-    public function render()
+    public function render($format)
     {
         $data = [
             'collection' => $this->collection,
@@ -154,6 +154,7 @@ class Builder
             'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
             'row'            => $this->row,
+            'format'         => $format,
             'builder'        => $this,
         ];
 
@@ -230,6 +231,7 @@ class Builder
             $html = array_get($column, 'header', '');
         } elseif ($column instanceof ColumnInterface) {
             $html = $column->header();
+
             $headerAttributes = $column->headerAttributes();
         } else {
             throw new \Exception('Invalid header value');

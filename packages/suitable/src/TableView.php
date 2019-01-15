@@ -30,13 +30,13 @@ abstract class TableView implements Responsable
                 [
                     'html' => function () {
                         $view = $this->view ?: 'suitable::layouts.print';
-                        $this->data = array_add($this->data, $this->alias, $this->table());
+                        $this->data = array_add($this->data, $this->alias, $this->table('html'));
 
                         return response()->view($view, $this->data);
                     },
                     'pdf' => function () {
                         return Pdf
-                            ::loadView('suitable::layouts.pdf', [$this->alias => $this->table()])
+                            ::loadView('suitable::layouts.pdf', [$this->alias => $this->table('pdf')])
                             ->stream('test.pdf');
                     },
                     'csv' => function () {
@@ -67,12 +67,12 @@ abstract class TableView implements Responsable
         return $this;
     }
 
-    protected function table()
+    protected function table($format)
     {
         return app('laravolt.suitable')
             ->source($this->source)
             ->columns($this->columns())
-            ->render();
+            ->render($format);
     }
 
     abstract protected function columns();

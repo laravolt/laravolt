@@ -12,6 +12,8 @@ abstract class Column
 
     protected $field;
 
+    public $showOnly = ['html', 'pdf', 'xls', 'xlsx'];
+
     public function __construct($header)
     {
         $this->header = $header;
@@ -47,5 +49,12 @@ abstract class Column
     public function cellAttributes($cell)
     {
         return $this->cellAttributes;
+    }
+
+    public function only($formats)
+    {
+        $this->showOnly = array_intersect(is_array($formats) ? $formats : func_get_args(), $this->showOnly);
+
+        return $this;
     }
 }
