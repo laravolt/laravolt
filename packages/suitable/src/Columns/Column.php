@@ -20,7 +20,16 @@ abstract class Column
     static public function make($header, $field = null)
     {
         $column = new static($header);
-        $column->field = $field ?? snake_case($header);
+
+        if ($field) {
+            if (is_string($field)) {
+                $column->field = $field;
+            } elseif ($field instanceof \Closure) {
+                $column->field = $field;
+            }
+        } else {
+            $column->field = snake_case($header);
+        }
 
         return $column;
     }
