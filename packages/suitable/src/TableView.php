@@ -12,6 +12,8 @@ abstract class TableView implements Responsable
 
     protected $data = [];
 
+    protected $alias = 'table';
+
     /**
      * TableView constructor.
      * @param string $view
@@ -25,7 +27,7 @@ abstract class TableView implements Responsable
     public function toResponse($request)
     {
         $view = $this->view ?: 'suitable::layouts.print';
-        $this->data = array_add($this->data, 'table', $this->table());
+        $this->data = array_add($this->data, $this->alias, $this->table());
 
         return response()->view($view, $this->data);
     }
@@ -34,6 +36,13 @@ abstract class TableView implements Responsable
     {
         $this->view = $view;
         $this->data = $data;
+
+        return $this;
+    }
+
+    public function alias($alias)
+    {
+        $this->alias = $alias;
 
         return $this;
     }
