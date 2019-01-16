@@ -81,6 +81,7 @@ abstract class TableView implements Responsable
             ->format($format)
             ->source($this->buildSource($format))
             ->columns($this->columns())
+            ->segments($this->segments())
             ->render();
     }
 
@@ -100,4 +101,6 @@ abstract class TableView implements Responsable
     }
 
     abstract protected function columns();
+
+    abstract protected function segments();
 }

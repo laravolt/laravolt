@@ -1,8 +1,14 @@
-<div id="{{ $id }}">
+<div id="{{ $id }}" data-role="suitable">
+
+    @foreach($segments as $segment)
+        <div class="ui menu {{ $loop->first ? 'top' : '' }} attached">
+            {!! $segment->render() !!}
+        </div>
+    @endforeach
 
     @include('suitable::table')
 
-    <div class="ui menu bottom attached">
+    <div class="ui bottom attached menu">
         @if($showPagination)
             @if(!$collection->isEmpty())
                 <div class="item borderless">

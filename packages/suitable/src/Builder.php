@@ -24,6 +24,8 @@ class Builder
 
     protected $format;
 
+    protected $segments = [];
+
     /**
      * Builder constructor.
      */
@@ -46,6 +48,13 @@ class Builder
     public function id($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function segments(array $segments)
+    {
+        $this->segments = $segments;
 
         return $this;
     }
@@ -87,23 +96,17 @@ class Builder
         return $this;
     }
 
-    public function prepend($view)
-    {
-        $this->prepends[] = $view;
-
-        return $this;
-    }
-
     public function render()
     {
         $data = [
-            'collection' => $this->collection,
-            'id'         => $this->id,
-            'headers'    => $this->headers,
-            'fields'     => $this->fields,
+            'collection'     => $this->collection,
+            'id'             => $this->id,
+            'headers'        => $this->headers,
+            'fields'         => $this->fields,
             'showPagination' => $this->showPagination,
             'row'            => $this->row,
             'format'         => $this->format,
+            'segments'       => $this->segments,
             'builder'        => $this,
         ];
 
