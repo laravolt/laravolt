@@ -15,6 +15,8 @@ abstract class TableView implements Responsable
 
     protected $alias = 'table';
 
+    protected $perPage = 5;
+
     /**
      * TableView constructor.
      */
@@ -71,9 +73,24 @@ abstract class TableView implements Responsable
     {
         return app('laravolt.suitable')
             ->format($format)
-            ->source($this->source)
+            ->source($this->buildSource($format))
             ->columns($this->columns())
             ->render();
+    }
+
+    protected function buildSource($format)
+    {
+        $source = $this->source;
+
+        if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
+            if ($format === 'html') {
+                return $source->paginate($this->perPage);
+            }
+
+            return $source->get();
+        }
+
+        return $source;
     }
 
     abstract protected function columns();
