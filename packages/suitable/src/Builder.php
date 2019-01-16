@@ -41,7 +41,7 @@ class Builder
      */
     public function __construct()
     {
-        $this->id = 'suitable' . str_random();
+        $this->id = 'suitable'.str_random();
         $this->search = config('suitable.query_string.search');
 
         if (view()->exists($view = config('suitable.pagination_view'))) {
@@ -171,7 +171,7 @@ class Builder
             'builder'        => $this,
         ];
 
-        return View::make('suitable::table', $data)->render();
+        return View::make($this->getView(), $data)->render();
     }
 
     public function renderCell($field, $data, $collection, $loop)
@@ -291,5 +291,15 @@ class Builder
         $start = (request('page', 1) - 1) * $this->collection->perPage();
 
         return $start + $index;
+    }
+
+    protected function getView()
+    {
+        $view = 'suitable::container';
+        if ($this->format === 'pdf') {
+            $view = 'suitable::table';
+        }
+
+        return $view;
     }
 }
