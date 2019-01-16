@@ -12,6 +12,8 @@ abstract class Column
 
     protected $field;
 
+    protected $sortableColumn = '';
+
     public $showOnly = ['html', 'print', 'pdf', 'xls', 'xlsx'];
 
     public function __construct($header)
@@ -38,7 +40,7 @@ abstract class Column
 
     public function header()
     {
-        return $this->header;
+        return sprintf('<th>%s</th>', $this->header);
     }
 
     public function headerAttributes()
@@ -48,7 +50,13 @@ abstract class Column
 
     public function cellAttributes($cell)
     {
-        return $this->cellAttributes;
+        $html = '';
+
+        foreach ((array)$this->cellAttributes as $attribute => $value) {
+            $html .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $html;
     }
 
     public function only($formats)
@@ -73,5 +81,12 @@ abstract class Column
     public function hideOn($format)
     {
         return !$this->showOn($format);
+    }
+
+    public function sortable($column = null)
+    {
+        $this->sortableColumn = $column;
+
+        return $this;
     }
 }

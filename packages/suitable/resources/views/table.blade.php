@@ -1,12 +1,8 @@
 <table class="ui attached table">
     <thead>
     <tr>
-        @foreach($headers as $header)
-            @if($header->isSortable())
-                {!! $header->getHtml() !!}
-            @else
-                <th {!! $header->renderAttributes() !!}>{!! $header->getHtml() !!}</th>
-            @endif
+        @foreach($columns as $column)
+            {!! $column->header() !!}
         @endforeach
     </tr>
     </thead>
@@ -17,8 +13,8 @@
             @include($row)
         @else
             <tr>
-                @foreach($fields as $field)
-                    <td {!! $builder->renderCellAttributes($field, $data) !!}>{!! $builder->renderCell($field, $data, $collection, $outerLoop) !!}</td>
+                @foreach($columns as $column)
+                    <td {!! $column->cellAttributes($data) !!}>{!! $column->cell($data, $collection, $outerLoop) !!}</td>
                 @endforeach
             </tr>
         @endif

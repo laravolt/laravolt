@@ -12,9 +12,7 @@ class Builder
 
     protected $id = null;
 
-    protected $headers = [];
-
-    protected $fields = [];
+    protected $columns = [];
 
     protected $baseRoute = null;
 
@@ -66,8 +64,7 @@ class Builder
             if (($column instanceof ColumnInterface) && ($column->hideOn($this->format))) {
                 continue;
             }
-            $this->headers[] = $this->getHeader($column);
-            $this->fields[] = $column;
+            $this->columns[] = $column;
         }
 
         return $this;
@@ -101,8 +98,7 @@ class Builder
         $data = [
             'collection'     => $this->collection,
             'id'             => $this->id,
-            'headers'        => $this->headers,
-            'fields'         => $this->fields,
+            'columns'        => $this->columns,
             'showPagination' => $this->showPagination,
             'row'            => $this->row,
             'format'         => $this->format,
@@ -111,90 +107,6 @@ class Builder
         ];
 
         return View::make($this->getView(), $data)->render();
-    }
-
-    public function renderCell($field, $data, $collection, $loop)
-    {
-        if (array_has($field, 'raw') && $field['raw'] instanceof \Closure) {
-            return call_user_func($field['raw'], $data);
-        }
-
-        if ($view = array_get($field, 'view')) {
-            return View::make($view, compact('data'))->render();
-        }
-
-        if (array_has($field, 'field')) {
-            return array_get($data, $field['field']);
-        }
-
-        if (array_has($field, 'data')) {
-            return data_get($data, $field['data']);
-        }
-
-        if (array_has($field, 'present')) {
-            return $data->present($field['present']);
-        }
-
-        if (array_has($field, 'view')) {
-            return render($field['view'], compact('data'));
-        }
-
-        if ($field instanceof ColumnInterface) {
-            return $field->cell($data, $collection, $loop);
-        }
-
-        return false;
-    }
-
-    public function renderCellAttributes($field, $data)
-    {
-        $html = '';
-
-        if ($field instanceof ColumnInterface) {
-            $attributes = $field->cellAttributes($data);
-        } else {
-            $attributes = array_get($field, 'cellAttributes', []);
-        }
-
-        if (is_array($attributes)) {
-            foreach ($attributes as $attribute => $value) {
-                $html .= " {$attribute}=\"{$value}\"";
-            }
-        }
-
-        return $html;
-    }
-
-    protected function getHeader($column)
-    {
-        $header = new Header();
-        $headerAttributes = array_get($column, 'headerAttributes');
-
-        $sortable = array_get($column, 'sortable', false);
-        if ($sortable) {
-            unset($column['sortable']);
-            $field = array_get($column, 'field', '');
-            if (is_string($sortable)) {
-                $field = $sortable;
-            }
-
-            $html = SortableLink::make([$field, array_get($column, 'header', '')]);
-        } elseif (is_array($column)) {
-            $html = array_get($column, 'header', '');
-        } elseif ($column instanceof ColumnInterface) {
-            $html = $column->header();
-
-            $headerAttributes = $column->headerAttributes();
-        } else {
-            throw new \Exception('Invalid header value');
-        }
-
-        $header->setSortable($sortable);
-        $header->setHtml($html);
-
-        $header->setAttributes($headerAttributes);
-
-        return $header;
     }
 
     public function summary()
