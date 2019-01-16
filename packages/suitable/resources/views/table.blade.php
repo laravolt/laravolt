@@ -1,4 +1,4 @@
-<table class="ui table {{ $tableClass }}" style="border: 0 none;">
+<table class="ui attached table {{ $tableClass }}">
     <thead>
     <tr>
         @foreach($headers as $header)

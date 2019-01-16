@@ -18,13 +18,9 @@ class Builder
 
     protected $fields = [];
 
-    protected $title = null;
-
     protected $toolbars = [];
 
     protected $baseRoute = null;
-
-    protected $search = null;
 
     protected $showPagination = false;
 
@@ -42,7 +38,6 @@ class Builder
     public function __construct()
     {
         $this->id = 'suitable'.str_random();
-        $this->search = config('suitable.query_string.search');
 
         if (view()->exists($view = config('suitable.pagination_view'))) {
             $this->paginationView = $view;
@@ -88,23 +83,9 @@ class Builder
         return $this;
     }
 
-    public function title($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
     public function format($format)
     {
         $this->format = $format;
-
-        return $this;
-    }
-
-    public function search($search)
-    {
-        $this->search = $search;
 
         return $this;
     }
@@ -156,12 +137,6 @@ class Builder
             'headers'    => $this->headers,
             'prepends'   => $this->prepends,
             'fields'     => $this->fields,
-            'title'      => $this->title,
-            'search'     => $this->search,
-
-            // @deprecated, use search above
-            'showSearch' => $this->search,
-
             'showPagination' => $this->showPagination,
             'paginationView' => $this->paginationView,
             'toolbars'       => $this->toolbars,
