@@ -12,7 +12,7 @@ abstract class Column
 
     protected $field;
 
-    public $showOnly = ['html', 'pdf', 'xls', 'xlsx'];
+    public $showOnly = ['html', 'print', 'pdf', 'xls', 'xlsx'];
 
     public function __construct($header)
     {

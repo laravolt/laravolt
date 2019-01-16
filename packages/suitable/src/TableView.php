@@ -36,6 +36,12 @@ abstract class TableView implements Responsable
 
                         return response()->view($view, $this->data);
                     },
+                    'print' => function () {
+                        $view = $this->view ?: 'suitable::layouts.print';
+                        $this->data = array_add($this->data, $this->alias, $this->table('print'));
+
+                        return response()->view($view, $this->data);
+                    },
                     'pdf' => function () {
                         return Pdf
                             ::loadView('suitable::layouts.pdf', [$this->alias => $this->table('pdf')])

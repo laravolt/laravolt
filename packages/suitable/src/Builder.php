@@ -296,7 +296,7 @@ class Builder
     protected function getView()
     {
         $view = 'suitable::container';
-        if ($this->format === 'pdf') {
+        if (in_array($this->format, ['pdf', 'print'])) {
             $view = 'suitable::table';
         }
 
