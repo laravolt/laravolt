@@ -14,17 +14,11 @@ class Builder
 
     protected $headers = [];
 
-    protected $prepends = [];
-
     protected $fields = [];
-
-    protected $toolbars = [];
 
     protected $baseRoute = null;
 
     protected $showPagination = false;
-
-    protected $paginationView = 'suitable::pagination.full';
 
     protected $tableClass = null;
 
@@ -38,10 +32,6 @@ class Builder
     public function __construct()
     {
         $this->id = 'suitable'.str_random();
-
-        if (view()->exists($view = config('suitable.pagination_view'))) {
-            $this->paginationView = $view;
-        }
     }
 
     public function source($collection)
@@ -90,25 +80,9 @@ class Builder
         return $this;
     }
 
-    public function addToolbar($html)
-    {
-        $this->toolbars[] = $html;
-
-        return $this;
-    }
-
     public function baseRoute($route)
     {
         $this->baseRoute = $route;
-
-        return $this;
-    }
-
-    public function paginationView($view)
-    {
-        if (view()->exists($view)) {
-            $this->paginationView = $view;
-        }
 
         return $this;
     }
@@ -135,11 +109,8 @@ class Builder
             'collection' => $this->collection,
             'id'         => $this->id,
             'headers'    => $this->headers,
-            'prepends'   => $this->prepends,
             'fields'     => $this->fields,
             'showPagination' => $this->showPagination,
-            'paginationView' => $this->paginationView,
-            'toolbars'       => $this->toolbars,
             'tableClass'     => $this->tableClass,
             'row'            => $this->row,
             'format'         => $this->format,

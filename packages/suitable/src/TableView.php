@@ -15,7 +15,7 @@ abstract class TableView implements Responsable
 
     protected $alias = 'table';
 
-    protected $perPage = 5;
+    protected $perPage = null;
 
     /**
      * TableView constructor.
