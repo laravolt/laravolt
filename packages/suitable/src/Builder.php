@@ -20,8 +20,6 @@ class Builder
 
     protected $showPagination = false;
 
-    protected $tableClass = null;
-
     protected $row;
 
     protected $format;
@@ -48,13 +46,6 @@ class Builder
     public function id($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function tableClass($class)
-    {
-        $this->tableClass = $class;
 
         return $this;
     }
@@ -111,7 +102,6 @@ class Builder
             'headers'    => $this->headers,
             'fields'     => $this->fields,
             'showPagination' => $this->showPagination,
-            'tableClass'     => $this->tableClass,
             'row'            => $this->row,
             'format'         => $this->format,
             'builder'        => $this,
