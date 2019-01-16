@@ -1,25 +1,5 @@
 <div id="{{ $id }}">
 
-    @foreach($prepends as $prepend)
-        @if(view()->exists($prepend))
-            @include($prepend)
-        @else
-            {!! $prepend !!}
-        @endif
-    @endforeach
-
-    @if(!empty($toolbars))
-        <div class="ui menu attached">
-            @foreach($toolbars as $toolbar)
-                <div class="item borderless">
-                    {!! $toolbar !!}
-                </div>
-            @endforeach
-            <div class="menu right">
-            </div>
-        </div>
-    @endif
-
     @include('suitable::table')
 
     @if($showPagination)
