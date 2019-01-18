@@ -38,6 +38,8 @@ abstract class TableView implements Responsable
             }
         }
 
+        $table->columns($this->html->filter($this->columns()));
+
         return $this->html->response($this->source, $table);
     }
 
