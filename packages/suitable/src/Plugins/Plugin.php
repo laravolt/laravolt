@@ -6,8 +6,6 @@ abstract class Plugin
 {
     protected $only = [];
 
-    protected $except = [];
-
     public function init()
     {
     }
@@ -21,16 +19,20 @@ abstract class Plugin
         return $source;
     }
 
+    public function filter($columns)
+    {
+        if (count($this->only) == 0) {
+            return $columns;
+        }
+
+        return collect($columns)->filter(function ($item) {
+            return in_array($item->id(), $this->only);
+        })->toArray();
+    }
+
     public function only($columns)
     {
         $this->only = is_array($columns) ? $columns : func_get_args();
-
-        return $this;
-    }
-
-    public function except($columns)
-    {
-        $this->except = is_array($columns) ? $columns : func_get_args();
 
         return $this;
     }
