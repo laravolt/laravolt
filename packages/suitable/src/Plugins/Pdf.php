@@ -5,24 +5,20 @@ namespace Laravolt\Suitable\Plugins;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Toolbars\Action;
 
-class Pdf implements \Laravolt\Suitable\Contracts\Plugin
+class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 {
-    protected $wantsPdf = false;
+    protected $shouldResponse = false;
+
+    protected $filename = 'test.pdf';
 
     public function init()
     {
-        $this->wantsPdf = request('format') === 'pdf';
+        $this->shouldResponse = request('format') === 'pdf';
     }
 
-    public function resolve($source)
+    public function shouldResponse(): bool
     {
-        if (!$this->wantsPdf) {
-            return $source;
-        }
-
-        if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
-            return $source->get();
-        }
+        return $this->shouldResponse;
     }
 
     public function decorate(Builder $table): Builder
@@ -35,10 +31,12 @@ class Pdf implements \Laravolt\Suitable\Contracts\Plugin
         return $table;
     }
 
-    public function response()
+    public function response($source, Builder $table)
     {
+        $output = $table->source($this->resolve($source))->render('suitable::table');
+
         return \niklasravnsborg\LaravelPdf\Facades\Pdf
-            ::loadView('suitable::layouts.pdf', [$this->alias => $this->table('pdf')])
-            ->stream('test.pdf');
+            ::loadView('suitable::layouts.pdf', ['table' => $output])
+            ->stream($this->filename);
     }
 }

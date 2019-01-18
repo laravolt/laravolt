@@ -12,5 +12,7 @@ interface Plugin
 
     public function decorate(Builder $table): Builder;
 
-    public function response();
+    public function shouldResponse():bool;
+
+    public function response($source, Builder $table);
 }

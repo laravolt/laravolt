@@ -4,7 +4,6 @@ namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\View;
-use Laravolt\Suitable\Columns\ColumnInterface;
 
 class Builder
 {
@@ -23,6 +22,8 @@ class Builder
     protected $format;
 
     protected $segments = [];
+
+    protected $view = 'suitable::container';
 
     /**
      * Builder constructor.
@@ -69,22 +70,14 @@ class Builder
 
     public function columns(array $columns)
     {
-        foreach ($columns as $column) {
-            // filter column based on supported format
-            if (($column instanceof ColumnInterface) && ($column->hideOn($this->format))) {
-                continue;
-            }
-            $this->columns[] = $column;
-        }
+        $this->columns = $columns;
 
         return $this;
     }
 
-    public function format($format)
+    public function getColumns()
     {
-        $this->format = $format;
-
-        return $this;
+        return $this->columns;
     }
 
     public function baseRoute($route)
@@ -103,8 +96,10 @@ class Builder
         return $this;
     }
 
-    public function render()
+    public function render($view = null)
     {
+        $view = $view ?: $this->view;
+
         $data = [
             'collection'     => $this->collection,
             'id'             => $this->id,
@@ -116,7 +111,7 @@ class Builder
             'builder'        => $this,
         ];
 
-        return View::make($this->getView(), $data)->render();
+        return View::make($view, $data)->render();
     }
 
     public function summary()
@@ -152,15 +147,5 @@ class Builder
         $start = (request('page', 1) - 1) * $this->collection->perPage();
 
         return $start + $index;
-    }
-
-    protected function getView()
-    {
-        $view = 'suitable::container';
-        if (in_array($this->format, ['pdf', 'print'])) {
-            $view = 'suitable::table';
-        }
-
-        return $view;
     }
 }
