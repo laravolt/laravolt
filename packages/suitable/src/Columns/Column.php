@@ -12,11 +12,11 @@ abstract class Column
 
     protected $header = '';
 
+    protected $id;
+
     protected $field;
 
     protected $sortableColumn = '';
-
-    public $showOnly = ['html', 'print', 'pdf', 'xls', 'xlsx'];
 
     public function __construct($header)
     {
@@ -26,6 +26,7 @@ abstract class Column
     static public function make($header, $field = null)
     {
         $column = new static($header);
+        $column->id = snake_case($header);
 
         if ($field) {
             if (is_string($field)) {
@@ -38,6 +39,11 @@ abstract class Column
         }
 
         return $column;
+    }
+
+    public function id()
+    {
+        return $this->id;
     }
 
     public function header()
@@ -63,30 +69,6 @@ abstract class Column
         }
 
         return $html;
-    }
-
-    public function only($formats)
-    {
-        $this->showOnly = array_intersect(is_array($formats) ? $formats : func_get_args(), $this->showOnly);
-
-        return $this;
-    }
-
-    public function except($formats)
-    {
-        $this->showOnly = array_diff($this->showOnly, is_array($formats) ? $formats : func_get_args());
-
-        return $this;
-    }
-
-    public function showOn($format)
-    {
-        return in_array($format, $this->showOnly);
-    }
-
-    public function hideOn($format)
-    {
-        return !$this->showOn($format);
     }
 
     public function sortable($column = null)

@@ -33,10 +33,22 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function response($source, Builder $table)
     {
-        $output = $table->source($this->resolve($source))->render('suitable::table');
+        $table->source($this->resolve($source));
+
+        $columnsKeys = collect($table->getColumns())->map(function($item){
+            return $item->id();
+        })->toArray();
+
+        if (count($this->only) > 0) {
+            $columns = array_intersect($columnsKeys, (array) $this->only);
+        } elseif (count($this->except) > 0) {
+            $columns = array_diff($columnsKeys, (array) $this->except);
+        }
+
+        $table->filterColumns($columns);
 
         return \niklasravnsborg\LaravelPdf\Facades\Pdf
-            ::loadView('suitable::layouts.pdf', ['table' => $output])
+            ::loadView('suitable::layouts.pdf', ['table' => $table->render('suitable::table')])
             ->stream($this->filename);
     }
 }

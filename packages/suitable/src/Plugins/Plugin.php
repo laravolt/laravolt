@@ -4,6 +4,10 @@ namespace Laravolt\Suitable\Plugins;
 
 abstract class Plugin
 {
+    protected $only = [];
+
+    protected $except = [];
+
     public function init()
     {
     }
@@ -15,5 +19,19 @@ abstract class Plugin
         }
 
         return $source;
+    }
+
+    public function only($columns)
+    {
+        $this->only = is_array($columns) ? $columns : func_get_args();
+
+        return $this;
+    }
+
+    public function except($columns)
+    {
+        $this->except = is_array($columns) ? $columns : func_get_args();
+
+        return $this;
     }
 }

@@ -22,6 +22,8 @@ abstract class TableView implements Responsable
 
     public function toResponse($request)
     {
+        $this->init();
+
         $table = app('laravolt.suitable')->columns($this->columns());
 
         $this->html->decorate($table);
@@ -66,7 +68,15 @@ abstract class TableView implements Responsable
         return $this;
     }
 
-    abstract protected function columns();
+    protected function init()
+    {
 
-    abstract protected function segments();
+    }
+
+    protected function segments()
+    {
+
+    }
+
+    abstract protected function columns();
 }

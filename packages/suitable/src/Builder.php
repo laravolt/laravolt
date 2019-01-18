@@ -80,6 +80,14 @@ class Builder
         return $this->columns;
     }
 
+    public function filterColumns($filters)
+    {
+        $filters = is_array($filters) ? $filters : func_get_args();
+        $this->columns = collect($this->columns)->filter(function($item) use ($filters) {
+            return in_array($item->id(), $filters);
+        });
+    }
+
     public function baseRoute($route)
     {
         $this->baseRoute = $route;
