@@ -64,15 +64,11 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function resolve($source)
     {
-        if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
-            if ($this->perPage) {
-                return $source->paginate($this->perPage);
-            }
-
-            return $source->get();
+        if ($this->perPage && $source instanceof \Illuminate\Database\Eloquent\Builder) {
+            return $source->paginate($this->perPage);
         }
 
-        return $source;
+        return parent::resolve($source);
     }
 
     public function response($source, Builder $table)

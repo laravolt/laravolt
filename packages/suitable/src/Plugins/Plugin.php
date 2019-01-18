@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable\Plugins;
 
+use Illuminate\Database\Eloquent\Model;
 use Laravolt\Suitable\Builder;
 
 abstract class Plugin
@@ -20,6 +21,8 @@ abstract class Plugin
     {
         if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
             return $source->get();
+        } elseif (is_subclass_of($source, Model::class)) {
+            return (new $source)->all();
         }
 
         return $source;

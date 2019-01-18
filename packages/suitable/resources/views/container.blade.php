@@ -9,13 +9,11 @@
     @include('suitable::table')
 
     <div class="ui bottom attached menu">
-        @if($showPagination)
-            @if(!$collection->isEmpty())
-                <div class="item borderless">
-                    <small>{{ $builder->summary() }}</small>
-                </div>
-                {!! $collection->appends(request()->input())->links('suitable::pagination.full') !!}
-            @endif
+        @if($showPagination && !$collection->isEmpty())
+            <div class="item borderless">
+                <small>{{ $builder->summary() }}</small>
+            </div>
+            {!! $collection->appends(request()->input())->links('suitable::pagination.full') !!}
         @endif
     </div>
 </div>
