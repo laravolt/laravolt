@@ -2,12 +2,18 @@
 
 namespace Laravolt\Suitable\Plugins;
 
+use Laravolt\Suitable\Builder;
+
 abstract class Plugin
 {
     protected $only = [];
 
     public function init()
     {
+    }
+
+    public function decorate(Builder $table): Builder {
+        return $table;
     }
 
     public function resolve($source)
