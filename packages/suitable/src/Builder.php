@@ -57,6 +57,16 @@ class Builder
         return $this;
     }
 
+    public function addSegment($segment)
+    {
+        $this->segments[] = $segment;
+    }
+
+    public function getDefaultSegment()
+    {
+        return array_first($this->segments);
+    }
+
     public function columns(array $columns)
     {
         foreach ($columns as $column) {

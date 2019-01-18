@@ -31,9 +31,23 @@ class Segment
         return $this;
     }
 
+    public function addLeft($toolbar)
+    {
+        $this->left[] = $toolbar;
+
+        return $this;
+    }
+
     public function right($toolbars)
     {
         $this->right = is_array($toolbars) ? $toolbars : func_get_args();
+
+        return $this;
+    }
+
+    public function addRight($toolbar)
+    {
+        $this->right[] = $toolbar;
 
         return $this;
     }
