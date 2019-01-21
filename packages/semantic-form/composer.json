@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php" : ">=7.1.3",
+        "php": ">=7.1.3",
         "illuminate/support": "~5.7",
         "nesbot/carbon": "^1.36",
         "jenssegers/date": "^3.4"
@@ -30,7 +30,10 @@
     "autoload": {
         "psr-4": {
             "Laravolt\\SemanticForm\\": "src"
-        }
+        },
+        "files": [
+            "src\\helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -43,7 +46,8 @@
                 "Laravolt\\SemanticForm\\ServiceProvider"
             ],
             "aliases": {
-                "Form": "Laravolt\\SemanticForm\\Facade"
+                "Form": "Laravolt\\SemanticForm\\Facade",
+                "SemanticForm": "Laravolt\\SemanticForm\\Facade"
             }
         }
     }
