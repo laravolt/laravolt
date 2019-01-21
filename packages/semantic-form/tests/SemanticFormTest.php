@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Session;
 use Laravolt\SemanticForm\SemanticForm;
 
-class SemanticFormTest extends PHPUnit_Framework_TestCase
+class SemanticFormTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
@@ -13,11 +13,6 @@ class SemanticFormTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         Mockery::close();
-    }
-
-    public function testSemanticFormCanBeCreated()
-    {
-        $formBuilder = new SemanticForm;
     }
 
     public function testFormOpen()

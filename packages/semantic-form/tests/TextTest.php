@@ -2,13 +2,8 @@
 
 use Laravolt\SemanticForm\Elements\Text;
 
-class TextTest extends PHPUnit_Framework_TestCase
+class TextTest extends \PHPUnit\Framework\TestCase
 {
-	public function testTextCanBeCreated()
-	{
-		$text = new Text('email');
-	}
-
 	public function testCanRenderBasicText()
 	{
 		$text = new Text('email');

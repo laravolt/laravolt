@@ -3,8 +3,11 @@
 use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 use Illuminate\Support\MessageBag;
 
-class IlluminateErrorStoreTest extends PHPUnit_Framework_TestCase
+class IlluminateErrorStoreTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @test
+     */
     public function test_it_converts_array_keys_to_dot_notation()
     {
         $errors = new MessageBag(array(

@@ -2,13 +2,8 @@
 
 use Laravolt\SemanticForm\Elements\Hidden;
 
-class HiddenTest extends PHPUnit_Framework_TestCase
+class HiddenTest extends \PHPUnit\Framework\TestCase
 {
-	public function testTextCanBeCreated()
-	{
-		$hidden = new Hidden('_token');
-	}
-
 	public function testCanRenderBasicHidden()
 	{
 		$hidden = new Hidden('_token');

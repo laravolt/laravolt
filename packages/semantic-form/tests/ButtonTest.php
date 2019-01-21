@@ -2,13 +2,8 @@
 
 use Laravolt\SemanticForm\Elements\Button;
 
-class ButtonTest extends PHPUnit_Framework_TestCase
+class ButtonTest extends \PHPUnit\Framework\TestCase
 {
-    public function testButtonCanBeCreated()
-    {
-        $submit = new Button('Click Me', 'click-me');
-    }
-
     public function testRenderBasicButton()
     {
         $button = new Button('Click Me', 'click-me');

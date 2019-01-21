@@ -2,10 +2,14 @@
 
 use Laravolt\SemanticForm\Elements\Password;
 
-class PasswordTest extends PHPUnit_Framework_TestCase
+class PasswordTest extends \PHPUnit\Framework\TestCase
 {
-	public function testPasswordCanBeCreated()
-	{
-		$password = new Password('password');
-	}
+    public function testCanRenderBasicText()
+    {
+        $text = new Password('password');
+
+        $expected = '<input type="password" name="password">';
+        $result = $text->render();
+        $this->assertEquals($expected, $result);
+    }
 }

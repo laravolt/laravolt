@@ -2,13 +2,8 @@
 
 use Laravolt\SemanticForm\Elements\Select;
 
-class SelectTest extends PHPUnit_Framework_TestCase
+class SelectTest extends \PHPUnit\Framework\TestCase
 {
-	public function testSelectCanBeCreated()
-	{
-		$select = new Select('birth_year');
-	}
-
 	public function testCanRenderBasicSelect()
 	{
 		$select = new Select('birth_year');

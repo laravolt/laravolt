@@ -2,13 +2,8 @@
 
 use Laravolt\SemanticForm\Elements\Email;
 
-class EmailTest extends PHPUnit_Framework_TestCase
+class EmailTest extends \PHPUnit\Framework\TestCase
 {
-	public function testEmailCanBeCreated()
-	{
-		$email = new Email('email');
-	}
-
 	public function testRenderEmailInput()
 	{
 		$email = new Email('email');

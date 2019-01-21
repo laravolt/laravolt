@@ -3,13 +3,8 @@
 use Laravolt\SemanticForm\Elements\Hint;
 use Laravolt\SemanticForm\Elements\Text;
 
-class HintTest extends PHPUnit_Framework_TestCase
+class HintTest extends \PHPUnit\Framework\TestCase
 {
-	public function testHintCanBeCreated()
-	{
-		$hint = new Hint('Hint', 'custom-class');
-	}
-
 	public function testTextCanHaveHint()
 	{
 		$text = (new Text('email'))->hint('Hint');

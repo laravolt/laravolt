@@ -2,13 +2,8 @@
 
 use Laravolt\SemanticForm\Elements\InputWrapper;
 
-class InputWrapperTest extends PHPUnit_Framework_TestCase
+class InputWrapperTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTextCanBeCreated()
-    {
-        new InputWrapper();
-    }
-
     public function testCanRenderBasicInput()
     {
         $input = new InputWrapper();
