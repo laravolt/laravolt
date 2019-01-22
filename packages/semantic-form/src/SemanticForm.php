@@ -275,7 +275,7 @@ class SemanticForm
     public function submit($label = 'Submit', $name = null)
     {
         $submit = new Button($label, $name);
-        $submit->attribute('type', 'submit');
+        $submit->attribute('type', 'submit')->addClass('primary');
 
         return $submit;
     }
