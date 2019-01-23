@@ -138,4 +138,11 @@ class FormOpen extends Element
     {
         return $this->encodingType('multipart/form-data');
     }
+
+    public function horizontal()
+    {
+        $this->addClass('horizontal');
+
+        return $this;
+    }
 }
