@@ -25,7 +25,7 @@ class SelectMultiple extends Select
             $element = clone $this;
             $element->label = false;
 
-            return (new Field($this->label, $element))->render();
+            return $this->decorateField(new Field($this->label, $element))->render();
         }
 
         $result = '<select';

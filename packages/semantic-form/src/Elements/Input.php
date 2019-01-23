@@ -8,7 +8,7 @@ abstract class Input extends FormControl
             $element = clone $this;
             $element->label = false;
 
-            return (new Field($this->label, $element))->addClass($this->fieldWidth)->render();
+            return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
         }
 
         $result = '<input';

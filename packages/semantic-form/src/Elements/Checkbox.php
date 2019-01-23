@@ -19,7 +19,7 @@ class Checkbox extends Input
         if ($this->label) {
             $element = clone $this;
             $element->label = false;
-            return (new Field(new CheckboxWrapper($element, $this->label)))->render();
+            return $this->decorateField(new Field(new CheckboxWrapper($element, $this->label)))->render();
         }
 
         $result = '<input';

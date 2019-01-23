@@ -2,11 +2,13 @@
 
 abstract class Element
 {
-    protected $attributes = array();
+    protected $attributes = [];
 
     protected $label = false;
 
     protected $fieldWidth;
+
+    protected $fieldCallback = null;
 
     protected $hint = false;
 
@@ -26,7 +28,7 @@ abstract class Element
         'thirteen',
         'fourteen',
         'fiveteen',
-        'sizteen'
+        'sizteen',
     ];
 
     protected function getPrimaryControl()
@@ -90,12 +92,10 @@ abstract class Element
         }
 
         if (isset($this->attributes['class'])) {
-
             $existingClasses = explode(' ', $this->attributes['class']);
             $newClasses = explode(' ', $class);
 
             $class = implode(' ', array_unique(array_merge($existingClasses, $newClasses)));
-
         }
 
         $this->setAttribute('class', $class);
@@ -143,6 +143,13 @@ abstract class Element
     public function fieldWidth($width)
     {
         $this->getPrimaryControl()->fieldWidth = $this->normalizeWidth($width);
+
+        return $this;
+    }
+
+    public function field(\Closure $callback)
+    {
+        $this->fieldCallback = $callback;
 
         return $this;
     }
@@ -199,11 +206,20 @@ abstract class Element
         return null;
     }
 
+    protected function decorateField(Field $field)
+    {
+        if ($this->fieldCallback instanceof \Closure) {
+            call_user_func($this->fieldCallback, $field);
+        }
+
+        return $field;
+    }
+
     public function __call($method, $params)
     {
-        $params = count($params) ? $params : array($method);
-        $params = array_merge(array($method), $params);
-        call_user_func_array(array($this, 'attribute'), $params);
+        $params = count($params) ? $params : [$method];
+        $params = array_merge([$method], $params);
+        call_user_func_array([$this, 'attribute'], $params);
 
         return $this;
     }

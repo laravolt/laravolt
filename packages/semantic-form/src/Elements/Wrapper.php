@@ -18,7 +18,7 @@ class Wrapper extends Element
             $element = clone $this;
             $element->label = false;
 
-            $field = (new Field($this->label, $element));
+            $field = $this->decorateField(new Field($this->label, $element));
             if ($control = $element->getPrimaryControl()) {
                 $field->addClass($control->fieldWidth);
             }

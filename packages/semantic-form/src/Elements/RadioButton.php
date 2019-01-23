@@ -23,7 +23,7 @@ class RadioButton extends Checkbox
             $element = clone $this;
             $element->label = false;
 
-            return (new Field(new RadioButtonWrapper($element, $this->label)))->render();
+            return $this->decorateField(new Field(new RadioButtonWrapper($element, $this->label)))->render();
         }
 
         $result = '<input';
