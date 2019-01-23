@@ -365,7 +365,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testSubmit()
     {
-        $expected = '<button type="submit" class="ui button" name="submit">Sign In</button>';
+        $expected = '<button type="submit" class="ui button primary" name="submit">Sign In</button>';
         $result = (string)$this->form->submit('Sign In', 'submit');
         $this->assertEquals($expected, $result);
     }
