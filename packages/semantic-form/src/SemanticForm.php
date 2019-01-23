@@ -8,6 +8,7 @@ use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\InputWrapper;
+use Laravolt\SemanticForm\Elements\Link;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\SelectMultiple;
@@ -276,6 +277,13 @@ class SemanticForm
     {
         $submit = new Button($label, $name);
         $submit->attribute('type', 'submit')->addClass('primary');
+
+        return $submit;
+    }
+
+    public function link($label, $url)
+    {
+        $submit = new Link($label, $url);
 
         return $submit;
     }
