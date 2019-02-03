@@ -64,4 +64,9 @@ class Dropdown implements ColumnInterface
             $this->text = $text;
         }
     }
+
+    public function sortable()
+    {
+        return null;
+    }
 }

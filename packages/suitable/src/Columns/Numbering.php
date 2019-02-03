@@ -18,4 +18,9 @@ class Numbering extends Column implements ColumnInterface
 
         return $loop->iteration;
     }
+
+    public function sortable()
+    {
+        return null;
+    }
 }

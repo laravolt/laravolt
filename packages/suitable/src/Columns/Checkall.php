@@ -41,4 +41,9 @@ class Checkall implements ColumnInterface
     {
         return null;
     }
+
+    public function sortable()
+    {
+        return null;
+    }
 }

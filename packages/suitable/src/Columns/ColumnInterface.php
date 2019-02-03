@@ -10,4 +10,6 @@ interface ColumnInterface
     public function cell($cell, $collection, $loop);
 
     public function cellAttributes($cell);
+
+    public function sortable();
 }
