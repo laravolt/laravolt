@@ -1,7 +1,17 @@
 # Change Log
+All notable changes to semantic-form will be documented in this file.
 
-## 2.0.0 (2018-XX-XX)
+## 2.0.0 (2019-02-06)
+* Minimum PHP version changed to 7.2
+* Add horizontal form
 * Add `Macroable`
+* Add global helper `form()`
+* Alias `SemanticForm` are now deprecated, use `Form::text()` or `form()->text()`
+* Add new component `link()`
 * Remove undocumented function `setToken()`
 * Automatically generate CSRF token when opening form
 * Add chainable method `withoutToken()`  when opening form
+* Add optional second param to `open($route, $bind)` to bind model
+* Make `bind()` chainable
+* Add optional second param to `label($text, $fieldCallback)` to modify Field wrapper
+* Component `submit()` will have class `ui button primary` as default
