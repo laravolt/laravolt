@@ -15,11 +15,12 @@ class SelectDateWrapper extends Wrapper
 
     public function value($value)
     {
-
         try {
             $date = $this->asDateTime($value);
         } catch (\Exception $e) {
-            throw new \InvalidArgumentException('Argument must be an instance of Carbon or DateTime, or date string in Y-m-d format.');
+            throw new \InvalidArgumentException(
+                'Argument must be an instance of Carbon or DateTime, or date string in Y-m-d format.'
+            );
         }
 
         $this->getControl(0)->getControl(0)->select($date->day);
@@ -33,7 +34,7 @@ class SelectDateWrapper extends Wrapper
 
     public function defaultValue($value)
     {
-        if(!$this->hasValue()) {
+        if (!$this->hasValue()) {
             return $this->value($value);
         }
 
@@ -68,7 +69,6 @@ class SelectDateWrapper extends Wrapper
         }
 
         return Carbon::createFromFormat($this->format, $value);
-
     }
 
     protected function hasValue()

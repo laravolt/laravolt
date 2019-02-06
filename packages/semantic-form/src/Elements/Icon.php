@@ -15,10 +15,8 @@ class Icon extends Element
         $this->addClass($icon);
     }
 
-
     public function render()
     {
-
         $html = '<i';
         $html .= $this->renderAttributes();
         $html .= '>';
@@ -27,5 +25,4 @@ class Icon extends Element
 
         return $html;
     }
-
 }

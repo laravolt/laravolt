@@ -33,5 +33,4 @@ class SelectDateMiddleware
     {
         return sprintf('%s-%s-%s', $dates['year'], $dates['month'], $dates['date']);
     }
-
 }

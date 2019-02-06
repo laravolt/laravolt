@@ -3,7 +3,7 @@
 class InputWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui input'
+        'class' => 'ui input',
     ];
 
     protected $controlsLeft = [];
@@ -23,7 +23,7 @@ class InputWrapper extends Wrapper
     {
         $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
 
-        if($this->getPrimaryControl()->hasError()) {
+        if ($this->getPrimaryControl()->hasError()) {
             $this->addClass('error');
         }
     }
@@ -138,8 +138,8 @@ class InputWrapper extends Wrapper
     {
         $this->removeClass('left icon');
 
-        foreach($this->controlsLeft as $key => $control) {
-            if ($control instanceof  Icon) {
+        foreach ($this->controlsLeft as $key => $control) {
+            if ($control instanceof Icon) {
                 unset($this->controlsLeft[$key]);
             }
         }
@@ -149,8 +149,8 @@ class InputWrapper extends Wrapper
     {
         $this->removeClass('icon');
 
-        foreach($this->controlsRight as $key => $control) {
-            if ($control instanceof  Icon) {
+        foreach ($this->controlsRight as $key => $control) {
+            if ($control instanceof Icon) {
                 unset($this->controlsRight[$key]);
             }
         }

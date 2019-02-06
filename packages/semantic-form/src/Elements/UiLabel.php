@@ -17,7 +17,6 @@ class UiLabel extends Element
         $this->text = $text;
     }
 
-
     public function render()
     {
 
@@ -31,5 +30,4 @@ class UiLabel extends Element
 
         return $html;
     }
-
 }

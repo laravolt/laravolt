@@ -2,7 +2,6 @@
 
 abstract class FormControl extends Element
 {
-
     protected $hasError = false;
 
     public function __construct($name)
@@ -68,5 +67,4 @@ abstract class FormControl extends Element
     {
         return $this->hasError;
     }
-
 }

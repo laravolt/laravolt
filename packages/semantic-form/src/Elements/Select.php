@@ -5,17 +5,17 @@ use Illuminate\Support\Collection;
 
 class Select extends FormControl
 {
-
     private $options;
+
     private $selected;
 
-    protected $attributes = array(
+    protected $attributes = [
         'class' => 'ui dropdown search',
-    );
+    ];
 
-    public function __construct($name, $options = array())
+    public function __construct($name, $options = [])
     {
-        if($options instanceof Collection) {
+        if ($options instanceof Collection) {
             $options = $options->toArray();
         }
 
@@ -26,6 +26,7 @@ class Select extends FormControl
     public function select($option)
     {
         $this->selected = $option;
+
         return $this;
     }
 
@@ -37,6 +38,7 @@ class Select extends FormControl
     public function options($options)
     {
         $this->setOptions($options);
+
         return $this;
     }
 
@@ -45,6 +47,7 @@ class Select extends FormControl
         if ($this->label) {
             $element = clone $this;
             $element->label = false;
+
             return $this->decorateField(new Field($this->label, $element))->render();
         }
 
@@ -80,17 +83,19 @@ class Select extends FormControl
             $result .= $this->renderOption($value, $label);
         }
         $result .= "</optgroup>";
+
         return $result;
     }
 
     protected function renderOption($value, $label)
     {
         $option = '<option ';
-        $option .= 'value="' . $value . '"';
+        $option .= 'value="'.$value.'"';
         $option .= $this->isSelected($value) ? ' selected' : '';
         $option .= '>';
         $option .= $label;
         $option .= '</option>';
+
         return $option;
     }
 
@@ -102,18 +107,20 @@ class Select extends FormControl
             $selected = html_entity_decode($selected);
         }
 
-        return in_array($value, (array) $selected);
+        return in_array($value, (array)$selected);
     }
 
     public function addOption($value, $label)
     {
         $this->options[$value] = $label;
+
         return $this;
     }
 
     public function prependOption($value, $label)
     {
         $this->options = Arr::prepend($this->options, $label, $value);
+
         return $this;
     }
 
@@ -136,6 +143,7 @@ class Select extends FormControl
         }
 
         $this->select($value);
+
         return $this;
     }
 

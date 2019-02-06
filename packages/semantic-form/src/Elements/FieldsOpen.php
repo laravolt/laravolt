@@ -8,12 +8,10 @@ class FieldsOpen extends Element
 
     public function render()
     {
-
         $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
 
         return $html;
     }
-
 }

@@ -6,11 +6,12 @@ class SelectDateTimeWrapper extends SelectDateWrapper
 
     public function value($value)
     {
-
         try {
             $date = $this->asDateTime($value);
         } catch (\Exception $e) {
-            throw new \InvalidArgumentException('Argument must be an instance of Carbon or DateTime, or date string in Y-m-d format.');
+            throw new \InvalidArgumentException(
+                'Argument must be an instance of Carbon or DateTime, or date string in Y-m-d format.'
+            );
         }
 
         $this->getControl(0)->getControl(0)->select($date->day);
@@ -22,5 +23,4 @@ class SelectDateTimeWrapper extends SelectDateWrapper
 
         return $this;
     }
-
 }

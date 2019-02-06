@@ -2,7 +2,6 @@
 
 class SelectMultiple extends Select
 {
-
     private $selected;
 
     protected $attributes = [
@@ -37,5 +36,4 @@ class SelectMultiple extends Select
 
         return $result;
     }
-
 }

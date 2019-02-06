@@ -24,7 +24,6 @@ class Hint extends Element
 
     public function render()
     {
-
         $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
@@ -35,5 +34,4 @@ class Hint extends Element
 
         return $html;
     }
-
 }

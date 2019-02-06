@@ -138,7 +138,10 @@ class SemanticForm
             $input->setError();
         }
 
-        return (new InputWrapper($input))->data('datepicker-format', $format)->appendIcon('calendar')->addClass('calendar date');
+        return (new InputWrapper($input))
+            ->data('datepicker-format', $format)
+            ->appendIcon('calendar')
+            ->addClass('calendar date');
     }
 
     public function email($name, $defaultValue = null)
