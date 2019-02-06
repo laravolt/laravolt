@@ -47,9 +47,13 @@ class SemanticForm
         $this->errorStore = $errorStore;
     }
 
-    public function open($action = null)
+    public function open($action = null, $model = null)
     {
         $open = new FormOpen($action);
+
+        if ($model) {
+            $this->bind($model);
+        }
 
         return $open;
     }
@@ -370,6 +374,8 @@ class SemanticForm
     public function bind($model)
     {
         $this->model = is_array($model) ? (object)$model : $model;
+
+        return $this;
     }
 
     public function getValueFor($name)

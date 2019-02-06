@@ -22,6 +22,15 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testFormOpenAndBind()
+    {
+        $object = $this->getStubObject();
+        $expected = '<form method="POST" action="" class="ui form">';
+        $result = (string)$this->form->open(null, $object)->withoutToken();
+        $this->assertEquals($expected, $result);
+        $this->assertEquals('John', $this->form->getValueFor('first_name'));
+    }
+
     public function testFormGet()
     {
         $expected = '<form method="GET" action="localhost" class="ui form">';
@@ -903,6 +912,15 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testCanBindObject()
     {
         $this->assertTrue(method_exists($this->form, 'bind'));
+    }
+
+    public function testBindCanBeChainedBeforeOpeningForm()
+    {
+        $object = $this->getStubObject();
+        $this->form->bind($object)->open()->horizontal();
+        $expected = 'John';
+        $result = $this->form->getValueFor('first_name');
+        $this->assertEquals($expected, $result);
     }
 
     public function testBindEmail()
