@@ -1076,11 +1076,10 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testFieldCallback()
     {
         $expected = '<div class="field inline"><label>Name</label><input type="text" name="name"></div>';
-        $result = $this->form->text('name')->label('Name')->field(
-            function (\Laravolt\SemanticForm\Elements\Field $field) {
-                $field->addClass('inline');
-            }
-        )->render();
+        $callback = function (\Laravolt\SemanticForm\Elements\Field $field) {
+            $field->addClass('inline');
+        };
+        $result = $this->form->text('name')->label('Name', $callback)->render();
 
         $this->assertEquals($expected, $result);
     }

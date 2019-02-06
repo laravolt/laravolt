@@ -133,9 +133,10 @@ abstract class Element
         $this->setAttribute('id', $id);
     }
 
-    public function label($label)
+    public function label($label, \Closure $callback = null)
     {
         $this->label = new Label($label);
+        $this->fieldCallback = $callback;
 
         return $this;
     }
@@ -143,13 +144,6 @@ abstract class Element
     public function fieldWidth($width)
     {
         $this->getPrimaryControl()->fieldWidth = $this->normalizeWidth($width);
-
-        return $this;
-    }
-
-    public function field(\Closure $callback)
-    {
-        $this->fieldCallback = $callback;
 
         return $this;
     }
