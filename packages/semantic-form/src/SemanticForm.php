@@ -3,6 +3,7 @@ namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
 use Illuminate\Support\Traits\Macroable;
+use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\Field;
@@ -293,6 +294,13 @@ class SemanticForm
         $submit = new Link($label, $url);
 
         return $submit;
+    }
+
+    public function action($actions)
+    {
+        $actions = is_array($actions) ? $actions : func_get_args();
+
+        return new ActionWrapper($actions);
     }
 
     public function select($name, $options = [], $defaultValue = null)
