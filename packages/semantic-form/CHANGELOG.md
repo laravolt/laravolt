@@ -3,11 +3,13 @@ All notable changes to semantic-form will be documented in this file.
 
 ## 2.0.0 (2019-02-06)
 * Minimum PHP version changed to 7.2
+* Minimum Laravel version changed to 5.7
 * Add horizontal form
 * Add `Macroable`
 * Add global helper `form()`
-* Alias `SemanticForm` are now deprecated, use `Form::text()` or `form()->text()`
+* Alias `SemanticForm` are now deprecated, use alias `Form::text()` or helper `form()->text()`
 * Add new component `link()`
+* Add new component `action()`
 * Remove undocumented function `setToken()`
 * Automatically generate CSRF token when opening form
 * Add chainable method `withoutToken()`  when opening form
