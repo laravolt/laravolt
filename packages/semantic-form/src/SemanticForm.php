@@ -35,7 +35,6 @@ class SemanticForm
 
     private $oldInput;
     private $errorStore;
-    private $csrfToken;
     private $model;
 
     public function setOldInputProvider(OldInputInterface $oldInputProvider)
