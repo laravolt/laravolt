@@ -17,7 +17,7 @@ env:
     - coverage=no
 
 before_install:
-  - composer require satooshi/php-coveralls:dev-master
+  - composer require satooshi/php-coveralls
 
 before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
