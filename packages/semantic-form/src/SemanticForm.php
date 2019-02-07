@@ -298,7 +298,15 @@ class SemanticForm
 
     public function action($actions)
     {
-        $actions = is_array($actions) ? $actions : func_get_args();
+        $actions = collect(is_array($actions) ? $actions : func_get_args());
+
+        $actions->transform(function ($action) {
+            if (is_string($action) && static::hasMacro($action)) {
+                return call_user_func_array(\Closure::bind(static::$macros[$action], null, static::class), []);
+            }
+
+            return $action;
+        });
 
         return new ActionWrapper($actions);
     }
