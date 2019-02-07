@@ -7,23 +7,12 @@
 
 ## Installation
 
-Via Composer
-
 ``` bash
 $ composer require laravolt/semantic-form
 ```
 
-## Service Provider
-``` php
-Laravolt\SemanticForm\ServiceProvider::class,
-```
-
-## Facade (Alias)
-``` php
-'SemanticForm'    => Laravolt\SemanticForm\Facade::class,
-```
-
 ## API
+**Note: You can use either facade `Form::method()` or helper `form()->method()`.**
 
 ### Opening Form
 ``` php
@@ -184,11 +173,6 @@ Form::datepicker($name, $value, $format);
 ```
 See https://github.com/Semantic-Org/Semantic-UI/pull/3256 for further discussion. Remember, you must include calendar.js and calendar.css on your own.
 
-### Redactor (Not Yet Implemented)
-``` php
-Form::redactor($name, $value)->label('Post Body');
-```
-
 ### Hidden
 ``` php
 Form::hidden($name, $value);
@@ -224,6 +208,38 @@ And then call it like any other method:
 ```php
 Form::trix('contentId', 'content', '<b>some content</b>');
 ```
+
+### Action
+``` php
+// Method 1
+
+Form::action(Form::submit('Save'), Form::button('cancel'));
+
+// Method 2
+
+// Assumed you already define some macros:
+Form::macro('submit', function(){
+    return form()->submit('Submit');
+});
+
+Form::macro('cancel', function(){
+    return form()->button('Cancel');
+});
+
+// Then you can just call macro name as string
+Form::action('submit', 'cancel');
+
+// Method 3
+
+// Even further, you can define macro thats just wrap several buttons:
+SemanticForm::macro('default', function(){
+    return new \Laravolt\SemanticForm\Elements\Wrapper(form()->submit('Submit'), form()->submit('Submit'));
+});
+
+// And then make the call simplier:
+Form::action('default');
+```
+
 ### General Function
 For every form element, you can call and chaining following methods:
 
