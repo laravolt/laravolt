@@ -16,9 +16,16 @@ env:
     - setup=basic
     - coverage=no
 
+before_install:
+  - composer require satooshi/php-coveralls:dev-master
+
 before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
+  - mkdir -p build/logs
   - vendor/bin/phpcs --standard=psr2 src/
   - vendor/bin/phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php vendor/bin/coveralls -v
