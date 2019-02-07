@@ -1084,6 +1084,52 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testActionWithSingleComponent()
+    {
+        $expected = '<div class="action pushed"><button type="submit" class="ui button primary" name="submit">Sign In</button></div>';
+        $submit = $this->form->submit('Sign In', 'submit');
+        $result = $this->form->action($submit)->render();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testActionWithMultipleComponent()
+    {
+        $expected = '<div class="action pushed">' .
+            '<button type="submit" class="ui button primary" name="submit">Sign In</button>' .
+            '<button type="button" class="ui button">Cancel</button>' .
+            '</div>';
+        $submit = $this->form->submit('Sign In', 'submit');
+        $cancel = $this->form->button('Cancel');
+        $result = $this->form->action([$submit, $cancel])->render();
+        $this->assertEquals($expected, $result);
+
+        $result = $this->form->action($submit, $cancel)->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testActionWithMacro()
+    {
+        $expected = '<div class="action pushed">' .
+            '<button type="submit" class="ui button primary">Submit</button>' .
+            '<button type="button" class="ui button">Cancel</button>' .
+            '</div>';
+
+        $form = $this->form;
+
+        SemanticForm::macro('submit', function() use ($form) {
+            return $form->submit('Submit');
+        });
+
+        SemanticForm::macro('cancel', function() use ($form) {
+            return $form->button('Cancel');
+        });
+
+        $result = $this->form->action('submit', 'cancel')->render();
+
+        $this->assertEquals($expected, $result);
+    }
+
     private function getStubObject()
     {
         $obj = new stdClass;
