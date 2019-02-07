@@ -7,6 +7,14 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <file>src/ServiceProvider.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
     <php>
         <env name="SESSION_DRIVER" value="array"/>
     </php>
