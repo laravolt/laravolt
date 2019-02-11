@@ -2,7 +2,7 @@
 All notable changes to semantic-form will be documented in this file.
 
 ## 2.0.0 (2019-02-06)
-* Minimum PHP version changed to 7.2
+* Minimum PHP version changed to 7.1.3
 * Minimum Laravel version changed to 5.7
 * Add horizontal form
 * Add `Macroable`
