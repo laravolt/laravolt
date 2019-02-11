@@ -189,9 +189,28 @@ Form::submit($value);
 ```
 
 ### Model Binding
+
+#### Version 1
 ``` php
-Form::bind($model);
+{!! Form::bind($model) !!}
 ```
+
+#### Version 2
+``` php
+// as parameter for method open()
+{!! Form::open($route, $model) !!}
+
+// or chaining it
+{!! Form::bind($model)->get($route) !!}
+```
+
+#### Warning
+```php 
+// This is OK in version 1, but will produce error in version 2
+{!! Form::bind($model) !!}
+```
+
+
 ### Macro
 Macro definition, put it anywhere within your application, e.g. AppServiceProvider:
 ```php
