@@ -404,11 +404,7 @@ class SemanticForm
             return $this->getOldInput($name);
         }
 
-        if ($this->hasModelValue($name)) {
-            return $this->getModelValue($name);
-        }
-
-        return null;
+        return $this->getModelValue($name);
     }
 
     protected function hasOldInput()
@@ -425,18 +421,9 @@ class SemanticForm
         return $this->escape($this->oldInput->getOldInput($name));
     }
 
-    protected function hasModelValue($name)
-    {
-        if (!isset($this->model)) {
-            return false;
-        }
-
-        return isset($this->model->{$name}) || method_exists($this->model, '__get');
-    }
-
     protected function getModelValue($name)
     {
-        return $this->escape($this->model->{$name});
+        return $this->escape($this->model->{$name} ?? null);
     }
 
     protected function escape($value)
