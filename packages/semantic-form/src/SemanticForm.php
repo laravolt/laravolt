@@ -423,7 +423,14 @@ class SemanticForm
 
     protected function getModelValue($name)
     {
-        return $this->escape($this->model->{$name} ?? null);
+        $name = str_replace('[', '.', str_replace(']', '', $name));
+        $value = data_get($this->model, $name, $this->model->{$name} ?? null);
+
+        if (!is_string($value)) {
+            return null;
+        }
+
+        return $this->escape($value);
     }
 
     protected function escape($value)

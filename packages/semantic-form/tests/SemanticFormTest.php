@@ -1036,6 +1036,15 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testBindNestedArray()
+    {
+        $model = array('address' => ['street' => 'Petaling']);
+        $this->form->bind($model);
+        $expected = '<input type="text" name="address[street]" value="Petaling">';
+        $result = (string)$this->form->text('address[street]');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCloseUnbindsModel()
     {
         $object = $this->getStubObject();
@@ -1136,7 +1145,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $obj->email = 'johndoe@example.com';
         $obj->first_name = 'John';
         $obj->last_name = 'Doe';
-        $obj->date_of_birth = new \DateTime('1985-05-06');
+        $obj->date_of_birth = '1985-05-06';
         $obj->gender = 'male';
         $obj->terms = 'agree';
         $obj->number = '0';
