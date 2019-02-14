@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 
 class Builder
@@ -124,6 +125,10 @@ class Builder
 
     public function summary()
     {
+        if (!$this->collection instanceof LengthAwarePaginator) {
+            return false;
+        }
+
         $from = (($this->collection->currentPage() - 1) * $this->collection->perPage()) + 1;
         $total = $this->collection->total();
 
@@ -142,10 +147,30 @@ class Builder
 
     public function pager()
     {
+        if (!$this->collection instanceof LengthAwarePaginator) {
+            return $this->total();
+        }
+
         $page = $this->collection->currentPage();
         $total = max(1, ceil($this->collection->total() / $this->collection->perPage()));
 
         return trans('suitable::pagination.pager', compact('page', 'total'));
+    }
+
+    public function total()
+    {
+        $count = false;
+        if ($this->collection instanceof Collection) {
+            $count = count($this->collection);
+        } elseif ($this->collection instanceof LengthAwarePaginator) {
+            $count = $this->collection->total();
+        }
+
+        if ($count !== false) {
+            return trans('suitable::pagination.total', compact('count'));
+        }
+
+        return false;
     }
 
     public function sequence($item)

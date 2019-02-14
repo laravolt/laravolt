@@ -24,14 +24,13 @@ abstract class TableView implements Responsable
     {
         $this->init();
 
-        $table = app('laravolt.suitable');
+        $table = app('laravolt.suitable')->source($this->html->resolve($this->source));
 
         $this->html->decorate($table);
         collect($this->plugins)->each->decorate($table);
 
         foreach ($this->plugins as $plugin) {
             if ($plugin->shouldResponse()) {
-
                 $table->columns($plugin->filter($this->columns()));
 
                 return $plugin->response($this->source, $table);

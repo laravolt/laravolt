@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable\Plugins;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Toolbars\Action;
 
@@ -40,6 +41,15 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         $segment->addLeft(Action::make('Export To '.title_case($this->format), $url));
 
         return $table;
+    }
+
+    public function resolve($source)
+    {
+        if ($source instanceof LengthAwarePaginator) {
+            return $source->items();
+        }
+
+        return parent::resolve($source);
     }
 
     public function response($source, Builder $table)
