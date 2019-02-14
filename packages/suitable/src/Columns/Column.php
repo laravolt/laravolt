@@ -18,7 +18,7 @@ abstract class Column
 
     protected $sortableColumn = '';
 
-    public function __construct($header)
+    protected function __construct($header)
     {
         $this->header = $header;
     }
