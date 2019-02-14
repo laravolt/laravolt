@@ -2,14 +2,13 @@
 
 namespace Laravolt\Suitable\Plugins;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Laravolt\Suitable\Builder;
+use Laravolt\Suitable\Concerns\SourceResolver;
 
 abstract class Plugin
 {
+    use SourceResolver;
+
     protected $only = [];
 
     public function init()
@@ -18,26 +17,6 @@ abstract class Plugin
 
     public function decorate(Builder $table): Builder {
         return $table;
-    }
-
-    public function resolve($source)
-    {
-        if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
-            return $source->get();
-        } elseif (is_subclass_of($source, Model::class)) {
-            return (new $source)->all();
-        } elseif (is_string($source) && Schema::hasTable($source)) {
-            return DB::table($source)->get();
-        } elseif($source instanceof LengthAwarePaginator) {
-            return $source;
-        }
-
-        $type = gettype($source);
-        if (is_object($source)) {
-            $type = get_class($source);
-        }
-
-        throw new \InvalidArgumentException('Cannot generate table from '.$type);
     }
 
     public function filter($columns)
