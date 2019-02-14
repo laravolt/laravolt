@@ -5,7 +5,6 @@ namespace Laravolt\Suitable\Plugins;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Segments\Segment;
 use Laravolt\Suitable\Toolbars\Search;
-use Laravolt\Suitable\Toolbars\Text;
 
 class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 {
