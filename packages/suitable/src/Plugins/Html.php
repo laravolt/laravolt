@@ -53,8 +53,8 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         $table->segments(
             [
                 Segment::make('first')
-                    ->left(sprintf("<small>%s</small>", $table->total()))
-                    ->right(Search::make('search')),
+                    ->right(sprintf("<small>%s</small>", $table->total()))
+                    ->left(Search::make('search')),
             ]
         );
 
