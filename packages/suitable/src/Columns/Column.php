@@ -23,19 +23,17 @@ abstract class Column
         $this->header = $header;
     }
 
-    static public function make($header, $field = null)
+    static public function make($field, $header = null)
     {
+        if ($header === null) {
+            $header = str_replace('_', ' ', title_case($field));
+        }
+
         $column = new static($header);
         $column->id = snake_case($header);
 
-        if ($field) {
-            if (is_string($field)) {
-                $column->field = $field;
-            } elseif ($field instanceof \Closure) {
-                $column->field = $field;
-            }
-        } else {
-            $column->field = snake_case($header);
+        if (is_string($field) || $field instanceof \Closure) {
+            $column->field = $field;
         }
 
         return $column;
