@@ -5,7 +5,7 @@ namespace Laravolt\Suitable\Plugins;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Segments\Segment;
 use Laravolt\Suitable\Toolbars\Search;
-use Laravolt\Suitable\Toolbars\Title;
+use Laravolt\Suitable\Toolbars\Text;
 
 class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 {
@@ -53,9 +53,7 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     public function decorate(Builder $table): Builder {
         $table->segments(
             [
-                Segment::make('first')
-                    ->left(Title::make('Pengguna Aktif'))
-                    ->right(Search::make('search')),
+                Segment::make('first')->right(Search::make('search')),
             ]
         );
 

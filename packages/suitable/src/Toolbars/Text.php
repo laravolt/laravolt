@@ -2,7 +2,7 @@
 
 namespace Laravolt\Suitable\Toolbars;
 
-class Title implements Toolbar
+class Text implements Toolbar
 {
     protected $tag = 'h4';
 
