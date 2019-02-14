@@ -2,7 +2,7 @@
 
 namespace Laravolt\Suitable\Toolbars;
 
-class Search implements Toolbar
+class Search extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 {
     protected $name = 'search';
 
@@ -24,6 +24,6 @@ class Search implements Toolbar
 
     public function render()
     {
-        return view('suitable::toolbars.search', ['name' => $this->name]);
+        return view('suitable::toolbars.search', ['name' => $this->name])->render();
     }
 }

@@ -53,7 +53,9 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     public function decorate(Builder $table): Builder {
         $table->segments(
             [
-                Segment::make('first')->right(Search::make('search')),
+                Segment::make('first')
+                    ->left('title')
+                    ->right(Search::make('search')),
             ]
         );
 

@@ -2,7 +2,7 @@
 
 namespace Laravolt\Suitable\Toolbars;
 
-class Action implements Toolbar
+class Action extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 {
     protected $label = '';
 

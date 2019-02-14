@@ -2,7 +2,12 @@
 
 namespace Laravolt\Suitable\Toolbars;
 
-interface Toolbar
+abstract class Toolbar
 {
-    public function render();
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    abstract function render();
 }
