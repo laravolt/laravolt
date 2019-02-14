@@ -3,6 +3,8 @@
 namespace Laravolt\Suitable\Plugins;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Laravolt\Suitable\Builder;
 
 abstract class Plugin
@@ -23,6 +25,8 @@ abstract class Plugin
             return $source->get();
         } elseif (is_subclass_of($source, Model::class)) {
             return (new $source)->all();
+        } elseif (Schema::hasTable($source)) {
+            return DB::table($source)->get();
         }
 
         return $source;

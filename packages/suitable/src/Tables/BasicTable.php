@@ -2,8 +2,9 @@
 
 namespace Laravolt\Suitable\Tables;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
 
@@ -41,8 +42,18 @@ class BasicTable extends TableView
 
     protected function getColumnListing($source)
     {
+        $table = $source;
+
         if (is_subclass_of($source, Model::class)) {
-            return \Illuminate\Support\Facades\Schema::getColumnListing(app($source)->getTable());
+            $table = app($source)->getTable();
+        } elseif ($source instanceof LengthAwarePaginator) {
+            if (($item = $source->first()) !== null && ($item instanceof Model)) {
+                $table = $item->getTable();
+            }
+        }
+
+        if (Schema::hasTable($table)) {
+            return \Illuminate\Support\Facades\Schema::getColumnListing($table);
         }
 
         return [];
