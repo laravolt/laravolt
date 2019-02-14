@@ -164,4 +164,15 @@ class StatusColumn implements ColumnInterface
 ```
 
 ##### Built In Columns
-1. 
+1. `Laravolt\Suitable\Columns\Avatar`
+1. `Laravolt\Suitable\Columns\Boolean`
+1. `Laravolt\Suitable\Columns\Checkall`
+1. `Laravolt\Suitable\Columns\Date`
+1. `Laravolt\Suitable\Columns\DateTime`
+1. `Laravolt\Suitable\Columns\Dropdown`
+1. `Laravolt\Suitable\Columns\Id`
+1. `Laravolt\Suitable\Columns\Image`
+1. `Laravolt\Suitable\Columns\Numbering`
+1. `Laravolt\Suitable\Columns\Raw`
+1. `Laravolt\Suitable\Columns\RestfulButton`
+1. `Laravolt\Suitable\Columns\Text`
