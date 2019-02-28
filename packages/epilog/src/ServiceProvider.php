@@ -71,8 +71,8 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerMenu()
     {
-        if ($this->app->bound('laravolt.sidebar')) {
-            $this->systemMenu()->add('Log Viewer')->data('icon', 'file text outline');
+        if ($this->app->bound('laravolt.menu')) {
+            $this->systemMenu()->add('Log Viewer', route('epilog::log.index'))->data('icon', 'file text outline');
         }
     }
 
@@ -95,9 +95,9 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function systemMenu()
     {
-        $menu = $this->app['laravolt.sidebar']->system;
+        $menu = $this->app['laravolt.menu']->system;
         if (!$menu) {
-            $menu = $this->app['laravolt.sidebar']->add('System');
+            $menu = $this->app['laravolt.menu']->add('System');
         }
 
         return $menu;
