@@ -9,7 +9,7 @@ return [
         'prefix'     => 'epilog',
     ],
     'view'   => [
-        'layout' => 'ui::layouts.back',
+        'layout' => 'ui::layouts.app',
     ],
     'menu'   => [
         'enabled' => true,
