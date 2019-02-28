@@ -72,7 +72,11 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerMenu()
     {
         if ($this->app->bound('laravolt.menu')) {
-            $this->systemMenu()->add('Log Viewer', route('epilog::log.index'))->data('icon', 'file text outline');
+            $this->systemMenu()
+                ->add(__('Application Log'), route('epilog::log.index'))
+                ->data('permission', Permission::VIEW_LOG)
+                ->active('epilog/*')
+                ->data('icon', 'file text');
         }
     }
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2 class="ui header">Application Log</h2>
+    <h2 class="ui header">@lang('Application Log')</h2>
 
     <div class="ui divider hidden"></div>
 

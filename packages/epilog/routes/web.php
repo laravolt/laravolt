@@ -8,7 +8,5 @@ Route::group(
         'middleware' => config('laravolt.epilog.route.middleware'),
     ],
     function () {
-
-        Route::resource('backup', 'BackupController', ['only' => ['index']]);
-        Route::resource('log', 'LogController', ['only' => ['index']]);
+        Route::resource('/', 'LogController', ['only' => ['index']])->names('log');
     });
