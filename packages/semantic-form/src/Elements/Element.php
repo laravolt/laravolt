@@ -27,8 +27,8 @@ abstract class Element
         'twelve',
         'thirteen',
         'fourteen',
-        'fiveteen',
-        'sizteen',
+        'fifteen',
+        'sixteen',
     ];
 
     protected function getPrimaryControl()
