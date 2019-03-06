@@ -36,6 +36,7 @@ class CheckboxGroup extends Wrapper
             $html .= $control;
         }
 
+        $html .= $this->renderHint();
         $html .= '</div>';
 
         return $html;
