@@ -1148,7 +1148,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $obj->date_of_birth = '1985-05-06';
         $obj->gender = 'male';
         $obj->terms = 'agree';
-        $obj->number = '0';
+        $obj->number = 0;
 
         return $obj;
     }
