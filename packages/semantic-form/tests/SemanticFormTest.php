@@ -968,6 +968,15 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testBindSelectWithMultipleValues()
+    {
+        $object = $this->getStubObject();
+        $this->form->bind($object);
+        $expected = '<select class="ui dropdown search" name="skills[]" multiple="multiple"><option value="php" selected>PHP</option><option value="java" selected>Java</option></select>';
+        $result = (string)$this->form->select('skills', array('php' => 'PHP', 'java' => 'Java'))->multiple();
+        $this->assertEquals($expected, $result);
+    }
+
     public function testBindHidden()
     {
         $object = $this->getStubObject();
@@ -1159,6 +1168,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $obj->terms = 'agree';
         $obj->is_admin = true;
         $obj->number = 0;
+        $obj->skills = ['php', 'java'];
 
         return $obj;
     }
