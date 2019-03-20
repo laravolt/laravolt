@@ -820,8 +820,8 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $year = $this->form->selectRange('_schedule[year]', 2001, 2010)->addClass('compact');
 
         $timeOptions = [];
-        foreach(range(0, 23) as $hour) {
-            if(strlen($hour) == 1) {
+        foreach (range(0, 23) as $hour) {
+            if (strlen($hour) == 1) {
                 $hour = '0' . $hour;
             }
             $key = $val = sprintf('%s:%s', $hour, '00');
@@ -859,8 +859,8 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $year = $this->form->selectRange('_schedule[year]', 2001, 2010)->addClass('compact')->select(2004);
 
         $timeOptions = [];
-        foreach(range(0, 23) as $hour) {
-            if(strlen($hour) == 1) {
+        foreach (range(0, 23) as $hour) {
+            if (strlen($hour) == 1) {
                 $hour = '0' . $hour;
             }
             $key = $val = sprintf('%s:%s', $hour, '00');
@@ -1126,11 +1126,11 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
         $form = $this->form;
 
-        SemanticForm::macro('submit', function() use ($form) {
+        SemanticForm::macro('submit', function () use ($form) {
             return $form->submit('Submit');
         });
 
-        SemanticForm::macro('cancel', function() use ($form) {
+        SemanticForm::macro('cancel', function () use ($form) {
             return $form->button('Cancel');
         });
 

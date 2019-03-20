@@ -199,5 +199,4 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $result = $input->render();
         $this->assertEquals($expected, $result);
     }
-
 }
