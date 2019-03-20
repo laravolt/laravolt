@@ -1000,6 +1000,15 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testBindCheckboxWithBooleanValue()
+    {
+        $object = $this->getStubObject();
+        $this->form->bind($object);
+        $expected = '<input type="checkbox" name="is_admin" value="1" checked="checked">';
+        $result = (string)$this->form->checkbox('is_admin', 1);
+        $this->assertEquals($expected, $result);
+    }
+
     public function testValueTakesPrecedenceOverBinding()
     {
         $object = $this->getStubObject();
@@ -1148,6 +1157,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $obj->date_of_birth = '1985-05-06';
         $obj->gender = 'male';
         $obj->terms = 'agree';
+        $obj->is_admin = true;
         $obj->number = 0;
 
         return $obj;

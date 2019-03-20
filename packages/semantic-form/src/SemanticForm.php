@@ -426,7 +426,7 @@ class SemanticForm
         $name = str_replace('[', '.', str_replace(']', '', $name));
         $value = data_get($this->model, $name, $this->model->{$name} ?? null);
 
-        if (!is_string($value) && !is_numeric($value)) {
+        if (!is_string($value) && !is_numeric($value) && !is_bool($value)) {
             return null;
         }
 
