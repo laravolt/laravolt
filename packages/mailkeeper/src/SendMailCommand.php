@@ -46,7 +46,7 @@ class SendMailCommand extends Command
             $to['email'] = key($mail->to);
             $to['name'] = head($mail->to);
 
-            \Illuminate\Support\Facades\Mail::raw($mail->body, function ($message) use ($from, $to, $mail) {
+            \Illuminate\Support\Facades\Mail::html($mail->body, function ($message) use ($from, $to, $mail) {
                 $message->to($to['email'], $to['name']);
                 $message->from($from['email'], $from['name']);
                 $message->subject($mail->subject);
