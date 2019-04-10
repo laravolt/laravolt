@@ -21,7 +21,8 @@ class SendMailCommand extends Command
      */
     protected $description = 'Send mail stored in database';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         // disable mailkeeper so we can send email using the normal way
@@ -40,16 +41,18 @@ class SendMailCommand extends Command
         $mails = Mail::take($take)->get();
 
         $this->info(sprintf("Sending %d emails...", $mails->count()));
-        foreach($mails as $mail) {
-            $from['email'] = key($mail->from);
-            $from['name'] = head($mail->from);
-            $to['email'] = key($mail->to);
-            $to['name'] = head($mail->to);
-
-            \Illuminate\Support\Facades\Mail::html($mail->body, function ($message) use ($from, $to, $mail) {
-                $message->to($to['email'], $to['name']);
-                $message->from($from['email'], $from['name']);
-                $message->subject($mail->subject);
+        foreach ($mails as $mail) {
+            \Illuminate\Support\Facades\Mail::send([], [], function ($message) use ($mail) {
+                $message
+                    ->subject($mail->subject)
+                    ->from($mail->from)
+                    ->sender($mail->sender)
+                    ->to($mail->to)
+                    ->cc($mail->cc)
+                    ->bcc($mail->bcc)
+                    ->replyTo($mail->reply_to)
+                    ->priority($mail->priority)
+                    ->setBody($mail->body, $mail->content_type);
             });
 
             $mail->delete();

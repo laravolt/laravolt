@@ -12,8 +12,12 @@ class Mail extends Model
     protected $table = 'mail';
 
     protected $casts = [
-        'from' => 'array',
-        'to'   => 'array',
+        'from'     => 'array',
+        'sender'   => 'array',
+        'to'       => 'array',
+        'cc'       => 'array',
+        'bcc'      => 'array',
+        'reply_to' => 'array',
     ];
 
     protected $guarded = [];
