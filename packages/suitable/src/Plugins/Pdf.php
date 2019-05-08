@@ -14,6 +14,15 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     protected $filename = 'test.pdf';
 
+    /**
+     * Pdf constructor.
+     * @param  string  $filename
+     */
+    public function __construct(string $filename)
+    {
+        $this->filename = $filename;
+    }
+
     public function init()
     {
         $this->shouldResponse = request('format') === 'pdf';
