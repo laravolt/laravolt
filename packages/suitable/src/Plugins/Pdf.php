@@ -3,10 +3,13 @@
 namespace Laravolt\Suitable\Plugins;
 
 use Laravolt\Suitable\Builder;
+use Laravolt\Suitable\Concerns\SourceOverridden;
 use Laravolt\Suitable\Toolbars\Action;
 
 class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 {
+    use SourceOverridden;
+
     protected $shouldResponse = false;
 
     protected $filename = 'test.pdf';
@@ -33,10 +36,11 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function response($source, Builder $table)
     {
-        $table->source($this->resolve($source));
+        $table->source($this->overriddenSource ?? $this->resolve($source));
 
         return \niklasravnsborg\LaravelPdf\Facades\Pdf
             ::loadView('suitable::layouts.pdf', ['table' => $table->render('suitable::table')])
             ->stream($this->filename);
     }
+
 }

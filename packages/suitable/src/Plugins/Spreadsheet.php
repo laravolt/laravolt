@@ -4,10 +4,13 @@ namespace Laravolt\Suitable\Plugins;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Laravolt\Suitable\Builder;
+use Laravolt\Suitable\Concerns\SourceOverridden;
 use Laravolt\Suitable\Toolbars\Action;
 
 class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 {
+    use SourceOverridden;
+
     protected $shouldResponse = false;
 
     protected $filename = 'spreadsheet.csv';
@@ -54,7 +57,7 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function response($source, Builder $table)
     {
-        $source = $this->resolve($source);
+        $source = $this->overriddenSource ?? $this->resolve($source);
 
         if (count($this->only) > 0) {
             $source = $source->map->only($this->only);
