@@ -50,7 +50,7 @@ abstract class Column
             return SortableHeader::make($this->header, $this->sortableColumn);
         }
 
-        return sprintf('<th>%s</th>', $this->header);
+        return sprintf('<th %s>%s</th>', $this->generateAttributes($this->headerAttributes), $this->header);
     }
 
     public function headerAttributes()
@@ -60,13 +60,7 @@ abstract class Column
 
     public function cellAttributes($cell)
     {
-        $html = '';
-
-        foreach ((array)$this->cellAttributes as $attribute => $value) {
-            $html .= " {$attribute}=\"{$value}\"";
-        }
-
-        return $html;
+        return $this->generateAttributes((array) $this->cellAttributes);
     }
 
     public function sortable($column = null)
@@ -79,5 +73,16 @@ abstract class Column
     protected function isSortable()
     {
         return (bool)$this->sortableColumn;
+    }
+
+    protected function generateAttributes(array $attributes)
+    {
+        $html = '';
+
+        foreach ($attributes as $attribute => $value) {
+            $html .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $html;
     }
 }
