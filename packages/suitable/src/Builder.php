@@ -5,6 +5,8 @@ namespace Laravolt\Suitable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
+use Laravolt\Suitable\Columns\Raw;
+use Laravolt\Suitable\Columns\Text;
 
 class Builder
 {
@@ -71,7 +73,13 @@ class Builder
 
     public function columns(array $columns)
     {
-        $this->columns = $columns;
+        $this->columns = collect($columns)->transform(function ($column) {
+            if (is_array($column)) {
+                $column = $this->transformColumn($column);
+            }
+
+            return $column;
+        });
 
         return $this;
     }
@@ -181,4 +189,24 @@ class Builder
 
         return $start + $index;
     }
+
+    protected function transformColumn($column)
+    {
+        $header = array_get($column, 'header');
+
+        if (array_has($column, 'raw') && $column['raw'] instanceof \Closure) {
+            return Raw::make($column['raw'], $header);
+        }
+
+        if ($view = array_get($column, 'view')) {
+            return \Laravolt\Suitable\Columns\View::make($view, $header);
+        }
+
+        if ($field = array_get($column, 'field')) {
+            return Text::make($field, $header);
+        }
+
+        return false;
+    }
+
 }
