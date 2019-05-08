@@ -26,9 +26,6 @@
         "rap2hpoutre/fast-excel": "^1.0",
         "niklasravnsborg/laravel-pdf": "^2.0"
     },
-    "suggest": {
-        "lavary/laravel-menu": "Required to render Dropdown column"
-    },
     "require-dev": {
         "phpunit/phpunit" : "^7.0",
         "orchestra/testbench": "^3.7"
