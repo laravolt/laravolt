@@ -13,7 +13,11 @@ class Date extends Column implements ColumnInterface
         try {
             return \Jenssegers\Date\Date::createFromFormat('Y-m-d', $field)->format($this->format);
         } catch (\InvalidArgumentException $e) {
-            return $field;
+            try {
+                return \Jenssegers\Date\Date::createFromFormat('Y-m-d H:i:s', $field)->format($this->format);
+            } catch (\InvalidArgumentException $e) {
+                return $field;
+            }
         }
     }
 
