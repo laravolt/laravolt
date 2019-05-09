@@ -11,6 +11,7 @@ Semantic-UI table builder for Laravel.
  5.5.x    | 2.x
  5.6.x    | 2.x
  5.7.x    | 2.x
+ 5.8.x    | 3.x
 
 ## Installation
 
@@ -20,14 +21,14 @@ composer require laravolt/suitable
 ```
 
 ### Service Provider
-_Skip this step for Laravel 5.5 or above._
+_Skip this step for Laravel >= 5.5._
 
 ```php
 Laravolt\Suitable\ServiceProvider::class,
 ```
 
 ### Facade
-_Skip this step for Laravel 5.5 or above._
+_Skip this step for Laravel >= 5.5._
 
 ```php
 'Suitable'  => Laravolt\Suitable\Facade::class,
@@ -38,12 +39,8 @@ _Skip this step for Laravel 5.5 or above._
 ### Basic
 ```php
 {!! Suitable::source(User::all())
-->id('table1')
-->title('Users')
-->tableClass('ui table')
-->search(false)
 ->columns([
-    new \Laravolt\Suitable\Components\Checkall(),
+    \Laravolt\Suitable\Columns\Numbering::make('No'),
     ['header' => 'Nama', 'field' => 'name'],
     ['header' => 'Email', 'field' => 'email'],
 ])
@@ -118,6 +115,8 @@ interface ColumnInterface
     public function cell($cell, $collection, $loop);
 
     public function cellAttributes($cell);
+
+    public function sortable();
 }
 ```
 
@@ -163,16 +162,102 @@ class StatusColumn implements ColumnInterface
 
 ```
 
-##### Built In Columns
+## Advance Usage
+
+### Auto Detect
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\User;
+use Illuminate\Routing\Controller;
+use Laravolt\Suitable\Plugins\Pdf;
+use Laravolt\Suitable\Plugins\Spreadsheet;
+use Laravolt\Suitable\Tables\BasicTable;
+
+class SuitableController extends Controller
+{
+    public function __invoke()
+    {
+        $table = (new BasicTable(new User()));
+
+        return $table->view('etalase::example.suitable');
+    }
+}
+```
+
+### Custom TableView
+
+#### TableView Definition
+
+```php
+<?php
+
+namespace App\Table;
+
+use Laravolt\Suitable\Columns\Date;
+use Laravolt\Suitable\Columns\DateTime;
+use Laravolt\Suitable\Columns\Id;
+use Laravolt\Suitable\Columns\Numbering;
+use Laravolt\Suitable\Columns\Text;
+use Laravolt\Suitable\TableView;
+
+class UserTable extends TableView
+{
+    protected function columns()
+    {
+        return [
+            Numbering::make('No'),
+            Id::make('id'),
+            Text::make('name'),
+            Text::make('email'),
+            Date::make('created_at'),
+            DateTime::make('updated_at'),
+        ];
+    }
+}
+```
+
+```php
+<?php
+
+namespace Laravolt\Etalase\Http\Controllers;
+
+use App\User;
+use Illuminate\Routing\Controller;
+use App\Table\UserTable;
+use Laravolt\Suitable\Plugins\Pdf;
+use Laravolt\Suitable\Plugins\Spreadsheet;
+
+class SuitableController extends Controller
+{
+    public function __invoke()
+    {
+        $users = User::autoSort()->paginate(5);
+        $userTable = new UserTable($users);
+
+        $table = $userTable
+            ->plugins([
+                (new Pdf('users.pdf')),
+                (new Spreadsheet('users.xls')),
+            ]);
+
+        return $table->view('etalase::example.suitable');
+    }
+}
+```
+
+#### Built In Columns
 1. `Laravolt\Suitable\Columns\Avatar`
 1. `Laravolt\Suitable\Columns\Boolean`
 1. `Laravolt\Suitable\Columns\Checkall`
 1. `Laravolt\Suitable\Columns\Date`
 1. `Laravolt\Suitable\Columns\DateTime`
-1. `Laravolt\Suitable\Columns\Dropdown`
 1. `Laravolt\Suitable\Columns\Id`
 1. `Laravolt\Suitable\Columns\Image`
 1. `Laravolt\Suitable\Columns\Numbering`
 1. `Laravolt\Suitable\Columns\Raw`
 1. `Laravolt\Suitable\Columns\RestfulButton`
 1. `Laravolt\Suitable\Columns\Text`
+1. `Laravolt\Suitable\Columns\View`
