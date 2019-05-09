@@ -2,6 +2,8 @@
 
 namespace Laravolt\Suitable\Columns;
 
+use Laravolt\Suitable\Headers\SortableHeader;
+
 abstract class Column
 {
     protected $headerAttributes = [];
@@ -10,35 +12,45 @@ abstract class Column
 
     protected $header = '';
 
+    protected $id;
+
     protected $field;
 
-    public $showOnly = ['html', 'pdf', 'xls', 'xlsx'];
+    protected $sortableColumn = '';
 
-    public function __construct($header)
+    protected function __construct($header)
     {
         $this->header = $header;
     }
 
-    static public function make($header, $field = null)
+    static public function make($field, $header = null)
     {
-        $column = new static($header);
+        if ($header === null) {
+            $header = str_replace('_', ' ', title_case($field));
+        }
 
-        if ($field) {
-            if (is_string($field)) {
-                $column->field = $field;
-            } elseif ($field instanceof \Closure) {
-                $column->field = $field;
-            }
-        } else {
-            $column->field = snake_case($header);
+        $column = new static($header);
+        $column->id = snake_case($header);
+
+        if (is_string($field) || $field instanceof \Closure) {
+            $column->field = $field;
         }
 
         return $column;
     }
 
+    public function id()
+    {
+        return $this->id;
+    }
+
     public function header()
     {
-        return $this->header;
+        if ($this->isSortable()) {
+            return SortableHeader::make($this->header, $this->sortableColumn);
+        }
+
+        return sprintf('<th %s>%s</th>', $this->generateAttributes($this->headerAttributes), $this->header);
     }
 
     public function headerAttributes()
@@ -48,30 +60,29 @@ abstract class Column
 
     public function cellAttributes($cell)
     {
-        return $this->cellAttributes;
+        return $this->generateAttributes((array) $this->cellAttributes);
     }
 
-    public function only($formats)
+    public function sortable($column = null)
     {
-        $this->showOnly = array_intersect(is_array($formats) ? $formats : func_get_args(), $this->showOnly);
+        $this->sortableColumn = $column ?: $this->field;
 
         return $this;
     }
 
-    public function except($formats)
+    protected function isSortable()
     {
-        $this->showOnly = array_diff($this->showOnly, is_array($formats) ? $formats : func_get_args());
-
-        return $this;
+        return (bool)$this->sortableColumn;
     }
 
-    public function showOn($format)
+    protected function generateAttributes(array $attributes)
     {
-        return in_array($format, $this->showOnly);
-    }
+        $html = '';
 
-    public function hideOn($format)
-    {
-        return !$this->showOn($format);
+        foreach ($attributes as $attribute => $value) {
+            $html .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $html;
     }
 }

@@ -3,19 +3,13 @@
 namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Support\Responsable;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Laravolt\Suitable\Plugins\Html;
 
 abstract class TableView implements Responsable
 {
     protected $source = null;
 
-    protected $view = '';
-
-    protected $data = [];
-
-    protected $alias = 'table';
-
-    protected $perPage = 5;
+    protected $plugins = [];
 
     /**
      * TableView constructor.
@@ -23,74 +17,69 @@ abstract class TableView implements Responsable
     public function __construct($source)
     {
         $this->source = $source;
+        $this->html = new Html();
     }
 
     public function toResponse($request)
     {
-        return request()
-            ->match(
-                [
-                    'html' => function () {
-                        $view = $this->view ?: 'suitable::layouts.print';
-                        $this->data = array_add($this->data, $this->alias, $this->table('html'));
+        $this->init();
 
-                        return response()->view($view, $this->data);
-                    },
-                    'pdf' => function () {
-                        return Pdf
-                            ::loadView('suitable::layouts.pdf', [$this->alias => $this->table('pdf')])
-                            ->stream('test.pdf');
-                    },
-                    'csv' => function () {
-                        return fastexcel($this->source)->configureCsv(';', '#', '\n', 'gbk')->download('test.csv');
-                    },
-                    'xls' => function () {
-                        return fastexcel($this->source)->download('test.xls');
-                    },
-                    'xlsx' => function () {
-                        return fastexcel($this->source)->download('test.xlsx');
-                    },
-                ]
-            );
+        $table = app('laravolt.suitable')->source($this->html->resolve($this->source));
+
+        $this->html->decorate($table);
+        collect($this->plugins)->each->decorate($table);
+
+        foreach ($this->plugins as $plugin) {
+            if ($plugin->shouldResponse()) {
+                $table->columns($plugin->filter($this->columns()));
+
+                return $plugin->response($this->source, $table);
+            }
+        }
+
+        $table->columns($this->html->filter($this->columns()));
+
+        return $this->html->response($this->source, $table);
     }
 
     public function view(string $view = '', array $data = [])
     {
-        $this->view = $view;
-        $this->data = $data;
+        $this->html->view($view)->data($data);
 
         return $this;
     }
 
     public function alias($alias)
     {
-        $this->alias = $alias;
+        $this->html->alias($alias);
 
         return $this;
     }
 
-    protected function table($format)
+    public function paginate($perPage)
     {
-        return app('laravolt.suitable')
-            ->format($format)
-            ->source($this->buildSource($format))
-            ->columns($this->columns())
-            ->render();
+        $this->html->paginate($perPage);
+
+        return $this;
     }
 
-    protected function buildSource($format)
+    public function plugins($plugins)
     {
-        $source = $this->source;
+        $this->plugins = is_array($plugins) ? $plugins : func_get_args();
 
-        if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
-            if ($format === 'html') {
-                return $source->paginate($this->perPage);
-            }
+        collect($this->plugins)->each->init();
 
-            return $source->get();
-        }
+        return $this;
+    }
 
-        return $source;
+    protected function init()
+    {
+
+    }
+
+    protected function segments()
+    {
+
     }
 
     abstract protected function columns();

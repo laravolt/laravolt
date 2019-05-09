@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravolt\Suitable;
+namespace Laravolt\Suitable\Headers;
 
-class SortableLink
+class SortableHeader
 {
     protected static $classMapping = [
         'asc'  => [
@@ -15,17 +15,10 @@ class SortableLink
         ],
     ];
 
-    public static function make($parameters)
+    public static function make($title, $column)
     {
         $sortByKey = config('suitable.query_string.sort_by');
         $sortDirectionKey = config('suitable.query_string.sort_direction');
-
-        if (count($parameters) == 1) {
-            $parameters[1] = ucfirst($parameters[0]);
-        }
-
-        $column = $parameters[0];
-        $title = $parameters[1];
 
         $headerClass = '';
         $iconClass = 'sort';

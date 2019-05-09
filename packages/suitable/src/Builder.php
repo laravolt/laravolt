@@ -3,8 +3,10 @@
 namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
-use Laravolt\Suitable\Columns\ColumnInterface;
+use Laravolt\Suitable\Columns\Raw;
+use Laravolt\Suitable\Columns\Text;
 
 class Builder
 {
@@ -12,29 +14,19 @@ class Builder
 
     protected $id = null;
 
-    protected $headers = [];
-
-    protected $prepends = [];
-
-    protected $fields = [];
-
-    protected $title = null;
-
-    protected $toolbars = [];
+    protected $columns = [];
 
     protected $baseRoute = null;
 
-    protected $search = null;
-
     protected $showPagination = false;
-
-    protected $paginationView = 'suitable::pagination.full';
-
-    protected $tableClass = null;
 
     protected $row;
 
     protected $format;
+
+    protected $segments = [];
+
+    protected $view = 'suitable::container';
 
     /**
      * Builder constructor.
@@ -42,11 +34,6 @@ class Builder
     public function __construct()
     {
         $this->id = 'suitable'.str_random();
-        $this->search = config('suitable.query_string.search');
-
-        if (view()->exists($view = config('suitable.pagination_view'))) {
-            $this->paginationView = $view;
-        }
     }
 
     public function source($collection)
@@ -67,67 +54,52 @@ class Builder
         return $this;
     }
 
-    public function tableClass($class)
+    public function segments(array $segments)
     {
-        $this->tableClass = $class;
+        $this->segments = $segments;
 
         return $this;
+    }
+
+    public function addSegment($segment)
+    {
+        $this->segments[] = $segment;
+    }
+
+    public function getDefaultSegment()
+    {
+        return array_first($this->segments);
     }
 
     public function columns(array $columns)
     {
-        foreach ($columns as $column) {
-            // filter column based on supported format
-            if (($column instanceof ColumnInterface) && ($column->hideOn($this->format))) {
-                continue;
+        $this->columns = collect($columns)->transform(function ($column) {
+            if (is_array($column)) {
+                $column = $this->transformColumn($column);
             }
-            $this->headers[] = $this->getHeader($column);
-            $this->fields[] = $column;
-        }
+
+            return $column;
+        });
 
         return $this;
     }
 
-    public function title($title)
+    public function getColumns()
     {
-        $this->title = $title;
-
-        return $this;
+        return $this->columns;
     }
 
-    public function format($format)
+    public function filterColumns($filters)
     {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    public function search($search)
-    {
-        $this->search = $search;
-
-        return $this;
-    }
-
-    public function addToolbar($html)
-    {
-        $this->toolbars[] = $html;
-
-        return $this;
+        $filters = is_array($filters) ? $filters : func_get_args();
+        $this->columns = collect($this->columns)->filter(function($item) use ($filters) {
+            return in_array($item->id(), $filters);
+        });
     }
 
     public function baseRoute($route)
     {
         $this->baseRoute = $route;
-
-        return $this;
-    }
-
-    public function paginationView($view)
-    {
-        if (view()->exists($view)) {
-            $this->paginationView = $view;
-        }
 
         return $this;
     }
@@ -141,130 +113,30 @@ class Builder
         return $this;
     }
 
-    public function prepend($view)
+    public function render($view = null)
     {
-        $this->prepends[] = $view;
+        $view = $view ?: $this->view;
 
-        return $this;
-    }
-
-    public function render()
-    {
         $data = [
-            'collection' => $this->collection,
-            'id'         => $this->id,
-            'headers'    => $this->headers,
-            'prepends'   => $this->prepends,
-            'fields'     => $this->fields,
-            'title'      => $this->title,
-            'search'     => $this->search,
-
-            // @deprecated, use search above
-            'showSearch' => $this->search,
-
+            'collection'     => $this->collection,
+            'id'             => $this->id,
+            'columns'        => $this->columns,
             'showPagination' => $this->showPagination,
-            'paginationView' => $this->paginationView,
-            'toolbars'       => $this->toolbars,
-            'tableClass'     => $this->tableClass,
             'row'            => $this->row,
             'format'         => $this->format,
+            'segments'       => $this->segments,
             'builder'        => $this,
         ];
 
-        return View::make($this->getView(), $data)->render();
-    }
-
-    public function renderCell($field, $data, $collection, $loop)
-    {
-        if (array_has($field, 'raw') && $field['raw'] instanceof \Closure) {
-            return call_user_func($field['raw'], $data);
-        }
-
-        if ($view = array_get($field, 'view')) {
-            return View::make($view, compact('data'))->render();
-        }
-
-        if (array_has($field, 'field')) {
-            return array_get($data, $field['field']);
-        }
-
-        if (array_has($field, 'data')) {
-            return data_get($data, $field['data']);
-        }
-
-        if (array_has($field, 'present')) {
-            return $data->present($field['present']);
-        }
-
-        if (array_has($field, 'view')) {
-            return render($field['view'], compact('data'));
-        }
-
-        if ($field instanceof ColumnInterface) {
-            return $field->cell($data, $collection, $loop);
-        }
-
-        return false;
-    }
-
-    public function renderCellAttributes($field, $data)
-    {
-        $html = '';
-
-        if ($field instanceof ColumnInterface) {
-            $attributes = $field->cellAttributes($data);
-        } else {
-            $attributes = array_get($field, 'cellAttributes', []);
-        }
-
-        if (is_array($attributes)) {
-            foreach ($attributes as $attribute => $value) {
-                $html .= " {$attribute}=\"{$value}\"";
-            }
-        }
-
-        return $html;
-    }
-
-    protected function getHeader($column)
-    {
-        $header = new Header();
-        $headerAttributes = array_get($column, 'headerAttributes');
-
-        $sortable = array_get($column, 'sortable', false);
-        if ($sortable) {
-            unset($column['sortable']);
-            $field = array_get($column, 'field', '');
-            if (is_string($sortable)) {
-                $field = $sortable;
-            }
-
-            $html = SortableLink::make([$field, array_get($column, 'header', '')]);
-        } elseif (is_array($column)) {
-            $html = array_get($column, 'header', '');
-        } elseif ($column instanceof ColumnInterface) {
-            $html = $column->header();
-
-            $headerAttributes = $column->headerAttributes();
-
-            $sortable = $column->sortable();
-            if (is_string($sortable)) {
-                $html = SortableLink::make([$sortable, $html]);
-            }
-        } else {
-            throw new \Exception('Invalid header value');
-        }
-
-        $header->setSortable($sortable);
-        $header->setHtml($html);
-
-        $header->setAttributes($headerAttributes);
-
-        return $header;
+        return View::make($view, $data)->render();
     }
 
     public function summary()
     {
+        if (!$this->collection instanceof LengthAwarePaginator) {
+            return false;
+        }
+
         $from = (($this->collection->currentPage() - 1) * $this->collection->perPage()) + 1;
         $total = $this->collection->total();
 
@@ -283,10 +155,30 @@ class Builder
 
     public function pager()
     {
+        if (!$this->collection instanceof LengthAwarePaginator) {
+            return $this->total();
+        }
+
         $page = $this->collection->currentPage();
         $total = max(1, ceil($this->collection->total() / $this->collection->perPage()));
 
         return trans('suitable::pagination.pager', compact('page', 'total'));
+    }
+
+    public function total()
+    {
+        $count = false;
+        if ($this->collection instanceof Collection) {
+            $count = count($this->collection);
+        } elseif ($this->collection instanceof LengthAwarePaginator) {
+            $count = $this->collection->total();
+        }
+
+        if ($count !== false) {
+            return trans('suitable::pagination.total', compact('count'));
+        }
+
+        return false;
     }
 
     public function sequence($item)
@@ -298,13 +190,23 @@ class Builder
         return $start + $index;
     }
 
-    protected function getView()
+    protected function transformColumn($column)
     {
-        $view = 'suitable::container';
-        if ($this->format === 'pdf') {
-            $view = 'suitable::table';
+        $header = array_get($column, 'header');
+
+        if (array_has($column, 'raw') && $column['raw'] instanceof \Closure) {
+            return Raw::make($column['raw'], $header);
         }
 
-        return $view;
+        if ($view = array_get($column, 'view')) {
+            return \Laravolt\Suitable\Columns\View::make($view, $header);
+        }
+
+        if ($field = array_get($column, 'field')) {
+            return Text::make($field, $header);
+        }
+
+        return false;
     }
+
 }
