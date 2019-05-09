@@ -38,7 +38,7 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         $url = request()->url().'?'.http_build_query(array_merge(request()->input(), ['format' => 'pdf']));
 
         $segment = $table->getDefaultSegment();
-        $segment->addLeft(Action::make('Export To Pdf', $url));
+        $segment->addLeft(Action::make('file pdf', 'Export To Pdf', $url));
 
         return $table;
     }

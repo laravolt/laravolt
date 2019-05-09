@@ -6,28 +6,38 @@ class Action extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 {
     protected $label = '';
 
+    protected $icon = '';
+
     protected $href = '';
 
     /**
      * Title constructor.
+     * @param string $icon
      * @param string $label
      * @param string $href
      */
-    public function __construct(string $label, string $href)
+    public function __construct(?string $icon, ?string $label, string $href)
     {
+        $this->icon = $icon;
         $this->label = $label;
         $this->href = $href;
     }
 
-    static public function make($label, $href)
+    static public function make(?string $icon, ?string $label, string $href)
     {
-        $toolbar = new static($label, $href);
+        $toolbar = new static($icon, $label, $href);
 
         return $toolbar;
     }
 
     public function render()
     {
-        return sprintf('<a href="%s" class="ui button">%s</a>', $this->href, $this->label);
+        return sprintf(
+            '<a href="%s" class="ui button %s">%s%s</a>',
+            $this->href,
+            $this->icon ? 'icon':'',
+            $this->icon ? "<i class='icon {$this->icon}'></i> ":'',
+            $this->label
+        );
     }
 }

@@ -41,7 +41,7 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         $url = request()->url().'?'.http_build_query(array_merge(request()->input(), ['format' => $this->format]));
 
         $segment = $table->getDefaultSegment();
-        $segment->addLeft(Action::make('Export To '.title_case($this->format), $url));
+        $segment->addLeft(Action::make('file excel', 'Export To '.title_case($this->format), $url));
 
         return $table;
     }
