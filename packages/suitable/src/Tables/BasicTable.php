@@ -46,7 +46,9 @@ class BasicTable extends TableView
     {
         $table = $source;
 
-        if (is_subclass_of($source, Model::class)) {
+        if ($source instanceof Model) {
+            $table = $source->getTable();
+        } elseif (is_subclass_of($source, Model::class)) {
             $table = app($source)->getTable();
         } elseif ($source instanceof LengthAwarePaginator || $source instanceof Collection) {
             if (($item = $source->first()) !== null && ($item instanceof Model)) {
