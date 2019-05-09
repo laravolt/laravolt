@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 
-class RestfulButton implements ColumnInterface
+class RestfulButton extends Column implements ColumnInterface
 {
 
     protected $buttons = ['view', 'edit', 'delete'];
 
     protected $baseRoute;
+
+    protected $header;
 
     protected $deleteConfirmation;
 
@@ -18,16 +20,24 @@ class RestfulButton implements ColumnInterface
      * RestfulButton constructor.
      * @param $baseRoute
      */
-    public function __construct($baseRoute)
+    public function __construct($baseRoute, $header = null)
     {
         $this->baseRoute = $baseRoute;
+        $this->header = $header;
         $this->deleteConfirmation = config('suitable.restul_button.delete_message');
     }
 
+    static public function make($baseRoute, $header = null)
+    {
+        $column = new static($baseRoute, $header);
+        $column->id = snake_case($header);
+
+        return $column;
+    }
 
     public function header()
     {
-        return '';
+        return sprintf('<th %s>%s</th>', $this->generateAttributes($this->headerAttributes), $this->header);
     }
 
     public function headerAttributes()
@@ -95,11 +105,6 @@ class RestfulButton implements ColumnInterface
         return config('suitable.restful_button.delete_confirmation');
     }
 
-    public function sortable()
-    {
-        return null;
-    }
-  
     protected function buildActions($data)
     {
         $actions = [
