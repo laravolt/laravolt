@@ -36,7 +36,7 @@ class BasicTable extends TableView
     {
         $columns = [];
         foreach ($this->columns as $column) {
-            $columns[] = Text::make($column);
+            $columns[] = Text::make($column)->sortable($column);
         }
 
         return $columns;
