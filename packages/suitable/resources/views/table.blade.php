@@ -1,4 +1,4 @@
-<table class="ui attached table">
+<table class="ui {{ empty($segments) ? 'top': '' }} attached table">
     <thead>
     <tr>
         @foreach($columns as $column)
