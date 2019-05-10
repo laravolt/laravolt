@@ -4,9 +4,9 @@ namespace Laravolt\Thunderclap\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Laravolt\Packer\PackerHelper;
 use Laravolt\Thunderclap\ColumnsTransformer;
 use Laravolt\Thunderclap\DBHelper;
+use Laravolt\Thunderclap\FileTransformer;
 
 class Generator extends Command
 {
@@ -33,7 +33,7 @@ class Generator extends Command
     /**
      * Generator constructor.
      */
-    public function __construct(DBHelper $DBHelper, PackerHelper $packerHelper, ColumnsTransformer $transformer)
+    public function __construct(DBHelper $DBHelper, FileTransformer $packerHelper, ColumnsTransformer $transformer)
     {
         parent::__construct();
         $this->DBHelper = $DBHelper;
