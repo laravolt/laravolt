@@ -92,7 +92,7 @@ class RestfulButton extends Column implements ColumnInterface
             return call_user_func($this->deleteConfirmation, $data);
         }
 
-        if ($message = config('suitable.restful_button.delete_confirmation_auto')) {
+        if ($message = trans('suitable::suitable.delete_confirmation_auto')) {
             $fields = config('suitable.restful_button.delete_confirmation_fields');
 
             foreach ($fields as $field) {
@@ -102,7 +102,7 @@ class RestfulButton extends Column implements ColumnInterface
             }
         }
 
-        return config('suitable.restful_button.delete_confirmation');
+        return trans('suitable::suitable.delete_confirmation');
     }
 
     protected function buildActions($data)
