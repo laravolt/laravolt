@@ -11,10 +11,18 @@ Install thunderclap via composer:
 ```bash
 composer require laravolt/thunderclap
 ```
-Add service provider:
+Add service provider (only for Laravel <= 5.4):
 
 ```php
 Laravolt\Thunderclap\ServiceProvider::class,
+```
+
+**WARNING!!**
+Thunderclap assume followings package already installed in your application:
+
+```json
+"nwidart/laravel-modules": "^5.0",
+"sofa/eloquence": "^5.6"
 ```
 
 ## Usage
