@@ -16,6 +16,6 @@ return [
     'columns'    => [
         'except' => ['id', 'created_at', 'updated_at', 'deleted_at', 'remember_token'],
     ],
-    'namespace'  => 'App',
-    'target_dir' => app_path()
+    'namespace'  => 'Modules',
+    'target_dir' => base_path('modules')
 ];

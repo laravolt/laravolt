@@ -2,112 +2,54 @@
 
 namespace :Namespace:\:ModuleName:\Http\Controllers;
 
-use App\Http\Controllers\Controller as BaseController;
+use Laravolt\Suitable\Tables\BasicTable;
 use :Namespace:\:ModuleName:\Http\Requests\Store;
 use :Namespace:\:ModuleName:\Http\Requests\Update;
-use :Namespace:\:ModuleName:\Repositories\RepositoryInterface;
-use Notification;
+use :Namespace:\:ModuleName:\Models\:ModuleName:;
+use :Namespace:\:ModuleName:\TableView\IndexTableView;
 
-class Controller extends BaseController
+class Controller extends \Illuminate\Routing\Controller
 {
+    public function index()
+    {
+        $items = :ModuleName:::autoSort()->latest()->search(request('search'))->paginate();
 
-	protected $repository;
+        return (IndexTableView::make($items))->view(':moduleName:::index');
+    }
 
-	function __construct(RepositoryInterface $repository)
-	{
-		$this->repository = $repository;
-	}
+    public function create()
+    {
+        return view(':moduleName:::create');
+    }
 
-	/**
-	 * Display a listing of the :ModuleName:.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$collection = $this->repository->paginate();
+    public function store(Store $request)
+    {
+        :ModuleName:::create($request->all());
 
-		return view(':module_name:::index', compact('collection'));
-	}
+        return redirect()->route(':moduleName:.index')->withSuccess(':ModuleName: saved');
+    }
 
-	/**
-	 * Show the form for creating a new :ModuleName:.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return view(':module_name:::create');
-	}
+    public function show(:ModuleName: $:moduleName:)
+    {
+        return view(':moduleName:::show', compact(':moduleName:'));
+    }
 
-	/**
-	 * Store a newly created :ModuleName: in storage.
-	 *
-	 * @param Create:ModuleName:Request $request
-	 *
-	 * @return Response
-	 */
-	public function store(Store $request)
-	{
-		$input = $request->all();
+    public function edit(:ModuleName: $:moduleName:)
+    {
+        return view(':moduleName:::edit', compact(':moduleName:'));
+    }
 
-		$this->repository->create($input);
+    public function update(Update $request, :ModuleName: $:moduleName:)
+    {
+        $:moduleName:->update($request->all());
 
-		Notification::success(':module_name:::store.success');
+        return redirect()->back()->withSuccess(':ModuleName: saved');
+    }
 
-		return redirect()->route(':route-url-prefix:.index');
-	}
+    public function destroy(:ModuleName: $:moduleName:)
+    {
+        $:moduleName:->delete();
 
-	/**
-	 * Display the specified :ModuleName:.
-	 *
-	 * @param  int $id
-	 *
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$item = $this->repository->find($id);
-
-		return view(':module_name:::show', compact('item'));
-	}
-
-	/**
-	 * Show the form for editing the specified :ModuleName:.
-	 *
-	 * @param  int $id
-	 *
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$item = $this->repository->find($id);
-
-		return view(':module_name:::edit', compact('item'));
-	}
-
-	public function update($id, Update $request)
-	{
-		$this->repository->update($request->all(), $id);
-
-		Notification::success(':module_name:::update.success');
-
-		return redirect()->route(':route-url-prefix:.index');
-	}
-
-	/**
-	 * Remove the specified :ModuleName: from storage.
-	 *
-	 * @param  int $id
-	 *
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		$this->repository->delete($id);
-
-		Notification::success(':module_name:::destroy.success');
-
-		return redirect()->route(':route-url-prefix:.index');
-	}
+        return redirect()->route(':moduleName:.index')->withSuccess(':ModuleName: deleted');
+    }
 }

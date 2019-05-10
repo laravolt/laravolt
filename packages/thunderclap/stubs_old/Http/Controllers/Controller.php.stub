@@ -1,0 +1,113 @@
+<?php
+
+namespace :Namespace:\:ModuleName:\Http\Controllers;
+
+use App\Http\Controllers\Controller as BaseController;
+use :Namespace:\:ModuleName:\Http\Requests\Store;
+use :Namespace:\:ModuleName:\Http\Requests\Update;
+use :Namespace:\:ModuleName:\Repositories\RepositoryInterface;
+use Notification;
+
+class Controller extends BaseController
+{
+
+	protected $repository;
+
+	function __construct(RepositoryInterface $repository)
+	{
+		$this->repository = $repository;
+	}
+
+	/**
+	 * Display a listing of the :ModuleName:.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		$collection = $this->repository->paginate();
+
+		return view(':module_name:::index', compact('collection'));
+	}
+
+	/**
+	 * Show the form for creating a new :ModuleName:.
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		return view(':module_name:::create');
+	}
+
+	/**
+	 * Store a newly created :ModuleName: in storage.
+	 *
+	 * @param Create:ModuleName:Request $request
+	 *
+	 * @return Response
+	 */
+	public function store(Store $request)
+	{
+		$input = $request->all();
+
+		$this->repository->create($input);
+
+		Notification::success(':module_name:::store.success');
+
+		return redirect()->route(':route-url-prefix:.index');
+	}
+
+	/**
+	 * Display the specified :ModuleName:.
+	 *
+	 * @param  int $id
+	 *
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$item = $this->repository->find($id);
+
+		return view(':module_name:::show', compact('item'));
+	}
+
+	/**
+	 * Show the form for editing the specified :ModuleName:.
+	 *
+	 * @param  int $id
+	 *
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		$item = $this->repository->find($id);
+
+		return view(':module_name:::edit', compact('item'));
+	}
+
+	public function update($id, Update $request)
+	{
+		$this->repository->update($request->all(), $id);
+
+		Notification::success(':module_name:::update.success');
+
+		return redirect()->route(':route-url-prefix:.index');
+	}
+
+	/**
+	 * Remove the specified :ModuleName: from storage.
+	 *
+	 * @param  int $id
+	 *
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		$this->repository->delete($id);
+
+		Notification::success(':module_name:::destroy.success');
+
+		return redirect()->route(':route-url-prefix:.index');
+	}
+}

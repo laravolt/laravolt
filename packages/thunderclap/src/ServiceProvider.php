@@ -64,7 +64,7 @@ class ServiceProvider extends BaseServiceProvider
             $this->packagePath('config/config.php'), 'thunderclap'
         );
         $this->publishes([
-            $this->packagePath('config/config.php') => config_path('thunderclap.php'),
+            $this->packagePath('config/config.php') => config_path('laravolt/thunderclap.php'),
         ], 'config');
     }
 

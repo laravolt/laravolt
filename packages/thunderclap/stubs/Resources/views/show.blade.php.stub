@@ -1,0 +1,22 @@
+@extends('ui::layouts.app')
+
+@section('content')
+
+    <div class="ui secondary menu">
+        <div class="item">
+            <h2>:Module Name: Detail</h2>
+        </div>
+        <div class="right menu">
+            <div class="item">
+                <a href="{{ route('post.index') }}" class="ui button basic small"><i class="icon angle left"></i>
+                    Back to index
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <table class="ui table definition">
+:DETAIL_FIELDS:
+    </table>
+
+@stop

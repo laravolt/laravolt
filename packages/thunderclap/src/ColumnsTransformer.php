@@ -14,38 +14,22 @@ class ColumnsTransformer
         $this->columns = $columns;
     }
 
-    public function toFillableFields()
+    public function toSearchableColumns()
     {
         $columns = $this->removeForeignKeys($this->columns);
         $columns = $columns->except(config('thunderclap.columns.except'));
 
         return $columns
-            ->keys()
-            ->map(function ($item) {
-                return '"' . $item . '"';
-            })
-            ->implode(", ") . ",";
-    }
-
-    public function toTransformerFields()
-    {
-        $columns = $this->removeForeignKeys($this->columns);
-        $template =
-            <<<TEMPLATE
-            '%s' => \$model->%s
-TEMPLATE;
-
-        return $columns
-            ->keys()
-            ->map(function ($item) use ($template){
-                return sprintf($template, $item, $item);
-            })
-            ->implode(",\n") . ",";
+                ->keys()
+                ->map(function ($item) {
+                    return '"'.$item.'"';
+                })
+                ->implode(", ").",";
     }
 
     public function toValidationRules()
     {
-        $columns = $this->removeForeignKeys($this->columns);
+        $columns = $this->columns;
         $columns = $columns->except(config('thunderclap.columns.except'));
 
         $template =
@@ -80,7 +64,7 @@ TEMPLATE;
 
     public function toFormCreateFields()
     {
-        $columns = $this->removeForeignKeys($this->columns);
+        $columns = $this->columns;
         $columns = $columns->except(config('thunderclap.columns.except'));
 
         $template =
@@ -96,7 +80,7 @@ TEMPLATE;
             ->implode("\n");
     }
 
-    public function toFormUpdateFields()
+    public function toFormEditFields()
     {
         return $this->toFormCreateFields();
     }
@@ -138,18 +122,37 @@ TEMPLATE;
 
     }
 
-    public function toDetailFields()
+    public function toTableViewFields()
     {
         $columns = $this->columns;
+        $columns = $columns->except(config('thunderclap.columns.except'));
+
         $template =
             <<<TEMPLATE
-                <tr><td>%s</td><td>{{ \$item->present('%s') }}</td></tr>
+                    Text::make('%s')->sortable(),
 TEMPLATE;
 
         return $columns
             ->keys()
             ->map(function ($item) use ($template){
-                return sprintf($template, Stringy::create($item)->humanize(), $item);
+                return sprintf($template, $item);
+            })
+            ->implode("\n");
+
+    }
+
+    public function toDetailFields($objectName)
+    {
+        $columns = $this->columns;
+        $template =
+            <<<TEMPLATE
+                <tr><td>%s</td><td>{{ $%s->%s }}</td></tr>
+TEMPLATE;
+
+        return $columns
+            ->keys()
+            ->map(function ($item) use ($template, $objectName){
+                return sprintf($template, Stringy::create($item)->humanize(), $objectName, $item);
             })
             ->implode("\n");
     }

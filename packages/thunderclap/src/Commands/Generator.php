@@ -53,7 +53,7 @@ class Generator extends Command
         $this->transformer->setColumns($columns);
 
         $namespace = config('thunderclap.namespace');
-        $moduleName = str_replace('_', '', title_case($table));
+        $moduleName = Str::singular(str_replace('_', '', title_case($table)));
         $containerPath = config('thunderclap.target_dir', base_path('modules'));
         $modulePath = $containerPath . DIRECTORY_SEPARATOR . $moduleName;
 
@@ -78,7 +78,7 @@ class Generator extends Command
         File::copyDirectory($stubs, $modulePath);
 
         $templates = [
-            'module-name'  => str_replace('_', '-', $table),
+            'module-name'  => str_replace('_', '-', Str::singular($table)),
             'route-prefix' => config('thunderclap.routes.prefix'),
         ];
 
@@ -91,8 +91,7 @@ class Generator extends Command
             ':Module Name:',
             ':moduleName:',
             ':ModuleName:',
-            ':FILLABLE:',
-            ':TRANSFORMER_FIELDS:',
+            ':SEARCHABLE_COLUMNS:',
             ':VALIDATION_RULES:',
             ':LANG_FIELDS:',
             ':TABLE_HEADERS:',
@@ -100,6 +99,7 @@ class Generator extends Command
             ':DETAIL_FIELDS:',
             ':FORM_CREATE_FIELDS:',
             ':FORM_EDIT_FIELDS:',
+            ':TABLE_VIEW_FIELDS:',
             ':VIEW_EXTENDS:',
             ':route-prefix:',
             ':route-middleware:',
@@ -107,21 +107,21 @@ class Generator extends Command
         ];
         $replace = [
             $namespace,
-            snake_case($table),
+            snake_case(Str::singular($table)),
             $templates['module-name'],
-            str_replace('_', ' ', strtolower($table)),
-            ucwords(str_replace('_', ' ', $table)),
-            str_replace('_', '', camel_case($table)),
-            str_replace('_', '', title_case($table)),
-            $this->transformer->toFillableFields(),
-            $this->transformer->toTransformerFields(),
+            str_replace('_', ' ', strtolower(Str::singular($table))),
+            ucwords(str_replace('_', ' ', Str::singular($table))),
+            lcfirst($moduleName),
+            $moduleName,
+            $this->transformer->toSearchableColumns(),
             $this->transformer->toValidationRules(),
             $this->transformer->toLangFields(),
             $this->transformer->toTableHeaders(),
             $this->transformer->toTableFields(),
-            $this->transformer->toDetailFields(),
+            $this->transformer->toDetailFields(lcfirst($moduleName)),
             $this->transformer->toFormCreateFields(),
-            $this->transformer->toFormUpdateFields(),
+            $this->transformer->toFormEditFields(),
+            $this->transformer->toTableViewFields(),
             config('thunderclap.view.extends'),
             $templates['route-prefix'],
             $this->toArrayElement(config('thunderclap.routes.middleware')),
@@ -138,12 +138,15 @@ class Generator extends Command
                     $deleteOriginal = true;
                 }
 
+                if (Str::endsWith($newFile, 'Model.php')) {
+                    $newFile = Str::replaceLast('Model', $moduleName, $newFile);
+                }
+
+                $this->info($newFile);
                 $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile, $deleteOriginal);
 
             }
         }
-
-        $this->warn('Add following service provider to config/app.php ====> ' . $namespace . '\\' . ucwords(str_replace('_', ' ', $table)) . '\\ServiceProvider::class,');
     }
 
     protected function toArrayElement($array)
