@@ -142,6 +142,10 @@ class Generator extends Command
                     $newFile = Str::replaceLast('Model', $moduleName, $newFile);
                 }
 
+                if (Str::endsWith($newFile, 'Controller.php')) {
+                    $newFile = Str::replaceLast('Controller', $moduleName."Controller", $newFile);
+                }
+
                 $this->info($newFile);
                 $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile, $deleteOriginal);
 

@@ -2,13 +2,12 @@
 
 namespace :Namespace:\:ModuleName:\Http\Controllers;
 
-use Laravolt\Suitable\Tables\BasicTable;
 use :Namespace:\:ModuleName:\Http\Requests\Store;
 use :Namespace:\:ModuleName:\Http\Requests\Update;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
 use :Namespace:\:ModuleName:\TableView\IndexTableView;
 
-class Controller extends \Illuminate\Routing\Controller
+class :ModuleName:Controller extends \Illuminate\Routing\Controller
 {
     public function index()
     {

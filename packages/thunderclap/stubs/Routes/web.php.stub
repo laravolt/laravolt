@@ -18,6 +18,6 @@ Route::group(
         'middleware' => ['web', 'auth'],
     ],
     function () {
-        Route::resource(':moduleName:', 'Controller');
+        Route::resource(':moduleName:', ':ModuleName:Controller');
     }
 );
