@@ -20,6 +20,11 @@ abstract class TableView implements Responsable
         $this->html = new Html();
     }
 
+    public static function make($source)
+    {
+        return new static($source);
+    }
+
     public function toResponse($request)
     {
         $this->init();
