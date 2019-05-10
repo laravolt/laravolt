@@ -14,9 +14,7 @@ class Update extends Store
     public function rules()
     {
         return [
-            'title'     => ['required'],
-            'content'   => ['required'],
-            'author_id' => ['required'],
+:VALIDATION_RULES:
         ];
     }
 
