@@ -26,13 +26,41 @@ Thunderclap assume followings package already installed in your application:
 ```
 
 ## Usage
-
+1. Run the command and choose your table
 ```bash
 php artisan laravolt:clap
 ```
-
 :clap: clap your hand twice, and follow the magic...
+1. Register your module into `composer.json` and `config/app.php`, i.e your table name is `category`
+	- composer.json
+		```
+		"autoload": {
+			"psr-4": {
+				"App\\": "app/",
+				"Modules\\Category\\": "modules/Category" <= insert here
+			},
+			....
+		},
+		....
+		```
+	- config/app.php
+		```
+		'providers' => [
+			....
+			 /*
+            * Package Service Providers...
+            */
+            
+            Modules\Category\Providers\ServiceProvider::class,
+                
+           /*
+            * Application Service Providers...
+            */
+           ....
+		]
 
+		```
+1. Run `composer dumpautoload`
 
 ## Roadmap
 
