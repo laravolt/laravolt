@@ -24,6 +24,11 @@ class Segment
         return new static($key);
     }
 
+    public function getKey()
+    {
+        return $this->key;
+    }
+
     public function left($toolbars)
     {
         $this->left = is_array($toolbars) ? $toolbars : func_get_args();

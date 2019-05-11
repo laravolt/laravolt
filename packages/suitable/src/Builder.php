@@ -6,7 +6,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Laravolt\Suitable\Columns\Raw;
-use Laravolt\Suitable\Columns\Text;
+use Laravolt\Suitable\Segments\Segment;
+use Laravolt\Suitable\Toolbars\Search;
+use Laravolt\Suitable\Toolbars\Text;
 
 class Builder
 {
@@ -14,11 +16,15 @@ class Builder
 
     protected $id = null;
 
+    protected $title;
+
     protected $columns = [];
 
     protected $baseRoute = null;
 
     protected $showPagination = false;
+
+    protected $search;
 
     protected $row;
 
@@ -33,7 +39,12 @@ class Builder
      */
     public function __construct()
     {
+        // Generate default value
         $this->id = 'suitable'.str_random();
+
+        // Add default segment
+        $segment = Segment::make('default');
+        $this->addSegment($segment);
     }
 
     public function source($collection)
@@ -54,6 +65,26 @@ class Builder
         return $this;
     }
 
+    public function title(string $title)
+    {
+        $this->getDefaultSegment()->left(Text::make($title));
+
+        return $this;
+    }
+
+    public function search($search)
+    {
+        if (is_bool($search) && $search === true) {
+            $this->search = config('suitable.query_string.search');
+        } elseif (is_string($search)) {
+            $this->search = $search;
+        } else {
+            throw new \InvalidArgumentException('Only boolean or string allowed');
+        }
+
+        return $this;
+    }
+
     public function segments(array $segments)
     {
         $this->segments = $segments;
@@ -63,12 +94,12 @@ class Builder
 
     public function addSegment($segment)
     {
-        $this->segments[] = $segment;
+        $this->segments[$segment->getKey()] = $segment;
     }
 
     public function getDefaultSegment()
     {
-        return array_first($this->segments);
+        return $this->segments['default'] ?? null;
     }
 
     public function columns(array $columns)
@@ -92,7 +123,7 @@ class Builder
     public function filterColumns($filters)
     {
         $filters = is_array($filters) ? $filters : func_get_args();
-        $this->columns = collect($this->columns)->filter(function($item) use ($filters) {
+        $this->columns = collect($this->columns)->filter(function ($item) use ($filters) {
             return in_array($item->id(), $filters);
         });
     }
@@ -116,6 +147,10 @@ class Builder
     public function render($view = null)
     {
         $view = $view ?: $this->view;
+
+        if ($this->search) {
+            $this->getDefaultSegment()->right(Search::make($this->search));
+        }
 
         $data = [
             'collection'     => $this->collection,
@@ -208,5 +243,4 @@ class Builder
 
         return false;
     }
-
 }

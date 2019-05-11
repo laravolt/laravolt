@@ -3,7 +3,6 @@
 namespace Laravolt\Suitable\Plugins;
 
 use Laravolt\Suitable\Builder;
-use Laravolt\Suitable\Segments\Segment;
 use Laravolt\Suitable\Toolbars\Search;
 
 class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
@@ -50,13 +49,7 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     }
 
     public function decorate(Builder $table): Builder {
-        $table->segments(
-            [
-                Segment::make('first')
-                    ->right(sprintf("<small>%s</small>", $table->total()))
-                    ->left(Search::make('search')),
-            ]
-        );
+        $table->getDefaultSegment()->right(Search::make('search'));
 
         return $table;
     }
