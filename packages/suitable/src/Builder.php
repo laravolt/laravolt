@@ -74,7 +74,7 @@ class Builder
 
     public function search($search)
     {
-        if (is_bool($search) && $search === true) {
+        if ($search === true) {
             $this->search = config('suitable.query_string.search');
         } elseif (is_string($search)) {
             $this->search = $search;
