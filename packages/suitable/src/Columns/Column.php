@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable\Columns;
 
 use Laravolt\Suitable\Concerns\HtmlHelper;
+use Laravolt\Suitable\Headers\Header;
 use Laravolt\Suitable\Headers\SortableHeader;
 
 abstract class Column
@@ -52,10 +53,14 @@ abstract class Column
     public function header()
     {
         if ($this->isSortable()) {
-            return SortableHeader::make($this->header, $this->sortableColumn);
+            $header = SortableHeader::make($this->header, $this->sortableColumn);
+        } else {
+            $header = Header::make($this->header);
         }
 
-        return sprintf('<th %s>%s</th>', $this->tagAttributes($this->headerAttributes), $this->header);
+        $header->setAttributes($this->headerAttributes());
+
+        return $header;
     }
 
     public function headerAttributes()
@@ -77,7 +82,7 @@ abstract class Column
 
     protected function isSortable()
     {
-        return (bool)$this->sortableColumn;
+        return (bool) $this->sortableColumn;
     }
 
     public function searchable($column = null)
@@ -89,6 +94,6 @@ abstract class Column
 
     protected function isSearchable()
     {
-        return (bool)$this->searchableColumn;
+        return (bool) $this->searchableColumn;
     }
 }

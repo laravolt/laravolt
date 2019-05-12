@@ -2,7 +2,11 @@
     <thead>
     <tr>
         @foreach($columns as $column)
-            {!! $column->header() !!}
+            @if($column->header() instanceof \Laravolt\Suitable\Contracts\Header)
+                {!! $column->header()->render() !!}
+            @else
+                {!! $column->header() !!}
+            @endif
         @endforeach
     </tr>
     </thead>

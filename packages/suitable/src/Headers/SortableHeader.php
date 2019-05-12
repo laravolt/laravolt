@@ -2,7 +2,9 @@
 
 namespace Laravolt\Suitable\Headers;
 
-class SortableHeader
+use Laravolt\Suitable\Contracts\Header;
+
+class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 {
     protected static $classMapping = [
         'asc'  => [
@@ -15,14 +17,32 @@ class SortableHeader
         ],
     ];
 
+    public function __construct($title, $column)
+    {
+        $this->title = $title;
+        $this->column = $column;
+    }
+
     public static function make($title, $column)
+    {
+        return new self($title, $column);
+    }
+
+    public function setAttributes(array $attributes): Header
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    public function render(): string
     {
         $sortByKey = config('suitable.query_string.sort_by');
         $sortDirectionKey = config('suitable.query_string.sort_direction');
 
         $headerClass = '';
         $iconClass = 'sort';
-        if (request($sortByKey) == $column && in_array(request($sortDirectionKey), ['asc', 'desc'])) {
+        if (request($sortByKey) == $this->column && in_array(request($sortDirectionKey), ['asc', 'desc'])) {
             $headerClass = self::$classMapping[request($sortDirectionKey)]['header'];
             $iconClass = self::$classMapping[request($sortDirectionKey)]['icon'];
         }
@@ -30,7 +50,7 @@ class SortableHeader
         $icon = sprintf('<i class="icon %s"></i>', $iconClass);
 
         $sortableQueryString = [
-            $sortByKey        => $column,
+            $sortByKey        => $this->column,
             $sortDirectionKey => request($sortDirectionKey) === 'asc' ? 'desc' : 'asc',
         ];
 
@@ -38,6 +58,6 @@ class SortableHeader
 
         $url = request()->url().'?'.http_build_query($queryString);
 
-        return '<th class="'.$headerClass.'"><a href="'.$url.'"'.'>'.htmlentities($title).' '.$icon.'</a></th>';
+        return '<th class="'.$headerClass.'"><a href="'.$url.'"'.'>'.htmlentities($this->title).' '.$icon.'</a></th>';
     }
 }
