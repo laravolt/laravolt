@@ -9,6 +9,13 @@ class ColumnsTransformer
 
     protected $columns;
 
+    protected $fieldTypeTransformer;
+
+    public function __construct(FieldTypeTransformer $fieldTypeTransformer)
+    {
+        $this->fieldTypeTransformer = $fieldTypeTransformer;
+    }
+
     public function setColumns($columns)
     {
         $this->columns = $columns;
@@ -67,15 +74,11 @@ TEMPLATE;
         $columns = $this->columns;
         $columns = $columns->except(config('thunderclap.columns.except'));
 
-        $template =
-            <<<TEMPLATE
-                    {!! form()->text('%s')->label('%s') !!}
-TEMPLATE;
-
         return $columns
-            ->keys()
-            ->map(function ($item) use ($template){
-                return sprintf($template, $item, Stringy::create($item)->humanize());
+            ->map(function ($item) {
+                $template = $this->fieldTypeTransformer->generate($item);
+
+                return sprintf($template, $item['name'], Stringy::create($item['name'])->humanize());
             })
             ->implode("\n");
     }

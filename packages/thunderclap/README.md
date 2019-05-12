@@ -98,11 +98,11 @@ php artisan laravolt:clap
 - [ ] Relationship
 - Field Type
 	- [x] Text
-	- [ ] Textarea
+	- [x] Textarea
 	- [ ] Select
 	- [ ] Checkbox
-	- [ ] Date
-	- [ ] Datetime
+	- [x] Date
+	- [x] Datetime
 - Table
 	- [ ] Multiple delete
 	- [ ] Confirm on delete
