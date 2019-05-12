@@ -12,4 +12,6 @@ interface ColumnInterface
     public function cellAttributes($cell);
 
     public function sortable();
+
+    public function searchable();
 }

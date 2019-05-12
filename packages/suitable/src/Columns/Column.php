@@ -2,10 +2,13 @@
 
 namespace Laravolt\Suitable\Columns;
 
+use Laravolt\Suitable\Concerns\HtmlHelper;
 use Laravolt\Suitable\Headers\SortableHeader;
 
 abstract class Column
 {
+    use HtmlHelper;
+
     protected $headerAttributes = [];
 
     protected $cellAttributes = [];
@@ -17,6 +20,8 @@ abstract class Column
     protected $field;
 
     protected $sortableColumn = '';
+
+    protected $searchableColumn = '';
 
     protected function __construct($header)
     {
@@ -50,7 +55,7 @@ abstract class Column
             return SortableHeader::make($this->header, $this->sortableColumn);
         }
 
-        return sprintf('<th %s>%s</th>', $this->generateAttributes($this->headerAttributes), $this->header);
+        return sprintf('<th %s>%s</th>', $this->tagAttributes($this->headerAttributes), $this->header);
     }
 
     public function headerAttributes()
@@ -60,7 +65,7 @@ abstract class Column
 
     public function cellAttributes($cell)
     {
-        return $this->generateAttributes((array) $this->cellAttributes);
+        return $this->tagAttributes((array) $this->cellAttributes);
     }
 
     public function sortable($column = null)
@@ -75,14 +80,15 @@ abstract class Column
         return (bool)$this->sortableColumn;
     }
 
-    protected function generateAttributes(array $attributes)
+    public function searchable($column = null)
     {
-        $html = '';
+        $this->searchableColumn = $column ?: $this->field;
 
-        foreach ($attributes as $attribute => $value) {
-            $html .= " {$attribute}=\"{$value}\"";
-        }
+        return $this;
+    }
 
-        return $html;
+    protected function isSearchable()
+    {
+        return (bool)$this->searchableColumn;
     }
 }

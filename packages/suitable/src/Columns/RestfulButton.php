@@ -37,7 +37,7 @@ class RestfulButton extends Column implements ColumnInterface
 
     public function header()
     {
-        return sprintf('<th %s>%s</th>', $this->generateAttributes($this->headerAttributes), $this->header);
+        return sprintf('<th %s>%s</th>', $this->tagAttributes($this->headerAttributes), $this->header);
     }
 
     public function headerAttributes()
