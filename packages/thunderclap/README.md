@@ -21,8 +21,37 @@ Laravolt\Thunderclap\ServiceProvider::class,
 Thunderclap assume followings package already installed in your application:
 
 ```json
-"nwidart/laravel-modules": "^5.0",
-"sofa/eloquence": "^5.6"
+{
+	"nwidart/laravel-modules": "^5.0",
+	"sofa/eloquence": "^5.6"
+}
+```
+
+## Configuration
+
+publish configuration file `php artisan vendor:publish --provider='Laravolt\Thunderclap\ServiceProvider' --tag=config` there will be 
+file `config/laravolt/thunderclap.php` and example code inside it.
+
+```php
+<?php
+
+return [
+    // specify columns that you want to except
+    'columns' => [
+        'except' => ['id', 'created_at', 'updated_at', 'deleted_at', 'remember_token']
+    ],
+    'view' => [
+        'extends' => 'layout'
+    ],
+    // custom your routes specification
+    'routes'     => [
+        'prefix'    => '',
+        'middleware' => [],
+    ],
+    // custom your namespace per module
+    'namespace'  => 'Modules',
+    'target_dir' => base_path('modules')
+];
 ```
 
 ## Usage
