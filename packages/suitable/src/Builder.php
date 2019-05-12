@@ -20,6 +20,8 @@ class Builder
 
     protected $columns = [];
 
+    protected $searchableColumns = [];
+
     protected $baseRoute = null;
 
     protected $showPagination = false;
@@ -153,14 +155,15 @@ class Builder
         }
 
         $data = [
-            'collection'     => $this->collection,
-            'id'             => $this->id,
-            'columns'        => $this->columns,
-            'showPagination' => $this->showPagination,
-            'row'            => $this->row,
-            'format'         => $this->format,
-            'segments'       => $this->segments,
-            'builder'        => $this,
+            'collection'           => $this->collection,
+            'id'                   => $this->id,
+            'columns'              => $this->columns,
+            'hasSearchableColumns' => $this->columns->first->isSearchable() !== null,
+            'showPagination'       => $this->showPagination,
+            'row'                  => $this->row,
+            'format'               => $this->format,
+            'segments'             => $this->segments,
+            'builder'              => $this,
         ];
 
         return View::make($view, $data)->render();

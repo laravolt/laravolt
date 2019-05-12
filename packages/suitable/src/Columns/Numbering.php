@@ -10,6 +10,8 @@ class Numbering extends Column implements ColumnInterface
 
     protected $cellAttributes = ['class' => 'numbering'];
 
+    protected $searchableColumn = 'id';
+
     static public function make($field, $header = null)
     {
         return parent::make($field, $field);

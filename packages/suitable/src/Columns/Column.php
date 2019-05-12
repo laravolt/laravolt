@@ -80,7 +80,7 @@ abstract class Column
         return $this;
     }
 
-    protected function isSortable()
+    public function isSortable()
     {
         return (bool) $this->sortableColumn;
     }
@@ -92,7 +92,7 @@ abstract class Column
         return $this;
     }
 
-    protected function isSearchable()
+    public function isSearchable()
     {
         return (bool) $this->searchableColumn;
     }

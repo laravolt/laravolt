@@ -9,6 +9,17 @@
             @endif
         @endforeach
     </tr>
+    @if($columns->first->isSearchable() !== null)
+    <tr class="ui form">
+        @foreach($columns as $column)
+            @if($column->isSearchable())
+                <th><input type="text"></th>
+            @else
+                <th></th>
+            @endif
+        @endforeach
+    </tr>
+    @endif
     </thead>
     <tbody class="collection">
     @forelse($collection as $data)
