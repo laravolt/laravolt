@@ -11,6 +11,8 @@ abstract class TableView implements Responsable
 
     protected $plugins = [];
 
+    protected $search = null;
+
     /**
      * TableView constructor.
      */
@@ -22,7 +24,13 @@ abstract class TableView implements Responsable
 
     public static function make($source)
     {
-        return new static($source);
+        $table = new static($source);
+
+        if ($table->search !== null) {
+            $table->html->search($table->search);
+        }
+
+        return $table;
     }
 
     public function toResponse($request)

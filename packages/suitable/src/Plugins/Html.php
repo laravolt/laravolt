@@ -13,7 +13,14 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     protected $alias = 'table';
 
+    protected $search = null;
+
     protected $perPage = null;
+
+    public function __construct()
+    {
+        $this->search = config('suitable.query_string.search');
+    }
 
     public function view($view)
     {
@@ -36,6 +43,13 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         return $this;
     }
 
+    public function search($search)
+    {
+        $this->search = $search;
+
+        return $this;
+    }
+
     public function paginate($perPage)
     {
         $this->perPage = $perPage;
@@ -49,7 +63,9 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     }
 
     public function decorate(Builder $table): Builder {
-        $table->getDefaultSegment()->right(Search::make(config('suitable.query_string.search')));
+        if ($this->search) {
+            $table->getDefaultSegment()->right(Search::make($this->search));
+        }
 
         return $table;
     }
