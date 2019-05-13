@@ -10,10 +10,10 @@
         @endforeach
     </tr>
     @if($columns->first->isSearchable() !== null)
-    <tr class="ui form">
+    <tr class="ui form" data-role="suitable-header-searchable">
         @foreach($columns as $column)
             @if($column->isSearchable())
-                <th><input type="text"></th>
+                {!! $column->searchableHeader()->render() !!}
             @else
                 <th></th>
             @endif

@@ -4,6 +4,7 @@ namespace Laravolt\Suitable\Columns;
 
 use Laravolt\Suitable\Concerns\HtmlHelper;
 use Laravolt\Suitable\Headers\Header;
+use Laravolt\Suitable\Headers\Search\TextHeader;
 use Laravolt\Suitable\Headers\SortableHeader;
 
 abstract class Column
@@ -15,6 +16,8 @@ abstract class Column
     protected $cellAttributes = [];
 
     protected $header = '';
+
+    protected $searchableHeader;
 
     protected $id;
 
@@ -63,6 +66,11 @@ abstract class Column
         return $header;
     }
 
+    public function searchableHeader()
+    {
+        return $this->searchableHeader;
+    }
+
     public function headerAttributes()
     {
         return $this->headerAttributes;
@@ -85,9 +93,11 @@ abstract class Column
         return (bool) $this->sortableColumn;
     }
 
-    public function searchable($column = null)
+    public function searchable($column = null, ?\Laravolt\Suitable\Contracts\Header $header = null)
     {
         $this->searchableColumn = ($column === null) ? $this->field : $column;
+
+        $this->searchableHeader = $header ?? TextHeader::make($this->searchableColumn);
 
         return $this;
     }
