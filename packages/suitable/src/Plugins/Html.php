@@ -49,7 +49,7 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     }
 
     public function decorate(Builder $table): Builder {
-        $table->getDefaultSegment()->right(Search::make('search'));
+        $table->getDefaultSegment()->right(Search::make(config('suitable.query_string.search')));
 
         return $table;
     }
