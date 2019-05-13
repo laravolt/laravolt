@@ -75,7 +75,7 @@ abstract class Column
 
     public function sortable($column = null)
     {
-        $this->sortableColumn = $column ?: $this->field;
+        $this->sortableColumn = ($column === null) ? $this->field : $column;
 
         return $this;
     }
@@ -87,7 +87,7 @@ abstract class Column
 
     public function searchable($column = null)
     {
-        $this->searchableColumn = $column ?: $this->field;
+        $this->searchableColumn = ($column === null) ? $this->field : $column;
 
         return $this;
     }
