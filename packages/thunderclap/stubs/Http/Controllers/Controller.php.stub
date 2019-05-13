@@ -2,12 +2,13 @@
 
 namespace :Namespace:\:ModuleName:\Http\Controllers;
 
+use Illuminate\Routing\Controller;
 use :Namespace:\:ModuleName:\Http\Requests\Store;
 use :Namespace:\:ModuleName:\Http\Requests\Update;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
 use :Namespace:\:ModuleName:\TableView\IndexTableView;
 
-class :ModuleName:Controller extends \Illuminate\Routing\Controller
+class :ModuleName:Controller extends Controller
 {
     public function index()
     {

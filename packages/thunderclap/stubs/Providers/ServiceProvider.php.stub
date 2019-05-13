@@ -43,7 +43,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             $parent->add(':Module Name:', route(':moduleName:.index'))
                 ->data('icon', 'circle outline')
-                ->active(':module-name:/*');;
+                ->active(':module-name:/*');
         }
     }
 

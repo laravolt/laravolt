@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    {!! form()->post(route(':moduleName:.store')) !!}
+    {!! form()->post(route(':moduleName:.store'))->multipart() !!}
 :FORM_CREATE_FIELDS:
     {!! form()->submit('Save') !!}
     {!! form()->link('Cancel', route(':moduleName:.index')) !!}
