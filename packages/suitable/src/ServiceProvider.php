@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable;
 
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
@@ -37,6 +38,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerViews();
         $this->registerConfigurations();
         $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'suitable');
+        $this->registerMacro();
     }
 
     /**
@@ -71,6 +73,38 @@ class ServiceProvider extends BaseServiceProvider
         $this->publishes([
             $this->packagePath('config/config.php') => config_path('laravolt/suitable.php'),
         ], 'config');
+    }
+
+    /**
+     * Flexible where like search
+     *
+     * @see https://murze.be/searching-models-using-a-where-like-query-in-laravel
+     * @return void
+     */
+    protected function registerMacro()
+    {
+        EloquentBuilder::macro('whereLike', function ($attributes, string $searchTerm) {
+            $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
+                foreach (array_wrap($attributes) as $attribute) {
+                    $query->when(
+                        str_contains($attribute, '.'),
+                        function (EloquentBuilder $query) use ($attribute, $searchTerm) {
+                            [$relationName, $relationAttribute] = explode('.', $attribute);
+
+                            $query->orWhereHas($relationName,
+                                function (EloquentBuilder $query) use ($relationAttribute, $searchTerm) {
+                                    $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
+                                });
+                        },
+                        function (EloquentBuilder $query) use ($attribute, $searchTerm) {
+                            $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+                        }
+                    );
+                }
+            });
+
+            return $this;
+        });
     }
 
     /**
