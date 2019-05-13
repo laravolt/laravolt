@@ -3,12 +3,13 @@
 namespace :Namespace:\:ModuleName:\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Suitable\AutoFilter;
 use Laravolt\Suitable\AutoSort;
 use Sofa\Eloquence\Eloquence;
 
 class :ModuleName: extends Model
 {
-    use AutoSort;
+    use AutoSort, AutoFilter;
     use Eloquence;
 
     protected $guarded = [];
