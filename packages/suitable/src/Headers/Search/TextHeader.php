@@ -37,10 +37,10 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
     public function render(): string
     {
         return sprintf(
-            '<th %s><input type="text" name="_s[%s]" value="%s" form="suitable-form-searchable"></th>',
+            '<th %s><input type="text" name="filter[%s]" value="%s" form="suitable-form-searchable"></th>',
             $this->tagAttributes($this->attributes),
             $this->name,
-            request("_s.$this->name")
+            request("filter.$this->name")
         );
     }
 }
