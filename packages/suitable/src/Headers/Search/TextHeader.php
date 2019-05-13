@@ -36,15 +36,11 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
 
     public function render(): string
     {
-        $submit = '<input type="submit" style="position: absolute; left: -9999px"/>';
-
-        $input = sprintf(
+        return sprintf(
             '<th %s><input type="text" name="filter[%s]" value="%s" form="suitable-form-searchable"></th>',
             $this->tagAttributes($this->attributes),
             $this->name,
             array_get(request("filter"), $this->name)
         );
-
-        return $submit . $input;
     }
 }

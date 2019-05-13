@@ -241,7 +241,7 @@ class Builder
         }
 
         if ($field = array_get($column, 'field')) {
-            return \Laravolt\Suitable\Columns\Text::make($field, $header, $column);
+            return Text::make($field, $header);
         }
 
         return false;
