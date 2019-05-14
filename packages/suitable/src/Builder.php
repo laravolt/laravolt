@@ -5,6 +5,7 @@ namespace Laravolt\Suitable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
+use Laravolt\Suitable\Columns\ColumnInterface;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Segments\Segment;
 use Laravolt\Suitable\Toolbars\Search;
@@ -233,17 +234,23 @@ class Builder
         $header = array_get($column, 'header');
 
         if (array_has($column, 'raw') && $column['raw'] instanceof \Closure) {
-            return Raw::make($column['raw'], $header);
+            $columnObject = Raw::make($column['raw'], $header);
         }
 
         if ($view = array_get($column, 'view')) {
-            return \Laravolt\Suitable\Columns\View::make($view, $header);
+            $columnObject = \Laravolt\Suitable\Columns\View::make($view, $header);
         }
 
         if ($field = array_get($column, 'field')) {
-            return Text::make($field, $header);
+            $columnObject = \Laravolt\Suitable\Columns\Text::make($field, $header);
         }
 
-        return false;
+        if ($columnObject instanceof ColumnInterface) {
+            $columnObject->setSortable($column['sortable'] ?? '');
+            $columnObject->searchable($column['searchable'] ?? '');
+            $columnObject->setCellAttributes($column['cellAttributes'] ?? '');
+        }
+
+        return $columnObject;
     }
 }

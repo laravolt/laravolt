@@ -81,11 +81,21 @@ abstract class Column
         return $this->tagAttributes((array) $this->cellAttributes);
     }
 
+    public function setCellAttributes($cell = null)
+    {
+        $this->cellAttributes = $cell;
+    }
+
     public function sortable($column = null)
     {
         $this->sortableColumn = ($column === null) ? $this->field : $column;
 
         return $this;
+    }
+
+    public function setSortable($column = null)
+    {
+        $this->sortable($column);
     }
 
     public function isSortable()
@@ -100,6 +110,11 @@ abstract class Column
         $this->searchableHeader = $header ?? TextHeader::make($this->searchableColumn);
 
         return $this;
+    }
+
+    public function setSearchable($column = null)
+    {
+        $this->searchable($column);
     }
 
     public function isSearchable()
