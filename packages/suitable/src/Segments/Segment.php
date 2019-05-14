@@ -19,7 +19,7 @@ class Segment
         $this->key = $key;
     }
 
-    static public function make($key)
+    public static function make($key)
     {
         return new static($key);
     }
