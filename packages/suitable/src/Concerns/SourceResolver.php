@@ -2,7 +2,7 @@
 
 namespace Laravolt\Suitable\Concerns;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +18,7 @@ trait SourceResolver
             return (new $source)->all();
         } elseif (is_string($source) && Schema::hasTable($source)) {
             return DB::table($source)->get();
-        } elseif ($source instanceof LengthAwarePaginator) {
+        } elseif ($source instanceof Paginator) {
             return $source;
         } elseif ($source instanceof Collection) {
             return $source;
