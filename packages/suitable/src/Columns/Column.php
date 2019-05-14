@@ -76,14 +76,19 @@ abstract class Column
         return $this->headerAttributes;
     }
 
+    public function setHeaderAttributes(array $attributes)
+    {
+        $this->headerAttributes = $attributes;
+    }
+
     public function cellAttributes($cell)
     {
         return $this->tagAttributes((array) $this->cellAttributes);
     }
 
-    public function setCellAttributes($cell = null)
+    public function setCellAttributes(array $attributes)
     {
-        $this->cellAttributes = $cell;
+        $this->cellAttributes = $attributes;
     }
 
     public function sortable($column = null)
@@ -91,11 +96,6 @@ abstract class Column
         $this->sortableColumn = ($column === null) ? $this->field : $column;
 
         return $this;
-    }
-
-    public function setSortable($column = null)
-    {
-        $this->sortable($column);
     }
 
     public function isSortable()

@@ -254,9 +254,21 @@ class Builder
         }
 
         if ($columnObject instanceof ColumnInterface) {
-            $columnObject->setSortable($column['sortable'] ?? '');
-            $columnObject->searchable($column['searchable'] ?? '');
-            $columnObject->setCellAttributes($column['cellAttributes'] ?? '');
+            if (array_has($column, 'sortable')) {
+                $columnObject->sortable($column['sortable']);
+            }
+
+            if (array_has($column, 'searchable')) {
+                $columnObject->searchable($column['searchable']);
+            }
+
+            if (array_has($column, 'headerAttributes')) {
+                $columnObject->setHeaderAttributes($column['headerAttributes']);
+            }
+
+            if (array_has($column, 'cellAttributes')) {
+                $columnObject->setCellAttributes($column['cellAttributes']);
+            }
         }
 
         return $columnObject;
