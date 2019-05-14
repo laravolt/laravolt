@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Laravolt\Suitable\Columns\ColumnInterface;
@@ -26,6 +27,8 @@ class Builder
     protected $baseRoute = null;
 
     protected $showPagination = false;
+
+    protected $paginationView = 'suitable::pagination.simple';
 
     protected $search;
 
@@ -54,8 +57,12 @@ class Builder
     {
         $this->collection = $collection;
 
-        if ($collection instanceof LengthAwarePaginator) {
+        if ($collection instanceof Paginator) {
             $this->showPagination = true;
+
+            if ($collection instanceof LengthAwarePaginator) {
+                $this->paginationView = 'suitable::pagination.full';
+            }
         }
 
         return $this;
@@ -161,6 +168,7 @@ class Builder
             'columns'              => $this->columns,
             'hasSearchableColumns' => $this->columns->first->isSearchable() !== null,
             'showPagination'       => $this->showPagination,
+            'paginationView'       => $this->paginationView,
             'row'                  => $this->row,
             'format'               => $this->format,
             'segments'             => $this->segments,
