@@ -13,7 +13,7 @@ abstract class TableView implements Responsable
 
     protected $search = null;
 
-    protected $title;
+    protected $title = '';
 
     /**
      * TableView constructor.
@@ -28,16 +28,16 @@ abstract class TableView implements Responsable
     {
         $table = new static($source);
 
-        if ($table->search !== null) {
-            $table->html->search($table->search);
-        }
-
         return $table;
     }
 
     public function toResponse($request)
     {
         $this->init();
+
+        if ($this->search !== null) {
+            $this->html->search($this->search);
+        }
 
         $table = app('laravolt.suitable')->source($this->html->resolve($this->source));
 
@@ -94,6 +94,13 @@ abstract class TableView implements Responsable
     public function title(string $title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function search($search)
+    {
+        $this->search = $search;
 
         return $this;
     }
