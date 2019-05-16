@@ -13,6 +13,8 @@ abstract class TableView implements Responsable
 
     protected $search = null;
 
+    protected $title;
+
     /**
      * TableView constructor.
      */
@@ -38,6 +40,10 @@ abstract class TableView implements Responsable
         $this->init();
 
         $table = app('laravolt.suitable')->source($this->html->resolve($this->source));
+
+        if (is_string($this->title) && $this->title !== "") {
+            $table->title($this->title);
+        }
 
         $this->html->decorate($table);
         collect($this->plugins)->each->decorate($table);
@@ -81,6 +87,13 @@ abstract class TableView implements Responsable
         $this->plugins = is_array($plugins) ? $plugins : func_get_args();
 
         collect($this->plugins)->each->init();
+
+        return $this;
+    }
+
+    public function title(string $title)
+    {
+        $this->title = $title;
 
         return $this;
     }
