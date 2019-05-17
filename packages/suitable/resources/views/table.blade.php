@@ -1,4 +1,4 @@
-<table class="ui {{ empty($segments) ? 'top': '' }} attached table">
+<table class="ui {{ empty($segments) ? 'top': '' }} attached table unstackable responsive">
     <thead>
     <tr>
         @foreach($columns as $column)
