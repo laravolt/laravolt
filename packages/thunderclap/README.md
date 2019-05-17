@@ -66,7 +66,7 @@ php artisan laravolt:clap
 		"autoload": {
 			"psr-4": {
 				"App\\": "app/",
-				"Modules\\Category\\": "modules/Category" <= insert here
+				"Modules\\": "modules" <= insert here
 			},
 			....
 		},
