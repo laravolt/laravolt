@@ -85,6 +85,7 @@ class Generator extends Command
         // 4. rename file and replace common string
         $search = [
             ':Namespace:',
+            ':table:',
             ':module_name:',
             ':module-name:',
             ':module name:',
@@ -107,6 +108,7 @@ class Generator extends Command
         ];
         $replace = [
             $namespace,
+            $table,
             snake_case(Str::singular($table)),
             $templates['module-name'],
             str_replace('_', ' ', strtolower(Str::singular($table))),

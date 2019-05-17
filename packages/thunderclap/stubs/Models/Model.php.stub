@@ -12,6 +12,8 @@ class :ModuleName: extends Model
     use AutoSort, AutoFilter;
     use Eloquence;
 
+    protected $table = ':table:';
+
     protected $guarded = [];
 
     protected $searchableColumns = [:SEARCHABLE_COLUMNS:];
