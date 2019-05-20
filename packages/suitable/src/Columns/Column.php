@@ -79,6 +79,8 @@ abstract class Column
     public function setHeaderAttributes(array $attributes)
     {
         $this->headerAttributes = $attributes;
+        
+        return $this;
     }
 
     public function cellAttributes($cell)
@@ -89,6 +91,8 @@ abstract class Column
     public function setCellAttributes(array $attributes)
     {
         $this->cellAttributes = $attributes;
+        
+        return $this;
     }
 
     public function sortable($column = null)
@@ -115,6 +119,8 @@ abstract class Column
     public function setSearchable($column = null)
     {
         $this->searchable($column);
+        
+        return $this;
     }
 
     public function isSearchable()
