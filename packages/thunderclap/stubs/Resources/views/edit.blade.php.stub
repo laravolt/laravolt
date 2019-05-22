@@ -17,8 +17,11 @@
 
     {!! form()->bind($:moduleName:)->put(route(':moduleName:.update', $:moduleName:->getKey()))->multipart() !!}
 :FORM_CREATE_FIELDS:
-    {!! form()->submit('Save') !!}
-    {!! form()->link('Cancel', route(':moduleName:.index')) !!}
-    {!! form()->open() !!}
+    {!! form()->action([
+        form()->submit('Save'),
+        form()->link('Cancel', route(':moduleName:.index'))
+    ]) !!}
+
+{!! form()->close() !!}
 
 @stop
