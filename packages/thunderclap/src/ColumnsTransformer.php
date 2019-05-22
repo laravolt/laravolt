@@ -78,7 +78,7 @@ TEMPLATE;
             ->map(function ($item) {
                 $template = $this->fieldTypeTransformer->generate($item);
 
-                return sprintf($template, $item['name'], Stringy::create($item['name'])->humanize());
+                return sprintf("\t".$template, $item['name'], Stringy::create($item['name'])->humanize());
             })
             ->implode("\n");
     }
