@@ -61,6 +61,14 @@ class RestfulButton extends Column implements ColumnInterface
         return $this;
     }
 
+    public function except($buttons)
+    {
+        $buttons = is_array($buttons) ? $buttons : func_get_args();
+        $this->buttons = array_diff($this->buttons, $buttons);
+
+        return $this;
+    }
+
     public function deleteConfirmation($message)
     {
         $this->deleteConfirmation = $message;
