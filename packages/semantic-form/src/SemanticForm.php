@@ -140,7 +140,7 @@ class SemanticForm
 
         return (new InputWrapper($input))
             ->data('datepicker-format', $format)
-            ->appendIcon('calendar alternate outline')
+            ->prependIcon('calendar alternate outline')
             ->addClass('calendar');
     }
 
