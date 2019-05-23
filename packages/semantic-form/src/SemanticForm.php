@@ -26,6 +26,7 @@ use Laravolt\SemanticForm\Elements\Hidden;
 use Laravolt\SemanticForm\Elements\File;
 use Laravolt\SemanticForm\Elements\Date;
 use Laravolt\SemanticForm\Elements\Email;
+use Laravolt\SemanticForm\Elements\Time;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
 use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
 
@@ -142,6 +143,23 @@ class SemanticForm
             ->data('datepicker-format', $format)
             ->prependIcon('calendar alternate outline')
             ->addClass('calendar');
+    }
+
+    public function time($name, $defaultValue = null)
+    {
+        $date = new Time($name);
+
+        if (!is_null($value = $this->getValueFor($name))) {
+            $date->value($value);
+        }
+
+        $date->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $date->setError();
+        }
+
+        return $date;
     }
 
     public function email($name, $defaultValue = null)
