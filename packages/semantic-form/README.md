@@ -157,9 +157,6 @@ Form::image($name);
 // somewhere in view
 Form::datepicker($name, $value, $format);
 
-// don't forget to put this somewhere on your view
-@include('semantic-form::scripts.calendar')
-
 // Valid $format are:
 // DD -> two digit date
 // MM -> two digit month number
@@ -171,8 +168,6 @@ Form::datepicker($name, $value, $format);
 // Jenssegers\Date\Date::createFromFormat('d F Y', '12 februari 2000')->startOfDay()->toDateTimeString();
 // Jenssegers\Date\Date::createFromFormat('d F Y', '12 februari 2000')->startOfDay()->toDateString();
 ```
-See https://github.com/Semantic-Org/Semantic-UI/pull/3256 for further discussion. Remember, you must include calendar.js and calendar.css on your own.
-
 ### Hidden
 ``` php
 Form::hidden($name, $value);
