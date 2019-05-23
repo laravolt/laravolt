@@ -47,9 +47,19 @@ you can call `withoutToken()` when opening a form.
 Form::post('search')->withoutToken();
 ```
 
-### Input Text
+### Text
 ``` php
 Form::text($name, $value)->label('Username');
+```
+
+### Date
+``` php
+Form::date($name, $value)->label('Birthday');
+```
+
+### Time
+``` php
+Form::time($name, $value)->label('Start Time');
 ```
 
 ### Password
@@ -75,7 +85,7 @@ Form::select($name, $options)->appendOption($key, $label);
 Form::select($name, $options)->prependOption($key, $label);
 ```
 
-### Select Date & Date Time
+### Select Date & Select Date Time
 ``` php
 Form::selectDate('myDate', $startYear, $endYear)->label('Birth Date');
 Form::selectDateTime('myDate', $startYear, $endYear, $intervalInMinute)->label('Schedule');
@@ -147,14 +157,9 @@ Form::input($name, $defaultvalue)->type("password");
 ```
 Reference: http://semantic-ui.com/elements/input.html
 
-### Image (Not Yet Implemented)
-``` php
-Form::image($name);
-```
 
-### Datepicker (experimental)
+### Datepicker
 ``` php
-// somewhere in view
 Form::datepicker($name, $value, $format);
 
 // Valid $format are:
@@ -168,6 +173,12 @@ Form::datepicker($name, $value, $format);
 // Jenssegers\Date\Date::createFromFormat('d F Y', '12 februari 2000')->startOfDay()->toDateTimeString();
 // Jenssegers\Date\Date::createFromFormat('d F Y', '12 februari 2000')->startOfDay()->toDateString();
 ```
+
+### Timepicker
+``` php
+Form::timepicker($name, $value);
+```
+
 ### Hidden
 ``` php
 Form::hidden($name, $value);
@@ -208,6 +219,7 @@ Form::submit($value);
 
 ### Macro
 Macro definition, put it anywhere within your application, e.g. AppServiceProvider:
+
 ```php
 Form::macro('trix', function ($id, $name, $value = null) {
     return sprintf(
