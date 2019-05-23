@@ -140,7 +140,8 @@ class SemanticForm
         }
 
         return (new InputWrapper($input))
-            ->data('datepicker-format', $format)
+            ->data('calendar-type', 'date')
+            ->data('calendar-format', $format)
             ->prependIcon('calendar alternate outline')
             ->addClass('calendar');
     }
@@ -160,6 +161,26 @@ class SemanticForm
         }
 
         return $date;
+    }
+
+    public function timepicker($name, $defaultValue = null)
+    {
+        $input = new Datepicker($name);
+
+        if (!is_null($value = $this->getValueFor($name))) {
+            $input->value($value);
+        }
+
+        $input->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $input->setError();
+        }
+
+        return (new InputWrapper($input))
+            ->data('calendar-type', 'time')
+            ->prependIcon('clock outline outline')
+            ->addClass('calendar');
     }
 
     public function email($name, $defaultValue = null)
