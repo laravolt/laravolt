@@ -4,6 +4,7 @@ namespace Laravolt\Mailkeeper;
 
 use Illuminate\Console\Command;
 use Illuminate\Mail\MailServiceProvider;
+use Illuminate\Mail\Message;
 
 class SendMailCommand extends Command
 {
@@ -42,17 +43,29 @@ class SendMailCommand extends Command
 
         $this->info(sprintf("Sending %d emails...", $mails->count()));
         foreach ($mails as $mail) {
-            \Illuminate\Support\Facades\Mail::send([], [], function ($message) use ($mail) {
-                $message
-                    ->subject($mail->subject)
+            \Illuminate\Support\Facades\Mail::send([], [], function (Message $message) use ($mail) {
+
+                $message->subject($mail->subject)
                     ->from($mail->from)
-                    ->sender($mail->sender)
                     ->to($mail->to)
-                    ->cc($mail->cc)
-                    ->bcc($mail->bcc)
-                    ->replyTo($mail->reply_to)
                     ->priority($mail->priority)
                     ->setBody($mail->body, $mail->content_type);
+
+                if ($mail->sender) {
+                    $message->sender($mail->sender);
+                }
+
+                if ($mail->cc) {
+                    $message->cc($mail->cc);
+                }
+
+                if ($mail->bcc) {
+                    $message->bcc($mail->bcc);
+                }
+
+                if ($mail->reply_to) {
+                    $message->replyTo($mail->reply_to);
+                }
             });
 
             $mail->delete();
