@@ -63,9 +63,9 @@ class SendMailCommand extends Command
                         $message->bcc($mail->bcc);
                     }
 
-                    // if ($mail->reply_to) {
+                    if ($mail->reply_to) {
                         $message->replyTo($mail->reply_to);
-                    // }
+                    }
                 });
             } catch (\Swift_SwiftException $e) {
                 $this->error($e->getMessage());
