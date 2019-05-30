@@ -43,32 +43,37 @@ class SendMailCommand extends Command
 
         $this->info(sprintf("Sending %d emails...", $mails->count()));
         foreach ($mails as $mail) {
-            \Illuminate\Support\Facades\Mail::send([], [], function (Message $message) use ($mail) {
+            try {
+                \Illuminate\Support\Facades\Mail::send([], [], function (Message $message) use ($mail) {
+                    $message->subject($mail->subject)
+                        ->from($mail->from)
+                        ->to($mail->to)
+                        ->priority($mail->priority)
+                        ->setBody($mail->body, $mail->content_type);
 
-                $message->subject($mail->subject)
-                    ->from($mail->from)
-                    ->to($mail->to)
-                    ->priority($mail->priority)
-                    ->setBody($mail->body, $mail->content_type);
+                    if ($mail->sender) {
+                        $message->sender($mail->sender);
+                    }
 
-                if ($mail->sender) {
-                    $message->sender($mail->sender);
-                }
+                    if ($mail->cc) {
+                        $message->cc($mail->cc);
+                    }
 
-                if ($mail->cc) {
-                    $message->cc($mail->cc);
-                }
+                    if ($mail->bcc) {
+                        $message->bcc($mail->bcc);
+                    }
 
-                if ($mail->bcc) {
-                    $message->bcc($mail->bcc);
-                }
-
-                if ($mail->reply_to) {
-                    $message->replyTo($mail->reply_to);
-                }
-            });
-
-            $mail->delete();
+                    // if ($mail->reply_to) {
+                        $message->replyTo($mail->reply_to);
+                    // }
+                });
+            } catch (\Swift_SwiftException $e) {
+                $this->error($e->getMessage());
+                $mail->error = $e->getMessage();
+                $mail->save();
+            } finally {
+                $mail->delete();
+            }
         }
 
         $this->info("Finished");
