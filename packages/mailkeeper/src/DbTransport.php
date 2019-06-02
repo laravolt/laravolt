@@ -17,7 +17,7 @@ class DbTransport extends Transport
             'bcc'          => $message->getBcc(),
             'reply_to'     => $message->getReplyTo(),
             'priority'     => $message->getPriority(),
-            'content_type' => $message->getContentType(),
+            'content_type' => $message->getBodyContentType(),
             'body'         => html_entity_decode($message->getBody()),
             'subject'      => $message->getSubject(),
         ];
