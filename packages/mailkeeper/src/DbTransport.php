@@ -19,7 +19,7 @@ class DbTransport extends Transport
             'priority'     => $message->getPriority(),
             'content_type' => $message->getBodyContentType(),
             'body'         => html_entity_decode($message->getBody()),
-            'subject'      => $message->getSubject(),
+            'subject'      => $message->getSubject() ?? 'No Subject',
         ];
 
         Mail::create($data);
