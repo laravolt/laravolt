@@ -1,6 +1,6 @@
 <div id="{{ $id }}" data-role="suitable">
 
-    @if($columns->first->isSearchable() !== null)
+    @if($hasSearchableColumns)
         <form id="suitable-form-searchable" action="{{ request()->url() }}" data-role="suitable-form-searchable"></form>
     @endif
 

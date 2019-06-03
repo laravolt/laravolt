@@ -9,7 +9,7 @@
             @endif
         @endforeach
     </tr>
-    @if($columns->first->isSearchable() !== null)
+    @if($hasSearchableColumns)
     <tr class="ui form" data-role="suitable-header-searchable">
         @foreach($columns as $column)
             @if($column->isSearchable())

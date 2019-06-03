@@ -166,7 +166,7 @@ class Builder
             'collection'           => $this->collection,
             'id'                   => $this->id,
             'columns'              => $this->columns,
-            'hasSearchableColumns' => $this->columns->first->isSearchable() !== null,
+            'hasSearchableColumns' => optional(optional($this->columns)->first)->isSearchable() !== null,
             'showPagination'       => $this->showPagination,
             'paginationView'       => $this->paginationView,
             'row'                  => $this->row,
