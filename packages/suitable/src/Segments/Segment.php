@@ -57,6 +57,16 @@ class Segment
         return $this;
     }
 
+    public function isEmpty()
+    {
+        return empty($this->left) && empty($this->right);
+    }
+
+    public function isNotEmpty()
+    {
+        return !$this->isEmpty();
+    }
+
     public function render()
     {
         return view('suitable::segments.segment', ['left' => $this->left, 'right' => $this->right])->render();

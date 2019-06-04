@@ -168,6 +168,8 @@ class Builder
             'columns'              => $this->columns,
             'hasSearchableColumns' => optional(optional($this->columns)->first)->isSearchable() !== null,
             'showPagination'       => $this->showPagination,
+            'showHeader'           => collect($this->segments)->first->isNotEmpty(),
+            'showFooter'           => $this->showPagination && !$this->collection->isEmpty(),
             'paginationView'       => $this->paginationView,
             'row'                  => $this->row,
             'format'               => $this->format,

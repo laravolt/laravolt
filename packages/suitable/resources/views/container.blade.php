@@ -5,19 +5,21 @@
     @endif
 
     @foreach($segments as $segment)
+        @unless($segment->isEmpty())
         <div class="ui menu {{ $loop->first ? 'top' : '' }} attached">
             {!! $segment->render() !!}
         </div>
+        @endunless
     @endforeach
 
     @include('suitable::table')
 
-    <div class="ui bottom attached menu">
-        @if($showPagination && !$collection->isEmpty())
+    @if($showFooter)
+        <div class="ui bottom attached menu">
             <div class="item borderless">
                 <small>{{ $builder->summary() }}</small>
             </div>
             {!! $collection->appends(request()->input())->links($paginationView) !!}
-        @endif
-    </div>
+        </div>
+    @endif
 </div>
