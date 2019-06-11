@@ -15,7 +15,7 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap {--table= : table you want to generate the code skeleton} {--template= : choose template}";
+    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema} {--template= : Code will be generated based on this stubs structure} {--force : Overwrite files if exists}";
 
     /**
      * The console command description.
@@ -59,7 +59,7 @@ class Generator extends Command
 
         // 1. check existing module
         if (is_dir($modulePath)) {
-            $overwrite = $this->confirm("Folder {$modulePath} already exist, do you want to overwrite it?");
+            $overwrite = $this->option('force') || $this->confirm("Folder {$modulePath} already exist, do you want to overwrite it?");
             if ($overwrite) {
                 File::deleteDirectory($modulePath);
             } else {
