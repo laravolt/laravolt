@@ -24,7 +24,7 @@ class ColumnsTransformer
     public function toSearchableColumns()
     {
         $columns = $this->removeForeignKeys($this->columns);
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         return $columns
                 ->keys()
@@ -37,7 +37,7 @@ class ColumnsTransformer
     public function toValidationRules()
     {
         $columns = $this->columns;
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
             <<<TEMPLATE
@@ -72,7 +72,7 @@ TEMPLATE;
     public function toFormCreateFields()
     {
         $columns = $this->columns;
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         return $columns
             ->map(function ($item) {
@@ -91,7 +91,7 @@ TEMPLATE;
     public function toTableHeaders()
     {
         $columns = $this->removeForeignKeys($this->columns);
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
             <<<TEMPLATE
@@ -109,7 +109,7 @@ TEMPLATE;
     public function toTableFields()
     {
         $columns = $this->removeForeignKeys($this->columns);
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
             <<<TEMPLATE
@@ -128,11 +128,11 @@ TEMPLATE;
     public function toTableViewFields()
     {
         $columns = $this->columns;
-        $columns = $columns->except(config('thunderclap.columns.except'));
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
             <<<TEMPLATE
-                    Text::make('%s')->sortable(),
+            Text::make('%s')->sortable(),
 TEMPLATE;
 
         return $columns
@@ -149,7 +149,7 @@ TEMPLATE;
         $columns = $this->columns;
         $template =
             <<<TEMPLATE
-                <tr><td>%s</td><td>{{ $%s->%s }}</td></tr>
+        <tr><td>%s</td><td>{{ $%s->%s }}</td></tr>
 TEMPLATE;
 
         return $columns

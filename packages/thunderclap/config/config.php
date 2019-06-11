@@ -1,18 +1,27 @@
 <?php
+
 /*
  * Set specific configuration variables here
  */
 return [
-    'columns' => [
-        'except' => ['id', 'created_at', 'updated_at', 'deleted_at', 'remember_token']
+    'columns'    => [
+        'except' => ['id', 'created_at', 'updated_at', 'deleted_at', 'remember_token'],
     ],
-    'view' => [
-        'extends' => 'layout'
+    'view'       => [
+        'extends' => 'layout',
     ],
     'routes'     => [
-        'prefix'    => '',
+        'prefix'     => '',
         'middleware' => [],
     ],
     'namespace'  => 'Modules',
-    'target_dir' => base_path('modules')
+    'target_dir' => base_path('modules'),
+
+    // Template skeleton (stubs)
+    'default'    => 'laravolt',
+
+    // name => directory path, relative with stubs directory or absolute path
+    'templates'  => [
+        'laravolt' => 'laravolt',
+    ],
 ];

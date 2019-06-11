@@ -15,7 +15,7 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap {--table= : table you want to generate the code skeleton}";
+    protected $signature = "laravolt:clap {--table= : table you want to generate the code skeleton} {--template= : choose template}";
 
     /**
      * The console command description.
@@ -52,9 +52,9 @@ class Generator extends Command
         $columns = collect($this->DBHelper->listColumns($table));
         $this->transformer->setColumns($columns);
 
-        $namespace = config('thunderclap.namespace');
+        $namespace = config('laravolt.thunderclap.namespace');
         $moduleName = Str::singular(str_replace('_', '', title_case($table)));
-        $containerPath = config('thunderclap.target_dir', base_path('modules'));
+        $containerPath = config('laravolt.thunderclap.target_dir', base_path('modules'));
         $modulePath = $containerPath . DIRECTORY_SEPARATOR . $moduleName;
 
         // 1. check existing module
@@ -73,13 +73,13 @@ class Generator extends Command
         $this->packerHelper->makeDir($modulePath);
 
         // 3. copy module skeleton
-        $stubs = __DIR__ . '/../../stubs';
-        $this->info('Copying module skeleton into ' . $modulePath);
+        $stubs = $this->getStubDir($this->option('template') ?? config('laravolt.thunderclap.default'));
+        $this->info(sprintf('Generating code from %s to %s', $stubs, $modulePath));
         File::copyDirectory($stubs, $modulePath);
 
         $templates = [
             'module-name'  => str_replace('_', '-', Str::singular($table)),
-            'route-prefix' => config('thunderclap.routes.prefix'),
+            'route-prefix' => config('laravolt.thunderclap.routes.prefix'),
         ];
 
         // 4. rename file and replace common string
@@ -124,9 +124,9 @@ class Generator extends Command
             $this->transformer->toFormCreateFields(),
             $this->transformer->toFormEditFields(),
             $this->transformer->toTableViewFields(),
-            config('thunderclap.view.extends'),
+            config('laravolt.thunderclap.view.extends'),
             $templates['route-prefix'],
-            $this->toArrayElement(config('thunderclap.routes.middleware')),
+            $this->toArrayElement(config('laravolt.thunderclap.routes.middleware')),
             $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
         ];
 
@@ -148,8 +148,16 @@ class Generator extends Command
                     $newFile = Str::replaceLast('Controller', $moduleName."Controller", $newFile);
                 }
 
+                if (!$newFile) {
+                    continue;
+                }
                 $this->info($newFile);
-                $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile, $deleteOriginal);
+
+                try {
+                    $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile, $deleteOriginal);
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                }
 
             }
         }
@@ -172,5 +180,18 @@ class Generator extends Command
         }
 
         return $module;
+    }
+
+    protected function getStubDir($template)
+    {
+        $templateDir = config('laravolt.thunderclap.templates.'.$template);
+
+        $dir = Str::startsWith($templateDir, DIRECTORY_SEPARATOR) ? $templateDir : __DIR__.'/../../stubs/'.$templateDir;
+
+        if (is_dir($dir)) {
+            return $dir;
+        }
+
+        throw new \InvalidArgumentException(sprintf('Invalid template directory: %s', $dir));
     }
 }
