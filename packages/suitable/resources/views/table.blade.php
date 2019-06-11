@@ -4,9 +4,9 @@ $tableClass = '';
     if ($showHeader && $showFooter) {
         $tableClass = 'attached';
     } elseif ($showHeader) {
-        $tableClass = 'top attached';
-    } elseif($showFooter) {
         $tableClass = 'bottom attached';
+    } elseif($showFooter) {
+        $tableClass = 'top attached';
     }
 ?>
 
