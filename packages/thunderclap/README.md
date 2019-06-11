@@ -50,7 +50,15 @@ return [
     ],
     // custom your namespace per module
     'namespace'  => 'Modules',
-    'target_dir' => base_path('modules')
+    'target_dir' => base_path('modules'),
+    
+    // Template skeleton (stubs)
+    'default'    => 'laravolt',
+
+    // name => directory path, relative with stubs directory or absolute path
+    'templates'  => [
+        'laravolt' => 'laravolt',
+    ],    
 ];
 ```
 
@@ -109,6 +117,6 @@ php artisan laravolt:clap
 - Form
 	- [ ] Inline error message
 	- [ ] Mark required field
-- [ ] Custom template
+- [x] Custom template
 - [ ] API generator
 - [ ] API documentation
