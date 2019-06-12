@@ -7,16 +7,6 @@ use Illuminate\Support\Facades\DB;
 class DBHelper
 {
 
-    /**
-     * DBHelper constructor.
-     */
-    public function __construct()
-    {
-        $platform = DB::getDoctrineConnection()->getDatabasePlatform();
-        $platform->registerDoctrineTypeMapping('enum', Type::STRING);
-
-    }
-
     public function listTables()
     {
         $tables = DB::getDoctrineSchemaManager()->listTables();
@@ -31,6 +21,9 @@ class DBHelper
 
     public function listColumns($table)
     {
+        $platform = DB::getDoctrineConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', Type::STRING);
+
         $columns = \DB::getDoctrineSchemaManager()->listTableColumns($table);
 
         $data = [];
