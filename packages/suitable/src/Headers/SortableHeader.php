@@ -2,10 +2,13 @@
 
 namespace Laravolt\Suitable\Headers;
 
+use Laravolt\Suitable\Concerns\HtmlHelper;
 use Laravolt\Suitable\Contracts\Header;
 
 class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 {
+    use HtmlHelper;
+
     protected static $classMapping = [
         'asc'  => [
             'header' => 'ascending sorted',
@@ -16,6 +19,8 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
             'icon'   => 'caret down',
         ],
     ];
+
+    protected $attributes;
 
     public function __construct($title, $column)
     {
@@ -58,6 +63,9 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 
         $url = request()->url().'?'.http_build_query($queryString);
 
-        return '<th class="'.$headerClass.'"><a href="'.$url.'"'.'>'.htmlentities($this->title).' '.$icon.'</a></th>';
+        $this->attributes['class'] = ($this->attributes['class'] ?? '') . ' ' . $headerClass;
+        $attributes = $this->tagAttributes($this->attributes);
+
+        return sprintf('<th %s><a href="%s">%s %s</a></th>', $attributes, $url, htmlentities($this->title), $icon);
     }
 }
