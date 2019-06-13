@@ -38,7 +38,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function registerMenu()
     {
-        if ($this->app->bound('laravolt.menu')) {
+        if ($this->app->bound('laravolt.menu') && ! $this->app->runningInConsole()) {
             $parent = app('laravolt.menu');
 
             $parent->add(':Module Name:', route(':moduleName:.index'))
