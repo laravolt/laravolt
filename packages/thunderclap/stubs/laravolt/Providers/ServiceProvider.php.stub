@@ -41,7 +41,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         if ($this->app->bound('laravolt.menu') && ! $this->app->runningInConsole()) {
             $parent = app('laravolt.menu');
 
-            $parent->add(':Module Name:', route(':moduleName:.index'))
+            $parent
+                ->add(':Module Name:', ['route' => ':moduleName:.index'])
                 ->data('icon', 'circle outline')
                 ->active(':module-name:/*');
         }
