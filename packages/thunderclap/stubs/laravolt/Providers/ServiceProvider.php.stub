@@ -13,11 +13,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->registerMenu();
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
-        $this->registerFactories();
+        $this->bootMenu();
+        $this->bootTranslations();
+        $this->bootConfig();
+        $this->bootViews();
+        $this->bootFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
@@ -32,11 +32,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Register menu.
+     * Boot menu.
      *
      * @return void
      */
-    protected function registerMenu()
+    protected function bootMenu()
     {
         if ($this->app->bound('laravolt.menu') && ! $this->app->runningInConsole()) {
             $parent = app('laravolt.menu');
@@ -49,11 +49,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Register config.
+     * Boot config.
      *
      * @return void
      */
-    protected function registerConfig()
+    protected function bootConfig()
     {
         $this->publishes([
             __DIR__.'/../Config/config.php' => config_path(':moduleName:.php'),
@@ -64,11 +64,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Register views.
+     * Boot views.
      *
      * @return void
      */
-    public function registerViews()
+    public function bootViews()
     {
         $viewPath = resource_path('views/modules/:moduleName:');
 
@@ -84,11 +84,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Register translations.
+     * Boot translations.
      *
      * @return void
      */
-    public function registerTranslations()
+    public function bootTranslations()
     {
         $langPath = resource_path('lang/modules/:moduleName:');
 
@@ -100,11 +100,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * Register an additional directory of factories.
+     * Boot an additional directory of factories.
      *
      * @return void
      */
-    public function registerFactories()
+    public function bootFactories()
     {
         if (! app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
