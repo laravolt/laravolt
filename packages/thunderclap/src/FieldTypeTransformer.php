@@ -13,37 +13,40 @@ class FieldTypeTransformer
     {
         $class = get_class($column['type']);
         switch ($class) {
+            case StringType::class:
+                return $this->text();
+                break;
             case TextType::class:
-                return $this->textType();
+                return $this->textarea();
                 break;
             case DateType::class:
-                return $this->dateType();
+                return $this->date();
                 break;
             case DateTimeType::class:
-                return $this->dateTimeType();
+                return $this->datetime();
                 break;
             default:
-                return $this->stringType();
+                return $this->text();
                 break;
         }
     }
 
-    private function stringType()
+    private function text()
     {
         return "{!! form()->text('%s')->label('%s') !!}";
     }
 
-    private function textType()
+    private function textarea()
     {
         return "{!! form()->textarea('%s')->label('%s') !!}";
     }
 
-    private function dateType()
+    private function date()
     {
         return "{!! form()->selectDate('%s')->label('%s') !!}";
     }
 
-    private function dateTimeType()
+    private function datetime()
     {
         return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
