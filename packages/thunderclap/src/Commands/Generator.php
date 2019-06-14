@@ -15,7 +15,7 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema} {--template= : Code will be generated based on this stubs structure} {--force : Overwrite files if exists}";
+    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema} {--template= : Code will be generated based on this stubs structure} {--force : Overwrite files if exists} {--module-name= : Custom module name you want}";
 
     /**
      * The console command description.
@@ -53,7 +53,11 @@ class Generator extends Command
         $this->transformer->setColumns($columns);
 
         $namespace = config('laravolt.thunderclap.namespace');
-        $moduleName = Str::singular(str_replace('_', '', title_case($table)));
+
+        if (($moduleName = $this->option('module-name')) === null) {
+            $moduleName = Str::singular(str_replace('_', '', title_case($table)));
+        }
+
         $containerPath = config('laravolt.thunderclap.target_dir', base_path('modules'));
         $modulePath = $containerPath . DIRECTORY_SEPARATOR . $moduleName;
 
@@ -112,7 +116,7 @@ class Generator extends Command
             snake_case(Str::singular($table)),
             $templates['module-name'],
             str_replace('_', ' ', strtolower(Str::singular($table))),
-            ucwords(str_replace('_', ' ', Str::singular($table))),
+            $moduleName,
             lcfirst($moduleName),
             $moduleName,
             $this->transformer->toSearchableColumns(),
