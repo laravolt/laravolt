@@ -27,15 +27,15 @@ class FieldTypeTransformer
                 break;
         }
     }
-    
+
     private function stringType()
     {
-        return  "{!! form()->text('%s')->label('%s') !!}";
+        return "{!! form()->text('%s')->label('%s') !!}";
     }
 
     private function textType()
     {
-        return  "{!! form()->textarea('%s')->label('%s') !!}";
+        return "{!! form()->textarea('%s')->label('%s') !!}";
     }
 
     private function dateType()
@@ -45,6 +45,6 @@ class FieldTypeTransformer
 
     private function dateTimeType()
     {
-        return "{!! form()->selectDateTime('%s')->label('%s') !!}";
+        return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
 }
