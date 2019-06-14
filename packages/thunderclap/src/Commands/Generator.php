@@ -15,7 +15,7 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema} {--template= : Code will be generated based on this stubs structure} {--force : Overwrite files if exists} {--module-name= : Custom module name you want}";
+    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema} {--template= : Code will be generated based on this stubs structure} {--force : Overwrite files if exists} {--module= : Custom module name you want}";
 
     /**
      * The console command description.
@@ -54,7 +54,7 @@ class Generator extends Command
 
         $namespace = config('laravolt.thunderclap.namespace');
 
-        if (($moduleName = $this->option('module-name')) === null) {
+        if (($moduleName = $this->option('module')) === null) {
             $moduleName = Str::singular(str_replace('_', '', title_case($table)));
         }
 
