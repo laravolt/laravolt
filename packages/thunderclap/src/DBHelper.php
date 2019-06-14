@@ -29,8 +29,9 @@ class DBHelper
         $data = [];
         foreach($columns as $column) {
             $data[$column->getName()] = [
-                'name'  => $column->getName(),
-                'type'  => $column->getType()
+                'name'     => $column->getName(),
+                'type'     => $column->getType(),
+                'required' => $column->getNotnull(),
             ];
         }
 

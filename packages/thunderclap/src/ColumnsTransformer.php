@@ -41,13 +41,13 @@ class ColumnsTransformer
 
         $template =
             <<<TEMPLATE
-            '%s' => 'required'
+            '%s' => ['%s']
 TEMPLATE;
 
         return $columns
-            ->keys()
+            ->values()
             ->map(function ($item) use ($template){
-                return sprintf($template, $item, $item);
+                return sprintf($template, $item['name'], $item['required'] ? 'required' : '');
             })
             ->implode(",\n") . ",";
 
