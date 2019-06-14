@@ -2,9 +2,9 @@
 
 Route::group(
     [
-        'prefix'     => '',
+        'prefix'     => ':route-prefix:',
         'as'         => '',
-        'middleware' => ['web', 'auth'],
+        'middleware' => [:route-middleware:],
     ],
     function (\Illuminate\Routing\Router $router) {
         $router->get(':module-name:', ':ModuleName:Controller@index')->name(':module-name:.index');
