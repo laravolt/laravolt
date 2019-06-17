@@ -30,7 +30,6 @@ use Laravolt\SemanticForm\Elements\Email;
 use Laravolt\SemanticForm\Elements\Time;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
 use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
-use phpDocumentor\Reflection\Types\Integer;
 
 class SemanticForm
 {
