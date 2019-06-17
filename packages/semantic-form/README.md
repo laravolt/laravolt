@@ -52,6 +52,11 @@ Form::post('search')->withoutToken();
 Form::text($name, $value)->label('Username');
 ```
 
+### Number
+``` php
+Form::number($name, $integerValue)->label('Total');
+```
+
 ### Date
 ``` php
 Form::date($name, $value)->label('Birthday');
