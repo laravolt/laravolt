@@ -10,6 +10,7 @@ use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\Link;
+use Laravolt\SemanticForm\Elements\Number;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\SelectMultiple;
@@ -29,6 +30,7 @@ use Laravolt\SemanticForm\Elements\Email;
 use Laravolt\SemanticForm\Elements\Time;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
 use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
+use phpDocumentor\Reflection\Types\Integer;
 
 class SemanticForm
 {
@@ -106,6 +108,23 @@ class SemanticForm
         }
 
         return $text;
+    }
+
+    public function number($name, int $defaultValue = null)
+    {
+        $number = new Number($name);
+
+        if (!is_null($value = $this->getValueFor($name))) {
+            $number->value($value);
+        }
+
+        $number->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $number->setError();
+        }
+
+        return $number;
     }
 
     public function date($name, $defaultValue = null)
