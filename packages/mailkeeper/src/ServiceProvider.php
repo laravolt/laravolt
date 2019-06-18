@@ -34,7 +34,14 @@ class ServiceProvider extends MailServiceProvider
      */
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        if ($this->app->runningInConsole() && config('laravolt.mailkeeper.migrations')) {
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        }
+
+        $this->publishes([
+            $this->packagePath('database/migrations') => database_path('migrations'),
+        ], 'migrations');
+
         $this->registerCommands();
     }
 

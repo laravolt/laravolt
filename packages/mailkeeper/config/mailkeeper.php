@@ -8,4 +8,8 @@ return [
 
     // How many rows to take for each "laravolt:send-mail" command
     'take'    => 100,
+
+    // Whether to auto load migrations or not.
+    // If set to false, then you must publish the migration files first before running the migrate command
+    'migrations' => true
 ];
