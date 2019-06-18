@@ -39,7 +39,7 @@ class ServiceProvider extends MailServiceProvider
         }
 
         $this->publishes([
-            $this->packagePath('database/migrations') => database_path('migrations'),
+            realpath(__DIR__.'/../database/migrations') => database_path('migrations'),
         ], 'migrations');
 
         $this->registerCommands();
