@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Suitable\Columns;
 
 use Illuminate\Support\Facades\Auth;
@@ -7,7 +8,6 @@ use Illuminate\Support\Facades\View;
 
 class RestfulButton extends Column implements ColumnInterface
 {
-
     protected $buttons = ['view', 'edit', 'delete'];
 
     protected $baseRoute;
@@ -45,7 +45,8 @@ class RestfulButton extends Column implements ColumnInterface
         $actions = $this->buildActions($data);
         $deleteConfirmation = $this->buildDeleteConfirmation($data);
 
-        return View::make('suitable::columns.restful_button', compact('data', 'actions', 'deleteConfirmation'))->render();
+        return View::make('suitable::columns.restful_button', compact('data', 'actions', 'deleteConfirmation'))
+            ->render();
     }
 
     public function cellAttributes($cell)
@@ -99,7 +100,7 @@ class RestfulButton extends Column implements ColumnInterface
             $fields = config('suitable.restful_button.delete_confirmation_fields');
 
             foreach ($fields as $field) {
-                if($value = array_get($data, $field)) {
+                if ($value = array_get($data, $field)) {
                     return str_replace(':item', $value, $message);
                 }
             }
@@ -111,9 +112,9 @@ class RestfulButton extends Column implements ColumnInterface
     protected function buildActions($data)
     {
         $actions = [
-            'view'   => $this->getRoute('show', $data->getKey()),
-            'edit'   => $this->getRoute('edit', $data->getKey()),
-            'delete' => $this->getRoute('destroy', $data->getKey()),
+            'view'   => 'show',
+            'edit'   => 'edit',
+            'delete' => 'destroy',
         ];
 
         $class = get_class($data);
@@ -121,10 +122,13 @@ class RestfulButton extends Column implements ColumnInterface
 
         $actions = collect($actions)
             ->reject(
-                function ($url, $action) use ($policyEnabled, $data) {
-                    return ($policyEnabled && Auth::user()->cannot($action, $data)) || !in_array($action, $this->buttons);
+                function ($verb, $action) use ($policyEnabled, $data) {
+                    return ($policyEnabled && Auth::user()->cannot($action, $data)) || !in_array($action,
+                            $this->buttons);
                 }
-            );
+            )->transform(function ($verb) use ($data) {
+                return $this->getRoute($verb, $data->getKey());
+            });
 
         return $actions;
     }
