@@ -115,6 +115,11 @@ class Builder
     public function columns(array $columns)
     {
         $this->columns = collect($columns)->transform(function ($column) {
+
+            if (is_string($column)) {
+                $column = ['header' => $column, 'field' => $column];
+            }
+
             if (is_array($column)) {
                 $column = $this->transformColumn($column);
             }
