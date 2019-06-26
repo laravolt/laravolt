@@ -7,6 +7,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Laravolt\Suitable\Columns\ColumnInterface;
+use Laravolt\Suitable\Columns\Dummy;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Segments\Segment;
 use Laravolt\Suitable\Toolbars\Search;
@@ -82,7 +83,7 @@ class Builder
         return $this;
     }
 
-    public function search($search)
+    public function search($search = true)
     {
         if ($search === true) {
             $this->search = config('suitable.query_string.search');
@@ -247,6 +248,8 @@ class Builder
     protected function transformColumn($column)
     {
         $header = array_get($column, 'header');
+
+        $columnObject = Dummy::make(null, $header);
 
         if (array_has($column, 'raw') && $column['raw'] instanceof \Closure) {
             $columnObject = Raw::make($column['raw'], $header);

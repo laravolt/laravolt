@@ -79,7 +79,7 @@ abstract class Column
     public function setHeaderAttributes(array $attributes)
     {
         $this->headerAttributes = $attributes;
-        
+
         return $this;
     }
 
@@ -91,7 +91,7 @@ abstract class Column
     public function setCellAttributes(array $attributes)
     {
         $this->cellAttributes = $attributes;
-        
+
         return $this;
     }
 
@@ -109,7 +109,7 @@ abstract class Column
 
     public function searchable($column = null, ?\Laravolt\Suitable\Contracts\Header $header = null)
     {
-        $this->searchableColumn = ($column === null) ? $this->field : $column;
+        $this->searchableColumn = ($column === null || $column === true) ? $this->field : $column;
 
         $this->searchableHeader = $header ?? TextHeader::make($this->searchableColumn);
 
@@ -119,7 +119,7 @@ abstract class Column
     public function setSearchable($column = null)
     {
         $this->searchable($column);
-        
+
         return $this;
     }
 

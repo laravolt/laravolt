@@ -1,7 +1,9 @@
 <div id="{{ $id }}" data-role="suitable">
 
     @if($hasSearchableColumns)
-        <form id="suitable-form-searchable" action="{{ request()->url() }}" data-role="suitable-form-searchable"></form>
+        <form id="suitable-form-searchable" action="{{ request()->url() }}" data-role="suitable-form-searchable" style="display: none">
+            <input type="submit">
+        </form>
     @endif
 
     @foreach($segments as $segment)
