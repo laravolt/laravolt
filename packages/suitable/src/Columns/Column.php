@@ -97,7 +97,7 @@ abstract class Column
 
     public function sortable($column = null)
     {
-        $this->sortableColumn = ($column === null) ? $this->field : $column;
+        $this->sortableColumn = ($column === null || $column === true) ? $this->field : $column;
 
         return $this;
     }
