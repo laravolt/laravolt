@@ -34,7 +34,7 @@ abstract class Column
 
     static public function make($field, $header = null)
     {
-        if ($header === null) {
+        if ($header === null && is_string($field)) {
             $header = str_replace('_', ' ', title_case($field));
         }
 
