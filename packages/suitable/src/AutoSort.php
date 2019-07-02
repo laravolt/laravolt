@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait AutoSort
 {
-    public function scopeAutoSort(Builder $query)
+    public function scopeAutoSort(Builder $query, $sortByKey = null, $sortDirectionKey = null)
     {
-        $sortByKey = config('suitable.query_string.sort_by');
-        $sortDirectionKey = config('suitable.query_string.sort_direction');
+        $sortByKey = $sortByKey ?? config('suitable.query_string.sort_by');
+        $sortDirectionKey = $sortDirectionKey ?? config('suitable.query_string.sort_direction');
         $direction = request()->get($sortDirectionKey, 'asc');
 
         if (request()->has($sortByKey)) {
