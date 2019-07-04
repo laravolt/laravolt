@@ -19,7 +19,7 @@ class AlterMailAddMoreMetadataColumns extends Migration
             $table->json('bcc')->nullable();
             $table->json('reply_to')->nullable();
             $table->unsignedSmallInteger('priority')->nullable();
-            $table->string('content_type', 255);
+            $table->string('content_type', 255)->default('text/plain');
         });
     }
 }
