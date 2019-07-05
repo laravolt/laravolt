@@ -1,0 +1,56 @@
+{
+    "name": "laravolt/platform",
+    "description": "Platform for developing information systems in 2 weeks",
+    "keywords": [
+        "framework",
+        "laravel",
+        "platform",
+        "laravolt",
+        "admin",
+        "crud",
+        "cms"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://laravolt.dev",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com",
+            "homepage": "https://github.com/uyab",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "laravolt/acl": "^4.1",
+        "laravolt/avatar": "^2.2",
+        "laravolt/epicentrum": "^1.0",
+        "laravolt/mailkeeper": "~0.9",
+        "laravolt/password": "^1.5",
+        "laravolt/semantic-form": "^2.2",
+        "laravolt/suitable": "^3.3",
+        "laravolt/thunderclap": "~0.11",
+        "laravolt/ui": "~0.7",
+        "nwidart/laravel-modules": "^5.0",
+        "spatie/laravel-medialibrary": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\Platform\\": "src/Platform/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Platform\\Providers\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
