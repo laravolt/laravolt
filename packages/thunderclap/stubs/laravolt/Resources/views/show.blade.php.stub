@@ -8,7 +8,7 @@
         </div>
         <div class="right menu">
             <div class="item">
-                <a href="{{ route(':moduleName:.index') }}" class="ui button basic small"><i class="icon angle left"></i>
+                <a href="{{ route(':module-name:.index') }}" class="ui button basic small"><i class="icon angle left"></i>
                     Back to index
                 </a>
             </div>

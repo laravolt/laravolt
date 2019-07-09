@@ -14,7 +14,7 @@ class IndexTableView extends TableView
         return [
             Numbering::make('No'),
 :TABLE_VIEW_FIELDS:
-            RestfulButton::make(':moduleName:'),
+            RestfulButton::make(':module-name:'),
         ];
     }
 }

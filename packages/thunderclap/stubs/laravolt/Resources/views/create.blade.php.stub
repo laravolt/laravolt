@@ -8,18 +8,18 @@
         </div>
         <div class="right menu">
             <div class="item">
-                <a href="{{ route(':moduleName:.index') }}" class="ui button basic small"><i class="icon angle left"></i>
+                <a href="{{ route(':module-name:.index') }}" class="ui button basic small"><i class="icon angle left"></i>
                     Back to index
                 </a>
             </div>
         </div>
     </div>
 
-    {!! form()->post(route(':moduleName:.store'))->multipart() !!}
+    {!! form()->post(route(':module-name:.store'))->multipart() !!}
 :FORM_CREATE_FIELDS:
     {!! form()->action([
         form()->submit('Save'),
-        form()->link('Cancel', route(':moduleName:.index'))
+        form()->link('Cancel', route(':module-name:.index'))
     ]) !!}
     {!! form()->close() !!}
 

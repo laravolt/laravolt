@@ -26,7 +26,7 @@ class :ModuleName:Controller extends Controller
     {
         :ModuleName:::create($request->all());
 
-        return redirect()->route(':moduleName:.index')->withSuccess(':ModuleName: saved');
+        return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: saved');
     }
 
     public function show(:ModuleName: $:moduleName:)
@@ -50,6 +50,6 @@ class :ModuleName:Controller extends Controller
     {
         $:moduleName:->delete();
 
-        return redirect()->route(':moduleName:.index')->withSuccess(':ModuleName: deleted');
+        return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: deleted');
     }
 }
