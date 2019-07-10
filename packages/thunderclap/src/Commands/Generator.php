@@ -1,12 +1,13 @@
 <?php
+
 namespace Laravolt\Thunderclap\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Laravolt\Thunderclap\ColumnsTransformer;
+use Illuminate\Console\Command;
 use Laravolt\Thunderclap\DBHelper;
+use Illuminate\Support\Facades\File;
 use Laravolt\Thunderclap\FileTransformer;
+use Laravolt\Thunderclap\ColumnsTransformer;
 
 class Generator extends Command
 {
@@ -15,7 +16,10 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema} {--template= : Code will be generated based on this stubs structure} {--force : Overwrite files if exists} {--module= : Custom module name you want}";
+    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema}
+                    {--template= : Code will be generated based on this stubs structure}
+                    {--force : Overwrite files if exists}
+                    {--module= : Custom module name you want}";
 
     /**
      * The console command description.
@@ -32,15 +36,17 @@ class Generator extends Command
 
     /**
      * Generator constructor.
+     *
+     * @return void
      */
     public function __construct(DBHelper $DBHelper, FileTransformer $packerHelper, ColumnsTransformer $transformer)
     {
         parent::__construct();
+
         $this->DBHelper = $DBHelper;
         $this->packerHelper = $packerHelper;
         $this->transformer = $transformer;
     }
-
 
     public function handle()
     {
@@ -110,6 +116,7 @@ class Generator extends Command
             ':route-middleware:',
             ':route-url-prefix:',
         ];
+
         $replace = [
             $namespace,
             $table,
@@ -134,7 +141,7 @@ class Generator extends Command
             $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
         ];
 
-        foreach (File::allFiles($modulePath) as $file) {
+        foreach (File::allFiles($modulePath, true) as $file) {
             if (is_file($file)) {
 
                 $newFile = $deleteOriginal = false;
