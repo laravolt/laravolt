@@ -1,12 +1,14 @@
 <?php
+
 namespace Laravolt\Thunderclap\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Laravolt\Thunderclap\ColumnsTransformer;
+use Illuminate\Console\Command;
 use Laravolt\Thunderclap\DBHelper;
+use Illuminate\Support\Facades\File;
 use Laravolt\Thunderclap\FileTransformer;
+use Laravolt\Thunderclap\ColumnsTransformer;
 
 class Generator extends Command
 {
@@ -87,56 +89,32 @@ class Generator extends Command
         ];
 
         // 4. rename file and replace common string
-        $search = [
-            ':Namespace:',
-            ':table:',
-            ':module_name:',
-            ':module-name:',
-            ':module name:',
-            ':Module Name:',
-            ':moduleName:',
-            ':ModuleName:',
-            ':SEARCHABLE_COLUMNS:',
-            ':VALIDATION_RULES:',
-            ':LANG_FIELDS:',
-            ':TABLE_HEADERS:',
-            ':TABLE_FIELDS:',
-            ':DETAIL_FIELDS:',
-            ':FORM_CREATE_FIELDS:',
-            ':FORM_EDIT_FIELDS:',
-            ':TABLE_VIEW_FIELDS:',
-            ':VIEW_EXTENDS:',
-            ':route-prefix:',
-            ':route-middleware:',
-            ':route-url-prefix:',
-        ];
-        $replace = [
-            $namespace,
-            $table,
-            snake_case(Str::singular($table)),
-            $templates['module-name'],
-            str_replace('_', ' ', strtolower(Str::singular($table))),
-            $moduleName,
-            lcfirst($moduleName),
-            $moduleName,
-            $this->transformer->toSearchableColumns(),
-            $this->transformer->toValidationRules(),
-            $this->transformer->toLangFields(),
-            $this->transformer->toTableHeaders(),
-            $this->transformer->toTableFields(),
-            $this->transformer->toDetailFields(lcfirst($moduleName)),
-            $this->transformer->toFormCreateFields(),
-            $this->transformer->toFormEditFields(),
-            $this->transformer->toTableViewFields(),
-            config('laravolt.thunderclap.view.extends'),
-            $templates['route-prefix'],
-            $this->toArrayElement(config('laravolt.thunderclap.routes.middleware')),
-            $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
+        $replacer = [
+            ':Namespace:' => $namespace,
+            ':table:' => $table,
+            ':module_name:' => snake_case(Str::singular($table)),
+            ':module-name:' => $templates['module-name'],
+            ':module name:' => str_replace('_', ' ', strtolower(Str::singular($table))),
+            ':Module Name:' => $moduleName,
+            ':moduleName:' => lcfirst($moduleName),
+            ':ModuleName:' => $moduleName,
+            ':SEARCHABLE_COLUMNS:' => $this->transformer->toSearchableColumns(),
+            ':VALIDATION_RULES:' => $this->transformer->toValidationRules(),
+            ':LANG_FIELDS:' => $this->transformer->toLangFields(),
+            ':TABLE_HEADERS:' => $this->transformer->toTableHeaders(),
+            ':TABLE_FIELDS:' => $this->transformer->toTableFields(),
+            ':DETAIL_FIELDS:' => $this->transformer->toDetailFields(lcfirst($moduleName)),
+            ':FORM_CREATE_FIELDS:' => $this->transformer->toFormCreateFields(),
+            ':FORM_EDIT_FIELDS:' => $this->transformer->toFormEditFields(),
+            ':TABLE_VIEW_FIELDS:' => $this->transformer->toTableViewFields(),
+            ':VIEW_EXTENDS:' => config('laravolt.thunderclap.view.extends'),
+            ':route-prefix:' => $templates['route-prefix'],
+            ':route-middleware:' => $this->toArrayElement(config('laravolt.thunderclap.routes.middleware')),
+            ':route-url-prefix:' => $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
         ];
 
         foreach (File::allFiles($modulePath) as $file) {
             if (is_file($file)) {
-
                 $newFile = $deleteOriginal = false;
 
                 if (Str::endsWith($file, '.stub')) {
@@ -152,13 +130,25 @@ class Generator extends Command
                     $newFile = Str::replaceLast('Controller', $moduleName."Controller", $newFile);
                 }
 
-                if (!$newFile) {
+                if ($newFile) {
+                    $fileNameReplacer = Arr::only($replacer, [
+                        ':module_name:',
+                        ':module-name:',
+                        ':moduleName:',
+                        ':ModuleName:',
+                    ]);
+
+                    $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
+                }
+
+                if (! $newFile) {
                     continue;
                 }
+
                 $this->info($newFile);
 
                 try {
-                    $this->packerHelper->replaceAndSave($file, $search, $replace, $newFile, $deleteOriginal);
+                    $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
