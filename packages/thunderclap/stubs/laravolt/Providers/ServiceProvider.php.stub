@@ -59,7 +59,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             __DIR__.'/../Config/config.php' => config_path(':moduleName:.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', ':moduleName:'
+            __DIR__.'/../Config/config.php', 
+            ':moduleName:'
         );
     }
 
@@ -76,7 +77,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/:moduleName:';
