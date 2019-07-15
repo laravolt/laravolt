@@ -27,6 +27,7 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "laravolt/acl": "^4.1",
+        "laravolt/auth": "^4.7",
         "laravolt/avatar": "^2.2",
         "laravolt/epicentrum": "^1.0",
         "laravolt/mailkeeper": "~0.9",
