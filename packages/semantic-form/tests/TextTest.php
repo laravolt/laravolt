@@ -137,6 +137,15 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertNotContains($pattern, $result, $message);
     }
 
+    public function testReadonly()
+    {
+        $text = new Text('email');
+
+        $expected = '<input type="text" name="email" readonly="readonly">';
+        $result = $text->readonly()->render();
+        $this->assertEquals($expected, $result);
+    }
+
     public function testOptional()
     {
         $text = new Text('email');

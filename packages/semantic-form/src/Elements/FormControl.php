@@ -14,6 +14,13 @@ abstract class FormControl extends Element
         $this->setAttribute('name', $name);
     }
 
+    public function readonly()
+    {
+        $this->setAttribute('readonly', 'readonly');
+
+        return $this;
+    }
+
     public function required()
     {
         $this->setAttribute('required', 'required');
