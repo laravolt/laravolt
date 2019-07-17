@@ -96,16 +96,16 @@ class InputWrapper extends Wrapper
         return $this;
     }
 
-    public function disable()
+    public function disable($disable = true)
     {
-        $this->getPrimaryControl()->disable();
+        $this->getPrimaryControl()->disable($disable);
 
         return $this;
     }
 
-    public function enable()
+    public function enable($enable = true)
     {
-        $this->getPrimaryControl()->enable();
+        $this->getPrimaryControl()->enable($enable);
 
         return $this;
     }

@@ -170,10 +170,42 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testDisableWithParameter()
+    {
+        $input = new InputWrapper();
+        $input->disable(false);
+
+        $expected = '<div class="ui input"><input type="text" name=""></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+        $input->disable(true);
+
+        $expected = '<div class="ui input"><input type="text" name="" disabled="disabled"></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
     public function testEnable()
     {
         $input = new InputWrapper();
         $input->disable()->enable();
+
+        $expected = '<div class="ui input"><input type="text" name=""></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testEnableWithParameter()
+    {
+        $input = new InputWrapper();
+        $input->disable()->enable(false);
+
+        $expected = '<div class="ui input"><input type="text" name="" disabled="disabled"></div>';
+        $result = $input->render();
+        $this->assertEquals($expected, $result);
+
+        $input->disable()->enable(true);
 
         $expected = '<div class="ui input"><input type="text" name=""></div>';
         $result = $input->render();

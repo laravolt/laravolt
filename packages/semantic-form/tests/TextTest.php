@@ -161,6 +161,19 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testDisableWithParameter()
+    {
+        $text = new Text('email');
+
+        $expected = '<input type="text" name="email">';
+        $result = $text->disable(false)->render();
+        $this->assertEquals($expected, $result);
+
+        $expected = '<input type="text" name="email" disabled="disabled">';
+        $result = $text->disable(true)->render();
+        $this->assertEquals($expected, $result);
+    }
+
     public function testEnable()
     {
         $text = new Text('email');
@@ -173,6 +186,15 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
         $expected = '<input type="text" name="email">';
         $result = $text->disable()->enable()->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testEnableWithParameter()
+    {
+        $text = new Text('email');
+
+        $expected = '<input type="text" name="email" disabled="disabled">';
+        $result = $text->enable(false)->render();
         $this->assertEquals($expected, $result);
     }
 
