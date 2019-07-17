@@ -28,16 +28,20 @@ abstract class FormControl extends Element
         return $this;
     }
 
-    public function disable()
+    public function disable($disable = true)
     {
-        $this->setAttribute('disabled', 'disabled');
+        if ($disable) {
+            $this->setAttribute('disabled', 'disabled');
+        } else {
+            $this->removeAttribute('disabled');
+        }
 
         return $this;
     }
 
-    public function enable()
+    public function enable($enable = true)
     {
-        $this->removeAttribute('disabled');
+        $this->disable(!$enable);
 
         return $this;
     }
