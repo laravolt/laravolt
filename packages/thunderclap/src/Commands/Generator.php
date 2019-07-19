@@ -185,12 +185,20 @@ class Generator extends Command
     {
         $templateDir = config('laravolt.thunderclap.templates.'.$template);
 
-        $dir = Str::startsWith($templateDir, DIRECTORY_SEPARATOR) ? $templateDir : __DIR__.'/../../stubs/'.$templateDir;
+        $dirApp = $templateDir;
+        $dirVendor = __DIR__.'/../../stubs/'.$templateDir;
 
-        if (is_dir($dir)) {
-            return $dir;
+        // First, we are looking for user defined path
+        if (is_dir($dirApp)) {
+            return $dirApp;
         }
 
-        throw new \InvalidArgumentException(sprintf('Invalid template directory: %s', $dir));
+        // If not exists, fallback to default template from vendor
+        if (is_dir($dirVendor)) {
+            return $dirVendor;
+        }
+
+        // Throw exception if both directory doesn't exists
+        throw new \InvalidArgumentException(sprintf('Invalid directory for template named "%s"', $template));
     }
 }
