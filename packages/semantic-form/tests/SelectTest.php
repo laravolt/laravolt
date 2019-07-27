@@ -261,4 +261,13 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    public function testReadonly()
+    {
+        $select = new Select('people');
+        $expected = '<select class="ui dropdown search" name="people[]" multiple="multiple" readonly="readonly" disabled="disabled"></select>';
+        $result = $select->multiple()->readonly()->render();
+
+        $this->assertEquals($expected, $result);
+    }
 }

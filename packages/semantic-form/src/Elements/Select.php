@@ -159,4 +159,13 @@ class Select extends FormControl
 
         return $this;
     }
+
+    public function readonly()
+    {
+        parent::readonly();
+
+        $this->disable();
+
+        return $this;
+    }
 }
