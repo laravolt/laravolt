@@ -22,7 +22,7 @@ trait AutoSort
                 $column = $temp[1];
 
                 $query->select($this->getTable().'.*');
-                $query->join($table, $relation->getForeignKey(), '=', $table.".".$relation->getOwnerKey());
+                $query->join($table, $relation->getQualifiedForeignKeyName(), '=', $relation->getQualifiedOwnerKeyName());
                 $query->orderBy($table.".".$column, $direction);
             } else {
                 $query->orderBy($column, $direction);
