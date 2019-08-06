@@ -56,6 +56,10 @@ class Builder
 
     public function source($collection)
     {
+        if ($collection instanceof \Closure) {
+            $collection = call_user_func($collection);
+        }
+
         $this->collection = $collection;
 
         if ($collection instanceof Paginator) {
