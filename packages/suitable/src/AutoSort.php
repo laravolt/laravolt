@@ -21,8 +21,16 @@ trait AutoSort
                 $table = $related->getTable();
                 $column = $temp[1];
 
+                $foreignKey = $relation->getForeignKey();
+                $ownerKey = $table.".".$relation->getOwnerKey();
+
+                if (version_compare(app()->version(), '5.8.0', '>=')) {
+                    $foreignKey = $relation->getQualifiedForeignKeyName();
+                    $ownerKey = $relation->getQualifiedOwnerKeyName();
+                }
+
                 $query->select($this->getTable().'.*');
-                $query->join($table, $relation->getQualifiedForeignKeyName(), '=', $relation->getQualifiedOwnerKeyName());
+                $query->join($table, $foreignKey, '=', $ownerKey);
                 $query->orderBy($table.".".$column, $direction);
             } else {
                 $query->orderBy($column, $direction);
