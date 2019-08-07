@@ -19,7 +19,7 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     /**
      * Spreadsheet constructor.
-     * @param string $filename
+     * @param  string  $filename
      */
     public function __construct(string $filename)
     {
@@ -37,7 +37,8 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         return $this->shouldResponse;
     }
 
-    public function decorate(Builder $table): Builder {
+    public function decorate(Builder $table): Builder
+    {
         $url = request()->url().'?'.http_build_query(array_merge(request()->input(), ['format' => $this->format]));
 
         $segment = $table->getDefaultSegment();
@@ -50,6 +51,8 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     {
         if ($source instanceof LengthAwarePaginator) {
             return $source->items();
+        } elseif ($source instanceof \Closure) {
+            return call_user_func($source);
         }
 
         return parent::resolve($source);
@@ -57,7 +60,7 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function response($source, Builder $table)
     {
-        $source = $this->overriddenSource ?? $this->resolve($source);
+        $source = $this->resolve($this->overriddenSource ?? $source);
 
         if (count($this->only) > 0) {
             $source = $source->map->only($this->only);
