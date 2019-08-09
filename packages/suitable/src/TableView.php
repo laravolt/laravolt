@@ -54,7 +54,9 @@ abstract class TableView implements Responsable
         $this->html->decorate($table);
 
         // 2. User defined decoration
-        call_user_func($this->decorateCallback, $table);
+        if (is_callable($this->decorateCallback)) {
+            call_user_func($this->decorateCallback, $table);
+        }
 
         // 3. Plugin decoration
         collect($this->plugins)->each->decorate($table);
