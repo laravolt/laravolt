@@ -107,7 +107,7 @@ class Builder
         return $this;
     }
 
-    public function addSegment($segment)
+    public function addSegment(Segment $segment)
     {
         $this->segments[$segment->getKey()] = $segment;
     }

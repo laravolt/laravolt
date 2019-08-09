@@ -33,8 +33,9 @@ class Action extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
     public function render()
     {
         return sprintf(
-            '<a href="%s" class="ui button %s">%s%s</a>',
+            '<a href="%s" class="ui button %s %s">%s%s</a>',
             $this->href,
+            collect($this->class)->implode(' '),
             $this->icon ? 'icon':'',
             $this->icon ? "<i class='icon {$this->icon}'></i> ":'',
             $this->label

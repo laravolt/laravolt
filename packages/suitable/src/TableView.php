@@ -15,6 +15,10 @@ abstract class TableView implements Responsable
 
     protected $title = '';
 
+    protected $html;
+
+    protected $decorateCallback;
+
     /**
      * TableView constructor.
      */
@@ -45,7 +49,14 @@ abstract class TableView implements Responsable
             $table->title($this->title);
         }
 
+        // Start decorating table
+        // 1. HTML decoration
         $this->html->decorate($table);
+
+        // 2. User defined decoration
+        call_user_func($this->decorateCallback, $table);
+
+        // 3. Plugin decoration
         collect($this->plugins)->each->decorate($table);
 
         foreach ($this->plugins as $plugin) {
@@ -101,6 +112,13 @@ abstract class TableView implements Responsable
     public function search($search)
     {
         $this->search = $search;
+
+        return $this;
+    }
+
+    public function decorate(\Closure $callback)
+    {
+        $this->decorateCallback = $callback;
 
         return $this;
     }
