@@ -8,7 +8,7 @@
 
     @foreach($segments as $segment)
         @unless($segment->isEmpty())
-        <div class="ui menu {{ $loop->first ? 'top' : '' }} attached">
+        <div class="ui borderless menu {{ $loop->first ? 'top' : '' }} attached">
             {!! $segment->render() !!}
         </div>
         @endunless
