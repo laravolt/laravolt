@@ -168,8 +168,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testRadioGroup()
     {
-        $expected = '<div class="grouped fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="grouped fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui radio checkbox">';
         $expected .= '<input type="radio" name="fruit" value="orange">';
@@ -183,6 +184,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
+        $expected .= '</div>';
 
         $options = ['orange' => 'Orange', 'banana'=>'Banana'];
         $result = (string)$this->form->radioGroup('fruit', $options)->label('Fruit');
@@ -191,8 +193,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testRadioGroupWithValue()
     {
-        $expected = '<div class="grouped fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="grouped fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui radio checkbox">';
         $expected .= '<input type="radio" name="fruit" value="orange">';
@@ -203,6 +206,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '<div class="ui radio checkbox">';
         $expected .= '<input type="radio" name="fruit" value="banana" checked="checked">';
         $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
@@ -221,8 +225,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->form->setOldInputProvider($oldInput);
 
 
-        $expected = '<div class="grouped fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="grouped fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui radio checkbox">';
         $expected .= '<input type="radio" name="fruit" value="orange" checked="checked">';
@@ -236,6 +241,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
+        $expected .= '</div>';
 
         $options = ['orange' => 'Orange', 'banana'=>'Banana'];
         $result = (string)$this->form->radioGroup('fruit', $options, 'banana')->label('Fruit');
@@ -244,8 +250,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testRadioGroupInline()
     {
-        $expected = '<div class="inline fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="inline fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui radio checkbox">';
         $expected .= '<input type="radio" name="fruit" value="orange">';
@@ -256,6 +263,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '<div class="ui radio checkbox">';
         $expected .= '<input type="radio" name="fruit" value="banana">';
         $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
@@ -270,8 +278,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testCheckboxGroup()
     {
-        $expected = '<div class="grouped fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="grouped fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[orange]" value="orange">';
@@ -285,6 +294,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
+        $expected .= '</div>';
 
         $options = ['orange' => 'Orange', 'banana'=>'Banana'];
         $result = (string)$this->form->checkboxGroup('fruit', $options)->label('Fruit');
@@ -293,8 +303,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testCheckboxGroupWithValue()
     {
-        $expected = '<div class="grouped fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="grouped fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[orange]" value="orange">';
@@ -305,6 +316,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[banana]" value="banana" checked="checked">';
         $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
@@ -325,8 +337,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
         $this->form->setOldInputProvider($oldInput);
 
-        $expected = '<div class="grouped fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="grouped fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[orange]" value="orange" checked="checked">';
@@ -337,6 +350,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[banana]" value="banana">';
         $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
@@ -351,8 +365,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testCheckboxGroupInline()
     {
-        $expected = '<div class="inline fields">';
+        $expected = '<div class="field">';
         $expected .= '<label>Fruit</label>';
+        $expected .= '<div class="inline fields">';
         $expected .= '<div class="field">';
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[orange]" value="orange">';
@@ -363,6 +378,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $expected .= '<div class="ui checkbox">';
         $expected .= '<input type="checkbox" name="fruit[banana]" value="banana">';
         $expected .= '<label>Banana</label>';
+        $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
         $expected .= '</div>';
