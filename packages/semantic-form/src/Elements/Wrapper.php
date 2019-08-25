@@ -8,7 +8,11 @@ class Wrapper extends Element
 
     public function __construct()
     {
-        $this->controls = func_get_args();
+        if (func_num_args() == 1 && is_array(func_get_arg(0))) {
+            $this->controls = func_get_arg(0);
+        } else {
+            $this->controls = func_get_args();
+        }
     }
 
     public function render()
