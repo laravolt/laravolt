@@ -28,6 +28,7 @@ use Laravolt\SemanticForm\Elements\File;
 use Laravolt\SemanticForm\Elements\Date;
 use Laravolt\SemanticForm\Elements\Email;
 use Laravolt\SemanticForm\Elements\Time;
+use Laravolt\SemanticForm\Elements\Uploader;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
 use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
 
@@ -409,6 +410,13 @@ class SemanticForm
     public function file($name)
     {
         return new File($name);
+    }
+
+    public function uploader($name)
+    {
+        $uploader = (new Uploader($name))->data('fileuploader-listInput', "uploader[$name]");
+
+        return $uploader;
     }
 
     public function input($name, $defaultValue = null)
