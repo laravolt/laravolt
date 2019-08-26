@@ -1,2 +1,2 @@
-# media
+# laravolt/media
 Handling media upload

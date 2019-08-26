@@ -1,0 +1,38 @@
+{
+    "name": "laravolt/media",
+    "description": "File browser and media upload handler",
+    "keywords": [
+        "laravel",
+        "laravolt",
+        "media",
+        "upload",
+        "file manager"
+    ],
+    "homepage": "https://github.com/laravolt/media",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com",
+            "homepage": "https://laravolt.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "illuminate/support": "5.8.*",
+        "spatie/laravel-medialibrary": "^7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\Media\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Media\\ServiceProvider"
+            ]
+        }
+    }
+}
