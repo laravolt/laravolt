@@ -1,5 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Arr;
+
 class InputWrapper extends Wrapper
 {
     protected $attributes = [
@@ -35,7 +37,7 @@ class InputWrapper extends Wrapper
         $icon = (new Icon($icon))->addClass($class);
 
         $this->addClass('left icon');
-        $this->controlsLeft = array_prepend($this->controlsLeft, $icon);
+        $this->controlsLeft = Arr::prepend($this->controlsLeft, $icon);
 
         return $this;
     }
@@ -47,7 +49,7 @@ class InputWrapper extends Wrapper
         $icon = (new Icon($icon))->addClass($class);
 
         $this->addClass('icon');
-        $this->controlsRight = array_prepend($this->controlsRight, $icon);
+        $this->controlsRight = Arr::prepend($this->controlsRight, $icon);
 
         return $this;
     }
@@ -55,7 +57,7 @@ class InputWrapper extends Wrapper
     public function prependLabel($text, $class = null)
     {
         $this->addClass('labeled');
-        $this->controlsLeft = array_prepend($this->controlsLeft, (new UiLabel($text))->addClass($class));
+        $this->controlsLeft = Arr::prepend($this->controlsLeft, (new UiLabel($text))->addClass($class));
 
         return $this;
     }
@@ -63,7 +65,7 @@ class InputWrapper extends Wrapper
     public function appendLabel($text, $class = null)
     {
         $this->removeClass('labeled')->addClass('right labeled');
-        $this->controlsRight = array_prepend($this->controlsRight, (new UiLabel($text))->addClass($class));
+        $this->controlsRight = Arr::prepend($this->controlsRight, (new UiLabel($text))->addClass($class));
 
         return $this;
     }
