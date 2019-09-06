@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "illuminate/support": "5.8.*",
+        "illuminate/support": "5.8.*|^6.0",
         "spatie/laravel-medialibrary": "^7.0.0"
     },
     "autoload": {
