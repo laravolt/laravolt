@@ -51,4 +51,13 @@ trait Bootstrap
         return [
         ];
     }
+
+    protected function createUser(): User
+    {
+        return User::create([
+            'name' => 'Fulan',
+            'email' => 'fulan@example.com',
+            'password' => bcrypt('secret'),
+        ]);
+    }
 }

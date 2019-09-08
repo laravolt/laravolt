@@ -60,6 +60,7 @@
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.2",
+        "mockery/mockery": "^1.2",
         "orchestra/testbench": "^4.0",
         "orchestra/testbench-browser-kit": "^4.0"
     }

@@ -26,7 +26,7 @@ class AddLaravoltAttributesToUsers extends Migration
         Schema::table($this->table, function (Blueprint $table) {
             $table->string('status')->after('email')->index()->nullable();
             $table->string('timezone')->default(config('app.timezone'))->after('status');
-            $table->timestamp('password_last_set')->nullable()->after('password');
+            $table->timestamp('password_changed_at')->nullable()->after('password');
         });
     }
 
@@ -38,7 +38,7 @@ class AddLaravoltAttributesToUsers extends Migration
     public function down()
     {
         Schema::table($this->table, function (Blueprint $table) {
-            $table->dropColumn(['status', 'timezone', 'password_last_set']);
+            $table->dropColumn(['status', 'timezone', 'password_changed_at']);
         });
     }
 }
