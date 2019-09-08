@@ -4,7 +4,7 @@ php:
   - 7.3
 
 before_script:
-  - travis_retry composer update
+  - travis_retry composer update --prefer-dist --no-interaction
 
 script:
   - mkdir -p build/logs
@@ -12,3 +12,7 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/php-coveralls -v
+
+branches:
+  only:
+    - master
