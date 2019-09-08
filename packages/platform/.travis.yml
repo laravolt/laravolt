@@ -4,7 +4,7 @@ php:
   - 7.3
 
 before_script:
-  - travis_retry composer update --prefer-dist --no-interaction
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction
 
 script:
   - mkdir -p build/logs
