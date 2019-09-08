@@ -26,32 +26,36 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "laravolt/acl": "^4.1",
-        "laravolt/auth": "^4.7",
-        "laravolt/avatar": "^2.2",
-        "laravolt/epicentrum": "^1.0",
-        "laravolt/mailkeeper": "~0.9",
-        "laravolt/password": "^1.5",
-        "laravolt/semantic-form": "^2.2",
-        "laravolt/suitable": "^3.3",
-        "laravolt/thunderclap": "~0.11",
-        "laravolt/ui": "~0.7",
         "nwidart/laravel-modules": "^5.0",
         "spatie/laravel-medialibrary": "^7.0"
     },
     "autoload": {
         "psr-4": {
             "Laravolt\\Platform\\": "src/Platform/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+        ],
+        "psr-4": {
+            "Laravolt\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Laravolt\\Platform\\Providers\\ServiceProvider"
+                "Laravolt\\Platform\\Providers\\PlatformServiceProvider"
             ]
         }
     },
     "config": {
         "sort-packages": true
+    },
+    "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.26.2",
+        "orchestra/testbench": "^4.0"
     }
 }
