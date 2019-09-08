@@ -22,7 +22,7 @@ trait Bootstrap
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -30,7 +30,7 @@ trait Bootstrap
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
@@ -42,7 +42,7 @@ trait Bootstrap
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */

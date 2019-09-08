@@ -10,7 +10,8 @@ trait CanChangePassword
 {
     /**
      * @param      $password
-     * @param  bool  $mustBeChanged
+     * @param bool $mustBeChanged
+     *
      * @return $this
      */
     public function setPassword($password, $mustBeChanged = false): bool
@@ -33,7 +34,8 @@ trait CanChangePassword
     }
 
     /**
-     * @param  null  $durationInDays
+     * @param null $durationInDays
+     *
      * @return bool
      */
     public function passwordMustBeChanged($durationInDays = null): bool

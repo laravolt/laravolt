@@ -29,7 +29,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         // Password
         $this->app->singleton('laravolt.password', function ($app) {
             $app['config']['auth.password.email'] = $app['config']['laravolt.password.emails.reset'];
-            $config = $this->app['config']["auth.passwords.users"];
+            $config = $this->app['config']['auth.passwords.users'];
             $token = $this->createTokenRepository($config);
 
             return new Password($token, $app['mailer'], $app['config']['laravolt.password.emails.new']);
@@ -68,7 +68,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param  array  $config
+     * @param array $config
+     *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
     protected function createTokenRepository(array $config)
