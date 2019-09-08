@@ -23,8 +23,9 @@ class Password
 
     /**
      * Password constructor.
-     * @param  TokenRepositoryInterface  $token
-     * @param  Mailer  $mailer
+     *
+     * @param TokenRepositoryInterface $token
+     * @param Mailer                   $mailer
      */
     public function __construct(TokenRepositoryInterface $token, Mailer $mailer)
     {
@@ -40,8 +41,9 @@ class Password
     }
 
     /**
-     * @param  CanChangePassword  $user
-     * @param  bool|false  $mustBeChanged
+     * @param CanChangePassword $user
+     * @param bool|false        $mustBeChanged
+     *
      * @return bool
      */
     public function sendNewPassword(CanChangePassword $user, $mustBeChanged = false)
