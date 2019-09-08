@@ -4,6 +4,7 @@ php:
   - 7.3
 
 before_script:
+  - printf "\n" | pecl install imagick
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction
 
 script:

@@ -23,6 +23,7 @@
     ],
     "require": {
         "php": ">=7.3",
+        "ext-imagick": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
