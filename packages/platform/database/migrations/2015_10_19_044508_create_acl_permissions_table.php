@@ -15,7 +15,7 @@ class CreateAclPermissionsTable extends Migration
         Schema::create('acl_permissions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('description')->nullable()->after('name');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
