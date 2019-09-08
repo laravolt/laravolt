@@ -26,8 +26,12 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
+        "bensampo/laravel-enum": "^1.26",
+        "illuminate/database": "^6.0",
+        "illuminate/support": "^6.0",
         "nwidart/laravel-modules": "^5.0",
-        "spatie/laravel-medialibrary": "^7.0"
+        "spatie/laravel-medialibrary": "^7.0",
+        "stolz/assets": "^0.1.11"
     },
     "autoload": {
         "psr-4": {
@@ -56,6 +60,7 @@
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.2",
-        "orchestra/testbench": "^4.0"
+        "orchestra/testbench": "^4.0",
+        "orchestra/testbench-browser-kit": "^4.0"
     }
 }
