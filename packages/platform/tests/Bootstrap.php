@@ -18,7 +18,7 @@ trait Bootstrap
 
         $this->loadLaravelMigrations();
         $this->artisan('migrate');
-        $this->withFactories(realpath(__DIR__.'/../database/factories'));
+        // $this->withFactories(realpath(__DIR__.'/../database/factories'));
     }
 
     /**
