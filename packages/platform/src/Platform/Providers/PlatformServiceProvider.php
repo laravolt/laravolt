@@ -6,12 +6,20 @@ namespace Laravolt\Platform\Providers;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Support\Str;
+use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\Password;
 
 class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 {
+    protected $commands = [
+        SyncPermission::class,
+    ];
+
     public function register(): void
     {
+        $this->commands($this->commands);
+        
         $this->registerServices();
     }
 
@@ -26,6 +34,11 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function registerServices()
     {
+        // Acl
+        $this->app->singleton('laravolt.acl', function ($app) {
+            return new Acl;
+        });
+
         // Password
         $this->app->singleton('laravolt.password', function ($app) {
             $app['config']['auth.password.email'] = $app['config']['laravolt.password.emails.reset'];
@@ -39,6 +52,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bootConfig(): self
     {
         $this->mergeConfigFrom(platform_path('config/platform.php'), 'laravolt.platform');
+        $this->mergeConfigFrom(platform_path('config/acl.php'), 'laravolt.acl');
         $this->mergeConfigFrom(platform_path('config/password.php'), 'laravolt.password');
 
         return $this;
@@ -68,7 +82,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param array $config
+     * @param  array  $config
      *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
