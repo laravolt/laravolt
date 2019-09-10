@@ -19,7 +19,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register(): void
     {
         $this->commands($this->commands);
-        
+
         $this->registerServices();
     }
 
@@ -36,7 +36,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         // Acl
         $this->app->singleton('laravolt.acl', function ($app) {
-            return new Acl;
+            return new Acl();
         });
 
         // Password
@@ -82,7 +82,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param  array  $config
+     * @param array $config
      *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */

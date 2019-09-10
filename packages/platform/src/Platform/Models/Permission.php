@@ -19,5 +19,4 @@ class Permission extends Model
             $builder->orderBy('name');
         });
     }
-
 }

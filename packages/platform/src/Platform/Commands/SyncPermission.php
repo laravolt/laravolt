@@ -3,7 +3,6 @@
 namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Config\Repository;
 
 class SyncPermission extends Command
 {

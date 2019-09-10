@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Platform\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ trait HasRoleAndPermission
         if (is_array($role)) {
             $match = 0;
             foreach ($role as $r) {
-                $match += (int)$this->hasRole($r, $checkAll);
+                $match += (int) $this->hasRole($r, $checkAll);
             }
 
             if ($checkAll) {
@@ -29,7 +30,7 @@ trait HasRoleAndPermission
             $role = $this->roles->firstWhere('name', $role);
         }
 
-        if (is_integer($role)) {
+        if (is_int($role)) {
             $role = $this->roles->firstWhere('id', $role);
         }
 
@@ -68,7 +69,7 @@ trait HasRoleAndPermission
     {
         $ids = collect($roles)->transform(function ($role) {
             if (is_numeric($role)) {
-                return (int)$role;
+                return (int) $role;
             } elseif (is_string($role)) {
                 $role = app(config('laravolt.acl.models.role'))->firstOrCreate(['name' => $role]);
 
@@ -86,7 +87,7 @@ trait HasRoleAndPermission
         if (is_array($permission)) {
             $match = 0;
             foreach ($permission as $perm) {
-                $match += (int)$this->hasPermission($perm);
+                $match += (int) $this->hasPermission($perm);
             }
 
             if ($checkAll) {
@@ -100,7 +101,7 @@ trait HasRoleAndPermission
             $permission = app(config('laravolt.acl.models.permission'))->where('name', $permission)->first();
         }
 
-        if (is_integer($permission)) {
+        if (is_int($permission)) {
             $permission = app(config('laravolt.acl.models.permission'))->find($permission);
         }
 

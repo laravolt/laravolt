@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 class Acl
 {
-
     /**
      * All of the registered permissions.
      *
@@ -21,7 +20,7 @@ class Acl
 
     public function registerPermission($permission)
     {
-        $this->permissions = array_unique(array_merge($this->permissions, (array)$permission));
+        $this->permissions = array_unique(array_merge($this->permissions, (array) $permission));
 
         return $this;
     }
