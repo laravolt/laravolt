@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Services;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Acl
@@ -13,47 +16,60 @@ class Acl
      */
     protected $permissions = [];
 
-    public function permissions()
+    public function permissions(): array
     {
         return $this->permissions;
     }
 
-    public function registerPermission($permission)
+    public function clearPermissions(): self
+    {
+        $this->permissions = [];
+
+        return $this;
+    }
+
+    public function registerPermission($permission): self
     {
         $this->permissions = array_unique(array_merge($this->permissions, (array) $permission));
 
         return $this;
     }
 
-    public function syncPermission($refresh = false)
+    public function syncPermission($refresh = false): Collection
     {
-        if ($refresh) {
-            DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-            app(config('laravolt.acl.models.permission'))->truncate();
-        }
-
-        $items = collect();
-        foreach ($this->permissions() as $name) {
-            $permission = app(config('laravolt.acl.models.permission'))->firstOrNew(['name' => $name]);
-            $status = 'No Change';
-
-            if (!$permission->exists) {
-                $permission->save();
-                $status = 'New';
+        return DB::transaction(function () use ($refresh) {
+            if ($refresh) {
+                if (!is_sqlite()) {
+                    DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+                }
+                app(config('laravolt.acl.models.permission'))->truncate();
             }
 
-            $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
-        }
+            $items = collect();
+            foreach ($this->permissions() as $name) {
+                $permission = app(config('laravolt.acl.models.permission'))->firstOrNew(['name' => $name]);
+                $status = 'No Change';
 
-        // delete unused permissions
-        $unusedPermissions = app(config('laravolt.acl.models.permission'))->whereNotIn('name', $this->permissions())->get();
-        foreach ($unusedPermissions as $permission) {
-            $items->push(['id' => $permission->getKey(), 'name' => $permission->name, 'status' => 'Deleted']);
-            $permission->delete();
-        }
+                if (!$permission->exists) {
+                    $permission->save();
+                    $status = 'New';
+                }
 
-        $items = $items->sortBy('name');
+                $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
+            }
 
-        return $items;
+            // delete unused permissions
+            $unusedPermissions = app(config('laravolt.acl.models.permission'))
+                ->whereNotIn('name', $this->permissions())
+                ->get();
+            foreach ($unusedPermissions as $permission) {
+                $items->push(['id' => $permission->getKey(), 'name' => $permission->name, 'status' => 'Deleted']);
+                $permission->delete();
+            }
+
+            $items = $items->sortBy('name');
+
+            return $items;
+        });
     }
 }

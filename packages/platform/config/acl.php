@@ -5,7 +5,7 @@
  */
 return [
     'models' => [
-        'role' => \Laravolt\Acl\Models\Role::class,
-        'permission' => \Laravolt\Acl\Models\Permission::class,
+        'role' => \Laravolt\Platform\Models\Role::class,
+        'permission' => \Laravolt\Platform\Models\Permission::class,
     ],
 ];
