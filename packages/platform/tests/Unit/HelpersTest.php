@@ -10,8 +10,8 @@ class HelpersTest extends UnitTest
 {
     public function testPlatformPath()
     {
-        $actual = platform_path('tests/resources/file.txt');
-        $expected = realpath(__DIR__.'/../resources/file.txt');
+        $actual = platform_path('resources/files/file.txt');
+        $expected = realpath(__DIR__.'/../../resources/files/file.txt');
 
         $this->assertSame($expected, $actual);
         $this->assertFileExists($actual);
@@ -19,8 +19,8 @@ class HelpersTest extends UnitTest
 
     public function testPlatformPathWithTrailingSlash()
     {
-        $actual = platform_path('/tests/resources/file.txt');
-        $expected = realpath(__DIR__.'/../resources/file.txt');
+        $actual = platform_path('/resources/files/file.txt');
+        $expected = realpath(__DIR__.'/../../resources/files/file.txt');
 
         $this->assertSame($expected, $actual);
         $this->assertFileExists($actual);
