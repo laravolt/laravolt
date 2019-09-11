@@ -42,7 +42,7 @@ class Role extends Model
     {
         $ids = collect($permissions)->transform(function ($permission) {
             if (is_numeric($permission)) {
-                return (int)$permission;
+                return (int) $permission;
             } elseif (is_string($permission)) {
                 $permissionObject = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
 
@@ -54,5 +54,4 @@ class Role extends Model
 
         return $this->permissions()->sync($ids->toArray());
     }
-
 }
