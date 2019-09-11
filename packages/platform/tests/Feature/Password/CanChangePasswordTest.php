@@ -38,6 +38,12 @@ class CanChangePasswordTest extends FeatureTest
 
         $user->setPassword('secret2', false);
         $this->assertFalse($user->passwordMustBeChanged(1));
+
+        $user->setPassword('secret2', false);
+        $this->assertFalse($user->passwordMustBeChanged(null));
+
+        $user->setPassword('secret2', true);
+        $this->assertTrue($user->passwordMustBeChanged(null));
     }
 
     public function testPasswordMustBeChangedDuration()
