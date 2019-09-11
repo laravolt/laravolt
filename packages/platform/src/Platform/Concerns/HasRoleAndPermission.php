@@ -85,7 +85,7 @@ trait HasRoleAndPermission
         return false;
     }
 
-    public function syncRoles($roles): array
+    public function syncRoles($roles): self
     {
         $ids = collect($roles)->transform(function ($role) {
             if (is_numeric($role)) {
@@ -94,12 +94,16 @@ trait HasRoleAndPermission
                 $role = app(config('laravolt.acl.models.role'))->firstOrCreate(['name' => $role]);
 
                 return $role->getKey();
+            } elseif ($role instanceof Model) {
+                return $role->getKey();
             }
         })->filter(function ($id) {
             return $id > 0;
         });
 
-        return $this->roles()->sync($ids);
+        $this->roles()->sync($ids);
+
+        return $this;
     }
 
     public function hasPermission($permission, $checkAll = false): bool
