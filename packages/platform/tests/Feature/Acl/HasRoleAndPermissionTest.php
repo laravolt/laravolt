@@ -105,6 +105,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $user->assignRole(['Admin']);
 
         $this->assertTrue($user->hasRole(1));
+        $this->assertFalse($user->hasRole(2));
         $this->assertTrue($user->hasRole([1, 2]));
         $this->assertFalse($user->hasRole([1, 2], true));
     }
@@ -144,7 +145,11 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasPermission([1, 2], true));
         $this->assertTrue($user->hasPermission([app(config('laravolt.acl.models.permission'))->find(1), 2], true));
         $this->assertFalse($user->hasPermission('smoking'));
+        $this->assertTrue($user->hasPermission(['smoking', 'create']));
         $this->assertFalse($user->hasPermission(['smoking', 'create'], true));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->assertFalse($user->hasPermission('gambling'));
     }
 
     public function testChaining()

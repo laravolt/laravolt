@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class CheckPassword
 {
@@ -29,7 +30,7 @@ class CheckPassword
         return $next($request);
     }
 
-    protected function shouldPassThrough($request)
+    protected function shouldPassThrough(Request $request): bool
     {
         $except = array_merge((array) config('laravolt.password.except'), (array) config('laravolt.password.redirect'));
 
