@@ -11,7 +11,45 @@ trait HasRoleAndPermission
         return $this->belongsToMany(config('laravolt.acl.models.role'), 'acl_role_user', 'user_id', 'role_id');
     }
 
-    public function hasRole($role, $checkAll = false)
+    public function assignRole($role): self
+    {
+        if (is_array($role)) {
+            foreach ($role as $r) {
+                $this->assignRole($r);
+            }
+
+            return $this;
+        }
+
+        if (is_string($role)) {
+            $role = app(config('laravolt.acl.models.role'))->firstOrCreate(['name' => $role]);
+        }
+
+        $this->roles()->syncWithoutDetaching($role);
+
+        return $this;
+    }
+
+    public function revokeRole($role): self
+    {
+        if (is_array($role)) {
+            foreach ($role as $r) {
+                $this->revokeRole($r);
+            }
+
+            return $this;
+        }
+
+        if (is_string($role)) {
+            $role = app(config('laravolt.acl.models.role'))->where('name', $role)->first();
+        }
+
+        $this->roles()->detach($role);
+
+        return $this;
+    }
+
+    public function hasRole($role, $checkAll = false): bool
     {
         if (is_array($role)) {
             $match = 0;
@@ -47,25 +85,7 @@ trait HasRoleAndPermission
         return false;
     }
 
-    public function assignRole($role)
-    {
-        if (is_string($role)) {
-            $role = app(config('laravolt.acl.models.role'))->where('name', $role)->first();
-        }
-
-        return $this->roles()->syncWithoutDetaching($role);
-    }
-
-    public function revokeRole($role)
-    {
-        if (is_string($role)) {
-            $role = app(config('laravolt.acl.models.role'))->where('name', $role)->first();
-        }
-
-        return $this->roles()->detach($role);
-    }
-
-    public function syncRoles($roles)
+    public function syncRoles($roles): array
     {
         $ids = collect($roles)->transform(function ($role) {
             if (is_numeric($role)) {
@@ -82,7 +102,7 @@ trait HasRoleAndPermission
         return $this->roles()->sync($ids);
     }
 
-    public function hasPermission($permission, $checkAll = false)
+    public function hasPermission($permission, $checkAll = false): bool
     {
         if (is_array($permission)) {
             $match = 0;
