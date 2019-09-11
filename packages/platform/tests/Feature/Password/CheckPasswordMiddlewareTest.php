@@ -38,6 +38,23 @@ class CheckPasswordMiddlewareTest extends FeatureTest
         $this->visit('public')->seeText('public');
     }
 
+    public function testDoNothingForNormalUser()
+    {
+        Route::middleware(CheckPassword::class)->get('public', function () {
+            return 'public page';
+        });
+        Route::middleware(CheckPassword::class)->get('edit-password', function () {
+            return 'edit password';
+        });
+
+        $user = $this->createUser();
+        config()->set('laravolt.password.duration', 1);
+        config()->set('laravolt.password.redirect', 'edit-password');
+        $this->actingAs($user);
+
+        $this->visit('public')->seeText('public page');
+    }
+
     public function testRedirectToEditPasswordPage()
     {
         Route::middleware(CheckPassword::class)->get('public', function () {
