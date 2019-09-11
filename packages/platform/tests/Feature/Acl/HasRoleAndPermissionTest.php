@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laravolt\Tests;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Laravolt\Platform\Models\Role;
 
 class HasRoleAndPermissionTest extends FeatureTest
 {
