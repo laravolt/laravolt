@@ -137,11 +137,14 @@ class HasRoleAndPermissionTest extends FeatureTest
         $admin->addPermission('create');
         $admin->addPermission('edit');
         $user->assignRole($admin);
+        $smoking = app(config('laravolt.acl.models.permission'))->create(['name' => 'smoking']);
 
         $this->assertTrue($user->hasPermission('create'));
         $this->assertTrue($user->hasPermission(['create', 'edit'], true));
         $this->assertTrue($user->hasPermission([1, 2], true));
         $this->assertTrue($user->hasPermission([app(config('laravolt.acl.models.permission'))->find(1), 2], true));
+        $this->assertFalse($user->hasPermission('smoking'));
+        $this->assertFalse($user->hasPermission(['smoking', 'create'], true));
     }
 
     public function testChaining()
