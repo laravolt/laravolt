@@ -11,7 +11,7 @@ class SyncPermission extends Command
      *
      * @var string
      */
-    protected $signature = 'laravolt:sync-permission {--clear}';
+    protected $signature = 'laravolt:sync-permission {--refresh}';
 
     /**
      * The console command description.
@@ -19,16 +19,6 @@ class SyncPermission extends Command
      * @var string
      */
     protected $description = 'Synchronize permission table and config file';
-
-    protected $config;
-
-    /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -39,7 +29,7 @@ class SyncPermission extends Command
     {
         $this->info('Synchronize Permissions Entries');
 
-        $result = app('laravolt.acl')->syncPermission($this->option('clear'));
+        $result = app('laravolt.acl')->syncPermission($this->option('refresh'));
 
         $this->table(['ID', 'Name', 'Status'], $result);
     }
