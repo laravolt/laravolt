@@ -44,6 +44,8 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
+        $model = $permission;
+
         if (!$permission instanceof Model) {
             $model = app(config('laravolt.acl.models.permission'))->find($permission);
             if (!$model) {

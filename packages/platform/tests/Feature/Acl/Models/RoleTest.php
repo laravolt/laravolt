@@ -85,4 +85,29 @@ class RoleTest extends FeatureTest
 
         $this->assertEmpty($role->permissions);
     }
+
+    public function testHasPermission()
+    {
+        $role = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        $permission = app(config('laravolt.acl.models.permission'))->create(['name' => 'create']);
+
+        $role->addPermission($permission);
+
+        $this->assertTrue($role->hasPermission($permission->getKey()));
+        $this->assertTrue($role->hasPermission($permission->name));
+        $this->assertTrue($role->hasPermission($permission));
+    }
+
+    public function testHasNotPermission()
+    {
+        $role = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        $create = app(config('laravolt.acl.models.permission'))->create(['name' => 'create']);
+        $edit = app(config('laravolt.acl.models.permission'))->create(['name' => 'edit']);
+
+        $role->addPermission($create);
+
+        $this->assertFalse($role->hasPermission($edit->getKey()));
+        $this->assertFalse($role->hasPermission($edit->name));
+        $this->assertFalse($role->hasPermission($edit));
+    }
 }
