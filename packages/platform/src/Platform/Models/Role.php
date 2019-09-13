@@ -20,22 +20,48 @@ class Role extends Model
         return $this->belongsToMany(config('auth.providers.users.model'), 'acl_role_user');
     }
 
-    public function addPermission($permission)
+    public function addPermission($permission): self
     {
         if (is_string($permission)) {
             $permission = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
         }
 
-        return $this->permissions()->attach($permission);
+        $this->permissions()->attach($permission);
+
+        return $this;
     }
 
-    public function removePermission($permission)
+    public function removePermission($permission): self
     {
         if (is_string($permission)) {
             $permission = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
         }
 
-        return $this->permissions()->detach($permission);
+        $this->permissions()->detach($permission);
+
+        return $this;
+    }
+
+    public function hasPermission($permission)
+    {
+        if (!$permission instanceof Model) {
+            $model = app(config('laravolt.acl.models.permission'))->find($permission);
+            if (!$model) {
+                $model = app(config('laravolt.acl.models.permission'))->where('name', $permission)->first();
+            }
+        }
+
+        if (!$model instanceof Model) {
+            return false;
+        }
+
+        foreach ($this->permissions as $assignedPermission) {
+            if ($model->is($assignedPermission)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function syncPermission(array $permissions)
