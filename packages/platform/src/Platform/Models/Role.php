@@ -74,7 +74,9 @@ class Role extends Model
             } elseif (is_string($permission)) {
                 $permissionObject = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
 
-                return $permissionObject->id;
+                return $permissionObject->getKey();
+            } elseif ($permission instanceof Model) {
+                return $permission->getKey();
             }
         })->filter(function ($id) {
             return $id > 0;
