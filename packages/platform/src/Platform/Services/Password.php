@@ -11,7 +11,7 @@ use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Laravolt\Platform\Contracts\CanChangePassword;
+use Laravolt\Contracts\CanChangePassword;
 use Laravolt\Platform\Mail\NewPassword;
 use UnexpectedValueException;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Platform\Contracts;
+namespace Laravolt\Contracts;
 
 interface CanChangePassword
 {

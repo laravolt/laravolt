@@ -8,8 +8,8 @@ use Illuminate\Foundation\Auth\User as BaseUser;
 use Laravolt\Platform\Concerns\CanChangePassword;
 use Laravolt\Platform\Concerns\CanResetPassword;
 use Laravolt\Platform\Concerns\HasRoleAndPermission;
-use Laravolt\Platform\Contracts\CanChangePassword as CanChangePasswordContract;
-use Laravolt\Platform\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+use Laravolt\Contracts\CanChangePassword as CanChangePasswordContract;
+use Laravolt\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 class User extends BaseUser implements CanChangePasswordContract, HasRoleAndPermissionContract
 {

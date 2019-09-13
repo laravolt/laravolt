@@ -1,6 +1,8 @@
 <?php
 
-namespace Laravolt\Platform\Contracts;
+declare(strict_types=1);
+
+namespace Laravolt\Contracts;
 
 interface HasRoleAndPermission
 {

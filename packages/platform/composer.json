@@ -36,7 +36,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Laravolt\\Platform\\": "src/Platform/"
+            "Laravolt\\Platform\\": "src/Platform/",
+            "Laravolt\\Contracts\\": "src/Contracts/"
         },
         "files": [
             "src/helpers.php"
