@@ -57,6 +57,11 @@ Form::text($name, $value)->label('Username');
 Form::number($name, $integerValue)->label('Total');
 ```
 
+### Rupiah
+``` php
+Form::rupiah($name, $defaultValue = null)->label('Price');
+```
+
 ### Date
 ``` php
 Form::date($name, $value)->label('Birthday');
