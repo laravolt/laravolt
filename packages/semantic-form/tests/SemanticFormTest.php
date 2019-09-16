@@ -925,6 +925,26 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testUploader()
+    {
+        $result = (string)$this->form->uploader('avatar');
+        $expected = '<input type="file" class="uploader" name="avatar" data-fileuploader-listInput="uploader[avatar]">';
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testRupiah()
+    {
+        $mock1 = Mockery::mock('alias:Stolz\Assets\Laravel\Facade');
+        $mock1->shouldReceive('group')->andReturnSelf();
+        $mock1->shouldReceive('add')->andReturnSelf();
+
+        $result = (string)$this->form->rupiah('price');
+        $expected = '<div class="ui input labeled"><div class="ui label">Rp</div><input type="text" name="price" data-role="rupiah"></div>';
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCanBindObject()
     {
         $this->assertTrue(method_exists($this->form, 'bind'));

@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
@@ -37,7 +38,9 @@ class SemanticForm
     use Macroable;
 
     private $oldInput;
+
     private $errorStore;
+
     private $model;
 
     public function setOldInputProvider(OldInputInterface $oldInputProvider)
@@ -276,7 +279,7 @@ class SemanticForm
 
     public function checkboxGroup($name, $options, $checked = [])
     {
-        $checked = (array)$checked;
+        $checked = (array) $checked;
         $controls = [];
         $oldValue = $this->getValueFor($name);
 
@@ -419,6 +422,16 @@ class SemanticForm
         return $uploader;
     }
 
+    public function rupiah($name, $defaultValue = null)
+    {
+        \Stolz\Assets\Laravel\Facade::group('laravolt')->add('autoNumeric');
+
+        $input = $this->input($name, $defaultValue)->prependLabel('Rp');
+        $input->getPrimaryControl()->data('role', 'rupiah');
+
+        return $input;
+    }
+
     public function input($name, $defaultValue = null)
     {
         $text = $this->text($name, $defaultValue);
@@ -456,7 +469,7 @@ class SemanticForm
 
     public function bind($model)
     {
-        $this->model = is_array($model) ? (object)$model : $model;
+        $this->model = is_array($model) ? (object) $model : $model;
 
         return $this;
     }
