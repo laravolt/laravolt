@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable\Plugins;
 
+use Illuminate\Support\Arr;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Toolbars\Search;
 
@@ -83,7 +84,7 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     {
         $output = $table->source($this->resolve($source))->render();
         $view = $this->view ?: 'suitable::layouts.print';
-        $this->data = array_add($this->data, $this->alias, $output);
+        $this->data = Arr::add($this->data, $this->alias, $output);
 
         return response()->view($view, $this->data);
     }

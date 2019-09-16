@@ -4,6 +4,8 @@ namespace Laravolt\Suitable;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Class PackageServiceProvider
@@ -85,9 +87,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         EloquentBuilder::macro('whereLike', function ($attributes, string $searchTerm) {
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
-                foreach (array_wrap($attributes) as $attribute) {
+                foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(
-                        str_contains($attribute, '.'),
+                        Str::contains($attribute, '.'),
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
                             [$relationName, $relationAttribute] = explode('.', $attribute);
 

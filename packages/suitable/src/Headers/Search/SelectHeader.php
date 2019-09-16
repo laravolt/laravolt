@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable\Headers\Search;
 
+use Illuminate\Support\Arr;
 use Laravolt\Suitable\Concerns\HtmlHelper;
 
 class SelectHeader implements \Laravolt\Suitable\Contracts\Header
@@ -42,7 +43,7 @@ class SelectHeader implements \Laravolt\Suitable\Contracts\Header
         return sprintf(
             '<th %s>%s</th>',
             $this->tagAttributes($this->attributes),
-            form()->select("filter[$this->name]", $this->options, array_get(request("filter"), $this->name))
+            form()->select("filter[$this->name]", $this->options, Arr::has(request("filter"), $this->name))
                 ->attribute('form', 'suitable-form-searchable')
         );
     }

@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable\Headers\Search;
 
+use Illuminate\Support\Arr;
 use Laravolt\Suitable\Concerns\HtmlHelper;
 
 class TextHeader implements \Laravolt\Suitable\Contracts\Header
@@ -40,7 +41,7 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
             '<th %s><input type="text" name="filter[%s]" value="%s" form="suitable-form-searchable"></th>',
             $this->tagAttributes($this->attributes),
             $this->name,
-            array_get(request("filter"), $this->name)
+            Arr::get(request("filter"), $this->name)
         );
     }
 }

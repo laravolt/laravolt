@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable\Columns;
 
+use Illuminate\Support\Str;
 use Laravolt\Suitable\Concerns\HtmlHelper;
 use Laravolt\Suitable\Headers\Header;
 use Laravolt\Suitable\Headers\Search\TextHeader;
@@ -35,11 +36,11 @@ abstract class Column
     static public function make($field, $header = null)
     {
         if ($header === null && is_string($field)) {
-            $header = str_replace('_', ' ', title_case($field));
+            $header = str_replace('_', ' ', Str::title($field));
         }
 
         $column = new static($header);
-        $column->id = snake_case($header);
+        $column->id = Str::snake($header);
 
         if (is_string($field) || $field instanceof \Closure) {
             $column->field = $field;

@@ -4,8 +4,10 @@ namespace Laravolt\Suitable;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Laravolt\Suitable\Columns\ColumnInterface;
 use Laravolt\Suitable\Columns\Dummy;
 use Laravolt\Suitable\Columns\Raw;
@@ -47,7 +49,7 @@ class Builder
     public function __construct()
     {
         // Generate default value
-        $this->id = 'suitable'.str_random();
+        $this->id = 'suitable'.Str::random();
 
         // Add default segment
         $segment = Segment::make('default');
@@ -251,36 +253,36 @@ class Builder
 
     protected function transformColumn($column)
     {
-        $header = array_get($column, 'header');
+        $header = Arr::get($column, 'header');
 
         $columnObject = Dummy::make(null, $header);
 
-        if (array_has($column, 'raw') && $column['raw'] instanceof \Closure) {
+        if (Arr::has($column, 'raw') && $column['raw'] instanceof \Closure) {
             $columnObject = Raw::make($column['raw'], $header);
         }
 
-        if ($view = array_get($column, 'view')) {
+        if ($view = Arr::get($column, 'view')) {
             $columnObject = \Laravolt\Suitable\Columns\View::make($view, $header);
         }
 
-        if ($field = array_get($column, 'field')) {
+        if ($field = Arr::get($column, 'field')) {
             $columnObject = \Laravolt\Suitable\Columns\Text::make($field, $header);
         }
 
         if ($columnObject instanceof ColumnInterface) {
-            if (array_has($column, 'sortable')) {
+            if (Arr::has($column, 'sortable')) {
                 $columnObject->sortable($column['sortable']);
             }
 
-            if (array_has($column, 'searchable')) {
+            if (Arr::has($column, 'searchable')) {
                 $columnObject->searchable($column['searchable']);
             }
 
-            if (array_has($column, 'headerAttributes')) {
+            if (Arr::has($column, 'headerAttributes')) {
                 $columnObject->setHeaderAttributes($column['headerAttributes']);
             }
 
-            if (array_has($column, 'cellAttributes')) {
+            if (Arr::has($column, 'cellAttributes')) {
                 $columnObject->setCellAttributes($column['cellAttributes']);
             }
         }

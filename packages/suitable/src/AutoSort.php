@@ -2,6 +2,7 @@
 
 namespace Laravolt\Suitable;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
 trait AutoSort
@@ -14,7 +15,7 @@ trait AutoSort
 
         if (request()->has($sortByKey)) {
             $column = request()->get($sortByKey);
-            if (str_contains($column, '.')) {
+            if (Str::contains($column, '.')) {
                 $temp = explode('.', $column);
                 $relation = $this->{$temp[0]}();
                 $related = $relation->getRelated();

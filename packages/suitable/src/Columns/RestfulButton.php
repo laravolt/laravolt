@@ -2,6 +2,8 @@
 
 namespace Laravolt\Suitable\Columns;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -30,7 +32,7 @@ class RestfulButton extends Column implements ColumnInterface
     static public function make($baseRoute, $header = null)
     {
         $column = new static($baseRoute, $header);
-        $column->id = snake_case($header);
+        $column->id = Str::snake($header);
 
         return $column;
     }
@@ -100,7 +102,7 @@ class RestfulButton extends Column implements ColumnInterface
             $fields = config('suitable.restful_button.delete_confirmation_fields');
 
             foreach ($fields as $field) {
-                if ($value = array_get($data, $field)) {
+                if ($value = Arr::get($data, $field)) {
                     return str_replace(':item', $value, $message);
                 }
             }

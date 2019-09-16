@@ -3,6 +3,8 @@
 namespace Laravolt\Suitable\Plugins;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Concerns\SourceOverridden;
 use Laravolt\Suitable\Toolbars\Action;
@@ -24,7 +26,7 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     public function __construct(string $filename)
     {
         $this->filename = $filename;
-        $this->format = array_get(pathinfo($this->filename), 'extension', 'csv');
+        $this->format = Arr::get(pathinfo($this->filename), 'extension', 'csv');
     }
 
     public function init()
@@ -42,7 +44,7 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         $url = request()->url().'?'.http_build_query(array_merge(request()->input(), ['format' => $this->format]));
 
         $segment = $table->getDefaultSegment();
-        $segment->addLeft(Action::make('file excel', 'Export To '.title_case($this->format), $url));
+        $segment->addLeft(Action::make('file excel', 'Export To '.Str::title($this->format), $url));
 
         return $table;
     }
