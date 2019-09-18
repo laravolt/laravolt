@@ -6,6 +6,6 @@ class Text extends Column implements ColumnInterface
 {
     public function cell($cell, $collection, $loop)
     {
-        return htmlspecialchars($cell->{$this->field}, ENT_QUOTES);
+        return htmlspecialchars(data_get($cell, $this->field), ENT_QUOTES);
     }
 }
