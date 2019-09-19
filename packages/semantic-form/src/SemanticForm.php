@@ -3,6 +3,7 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
@@ -249,6 +250,16 @@ class SemanticForm
         }
 
         return $textarea;
+    }
+
+    public function redactor($name, $defaultValue = null)
+    {
+        \Stolz\Assets\Laravel\Facade::add('redactor');
+
+        return $this->textarea($name, $defaultValue)
+            ->data('upload-url', Route::has('platform::media.store') ? route('platform::media.store') : false)
+            ->data('token', csrf_token())
+            ->data('role', 'redactor');
     }
 
     public function password($name)
