@@ -16,6 +16,8 @@ class RestfulButton extends Column implements ColumnInterface
 
     protected $header;
 
+    protected $routeParameters = [];
+
     protected $deleteConfirmation;
 
     /**
@@ -79,6 +81,13 @@ class RestfulButton extends Column implements ColumnInterface
         return $this;
     }
 
+    public function routeParameters($param)
+    {
+        $this->routeParameters = $param;
+
+        return $this;
+    }
+
     protected function getRoute($verb, $param = null)
     {
         if ($this->baseRoute) {
@@ -114,8 +123,8 @@ class RestfulButton extends Column implements ColumnInterface
     protected function buildActions($data)
     {
         $actions = [
-            'view'   => 'show',
-            'edit'   => 'edit',
+            'view' => 'show',
+            'edit' => 'edit',
             'delete' => 'destroy',
         ];
 
@@ -129,7 +138,7 @@ class RestfulButton extends Column implements ColumnInterface
                             $this->buttons);
                 }
             )->transform(function ($verb) use ($data) {
-                return $this->getRoute($verb, $data->getKey());
+                return $this->getRoute($verb, $this->routeParameters + ['id' => $data->getKey()]);
             });
 
         return $actions;
