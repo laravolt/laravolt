@@ -138,7 +138,7 @@ class RestfulButton extends Column implements ColumnInterface
                             $this->buttons);
                 }
             )->transform(function ($verb) use ($data) {
-                return $this->getRoute($verb, $this->routeParameters + ['id' => $data->getKey()]);
+                return $this->getRoute($verb, $this->routeParameters + [$data->getKey()]);
             });
 
         return $actions;
