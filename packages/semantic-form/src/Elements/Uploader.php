@@ -7,6 +7,7 @@ class Uploader extends Input
     protected $attributes = [
         'type' => 'file',
         'class' => 'uploader',
+        'data-limit' => 1,
     ];
 
     protected function setValue($media)
