@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\Password;
@@ -29,7 +31,9 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             ->bootConfig()
             ->bootViews()
             ->bootTranslations()
-            ->bootDatabase();
+            ->bootDatabase()
+            ->bootRoutes()
+            ->bootAcl();
     }
 
     protected function registerServices()
@@ -79,6 +83,14 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         return $this;
     }
 
+    protected function bootRoutes(): self
+    {
+        Route::middleware(['web', 'auth'])
+            ->group(platform_path('routes/web.php'));
+
+        return $this;
+    }
+
     /**
      * Create a token repository instance based on the given configuration.
      *
@@ -103,5 +115,15 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             $key,
             $config['expire']
         );
+    }
+
+    protected function bootAcl()
+    {
+        // register wildcard permission
+        \Illuminate\Support\Facades\Gate::before(function (HasRoleAndPermission $user) {
+            if ($user->hasPermission('*')) {
+                return true;
+            }
+        });
     }
 }
