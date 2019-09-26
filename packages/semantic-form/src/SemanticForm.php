@@ -262,6 +262,13 @@ class SemanticForm
             ->data('role', 'redactor');
     }
 
+    public function coordinate($name, $defaultValue = null)
+    {
+        \Stolz\Assets\Laravel\Facade::addJs('http://maps.google.com/maps/api/js?sensor=false');
+
+        return $this->text($name, $defaultValue)->data('form-coordinate', 'true')->readonly();
+    }
+
     public function password($name)
     {
         $password = new Password($name);
