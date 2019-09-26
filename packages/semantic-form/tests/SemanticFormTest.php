@@ -928,7 +928,23 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testUploader()
     {
         $result = (string)$this->form->uploader('avatar');
-        $expected = '<input type="file" class="uploader" name="avatar" data-fileuploader-listInput="uploader[avatar]">';
+        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-fileuploader-listInput="uploader[avatar]">';
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testUploaderWithCustomLimit()
+    {
+        $result = (string)$this->form->uploader('avatar')->limit(3);
+        $expected = '<input type="file" class="uploader" data-limit="3" name="avatar" data-fileuploader-listInput="uploader[avatar]">';
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testUploaderWithCustomExtensions()
+    {
+        $result = (string)$this->form->uploader('avatar')->extensions(['jpg', 'png']);
+        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-fileuploader-listInput="uploader[avatar]" data-extensions="jpg,png">';
 
         $this->assertEquals($expected, $result);
     }

@@ -10,6 +10,16 @@ class Uploader extends Input
         'data-limit' => 1,
     ];
 
+    public function limit(int $limit)
+    {
+        return $this->data('limit', $limit);
+    }
+
+    public function extensions(array $extensions)
+    {
+        return $this->data('extensions', implode(',', $extensions));
+    }
+
     protected function setValue($media)
     {
         if ($media instanceof Model) {
