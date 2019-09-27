@@ -20,24 +20,35 @@ class Uploader extends Input
         return $this->data('extensions', implode(',', $extensions));
     }
 
-    protected function setValue($media)
+    protected function setValue($mediaCollection)
     {
-        if ($media instanceof Model) {
-            $value = [
-                [
+        if ($mediaCollection instanceof Model) {
+            $mediaCollection = [$mediaCollection];
+        }
+
+        if (!is_iterable($mediaCollection)) {
+            return $this;
+        }
+
+        $data = [];
+        foreach ($mediaCollection as $media) {
+            if ($media instanceof Model) {
+                $data[] = [
                     'file' => $media->getFullUrl(),
                     'name' => $media->file_name,
                     'size' => $media->size,
                     'type' => $media->mime_type,
                     "data" => [
+                        'id' => $media->getKey(),
                         "url" => $media->getFullUrl(),
                         "thumbnail" => $media->getFullUrl(),
                         "readerForce" => true,
                     ],
-                ],
-            ];
-            $this->data('fileuploader-files', htmlspecialchars(json_encode($value)));
+                ];
+            }
         }
+
+        $this->data('fileuploader-files', htmlspecialchars(json_encode($data)));
 
         return $this;
     }
