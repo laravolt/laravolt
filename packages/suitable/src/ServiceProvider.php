@@ -99,7 +99,8 @@ class ServiceProvider extends BaseServiceProvider
                                 });
                         },
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
-                            $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+                            $table = $query->getModel()->getTable();
+                            $query->orWhere(sprintf('%s.%s', $table, $attribute), 'LIKE', "%{$searchTerm}%");
                         }
                     );
                 }
