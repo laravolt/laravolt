@@ -51,8 +51,14 @@ class BasicTable extends TableView
         } elseif (is_subclass_of($source, Model::class)) {
             $table = app($source)->getTable();
         } elseif ($source instanceof LengthAwarePaginator || $source instanceof Collection) {
-            if (($item = $source->first()) !== null && ($item instanceof Model)) {
-                $table = $item->getTable();
+            if (($item = $source->first()) !== null) {
+                if ($item instanceof \stdClass) {
+                    return array_keys((array) $item);
+                }
+
+                if ($item instanceof Model) {
+                    $table = $item->getTable();
+                }
             }
         } elseif ($source instanceof Builder) {
             $table = $source->getModel()->getTable();
