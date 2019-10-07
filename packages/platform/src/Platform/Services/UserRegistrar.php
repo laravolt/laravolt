@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
-use Illuminate\Support\Facades\Mail;
-use Laravolt\Platform\Mail\ActivationMail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Laravolt\Contracts\ShouldActivate;
+use Laravolt\Platform\Mail\ActivationMail;
 
 class UserRegistrar implements \Laravolt\Contracts\UserRegistrar, ShouldActivate
 {

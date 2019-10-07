@@ -9,9 +9,8 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Contracts\ForgotPassword;
 
 /**
- * Class PackageServiceProvider
+ * Class PackageServiceProvider.
  *
- * @package LaraLeague\Auth
  * @see     http://laravel.com/docs/master/packages#service-providers
  * @see     http://laravel.com/docs/master/providers
  */
@@ -21,6 +20,7 @@ class AuthServiceProvider extends BaseServiceProvider
      * Register the service provider.
      *
      * @see    http://laravel.com/docs/master/providers#the-register-method
+     *
      * @return void
      */
     public function register()
@@ -28,13 +28,13 @@ class AuthServiceProvider extends BaseServiceProvider
         $this->app->bind('laravolt.auth.registrar', function () {
             $class = config('laravolt.auth.registration.implementation');
 
-            return new $class;
+            return new $class();
         });
 
         $this->app->bind('laravolt.auth.login', function () {
             $class = config('laravolt.auth.login.implementation');
 
-            return new $class;
+            return new $class();
         });
 
         $this->app->bind('laravolt.auth.password.forgot', function () {
@@ -44,7 +44,7 @@ class AuthServiceProvider extends BaseServiceProvider
             }
 
             throw new \InvalidArgumentException(
-                sprintf("We expect %s instance, but you give %s.", ForgotPassword::class, get_class($class))
+                sprintf('We expect %s instance, but you give %s.', ForgotPassword::class, get_class($class))
             );
         });
 
@@ -55,20 +55,20 @@ class AuthServiceProvider extends BaseServiceProvider
             }
 
             throw new \InvalidArgumentException(
-                sprintf("We expect %s instance, but you give %s.", ForgotPassword::class, get_class($class))
+                sprintf('We expect %s instance, but you give %s.', ForgotPassword::class, get_class($class))
             );
         });
     }
 
     /**
-     * Application is booting
+     * Application is booting.
      *
      * @see    http://laravel.com/docs/master/providers#the-boot-method
+     *
      * @return void
      */
     public function boot()
     {
-
         if (!$this->app->routesAreCached()) {
             $this->bootRoutes();
         }
@@ -79,11 +79,13 @@ class AuthServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register the package routes
+     * Register the package routes.
      *
      * @warn   consider allowing routes to be disabled
+     *
      * @see    http://laravel.com/docs/master/routing
      * @see    http://laravel.com/docs/master/packages#routing
+     *
      * @return void
      */
     protected function bootRoutes()
@@ -125,13 +127,14 @@ class AuthServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Loads a path relative to the package base directory
+     * Loads a path relative to the package base directory.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return string
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 }

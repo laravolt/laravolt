@@ -23,7 +23,7 @@ class ActivationTest extends FeatureTest
         $this->visitRoute('auth::activate', $token)
              ->seeRouteIs('auth::login');
 
-        $this->seeInDatabase((new User)->getTable(), ['id' => $user->getKey(), 'status' => $status]);
+        $this->seeInDatabase((new User())->getTable(), ['id' => $user->getKey(), 'status' => $status]);
     }
 
     /**
@@ -41,6 +41,6 @@ class ActivationTest extends FeatureTest
         $this->route('GET', 'auth::activate', 'badtoken1234');
         $this->assertResponseStatus(404);
 
-        $this->seeInDatabase((new User)->getTable(), ['id' => $user->getKey(), 'status' => $statusBefore]);
+        $this->seeInDatabase((new User())->getTable(), ['id' => $user->getKey(), 'status' => $statusBefore]);
     }
 }

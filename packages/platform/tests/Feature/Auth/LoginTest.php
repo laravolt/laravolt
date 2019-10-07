@@ -4,7 +4,6 @@ namespace Laravolt\Tests;
 
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use Illuminate\Support\Facades\Route;
-use Laravolt\Tests\FeatureTest;
 
 class LoginTest extends FeatureTest
 {
