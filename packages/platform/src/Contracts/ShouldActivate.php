@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Auth\Contracts;
+namespace Laravolt\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laravolt\Tests;
 
+use Anhskohbo\NoCaptcha\NoCaptchaServiceProvider;
 use Laravolt\Platform\Models\User;
+use Laravolt\Platform\Providers\AuthServiceProvider;
 use Laravolt\Platform\Providers\PlatformServiceProvider;
 
 trait Bootstrap
@@ -27,6 +29,11 @@ trait Bootstrap
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('auth.providers.users.model', User::class);
+
+        $app['view']->addNamespace('dummy', __DIR__.'/Dummy');
+        $app['config']->set('laravolt.auth.layout', 'dummy::layout');
+
+        \URL::forceRootUrl('http://localhost');
     }
 
     /**
@@ -38,6 +45,8 @@ trait Bootstrap
     {
         return [
             PlatformServiceProvider::class,
+            AuthServiceProvider::class,
+            NoCaptchaServiceProvider::class,
         ];
     }
 

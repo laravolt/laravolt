@@ -13,8 +13,14 @@
          verbose="true"
 >
     <testsuites>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Acl">
+            <directory suffix="Test.php">./tests/Feature/Acl</directory>
+        </testsuite>
+        <testsuite name="Auth">
+            <directory suffix="Test.php">./tests/Feature/Auth</directory>
+        </testsuite>
+        <testsuite name="Password">
+            <directory suffix="Test.php">./tests/Feature/Password</directory>
         </testsuite>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>

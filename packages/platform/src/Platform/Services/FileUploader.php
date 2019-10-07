@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Services;
 
 use Spatie\MediaLibrary\Models\Media;
