@@ -2,10 +2,10 @@
 
 namespace Laravolt\Platform\Controllers;
 
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravolt\Auth\Services\LdapService;
 
 class LoginController extends Controller
@@ -35,9 +35,9 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     /**
-     * Whether LDAP authentication enabled or not
+     * Whether LDAP authentication enabled or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $ldapEnabled = false;
 
@@ -130,8 +130,9 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $user
+     *
      * @return mixed
      */
     protected function authenticated(Request $request, $user)
@@ -142,9 +143,10 @@ class LoginController extends Controller
     }
 
     /**
-     * The user has been logged out
+     * The user has been logged out.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed
      */
     protected function loggedOut(Request $request)

@@ -2,11 +2,8 @@
 
 namespace Laravolt\Tests;
 
-use Laravolt\Tests\FeatureTest;
-
 class ForgotPasswordTest extends FeatureTest
 {
-
     /**
      * @test
      */

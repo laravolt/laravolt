@@ -22,7 +22,7 @@ return [
     'password' => [
         'forgot' => [
             'implementation' => \Laravolt\Platform\Services\ForgotPassword::class,
-            'identifier' => null
+            'identifier' => null,
         ],
         'reset' => [
             'implementation' => \Laravolt\Platform\Services\ResetPassword::class,

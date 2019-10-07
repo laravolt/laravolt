@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
-use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Arr;
+use Spatie\MediaLibrary\Models\Media;
 
 class FileUploader
 {
@@ -21,7 +21,7 @@ class FileUploader
             return $undeleted->search($item->getFullUrl()) === false;
         })->each->delete();
 
-        $param = Arr::first(json_decode(Arr::get(request()->get("uploader"), $key), true));
+        $param = Arr::first(json_decode(Arr::get(request()->get('uploader'), $key), true));
         $media = null;
         if (($path = Arr::get($param, 'file')) !== null) {
             $mediaId = Arr::last(explode('/', dirname(parse_url($path)['path'])));
@@ -39,7 +39,7 @@ class FileUploader
                 if ($media && (isset($editor['crop']) || isset($editor['rotation']))) {
                     $originalFile = $media->getPath();
                     $destinationFile = storage_path(
-                        "tmp/".$media->file_name
+                        'tmp/'.$media->file_name
                     );
 
                     $saved = static::resize(
@@ -65,7 +65,7 @@ class FileUploader
 
             $originalFile = $uploadedFile->getPathname();
             $destinationFile = storage_path(
-                "tmp/".$uploadedFile->getFilename().".".$uploadedFile
+                'tmp/'.$uploadedFile->getFilename().'.'.$uploadedFile
                     ->getClientOriginalExtension()
             );
 
@@ -94,10 +94,11 @@ class FileUploader
 
     /**
      * resize method
-     * Resize, crop and rotate images
+     * Resize, crop and rotate images.
      *
      * @public
      * @static
+     *
      * @param $filename {String} file source
      * @param $width {Number} new width
      * @param $height {Number} new height
@@ -105,6 +106,7 @@ class FileUploader
      * @param $crop {boolean, Array} crop property
      * @param $quality {Number} quality of destination
      * @param $rotation {Number} rotation degrees
+     *
      * @return {boolean} resizing was successful
      */
     public static function resize(
@@ -142,7 +144,7 @@ class FileUploader
         }
 
         // store image information
-        list ($imageWidth, $imageHeight, $imageType) = $imageInfo;
+        list($imageWidth, $imageHeight, $imageType) = $imageInfo;
         $imageRatio = $imageWidth / $imageHeight;
 
         // create GD image
