@@ -36,9 +36,26 @@ class Segment
         return $this;
     }
 
+    /**
+     * @param $toolbar
+     * @return $this
+     * @deprecated
+     */
     public function addLeft($toolbar)
     {
-        $this->left[] = $toolbar;
+        return $this->appendLeft($toolbar);
+    }
+
+    public function appendLeft($toolbar)
+    {
+        array_push($this->left, $toolbar);
+
+        return $this;
+    }
+
+    public function prependLeft($toolbar)
+    {
+        array_unshift($this->left, $toolbar);
 
         return $this;
     }
@@ -50,9 +67,26 @@ class Segment
         return $this;
     }
 
+    /**
+     * @param $toolbar
+     * @return $this
+     * @deprecated
+     */
     public function addRight($toolbar)
     {
-        $this->right[] = $toolbar;
+        return $this->appendRight($toolbar);
+    }
+
+    public function appendRight($toolbar)
+    {
+        array_push($this->right, $toolbar);
+
+        return $this;
+    }
+
+    public function prependRight($toolbar)
+    {
+        array_unshift($this->right, $toolbar);
 
         return $this;
     }
