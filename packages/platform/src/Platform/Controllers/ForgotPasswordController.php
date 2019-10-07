@@ -58,7 +58,7 @@ class ForgotPasswordController extends Controller
 
         $response = Password::INVALID_USER;
         if ($user) {
-            $response = app('password')->sendResetLink($user);
+            $response = app('laravolt.password')->sendResetLink($user);
         }
 
         if ($response === Password::RESET_LINK_SENT) {
