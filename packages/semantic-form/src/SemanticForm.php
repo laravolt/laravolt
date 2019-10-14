@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
+use Laravolt\SemanticForm\Elements\Coordinate;
 use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
@@ -264,9 +265,7 @@ class SemanticForm
 
     public function coordinate($name, $defaultValue = null)
     {
-        \Stolz\Assets\Laravel\Facade::addJs('http://maps.google.com/maps/api/js?sensor=false');
-
-        return $this->text($name, $defaultValue)->data('form-coordinate', 'true')->readonly();
+        return (new Coordinate($name))->defaultValue($defaultValue)->data('form-coordinate', 'true')->readonly();
     }
 
     public function password($name)

@@ -11,6 +11,8 @@ abstract class Input extends FormControl
             return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
         }
 
+        $this->beforeRender();
+
         $result = '<input';
         $result .= $this->renderAttributes();
         $result .= '>';
