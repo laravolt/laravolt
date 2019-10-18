@@ -9,6 +9,7 @@ use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Coordinate;
 use Laravolt\SemanticForm\Elements\Datepicker;
+use Laravolt\SemanticForm\Elements\DatepickerWrapper;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\InputWrapper;
@@ -149,7 +150,7 @@ class SemanticForm
         return $date;
     }
 
-    public function datepicker($name, $defaultValue = null, $format = 'YYYY-MM-DD')
+    public function datepicker($name, $defaultValue = null, $format = 'Y-m-d')
     {
         $input = new Datepicker($name);
 
@@ -163,9 +164,8 @@ class SemanticForm
             $input->setError();
         }
 
-        return (new InputWrapper($input))
-            ->data('calendar-type', 'date')
-            ->data('calendar-format', $format)
+        return (new DatepickerWrapper($input))
+            ->format($format)
             ->prependIcon('calendar alternate outline')
             ->addClass('calendar');
     }
