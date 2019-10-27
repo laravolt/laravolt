@@ -26,6 +26,8 @@ abstract class TableView implements Responsable
     {
         $this->source = $source;
         $this->html = new Html();
+
+        $this->init();
     }
 
     public static function make($source)
@@ -37,8 +39,6 @@ abstract class TableView implements Responsable
 
     public function toResponse($request)
     {
-        $this->init();
-
         if ($this->search !== null) {
             $this->html->search($this->search);
         }

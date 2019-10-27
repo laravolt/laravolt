@@ -261,3 +261,8 @@ class SuitableController extends Controller
 1. `Laravolt\Suitable\Columns\RestfulButton`
 1. `Laravolt\Suitable\Columns\Text`
 1. `Laravolt\Suitable\Columns\View`
+
+## Roadmap
+- Rename `TableView` to `Table`
+- Rename Toolbars to `Segment\Item`
+- Rename DropdownFilter to `DropdownLink`
