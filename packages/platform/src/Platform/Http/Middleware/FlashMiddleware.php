@@ -10,9 +10,8 @@ use Laravolt\Platform\Services\Flash;
 
 class FlashMiddleware
 {
-
     /**
-     * The Flash instance
+     * The Flash instance.
      *
      * @var Flash
      */
@@ -20,6 +19,7 @@ class FlashMiddleware
 
     /**
      * FlashMiddleware constructor.
+     *
      * @param Flash $flash
      */
     public function __construct(Flash $flash)
@@ -27,12 +27,12 @@ class FlashMiddleware
         $this->flash = $flash;
     }
 
-
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Closure                  $next
+     * @param \Illuminate\Http\Request $request
+     * @param Closure                  $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

@@ -16,9 +16,8 @@ use Lavary\Menu\Builder;
 use Stolz\Assets\Manager;
 
 /**
- * Class PackageServiceProvider
+ * Class PackageServiceProvider.
  *
- * @package Laravolt\Ui
  * @see     http://laravel.com/docs/master/packages#service-providers
  * @see     http://laravel.com/docs/master/providers
  */
@@ -28,6 +27,7 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the service provider.
      *
      * @see    http://laravel.com/docs/master/providers#the-register-method
+     *
      * @return void
      */
     public function register()
@@ -62,14 +62,14 @@ class UiServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Application is booting
+     * Application is booting.
      *
      * @see    http://laravel.com/docs/master/providers#the-boot-method
+     *
      * @return void
      */
     public function boot()
     {
-
         $this
             ->bootConfig()
             ->bootViews()
@@ -100,10 +100,12 @@ class UiServiceProvider extends BaseServiceProvider
 
         return $this;
     }
+
     /**
-     * Register the package views
+     * Register the package views.
      *
      * @see    http://laravel.com/docs/master/packages#views
+     *
      * @return void
      */
     protected function bootViews()
@@ -151,7 +153,7 @@ class UiServiceProvider extends BaseServiceProvider
     protected function registerAssets()
     {
         if (!$this->app->bound('stolz.assets.group.laravolt')) {
-            $this->app->singleton("stolz.assets.group.laravolt", function () {
+            $this->app->singleton('stolz.assets.group.laravolt', function () {
                 return new Manager([
                     'public_dir' => public_path('laravolt'),
                     'css_dir' => '',

@@ -58,7 +58,7 @@ class MenuBuilder
                 continue;
             }
 
-            if (! isset($option['menu'])) {
+            if (!isset($option['menu'])) {
                 $menu = $parent->add(
                     $name,
                     $option['url'] ?? (isset($option['route']) ? route($option['route']) : '#')
