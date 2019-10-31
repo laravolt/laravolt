@@ -10,6 +10,7 @@ use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\HasRoleAndPermission;
+use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltPreset;
@@ -19,6 +20,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     protected $commands = [
         SyncPermission::class,
+        AdminCommand::class,
     ];
 
     public function register(): void
