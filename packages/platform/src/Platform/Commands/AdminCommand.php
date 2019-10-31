@@ -57,7 +57,7 @@ class AdminCommand extends Command
                 'status' => $status,
             ]
         );
-        
+
         $user->assignRole($role);
     }
 }
