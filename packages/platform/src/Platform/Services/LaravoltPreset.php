@@ -41,7 +41,7 @@ class LaravoltPreset extends Preset
         ];
 
         foreach ($files as $original => $new) {
-            (new Filesystem)->delete($original);
+            (new Filesystem())->delete($original);
             copy($new, $original);
         }
 
