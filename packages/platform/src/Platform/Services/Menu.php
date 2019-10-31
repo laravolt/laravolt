@@ -62,6 +62,6 @@ class Menu extends BaseMenu
     {
         // If menu doesn't define permission, we assume this menu visible to everyone
         // Otherwise, check if current user has access
-        return $item->data('permission') === null || auth()->user()->can($item->data('permission'));
+        return $item->data('permission') === null || (auth()->check() && auth()->user()->can($item->data('permission')));
     }
 }

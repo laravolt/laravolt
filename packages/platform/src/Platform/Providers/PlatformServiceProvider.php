@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
+use Illuminate\Console\Command;
+use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Services\Acl;
+use Laravolt\Platform\Services\LaravoltPreset;
 use Laravolt\Platform\Services\Password;
 
 class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -33,7 +36,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             ->bootTranslations()
             ->bootDatabase()
             ->bootRoutes()
-            ->bootAcl();
+            ->bootAcl()
+            ->bootPreset();
     }
 
     protected function registerServices()
@@ -126,5 +130,17 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                 return true;
             }
         });
+
+        return $this;
+    }
+
+    protected function bootPreset()
+    {
+        PresetCommand::macro('laravolt', function (Command $command) {
+            LaravoltPreset::install();
+            $command->comment('Scaffolding Laravolt skeleton');
+        });
+
+        return $this;
     }
 }

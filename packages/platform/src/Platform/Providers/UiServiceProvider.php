@@ -7,7 +7,6 @@ namespace Laravolt\Platform\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Laravolt\Platform\Commands\AssetLinkCommand;
 use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
@@ -57,8 +56,6 @@ class UiServiceProvider extends BaseServiceProvider
         $this->registerMenuBuilder();
 
         $this->registerFlash();
-
-        $this->commands(AssetLinkCommand::class);
     }
 
     /**
