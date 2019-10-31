@@ -1,0 +1,16 @@
+.ui.menu.tabular {
+
+  .item {
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-weight: 700;
+    font-size: 11px;
+  }
+
+  &[class*="left attached"] {
+    .item:first-child {
+      border-left: 0 none !important;
+      border-top-left-radius: 0 !important;
+    }
+  }
+}

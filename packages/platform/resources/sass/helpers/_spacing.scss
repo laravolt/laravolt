@@ -1,0 +1,20 @@
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $length in (0: 0, 1: 2rem, 2: 4rem, 3: 8rem, 4: 16rem, 5: 32rem) {
+
+    .#{$abbrev}-#{$size} { #{$prop}:        $length $length !important; } // a = All sides
+    .#{$abbrev}-t-#{$size} { #{$prop}-top:    $length !important; }
+    .#{$abbrev}-r-#{$size} { #{$prop}-right:  $length !important; }
+    .#{$abbrev}-b-#{$size} { #{$prop}-bottom: $length !important; }
+    .#{$abbrev}-l-#{$size} { #{$prop}-left:   $length !important; }
+
+    // Axes
+    .#{$abbrev}-x-#{$size} {
+      #{$prop}-right:  $length !important;
+      #{$prop}-left:   $length !important;
+    }
+    .#{$abbrev}-y-#{$size} {
+      #{$prop}-top:    $length !important;
+      #{$prop}-bottom: $length !important;
+    }
+  }
+}

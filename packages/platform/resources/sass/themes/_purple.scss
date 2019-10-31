@@ -1,0 +1,95 @@
+$sidebar-color: #594f8d;
+$text-color: #bdb8d7;
+$text-color-selected: #e9b92a;
+
+[data-theme="purple"] {
+  background: #f3f5f9;
+
+  .sidebar {
+    .sidebar__wrapper {
+      border-right: 0 none;
+      background-color: $sidebar-color;
+
+      .ui.header.brand {
+        color: $text-color;
+        overflow: hidden;
+        //height: 63px;
+        font-size: 1.75rem;
+        text-align: center;
+      }
+
+      .ui.menu.vertical {
+        background: transparent;
+
+        .icon.left {
+        }
+
+        i.angle.icon {
+        }
+
+        .item {
+          color: $text-color;
+          > .header {
+            color: darken($sidebar-color, 25%);
+            font-size: .8em;
+            font-weight: 500;
+          }
+          &:before {
+
+          }
+        }
+      }
+    }
+
+    .sidebar__menu {
+      .brand {
+        color: $text-color;
+      }
+      .ui.menu {
+
+      }
+    }
+
+    .sidebar__accordion.ui.accordion {
+
+      .title {
+        color: $text-color;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: .9em;
+        &.active, &:hover {
+          background-color: darken($sidebar-color, 5%);
+        }
+        &:hover {
+          color: lighten($text-color, 15%);
+        }
+        &.empty.current{
+          color: $text-color-selected;
+        }
+      }
+
+      .content {
+        background-color: darken($sidebar-color, 5%);
+        .ui.list {
+          .item {
+            color: darken($text-color, 10%);
+            padding-left: 3.7em;
+
+            &:hover {
+              color: lighten($text-color, 15%);
+              background-color: darken($sidebar-color, 5%);
+            }
+            &.active {
+              background-color: darken($sidebar-color, 5%);
+              font-weight: normal;
+              color: $text-color-selected;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+}

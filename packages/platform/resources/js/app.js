@@ -1,0 +1,5 @@
+// require('components/flash')
+// require('components/keymaster')
+// require('init/shortcut')
+// require('init/sidebar')
+// require('init/ui')

@@ -1,0 +1,79 @@
+$sidebar-color: #f6f9fa;
+$header-color: #FFFFFF;
+$menu-item-color: #000;
+
+[data-theme="light"] {
+
+  header.ui.menu {
+    box-shadow: none;
+  }
+
+
+  .sidebar__wrapper {
+    background-color: $sidebar-color;
+
+
+    .ui.menu.vertical {
+      .icon.left {
+      }
+
+      i.angle.icon {
+      }
+
+      .item {
+        > .header {
+        }
+        &:before {
+        }
+      }
+    }
+  }
+
+  .sidebar__menu {
+    .brand {
+    }
+    .ui.menu {
+    }
+  }
+
+  .content {
+    .content__inner {
+    }
+
+    .content__body {
+    }
+  }
+}
+
+.sidebar__accordion.ui.accordion {
+
+  .title {
+    &:hover, &.active {
+      background: darken($sidebar-color, 15%);
+    }
+    .icon.angle {
+    }
+    &.active {
+      .icon.angle.down {
+      }
+    }
+  }
+
+  .content {
+    background-color: darken($sidebar-color, 5%);
+    .ui.list {
+      .item {
+        color: $menu-item-color;
+
+        &:hover{
+          background: darken($sidebar-color, 7.5%);
+        }
+        &.active  {
+          background-color: darken($sidebar-color, 5%);
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+}
