@@ -32,7 +32,7 @@ class AssetLinkCommand extends Command
         }
 
         $this->laravel->make('files')->link(
-            __DIR__ . '/../public', public_path('laravolt')
+            __DIR__.'/../public', public_path('laravolt')
         );
 
         $this->info('The [public/laravolt] directory has been linked.');

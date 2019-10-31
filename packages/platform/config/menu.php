@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Example Menu
      */
     // 'Main Menu' => [

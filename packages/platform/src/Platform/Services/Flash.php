@@ -37,8 +37,9 @@ class Flash
 
     /**
      * Flash constructor.
-     * @param  Store  $session
-     * @param  View  $view
+     *
+     * @param Store $session
+     * @param View  $view
      */
     public function __construct(Store $session, Factory $view)
     {
