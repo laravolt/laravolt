@@ -1,0 +1,35 @@
+table.ui.table {
+  thead th, tbody td.numbering {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: .8em;
+    color: #686f73;
+  }
+  thead th {
+    font-weight: 700;
+  }
+  thead th.numbering {
+
+  }
+  tbody td.numbering {
+    text-align: center;
+    background: #f9fafb;
+  }
+  &.scrolling {
+    overflow-x: auto;
+    width: fit-content;
+    max-width: 100%;
+    display: block;
+  }
+}
+
+//Hide pagination number on mobile
+[data-role="suitable"] {
+  [data-role="pagination"] {
+    .item.dots, .item.number {
+      @media only screen and (max-width: 767px) {
+        display: none;
+      }
+    }
+  }
+}

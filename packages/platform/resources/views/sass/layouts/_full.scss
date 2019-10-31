@@ -1,0 +1,27 @@
+.layout--full {
+  display: flex;
+  margin: 0;
+  paddding: 0;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+
+  &[data-position="left"] {
+    .content {
+      order: -1;
+    }
+  }
+
+  &[data-position="center"] {
+    .content {
+      order: 0;
+    }
+  }
+
+  &[data-position="right"] {
+    .content {
+      order: 1;
+    }
+
+  }
+}

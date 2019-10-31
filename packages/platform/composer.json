@@ -29,10 +29,12 @@
         "ext-openssl": "*",
         "anhskohbo/no-captcha": "^3.1",
         "bensampo/laravel-enum": "^1.26",
+        "illuminate/console": "^6.4",
         "illuminate/database": "^6.4",
         "illuminate/support": "^6.4",
         "laravolt/semantic-form": "^2.7",
         "laravolt/suitable": "^3.6",
+        "lavary/laravel-menu": "^1.7.7",
         "nwidart/laravel-modules": "^5.0",
         "spatie/laravel-medialibrary": "^7.0",
         "stolz/assets": "^0.1.11"
@@ -57,6 +59,7 @@
         "laravel": {
             "providers": [
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
+                "Laravolt\\Platform\\Providers\\UiServiceProvider",
                 "Laravolt\\Platform\\Providers\\AuthServiceProvider"
             ]
         }
