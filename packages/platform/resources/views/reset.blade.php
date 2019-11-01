@@ -6,7 +6,7 @@
         <?php flash()->success(session('status')); ?>
     @endif
 
-    <h3 class="ui header horizontal divider section">@lang('laravolt::auth.reset_password')</h3>
+    <h3 class="ui header">@lang('laravolt::auth.reset_password')</h3>
 
     <form class="ui form" method="POST" action="{{ route('auth::reset', $token) }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
