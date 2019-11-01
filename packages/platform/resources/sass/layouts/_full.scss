@@ -6,6 +6,10 @@
   align-items: center;
   height: 100%;
 
+  .content {
+    min-width: 400px;
+  }
+
   &[data-position="left"] {
     .content {
       order: -1;
