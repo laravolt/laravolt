@@ -12,7 +12,7 @@ class AdminCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laravolt:admin {email} {password}';
+    protected $signature = 'laravolt:admin {name?} {email?} {password?}';
 
     /**
      * The console command description.
@@ -28,36 +28,59 @@ class AdminCommand extends Command
      */
     public function handle()
     {
+        $name = $this->argument('name');
         $email = $this->argument('email');
         $password = $this->argument('password');
 
+        if (!$name) {
+            $name = $this->ask('Masukkan nama (display name):');
+        }
+
         if (!$email) {
-            $email = $this->ask('Masukkan email:');
+            $email = $this->ask('Masukkan email untuk login:');
         }
 
         if (!$password) {
             $password = $this->ask('Masukkan password:');
         }
 
-        $role = app(config('laravolt.acl.models.role'))->firstOrCreate(['name' => 'admin']);
-        $role->syncPermission(['*']);
+        $role = app(config('laravolt.acl.models.role'))->whereHas('permissions', function ($permissions) {
+            $permissions->whereName('*');
+        })->first();
+
+        if (!$role) {
+            $role = app(config('laravolt.acl.models.role'))->create(['name' => 'admin']);
+            $role->syncPermission(['*']);
+        }
 
         $status = config('laravolt.auth.registration.status');
         if (config('laravolt.auth.activation.enable')) {
             $status = config('laravolt.auth.activation.status_after');
         }
 
-        $user = app(config('auth.providers.users.model'))->firstOrCreate(
+        $user = app(config('auth.providers.users.model'))->updateOrCreate(
             [
                 'email' => $email,
             ],
             [
-                'name' => Str::title(Str::before($email, '@')),
+                'name' => $name,
                 'password' => bcrypt($password),
                 'status' => $status,
             ]
         );
-        
+
         $user->assignRole($role);
+
+        $this->warn(str_repeat('-', 30));
+        $this->warn('  User berhasil didaftarkan');
+        $this->warn(str_repeat('-', 30));
+        $this->table(null, [
+            ['ID', $user->getKey()],
+            ['Nama', $user->name],
+            ['Email', $user->email],
+            ['Password', $password],
+            ['Role', $role->name],
+            ['Status', $user->status],
+        ]);
     }
 }
