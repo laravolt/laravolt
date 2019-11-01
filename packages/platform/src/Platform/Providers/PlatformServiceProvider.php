@@ -66,6 +66,16 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(platform_path('config/password.php'), 'laravolt.password');
         $this->mergeConfigFrom(platform_path('config/auth.php'), 'laravolt.auth');
 
+        $this->publishes(
+            [
+                platform_path('config/platform.php') => config_path('laravolt/platform.php'),
+                platform_path('config/acl.php') => config_path('laravolt/acl.php'),
+                platform_path('config/password.php') => config_path('laravolt/password.php'),
+                platform_path('config/auth.php') => config_path('laravolt/auth.php'),
+            ],
+            'laravolt-config'
+        );
+
         return $this;
     }
 
