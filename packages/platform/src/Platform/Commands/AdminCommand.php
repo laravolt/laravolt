@@ -3,7 +3,6 @@
 namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class AdminCommand extends Command
 {
