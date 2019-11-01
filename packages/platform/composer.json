@@ -33,7 +33,6 @@
         "illuminate/database": "^6.4",
         "illuminate/support": "^6.4",
         "laravolt/semantic-form": "^2.7",
-        "laravolt/suitable": "^3.6",
         "lavary/laravel-menu": "^1.7.7",
         "nwidart/laravel-modules": "^5.0",
         "spatie/laravel-medialibrary": "^7.0",
