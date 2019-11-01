@@ -53,7 +53,7 @@ class LaravoltPreset extends Preset
                 "Route::get('/dashboard', 'Dashboard')->name('dashboard');",
             ],
             base_path('.gitignore') => [
-                "/public/laravolt"
+                '/public/laravolt',
             ],
         ];
 
