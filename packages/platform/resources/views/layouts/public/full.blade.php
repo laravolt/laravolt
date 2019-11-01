@@ -20,6 +20,8 @@
     </div>
 @endsection
 
+@php(\Stolz\Assets\Laravel\Facade::group('laravolt')->add('vegas'))
+
 @push('script')
     <script>
         $("body").vegas({

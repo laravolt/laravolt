@@ -21,6 +21,8 @@
     </div>
 @endsection
 
+@php(\Stolz\Assets\Laravel\Facade::group('laravolt')->add('vegas'))
+
 @push('script')
     <script>
         $("[bg-slideshow]").vegas({
