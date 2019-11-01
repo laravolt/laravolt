@@ -24,7 +24,7 @@ class CheckPassword
         }
 
         if (auth()->user()->passwordMustBeChanged(config('laravolt.password.duration'))) {
-            return redirect(config('laravolt.password.redirect'))->withWarning(trans('password::password.must_change_password'));
+            return redirect(config('laravolt.password.redirect'))->withWarning(trans('laravolt::password.must_change_password'));
         }
 
         return $next($request);

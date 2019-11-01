@@ -1,1 +1,1 @@
-@lang('password::password.your_new_password', ['password' => $password])
+@lang('laravolt::password.your_new_password', ['password' => $password])
