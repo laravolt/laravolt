@@ -125,16 +125,4 @@ class AuthServiceProvider extends BaseServiceProvider
             }
         );
     }
-
-    /**
-     * Loads a path relative to the package base directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    protected function packagePath($path = '')
-    {
-        return sprintf('%s/../%s', __DIR__, $path);
-    }
 }
