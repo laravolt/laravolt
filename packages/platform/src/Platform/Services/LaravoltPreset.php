@@ -31,6 +31,14 @@ class LaravoltPreset extends Preset
 
     protected static function replaceFiles()
     {
+        $directories = [
+            resource_path('lang/id') => platform_path('stubs/lang/id'),
+        ];
+
+        foreach ($directories as $destination => $source) {
+            (new Filesystem())->copyDirectory($source, $destination);
+        }
+
         $files = [
             app_path('User.php') => platform_path('stubs/User.php'),
             app_path('Http/Middleware/Authenticate.php') => platform_path('stubs/Authenticate.php'),
