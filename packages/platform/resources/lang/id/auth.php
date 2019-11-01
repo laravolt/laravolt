@@ -2,6 +2,7 @@
 
 return [
     'activation_success'       => 'Aktivasi berhasil. Silakan login.',
+    'activation_subject'       => 'Aktivasi Akun',
     'already_registered?'      => 'Sudah punya akun?',
     'click_to_activate'        => 'Silakan klik <a href=":link">link aktivasi ini</a> untuk mengaktifkan akun Anda.',
     'email'                    => 'Alamat Email',

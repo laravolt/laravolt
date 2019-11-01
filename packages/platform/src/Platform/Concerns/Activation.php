@@ -26,7 +26,7 @@ trait Activation
         );
 
         return $this->registered($request, $user) ?:
-            redirect()->back()->withSuccess(trans('auth::auth.registration_success'));
+            redirect()->back()->withSuccess(trans('laravolt::auth.registration_success'));
     }
 
     public function activate($token)

@@ -29,7 +29,7 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject(trans('auth::auth.activation_subject'))
-            ->view('auth::emails.activation');
+        return $this->subject(trans('laravolt::auth.activation_subject'))
+            ->view('laravolt::emails.activation');
     }
 }

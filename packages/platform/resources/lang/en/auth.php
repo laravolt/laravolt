@@ -2,6 +2,7 @@
 
 return [
     'activation_success'       => 'Your account successfully activated.',
+    'activation_subject'       => 'Account Activation',
     'already_registered?'      => 'Have an account?',
     'click_to_activate'        => 'Please click <a href=":link">this activation link</a> to activate your account.',
     'email'                    => 'Email',

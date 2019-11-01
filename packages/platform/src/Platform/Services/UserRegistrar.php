@@ -59,6 +59,6 @@ class UserRegistrar implements \Laravolt\Contracts\UserRegistrar, ShouldActivate
 
         \DB::table('users_activation')->whereUserId($userId)->delete();
 
-        return redirect()->route('auth::login')->withSuccess(trans('auth::auth.activation_success'));
+        return redirect()->route('auth::login')->withSuccess(trans('laravolt::auth.activation_success'));
     }
 }

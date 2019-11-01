@@ -2,12 +2,6 @@
 
 @section('content')
 
-    @if (session('success'))
-        <div class="ui success message">
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif
-
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.login')</h3>
 
     <form class="ui form" method="POST" action="{{ route('auth::login') }}">
