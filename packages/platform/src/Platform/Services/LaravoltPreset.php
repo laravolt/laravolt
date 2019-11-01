@@ -6,6 +6,8 @@ namespace Laravolt\Platform\Services;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Console\Presets\Preset;
+use Illuminate\Support\Facades\Artisan;
+use Laravolt\Platform\Commands\LinkCommand;
 
 class LaravoltPreset extends Preset
 {
@@ -16,17 +18,8 @@ class LaravoltPreset extends Preset
      */
     public static function install()
     {
-        static::linkAssets();
+        Artisan::call(LinkCommand::class);
         static::replaceFiles();
-    }
-
-    protected static function linkAssets()
-    {
-        if (!file_exists(public_path('laravolt'))) {
-            (new Filesystem())->link(
-                platform_path('public'), public_path('laravolt')
-            );
-        }
     }
 
     protected static function replaceFiles()
@@ -54,14 +47,20 @@ class LaravoltPreset extends Preset
             copy($new, $original);
         }
 
-        // Add Auth route in 'routes/web.php'
         $entries = [
-            "Route::get('/', 'Home')->name('home');",
-            "Route::get('/dashboard', 'Dashboard')->name('dashboard');",
+            base_path('routes/web.php') => [
+                "Route::get('/', 'Home')->name('home');",
+                "Route::get('/dashboard', 'Dashboard')->name('dashboard');",
+            ],
+            base_path('.gitignore') => [
+                "/public/laravolt"
+            ],
         ];
 
-        foreach ($entries as $entry) {
-            file_put_contents(base_path('routes/web.php'), $entry."\n", FILE_APPEND);
+        foreach ($entries as $file => $lines) {
+            foreach ($lines as $line) {
+                file_put_contents($file, $line."\n", FILE_APPEND);
+            }
         }
     }
 }
