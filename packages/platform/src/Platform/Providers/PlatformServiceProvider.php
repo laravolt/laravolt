@@ -74,6 +74,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                 platform_path('config/acl.php') => config_path('laravolt/acl.php'),
                 platform_path('config/password.php') => config_path('laravolt/password.php'),
                 platform_path('config/auth.php') => config_path('laravolt/auth.php'),
+                platform_path('config/menu.php') => config_path('laravolt/menu.php'),
             ],
             'laravolt-config'
         );
