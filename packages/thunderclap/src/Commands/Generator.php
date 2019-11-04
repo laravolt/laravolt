@@ -62,7 +62,7 @@ class Generator extends Command
         $namespace = config('laravolt.thunderclap.namespace');
 
         if (($moduleName = $this->option('module')) === null) {
-            $moduleName = Str::singular(str_replace('_', '', title_case($table)));
+            $moduleName = Str::singular(str_replace('_', '', Str::title($table)));
         }
 
         $containerPath = config('laravolt.thunderclap.target_dir', base_path('modules'));
