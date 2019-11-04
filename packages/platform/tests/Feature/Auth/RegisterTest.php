@@ -4,7 +4,7 @@ namespace Laravolt\Tests;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Laravolt\Platform\Mail\ActivationMail;
+use Laravolt\Platform\Mail\AccountActivationMail;
 
 class RegisterTest extends FeatureTest
 {
@@ -81,7 +81,7 @@ class RegisterTest extends FeatureTest
              ->press(trans('laravolt::auth.register'))
              ->seeRouteIs('auth::register');
 
-        Mail::assertSent(ActivationMail::class, function ($mail) use ($email) {
+        Mail::assertSent(AccountActivationMail::class, function ($mail) use ($email) {
             return $mail->hasTo($email);
         });
     }

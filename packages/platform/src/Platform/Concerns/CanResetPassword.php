@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Concerns;
 
 use Illuminate\Support\Facades\Mail;
-use Laravolt\Platform\Mail\PasswordResetLink;
+use Laravolt\Platform\Mail\ResetPasswordLink;
 
 trait CanResetPassword
 {
@@ -29,6 +29,6 @@ trait CanResetPassword
     public function sendPasswordResetNotification($token)
     {
         $email = $this->getEmailForPasswordReset();
-        Mail::to($email)->send(new PasswordResetLink($token, $email));
+        Mail::to($email)->send(new ResetPasswordLink($token, $email));
     }
 }

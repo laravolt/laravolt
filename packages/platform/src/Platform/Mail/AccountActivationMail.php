@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ActivationMail extends Mailable
+class AccountActivationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,6 +30,6 @@ class ActivationMail extends Mailable
     public function build()
     {
         return $this->subject(trans('laravolt::auth.activation_subject'))
-            ->view('laravolt::emails.activation');
+            ->view('laravolt::emails.account-activation');
     }
 }

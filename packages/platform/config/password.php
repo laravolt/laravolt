@@ -4,12 +4,6 @@
  * Set specific configuration variables here
  */
 return [
-    // email view
-    'emails' => [
-        'reset' => 'laravolt::emails.password.reset',
-        'new' => 'laravolt::emails.password.new',
-    ],
-
     // ask user to change their password periodically
     // leave null to skip checking or fill with integer (in days)
     'duration' => null,

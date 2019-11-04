@@ -6,7 +6,7 @@ namespace Laravolt\Platform\Mail;
 
 use Illuminate\Mail\Mailable;
 
-class NewPassword extends Mailable
+class NewPasswordInformation extends Mailable
 {
     public $password;
 
@@ -21,6 +21,6 @@ class NewPassword extends Mailable
     public function build()
     {
         return $this->subject(__('laravolt::password.new_password_mail_subject'))
-            ->view(config('laravolt.password.emails.new'));
+            ->view('laravolt::emails.new-password-information');
     }
 }

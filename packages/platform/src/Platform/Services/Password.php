@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\CanChangePassword;
-use Laravolt\Platform\Mail\NewPassword;
+use Laravolt\Platform\Mail\NewPasswordInformation;
 use UnexpectedValueException;
 
 class Password
@@ -86,6 +86,6 @@ class Password
     protected function emailNewPassword(CanChangePassword $user, $password)
     {
         $email = $user->getEmailForNewPassword();
-        Mail::to($email)->send(new NewPassword($password));
+        Mail::to($email)->send(new NewPasswordInformation($password));
     }
 }

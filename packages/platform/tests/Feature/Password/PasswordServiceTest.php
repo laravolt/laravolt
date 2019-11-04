@@ -9,8 +9,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Laravolt\Platform\Mail\NewPassword;
-use Laravolt\Platform\Mail\PasswordResetLink;
+use Laravolt\Platform\Mail\NewPasswordInformation;
+use Laravolt\Platform\Mail\ResetPasswordLink;
 use Laravolt\Tests\FeatureTest;
 
 class PasswordServiceTest extends FeatureTest
@@ -23,7 +23,7 @@ class PasswordServiceTest extends FeatureTest
 
         $service->sendResetLink($user);
 
-        Mail::assertSent(PasswordResetLink::class, function (Mailable $mail) use ($user) {
+        Mail::assertSent(ResetPasswordLink::class, function (Mailable $mail) use ($user) {
             return $mail->hasTo($user->getEmailForPasswordReset());
         });
     }
@@ -36,7 +36,7 @@ class PasswordServiceTest extends FeatureTest
 
         $service->sendNewPassword($user, false);
 
-        Mail::assertSent(NewPassword::class, function (Mailable $mail) use ($user) {
+        Mail::assertSent(NewPasswordInformation::class, function (Mailable $mail) use ($user) {
             return $mail->hasTo($user->getEmailForPasswordReset());
         });
     }

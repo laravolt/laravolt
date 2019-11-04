@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Laravolt\Contracts\ShouldActivate;
-use Laravolt\Platform\Mail\ActivationMail;
+use Laravolt\Platform\Mail\AccountActivationMail;
 
 class UserRegistrar implements \Laravolt\Contracts\UserRegistrar, ShouldActivate
 {
@@ -40,7 +40,7 @@ class UserRegistrar implements \Laravolt\Contracts\UserRegistrar, ShouldActivate
 
     public function notify(Model $user, $token)
     {
-        Mail::to($user)->send(new ActivationMail($token));
+        Mail::to($user)->send(new AccountActivationMail($token));
     }
 
     public function activate($token)

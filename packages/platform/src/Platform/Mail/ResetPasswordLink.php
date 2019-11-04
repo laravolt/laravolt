@@ -6,7 +6,7 @@ namespace Laravolt\Platform\Mail;
 
 use Illuminate\Mail\Mailable;
 
-class PasswordResetLink extends Mailable
+class ResetPasswordLink extends Mailable
 {
     public $token;
 
@@ -24,6 +24,6 @@ class PasswordResetLink extends Mailable
     public function build()
     {
         return $this->subject(trans('laravolt::password.reset_link_mail_subject'))
-            ->view(config('laravolt.password.emails.reset'));
+            ->view('laravolt::emails.reset-password-link');
     }
 }
