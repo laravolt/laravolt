@@ -388,7 +388,7 @@ class SemanticForm
         return new ActionWrapper($actions);
     }
 
-    public function select($name, $options = [], $defaultValue = null)
+    public function dropdown($name, $options = [], $defaultValue = null)
     {
         $select = new Select($name, $options);
 
@@ -402,6 +402,14 @@ class SemanticForm
         }
 
         return $select;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function select($name, $options = [], $defaultValue = null)
+    {
+        return $this->dropdown($name, $options, $defaultValue);
     }
 
     public function selectMultiple($name, $options = [], $defaultValue = null)
@@ -549,14 +557,14 @@ class SemanticForm
             $months[$month] = strftime($format, mktime(0, 0, 0, $month, 1));
         }
 
-        return $this->select($name, $months);
+        return $this->dropdown($name, $months);
     }
 
     public function selectRange($name, $begin, $end)
     {
         $range = array_combine($range = range($begin, $end), $range);
 
-        return $this->select($name, $range);
+        return $this->dropdown($name, $range);
     }
 
     public function selectDate($name, $beginYear = 1900, $endYear = null)
@@ -584,7 +592,7 @@ class SemanticForm
 
         $timeOptions = $this->getTimeOptions($interval);
 
-        $time = (new Field($this->select('_'.$name.'[time]', $timeOptions)->addClass('compact')));
+        $time = (new Field($this->dropdown('_'.$name.'[time]', $timeOptions)->addClass('compact')));
 
         $control = new SelectDateTimeWrapper($date, $month, $year, $time);
 
