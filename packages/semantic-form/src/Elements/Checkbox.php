@@ -2,11 +2,13 @@
 
 class Checkbox extends Input
 {
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'checkbox',
-    );
+    ];
 
     private $checked;
+
+    protected $fieldLabel;
 
     public function __construct($name, $value = 1)
     {
@@ -16,10 +18,21 @@ class Checkbox extends Input
 
     public function render()
     {
-        if ($this->label) {
+        if ($this->label || $this->fieldLabel) {
             $element = clone $this;
             $element->label = false;
-            return $this->decorateField(new Field(new CheckboxWrapper($element, $this->label)))->render();
+            $element->fieldLabel = false;
+            $items = [];
+
+            if (is_string($this->fieldLabel)) {
+                $items[] = new Label($this->fieldLabel);
+            }
+
+            if ($this->label) {
+                $items[] = new CheckboxWrapper($element, $this->label);
+            }
+
+            return $this->decorateField(new Field($items))->render();
         }
 
         $result = '<input';
@@ -33,7 +46,7 @@ class Checkbox extends Input
 
     public function defaultToChecked()
     {
-        if (! isset($this->checked)) {
+        if (!isset($this->checked)) {
             $this->check();
         }
 
@@ -42,7 +55,7 @@ class Checkbox extends Input
 
     public function defaultToUnchecked()
     {
-        if (! isset($this->checked)) {
+        if (!isset($this->checked)) {
             $this->uncheck();
         }
 
@@ -52,18 +65,28 @@ class Checkbox extends Input
     public function defaultCheckedState($state)
     {
         $state ? $this->defaultToChecked() : $this->defaultToUnchecked();
+
         return $this;
     }
 
     public function check()
     {
         $this->setChecked(true);
+
         return $this;
     }
 
     public function uncheck()
     {
         $this->setChecked(false);
+
+        return $this;
+    }
+
+    public function fieldLabel($label)
+    {
+        $this->fieldLabel = $label;
+
         return $this;
     }
 

@@ -4,6 +4,7 @@ namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
@@ -45,6 +46,8 @@ class SemanticForm
     private $errorStore;
 
     private $model;
+
+    private $fieldMethod = [];
 
     public function setOldInputProvider(OldInputInterface $oldInputProvider)
     {
@@ -611,6 +614,38 @@ class SemanticForm
     public function closeFields()
     {
         return '</div>';
+    }
+
+    public function render(array $fields)
+    {
+        $form = "";
+
+        foreach ($fields as $field) {
+            if (is_string($field)) {
+                $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
+            }
+            $field = collect($field);
+            $type = $field['type'] ?? null;
+            if (in_array($type, ['button', 'submit'])) {
+                $element = $this->{$type}($field['label'] ?? null, $field['name'] ?? null);
+            } elseif (in_array($type, ['action'])) {
+                $children = [];
+                foreach ($field['children'] as $child) {
+                    $children[] = $this->{$child['type']}($child['label'] ?? null, $child['name'] ?? null);
+                }
+                $element = $this->{$type}($children);
+            } else {
+                $element = $this->{$type}($field['name'])->label($field['label'] ?? null)->hint($field['hint'] ?? null);
+            }
+
+            foreach ($field->except('type', 'name', 'label', 'hint', 'validations', 'children') as $method => $param) {
+                $element->{$method}($param);
+            }
+
+            $form .= $element->render();
+        }
+
+        return $form;
     }
 
     protected function getTimeOptions($interval)
