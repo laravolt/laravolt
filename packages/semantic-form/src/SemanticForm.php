@@ -47,7 +47,9 @@ class SemanticForm
 
     private $model;
 
-    private $fieldMethod = [];
+    private $fieldMethod = [
+        'options', 'api', 'ajax', 'query', 'fieldLabel', 'hint', 'limit', 'extensions',
+    ];
 
     public function setOldInputProvider(OldInputInterface $oldInputProvider)
     {
@@ -638,7 +640,7 @@ class SemanticForm
                 $element = $this->{$type}($field['name'])->label($field['label'] ?? null)->hint($field['hint'] ?? null);
             }
 
-            foreach ($field->only('options', 'api', 'ajax', 'query', 'fieldLabel') as $method => $param) {
+            foreach ($field->only($this->fieldMethod) as $method => $param) {
                 $element->{$method}($param);
             }
 
