@@ -630,7 +630,7 @@ class SemanticForm
                 $element = $this->{$type}($field['label'] ?? null, $field['name'] ?? null);
             } elseif (in_array($type, ['action'])) {
                 $children = [];
-                foreach ($field['children'] as $child) {
+                foreach ($field['items'] as $child) {
                     $children[] = $this->{$child['type']}($child['label'] ?? null, $child['name'] ?? null);
                 }
                 $element = $this->{$type}($children);
@@ -638,7 +638,7 @@ class SemanticForm
                 $element = $this->{$type}($field['name'])->label($field['label'] ?? null)->hint($field['hint'] ?? null);
             }
 
-            foreach ($field->except('type', 'name', 'label', 'hint', 'validations', 'children') as $method => $param) {
+            foreach ($field->only('options', 'api', 'ajax', 'query', 'fieldLabel') as $method => $param) {
                 $element->{$method}($param);
             }
 
