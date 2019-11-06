@@ -632,7 +632,7 @@ class SemanticForm
         return new Html($content);
     }
 
-    public function collect(array $fields)
+    public function make(array $fields)
     {
         return new FieldCollection($fields);
     }
