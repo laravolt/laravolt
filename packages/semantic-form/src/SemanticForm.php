@@ -613,11 +613,9 @@ class SemanticForm
         return '</div>';
     }
 
-    public function render(array $fields)
+    public function collect(array $fields)
     {
-        $fields = new FieldCollection($fields);
-
-        return $fields->render();
+        return new FieldCollection($fields);
     }
 
     protected function getTimeOptions($interval)
