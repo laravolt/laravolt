@@ -3,6 +3,8 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
@@ -12,6 +14,7 @@ use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\DatepickerWrapper;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
+use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\Link;
 use Laravolt\SemanticForm\Elements\Number;
@@ -336,7 +339,7 @@ class SemanticForm
         return $radio;
     }
 
-    public function radioGroup($name, $options, $checked = null)
+    public function radioGroup($name, $options = [], $checked = null)
     {
         $controls = [];
         $oldValue = $this->getValueFor($name);
@@ -402,6 +405,17 @@ class SemanticForm
         }
 
         return $select;
+    }
+
+    public function dropdownQuery($name, $query)
+    {
+        $options = collect(DB::select($query))->mapWithKeys(function ($item) {
+            $item = (array) $item;
+
+            return [Arr::first($item) => Arr::last($item)];
+        });
+
+        return $this->dropdown($name, $options);
     }
 
     /**
@@ -611,6 +625,11 @@ class SemanticForm
     public function closeFields()
     {
         return '</div>';
+    }
+
+    public function html($content)
+    {
+        return new Html($content);
     }
 
     public function collect(array $fields)

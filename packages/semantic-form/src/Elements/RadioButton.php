@@ -19,11 +19,21 @@ class RadioButton extends Checkbox
 
     public function render()
     {
-        if ($this->label) {
+        if ($this->label || $this->fieldLabel) {
             $element = clone $this;
             $element->label = false;
+            $element->fieldLabel = false;
+            $items = [];
 
-            return $this->decorateField(new Field(new RadioButtonWrapper($element, $this->label)))->render();
+            if (is_string($this->fieldLabel)) {
+                $items[] = new Label($this->fieldLabel);
+            }
+
+            if ($this->label) {
+                $items[] = new RadioButtonWrapper($element, $this->label);
+            }
+
+            return $this->decorateField(new Field($items))->render();
         }
 
         $result = '<input';
