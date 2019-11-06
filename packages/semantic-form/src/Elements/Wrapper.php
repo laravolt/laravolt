@@ -6,6 +6,10 @@ class Wrapper extends Element
 {
     protected $controls = [];
 
+    protected $openTag = '<div %s>';
+
+    protected $closeTag = '</div>';
+
     public function __construct()
     {
         if (func_num_args() == 1 && is_array(func_get_arg(0))) {
@@ -32,15 +36,13 @@ class Wrapper extends Element
 
         $this->beforeRender();
 
-        $html = '<div';
-        $html .= $this->renderAttributes();
-        $html .= '>';
+        $html = sprintf($this->openTag, ltrim($this->renderAttributes()));
 
         foreach ($this->controls as $control) {
             $html .= $control;
         }
 
-        $html .= '</div>';
+        $html .= $this->closeTag;
         $html .= $this->renderHint();
 
         return $html;
@@ -49,6 +51,11 @@ class Wrapper extends Element
     public function getControl($key)
     {
         return Arr::get($this->controls, $key, null);
+    }
+
+    public function addControl($control)
+    {
+        Arr::prepend($this->controls, $control);
     }
 
     public function getPrimaryControl()
