@@ -92,7 +92,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $text = new Number('total');
 
         $expected = $text->render();
-        $result = (string)$text;
+        $result = (string) $text;
         $this->assertEquals($expected, $result);
     }
 

@@ -99,7 +99,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $text = new Text('email');
 
         $expected = $text->render();
-        $result = (string)$text;
+        $result = (string) $text;
         $this->assertEquals($expected, $result);
     }
 
