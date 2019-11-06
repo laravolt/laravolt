@@ -18,7 +18,6 @@ class Html extends Element
 
     public function name()
     {
-
     }
 
     public function render()
