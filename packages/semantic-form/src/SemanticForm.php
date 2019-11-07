@@ -411,12 +411,15 @@ class SemanticForm
     {
         $keyColumn = $keyColumn ?? 'key';
         $valueColumn = $valueColumn ?? 'value';
+        $options = [];
 
-        $options = collect(DB::select($query))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
-            $item = (array) $item;
+        if ($query) {
+            $options = collect(DB::select($query))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
+                $item = (array) $item;
 
-            return [Arr::get($item, $keyColumn) => Arr::get($item, $valueColumn)];
-        });
+                return [Arr::get($item, $keyColumn) => Arr::get($item, $valueColumn)];
+            });
+        }
 
         return $this->dropdown($name, $options);
     }
