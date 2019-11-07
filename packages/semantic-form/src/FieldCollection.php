@@ -26,59 +26,91 @@ class FieldCollection extends Collection
             }
 
             $field = $field + ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null];
+            $items[] = $this->createField($field);
+        }
 
-            $field = collect($field);
+        $this->items = $items;
+    }
 
-            $type = $field['type'];
-            if (in_array($type, ['button', 'submit'])) {
+    protected function createField($field)
+    {
+        $field = collect($field);
+        $type = $field['type'];
+        $macro = false;
+
+        switch ($type) {
+            case 'checkbox':
+            case 'date':
+            case 'number':
+            case 'rupiah':
+            case 'text':
+            case 'textarea':
+            case 'time':
+                $element = form()->{$type}($field['name'])->label($field['label'])->hint($field['hint']);
+                break;
+
+            case 'button':
+            case 'submit':
                 $element = form()->{$type}($field['label'], $field['name']);
-            } elseif (in_array($type, ['action'])) {
+                break;
+
+            case 'action':
                 $children = [];
                 foreach ($field['items'] as $child) {
                     $children[] = form()->{$child['type']}($child['label'], $child['name']);
                 }
                 $element = form()->{$type}($children);
-            } elseif (in_array($type, ['checkboxGroup', 'radioGroup', 'dropdown'])) {
+                break;
+
+            case 'checkboxGroup':
+            case 'radioGroup':
+            case 'dropdown':
                 $element = form()
                     ->{$type}($field['name'], $field['options'])
                     ->label($field['label'])
                     ->hint($field['hint']);
-            } elseif ($type == 'dropdownApi') {
-                $element = form()
-                    ->{$type}($field['name'], $field['api'])
-                    ->label($field['label'])
-                    ->hint($field['hint']);
-            } elseif ($type == 'dropdownQuery') {
-                $element = form()
-                    ->{$type}($field['name'], $field['query'])
-                    ->label($field['label'])
-                    ->hint($field['hint']);
-            } elseif ($type === 'segment') {
-                $element = new Segments(new SegmentTitle($field['label']), new FieldCollection($field['items']));
-            } elseif ($type === 'html') {
-                $element = new Html(Arr::get($field, 'content'));
-            } else {
-                $element = form()
-                    ->{$type}($field['name'])
-                    ->label($field['label'])
-                    ->hint($field['hint']);
-            }
+                break;
 
+            case 'dropdownQuery':
+                $element = form()
+                    ->dropdownQuery(
+                        $field['name'],
+                        $field['query'],
+                        $field['query_key'] ?? null,
+                        $field['query_value'] ?? null
+                    )
+                    ->label($field['label'])
+                    ->hint($field['hint']);
+                break;
+
+            case 'segment':
+                $element = new Segments(new SegmentTitle($field['label']), new FieldCollection($field['items']));
+                break;
+
+            case 'html':
+                $element = new Html(Arr::get($field, 'content'));
+                break;
+
+            default:
+                $element = form()->{$type}($field->toArray());
+                $macro = true;
+                break;
+        }
+
+        if (!$macro) {
             foreach ($field->only($this->fieldMethod) as $method => $param) {
                 $element->{$method}($param);
             }
-
-            $items[] = $element;
         }
 
-        $this->items = $items;
+        return $element;
     }
 
     public function render()
     {
         $form = "";
         foreach ($this->items as $item) {
-            $form .= $item->render();
+            $form .= (string) $item;
         }
 
         return $form;

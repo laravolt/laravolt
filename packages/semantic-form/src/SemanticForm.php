@@ -407,12 +407,15 @@ class SemanticForm
         return $select;
     }
 
-    public function dropdownQuery($name, $query)
+    public function dropdownQuery($name, $query, $keyColumn = null, $valueColumn = null)
     {
-        $options = collect(DB::select($query))->mapWithKeys(function ($item) {
+        $keyColumn = $keyColumn ?? 'key';
+        $valueColumn = $valueColumn ?? 'value';
+
+        $options = collect(DB::select($query))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
             $item = (array) $item;
 
-            return [Arr::first($item) => Arr::last($item)];
+            return [Arr::get($item, $keyColumn) => Arr::get($item, $valueColumn)];
         });
 
         return $this->dropdown($name, $options);
