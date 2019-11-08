@@ -45,6 +45,7 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/'), 'semantic-form');
+        require __DIR__.'/../routes/web.php';
     }
 
     /**

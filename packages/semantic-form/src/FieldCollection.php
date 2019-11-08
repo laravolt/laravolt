@@ -71,14 +71,15 @@ class FieldCollection extends Collection
                     ->hint($field['hint']);
                 break;
 
-            case 'dropdownQuery':
+            case 'dropdownDB':
                 $element = form()
-                    ->dropdownQuery(
+                    ->dropdownDB(
                         $field['name'],
                         $field['query'],
-                        $field['query_key'] ?? null,
-                        $field['query_value'] ?? null
+                        $field['query_key_column'] ?? null,
+                        $field['query_display_column'] ?? null
                     )
+                    ->dependency($field['dependency'] ?? null)
                     ->label($field['label'])
                     ->hint($field['hint']);
                 break;

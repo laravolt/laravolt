@@ -12,6 +12,7 @@ use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\Coordinate;
 use Laravolt\SemanticForm\Elements\Datepicker;
 use Laravolt\SemanticForm\Elements\DatepickerWrapper;
+use Laravolt\SemanticForm\Elements\DropdownDB;
 use Laravolt\SemanticForm\Elements\Field;
 use Laravolt\SemanticForm\Elements\FieldsOpen;
 use Laravolt\SemanticForm\Elements\Html;
@@ -407,21 +408,18 @@ class SemanticForm
         return $select;
     }
 
-    public function dropdownQuery($name, $query, $keyColumn = null, $valueColumn = null)
+    public function dropdownDB($name, $query, $keyColumn = null, $valueColumn = null)
     {
-        $keyColumn = $keyColumn ?? 'key';
-        $valueColumn = $valueColumn ?? 'value';
-        $options = [];
+        $element = (new DropdownDB($name, []))->query($query)->keyColumn($keyColumn)->label($valueColumn);
 
-        if ($query) {
-            $options = collect(DB::select($query))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
-                $item = (array) $item;
+        $selected = $this->getValueFor($name);
+        $element->select($selected);
 
-                return [Arr::get($item, $keyColumn) => Arr::get($item, $valueColumn)];
-            });
+        if ($this->hasError($name)) {
+            $element->setError();
         }
 
-        return $this->dropdown($name, $options);
+        return $element;
     }
 
     /**

@@ -51,6 +51,8 @@ class Select extends FormControl
             return $this->decorateField(new Field($this->label, $element))->render();
         }
 
+        $this->beforeRender();
+
         $result = '<select';
         $result .= $this->renderAttributes();
         $result .= '>';
