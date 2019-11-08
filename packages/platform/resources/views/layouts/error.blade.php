@@ -1,4 +1,4 @@
-@extends('ui::layouts.base')
+@extends('laravolt::layouts.base')
 
 @section('body')
     <div class="ui container">

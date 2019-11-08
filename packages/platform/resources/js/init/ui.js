@@ -25,6 +25,57 @@ $(function () {
     }).dropdown('set selected', selected);
   });
 
+  $.fn.destroyDropdown = function () {
+    return $(this).each(function () {
+      $(this).parent().dropdown('destroy').replaceWith($(this).addClass('search'));
+    });
+  };
+
+  let dependencies = [];
+  $('select[data-depend-on]').each(function (idx, elm) {
+    let child = $(elm);
+    let parentName = child.data('depend-on');
+    if (dependencies[parentName] === undefined) {
+      dependencies[parentName] = [];
+    }
+    dependencies[parentName].push(child);
+  });
+  for (var parentName of Object.keys(dependencies)) {
+    let parent = $('[name=' + parentName + ']');
+    let children = dependencies[parentName];
+    parent.destroyDropdown();
+    parent.dropdown({
+      forceSelection: false,
+      fullTextSearch: 'exact',
+      onChange: function (value, text, $option) {
+        jQuery.each(children, function (idx, child) {
+
+          let url = child.data('api');
+          let payload = child.data('payload');
+
+          child.api({
+            url: url,
+            urlData: {parent: value, payload: payload},
+            on: 'now',
+            beforeSend: function (settings) {
+              child.dropdown('clear');
+              child.parent().addClass('loading');
+              return settings;
+            },
+            onSuccess: function (response, element, xhr) {
+              let values = response.results;
+              child.dropdown('setup menu', {values: values});
+              child.dropdown('set selected', values[0]['value']);
+            },
+            onComplete: function (response, element, xhr) {
+              child.parent().removeClass('loading');
+            }
+          });
+        })
+      }
+    });
+  }
+
   $('.checkbox[data-toggle="checkall"]').each(function () {
     var $parent = $(this);
     var $childCheckbox = $(document).find($parent.data('selector'));

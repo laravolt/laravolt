@@ -1,4 +1,4 @@
 <h2 class="ui header brand centered">
-    @include('ui::components.brand-image')
+    @include('laravolt::components.brand-image')
     {{ config('laravolt.ui.brand_name') }}
 </h2>

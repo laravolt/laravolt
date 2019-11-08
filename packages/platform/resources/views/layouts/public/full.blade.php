@@ -1,11 +1,11 @@
-@extends('ui::layouts.base')
+@extends('laravolt::layouts.base')
 @section('body')
 
     <div class="layout--full" data-position="center">
         <div class="tablet or lower hidden"></div>
         <div class="content">
             <div class="ui segment tall stacked center aligned p-2 bg-white-90">
-                @include('ui::components.brand-image', ['class' => 'tiny centered'])
+                @include('laravolt::components.brand-image', ['class' => 'tiny centered'])
                 <h2 class="ui header">
                     {{ config('app.name') }}
                     <div class="sub header">{{ config('app.description') }}</div>
