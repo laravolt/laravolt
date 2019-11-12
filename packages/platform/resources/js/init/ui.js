@@ -27,7 +27,7 @@ $(function () {
 
   $.fn.destroyDropdown = function () {
     return $(this).each(function () {
-      $(this).parent().dropdown('destroy').replaceWith($(this).addClass('search'));
+      $(this).parent().dropdown('destroy').replaceWith($(this).addClass($(this).data('class')));
     });
   };
 
@@ -48,29 +48,36 @@ $(function () {
       forceSelection: false,
       fullTextSearch: 'exact',
       onChange: function (value, text, $option) {
+
         jQuery.each(children, function (idx, child) {
 
-          let url = child.data('api');
-          let payload = child.data('payload');
+          if (!value) {
+            child.dropdown('clear');
+            child.dropdown('setup menu', {values: []});
+          } else {
+            let url = child.data('api');
+            let payload = child.data('payload');
 
-          child.api({
-            url: url,
-            urlData: {parent: value, payload: payload},
-            on: 'now',
-            beforeSend: function (settings) {
-              child.dropdown('clear');
-              child.parent().addClass('loading');
-              return settings;
-            },
-            onSuccess: function (response, element, xhr) {
-              let values = response.results;
-              child.dropdown('setup menu', {values: values});
-              child.dropdown('set selected', values[0]['value']);
-            },
-            onComplete: function (response, element, xhr) {
-              child.parent().removeClass('loading');
-            }
-          });
+            child.api({
+              url: url,
+              urlData: {parent: value, payload: payload},
+              on: 'now',
+              beforeSend: function (settings) {
+                child.dropdown('clear');
+                child.parent().addClass('loading');
+                return settings;
+              },
+              onSuccess: function (response, element, xhr) {
+                let values = response.results;
+                child.dropdown('setup menu', {values: values});
+                // child.dropdown('set selected', values[0]['value']);
+              },
+              onComplete: function (response, element, xhr) {
+                child.parent().removeClass('loading');
+              }
+            });
+          }
+
         })
       }
     });
