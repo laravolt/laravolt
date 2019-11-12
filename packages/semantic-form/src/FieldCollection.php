@@ -41,6 +41,8 @@ class FieldCollection extends Collection
         switch ($type) {
             case 'checkbox':
             case 'date':
+            case 'email':
+            case 'hidden':
             case 'number':
             case 'rupiah':
             case 'text':
