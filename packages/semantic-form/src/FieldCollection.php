@@ -14,7 +14,7 @@ use Laravolt\SemanticForm\Elements\SegmentTitle;
 class FieldCollection extends Collection
 {
     protected $fieldMethod = [
-        'api', 'ajax', 'query', 'fieldLabel', 'hint', 'limit', 'extensions',
+        'api', 'ajax', 'query', 'fieldLabel', 'hint', 'limit', 'extensions', 'placeholder',
     ];
 
     public function __construct($fields = [])
@@ -104,6 +104,7 @@ class FieldCollection extends Collection
             foreach ($field->only($this->fieldMethod) as $method => $param) {
                 $element->{$method}($param);
             }
+            $element->addClass($field['class'] ?? '');
         }
 
         return $element;

@@ -17,6 +17,7 @@ class DropdownDB extends Select
     protected function beforeRender()
     {
         $this->setupDependency();
+        $this->data('class', $this->getAttribute('class'));
 
         if ($this->dependency && $this->hasOldInput()) {
             $query = sprintf($this->query, old($this->dependency));
@@ -79,7 +80,9 @@ class DropdownDB extends Select
             });
         }
 
-        $this->options($options);
+        foreach ($options as $value => $label) {
+            $this->appendOption($value, $label);
+        }
     }
 
     private function setupDependency()
