@@ -65,11 +65,13 @@ $(function () {
               beforeSend: function (settings) {
                 child.dropdown('clear');
                 child.parent().addClass('loading');
+
                 return settings;
               },
               onSuccess: function (response, element, xhr) {
                 let values = response.results;
-                child.dropdown('setup menu', {values: values});
+                // child.destroyDropdown();
+                child.dropdown('change values', values);
                 // child.dropdown('set selected', values[0]['value']);
               },
               onComplete: function (response, element, xhr) {
