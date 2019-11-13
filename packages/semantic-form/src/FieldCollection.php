@@ -44,10 +44,12 @@ class FieldCollection extends Collection
             case 'email':
             case 'hidden':
             case 'number':
+            case 'redactor':
             case 'rupiah':
             case 'text':
             case 'textarea':
             case 'time':
+            case 'uploader':
                 $element = form()->{$type}($field['name'])->label($field['label'])->hint($field['hint']);
                 break;
 
