@@ -5,9 +5,9 @@ use Illuminate\Support\Collection;
 
 class Select extends FormControl
 {
-    private $options;
+    protected $options;
 
-    private $selected;
+    protected $selected;
 
     protected $attributes = [
         'class' => 'ui dropdown search',
@@ -28,6 +28,11 @@ class Select extends FormControl
         $this->selected = $option;
 
         return $this;
+    }
+
+    public function value($value)
+    {
+        return $this->select($value);
     }
 
     protected function setOptions($options)
@@ -162,11 +167,13 @@ class Select extends FormControl
         return $this;
     }
 
-    public function readonly()
+    public function readonly($readonly = true)
     {
-        parent::readonly();
+        parent::readonly($readonly);
 
-        $this->disable();
+        if ($readonly) {
+            $this->disable();
+        }
 
         return $this;
     }
