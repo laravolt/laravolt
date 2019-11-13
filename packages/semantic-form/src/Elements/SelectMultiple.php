@@ -2,7 +2,7 @@
 
 class SelectMultiple extends Select
 {
-    private $selected;
+    protected $selected;
 
     protected $attributes = [
         'class'    => 'ui dropdown search multiple tag',
