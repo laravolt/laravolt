@@ -28,4 +28,14 @@ class Segments extends Wrapper
 
         parent::__construct($items);
     }
+
+    public function display()
+    {
+        $output = '';
+        foreach ($this->controls as $control) {
+            $output .= $control->display();
+        }
+
+        return $output;
+    }
 }

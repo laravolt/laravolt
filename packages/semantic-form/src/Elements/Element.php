@@ -50,9 +50,9 @@ abstract class Element
         unset($this->attributes[$attribute]);
     }
 
-    public function getAttribute($attribute)
+    public function getAttribute($attribute, $default = null)
     {
-        return $this->attributes[$attribute];
+        return $this->attributes[$attribute] ?? $default;
     }
 
     public function hasAttribute($attribute)
@@ -207,6 +207,16 @@ abstract class Element
         }
 
         return $field;
+    }
+
+    public function display()
+    {
+        return sprintf(
+            '<tr><td>%s</td><td>%s</td><td>%s</td></tr>',
+            $this->label,
+            $this->getAttribute('name'),
+            $this->value ?? $this->getAttribute('value')
+        );
     }
 
     public function __call($method, $params)

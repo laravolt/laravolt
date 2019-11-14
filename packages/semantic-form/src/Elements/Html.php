@@ -24,4 +24,12 @@ class Html extends Element
     {
         return $this->content;
     }
+
+    public function display()
+    {
+        return sprintf(
+            '<tr><td></td><td colspan="2">%s</td></tr>',
+            $this->content
+        );
+    }
 }

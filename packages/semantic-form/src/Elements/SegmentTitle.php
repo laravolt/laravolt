@@ -13,4 +13,14 @@ class SegmentTitle extends Wrapper
     protected $attributes = [
         'class' => 'ui header',
     ];
+
+    public function display()
+    {
+        $output = '';
+        foreach ($this->controls as $control) {
+            $output .= "<h2 class='ui header horizontal divider section'>$control</h2>";
+        }
+
+        return $output;
+    }
 }

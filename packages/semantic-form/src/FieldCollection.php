@@ -7,6 +7,7 @@ namespace Laravolt\SemanticForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\Segments;
 use Laravolt\SemanticForm\Elements\SegmentTitle;
@@ -120,6 +121,50 @@ class FieldCollection extends Collection
         }
 
         return $form;
+    }
+
+    public function display()
+    {
+        $items = collect($this->items)->reject(function ($item) {
+            return $item instanceof ActionWrapper;
+        });
+
+        $table = "<table class='ui definition table'>";
+        $table .= "<thead>";
+        $table .= "<tr>";
+        $table .= "<th width='200px'></th>";
+        $table .= "<th>Key</th>";
+        $table .= "<th>Value</th>";
+        $table .= "</tr>";
+        $table .= "</thead>";
+        $table .= "<tbody>";
+
+        $i = 0;
+        foreach ($items as $item) {
+            $i++;
+            if ($item instanceof Segments) {
+                $table .= "</tbody>";
+                $table .= "</table>";
+            }
+
+            $table .= $item->display();
+
+            if ($item instanceof Segments && $i < count($items)) {
+                $table .= "<table class='ui definition table'>";
+                $table .= "<thead>";
+                $table .= "<tr>";
+                $table .= "<th width='200px'></th>";
+                $table .= "<th>Key</th>";
+                $table .= "<th>Value</th>";
+                $table .= "</tr>";
+                $table .= "</thead>";
+                $table .= "<tbody>";
+            }
+        }
+        $table .= "</tbody>";
+        $table .= "</table>";
+
+        return $table;
     }
 
     public function __toString()
