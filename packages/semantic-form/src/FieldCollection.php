@@ -40,7 +40,6 @@ class FieldCollection extends Collection
         $macro = false;
 
         switch ($type) {
-            case 'checkbox':
             case 'date':
             case 'email':
             case 'hidden':
@@ -52,6 +51,11 @@ class FieldCollection extends Collection
             case 'time':
             case 'uploader':
                 $element = form()->{$type}($field['name'])->label($field['label'])->hint($field['hint']);
+                break;
+
+            case 'checkbox':
+                $element = form()->checkbox($field['name'])->label($field['label'])->hint($field['hint']);
+                $element->setChecked($field['checked'] ?? false);
                 break;
 
             case 'button':
@@ -130,13 +134,6 @@ class FieldCollection extends Collection
         });
 
         $table = "<table class='ui definition table'>";
-        $table .= "<thead>";
-        $table .= "<tr>";
-        $table .= "<th width='200px'></th>";
-        $table .= "<th>Key</th>";
-        $table .= "<th>Value</th>";
-        $table .= "</tr>";
-        $table .= "</thead>";
         $table .= "<tbody>";
 
         $i = 0;
@@ -151,13 +148,6 @@ class FieldCollection extends Collection
 
             if ($item instanceof Segments && $i < count($items)) {
                 $table .= "<table class='ui definition table'>";
-                $table .= "<thead>";
-                $table .= "<tr>";
-                $table .= "<th width='200px'></th>";
-                $table .= "<th>Key</th>";
-                $table .= "<th>Value</th>";
-                $table .= "</tr>";
-                $table .= "</thead>";
                 $table .= "<tbody>";
             }
         }

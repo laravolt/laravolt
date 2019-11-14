@@ -4,6 +4,8 @@ abstract class FormControl extends Element
 {
     protected $hasError = false;
 
+    protected $value;
+
     public function __construct($name)
     {
         $this->setName($name);

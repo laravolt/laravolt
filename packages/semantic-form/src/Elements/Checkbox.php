@@ -90,7 +90,16 @@ class Checkbox extends Input
         return $this;
     }
 
-    protected function setChecked($checked = true)
+    public function displayValue()
+    {
+        if ($this->checked) {
+            return '<i class="green icon check"></i>';
+        }
+
+        return '';
+    }
+
+    public function setChecked($checked = true)
     {
         $this->checked = $checked;
         $this->removeAttribute('checked');

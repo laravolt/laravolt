@@ -5,7 +5,7 @@ use Illuminate\Support\Collection;
 
 class Select extends FormControl
 {
-    protected $options;
+    protected $options = [];
 
     protected $selected;
 
@@ -32,6 +32,8 @@ class Select extends FormControl
 
     public function value($value)
     {
+        $this->value = $value;
+
         return $this->select($value);
     }
 
@@ -176,5 +178,14 @@ class Select extends FormControl
         }
 
         return $this;
+    }
+
+    public function displayValue()
+    {
+        if (is_string($this->value)) {
+            return Arr::get($this->options, $this->value);
+        }
+
+        return null;
     }
 }
