@@ -22,6 +22,10 @@ trait SourceResolver
             return $source;
         } elseif ($source instanceof Collection) {
             return $source;
+        } elseif ($source instanceof \Illuminate\Support\Collection) {
+            return $source;
+        } elseif (is_array($source)) {
+            return collect($source);
         }
 
         $type = gettype($source);
