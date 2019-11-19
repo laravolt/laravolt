@@ -5,10 +5,18 @@ declare(strict_types=1);
 namespace Laravolt\Media\MediaHandler;
 
 use Laravolt\Platform\Services\SingleFileUploader;
+use Spatie\MediaLibrary\Models\Media;
 
-class SingleFileUploaderMediaHandler
+class FileuploaderMediaHandler
 {
     public function __invoke()
+    {
+        $action = request('_action');
+
+        return $this->{$action}();
+    }
+
+    protected function upload()
     {
         $media = SingleFileUploader::handle(request('_key'));
         $response = [
@@ -31,5 +39,14 @@ class SingleFileUploaderMediaHandler
         ];
 
         return response()->json($response);
+    }
+
+    protected function delete()
+    {
+        $media = Media::find(request('id'));
+        if ($media) {
+            $media->delete();
+        }
+        return response()->json(true);
     }
 }
