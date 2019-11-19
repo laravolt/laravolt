@@ -84,4 +84,9 @@ abstract class FormControl extends Element
     {
         return $this->hasError;
     }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
 }

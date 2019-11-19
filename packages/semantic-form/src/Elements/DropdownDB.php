@@ -14,14 +14,20 @@ class DropdownDB extends Select
 
     protected $dependency;
 
+    protected $dependencyValue;
+
     protected function beforeRender()
     {
         $this->setupDependency();
         $this->data('class', $this->getAttribute('class'));
 
-        if ($this->dependency && $this->hasOldInput()) {
-            $query = sprintf($this->query, old($this->dependency));
-            $this->query($query);
+        if ($this->dependency) {
+            $dependencyValue = old($this->dependency) ?? $this->dependencyValue;
+
+            if ($dependencyValue) {
+                $query = sprintf($this->query, $dependencyValue);
+                $this->query($query);
+            }
         }
 
         if (!Str::contains($this->query, '%s')) {
@@ -29,10 +35,11 @@ class DropdownDB extends Select
         }
     }
 
-    public function dependency(?string $dependency)
+    public function dependency(?string $dependency, $value = null)
     {
         if ($dependency) {
             $this->dependency = $dependency;
+            $this->dependencyValue = $value;
         }
 
         return $this;
@@ -68,7 +75,7 @@ class DropdownDB extends Select
     public function displayValue()
     {
         if (is_string($this->value)) {
-            $this->populateOptions();
+            $this->beforeRender();
 
             return Arr::get($this->options, $this->value);
         }
@@ -110,14 +117,5 @@ class DropdownDB extends Select
             $this->data('api', route('laravolt::proxy').'?parent={parent}&payload={payload}');
             $this->data('payload', $payload);
         }
-    }
-
-    private function hasOldInput()
-    {
-        if ($this->dependency && request()->old($this->dependency)) {
-            return true;
-        }
-
-        return false;
     }
 }
