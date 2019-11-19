@@ -1,6 +1,6 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
-class Datepicker extends Text
+class Datepicker extends Date
 {
     protected $attributes = array(
         'type' => 'text',

@@ -87,6 +87,6 @@ abstract class FormControl extends Element
 
     public function getValue()
     {
-        return $this->value;
+        return $this->value ?? $this->getAttribute('value');
     }
 }
