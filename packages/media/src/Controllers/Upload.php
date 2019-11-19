@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Media\Http\Controllers;
+namespace Laravolt\Media\Controllers;
 
 class Upload
 {

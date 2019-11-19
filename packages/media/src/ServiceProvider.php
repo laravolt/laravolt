@@ -2,6 +2,7 @@
 
 namespace Laravolt\Media;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
@@ -25,5 +26,16 @@ class ServiceProvider extends BaseServiceProvider
     protected function bootRoutes()
     {
         require __DIR__.'/../routes/web.php';
+
+        return $this;
+    }
+
+    protected function bootMacro()
+    {
+        Request::macro('media', function ($key) {
+            return new MediaInputBag($key);
+        });
+
+        return $this;
     }
 }

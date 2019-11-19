@@ -7,7 +7,7 @@
         'middleware' => ['web', 'auth'],
     ],
     function (\Illuminate\Routing\Router $router) {
-        $router->post('/upload', \Laravolt\Media\Http\Controllers\Upload::class)->name('upload');
-        $router->post('/remove', \Laravolt\Media\Http\Controllers\Remove::class)->name('remove');
+        Route::post('upload', [\Laravolt\Media\Controllers\MediaController::class, 'store'])
+            ->name('store');
     }
 );
