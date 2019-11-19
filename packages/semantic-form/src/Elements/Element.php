@@ -212,9 +212,9 @@ abstract class Element
     public function display()
     {
         return sprintf(
-            '<tr><td style="width:300px">%s <div style="font-weight: normal">%s</div></td><td>%s</td></tr>',
-            $this->label,
+            '<tr><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
             $this->getAttribute('name'),
+            $this->label,
             $this->displayValue()
         );
     }
