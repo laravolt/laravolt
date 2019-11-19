@@ -19,7 +19,7 @@ class MediaInputBag
 
     public function toArray(): array
     {
-        collect(json_decode(request("_{$this->key}", '{}'), true))->flatten()->toArray();
+        return collect(json_decode(request("_{$this->key}", '{}'), true))->flatten()->toArray();
     }
 
     public function store(): array

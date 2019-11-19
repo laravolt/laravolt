@@ -20,7 +20,7 @@ class ServiceProvider extends BaseServiceProvider
 
     public function boot()
     {
-        $this->bootRoutes();
+        $this->bootRoutes()->bootMacro();
     }
 
     protected function bootRoutes()
