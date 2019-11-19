@@ -3,9 +3,6 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
@@ -19,6 +16,7 @@ use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\Link;
 use Laravolt\SemanticForm\Elements\Number;
+use Laravolt\SemanticForm\Elements\Redactor;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\SelectMultiple;
@@ -261,10 +259,21 @@ class SemanticForm
     {
         \Stolz\Assets\Laravel\Facade::add('redactor');
 
-        return $this->textarea($name, $defaultValue)
-            ->data('upload-url', Route::has('platform::media.store') ? route('platform::media.store') : false)
+        $redactor = new Redactor($name);
+
+        if (!is_null($value = $this->getValueFor($name))) {
+            $redactor->value($value);
+        }
+
+        if ($this->hasError($name)) {
+            $redactor->setError();
+        }
+
+        $redactor->defaultValue($defaultValue)
             ->data('token', csrf_token())
             ->data('role', 'redactor');
+
+        return $redactor;
     }
 
     public function coordinate($name, $defaultValue = null)
@@ -460,7 +469,7 @@ class SemanticForm
 
     public function uploader($name)
     {
-        $uploader = (new Uploader($name))->data('fileuploader-listInput', "uploader[$name]");
+        $uploader = (new Uploader($name))->data('token', csrf_token())->data('fileuploader-listInput', "_$name");
 
         return $uploader;
     }

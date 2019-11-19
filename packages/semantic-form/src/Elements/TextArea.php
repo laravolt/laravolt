@@ -19,6 +19,8 @@ class TextArea extends FormControl
             return $this->decorateField(new Field($this->label, $element))->render();
         }
 
+        $this->beforeRender();
+
         $result = '<textarea';
         $result .= $this->renderAttributes();
         $result .= '>';

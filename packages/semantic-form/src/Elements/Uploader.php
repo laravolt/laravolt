@@ -10,6 +10,8 @@ class Uploader extends Input
         'data-limit' => 1,
     ];
 
+    protected $mediaUrl;
+
     public function limit(int $limit)
     {
         return $this->data('limit', $limit);
@@ -18,6 +20,14 @@ class Uploader extends Input
     public function extensions(array $extensions)
     {
         return $this->data('extensions', implode(',', $extensions));
+    }
+
+    public function mediaUrl(string $url)
+    {
+        $this->mediaUrl = $url;
+        $this->data('media-url', $url);
+
+        return $this;
     }
 
     protected function setValue($mediaCollection)
@@ -40,9 +50,6 @@ class Uploader extends Input
                     'type' => $media->mime_type,
                     "data" => [
                         'id' => $media->getKey(),
-                        "url" => $media->getFullUrl(),
-                        "thumbnail" => $media->getFullUrl(),
-                        "readerForce" => true,
                     ],
                 ];
             }
