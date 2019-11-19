@@ -33,6 +33,11 @@ class Date extends Text
 
     public function displayValue()
     {
-        return Carbon::createFromIsoFormat(static::$inputFormat, $this->getValue())->isoFormat(static::$displayFormat);
+        $value = $this->getValue();
+        try {
+            return Carbon::createFromIsoFormat(static::$inputFormat, $value)->isoFormat(static::$displayFormat);
+        } catch (\Exception $e) {
+            return $value;
+        }
     }
 }
