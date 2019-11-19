@@ -3,6 +3,7 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
@@ -271,7 +272,7 @@ class SemanticForm
         }
 
         $redactor->defaultValue($defaultValue)
-            ->data('token', csrf_token())
+            ->data('token', Session::token())
             ->data('role', 'redactor');
 
         return $redactor;
@@ -473,7 +474,7 @@ class SemanticForm
 
     public function uploader($name)
     {
-        $uploader = (new Uploader($name))->data('token', csrf_token())->data('fileuploader-listInput', "_$name");
+        $uploader = (new Uploader($name))->data('token', Session::token())->data('fileuploader-listInput', "_$name");
 
         return $uploader;
     }
