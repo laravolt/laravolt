@@ -20,17 +20,14 @@ class FieldCollection extends Collection
 
     public function __construct($fields = [])
     {
-        $items = [];
         foreach ($fields as $field) {
             if (is_string($field)) {
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
             }
 
             $field = $field + ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null];
-            $items[] = $this->createField($field);
+            $this->put($field['name'], $this->createField($field));
         }
-
-        $this->items = $items;
     }
 
     protected function createField($field)
@@ -88,9 +85,12 @@ class FieldCollection extends Collection
                         $field['query_key_column'] ?? null,
                         $field['query_display_column'] ?? null
                     )
-                    ->dependency($field['dependency'] ?? null)
                     ->label($field['label'])
                     ->hint($field['hint']);
+
+                if ($field['dependency'] ?? false) {
+                    $element->dependency($field['dependency'], $this->get($field['dependency'])->getValue());
+                }
                 break;
 
             case 'segment':

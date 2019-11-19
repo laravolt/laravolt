@@ -3,7 +3,6 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
@@ -17,6 +16,7 @@ use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\Link;
 use Laravolt\SemanticForm\Elements\Number;
+use Laravolt\SemanticForm\Elements\RadioGroup;
 use Laravolt\SemanticForm\Elements\Redactor;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
@@ -271,7 +271,7 @@ class SemanticForm
         }
 
         $redactor->defaultValue($defaultValue)
-            ->data('token', Session::token())
+            ->data('token', csrf_token())
             ->data('role', 'redactor');
 
         return $redactor;
@@ -364,7 +364,10 @@ class SemanticForm
             $controls[] = $radio;
         }
 
-        return new CheckboxGroup($controls);
+        $radioGroup = new RadioGroup($controls);
+        $radioGroup->options($options);
+
+        return $radioGroup;
     }
 
     public function button($value, $name = null)
@@ -470,7 +473,7 @@ class SemanticForm
 
     public function uploader($name)
     {
-        $uploader = (new Uploader($name))->data('token', Session::token())->data('fileuploader-listInput', "_$name");
+        $uploader = (new Uploader($name))->data('token', csrf_token())->data('fileuploader-listInput', "_$name");
 
         return $uploader;
     }
