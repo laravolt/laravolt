@@ -39,8 +39,4 @@ class MediaInputBag
 
         return $media;
     }
-
-    public function delete(): bool
-    {
-    }
 }
