@@ -4,9 +4,9 @@ use Carbon\Carbon;
 
 class Date extends Text
 {
-    protected static $inputFormat = 'Y-m-d';
+    protected static $inputFormat = 'YYYY-MM-DD';
 
-    protected static $displayFormat = 'd-m-Y';
+    protected static $displayFormat = 'LL';
 
     protected $attributes = [
         'type' => 'date',
@@ -33,6 +33,6 @@ class Date extends Text
 
     public function displayValue()
     {
-        return Carbon::createFromFormat(static::$inputFormat, $this->getValue())->format(static::$displayFormat);
+        return Carbon::createFromIsoFormat(static::$inputFormat, $this->getValue())->isoFormat(static::$displayFormat);
     }
 }
