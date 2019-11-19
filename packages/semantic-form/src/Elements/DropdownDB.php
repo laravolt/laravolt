@@ -65,6 +65,17 @@ class DropdownDB extends Select
         return $this;
     }
 
+    public function displayValue()
+    {
+        if (is_string($this->value)) {
+            $this->populateOptions();
+
+            return Arr::get($this->options, $this->value);
+        }
+
+        return null;
+    }
+
     private function populateOptions()
     {
         $keyColumn = $this->keyColumn;
