@@ -194,9 +194,9 @@ $(function () {
           var YYYY = date.getFullYear();
 
           return format
-            // .replace('h', h)
-            // .replace('i', i)
-            // .replace('s', s)
+          // .replace('h', h)
+          // .replace('i', i)
+          // .replace('s', s)
             .replace('j', j)
             .replace('d', d)
             .replace('n', n)
@@ -223,11 +223,73 @@ $(function () {
       extensions = null;
     }
 
+    var upload = null;
+
+    if ($(elm).data('media-url')) {
+      upload = {
+        url: $(elm).data('media-url'),
+        data:{_token: $(elm).data('token'), _key:$(elm).attr('name'), _action:'upload'},
+        type:'POST',
+        enctype:'multipart/form-data',
+        start:true,
+        synchron:true,
+        chunk:false,
+        onSuccess: function (data, item, listEl, parentEl, newInputEl, inputEl, textStatus, jqXHR) {
+
+          item.local = data.files[0].file;
+          item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
+
+          setTimeout(function () {
+            item.html.find('.progress-bar2').fadeOut(400);
+          }, 400);
+        },
+        onError: function (item, listEl, parentEl, newInputEl, inputEl, jqXHR, textStatus, errorThrown) {
+          var progressBar = item.html.find('.progress-bar2');
+
+          if (progressBar.length > 0) {
+            progressBar.find('span').html(0 + "%");
+            progressBar.find('.fileuploader-progressbar .bar').width(0 + "%");
+            item.html.find('.progress-bar2').fadeOut(400);
+          }
+
+          item.upload.status != 'cancelled' && item.html.find('.fileuploader-action-retry').length == 0 ? item.html.find('.column-actions').prepend(
+            '<a class="fileuploader-action fileuploader-action-retry" title="Retry"><i></i></a>'
+          ) : null;
+        },
+        onProgress: function (data, item, listEl, parentEl, newInputEl, inputEl) {
+          var progressBar = item.html.find('.progress-bar2');
+
+          if (progressBar.length > 0) {
+            progressBar.show();
+            progressBar.find('span').html(data.percentage + "%");
+            progressBar.find('.fileuploader-progressbar .bar').width(data.percentage + "%");
+          }
+        },
+        onComplete: function (listEl, parentEl, newInputEl, inputEl, jqXHR, textStatus) {
+          // callback will go here
+        }
+      }
+    }
+
     $(elm).fileuploader({
       theme: 'simple',
       limit: $(elm).data('limit'),
       extensions: extensions,
       addMore: true,
+      upload: upload,
+      onRemove: function(item) {
+        if ($(elm).data('media-url')) {
+          console.log(item);
+          $.post($(elm).data('media-url'), {
+            _token: $(elm).data('token'),
+            _action: 'delete',
+            file: item.file,
+            id: item.data.id
+          });
+        }
+
+        return true;
+      },
       changeInput: '<div class="fileuploader-input">' +
         '<div class="fileuploader-input-inner">' +
         '<div><span>${captions.browse}</span></div>' +
