@@ -1,7 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 class Redactor extends TextArea
 {
