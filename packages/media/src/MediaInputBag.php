@@ -28,6 +28,11 @@ class MediaInputBag
         return collect(json_decode(request("_{$this->key}", '{}'), true))->flatten()->toArray();
     }
 
+    public function toJson(): string
+    {
+        return json_encode($this->toArray());
+    }
+    
     public function store(string $collection = 'default'): array
     {
         $key = $this->key;
