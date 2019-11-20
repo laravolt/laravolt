@@ -8,7 +8,9 @@ use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
@@ -32,7 +34,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->registerServices();
     }
 
-    public function boot(): void
+    public function boot(Gate $gate): void
     {
         $this
             ->bootConfig()
@@ -40,7 +42,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             ->bootTranslations()
             ->bootDatabase()
             ->bootRoutes()
-            ->bootAcl()
+            ->bootAcl($gate)
             ->bootPreset();
     }
 
@@ -137,7 +139,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         );
     }
 
-    protected function bootAcl()
+    protected function bootAcl($gate)
     {
         // register wildcard permission
         \Illuminate\Support\Facades\Gate::before(function (HasRoleAndPermission $user) {
@@ -145,6 +147,15 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                 return true;
             }
         });
+
+        if ($this->hasPermissionTable()) {
+            $permissions = app(config('laravolt.acl.models.permission'))->all();
+            foreach ($permissions as $permission) {
+                $gate->define($permission->name, function (HasRoleAndPermission $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
+        }
 
         return $this;
     }
@@ -157,5 +168,16 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         return $this;
+    }
+
+    protected function hasPermissionTable()
+    {
+        try {
+            $table_permissions_name = app(config('laravolt.acl.models.permission'))->getTable();
+
+            return Schema::hasTable($table_permissions_name);
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 }
