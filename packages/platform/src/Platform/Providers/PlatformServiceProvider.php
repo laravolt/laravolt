@@ -6,11 +6,11 @@ namespace Laravolt\Platform\Providers;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use Illuminate\Contracts\Auth\Access\Gate;
 use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
