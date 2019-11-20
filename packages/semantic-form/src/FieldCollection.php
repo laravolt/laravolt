@@ -48,6 +48,9 @@ class FieldCollection extends Collection
             case 'time':
             case 'uploader':
                 $element = form()->{$type}($field['name'])->label($field['label'])->hint($field['hint']);
+                if (isset($field['ajax'])) {
+                    $element->ajax($field['ajax']);
+                }
                 break;
 
             case 'checkbox':

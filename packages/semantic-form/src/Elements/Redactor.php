@@ -5,23 +5,23 @@ use Illuminate\Support\Facades\Route;
 
 class Redactor extends TextArea
 {
-    protected $uploadUrl;
+    protected $mediaUrl;
 
-    protected $fallbackUploadUrl = 'platform::media.store';
+    protected $fallbackMediaUrl = 'media::store';
 
-    public function uploadUrl(string $url)
+    public function mediaUrl(string $url)
     {
-        $this->uploadUrl = $url;
+        $this->mediaUrl = $url;
 
         return $this;
     }
 
     protected function beforeRender()
     {
-        $url = $this->uploadUrl;
+        $url = $this->mediaUrl;
 
         if (!$url) {
-            $url = Route::has($this->fallbackUploadUrl) ? route($this->fallbackUploadUrl) : false;
+            $url = Route::has($this->fallbackMediaUrl) ? route($this->fallbackMediaUrl) : false;
         }
         if ($url) {
             $this->data('upload-url', $url);

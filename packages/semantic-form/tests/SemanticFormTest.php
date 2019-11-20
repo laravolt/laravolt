@@ -930,8 +930,10 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testUploader()
     {
+        \Illuminate\Support\Facades\Route::shouldReceive('has')->once()->andReturn(true);
+
         $result = (string) $this->form->uploader('avatar');
-        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar">';
+        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -939,7 +941,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testUploaderWithCustomLimit()
     {
         $result = (string) $this->form->uploader('avatar')->limit(3);
-        $expected = '<input type="file" class="uploader" data-limit="3" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar">';
+        $expected = '<input type="file" class="uploader" data-limit="3" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -947,7 +949,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testUploaderWithCustomExtensions()
     {
         $result = (string) $this->form->uploader('avatar')->extensions(['jpg', 'png']);
-        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-extensions="jpg,png">';
+        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-extensions="jpg,png" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
