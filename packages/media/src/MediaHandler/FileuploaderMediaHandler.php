@@ -22,15 +22,15 @@ class FileuploaderMediaHandler
             'isSuccess' => true,
             'files' => [
                 [
-                    'file' => $media->getFullUrl(),
+                    'file' => $media->getUrl(),
                     'name' => $media->file_name,
                     'size' => $media->size,
                     'type' => $media->mime_type,
                     'uploaded' => true,
                     "data" => [
                         'id' => $media->getKey(),
-                        "url" => $media->getFullUrl(),
-                        "thumbnail" => $media->getFullUrl(),
+                        "url" => $media->getUrl(),
+                        "thumbnail" => $media->getUrl(),
                         "readerForce" => true,
                     ],
                 ],
