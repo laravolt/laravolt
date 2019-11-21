@@ -62,6 +62,13 @@ class Uploader extends Input
             $mediaCollection = [$mediaCollection];
         }
 
+        if (is_string($mediaCollection)) {
+            $temp = json_decode($mediaCollection);
+            if (json_last_error() == JSON_ERROR_NONE) {
+                $mediaCollection = $temp;
+            }
+        }
+
         if (!is_iterable($mediaCollection)) {
             return $this;
         }
@@ -78,11 +85,33 @@ class Uploader extends Input
                         'id' => $media->getKey(),
                     ],
                 ];
+            } else {
+                $data[] = [
+                    'file' => $media,
+                    'name' => $media,
+                ];
             }
         }
 
         $this->data('fileuploader-files', htmlspecialchars(json_encode($data)));
+        $this->value = $data;
 
         return $this;
+    }
+
+    public function displayValue()
+    {
+        if (is_array($this->value)) {
+            $output = "<div class='ui list'>";
+            $output .= "</div>";
+
+            foreach ($this->value as $media) {
+                $output .= sprintf("<div class='item'><a href='%s'>%s</a></div>", $media['file'], $media['name']);
+            }
+
+            return $output;
+        }
+
+        return null;
     }
 }
