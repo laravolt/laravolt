@@ -87,7 +87,7 @@ class Uploader extends Input
                 ];
             } else {
                 $data[] = [
-                    'file' => $media,
+                    'file' => URL::to($media),
                     'name' => $media,
                 ];
             }
