@@ -27,17 +27,18 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "anhskohbo/no-captcha": "^3.1",
         "bensampo/laravel-enum": "^1.26",
-        "illuminate/console": "^6.4",
-        "illuminate/database": "^6.4",
-        "illuminate/support": "^6.4",
-        "laravolt/epicentrum": "^1.1",
+        "illuminate/console": "^6.0",
+        "illuminate/database": "^6.0",
+        "illuminate/support": "^6.0",
         "laravolt/semantic-form": "^2.7",
         "lavary/laravel-menu": "^1.7.7",
         "nwidart/laravel-modules": "^5.0",
         "spatie/laravel-medialibrary": "^7.0",
         "stolz/assets": "^0.1.11"
+    },
+    "suggest": {
+        "anhskohbo/no-captcha": "Required if captcha for authentication enabled"
     },
     "autoload": {
         "psr-4": {
