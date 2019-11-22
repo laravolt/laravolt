@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
+use Laravolt\SemanticForm\Elements\FormControl;
 use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\Segments;
 use Laravolt\SemanticForm\Elements\SegmentTitle;
@@ -92,7 +93,10 @@ class FieldCollection extends Collection
                     ->hint($field['hint']);
 
                 if ($field['dependency'] ?? false) {
-                    $element->dependency($field['dependency'], $this->get($field['dependency'])->getValue());
+                    $dependency = $this->get($field['dependency']);
+                    if ($dependency instanceof FormControl) {
+                        $element->dependency($field['dependency'], $dependency->getValue());
+                    }
                 }
                 break;
 
