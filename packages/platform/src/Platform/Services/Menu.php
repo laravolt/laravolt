@@ -60,8 +60,24 @@ class Menu extends BaseMenu
 
     protected function filterByVisibility(Item $item)
     {
+        $permission = $item->data('permission');
+
         // If menu doesn't define permission, we assume this menu visible to everyone
         // Otherwise, check if current user has access
-        return $item->data('permission') === null || (auth()->check() && auth()->user()->can($item->data('permission')));
+        if ($permission === null) {
+            return true;
+        }
+
+        // If it was multiple permissions, we check using OR conditions.
+        // It means, user only need to have one of the permissions
+        if (is_array($permission)) {
+            foreach ($permission as $perm) {
+                if (auth()->user()->can($perm)) {
+                    return true;
+                }
+            }
+        }
+
+        return auth()->user()->can($item->data('permission'));
     }
 }
