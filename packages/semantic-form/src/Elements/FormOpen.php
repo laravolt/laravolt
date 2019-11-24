@@ -95,7 +95,7 @@ class FormOpen extends Element
         return $this;
     }
 
-    protected function setHiddenMethod($method)
+    public function setHiddenMethod($method)
     {
         $this->setMethod('POST');
         $this->hiddenMethod = $method;
