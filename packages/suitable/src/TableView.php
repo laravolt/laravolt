@@ -43,7 +43,7 @@ abstract class TableView implements Responsable
             $this->html->search($this->search);
         }
 
-        $table = app('laravolt.suitable')->source($this->html->resolve($this->source));
+        $table = app('laravolt.suitable')->source($this->html->resolve($this->getSource()));
 
         if (is_string($this->title) && $this->title !== "") {
             $table->title($this->title);
@@ -65,13 +65,13 @@ abstract class TableView implements Responsable
             if ($plugin->shouldResponse()) {
                 $table->columns($plugin->filter($this->columns()));
 
-                return $plugin->response($this->source, $table);
+                return $plugin->response($this->getSource(), $table);
             }
         }
 
         $table->columns($this->html->filter($this->columns()));
 
-        return $this->html->response($this->source, $table);
+        return $this->html->response($this->getSource(), $table);
     }
 
     public function view(string $view = '', array $data = [])
@@ -125,14 +125,21 @@ abstract class TableView implements Responsable
         return $this;
     }
 
+    protected function getSource()
+    {
+        if (!$this->source && method_exists($this, 'source')) {
+            return $this->source();
+        }
+
+        return $this->source;
+    }
+
     protected function init()
     {
-
     }
 
     protected function segments()
     {
-
     }
 
     abstract protected function columns();
