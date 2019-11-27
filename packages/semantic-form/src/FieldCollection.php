@@ -116,7 +116,9 @@ class FieldCollection extends Collection
 
         if (!$macro) {
             foreach ($field->only($this->fieldMethod) as $method => $param) {
-                $element->{$method}($param);
+                if ($param !== null) {
+                    $element->{$method}($param);
+                }
             }
             $element->addClass($field['class'] ?? '');
         }
