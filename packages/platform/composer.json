@@ -34,12 +34,8 @@
         "illuminate/support": "^6.0",
         "laravolt/semantic-form": "^2.7",
         "lavary/laravel-menu": "^1.7.7",
-        "nwidart/laravel-modules": "^5.0",
         "spatie/laravel-medialibrary": "^7.0",
         "stolz/assets": "^0.1.11"
-    },
-    "suggest": {
-        "anhskohbo/no-captcha": "Required if captcha for authentication enabled"
     },
     "autoload": {
         "psr-4": {
