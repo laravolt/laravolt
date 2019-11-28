@@ -72,7 +72,7 @@ class UiServiceProvider extends BaseServiceProvider
             ->bootViews()
             ->buildMenuFromConfig();
 
-        if (!$this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole() && !class_exists('Laravolt\Ui\ServiceProvider')) {
             $this->app['router']->pushMiddlewareToGroup('web', FlashMiddleware::class);
         }
     }
