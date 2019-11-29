@@ -24,9 +24,15 @@ class AddLaravoltAttributesToUsers extends Migration
     public function up()
     {
         Schema::table($this->table, function (Blueprint $table) {
-            $table->string('status')->after('email')->index()->nullable();
-            $table->string('timezone')->default(config('app.timezone'))->after('status');
-            $table->timestamp('password_changed_at')->nullable()->after('password');
+            if (!Schema::hasColumn($this->table, 'status')) {
+                $table->string('status')->after('email')->index()->nullable();
+            }
+            if (!Schema::hasColumn($this->table, 'timezone')) {
+                $table->string('timezone')->default(config('app.timezone'))->after('status');
+            }
+            if (!Schema::hasColumn($this->table, 'password_changed_at')) {
+                $table->timestamp('password_changed_at')->nullable()->after('password');
+            }
         });
     }
 
