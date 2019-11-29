@@ -26,12 +26,14 @@ class Field extends Wrapper
                 if ($control->hasError()) {
                     $hasError = true;
                 }
+                $this->addClass($control->getFieldClass());
             }
 
             if ($control instanceof FormControl) {
                 if ($control->hasError()) {
                     $hasError = true;
                 }
+                $this->addClass($control->getFieldClass());
             }
         }
 

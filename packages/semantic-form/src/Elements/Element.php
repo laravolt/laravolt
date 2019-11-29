@@ -10,6 +10,8 @@ abstract class Element
 
     protected $fieldCallback = null;
 
+    protected $fieldClass = '';
+
     protected $hint = false;
 
     protected $widthTranslation = [
@@ -146,6 +148,18 @@ abstract class Element
         $this->getPrimaryControl()->fieldWidth = $this->normalizeWidth($width);
 
         return $this;
+    }
+
+    public function fieldClass($class)
+    {
+        $this->fieldClass = $class;
+
+        return $this;
+    }
+
+    public function getFieldClass()
+    {
+        return $this->fieldClass;
     }
 
     public function hint($text, $class = null)
