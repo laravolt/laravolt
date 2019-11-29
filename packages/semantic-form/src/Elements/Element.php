@@ -4,13 +4,13 @@ abstract class Element
 {
     protected $attributes = [];
 
+    protected $fieldAttributes = [];
+
     protected $label = false;
 
     protected $fieldWidth;
 
     protected $fieldCallback = null;
-
-    protected $fieldClass = '';
 
     protected $hint = false;
 
@@ -72,6 +72,19 @@ abstract class Element
     public function attribute($attribute, $value)
     {
         $this->setAttribute($attribute, $value);
+
+        return $this;
+    }
+
+    public function attributes($attributes)
+    {
+        foreach ($attributes as $attribute => $value) {
+            if ($attribute == 'class') {
+                $this->addClass($value);
+            } else {
+                $this->setAttribute($attribute, $value);
+            }
+        }
 
         return $this;
     }
@@ -150,16 +163,16 @@ abstract class Element
         return $this;
     }
 
-    public function fieldClass($class)
+    public function fieldAttributes($attributes)
     {
-        $this->fieldClass = $class;
+        $this->fieldAttributes = $attributes;
 
         return $this;
     }
 
-    public function getFieldClass()
+    public function getFieldAttributes()
     {
-        return $this->fieldClass;
+        return $this->fieldAttributes;
     }
 
     public function hint($text, $class = null)
