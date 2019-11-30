@@ -64,7 +64,7 @@ class BasicTable extends TableView
             $table = $source->getModel()->getTable();
         }
 
-        if (Schema::hasTable($table)) {
+        if (is_string($table) && Schema::hasTable($table)) {
             return \Illuminate\Support\Facades\Schema::getColumnListing($table);
         }
 
