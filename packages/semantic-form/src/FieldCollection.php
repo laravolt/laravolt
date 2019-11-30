@@ -26,7 +26,7 @@ class FieldCollection extends Collection
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
             }
 
-            $field = $field + ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null];
+            $field = $field + ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
             $this->put($field['name'], $this->createField($field));
         }
     }
@@ -48,14 +48,22 @@ class FieldCollection extends Collection
             case 'textarea':
             case 'time':
             case 'uploader':
-                $element = form()->{$type}($field['name'])->label($field['label'])->hint($field['hint']);
+            $element = form()
+                ->{$type}($field['name'])
+                ->label($field['label'])
+                ->hint($field['hint'])
+                ->attributes($field['attributes']);
                 if (isset($field['ajax'])) {
                     $element->ajax($field['ajax']);
                 }
                 break;
 
             case 'checkbox':
-                $element = form()->checkbox($field['name'])->label($field['label'])->hint($field['hint']);
+                $element = form()
+                    ->checkbox($field['name'])
+                    ->label($field['label'])
+                    ->hint($field['hint'])
+                    ->attributes($field['attributes']);
                 $element->setChecked($field['checked'] ?? false);
                 break;
 
@@ -78,7 +86,8 @@ class FieldCollection extends Collection
                 $element = form()
                     ->{$type}($field['name'], $field['options'])
                     ->label($field['label'])
-                    ->hint($field['hint']);
+                    ->hint($field['hint'])
+                    ->attributes($field['attributes']);
                 break;
 
             case 'dropdownDB':
@@ -90,8 +99,8 @@ class FieldCollection extends Collection
                         $field['query_display_column'] ?? null
                     )
                     ->label($field['label'])
-                    ->hint($field['hint']);
-
+                    ->hint($field['hint'])
+                    ->attributes($field['attributes']);
                 if ($field['dependency'] ?? false) {
                     $dependency = $this->get($field['dependency']);
                     if ($dependency instanceof FormControl) {
