@@ -6,6 +6,11 @@
 //
 // see https://github.com/Semantic-Org/Semantic-UI/issues/1114*/
 
+/* Generic */
+.hidden {
+  display: none !important;
+}
+
 /* Mobile */
 @media only screen and (max-width: 767px) {
   [class*="mobile hidden"],

@@ -6,7 +6,8 @@ $(function () {
 
   $('.ui.dropdown:not(.tag)').dropdown({
     forceSelection: false,
-    fullTextSearch: 'exact'
+    selectOnKeydown: false,
+    fullTextSearch: 'exact',
   });
 
   $('.ui.dropdown.tag').each(function () {
@@ -46,6 +47,7 @@ $(function () {
     parent.destroyDropdown();
     parent.dropdown({
       forceSelection: false,
+      selectOnKeydown: false,
       fullTextSearch: 'exact',
       onChange: function (value, text, $option) {
 
@@ -70,9 +72,7 @@ $(function () {
               },
               onSuccess: function (response, element, xhr) {
                 let values = response.results;
-                // child.destroyDropdown();
                 child.dropdown('change values', values);
-                // child.dropdown('set selected', values[0]['value']);
               },
               onComplete: function (response, element, xhr) {
                 child.parent().removeClass('loading');
