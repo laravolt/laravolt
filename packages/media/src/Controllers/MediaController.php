@@ -15,10 +15,8 @@ class MediaController extends Controller
                 $handler = new FileuploaderMediaHandler();
                 break;
             case 'redactor':
-                $handler = new RedactorMediaHandler();
-                break;
             default:
-                return response()->json(['error' => 'Invalid handler '.request('handler')], 400);
+                $handler = new RedactorMediaHandler();
                 break;
         }
 
