@@ -91,12 +91,13 @@ class Builder
 
     public function search($search = true)
     {
+        if (!is_bool($search) && !is_string($search)) {
+            throw new \InvalidArgumentException('Only boolean or string allowed');
+        }
         if ($search === true) {
             $this->search = config('suitable.query_string.search');
-        } elseif (is_string($search)) {
-            $this->search = $search;
         } else {
-            throw new \InvalidArgumentException('Only boolean or string allowed');
+            $this->search = $search;
         }
 
         return $this;
@@ -122,7 +123,6 @@ class Builder
     public function columns(array $columns)
     {
         $this->columns = collect($columns)->transform(function ($column) {
-
             if (is_string($column)) {
                 $column = ['header' => $column, 'field' => $column];
             }
@@ -175,18 +175,18 @@ class Builder
         }
 
         $data = [
-            'collection'           => $this->collection,
-            'id'                   => $this->id,
-            'columns'              => $this->columns,
+            'collection' => $this->collection,
+            'id' => $this->id,
+            'columns' => $this->columns,
             'hasSearchableColumns' => optional(optional($this->columns)->first)->isSearchable() !== null,
-            'showPagination'       => $this->showPagination,
-            'showHeader'           => collect($this->segments)->first->isNotEmpty(),
-            'showFooter'           => $this->showPagination && !$this->collection->isEmpty(),
-            'paginationView'       => $this->paginationView,
-            'row'                  => $this->row,
-            'format'               => $this->format,
-            'segments'             => $this->segments,
-            'builder'              => $this,
+            'showPagination' => $this->showPagination,
+            'showHeader' => collect($this->segments)->first->isNotEmpty(),
+            'showFooter' => $this->showPagination && !$this->collection->isEmpty(),
+            'paginationView' => $this->paginationView,
+            'row' => $this->row,
+            'format' => $this->format,
+            'segments' => $this->segments,
+            'builder' => $this,
         ];
 
         return View::make($view, $data)->render();
