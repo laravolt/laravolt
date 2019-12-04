@@ -1,4 +1,4 @@
-<div class="menu attached right bottom">
+<div class="menu attached right bottom" data-role="pagination">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
         <div class="item disabled"><i class="icon left chevron"></i></div>
