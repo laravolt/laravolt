@@ -108,6 +108,13 @@ trait HasRoleAndPermission
 
     public function hasPermission($permission, $checkAll = false): bool
     {
+        return once(function () use ($permission, $checkAll) {
+            return $this->_hasPermission($permission, $checkAll);
+        });
+    }
+
+    protected function _hasPermission($permission, $checkAll = false): bool
+    {
         if (is_array($permission)) {
             $match = 0;
             foreach ($permission as $perm) {
@@ -134,10 +141,8 @@ trait HasRoleAndPermission
         }
 
         foreach ($this->roles as $assignedRole) {
-            foreach ($assignedRole->permissions as $assignedPermission) {
-                if ($permission->is($assignedPermission)) {
-                    return true;
-                }
+            if ($assignedRole->hasPermission($permission)) {
+                return true;
             }
         }
 

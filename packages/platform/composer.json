@@ -34,6 +34,7 @@
         "laravolt/semantic-form": "^2.7",
         "lavary/laravel-menu": "^1.7.7",
         "spatie/laravel-medialibrary": "^7.0",
+        "spatie/once": "^2.1",
         "stolz/assets": "^0.1.11"
     },
     "autoload": {
