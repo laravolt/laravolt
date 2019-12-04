@@ -69,13 +69,15 @@ class FieldCollection extends Collection
 
             case 'button':
             case 'submit':
-                $element = form()->{$type}($field['label'], $field['name']);
+                $element = form()->{$type}($field['label'], $field['name'])->attributes($field['attributes']);
                 break;
 
             case 'action':
                 $children = [];
                 foreach ($field['items'] as $child) {
-                    $children[] = form()->{$child['type']}($child['label'], $child['name']);
+                    $children[] = form()
+                        ->{$child['type']}($child['label'], $child['name'])
+                        ->attributes($field['attributes']);
                 }
                 $element = form()->{$type}($children);
                 break;
