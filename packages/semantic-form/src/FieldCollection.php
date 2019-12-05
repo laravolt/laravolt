@@ -82,6 +82,10 @@ class FieldCollection extends Collection
                 $element = form()->{$type}($children);
                 break;
 
+            case 'tabular':
+                $element = form()->tabular($field['items']);
+                break;
+
             case 'checkboxGroup':
             case 'radioGroup':
             case 'dropdown':
