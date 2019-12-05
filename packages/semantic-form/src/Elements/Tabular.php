@@ -48,7 +48,10 @@ class Tabular extends Element
             ->transform(function ($item) {
                 $this->labels[] = (string) $item->label;
                 $item->label(null);
-                $item->setAttribute('name', $item->getAttribute('name').'[]');
+                $item->getPrimaryControl()->setAttribute(
+                    'name',
+                    $item->getPrimaryControl()->getAttribute('name').'[]'
+                );
 
                 return $item;
             });
