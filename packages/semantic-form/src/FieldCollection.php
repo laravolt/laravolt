@@ -77,7 +77,7 @@ class FieldCollection extends Collection
                 foreach ($field['items'] as $child) {
                     $children[] = form()
                         ->{$child['type']}($child['label'], $child['name'])
-                        ->attributes($child['attributes']);
+                        ->attributes($child['attributes'] ?? []);
                 }
                 $element = form()->{$type}($children);
                 break;
