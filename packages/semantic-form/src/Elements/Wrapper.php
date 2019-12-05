@@ -21,9 +21,9 @@ class Wrapper extends Element
 
     public function render()
     {
+        $element = clone $this;
 
         if ($this->label) {
-            $element = clone $this;
             $element->label = false;
 
             $field = $this->decorateField(new Field($this->label, $element));
@@ -34,16 +34,16 @@ class Wrapper extends Element
             return $field->render();
         }
 
-        $this->beforeRender();
+        $element->beforeRender();
 
-        $html = sprintf($this->openTag, ltrim($this->renderAttributes()));
+        $html = sprintf($element->openTag, ltrim($element->renderAttributes()));
 
-        foreach ($this->controls as $control) {
+        foreach ($element->controls as $control) {
             $html .= $control;
         }
 
-        $html .= $this->closeTag;
-        $html .= $this->renderHint();
+        $html .= $element->closeTag;
+        $html .= $element->renderHint();
 
         return $html;
     }
