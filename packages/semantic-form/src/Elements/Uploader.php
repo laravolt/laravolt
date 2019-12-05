@@ -47,8 +47,9 @@ class Uploader extends Input
         $url = $this->mediaUrl;
 
         if (!$url) {
-            $url = Route::has($this->fallbackMediaUrl) ? URL::route($this->fallbackMediaUrl,
-                ['handler' => 'fileuploader']) : false;
+            $url = Route::has($this->fallbackMediaUrl) ?
+                URL::route($this->fallbackMediaUrl, ['handler' => 'fileuploader'])
+                : false;
         }
 
         if ($this->ajax && $url) {

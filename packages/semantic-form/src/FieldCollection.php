@@ -48,11 +48,11 @@ class FieldCollection extends Collection
             case 'textarea':
             case 'time':
             case 'uploader':
-            $element = form()
-                ->{$type}($field['name'])
-                ->label($field['label'])
-                ->hint($field['hint'])
-                ->attributes($field['attributes']);
+                $element = form()
+                    ->{$type}($field['name'])
+                    ->label($field['label'])
+                    ->hint($field['hint'])
+                    ->attributes($field['attributes']);
                 if (isset($field['ajax'])) {
                     $element->ajax($field['ajax']);
                 }
