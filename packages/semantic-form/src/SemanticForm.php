@@ -22,6 +22,7 @@ use Laravolt\SemanticForm\Elements\Redactor;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\SelectMultiple;
+use Laravolt\SemanticForm\Elements\Tabular;
 use Laravolt\SemanticForm\Elements\Text;
 use Laravolt\SemanticForm\Elements\Password;
 use Laravolt\SemanticForm\Elements\Checkbox;
@@ -494,6 +495,13 @@ class SemanticForm
         $text = $this->text($name, $defaultValue);
 
         return (new InputWrapper($text));
+    }
+
+    public function tabular($definition)
+    {
+        $element = new Tabular($definition);
+
+        return $element;
     }
 
     public function hasError($name)

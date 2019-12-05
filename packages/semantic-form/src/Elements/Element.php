@@ -150,8 +150,12 @@ abstract class Element
 
     public function label($label, \Closure $callback = null)
     {
-        $this->label = new Label($label);
-        $this->fieldCallback = $callback;
+        if ($label) {
+            $this->label = new Label($label);
+            $this->fieldCallback = $callback;
+        } else {
+            $this->label = null;
+        }
 
         return $this;
     }
