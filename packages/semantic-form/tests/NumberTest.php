@@ -262,4 +262,31 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $result = $text->render();
         $this->assertEquals($expected, $result);
     }
+
+    public function testCanSetStep()
+    {
+        $text = (new Number('total'))->step('0.01');
+
+        $expected = '<input type="number" name="total" step="0.01">';
+        $result = $text->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCanSetMin()
+    {
+        $text = (new Number('total'))->min('0');
+
+        $expected = '<input type="number" name="total" min="0">';
+        $result = $text->render();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCanSetMax()
+    {
+        $text = (new Number('total'))->max('10');
+
+        $expected = '<input type="number" name="total" max="10">';
+        $result = $text->render();
+        $this->assertEquals($expected, $result);
+    }
 }
