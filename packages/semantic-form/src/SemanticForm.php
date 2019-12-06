@@ -121,7 +121,7 @@ class SemanticForm
         return $text;
     }
 
-    public function number($name, int $defaultValue = null)
+    public function number($name, $defaultValue = null)
     {
         $number = new Number($name);
 
