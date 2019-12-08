@@ -2,20 +2,20 @@
 
 class Text extends Input
 {
-
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'text',
-    );
+    ];
 
     public function placeholder($placeholder)
     {
         $this->setAttribute('placeholder', $placeholder);
+
         return $this;
     }
 
     public function defaultValue($value)
     {
-        if (! $this->hasValue()) {
+        if (!$this->hasValue()) {
             $this->setValue($value);
         }
 

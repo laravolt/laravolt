@@ -47,7 +47,7 @@ abstract class Element
             return;
         }
 
-        $this->attributes[$attribute] = $value;
+        $this->attributes[$attribute] = form_escape($value);
     }
 
     protected function removeAttribute($attribute)
