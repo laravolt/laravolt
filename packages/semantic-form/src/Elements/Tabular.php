@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\SemanticForm\Elements;
 
+use DeepCopy\DeepCopy;
 use Illuminate\Support\Str;
 
 class Tabular extends Element
@@ -51,7 +52,8 @@ class Tabular extends Element
     public function render()
     {
         if ($this->label) {
-            $element = clone $this;
+            $copier = new DeepCopy();
+            $element = $copier->copy($this);
             $element->label = false;
 
             return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
@@ -70,7 +72,8 @@ class Tabular extends Element
         $rows = [];
         for ($i = 0; $i < $this->limit; $i++) {
             $rows[] = $fields->map(function ($field) use ($i) {
-                $newField = clone $field;
+                $copier = new DeepCopy();
+                $newField = $copier->copy($field);
                 $newField->bindAttribute('name', $i);
                 $newField->populateValue(old());
 

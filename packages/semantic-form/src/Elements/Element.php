@@ -260,10 +260,11 @@ abstract class Element
     public function bindAttribute()
     {
         $args = func_get_args();
+        $element = $this->getPrimaryControl();
         $attribute = $args[0] ?? null;
         if ($attribute) {
             unset($args[0]);
-            $this->setAttribute($attribute, sprintf($this->getAttribute($attribute), ...$args));
+            $element->setAttribute($attribute, sprintf($element->getAttribute($attribute), ...$args));
         }
 
         return $this;
@@ -271,12 +272,16 @@ abstract class Element
 
     public function populateValue($values)
     {
-        return $this->value(Arr::get($values, $this->normalizedName()));
+        $element = $this->getPrimaryControl();
+
+        return $element->value(Arr::get($values, $element->normalizedName()));
     }
 
     public function normalizedName()
     {
-        return str_replace(']', '', str_replace('[', '.', $this->getAttribute('name')));
+        $element = $this->getPrimaryControl();
+
+        return str_replace(']', '', str_replace('[', '.', $element->getAttribute('name')));
     }
 
     public function __call($method, $params)
