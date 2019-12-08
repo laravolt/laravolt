@@ -83,7 +83,13 @@ class FieldCollection extends Collection
                 break;
 
             case 'tabular':
-                $element = form()->tabular($field['items'])->label($field['label'] ?? null);
+                $element = form()->tabular($field['name'], $field['items'])->label($field['label'] ?? null);
+                if (isset($field['allow_addition'])) {
+                    $element->allowAddition($field['allow_addition']);
+                }
+                if (isset($field['allow_removal'])) {
+                    $element->allowRemoval($field['allow_removal']);
+                }
                 break;
 
             case 'checkboxGroup':

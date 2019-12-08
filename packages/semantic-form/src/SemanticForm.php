@@ -497,9 +497,9 @@ class SemanticForm
         return (new InputWrapper($text));
     }
 
-    public function tabular($definition)
+    public function tabular($name, $definition)
     {
-        $element = new Tabular($definition);
+        $element = new Tabular($name, $definition);
 
         return $element;
     }

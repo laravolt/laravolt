@@ -13,14 +13,18 @@ class Tabular extends Element
 
     protected $labels = [];
 
-    protected $limit = 3;
+    protected $rows = 3;
 
     protected $allowAddition = false;
 
     protected $allowRemoval = false;
 
-    public function __construct($schema)
+    protected $name;
+
+    public function __construct($name, $schema)
     {
+        $this->name = $name;
+
         $this->schema = collect($schema)->transform(function ($item) {
             $item['name'] = Str::endsWith($item['name'], '[]') ? $item['name'] : $item['name'].'[%s]';
 
@@ -28,9 +32,9 @@ class Tabular extends Element
         })->toArray();
     }
 
-    public function limit(int $limit)
+    public function rows(int $rows)
     {
-        $this->limit = $limit;
+        $this->rows = $rows;
 
         return $this;
     }
@@ -61,6 +65,7 @@ class Tabular extends Element
 
         $this->beforeRender();
 
+        $rowCount = old("$this->name.rows", $this->rows);
         $fields = collect(form()->make($this->schema)->all())
             ->transform(function ($item) {
                 $this->labels[] = (string) $item->label;
@@ -70,7 +75,7 @@ class Tabular extends Element
             });
 
         $rows = [];
-        for ($i = 0; $i < $this->limit; $i++) {
+        for ($i = 0; $i < $rowCount; $i++) {
             $rows[] = $fields->map(function ($field) use ($i) {
                 $copier = new DeepCopy();
                 $newField = $copier->copy($field);
@@ -82,9 +87,10 @@ class Tabular extends Element
         }
 
         $data = [
+            'name' => $this->name,
             'rows' => $rows,
             'labels' => $this->labels,
-            'limit' => $this->limit,
+            'limit' => $rowCount,
             'allowAddition' => $this->allowAddition,
             'allowRemoval' => $this->allowRemoval,
         ];
