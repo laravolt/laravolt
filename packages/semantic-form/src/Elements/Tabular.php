@@ -95,6 +95,7 @@ class Tabular extends Element
         }
 
         $data = [
+            'fields' => $fields,
             'name' => $this->name,
             'rows' => $rows,
             'labels' => $this->labels,
