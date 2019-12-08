@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Str;
+
 class Tabular extends Element
 {
     protected $schema = [];
@@ -18,7 +20,11 @@ class Tabular extends Element
 
     public function __construct($schema)
     {
-        $this->schema = $schema;
+        $this->schema = collect($schema)->transform(function ($item) {
+            $item['name'] = Str::endsWith($item['name'], '[]') ? $item['name'] : $item['name'].'[%s]';
+
+            return $item;
+        })->toArray();
     }
 
     public function limit(int $limit)
@@ -57,16 +63,23 @@ class Tabular extends Element
             ->transform(function ($item) {
                 $this->labels[] = (string) $item->label;
                 $item->label(null);
-                $item->getPrimaryControl()->setAttribute(
-                    'name',
-                    $item->getPrimaryControl()->getAttribute('name').'[]'
-                );
 
                 return $item;
             });
 
+        $rows = [];
+        for ($i = 0; $i < $this->limit; $i++) {
+            $rows[] = $fields->map(function ($field) use ($i) {
+                $newField = clone $field;
+                $newField->bindAttribute('name', $i);
+                $newField->populateValue(old());
+
+                return $newField;
+            });
+        }
+
         $data = [
-            'fields' => $fields,
+            'rows' => $rows,
             'labels' => $this->labels,
             'limit' => $this->limit,
             'allowAddition' => $this->allowAddition,

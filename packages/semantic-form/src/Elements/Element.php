@@ -1,5 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
+use Illuminate\Support\Arr;
+
 abstract class Element
 {
     protected $attributes = [];
@@ -253,6 +255,28 @@ abstract class Element
     public function displayValue()
     {
         return $this->value ?? $this->getAttribute('value');
+    }
+
+    public function bindAttribute()
+    {
+        $args = func_get_args();
+        $attribute = $args[0] ?? null;
+        if ($attribute) {
+            unset($args[0]);
+            $this->setAttribute($attribute, sprintf($this->getAttribute($attribute), ...$args));
+        }
+
+        return $this;
+    }
+
+    public function populateValue($values)
+    {
+        return $this->value(Arr::get($values, $this->normalizedName()));
+    }
+
+    public function normalizedName()
+    {
+        return str_replace(']', '', str_replace('[', '.', $this->getAttribute('name')));
     }
 
     public function __call($method, $params)

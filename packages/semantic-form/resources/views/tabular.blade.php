@@ -10,10 +10,10 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(range(1, $limit) as $index)
+    @foreach($rows as $fields)
         <tr>
             @foreach($fields as $field)
-                <td>{!! $field !!}</td>
+                <td>{!! $field->bindAttribute('name', $loop->parent->index) !!}</td>
             @endforeach
             @if($allowRemoval)
                 <td>
