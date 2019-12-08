@@ -74,13 +74,21 @@ class Tabular extends Element
                 return $item;
             });
 
+        // reset old values row index
+        $oldValues = old();
+        if (!empty($oldValues)) {
+            foreach ($fields as $field) {
+                $oldValues[$field->basename()] = array_values($oldValues[$field->basename()]);
+            }
+        }
+
         $rows = [];
         for ($i = 0; $i < $rowCount; $i++) {
-            $rows[] = $fields->map(function ($field) use ($i) {
+            $rows[] = $fields->map(function ($field) use ($oldValues, $i) {
                 $copier = new DeepCopy();
                 $newField = $copier->copy($field);
                 $newField->bindAttribute('name', $i);
-                $newField->populateValue(old());
+                $newField->populateValue($oldValues);
 
                 return $newField;
             });

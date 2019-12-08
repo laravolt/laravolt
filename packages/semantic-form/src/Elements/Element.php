@@ -1,6 +1,7 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 abstract class Element
 {
@@ -282,6 +283,11 @@ abstract class Element
         $element = $this->getPrimaryControl();
 
         return str_replace(']', '', str_replace('[', '.', $element->getAttribute('name')));
+    }
+
+    public function basename()
+    {
+        return Str::before($this->normalizedName(), '.');
     }
 
     public function __call($method, $params)
