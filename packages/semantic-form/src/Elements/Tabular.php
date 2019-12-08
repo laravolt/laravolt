@@ -44,6 +44,15 @@ class Tabular extends Element
 
     public function render()
     {
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+
+            return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
+        }
+
+        $this->beforeRender();
+
         $fields = collect(form()->make($this->schema)->all())
             ->transform(function ($item) {
                 $this->labels[] = (string) $item->label;
