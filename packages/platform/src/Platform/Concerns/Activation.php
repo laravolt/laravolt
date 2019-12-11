@@ -5,6 +5,7 @@ namespace Laravolt\Platform\Concerns;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,13 +18,20 @@ trait Activation
         $user = DB::transaction(
             function () use ($request) {
                 $user = $this->create($request->all());
-                $token = $this->createToken($user);
-                $this->notifyForActivation($user, $token);
-                event(new Registered($user));
+
+                if ($user instanceof Model) {
+                    $token = $this->createToken($user);
+                    $this->notifyForActivation($user, $token);
+                    event(new Registered($user));
+                }
 
                 return $user;
             }
         );
+
+        if ($user instanceof RedirectResponse) {
+            return $user;
+        }
 
         return $this->registered($request, $user) ?:
             redirect()->back()->withSuccess(trans('laravolt::auth.registration_success'));
