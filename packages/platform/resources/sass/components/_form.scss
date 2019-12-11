@@ -60,6 +60,7 @@ $widths: (
   // Remove transparency from disabled+readonly field
   .field.disabled.readonly {
     opacity: 1;
+    cursor: not-allowed;
 
     > label {
       opacity: 1;
@@ -70,9 +71,10 @@ $widths: (
       color: #999;
     }
   }
-  input:read-only {
+  input:read-only, input:focus:read-only {
     background: #f8f8f8;
     color: #999;
+    cursor: not-allowed;
   }
 }
 
