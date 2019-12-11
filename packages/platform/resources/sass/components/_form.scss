@@ -56,6 +56,24 @@ $widths: (
     bottom: 0;
     opacity: 0;
   }
+
+  // Remove transparency from disabled+readonly field
+  .field.disabled.readonly {
+    opacity: 1;
+
+    > label {
+      opacity: 1;
+    }
+
+    .ui.dropdown {
+      background: #f8f8f8;
+      color: #999;
+    }
+  }
+  input:read-only {
+    background: #f8f8f8;
+    color: #999;
+  }
 }
 
 .ui.form.horizontal {
