@@ -55,7 +55,12 @@ class Select extends FormControl
             $element = clone $this;
             $element->label = false;
 
-            return $this->decorateField(new Field($this->label, $element))->render();
+            $field = new Field($this->label, $element);
+            if ($element->hasAttribute('readonly')) {
+                $field->addClass('disabled readonly');
+            }
+
+            return $this->decorateField($field)->render();
         }
 
         $this->beforeRender();
@@ -116,7 +121,7 @@ class Select extends FormControl
             $selected = html_entity_decode($selected);
         }
 
-        return in_array($value, (array)$selected);
+        return in_array($value, (array) $selected);
     }
 
     public function addOption($value, $label)
@@ -165,17 +170,6 @@ class Select extends FormControl
 
         $this->setName($name);
         $this->setAttribute('multiple', 'multiple');
-
-        return $this;
-    }
-
-    public function readonly($readonly = true)
-    {
-        parent::readonly($readonly);
-
-        if ($readonly) {
-            $this->disable();
-        }
 
         return $this;
     }
