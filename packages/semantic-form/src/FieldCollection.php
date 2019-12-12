@@ -90,6 +90,9 @@ class FieldCollection extends Collection
                 if (isset($field['allow_removal'])) {
                     $element->allowRemoval($field['allow_removal']);
                 }
+                if (isset($field['rows'])) {
+                    $element->rows($field['rows']);
+                }
                 break;
 
             case 'checkboxGroup':
