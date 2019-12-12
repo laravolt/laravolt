@@ -1,3 +1,20 @@
+@push('head')
+    <template for="{{ $name }}">
+        <tr>
+            @foreach($fields as $field)
+                <td>{!! $field->bindAttribute('name', "") !!}</td>
+            @endforeach
+            @if($allowRemoval)
+                <td>
+                    <button class="ui button icon mini" type="button" data-role="tabular-remove-row" tabindex="-1">
+                        <i class="icon remove"></i>
+                    </button>
+                </td>
+            @endif
+        </tr>
+    </template>
+@endpush
+
 <table class="ui table" data-role="tabular">
     <caption>
         <input type="hidden" name="{{ $name }}[rows]" data-role="rows-counter" value="{{ $limit }}">
@@ -43,21 +60,6 @@
 </table>
 
 @push('script')
-    <template for="{{ $name }}">
-        <tr>
-            @foreach($fields as $field)
-                <td>{!! $field->bindAttribute('name', "") !!}</td>
-            @endforeach
-            @if($allowRemoval)
-                <td>
-                    <button class="ui button icon mini" type="button" data-role="tabular-remove-row" tabindex="-1">
-                        <i class="icon remove"></i>
-                    </button>
-                </td>
-            @endif
-        </tr>
-    </template>
-
     <script>
       $(function () {
         let tabular = $('[data-role="tabular"]');

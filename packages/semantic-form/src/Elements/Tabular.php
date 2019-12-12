@@ -26,7 +26,9 @@ class Tabular extends Element
         $this->name = $name;
 
         $this->schema = collect($schema)->transform(function ($item) {
-            $item['name'] = Str::endsWith($item['name'], '[]') ? $item['name'] : $item['name'].'[%s]';
+
+            // produce something like "person[data][$index][name]", to make it easier to handling by Laravel Request
+            $item['name'] = "{$this->name}[data][%s][{$item['name']}]";
 
             return $item;
         })->toArray();
@@ -76,10 +78,8 @@ class Tabular extends Element
 
         // reset old values row index
         $oldValues = old();
-        if (!empty($oldValues)) {
-            foreach ($fields as $field) {
-                $oldValues[$field->basename()] = array_values($oldValues[$field->basename()]);
-            }
+        if (isset($oldValues[$this->name]['data'])) {
+            $oldValues[$this->name]['data'] = array_values($oldValues[$this->name]['data']);
         }
 
         $rows = [];
@@ -89,7 +89,6 @@ class Tabular extends Element
                 $newField = $copier->copy($field);
                 $newField->bindAttribute('name', $i);
                 $newField->populateValue($oldValues);
-
                 return $newField;
             });
         }
