@@ -16,9 +16,6 @@
 @endpush
 
 <table class="ui table" data-role="tabular">
-    <caption>
-        <input type="hidden" name="{{ $name }}[rows]" data-role="rows-counter" value="{{ $limit }}">
-    </caption>
     <thead>
     <tr>
         @foreach($labels as $label)
@@ -66,22 +63,18 @@
 
         tabular.on('click', '[data-role="tabular-remove-row"]', function (e) {
           e.preventDefault();
-          let counter = $(e.delegateTarget).find('[data-role="rows-counter"]');
           let parent = $(e.currentTarget).parents('tr');
           parent.fadeOut("slow", function (e) {
             parent.remove();
-            counter.val(counter.val() - 1);
           });
         });
 
         tabular.on('click', '[data-role="tabular-add-row"]', function (e) {
           e.preventDefault();
           let templateName = $(e.currentTarget).data('template');
-          let counter = $(e.delegateTarget).find('[data-role="rows-counter"]');
           let template = $('template[for="'+templateName+'"]').get(0);
           var clone = document.importNode(template.content, true);
           $(e.delegateTarget).find('tbody').append($(clone));
-          counter.val(parseInt(counter.val()) + 1);
         });
 
       });

@@ -28,7 +28,7 @@ class Tabular extends Element
         $this->schema = collect($schema)->transform(function ($item) {
 
             // produce something like "person[data][$index][name]", to make it easier to handling by Laravel Request
-            $item['name'] = "{$this->name}[data][%s][{$item['name']}]";
+            $item['name'] = "{$this->name}[%s][{$item['name']}]";
 
             return $item;
         })->toArray();
@@ -67,7 +67,7 @@ class Tabular extends Element
 
         $this->beforeRender();
 
-        $rowCount = old("$this->name.rows", $this->rows);
+        $rowCount = old($this->name) ? count(old($this->name)) : $this->rows;
         $fields = collect(form()->make($this->schema)->all())
             ->transform(function ($item) {
                 $this->labels[] = (string) $item->label;
@@ -78,8 +78,8 @@ class Tabular extends Element
 
         // reset old values row index
         $oldValues = old();
-        if (isset($oldValues[$this->name]['data'])) {
-            $oldValues[$this->name]['data'] = array_values($oldValues[$this->name]['data']);
+        if (isset($oldValues[$this->name])) {
+            $oldValues[$this->name] = array_values($oldValues[$this->name]);
         }
 
         $rows = [];
