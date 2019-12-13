@@ -16,7 +16,8 @@ use Laravolt\SemanticForm\Elements\SegmentTitle;
 class FieldCollection extends Collection
 {
     protected $fieldMethod = [
-        'api', 'ajax', 'query', 'fieldLabel', 'fieldAttributes', 'limit', 'extensions', 'placeholder', 'value', 'readonly'
+        'api', 'ajax', 'query', 'fieldLabel', 'fieldAttributes', 'limit', 'extensions', 'placeholder', 'value',
+        'readonly',
     ];
 
     public function __construct($fields = [])
@@ -93,6 +94,8 @@ class FieldCollection extends Collection
                 if (isset($field['rows'])) {
                     $element->rows($field['rows']);
                 }
+
+                $element->source($field['data'] ?? []);
                 break;
 
             case 'checkboxGroup':

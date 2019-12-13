@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\SemanticForm\Elements;
 
 use DeepCopy\DeepCopy;
-use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class Tabular extends Element
 {
@@ -20,6 +20,8 @@ class Tabular extends Element
     protected $allowRemoval = false;
 
     protected $name;
+
+    protected $source = [];
 
     public function __construct($name, $schema)
     {
@@ -53,6 +55,21 @@ class Tabular extends Element
         $this->allowRemoval = $flag;
 
         return $this;
+    }
+
+    public function source($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function displayValue()
+    {
+        $data = $this->source;
+        $headers = collect(Arr::first($data))->keys();
+
+        return view('semantic-form::tabular.table', compact('data', 'headers'));
     }
 
     public function render()
@@ -103,6 +120,6 @@ class Tabular extends Element
             'allowRemoval' => $this->allowRemoval,
         ];
 
-        return view('semantic-form::tabular', $data)->render();
+        return view('semantic-form::tabular.form', $data)->render();
     }
 }
