@@ -94,23 +94,20 @@ class Tabular extends Element
             });
 
         // reset old values row index
-        $oldValues = old();
-        if (isset($oldValues[$this->name])) {
-            $oldValues[$this->name] = array_values($oldValues[$this->name]);
-        }
+        $data = [$this->name => array_values(old($this->name, $this->source))];
 
         $rows = [];
         for ($i = 0; $i < $rowCount; $i++) {
-            $rows[] = $fields->map(function ($field) use ($oldValues, $i) {
+            $rows[] = $fields->map(function ($field) use ($data, $i) {
                 $copier = new DeepCopy();
                 $newField = $copier->copy($field);
                 $newField->bindAttribute('name', $i);
-                $newField->populateValue($oldValues);
+                $newField->populateValue($data);
                 return $newField;
             });
         }
 
-        $data = [
+        $payload = [
             'fields' => $fields,
             'name' => $this->name,
             'rows' => $rows,
@@ -120,6 +117,6 @@ class Tabular extends Element
             'allowRemoval' => $this->allowRemoval,
         ];
 
-        return view('semantic-form::tabular.form', $data)->render();
+        return view('semantic-form::tabular.form', $payload)->render();
     }
 }
