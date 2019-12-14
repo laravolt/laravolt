@@ -26,7 +26,12 @@ class Field extends Wrapper
                 if ($control->hasError()) {
                     $hasError = true;
                 }
+
                 $this->attributes($control->getFieldAttributes());
+            }
+
+            if ($control instanceof CheckboxWrapper) {
+                $this->attributes($control->getPrimaryControl()->getFieldAttributes());
             }
 
             if ($control instanceof FormControl) {
