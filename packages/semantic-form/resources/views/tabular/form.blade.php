@@ -34,7 +34,7 @@
             @endforeach
             @if($allowRemoval)
                 <td>
-                    <button class="ui button icon mini" type="button" data-role="tabular-remove-row" tabindex="-1">
+                    <button class="ui button icon mini loading disabled" type="button" data-role="tabular-remove-row" tabindex="-1">
                         <i class="icon remove"></i>
                     </button>
                 </td>
@@ -46,7 +46,7 @@
     @if($allowAddition)
         <tr>
             <th colspan="{{ count($labels) + ($allowRemoval) }}">
-                <button class="ui button fluid" data-template="{{ $name }}" data-role="tabular-add-row" tabindex="-1"><i
+                <button class="ui button fluid loading disabled" data-template="{{ $name }}" data-role="tabular-add-row" tabindex="-1"><i
                             class="icon plus"></i>
                     Tambah
                 </button>
@@ -60,7 +60,7 @@
     <script>
       $(function () {
         let tabular = $('[data-role="tabular"]');
-
+        tabular.find('button.loading.disabled').removeClass('loading disabled');
         tabular.on('click', '[data-role="tabular-remove-row"]', function (e) {
           e.preventDefault();
           let tabular = $(e.delegateTarget);
