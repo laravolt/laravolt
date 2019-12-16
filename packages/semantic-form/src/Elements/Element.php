@@ -211,6 +211,16 @@ abstract class Element
         return $result;
     }
 
+    protected function renderFieldAttributes()
+    {
+        $result = '';
+        foreach ($this->fieldAttributes as $attribute => $value) {
+            $result .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $result;
+    }
+
     protected function renderHint()
     {
         $output = "";
@@ -246,7 +256,8 @@ abstract class Element
     public function display()
     {
         return sprintf(
-            '<tr><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
+            '<tr %s><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
+            $this->renderFieldAttributes(),
             $this->getAttribute('name'),
             $this->label,
             $this->displayValue()
