@@ -7,7 +7,7 @@
 // see https://github.com/Semantic-Org/Semantic-UI/issues/1114*/
 
 /* Generic */
-.hidden {
+.hidden:not(.mobile):not(.table):not(.computer):not(.large):not(.screen):not(.widescreen) {
   display: none !important;
 }
 
