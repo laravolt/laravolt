@@ -6,6 +6,8 @@ namespace Laravolt\SemanticForm\Elements;
 
 class SegmentTitle extends Wrapper
 {
+    public static $template = "<h3 class='ui blue ribbon label'>%s</h3>";
+
     protected $openTag = '<h3 %s>';
 
     protected $closeTag = '</h3>';
@@ -18,7 +20,7 @@ class SegmentTitle extends Wrapper
     {
         $output = '';
         foreach ($this->controls as $control) {
-            $output .= "<h2 class='ui header horizontal divider section'>$control</h2>";
+            $output .= sprintf(static::$template, $control);
         }
 
         return $output;
