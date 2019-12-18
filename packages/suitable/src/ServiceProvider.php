@@ -86,6 +86,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerMacro()
     {
         EloquentBuilder::macro('whereLike', function ($attributes, string $searchTerm) {
+            $searchTerm = strtolower($searchTerm);
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(
@@ -95,12 +96,12 @@ class ServiceProvider extends BaseServiceProvider
 
                             $query->orWhereHas($relationName,
                                 function (EloquentBuilder $query) use ($relationAttribute, $searchTerm) {
-                                    $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
+                                    $query->whereRaw(sprintf("LOWER(%s) LIKE '%%%s%%'", $relationAttribute, $searchTerm));
                                 });
                         },
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
                             $table = $query->getModel()->getTable();
-                            $query->orWhere(sprintf('%s.%s', $table, $attribute), 'LIKE', "%{$searchTerm}%");
+                            $query->orWhereRaw(sprintf("LOWER(%s.%s) LIKE '%%%s%%'", $table, $attribute, $searchTerm));
                         }
                     );
                 }
