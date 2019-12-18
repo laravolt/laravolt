@@ -13,14 +13,14 @@
         {
             "name": "Bayu Hendra Winata",
             "email": "uyab.exe@gmail.com",
-            "homepage": "http://id-laravel.com",
+            "homepage": "https://laravolt.dev",
             "role": "Developer"
         }
     ],
     "require": {
         "php": ">=7.0",
-        "pulse00/monolog-parser": "^0.0.3",
-        "league/flysystem": "^1.0"
+        "league/flysystem": "^1.0",
+        "illuminate/support": "^6.0"
     },
     "autoload": {
         "psr-4": {

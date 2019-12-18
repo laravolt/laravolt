@@ -2,13 +2,13 @@
 
 namespace Laravolt\Epilog;
 
-use Dubture\Monolog\Reader\LogReader;
+use Illuminate\Support\Arr;
+use Laravolt\Epilog\MonologParser\Reader\LogReader;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
 
 class Epilog
 {
-
     private $filesystem;
 
     private $basePath;
@@ -30,12 +30,12 @@ class Epilog
             $path .= $year;
         }
         if ($month) {
-            $path .= DIRECTORY_SEPARATOR.$month;
+            $path .= DIRECTORY_SEPARATOR . $month;
         }
 
         return collect($this->filesystem->listContents($path, true))
             ->filter(function ($file) {
-                return (array_get($file, 'type') === 'file') && (array_get($file, 'extension') === 'log');
+                return (Arr::get($file, 'type') === 'file') && (Arr::get($file, 'extension') === 'log');
             })
             ->sortByDesc('timestamp');
     }
@@ -46,15 +46,16 @@ class Epilog
             return [];
         }
 
-        $reader = new LogReader($this->basePath.DIRECTORY_SEPARATOR.$path);
-
+        $reader = new LogReader($this->basePath . DIRECTORY_SEPARATOR . $path);
+        $levels = config('laravolt.epilog.levels');
         $logs = [];
         foreach ($reader as $line) {
             if (!empty($line)) {
+                $line['class'] = $levels[$line['level']]['class'];
                 $logs[] = $line;
             }
         }
 
-        return $logs;
+        return collect($logs)->sortByDesc('date');
     }
 }

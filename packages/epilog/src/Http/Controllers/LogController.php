@@ -20,8 +20,6 @@ class LogController extends Controller
 
     public function index()
     {
-//        $year = request('year', date('Y'));
-//        $month = request('month', date('m'));
         $selectedFile = urldecode(request('file'));
 
         $files = $this->epilog->files();
