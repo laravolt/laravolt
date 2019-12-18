@@ -51,7 +51,7 @@ class Epilog
         $logs = [];
         foreach ($reader as $line) {
             if (!empty($line)) {
-                $line['class'] = $levels[$line['level']]['class'];
+                $line['class'] = $levels[$line['level']]['class'] ?? '';
                 $logs[] = $line;
             }
         }
