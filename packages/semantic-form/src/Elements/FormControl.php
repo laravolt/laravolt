@@ -27,9 +27,13 @@ abstract class FormControl extends Element
         return $this;
     }
 
-    public function required()
+    public function required($required = true)
     {
-        $this->setAttribute('required', 'required');
+        if ($required) {
+            $this->setAttribute('required', 'required');
+        } else {
+            $this->removeAttribute('required');
+        }
 
         return $this;
     }
@@ -54,7 +58,7 @@ abstract class FormControl extends Element
 
     public function enable($enable = true)
     {
-        $this->disable(!$enable);
+        $this->disable(! $enable);
 
         return $this;
     }

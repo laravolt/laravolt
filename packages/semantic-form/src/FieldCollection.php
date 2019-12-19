@@ -17,7 +17,7 @@ class FieldCollection extends Collection
 {
     protected $fieldMethod = [
         'api', 'ajax', 'query', 'fieldLabel', 'fieldAttributes', 'limit', 'extensions', 'placeholder', 'value',
-        'readonly',
+        'readonly', 'required'
     ];
 
     public function __construct($fields = [])
