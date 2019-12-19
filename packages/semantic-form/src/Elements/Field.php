@@ -30,7 +30,7 @@ class Field extends Wrapper
                 $this->attributes($control->getFieldAttributes());
             }
 
-            if ($control instanceof CheckboxWrapper) {
+            if ($control instanceof CheckboxWrapper || $control instanceof RadioButtonWrapper) {
                 $this->attributes($control->getPrimaryControl()->getFieldAttributes());
             }
 

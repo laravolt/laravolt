@@ -41,4 +41,15 @@ class CheckboxGroup extends Wrapper
             return Arr::get($this->options, $this->value);
         }
     }
+
+    public function attributes($attributes)
+    {
+        foreach ($this->controls as $control) {
+            if ($control instanceof Checkbox) {
+                $control->attributes($attributes);
+            }
+        }
+
+        return $this;
+    }
 }
