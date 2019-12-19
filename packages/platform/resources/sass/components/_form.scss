@@ -78,7 +78,7 @@ $widths: (
   }
 }
 
-.ui.form.horizontal {
+.ui.form.horizontal, .ui.form.horizontal .segment {
   > .field[class*="wide"] {
     width: 100% !important;
   }
