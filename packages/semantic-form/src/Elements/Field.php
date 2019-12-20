@@ -34,6 +34,10 @@ class Field extends Wrapper
                 $this->attributes($control->getPrimaryControl()->getFieldAttributes());
             }
 
+            if ($control instanceof CheckboxGroup || $control instanceof RadioGroup) {
+                $this->attributes($control->getFieldAttributes());
+            }
+
             if ($control instanceof FormControl) {
                 if ($control->hasError()) {
                     $hasError = true;
