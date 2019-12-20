@@ -75,12 +75,16 @@ class DropdownDB extends Select
     public function displayValue()
     {
         if (is_string($this->value)) {
+            if (strlen(trim($this->value)) === 0) {
+                return null;
+            }
+
             $this->beforeRender();
 
             return Arr::get($this->options, $this->value);
         }
 
-        return null;
+        return serialize($this->value);
     }
 
     private function populateOptions()
