@@ -69,13 +69,17 @@ class Wrapper extends Element
         return false;
     }
 
-    public function required()
+    public function required($required = true)
     {
-        $this->setAttribute('required', 'required');
+        if ($required) {
+            $this->setAttribute('required', 'required');
+        } else {
+            $this->removeAttribute('required');
+        }
 
         $control = $this->getPrimaryControl();
         if ($control) {
-            $control->required();
+            $control->required($required);
         }
 
         return $this;

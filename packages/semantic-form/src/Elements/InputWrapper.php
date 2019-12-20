@@ -84,9 +84,9 @@ class InputWrapper extends Wrapper
         return $this;
     }
 
-    public function required()
+    public function required($required = true)
     {
-        $this->getPrimaryControl()->required();
+        $this->getPrimaryControl()->required($required);
 
         return $this;
     }
