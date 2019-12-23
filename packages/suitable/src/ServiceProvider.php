@@ -85,7 +85,12 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerMacro()
     {
-        EloquentBuilder::macro('whereLike', function ($attributes, string $searchTerm) {
+        EloquentBuilder::macro('whereLike', function ($attributes, ?string $searchTerm) {
+
+            if ($searchTerm === null) {
+                return $this;
+            }
+
             $searchTerm = strtolower($searchTerm);
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {
