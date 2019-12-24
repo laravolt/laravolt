@@ -133,6 +133,7 @@ class FieldCollection extends Collection
 
             case 'html':
                 $element = new Html(Arr::get($field, 'content'));
+                $element->label($field['label'] ?? null);
                 break;
 
             default:

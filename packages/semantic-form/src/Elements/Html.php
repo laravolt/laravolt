@@ -22,6 +22,15 @@ class Html extends Element
 
     public function render()
     {
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+
+            return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
+        }
+
+        $this->beforeRender();
+
         return $this->content;
     }
 

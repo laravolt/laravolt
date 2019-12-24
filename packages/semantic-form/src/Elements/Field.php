@@ -44,6 +44,10 @@ class Field extends Wrapper
                 }
                 $this->attributes($control->getFieldAttributes());
             }
+
+            if ($control instanceof Html) {
+                $this->attributes($control->getFieldAttributes());
+            }
         }
 
         if ($required) {
