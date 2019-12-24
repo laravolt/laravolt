@@ -128,7 +128,7 @@ class InputWrapper extends Wrapper
 
     public function isRequired()
     {
-        return $this->getPrimaryControl()->hasAttribute('required');
+        return $this->getPrimaryControl()->getAttribute('required');
     }
 
     public function hasError()

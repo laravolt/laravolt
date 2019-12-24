@@ -56,7 +56,7 @@ class Select extends FormControl
             $element->label = false;
 
             $field = new Field($this->label, $element);
-            if ($element->hasAttribute('readonly')) {
+            if ($element->getAttribute('readonly')) {
                 $field->addClass('disabled readonly');
             }
 
