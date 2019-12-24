@@ -3,6 +3,7 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
@@ -317,7 +318,19 @@ class SemanticForm
         $oldValue = $this->getValueFor($name);
 
         foreach ($options as $value => $label) {
-            $radio = (new Checkbox($name."[$value]", $value))->label($label);
+
+            $dataAttributes = [];
+            $labelText = $label;
+            if (is_array($label)) {
+                $labelText = Arr::pull($label, 'label');
+                $dataAttributes = $label;
+            }
+
+            $radio = (new Checkbox($name."[$value]", $value))->label($labelText);
+
+            foreach ($dataAttributes as $dataKey => $dataValue) {
+                $radio->data($dataKey, $dataValue);
+            }
 
             if ($oldValue !== null) {
                 if (in_array($value, $oldValue)) {
@@ -358,7 +371,19 @@ class SemanticForm
         $oldValue = $this->getValueFor($name);
 
         foreach ($options as $value => $label) {
-            $radio = (new RadioButton($name, $value))->label($label);
+
+            $dataAttributes = [];
+            $labelText = $label;
+            if (is_array($label)) {
+                $labelText = Arr::pull($label, 'label');
+                $dataAttributes = $label;
+            }
+
+            $radio = (new RadioButton($name, $value))->label($labelText);
+
+            foreach ($dataAttributes as $dataKey => $dataValue) {
+                $radio->data($dataKey, $dataValue);
+            }
 
             if (($oldValue !== null && $value == $oldValue) || ($oldValue === null && $value == $checked)) {
                 $radio->check();
