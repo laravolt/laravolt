@@ -58,7 +58,8 @@ class Flash
         'error' => [
             'showIcon' => 'red times',
             'classProgress' => 'red',
-            'transition' => ['showMethod' => 'tada'],
+            'displayTime' => 0,
+            'transition' => ['showMethod' => 'tada', 'showDuration' => 1000],
         ],
     ];
 
@@ -83,11 +84,11 @@ class Flash
     public function message($message, $type = 'basic')
     {
         $this->attributes['message'] = $message;
-        $this->attributes['class'] = $this->attributes['class'] ?? null;
+        $this->attributes['class'] = $this->types[$type]['class'] ?? $this->attributes['class'];
         $this->attributes['showIcon'] = $this->types[$type]['showIcon'] ?? null;
         $this->attributes['classProgress'] = $this->types[$type]['classProgress'] ?? null;
-        if (isset($this->types[$type]['transition']['showMethod'])) {
-            $this->attributes['transition']['showMethod'] = $this->types[$type]['transition']['showMethod'];
+        if (isset($this->types[$type]['transition'])) {
+            $this->attributes['transition'] = $this->types[$type]['transition'] + $this->attributes['transition'];
         }
 
         $this->bags[] = $this->attributes;
