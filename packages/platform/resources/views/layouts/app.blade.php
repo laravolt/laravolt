@@ -9,9 +9,7 @@
         <div class="content">
             <div class="content__inner">
                 <div class="ui container-fluid content__body p-1">
-                    @isset($__page)
-                        @include('laravolt::components.page-header', $__page)
-                    @endisset
+                    @include('laravolt::components.page-header', $__page ?? [])
 
                     @yield('content')
                 </div>
