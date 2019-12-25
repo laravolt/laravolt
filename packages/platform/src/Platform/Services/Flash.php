@@ -137,9 +137,9 @@ class Flash
         $script = $this->view->make('ui::flash', compact('bags'))->render();
 
         if (false !== $pos) {
-            $content = substr($content, 0, $pos) . $script . substr($content, $pos);
+            $content = substr($content, 0, $pos).$script.substr($content, $pos);
         } else {
-            $content = $content . $script;
+            $content = $content.$script;
         }
 
         $response->setContent($content);
@@ -159,7 +159,7 @@ class Flash
 
     public function hasMessage()
     {
-        return ! empty($this->bags);
+        return !empty($this->bags);
     }
 
     public function inExceptArray(Request $request)
