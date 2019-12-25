@@ -70,6 +70,14 @@ class InputWrapper extends Wrapper
         return $this;
     }
 
+    public function appendButton($text, $class = null)
+    {
+        $this->removeClass('labeled')->addClass('action');
+        $this->controlsRight = Arr::prepend($this->controlsRight, (new Button($text, null))->addClass($class));
+
+        return $this;
+    }
+
     public function placeholder($placeholder)
     {
         $this->getPrimaryControl()->placeholder($placeholder);
