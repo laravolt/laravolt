@@ -8,10 +8,10 @@
     },
     "devDependencies": {
         "cross-env": "^5.2.1",
-        "fomantic-ui": "^2.7.8",
+        "fomantic-ui": "^2.8.3",
         "jquery": "^3.4.1",
         "laravel-mix": "^4.1.4",
-        "sass": "^1.22.12",
+        "sass": "^1.24.0",
         "sass-loader": "^7.3.1",
         "simplebar": "3.0.0-beta.0"
     }

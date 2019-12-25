@@ -16,9 +16,7 @@ return [
     ],
     'flash' => [
         'attributes' => [
-            'display_time' => 5000,
-            'opacity' => 0.9,
-            'position' => 'top center',
+            'class' => 'black',
         ],
         'except' => [],
     ],

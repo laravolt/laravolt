@@ -272,19 +272,34 @@
             Variations
 *******************************/
 
-.ui.small.feed {
-  font-size: 0.92307692rem;
-}
 .ui.feed {
   font-size: 1rem;
+}
+.ui.mini.feed {
+  font-size: 0.76923077rem;
+}
+.ui.tiny.feed {
+  font-size: 0.84615385rem;
+}
+.ui.small.feed {
+  font-size: 0.92307692rem;
 }
 .ui.large.feed {
   font-size: 1.15384615rem;
 }
+.ui.big.feed {
+  font-size: 1.30769231rem;
+}
+.ui.huge.feed {
+  font-size: 1.46153846rem;
+}
+.ui.massive.feed {
+  font-size: 1.69230769rem;
+}
 
 /*------------------
-      Inverted
--------------------*/
+        Inverted
+  -------------------*/
 
 .ui.inverted.feed > .event {
   background: #1B1C1D;

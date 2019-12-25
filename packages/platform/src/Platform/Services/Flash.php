@@ -22,13 +22,43 @@ class Flash
 
     protected $attributes = [
         'message' => null,
-        'class' => 'info',
+        'class' => 'basic',
         'closeIcon' => false,
-        'displayTime' => 5000,
-        'opacity' => 0.9,
+        'displayTime' => 'auto',
+        'opacity' => 1,
         'position' => 'top center',
         'compact' => false,
+        'showIcon' => false,
+        'showProgress' => 'bottom',
+        'progressUp' => false,
+        'pauseOnHover' => true,
         'newestOnTop' => true,
+        'transition' => [
+            'showMethod' => 'tada',
+            'showDuration' => 1000,
+            'hideMethod' => 'fly down',
+            'hideDuration' => 2000,
+        ],
+    ];
+
+    protected $types = [
+        'info' => [
+            'showIcon' => 'blue info',
+            'classProgress' => 'blue',
+        ],
+        'success' => [
+            'showIcon' => 'green checkmark',
+            'classProgress' => 'green',
+        ],
+        'warning' => [
+            'showIcon' => 'orange warning',
+            'classProgress' => 'orange',
+        ],
+        'error' => [
+            'showIcon' => 'red times',
+            'classProgress' => 'red',
+            'transition' => ['showMethod' => 'shake'],
+        ],
     ];
 
     protected $bags = [];
@@ -52,7 +82,12 @@ class Flash
     public function message($message, $type = 'basic')
     {
         $this->attributes['message'] = $message;
-        $this->attributes['class'] = $type;
+        $this->attributes['class'] = $this->attributes['class'] ?? null;
+        $this->attributes['showIcon'] = $this->types[$type]['showIcon'] ?? null;
+        $this->attributes['classProgress'] = $this->types[$type]['classProgress'] ?? null;
+        if (isset($this->types[$type]['transition']['showMethod'])) {
+            $this->attributes['transition']['showMethod'] = $this->types[$type]['transition']['showMethod'];
+        }
 
         $this->bags[] = $this->attributes;
 
@@ -101,9 +136,9 @@ class Flash
         $script = $this->view->make('ui::flash', compact('bags'))->render();
 
         if (false !== $pos) {
-            $content = substr($content, 0, $pos).$script.substr($content, $pos);
+            $content = substr($content, 0, $pos) . $script . substr($content, $pos);
         } else {
-            $content = $content.$script;
+            $content = $content . $script;
         }
 
         $response->setContent($content);
@@ -123,7 +158,7 @@ class Flash
 
     public function hasMessage()
     {
-        return !empty($this->bags);
+        return ! empty($this->bags);
     }
 
     public function inExceptArray(Request $request)

@@ -85,56 +85,6 @@
   }
 }
 
-/* Sizes */
-.ui.mini.loader:before,
-.ui.mini.loader:after {
-  width: 1.07692308rem;
-  height: 1.07692308rem;
-  margin: 0 0 0 -0.53846154rem;
-}
-.ui.tiny.loader:before,
-.ui.tiny.loader:after {
-  width: 1.23076923rem;
-  height: 1.23076923rem;
-  margin: 0 0 0 -0.61538462rem;
-}
-.ui.small.loader:before,
-.ui.small.loader:after {
-  width: 1.84615385rem;
-  height: 1.84615385rem;
-  margin: 0 0 0 -0.92307692rem;
-}
-.ui.loader:before,
-.ui.loader:after {
-  width: 2.46153846rem;
-  height: 2.46153846rem;
-  margin: 0 0 0 -1.23076923rem;
-}
-.ui.large.loader:before,
-.ui.large.loader:after {
-  width: 3.69230769rem;
-  height: 3.69230769rem;
-  margin: 0 0 0 -1.84615385rem;
-}
-.ui.big.loader:before,
-.ui.big.loader:after {
-  width: 4rem;
-  height: 4rem;
-  margin: 0 0 0 -2rem;
-}
-.ui.huge.loader:before,
-.ui.huge.loader:after {
-  width: 4.46153846rem;
-  height: 4.46153846rem;
-  margin: 0 0 0 -2.23076923rem;
-}
-.ui.massive.loader:before,
-.ui.massive.loader:after {
-  width: 4.92307692rem;
-  height: 4.92307692rem;
-  margin: 0 0 0 -2.46153846rem;
-}
-
 /*-------------------
       Coupling
 --------------------*/
@@ -168,8 +118,8 @@
 
 
 /*-------------------
-        Text
---------------------*/
+          Text
+  --------------------*/
 
 .ui.ui.ui.ui.text.loader {
   width: auto;
@@ -207,77 +157,121 @@
         Sizes
 --------------------*/
 
-
-/* Loader */
+.ui.loader {
+  width: 2.46153846rem;
+  height: 2.46153846rem;
+  font-size: 1em;
+}
+.ui.loader:before,
+.ui.loader:after {
+  width: 2.46153846rem;
+  height: 2.46153846rem;
+  margin: 0 0 0 -1.23076923rem;
+}
+.ui.text.loader {
+  min-width: 2.46153846rem;
+  padding-top: 3.23076923rem;
+}
 .ui.mini.loader {
   width: 1.07692308rem;
   height: 1.07692308rem;
   font-size: 0.76923077em;
+}
+.ui.mini.loader:before,
+.ui.mini.loader:after {
+  width: 1.07692308rem;
+  height: 1.07692308rem;
+  margin: 0 0 0 -0.53846154rem;
+}
+.ui.mini.text.loader {
+  min-width: 1.07692308rem;
+  padding-top: 1.84615385rem;
 }
 .ui.tiny.loader {
   width: 1.23076923rem;
   height: 1.23076923rem;
   font-size: 0.84615385em;
 }
+.ui.tiny.loader:before,
+.ui.tiny.loader:after {
+  width: 1.23076923rem;
+  height: 1.23076923rem;
+  margin: 0 0 0 -0.61538462rem;
+}
+.ui.tiny.text.loader {
+  min-width: 1.23076923rem;
+  padding-top: 2rem;
+}
 .ui.small.loader {
   width: 1.84615385rem;
   height: 1.84615385rem;
   font-size: 0.92307692em;
 }
-.ui.loader {
-  width: 2.46153846rem;
-  height: 2.46153846rem;
-  font-size: 1em;
+.ui.small.loader:before,
+.ui.small.loader:after {
+  width: 1.84615385rem;
+  height: 1.84615385rem;
+  margin: 0 0 0 -0.92307692rem;
+}
+.ui.small.text.loader {
+  min-width: 1.84615385rem;
+  padding-top: 2.61538462rem;
 }
 .ui.large.loader {
   width: 3.69230769rem;
   height: 3.69230769rem;
   font-size: 1.15384615em;
 }
+.ui.large.loader:before,
+.ui.large.loader:after {
+  width: 3.69230769rem;
+  height: 3.69230769rem;
+  margin: 0 0 0 -1.84615385rem;
+}
+.ui.large.text.loader {
+  min-width: 3.69230769rem;
+  padding-top: 4.46153846rem;
+}
 .ui.big.loader {
   width: 4rem;
   height: 4rem;
   font-size: 1.30769231em;
+}
+.ui.big.loader:before,
+.ui.big.loader:after {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 0 0 -2rem;
+}
+.ui.big.text.loader {
+  min-width: 4rem;
+  padding-top: 4.76923077rem;
 }
 .ui.huge.loader {
   width: 4.46153846rem;
   height: 4.46153846rem;
   font-size: 1.46153846em;
 }
+.ui.huge.loader:before,
+.ui.huge.loader:after {
+  width: 4.46153846rem;
+  height: 4.46153846rem;
+  margin: 0 0 0 -2.23076923rem;
+}
+.ui.huge.text.loader {
+  min-width: 4.46153846rem;
+  padding-top: 5.23076923rem;
+}
 .ui.massive.loader {
   width: 4.92307692rem;
   height: 4.92307692rem;
   font-size: 1.69230769em;
 }
-
-/* Text Loader */
-.ui.mini.text.loader {
-  min-width: 1.07692308rem;
-  padding-top: 1.84615385rem;
-}
-.ui.tiny.text.loader {
-  min-width: 1.23076923rem;
-  padding-top: 2rem;
-}
-.ui.small.text.loader {
-  min-width: 1.84615385rem;
-  padding-top: 2.61538462rem;
-}
-.ui.text.loader {
-  min-width: 2.46153846rem;
-  padding-top: 3.23076923rem;
-}
-.ui.large.text.loader {
-  min-width: 3.69230769rem;
-  padding-top: 4.46153846rem;
-}
-.ui.big.text.loader {
-  min-width: 4rem;
-  padding-top: 4.76923077rem;
-}
-.ui.huge.text.loader {
-  min-width: 4.46153846rem;
-  padding-top: 5.23076923rem;
+.ui.massive.loader:before,
+.ui.massive.loader:after {
+  width: 4.92307692rem;
+  height: 4.92307692rem;
+  margin: 0 0 0 -2.46153846rem;
 }
 .ui.massive.text.loader {
   min-width: 4.92307692rem;
@@ -640,8 +634,8 @@
 }
 
 /*-------------------
-       Inline
---------------------*/
+         Inline
+  --------------------*/
 
 .ui.inline.loader {
   position: relative;
@@ -688,8 +682,8 @@
 }
 
 /*-------------------
-       Elastic
---------------------*/
+         Elastic
+  --------------------*/
 
 .ui.dimmer > .ui.elastic.loader {
   color: #FFFFFF;
