@@ -25,6 +25,7 @@ class Flash
         'class' => 'basic',
         'closeIcon' => false,
         'displayTime' => 'auto',
+        'minDisplayTime' => 3000,
         'opacity' => 1,
         'position' => 'top center',
         'compact' => false,
@@ -34,10 +35,10 @@ class Flash
         'pauseOnHover' => true,
         'newestOnTop' => true,
         'transition' => [
-            'showMethod' => 'tada',
-            'showDuration' => 1000,
+            'showMethod' => 'fade',
+            'showDuration' => 2000,
             'hideMethod' => 'fly down',
-            'hideDuration' => 2000,
+            'hideDuration' => 3000,
         ],
     ];
 
@@ -57,7 +58,7 @@ class Flash
         'error' => [
             'showIcon' => 'red times',
             'classProgress' => 'red',
-            'transition' => ['showMethod' => 'shake'],
+            'transition' => ['showMethod' => 'tada'],
         ],
     ];
 
