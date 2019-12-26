@@ -318,7 +318,6 @@ class SemanticForm
         $oldValue = $this->getValueFor($name);
 
         foreach ($options as $value => $label) {
-
             $dataAttributes = [];
             $labelText = $label;
             if (is_array($label)) {
@@ -371,7 +370,6 @@ class SemanticForm
         $oldValue = $this->getValueFor($name);
 
         foreach ($options as $value => $label) {
-
             $dataAttributes = [];
             $labelText = $label;
             if (is_array($label)) {
