@@ -37,8 +37,17 @@ class Html extends Element
     public function display()
     {
         return sprintf(
-            '<tr><td></td><td colspan="2">%s</td></tr>',
-            $this->content
+            '<tr %s><td><div title="%s">%s</div></td><td>%s</td></tr>',
+            $this->renderFieldAttributes(),
+            $this->getAttribute('name'),
+            $this->label,
+            $this->displayValue()
         );
+    }
+
+
+    public function displayValue()
+    {
+        return $this->content;
     }
 }
