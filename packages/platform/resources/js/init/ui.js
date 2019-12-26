@@ -32,18 +32,29 @@ $(function () {
     });
   };
 
-  let dependencies = [];
+  let dependenciesSelect = [];
+  let dependenciesInput = [];
   $('select[data-depend-on]').each(function (idx, elm) {
     let child = $(elm);
     let parentName = child.data('depend-on');
-    if (dependencies[parentName] === undefined) {
-      dependencies[parentName] = [];
-    }
-    dependencies[parentName].push(child);
-  });
-  for (var parentName of Object.keys(dependencies)) {
     let parent = $('[name=' + parentName + ']');
-    let children = dependencies[parentName];
+
+    if (parent.prop('tagName') == 'SELECT') {
+      if (dependenciesSelect[parentName] === undefined) {
+        dependenciesSelect[parentName] = [];
+      }
+      dependenciesSelect[parentName].push(child);
+    } else if (parent.prop('tagName') == 'INPUT') {
+      if (dependenciesInput[parentName] === undefined) {
+        dependenciesInput[parentName] = [];
+      }
+      dependenciesInput[parentName].push(child);
+    }
+  });
+
+  for (var parentName of Object.keys(dependenciesSelect)) {
+    let parent = $('[name=' + parentName + ']');
+    let children = dependenciesSelect[parentName];
     parent.destroyDropdown();
     parent.dropdown({
       forceSelection: false,
@@ -82,6 +93,46 @@ $(function () {
 
         })
       }
+    });
+  }
+
+  for (var parentName of Object.keys(dependenciesInput)) {
+    let parent = $('[name=' + parentName + ']');
+    let children = dependenciesInput[parentName];
+
+    parent.on('change', function(e){
+      let value = $(e.currentTarget).val();
+      jQuery.each(children, function (idx, child) {
+        if (!value) {
+          child.dropdown('clear');
+          child.dropdown('setup menu', {values: []});
+        } else {
+          let url = child.data('api');
+          let payload = child.data('payload');
+
+          child.api({
+            url: url,
+            urlData: {parent: value, payload: payload},
+            on: 'now',
+            beforeSend: function (settings) {
+              child.dropdown('clear');
+              child.parent().addClass('loading');
+
+              return settings;
+            },
+            onSuccess: function (response, element, xhr) {
+              let values = response.results;
+              child.dropdown('change values', values);
+              child.dropdown('set selected', value);
+            },
+            onComplete: function (response, element, xhr) {
+              child.parent().removeClass('loading');
+            }
+          });
+        }
+
+      })
+
     });
   }
 
