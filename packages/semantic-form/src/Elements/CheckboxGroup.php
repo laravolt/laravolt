@@ -38,6 +38,11 @@ class CheckboxGroup extends Wrapper
     public function displayValue()
     {
         if (is_string($this->value)) {
+            $option = Arr::get($this->options, $this->value);
+            if (is_array($option) && isset($option['label'])) {
+                return $option['label'];
+            }
+
             return Arr::get($this->options, $this->value);
         }
     }
