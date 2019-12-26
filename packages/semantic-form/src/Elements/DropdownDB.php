@@ -84,7 +84,7 @@ class DropdownDB extends Select
             return Arr::get($this->options, $this->value);
         }
 
-        return serialize($this->value);
+        return $this->value;
     }
 
     private function populateOptions()
