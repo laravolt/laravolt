@@ -14,4 +14,6 @@ interface ColumnInterface
     public function sortable();
 
     public function searchable();
+
+    public function isSearchable();
 }
