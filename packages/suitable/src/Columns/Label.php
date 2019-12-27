@@ -8,13 +8,23 @@ class Label extends Column implements ColumnInterface
 
     protected $cellAttributes = ['class' => 'center aligned'];
 
+    protected $labelClass = [];
+
     public function cell($cell, $collection, $loop)
     {
         $label = $cell->{$this->field};
         if ($label) {
-            return sprintf('<div class="ui label basic">%s</div>', $cell->{$this->field});
+            $class = implode(" ", $this->labelClass);
+            return sprintf('<div class="ui label basic %s">%s</div>', $class, $cell->{$this->field});
         }
 
         return '-';
+    }
+
+    public function addClass(string $class)
+    {
+        array_push($this->labelClass, $class);
+
+        return $this;
     }
 }
