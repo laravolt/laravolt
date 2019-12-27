@@ -183,32 +183,15 @@ $(function () {
             }
           });
 
-          // change multiple delete form action, based on selected ids
-          var form = $('form[data-type="delete-multiple"]');
-          if (form.length > 0) {
-            var url = $('form[data-type="delete-multiple"]').attr('action');
-            var replaceStartFrom = url.lastIndexOf('/');
-            var newUrl = url.substr(0, replaceStartFrom) + '/' + ids.join(',');
-            $('form[data-type="delete-multiple"]').attr('action', newUrl);
-          }
-
-          if ($storage.length > 0) {
-            $storage.val(ids.join(',')).trigger('change');
-          }
+          $parentCheckbox.val(JSON.stringify(ids)).trigger('change');
 
           // set parent checkbox state, but dont trigger its onChange callback
           if (allChecked) {
             $parentCheckbox.checkbox('set checked');
-            form.find('[type="submit"]').removeClass('disabled');
-            //form.css('visibility', 'visible');
           } else if (allUnchecked) {
             $parentCheckbox.checkbox('set unchecked');
-            form.find('[type="submit"]').addClass('disabled');
-            //form.css('visibility', 'hidden');
           } else {
             $parentCheckbox.checkbox('set indeterminate');
-            form.find('[type="submit"]').removeClass('disabled');
-            //form.css('visibility', 'visible');
           }
         }
       })
@@ -336,7 +319,6 @@ $(function () {
       upload: upload,
       onRemove: function(item) {
         if ($(elm).data('media-url')) {
-          console.log(item);
           $.post($(elm).data('media-url'), {
             _token: $(elm).data('token'),
             _action: 'delete',
