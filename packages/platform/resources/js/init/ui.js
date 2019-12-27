@@ -136,6 +136,10 @@ $(function () {
       })
 
     });
+
+    if (parent.val()) {
+      parent.trigger('change');
+    }
   }
 
   $('.checkbox[data-toggle="checkall"]').each(function () {
