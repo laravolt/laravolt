@@ -30,7 +30,7 @@ class DropdownDB extends Select
             }
         }
 
-        if (!Str::contains($this->query, '%s')) {
+        if (!Str::contains($this->query, ['%s', '%1$s'])) {
             $this->populateOptions();
         }
     }

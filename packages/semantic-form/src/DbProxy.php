@@ -13,7 +13,7 @@ class DbProxy
     {
         try {
             $payload = decrypt(request('payload'));
-            $query = sprintf($payload['query'], request('parent'));
+            $query = sprintf($payload['query'], trim(request('parent')));
             $results = collect(DB::select($query))->transform(function ($item) use ($payload) {
                 $item = (array) $item;
 
