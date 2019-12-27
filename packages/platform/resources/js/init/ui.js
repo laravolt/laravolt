@@ -123,7 +123,9 @@ $(function () {
             onSuccess: function (response, element, xhr) {
               let values = response.results;
               child.dropdown('change values', values);
-              child.dropdown('set selected', value);
+              if (values.length == 1) {
+                child.dropdown('set selected', values[0].value);
+              }
             },
             onComplete: function (response, element, xhr) {
               child.parent().removeClass('loading');
