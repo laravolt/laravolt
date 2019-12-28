@@ -16,8 +16,8 @@ $text-colors: (
 
 @each $name, $color in $text-colors {
   .ui.ui.ui.label.#{$name}.basic {
-    border-color: rgba($color, 0.3);
-    color: rgba($color, 0.7);
+    border-color: rgba($color, 0.4);
+    color: rgba($color, 0.9);
     background-color: rgba($color, 0.1);
   }
 }
