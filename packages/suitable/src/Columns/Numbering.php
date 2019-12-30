@@ -2,7 +2,7 @@
 
 namespace Laravolt\Suitable\Columns;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class Numbering extends Column implements ColumnInterface
 {
@@ -17,7 +17,7 @@ class Numbering extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        if ($collection instanceof LengthAwarePaginator) {
+        if ($collection instanceof Paginator) {
             return (($collection->currentPage() - 1) * $collection->perPage()) + $loop->iteration;
         }
 
