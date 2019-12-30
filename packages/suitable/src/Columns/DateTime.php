@@ -8,9 +8,13 @@ class DateTime extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        return \Jenssegers\Date\Date
-            ::createFromFormat('Y-m-d H:i:s', $cell->{$this->field})
-            ->format($this->format);
+        try {
+            return \Jenssegers\Date\Date
+                ::createFromFormat('Y-m-d H:i:s', $cell->{$this->field})
+                ->format($this->format);
+        } catch (\InvalidArgumentException $e) {
+            return $cell->{$this->field};
+        }
     }
 
     public function format($format)
