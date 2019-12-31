@@ -106,7 +106,11 @@ class ServiceProvider extends BaseServiceProvider
                         },
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
                             $table = $query->getModel()->getTable();
-                            $query->orWhereRaw(sprintf("LOWER(%s.%s) LIKE '%%%s%%'", $table, $attribute, $searchTerm));
+                            if (Str::contains($attribute, '->')) {
+                                $query->orWhere($attribute, 'like', "%$searchTerm%");
+                            } else {
+                                $query->orWhereRaw(sprintf("LOWER(%s.%s) LIKE '%%%s%%'", $table, $attribute, $searchTerm));
+                            }
                         }
                     );
                 }
