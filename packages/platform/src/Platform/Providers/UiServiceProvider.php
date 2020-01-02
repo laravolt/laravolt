@@ -47,9 +47,13 @@ class UiServiceProvider extends BaseServiceProvider
             }
         );
 
+        $this->bootConfig();
+
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
-        $this->app['laravolt.menu']->add('System');
+        $this->app['laravolt.menu']
+            ->add('System')
+            ->data('order', config('laravolt.ui.system_menu.order'));
 
         $this->registerAssets();
 
@@ -68,7 +72,6 @@ class UiServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this
-            ->bootConfig()
             ->bootViews()
             ->buildMenuFromConfig();
 
