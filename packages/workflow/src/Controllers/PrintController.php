@@ -42,7 +42,7 @@ class PrintController extends Controller
         }
         $extension = pathinfo($path)['extension'] ?? 'docx';
 
-        return view('workflow::print.index',
+        return view('camunda::print.index',
             compact('path', 'module', 'processInstance', 'completedTasks', 'template', 'extension'));
     }
 

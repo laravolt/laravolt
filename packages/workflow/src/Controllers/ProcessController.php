@@ -40,7 +40,7 @@ class ProcessController extends Controller
     {
         $this->authorize('view', $module->getModel());
 
-        $view = $module->view['index'] ?? 'workflow::process.index';
+        $view = $module->view['index'] ?? 'camunda::process.index';
 
         return $module->table->view($view, compact('module'));
     }
@@ -49,7 +49,7 @@ class ProcessController extends Controller
     {
         $this->authorize('create', $module->getModel());
 
-        $view = $module->view['create'] ?? 'workflow::process.create';
+        $view = $module->view['create'] ?? 'camunda::process.create';
 
         try {
             $form = $this->workflow->createStartForm($module);
@@ -74,11 +74,11 @@ class ProcessController extends Controller
 
             $nextForm = TaskForm::make($module, $processInstance->currentTask());
 
-            $message = __('workflow::message.process.started',
+            $message = __('camunda::message.process.started',
                 ['current_task' => $form->title(), 'next_task' => $nextForm->title()]);
 
             return redirect()
-                ->route('workflow::process.show', [$module->id, $processInstance->id])
+                ->route('camunda::process.show', [$module->id, $processInstance->id])
                 ->withSuccess($message);
         } catch (ClientException $e) {
             abort($e->getCode(), $e->getMessage());
@@ -87,7 +87,7 @@ class ProcessController extends Controller
 
     public function show(Module $module, $processInstanceId)
     {
-        $view = $module->view['show'] ?? 'workflow::process.show';
+        $view = $module->view['show'] ?? 'camunda::process.show';
 
         try {
             $processInstance = (new ProcessInstanceHistory($processInstanceId))->fetch();
@@ -122,7 +122,7 @@ class ProcessController extends Controller
         try {
             $form = $this->workflow->editStartForm($module, $processInstanceId);
 
-            return view('workflow::process.edit', compact('form'));
+            return view('camunda::process.edit', compact('form'));
         } catch (ClientException $e) {
             abort($e->getCode(), $e->getMessage());
         }
@@ -136,7 +136,7 @@ class ProcessController extends Controller
             $this->workflow->updateProcess($processInstanceId, $request->all());
 
             return redirect()
-                ->route('workflow::process.show', [$module->id, $processInstanceId])
+                ->route('camunda::process.show', [$module->id, $processInstanceId])
                 ->withSuccess('OK');
         } catch (ClientException $e) {
             abort($e->getCode(), $e->getMessage());

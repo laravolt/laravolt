@@ -47,7 +47,7 @@ class TaskForm
     {
         $this->task = $task;
         $this->taskConfig = $module->getTask($this->task->taskDefinitionKey);
-        $this->url = route('workflow::task.store', [$module->id, $this->task->id]);
+        $this->url = route('camunda::task.store', [$module->id, $this->task->id]);
         $this->processInstance = $this->task->processInstance();
         $this->processDefinition = $this->processInstance->processDefinition();
         $this->fields = Form::getFields($this->processDefinition->key, $this->task->taskDefinitionKey);

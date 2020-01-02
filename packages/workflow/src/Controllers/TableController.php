@@ -15,6 +15,6 @@ class TableController extends Controller
             $table = new $table(null);
         }
 
-        return $table->view('workflow::table.index');
+        return $table->view('camunda::table.index');
     }
 }

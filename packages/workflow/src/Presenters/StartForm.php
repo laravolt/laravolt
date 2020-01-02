@@ -46,12 +46,12 @@ class StartForm
     ) {
         $this->processDefinition = $processDefinition;
         $this->module = $module;
-        $this->url = route('workflow::process.store', $this->module->id);
+        $this->url = route('camunda::process.store', $this->module->id);
 
         $this->processInstance = $processInstance;
         if ($this->processInstance) {
             $this->mode = self::EDIT;
-            $this->url = route('workflow::process.update', [$this->module->id, $this->processInstance->id]);
+            $this->url = route('camunda::process.update', [$this->module->id, $this->processInstance->id]);
         }
 
         $this->fields = Form::getFields($this->processDefinition->key, $this->module->startTaskName);
@@ -158,7 +158,7 @@ class StartForm
         $backButton = '';
         if ($this->processInstance) {
             $backButton = form()->link($label,
-                route('workflow::process.show', [$this->module->id, $this->processInstance->id]));
+                route('camunda::process.show', [$this->module->id, $this->processInstance->id]));
         }
 
         return $backButton;

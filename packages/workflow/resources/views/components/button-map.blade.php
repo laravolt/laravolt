@@ -1,5 +1,5 @@
 @php($tasks = (new \Laravolt\Camunda\Models\ProcessInstanceHistory($id))->tasks())
-@php($url = route('workflow::process.xml', $id))
+@php($url = route('camunda::process.xml', $id))
 
 <button class="ui button" camunda-map-button><i class="icon project diagram"></i> {{ $label ?? 'Diagram Proses' }}</button>
 

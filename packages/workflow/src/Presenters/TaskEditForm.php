@@ -37,7 +37,7 @@ class TaskEditForm
             throw new \DomainException('Task is non-editable');
         }
 
-        $this->url = route('workflow::task.update', [$this->module->id, $this->task->task_id]);
+        $this->url = route('camunda::task.update', [$this->module->id, $this->task->task_id]);
         $this->processDefinition = ProcessDefinition::byKey($this->task->process_definition_key)->fetch();
         $this->fields = Form::getFields($this->task->process_definition_key, $this->task->task_name);
     }
@@ -81,7 +81,7 @@ class TaskEditForm
                 . form()->make($formDefinition)
                 . form()->action(
                     form()->submit('Simpan'), form()->link('Kembali',
-                    route('workflow::process.show', [$this->module->id, $this->task->process_instance_id]))
+                    route('camunda::process.show', [$this->module->id, $this->task->process_instance_id]))
                 )
                 . form()->close();
 

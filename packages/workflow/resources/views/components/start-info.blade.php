@@ -1,4 +1,4 @@
-@include('workflow::components.button-map', ['id' => $processInstance->id])
+@include('camunda::components.button-map', ['id' => $processInstance->id])
 
 <div class="ui segments panel {{ $attributes['active'] ? 'active':'' }}">
     <div class="ui secondary segment fitted panel-header" data-task-name="{{ $taskName }}">
@@ -8,7 +8,7 @@
             <div class="right menu">
                 @if(config('laravolt.workflow.process_instance.editable'))
                     <div class="item">
-                        <a href="{{ route('workflow::process.edit', [$module->id, $processInstance->id]) }}"
+                        <a href="{{ route('camunda::process.edit', [$module->id, $processInstance->id]) }}"
                            class='ui basic button small'>
                             <i class='icon edit'></i> Edit
                         </a>

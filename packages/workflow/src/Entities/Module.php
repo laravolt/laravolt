@@ -70,12 +70,12 @@ class Module extends DataTransferObject
 
     public function getIndexUrl()
     {
-        return route('workflow::process.index', $this->id);
+        return route('camunda::process.index', $this->id);
     }
 
     public function getCreateUrl()
     {
-        return route('workflow::process.create', $this->id);
+        return route('camunda::process.create', $this->id);
     }
 
     public function getTasks()

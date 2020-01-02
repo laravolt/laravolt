@@ -23,11 +23,11 @@ class Module extends Model
 
     public function getIndexUrl()
     {
-        return route('workflow::process.index', $this->key);
+        return route('camunda::process.index', $this->key);
     }
 
     public function getCreateUrl()
     {
-        return route('workflow::process.create', $this->key);
+        return route('camunda::process.create', $this->key);
     }
 }

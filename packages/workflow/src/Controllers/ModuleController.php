@@ -29,10 +29,10 @@ class ModuleController extends Controller
         });
 
         $table = (new ModuleTableView($modules))->decorate(function (Builder $builder) {
-            $builder->row('workflow::module._row');
+            $builder->row('camunda::module._row');
         });
 
-        return $table->view('workflow::module.index');
+        return $table->view('camunda::module.index');
     }
 
     public function edit($id)
@@ -43,7 +43,7 @@ class ModuleController extends Controller
             return [$item->getKey() => $item->toArray()];
         });
 
-        return view('workflow::module.edit', compact('module', 'roles', 'moduleRoles'));
+        return view('camunda::module.edit', compact('module', 'roles', 'moduleRoles'));
     }
 
     public function update($id)

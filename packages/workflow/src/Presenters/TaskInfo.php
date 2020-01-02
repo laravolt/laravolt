@@ -64,7 +64,7 @@ class TaskInfo
         $formDefinition = (new FormAdapter($fields, $values))->readonly()->toArray();
         $task = $this->module->getTask($this->task->task_name);
 
-        return view('workflow::components.task-info', [
+        return view('camunda::components.task-info', [
             'task' => $this->task,
             'taskConfig' => $task,
             'module' => $this->module,
