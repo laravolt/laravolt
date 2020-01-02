@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Entities;
+namespace Laravolt\Camunda\Entities;
 
 use Spatie\DataTransferObject\DataTransferObject;
 

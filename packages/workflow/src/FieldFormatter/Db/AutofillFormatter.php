@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\FieldFormatter\Db;
+namespace Laravolt\Camunda\FieldFormatter\Db;
 
-use Laravolt\Workflow\Entities\Autofill;
+use Laravolt\Camunda\Entities\Autofill;
 
 class AutofillFormatter
 {

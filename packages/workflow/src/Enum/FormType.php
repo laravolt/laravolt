@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Enum;
+namespace Laravolt\Camunda\Enum;
 
 use BenSampo\Enum\Enum;
 

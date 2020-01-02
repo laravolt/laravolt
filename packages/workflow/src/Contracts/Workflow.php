@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Workflow\Contracts;
+namespace Laravolt\Camunda\Contracts;
 
 use Laravolt\Camunda\Models\ProcessInstance;
-use Laravolt\Workflow\Entities\Module;
-use Laravolt\Workflow\Presenters\StartForm;
+use Laravolt\Camunda\Entities\Module;
+use Laravolt\Camunda\Presenters\StartForm;
 
 interface Workflow
 {

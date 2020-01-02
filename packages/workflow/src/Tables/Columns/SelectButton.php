@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Tables\Columns;
+namespace Laravolt\Camunda\Tables\Columns;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\SemanticForm\Elements\Button;

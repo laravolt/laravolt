@@ -22,15 +22,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="ignore_missing_gitignore" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Models/Workflow" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Models" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Models" />
+      <recent name="$PROJECT_DIR$/src/Enum" />
       <recent name="$PROJECT_DIR$/src/Models/Workflow" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/config" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -67,13 +68,19 @@
       <screen x="310" y="1080" width="1280" height="720" />
     </state>
     <state x="461" y="1080" key="SettingsEditor/310.1080.1280.720/0.0.1920.1080@310.1080.1280.720" timestamp="1577950592759" />
-    <state width="498" height="445" key="SwitcherDM" timestamp="1577945853421">
-      <screen x="310" y="1080" width="1280" height="720" />
+    <state width="747" height="668" key="SwitcherDM" timestamp="1577954243424">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="747" height="668" key="SwitcherDM/310.1080.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1577954243424" />
     <state width="498" height="445" key="SwitcherDM/310.1080.1280.720/0.0.1920.1080@310.1080.1280.720" timestamp="1577945853421" />
-    <state x="613" y="1121" width="672" height="678" key="search.everywhere.popup" timestamp="1577947267394">
-      <screen x="310" y="1080" width="1280" height="720" />
+    <state x="564" y="244" width="791" height="590" key="find.popup" timestamp="1577952725401">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="564" y="244" width="791" height="590" key="find.popup/310.1080.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1577952725401" />
+    <state x="455" y="62" width="1008" height="1017" key="search.everywhere.popup" timestamp="1577954435048">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="455" y="62" width="1008" height="1017" key="search.everywhere.popup/310.1080.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1577954435048" />
     <state x="613" y="1121" width="672" height="678" key="search.everywhere.popup/310.1080.1280.720/0.0.1920.1080@310.1080.1280.720" timestamp="1577947267394" />
   </component>
 </project>

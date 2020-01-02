@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Requests;
+namespace Laravolt\Camunda\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Laravolt\Workflow\Models\Form;
+use Laravolt\Camunda\Models\Form;
 
 class BasicRequest extends FormRequest
 {

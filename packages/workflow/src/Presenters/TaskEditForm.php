@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Presenters;
+namespace Laravolt\Camunda\Presenters;
 
 use App\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\ProcessDefinition;
-use Laravolt\Workflow\Entities\Module;
-use Laravolt\Workflow\Models\Form;
+use Laravolt\Camunda\Entities\Module;
+use Laravolt\Camunda\Models\Form;
 
 class TaskEditForm
 {

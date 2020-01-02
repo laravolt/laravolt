@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Controllers;
+namespace Laravolt\Camunda\Controllers;
 
 use Laravolt\Camunda\Models\ProcessInstanceHistory;
 

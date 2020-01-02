@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Traits;
+namespace Laravolt\Camunda\Traits;
 
 use App\User;
 use Illuminate\Support\Facades\DB;

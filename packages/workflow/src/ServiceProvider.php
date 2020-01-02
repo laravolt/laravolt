@@ -6,7 +6,7 @@ namespace Laravolt\Camunda;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Laravolt\Workflow\Entities\Module;
+use Laravolt\Camunda\Entities\Module;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -15,14 +15,19 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/camunda.php'), 'laravolt.camunda');
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/workflow.php'), 'laravolt.workflow');
 
-        $this->app->singleton('laravolt.workflow', \Laravolt\Workflow\Contracts\Workflow::class);
-        $this->app->bind(\Laravolt\Workflow\Contracts\Workflow::class, function () {
+        $this->app->singleton('laravolt.workflow', \Laravolt\Camunda\Contracts\Workflow::class);
+        $this->app->bind(\Laravolt\Camunda\Contracts\Workflow::class, function () {
             return new Workflow();
         });
     }
 
     public function boot()
     {
+        $this->bootRoutes()
+             ->bootTranslations()
+             ->bootViews()
+             ->bootMacro()
+             ->bindModule();
     }
 
     protected function bootRoutes()
@@ -37,14 +42,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootTranslations()
     {
-        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/lang'), 'workflow');
+        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/lang'), 'camunda');
 
         return $this;
     }
 
     protected function bootViews()
     {
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'workflow');
+        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'camunda');
         $this->loadViewsFrom(storage_path('surat-compiled'), 'surat-compiled');
 
         return $this;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\FieldFormatter\Db;
+namespace Laravolt\Camunda\FieldFormatter\Db;
 
-use Laravolt\Workflow\Entities\Multirow;
+use Laravolt\Camunda\Entities\Multirow;
 
 class MultirowFormatter
 {

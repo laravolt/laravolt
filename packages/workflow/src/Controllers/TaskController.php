@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Controllers;
+namespace Laravolt\Camunda\Controllers;
 
 use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
@@ -10,9 +10,9 @@ use GuzzleHttp\Exception\ServerException;
 use Illuminate\Routing\Controller;
 use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Camunda\Models\ProcessInstance;
-use Laravolt\Workflow\Contracts\Workflow;
-use Laravolt\Workflow\Entities\Module;
-use Laravolt\Workflow\Requests\BasicRequest;
+use Laravolt\Camunda\Contracts\Workflow;
+use Laravolt\Camunda\Entities\Module;
+use Laravolt\Camunda\Requests\BasicRequest;
 use mysql_xdevapi\Exception;
 
 class TaskController extends Controller

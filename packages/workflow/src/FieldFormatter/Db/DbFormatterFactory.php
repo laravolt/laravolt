@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\FieldFormatter\Db;
+namespace Laravolt\Camunda\FieldFormatter\Db;
 
 class DbFormatterFactory
 {

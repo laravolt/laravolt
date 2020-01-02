@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\FieldFormatter\Camunda;
+namespace Laravolt\Camunda\FieldFormatter\Camunda;
 
 use Carbon\Carbon;
 

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Controllers\Actions;
+namespace Laravolt\Camunda\Controllers\Actions;
 
 use Illuminate\Support\Str;
-use Laravolt\Workflow\Entities\Module;
+use Laravolt\Camunda\Entities\Module;
+use Laravolt\Camunda\Models\AutoSave as AutoSaveModel;
 
 class AutoSave
 {
@@ -19,7 +20,7 @@ class AutoSave
             ->reject(function ($value, $key) {
                 return Str::startsWith($key, '_');
             });
-        $autosave = \Laravolt\Workflow\Models\AutoSave::updateOrCreate($primaryData, ['data' => $data]);
+        $autosave = AutoSaveModel::updateOrCreate($primaryData, ['data' => $data]);
 
         return response()->json($autosave->toArray());
     }

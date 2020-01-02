@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Events;
+namespace Laravolt\Camunda\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;
 use Laravolt\Camunda\Models\ProcessInstance;
-use Laravolt\Workflow\Entities\Payload;
+use Laravolt\Camunda\Entities\Payload;
 
 class ProcessStarted
 {

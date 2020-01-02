@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Workflow\Models;
+namespace Laravolt\Camunda\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Watson\Rememberable\Rememberable;

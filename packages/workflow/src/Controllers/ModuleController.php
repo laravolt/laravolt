@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Workflow\Controllers;
+namespace Laravolt\Camunda\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Platform\Models\Role;
 use Laravolt\Suitable\Builder;
-use Laravolt\Camunda\Workflow\Models\Module;
-use Laravolt\Workflow\TableView\ModuleTableView;
+use Laravolt\Camunda\Models\Module;
+use Laravolt\Camunda\TableView\ModuleTableView;
 
 class ModuleController extends Controller
 {
