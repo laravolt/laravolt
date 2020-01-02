@@ -40,7 +40,7 @@ class Menu extends BaseMenu
         $sidebar = $this->get('sidebar');
 
         $items = $sidebar->all()->map(function (Item $item) {
-            $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! $item->link->path['url']));
+            $item->data('is-parent', $item->hasChildren() || (!$item->hasChildren() && !$item->link->path['url']));
 
             return $item;
         });
@@ -50,7 +50,7 @@ class Menu extends BaseMenu
                 return $this->filterByVisibility($item);
             })
             ->filter(function (Item $item) {
-                if ($item->data('is-parent') && ! $item->hasChildren()) {
+                if ($item->data('is-parent') && !$item->hasChildren()) {
                     return false;
                 }
 
