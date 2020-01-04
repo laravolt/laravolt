@@ -12,7 +12,7 @@ return [
     'menu' => [
         'enable' => true,
     ],
-    'permission' => null,
+    'permission' => [],
     'collections' => [
         // Sample lookup collections
         // 'pekerjaan' => [
