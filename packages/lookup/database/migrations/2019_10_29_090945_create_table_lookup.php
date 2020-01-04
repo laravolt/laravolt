@@ -18,7 +18,7 @@ class TableLookup extends Migration
             $table->string('category');
             $table->string('lookup_key');
             $table->string('lookup_value');
-            $table->json('meta')->nullable()
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
     }
