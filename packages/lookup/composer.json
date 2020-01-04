@@ -1,0 +1,38 @@
+{
+    "name": "laravolt/lookup",
+    "description": "Simple key-value admin for Laravolt Platform",
+    "keywords": [
+        "laravel",
+        "laravolt",
+        "lookup",
+        "master data",
+        "key-value"
+    ],
+    "homepage": "https://github.com/laravolt/lookup",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com",
+            "homepage": "https://laravolt.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "illuminate/support": "^6.0",
+        "laravolt/suitable": "^3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\Lookup\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Lookup\\ServiceProvider"
+            ]
+        }
+    }
+}
