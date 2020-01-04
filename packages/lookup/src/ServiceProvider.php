@@ -23,7 +23,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootMenu()
     {
-        if ($this->app->bound('laravolt.menu')) {
+        if ($this->app->bound('laravolt.menu') && config('laravolt.lookup.menu.enabled')) {
             $menu = app('laravolt.menu')->system;
             $group = $menu->add(__('Lookup'))
                 ->data('icon', 'list')
@@ -42,8 +42,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootRoutes()
     {
-        $router = $this->app['router'];
-        require __DIR__ . '/../routes/web.php';
+        if (config('laravolt.lookup.route.enabled')) {
+            $router = $this->app['router'];
+            require __DIR__ . '/../routes/web.php';
+        }
 
         return $this;
     }
@@ -52,9 +54,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'lookup');
         $this->publishes(
-            [realpath(__DIR__.'/../resources/views') => base_path('resources/views/vendor/lookup')],
+            [realpath(__DIR__ . '/../resources/views') => base_path('resources/views/vendor/lookup')],
             'views'
         );
+
         return $this;
     }
 
