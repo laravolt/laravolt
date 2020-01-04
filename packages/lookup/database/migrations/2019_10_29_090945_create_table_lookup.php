@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TableLookup extends Migration
+class CreateTableLookup extends Migration
 {
     /**
      * Run the migrations.
