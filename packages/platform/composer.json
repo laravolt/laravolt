@@ -31,11 +31,13 @@
         "illuminate/console": "^6.0",
         "illuminate/database": "^6.0",
         "illuminate/support": "^6.0",
+        "laravolt/epilog": "~0.4",
+        "laravolt/media": "~0.4",
         "laravolt/semantic-form": "^2.7",
         "lavary/laravel-menu": "^1.7.7",
         "spatie/laravel-medialibrary": "^7.0",
         "spatie/once": "^2.1",
-        "stolz/assets": "^0.1.11"
+        "stolz/assets": "~0.1"
     },
     "autoload": {
         "psr-4": {
