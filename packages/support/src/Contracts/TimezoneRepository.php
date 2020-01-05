@@ -9,5 +9,5 @@ namespace Laravolt\Support\Contracts;
  */
 interface TimezoneRepository
 {
-    public function lists();
+    public function all();
 }
