@@ -40,6 +40,11 @@
         "test": "phpunit"
     },
     "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Support\\SupportServiceProvider"
+            ]
+        },
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
