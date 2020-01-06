@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('form')) {
+if (! function_exists('form')) {
     /**
      * @return \Laravolt\SemanticForm\SemanticForm
      */
@@ -10,17 +10,17 @@ if (!function_exists('form')) {
     }
 }
 
-if (!function_exists('form_escape')) {
+if (! function_exists('form_escape')) {
     /**
      * Escape HTML special characters in a string.
      *
      * @param \Illuminate\Contracts\Support\Htmlable|string $value
-     * @param bool                                          $doubleEncode
+     *
      * @return string
      */
     function form_escape($value)
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return $value;
         }
 
