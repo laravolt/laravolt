@@ -94,7 +94,7 @@ class Uploader extends Input
             }
         }
 
-        $this->data('fileuploader-files', htmlspecialchars(json_encode($data)));
+        $this->data('fileuploader-files', json_encode($data));
         $this->value = $data;
 
         return $this;
