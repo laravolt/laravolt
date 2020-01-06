@@ -3,6 +3,7 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
@@ -591,6 +592,10 @@ class SemanticForm
     {
         $name = str_replace('[', '.', str_replace(']', '', $name));
         $value = data_get($this->model, $name, $this->model->{$name} ?? null);
+
+        if ($value instanceof Collection) {
+            $value = $value->pluck('id')->toArray();
+        }
 
         if (is_string($value) || is_numeric($value) || is_bool($value) || is_array($value)) {
             return form_escape($value);
