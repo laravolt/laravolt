@@ -24,6 +24,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->bootRoutes()
+             ->bootMigrations()
              ->bootTranslations()
              ->bootViews()
              ->bootMacro()
@@ -82,6 +83,19 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             return Module::fromConfig($module);
         });
+
+        return $this;
+    }
+
+    protected function bootMigrations()
+    {
+        $path = realpath(__DIR__ . '/../database/migrations');
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom($path);
+        }
+        $this->publishes([
+            $path => database_path('migrations'),
+        ], 'migrations');
 
         return $this;
     }
