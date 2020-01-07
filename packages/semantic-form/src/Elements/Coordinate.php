@@ -1,10 +1,8 @@
 <?php namespace Laravolt\SemanticForm\Elements;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Coordinate extends Text
 {
-    static protected $sharedApiKey;
+    protected static $sharedApiKey;
 
     protected $apiKey;
 
