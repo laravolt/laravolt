@@ -6,6 +6,7 @@ namespace Laravolt\Camunda;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Laravolt\Camunda\Console\ImportCamundaForm;
 use Laravolt\Camunda\Entities\Module;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -19,11 +20,36 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->bind(\Laravolt\Camunda\Contracts\Workflow::class, function () {
             return new Workflow();
         });
+
+        $this->commands([
+            ImportCamundaForm::class
+        ]);
+    }
+
+    protected function registerMenu()
+    {
+        if ($this->app->bound('laravolt.menu')) {
+            app('laravolt.menu')->system->add('Form Fields', url('managementcamunda'))
+                                        ->data('icon', 'wpforms')
+                                        ->active('managementcamunda/*');
+
+            app('laravolt.menu')->system->add('Segment', url('segment'))
+                                        ->data('icon', 'wpforms')
+                                        ->active('segment/*');
+
+            $menu = app('laravolt.menu')->system
+                ->add('Workflow')
+                ->data('icon', 'fork');
+            $menu->add('Module', url('workflow/module '));
+        }
+
+        return $this;
     }
 
     public function boot()
     {
-        $this->bootRoutes()
+        $this->registerMenu()
+             ->bootRoutes()
              ->bootMigrations()
              ->bootTranslations()
              ->bootViews()
@@ -51,6 +77,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bootViews()
     {
         $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'camunda');
+        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views/managementcamunda'), 'managementcamunda');
         $this->loadViewsFrom(storage_path('surat-compiled'), 'surat-compiled');
 
         return $this;

@@ -43,3 +43,12 @@ $router->group(
         $router->put('{module}/task/{id}/autosave', AutoSave::class)->name('task.autosave');
     }
 );
+
+Route::group(['middleware' => ['web', 'auth']], function () {
+    Route::get('managementcamunda/download', ['uses' => '\Laravolt\Camunda\Controllers\ManagementCamundaController@download'])->name('managementcamunda.download');
+    Route::resource('managementcamunda', '\Laravolt\Camunda\Controllers\ManagementCamundaController');
+    Route::resource('segment', \Laravolt\Camunda\Controllers\SegmentController::class);
+    Route::get('getTasks', '\Laravolt\Camunda\Controllers\ManagementCamundaController@getTasks');
+    Route::get('getFields', '\Laravolt\Camunda\Controllers\ManagementCamundaController@getFields');
+    Route::get('getAttributes', '\Laravolt\Camunda\Controllers\ManagementCamundaController@getAttributes');
+});

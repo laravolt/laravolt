@@ -34,7 +34,8 @@
     "phpoffice/phpword": "^0.17.0",
     "spatie/data-transfer-object": "^1.10",
     "watson/rememberable": "^3.2",
-    "laravolt/semantic-form": "dev-master as 2.x-dev"
+    "laravolt/semantic-form": "dev-master as 2.x-dev",
+    "maatwebsite/excel": "^3.1"
   },
   "autoload": {
     "psr-4": {
