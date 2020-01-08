@@ -39,18 +39,19 @@ class SyncModule extends Command
      */
     public function handle()
     {
-        dd(config('laravolt.modules'));
-        foreach (config('laravolt.workflow.modules') as $key => $module) {
-            if ($this->validateModule($module)) {
-                Module::updateOrCreate(
-                    ['key' => $key],
-                    ['label' => $module['label'], 'process_definition_key' => $module['process_definition_key']]
-                );
+        if( config('workflow-modules') != null) {
+            foreach (config('workflow-modules') as $key => $module) {
+                if ($this->validateModule($module)) {
+                    Module::updateOrCreate(
+                        ['key' => $key],
+                        ['label' => $module['label'], 'process_definition_key' => $module['process_definition_key']]
+                    );
+                }
             }
         }
-
+        
         if ($this->option('prune')) {
-            $keys = collect(config('laravolt.workflow.modules'))->keys();
+            $keys = collect(config('workflow-modules'))->keys();
             $deleted = 0;
             if ($keys->isNotEmpty()) {
                 $deleted = Module::query()->whereNotIn('key', $keys)->delete();
