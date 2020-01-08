@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda;
+namespace Laravolt\Workflow;
 
 use Illuminate\Support\Str;
-use Laravolt\Camunda\Workflow;
 use Illuminate\Support\Facades\Route;
-use Laravolt\Camunda\Console\Commands\GenerateTableByProcessDefinition;
-use Laravolt\Camunda\Entities\Module;
-use Laravolt\Camunda\Console\Commands\ImportCamundaForm;
-use Laravolt\Camunda\Console\Commands\SyncModule;
+use Laravolt\Workflow\Console\Commands\GenerateTableByProcessDefinition;
+use Laravolt\Workflow\Console\ImportCamundaForm;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Console\Commands\SyncModule;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -19,15 +18,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/camunda.php'), 'laravolt.camunda');
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/workflow.php'), 'laravolt.workflow');
 
-        $this->app->singleton('laravolt.workflow', \Laravolt\Camunda\Contracts\Workflow::class);
-        $this->app->bind(\Laravolt\Camunda\Contracts\Workflow::class, function () {
+        $this->app->singleton('laravolt.workflow', \Laravolt\Workflow\Contracts\Workflow::class);
+        $this->app->bind(\Laravolt\Workflow\Contracts\Workflow::class, function () {
             return new Workflow();
         });
 
         $this->commands([
             ImportCamundaForm::class,
             GenerateTableByProcessDefinition::class,
-            SyncModule::class
+            SyncModule::class,
         ]);
     }
 
@@ -35,12 +34,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if ($this->app->bound('laravolt.menu')) {
             app('laravolt.menu')->system->add('Form Fields', url('managementcamunda'))
-                                        ->data('icon', 'wpforms')
-                                        ->active('managementcamunda/*');
+                ->data('icon', 'wpforms')
+                ->active('managementcamunda/*');
 
             app('laravolt.menu')->system->add('Segment', url('segment'))
-                                        ->data('icon', 'wpforms')
-                                        ->active('segment/*');
+                ->data('icon', 'wpforms')
+                ->active('segment/*');
 
             $menu = app('laravolt.menu')->system
                 ->add('Workflow')
@@ -54,12 +53,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->registerMenu()
-             ->bootRoutes()
-             ->bootMigrations()
-             ->bootTranslations()
-             ->bootViews()
-             ->bootMacro()
-             ->bindModule();
+            ->bootRoutes()
+            ->bootMigrations()
+            ->bootTranslations()
+            ->bootViews()
+            ->bootMacro()
+            ->bindModule();
     }
 
     protected function bootRoutes()

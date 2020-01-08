@@ -1,13 +1,13 @@
 <?php
 
-namespace Laravolt\Camunda\Controllers;
+namespace Laravolt\Workflow\Controllers;
 
-use Laravolt\Camunda\CamundaForm;
-use Laravolt\Camunda\Models\Segments;
+use Laravolt\Workflow\CamundaForm;
+use Laravolt\Workflow\Models\Segments;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Laravolt\Camunda\TableView\SegmentTableView;
+use Laravolt\Workflow\TableView\SegmentTableView;
 
 class SegmentController extends Controller
 {

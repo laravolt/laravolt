@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda\Services\FormAdapter;
+namespace Laravolt\Workflow\Services\FormAdapter;
 
 use App\Services\FormAdapter\Fields\StringAdapter;
 use Illuminate\Database\Eloquent\Collection;

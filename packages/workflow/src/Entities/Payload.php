@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Entities;
+namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
-use Laravolt\Camunda\FieldFormatter\CamundaFormatter;
-use Laravolt\Camunda\FieldFormatter\DbFormatter;
-use Laravolt\Camunda\Models\Form;
+use Laravolt\Workflow\FieldFormatter\CamundaFormatter;
+use Laravolt\Workflow\FieldFormatter\DbFormatter;
+use Laravolt\Workflow\Models\Form;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class Payload extends DataTransferObject

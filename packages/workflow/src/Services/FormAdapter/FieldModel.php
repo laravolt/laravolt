@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravolt\Camunda\Services\FormAdapter;
+namespace Laravolt\Workflow\Services\FormAdapter;
 
-use Laravolt\Camunda\CamundaForm;
+use Laravolt\Workflow\CamundaForm;
 
 class FieldModel extends CamundaForm
 {

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Controllers;
+namespace Laravolt\Workflow\Controllers;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Laravolt\Camunda\Models\ProcessInstanceHistory;
+use Laravolt\Workflow\Models\ProcessInstanceHistory;
 use Laravolt\Jasper\Jasper;
-use Laravolt\Camunda\Contracts\Workflow;
-use Laravolt\Camunda\Entities\Module;
-use Laravolt\Camunda\Presenters\TaskForm;
-use Laravolt\Camunda\Requests\BasicRequest;
+use Laravolt\Workflow\Contracts\Workflow;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Presenters\TaskForm;
+use Laravolt\Workflow\Requests\BasicRequest;
 
 class ProcessController extends Controller
 {

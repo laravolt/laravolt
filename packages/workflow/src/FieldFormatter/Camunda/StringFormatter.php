@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\FieldFormatter\Camunda;
+namespace Laravolt\Workflow\FieldFormatter\Camunda;
 
 class StringFormatter
 {

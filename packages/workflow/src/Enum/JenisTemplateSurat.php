@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda\Enum;
+namespace Laravolt\Workflow\Enum;
 
 use BenSampo\Enum\Enum;
 

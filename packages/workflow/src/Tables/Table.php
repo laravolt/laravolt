@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Tables;
+namespace Laravolt\Workflow\Tables;
 
 use Carbon\Carbon;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\TableView;
-use Laravolt\Camunda\Entities\Module;
-use Laravolt\Camunda\Entities\ViewQuery;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Entities\ViewQuery;
 
-abstract class Table extends TableView implements \Laravolt\Camunda\Contracts\Table
+abstract class Table extends TableView implements \Laravolt\Workflow\Contracts\Table
 {
     /** @var Module */
     protected $module;
@@ -31,7 +31,7 @@ abstract class Table extends TableView implements \Laravolt\Camunda\Contracts\Ta
 
     public function buttons()
     {
-        return \Laravolt\Camunda\Tables\Columns\ProcessInstanceButton::make()
+        return \Laravolt\Workflow\Tables\Columns\ProcessInstanceButton::make()
             ->setModule($this->module);
     }
 

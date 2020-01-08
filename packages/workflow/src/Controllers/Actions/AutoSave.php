@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Controllers\Actions;
+namespace Laravolt\Workflow\Controllers\Actions;
 
 use Illuminate\Support\Str;
-use Laravolt\Camunda\Entities\Module;
-use Laravolt\Camunda\Models\AutoSave as AutoSaveModel;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Models\AutoSave as AutoSaveModel;
 
 class AutoSave
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda;
+namespace Laravolt\Workflow;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

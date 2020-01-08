@@ -1084,6 +1084,62 @@
             "time": "2019-03-10T08:50:58+00:00"
         },
         {
+            "name": "laravolt/camunda",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravolt/camunda.git",
+                "reference": "d840b9a0f158ce3633a9b9ff946bb598423c91d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravolt/camunda/zipball/d840b9a0f158ce3633a9b9ff946bb598423c91d6",
+                "reference": "d840b9a0f158ce3633a9b9ff946bb598423c91d6",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5",
+                "illuminate/support": "^6.0",
+                "php": ">=7.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravolt\\Camunda\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravolt\\Camunda\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bayu Hendra Winata",
+                    "email": "uyab.exe@gmail.com",
+                    "homepage": "https://laravolt.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "High level model, something like Eloquent, to interact with Camunda resources via REST API",
+            "homepage": "https://github.com/laravolt/camunda",
+            "keywords": [
+                "camunda",
+                "laravel",
+                "laravolt"
+            ],
+            "time": "2020-01-08T00:26:24+00:00"
+        },
+        {
             "name": "laravolt/semantic-form",
             "version": "dev-master",
             "source": {
