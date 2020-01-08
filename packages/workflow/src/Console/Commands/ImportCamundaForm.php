@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Workflow\Console;
+namespace Laravolt\Workflow\Console\Commands;
 
 use Laravolt\Workflow\CamundaForm;
 use Laravolt\Workflow\Services\CamundaService;

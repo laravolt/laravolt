@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
+use Laravolt\Workflow\Console\Commands\GenerateTableByProcessDefinition;
 use Laravolt\Workflow\Console\ImportCamundaForm;
 use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Console\Commands\SyncModule;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -22,7 +24,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         $this->commands([
-            ImportCamundaForm::class
+            ImportCamundaForm::class,
+            GenerateTableByProcessDefinition::class,
+            SyncModule::class,
         ]);
     }
 
@@ -30,12 +34,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if ($this->app->bound('laravolt.menu')) {
             app('laravolt.menu')->system->add('Form Fields', url('managementcamunda'))
-                                        ->data('icon', 'wpforms')
-                                        ->active('managementcamunda/*');
+                ->data('icon', 'wpforms')
+                ->active('managementcamunda/*');
 
             app('laravolt.menu')->system->add('Segment', url('segment'))
-                                        ->data('icon', 'wpforms')
-                                        ->active('segment/*');
+                ->data('icon', 'wpforms')
+                ->active('segment/*');
 
             $menu = app('laravolt.menu')->system
                 ->add('Workflow')
@@ -49,12 +53,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->registerMenu()
-             ->bootRoutes()
-             ->bootMigrations()
-             ->bootTranslations()
-             ->bootViews()
-             ->bootMacro()
-             ->bindModule();
+            ->bootRoutes()
+            ->bootMigrations()
+            ->bootTranslations()
+            ->bootViews()
+            ->bootMacro()
+            ->bindModule();
     }
 
     protected function bootRoutes()
