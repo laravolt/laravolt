@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Workflow;
+namespace Laravolt\Workflow\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

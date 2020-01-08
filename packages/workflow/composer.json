@@ -40,7 +40,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Laravolt\\Camunda\\": "src"
+      "Laravolt\\Workflow\\": "src"
     }
   },
   "scripts": {
@@ -55,7 +55,7 @@
         "Laravolt\\Workflow\\ServiceProvider"
       ],
       "aliases": {
-        "Camunda": "Laravolt\\Workflow\\Facade"
+        "Workflow": "Laravolt\\Workflow\\Facade"
       }
     }
   }

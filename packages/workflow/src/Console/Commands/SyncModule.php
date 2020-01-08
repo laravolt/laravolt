@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravolt\Camunda\Console\Commands;
+namespace Laravolt\Workflow\Console\Commands;
 
 use Illuminate\Console\Command;
-use Laravolt\Camunda\Models\Module;
+use Laravolt\Workflow\Models\Module;
 
 
 class SyncModule extends Command

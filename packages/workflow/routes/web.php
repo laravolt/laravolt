@@ -1,10 +1,10 @@
 <?php
 
-use Laravolt\Camunda\Controllers\Actions\AutoSave;
-use Laravolt\Camunda\Controllers\PrintController;
-use Laravolt\Camunda\Controllers\ProcessController;
-use Laravolt\Camunda\Controllers\TableController;
-use Laravolt\Camunda\Controllers\TaskController;
+use Laravolt\Workflow\Controllers\Actions\AutoSave;
+use Laravolt\Workflow\Controllers\PrintController;
+use Laravolt\Workflow\Controllers\ProcessController;
+use Laravolt\Workflow\Controllers\TableController;
+use Laravolt\Workflow\Controllers\TaskController;
 
 $router->group(
     [
@@ -13,9 +13,9 @@ $router->group(
         'middleware' => config('laravolt.workflow.routes.middleware'),
     ],
     function ($router) {
-        $router->get('module', [\Laravolt\Camunda\Controllers\ModuleController::class, 'index'])->name('module.index');
-        $router->get('module/{id}/edit', [\Laravolt\Camunda\Controllers\ModuleController::class, 'edit'])->name('module.edit');
-        $router->put('module/{id}', [\Laravolt\Camunda\Controllers\ModuleController::class, 'update'])->name('module.update');
+        $router->get('module', [\Laravolt\Workflow\Controllers\ModuleController::class, 'index'])->name('module.index');
+        $router->get('module/{id}/edit', [\Laravolt\Workflow\Controllers\ModuleController::class, 'edit'])->name('module.edit');
+        $router->put('module/{id}', [\Laravolt\Workflow\Controllers\ModuleController::class, 'update'])->name('module.update');
 
         $router->get('table', [TableController::class, 'index'])->name('table.index');
 
@@ -35,7 +35,7 @@ $router->group(
 
         $router->delete('{module}/{id}', [ProcessController::class, 'destroy'])->name('process.destroy');
 
-        $router->get('process/{id}/xml', \Laravolt\Camunda\Controllers\ProcessXmlController::class)->name('process.xml');
+        $router->get('process/{id}/xml', \Laravolt\Workflow\Controllers\ProcessXmlController::class)->name('process.xml');
 
         $router->post('{module}/task/{id}', [TaskController::class, 'store'])->name('task.store');
         $router->get('{module}/task/{id}/edit', [TaskController::class, 'edit'])->name('task.edit');
@@ -45,10 +45,10 @@ $router->group(
 );
 
 Route::group(['middleware' => ['web', 'auth']], function () {
-    Route::get('managementcamunda/download', ['uses' => '\Laravolt\Camunda\Controllers\ManagementCamundaController@download'])->name('managementcamunda.download');
-    Route::resource('managementcamunda', '\Laravolt\Camunda\Controllers\ManagementCamundaController');
-    Route::resource('segment', \Laravolt\Camunda\Controllers\SegmentController::class);
-    Route::get('getTasks', '\Laravolt\Camunda\Controllers\ManagementCamundaController@getTasks');
-    Route::get('getFields', '\Laravolt\Camunda\Controllers\ManagementCamundaController@getFields');
-    Route::get('getAttributes', '\Laravolt\Camunda\Controllers\ManagementCamundaController@getAttributes');
+    Route::get('managementcamunda/download', ['uses' => '\Laravolt\Workflow\Controllers\ManagementCamundaController@download'])->name('managementcamunda.download');
+    Route::resource('managementcamunda', '\Laravolt\Workflow\Controllers\ManagementCamundaController');
+    Route::resource('segment', \Laravolt\Workflow\Controllers\SegmentController::class);
+    Route::get('getTasks', '\Laravolt\Workflow\Controllers\ManagementCamundaController@getTasks');
+    Route::get('getFields', '\Laravolt\Workflow\Controllers\ManagementCamundaController@getFields');
+    Route::get('getAttributes', '\Laravolt\Workflow\Controllers\ManagementCamundaController@getAttributes');
 });
