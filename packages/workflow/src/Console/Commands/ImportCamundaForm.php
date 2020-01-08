@@ -2,7 +2,7 @@
 
 namespace Laravolt\Workflow\Console\Commands;
 
-use Laravolt\Workflow\CamundaForm;
+use Laravolt\Workflow\Models\CamundaForm;
 use Laravolt\Workflow\Services\CamundaService;
 use DB;
 use Illuminate\Console\Command;

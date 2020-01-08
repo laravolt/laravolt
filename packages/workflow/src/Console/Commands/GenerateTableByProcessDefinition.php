@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravolt\Camunda\Console\Commands;
+namespace Laravolt\Workflow\Console\Commands;
 
 use Illuminate\Console\Command;
-use Laravolt\Camunda\CamundaForm;
+use Laravolt\Workflow\Models\CamundaForm;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 
