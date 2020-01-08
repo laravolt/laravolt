@@ -16,6 +16,7 @@ class CreateTableWorkflowModule extends Migration
         Schema::create('workflow_module', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('key')->unique();
+            $table->string('process_definition_key')->nullable();
             $table->string('label');
             $table->timestamps();
         });
