@@ -21,7 +21,8 @@
     "require": {
         "php": ">=7.2",
         "illuminate/support": "^6.0",
-        "laravolt/suitable": "^3.6"
+        "laravolt/suitable": "^3.6",
+        "laravolt/support": "^2.0"
     },
     "autoload": {
         "psr-4": {

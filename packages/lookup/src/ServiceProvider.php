@@ -4,26 +4,22 @@ declare(strict_types=1);
 
 namespace Laravolt\Lookup;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+use Illuminate\Support\Arr;
+use Laravolt\Support\Base\BaseServiceProvider;
+
+class ServiceProvider extends BaseServiceProvider
 {
-    public function register()
-    {
-        $file = realpath(__DIR__ . '/../config/lookup.php');
-        $this->mergeConfigFrom($file, 'laravolt.lookup');
-        $this->publishes([$file => config_path('laravolt/lookup.php')], 'config');
-    }
+    protected $name = 'lookup';
 
     public function boot()
     {
-        $this->bootRoutes()
-            ->bootMigrations()
-            ->bootViews()
-            ->bootMenu();
+        parent::boot();
+        $this->bootMenu();
     }
 
     protected function bootMenu()
     {
-        if ($this->app->bound('laravolt.menu') && config('laravolt.lookup.menu.enabled')) {
+        if ($this->app->bound('laravolt.menu') && Arr::get($this->config, 'menu.enabled')) {
             $menu = app('laravolt.menu')->system;
             $group = $menu->add(__('Lookup'))
                 ->data('icon', 'list')
@@ -36,40 +32,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 }
             }
         }
-
-        return $this;
-    }
-
-    protected function bootRoutes()
-    {
-        if (config('laravolt.lookup.route.enabled')) {
-            $router = $this->app['router'];
-            require __DIR__ . '/../routes/web.php';
-        }
-
-        return $this;
-    }
-
-    protected function bootViews()
-    {
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'lookup');
-        $this->publishes(
-            [realpath(__DIR__ . '/../resources/views') => base_path('resources/views/vendor/lookup')],
-            'views'
-        );
-
-        return $this;
-    }
-
-    protected function bootMigrations()
-    {
-        $path = realpath(__DIR__ . '/../database/migrations');
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom($path);
-        }
-        $this->publishes([
-            $path => database_path('migrations'),
-        ], 'migrations');
 
         return $this;
     }
