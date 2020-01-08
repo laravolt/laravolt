@@ -8,8 +8,8 @@ use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Routing\Controller;
-use Laravolt\Workflow\Models\ProcessDefinition;
-use Laravolt\Workflow\Models\ProcessInstance;
+use Laravolt\Camunda\Models\ProcessDefinition;
+use Laravolt\Camunda\Models\ProcessInstance;
 use Laravolt\Workflow\Contracts\Workflow;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Requests\BasicRequest;
@@ -39,9 +39,9 @@ class TaskController extends Controller
                 $this->checkSubInstance($task);
             }
 
-            $message = __('camunda::message.task.submitted', ['task_name' => $task->name]);
+            $message = __('workflow::message.task.submitted', ['task_name' => $task->name]);
             if ($request->isDraft()) {
-                $message = __('camunda::message.task.drafted', ['task_name' => $task->name]);
+                $message = __('workflow::message.task.drafted', ['task_name' => $task->name]);
             }
 
             if (request()->wantsJson()) {
@@ -50,8 +50,11 @@ class TaskController extends Controller
 
             return redirect()->back()->withSuccess($message);
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         } catch (ServerException $e) {
+            app('sentry')->captureException($e);
+
             throw new \Exception(json_decode((string) $e->getResponse()->getBody())->message);
         }
     }
@@ -61,11 +64,12 @@ class TaskController extends Controller
         try {
             $form = $this->workflow->editTaskForm($module, $taskId);
 
-            return view('camunda::task.edit', compact('form', 'module'));
+            return view('workflow::task.edit', compact('form', 'module'));
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         } catch (\DomainException $e) {
-            return redirect()->route('camunda::process.index', $module->id)->withError($e->getMessage());
+            return redirect()->route('workflow::process.index', $module->id)->withError($e->getMessage());
         }
     }
 
@@ -73,12 +77,13 @@ class TaskController extends Controller
     {
         try {
             $mapping = $this->workflow->updateTask($module, $taskId, $request->all());
-            $message = __('camunda::message.task.updated', ['task_name' => $module->getTask($mapping->task_name)['label'] ?? '']);
+            $message = __('workflow::message.task.updated', ['task_name' => $module->getTask($mapping->task_name)['label'] ?? '']);
 
             return redirect()
-                ->route('camunda::process.show', [$module->id, $mapping->process_instance_id])
+                ->route('workflow::process.show', [$module->id, $mapping->process_instance_id])
                 ->withSuccess($message);
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }

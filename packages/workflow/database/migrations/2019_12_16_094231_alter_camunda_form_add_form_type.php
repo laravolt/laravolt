@@ -14,7 +14,7 @@ class AlterCamundaFormAddFormType extends Migration
     public function up()
     {
         Schema::table('camunda_form', function (Blueprint $table) {
-            $table->string('type')->default(\Laravolt\Camunda\Enum\FormType::MAIN_FORM)->comment("See " . \Laravolt\Workflow\Enum\FormType::class);
+            $table->string('type')->default(\Laravolt\Workflow\Enum\FormType::MAIN_FORM)->comment("See " . \Laravolt\Workflow\Enum\FormType::class);
         });
     }
 

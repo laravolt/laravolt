@@ -14,7 +14,7 @@ class AddStatusToCamundaTask extends Migration
     public function up()
     {
         Schema::table('camunda_task', function (Blueprint $table) {
-            $table->string('status')->after('form_id')->default(\Laravolt\Camunda\Enum\TaskStatus::NEW);
+            $table->string('status')->after('form_id')->default(\Laravolt\Workflow\Enum\TaskStatus::NEW);
             $table->index('status');
         });
     }

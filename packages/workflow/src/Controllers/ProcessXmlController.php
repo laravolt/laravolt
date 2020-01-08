@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Controllers;
 
-use Laravolt\Workflow\Models\ProcessInstanceHistory;
+use Laravolt\Camunda\Models\ProcessInstanceHistory;
 
 class ProcessXmlController
 {

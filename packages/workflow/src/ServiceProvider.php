@@ -15,7 +15,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(realpath(__DIR__ . '/../config/camunda.php'), 'laravolt.camunda');
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/workflow.php'), 'laravolt.workflow');
 
         $this->app->singleton('laravolt.workflow', \Laravolt\Workflow\Contracts\Workflow::class);
@@ -73,14 +72,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootTranslations()
     {
-        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/lang'), 'camunda');
+        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/lang'), 'workflow');
 
         return $this;
     }
 
     protected function bootViews()
     {
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'camunda');
+        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'workflow');
         $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views/managementcamunda'), 'managementcamunda');
         $this->loadViewsFrom(storage_path('surat-compiled'), 'surat-compiled');
 

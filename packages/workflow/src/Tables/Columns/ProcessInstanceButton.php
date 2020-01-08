@@ -16,7 +16,7 @@ class ProcessInstanceButton extends RestfulButton
 
     public static function make($header = null, $dummy = null)
     {
-        return parent::make('camunda::process', $header);
+        return parent::make('workflow::process', $header);
     }
 
     public function setModule($module)
@@ -28,7 +28,7 @@ class ProcessInstanceButton extends RestfulButton
 
     public function cell($data, $collection, $loop)
     {
-        return view('camunda::components.process-actions', ['module' => $this->module, 'data' => $data])->render();
+        return view('workflow::components.process-actions', ['module' => $this->module, 'data' => $data])->render();
     }
 
     public function headerAttributes()
