@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravolt\Camunda\Console;
+namespace Laravolt\Workflow\Console;
 
-use Laravolt\Camunda\CamundaForm;
-use Laravolt\Camunda\Services\CamundaService;
+use Laravolt\Workflow\CamundaForm;
+use Laravolt\Workflow\Services\CamundaService;
 use DB;
 use Illuminate\Console\Command;
 use SimpleXMLElement;

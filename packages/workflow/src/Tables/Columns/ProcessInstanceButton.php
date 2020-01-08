@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Tables\Columns;
+namespace Laravolt\Workflow\Tables\Columns;
 
 use Laravolt\Suitable\Columns\RestfulButton;
 

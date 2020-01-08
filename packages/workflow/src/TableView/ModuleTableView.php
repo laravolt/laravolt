@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\TableView;
+namespace Laravolt\Workflow\TableView;
 
 use Laravolt\Suitable\Columns\Dummy;
 use Laravolt\Suitable\Columns\Id;

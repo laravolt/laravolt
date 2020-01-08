@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda;
+namespace Laravolt\Workflow;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Laravolt\Camunda\Console\ImportCamundaForm;
-use Laravolt\Camunda\Entities\Module;
+use Laravolt\Workflow\Console\ImportCamundaForm;
+use Laravolt\Workflow\Entities\Module;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -16,8 +16,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/camunda.php'), 'laravolt.camunda');
         $this->mergeConfigFrom(realpath(__DIR__ . '/../config/workflow.php'), 'laravolt.workflow');
 
-        $this->app->singleton('laravolt.workflow', \Laravolt\Camunda\Contracts\Workflow::class);
-        $this->app->bind(\Laravolt\Camunda\Contracts\Workflow::class, function () {
+        $this->app->singleton('laravolt.workflow', \Laravolt\Workflow\Contracts\Workflow::class);
+        $this->app->bind(\Laravolt\Workflow\Contracts\Workflow::class, function () {
             return new Workflow();
         });
 

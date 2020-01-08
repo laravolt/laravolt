@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Controllers;
+namespace Laravolt\Workflow\Controllers;
 
-use Laravolt\Camunda\Enum\JenisTemplateSurat;
-use Laravolt\Camunda\Models\TemplateSurat;
+use Laravolt\Workflow\Enum\JenisTemplateSurat;
+use Laravolt\Workflow\Models\TemplateSurat;
 use HTMLtoOpenXML\Parser;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use Laravolt\Camunda\Models\ProcessInstanceHistory;
+use Laravolt\Workflow\Models\ProcessInstanceHistory;
 use Laravolt\Jasper\Jasper;
-use Laravolt\Camunda\Entities\Module;
-use Laravolt\Camunda\Traits\DataRetrieval;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Traits\DataRetrieval;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class PrintController extends Controller

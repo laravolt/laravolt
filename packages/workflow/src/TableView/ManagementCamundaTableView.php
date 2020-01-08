@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravolt\Camunda\TableView;
+namespace Laravolt\Workflow\TableView;
 
-use Laravolt\Camunda\CamundaForm;
+use Laravolt\Workflow\CamundaForm;
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;

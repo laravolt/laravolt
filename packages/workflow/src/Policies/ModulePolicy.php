@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravolt\Camunda\Policies;
+namespace Laravolt\Workflow\Policies;
 
 use App\User;
 use Illuminate\Support\Str;
-use Laravolt\Camunda\Models\Module;
+use Laravolt\Workflow\Models\Module;
 
 class ModulePolicy
 {

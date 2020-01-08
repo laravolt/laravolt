@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Contracts;
+namespace Laravolt\Workflow\Contracts;
 
 interface Table
 {

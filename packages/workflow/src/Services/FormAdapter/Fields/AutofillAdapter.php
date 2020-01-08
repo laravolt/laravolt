@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Services\FormAdapter\Fields;
+namespace Laravolt\Workflow\Services\FormAdapter\Fields;
 
-use Laravolt\Camunda\Services\FormAdapter\FieldAdapter;
+use Laravolt\Workflow\Services\FormAdapter\FieldAdapter;
 
 class AutofillAdapter extends FieldAdapter
 {

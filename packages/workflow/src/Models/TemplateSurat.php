@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravolt\Camunda\Models;
+namespace Laravolt\Workflow\Models;
 
-use Laravolt\Camunda\Enum\JenisTemplateSurat;
+use Laravolt\Workflow\Enum\JenisTemplateSurat;
 use Illuminate\Database\Eloquent\Model;
 
 class TemplateSurat extends Model

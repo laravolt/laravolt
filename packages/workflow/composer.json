@@ -35,7 +35,8 @@
     "spatie/data-transfer-object": "^1.10",
     "watson/rememberable": "^3.2",
     "laravolt/semantic-form": "dev-master as 2.x-dev",
-    "maatwebsite/excel": "^3.1"
+    "maatwebsite/excel": "^3.1",
+    "laravolt/camunda": "^1.0"
   },
   "autoload": {
     "psr-4": {
@@ -51,10 +52,10 @@
     },
     "laravel": {
       "providers": [
-        "Laravolt\\Camunda\\ServiceProvider"
+        "Laravolt\\Workflow\\ServiceProvider"
       ],
       "aliases": {
-        "Camunda": "Laravolt\\Camunda\\Facade"
+        "Camunda": "Laravolt\\Workflow\\Facade"
       }
     }
   }

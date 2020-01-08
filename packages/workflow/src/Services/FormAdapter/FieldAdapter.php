@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda\Services\FormAdapter;
+namespace Laravolt\Workflow\Services\FormAdapter;
 
 abstract class FieldAdapter implements FieldAdapterInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda\TableView;
+namespace Laravolt\Workflow\TableView;
 
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;

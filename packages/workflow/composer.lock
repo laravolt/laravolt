@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6828c7ecc32f94a35a7e5645fd8a764",
+    "content-hash": "b2dbbb394d604e897b6703590a7f113a",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
@@ -1084,17 +1084,73 @@
             "time": "2019-03-10T08:50:58+00:00"
         },
         {
+            "name": "laravolt/camunda",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravolt/camunda.git",
+                "reference": "d840b9a0f158ce3633a9b9ff946bb598423c91d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravolt/camunda/zipball/d840b9a0f158ce3633a9b9ff946bb598423c91d6",
+                "reference": "d840b9a0f158ce3633a9b9ff946bb598423c91d6",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5",
+                "illuminate/support": "^6.0",
+                "php": ">=7.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravolt\\Camunda\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravolt\\Camunda\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bayu Hendra Winata",
+                    "email": "uyab.exe@gmail.com",
+                    "homepage": "https://laravolt.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "High level model, something like Eloquent, to interact with Camunda resources via REST API",
+            "homepage": "https://github.com/laravolt/camunda",
+            "keywords": [
+                "camunda",
+                "laravel",
+                "laravolt"
+            ],
+            "time": "2020-01-08T00:26:24+00:00"
+        },
+        {
             "name": "laravolt/semantic-form",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravolt/semantic-form.git",
-                "reference": "268ba8afa5c757e3028275fbede7f5a2d0561cc5"
+                "reference": "10a492df36407cbec72c0ddb09ca03b60bcba47b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravolt/semantic-form/zipball/268ba8afa5c757e3028275fbede7f5a2d0561cc5",
-                "reference": "268ba8afa5c757e3028275fbede7f5a2d0561cc5",
+                "url": "https://api.github.com/repos/laravolt/semantic-form/zipball/10a492df36407cbec72c0ddb09ca03b60bcba47b",
+                "reference": "10a492df36407cbec72c0ddb09ca03b60bcba47b",
                 "shasum": ""
             },
             "require": {
@@ -1153,7 +1209,7 @@
                 "laravolt",
                 "semantic ui"
             ],
-            "time": "2019-12-30T22:32:44+00:00"
+            "time": "2020-01-07T14:44:03+00:00"
         },
         {
             "name": "laravolt/suitable",

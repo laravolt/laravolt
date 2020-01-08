@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda\Services\FormAdapter\Fields;
+namespace Laravolt\Workflow\Services\FormAdapter\Fields;
 
 class FileAdapter extends StringAdapter
 {

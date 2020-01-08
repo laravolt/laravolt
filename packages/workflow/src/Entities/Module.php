@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\Entities;
+namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravolt\Suitable\Tables\BasicTable;
-use Laravolt\Camunda\Tables\Table;
+use Laravolt\Workflow\Tables\Table;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class Module extends DataTransferObject
@@ -24,7 +24,7 @@ class Module extends DataTransferObject
     /** @var string|null */
     public $startTaskName;
 
-    /** @var \Laravolt\Camunda\Tables\Table|\Laravolt\Suitable\Tables\BasicTable */
+    /** @var \Laravolt\Workflow\Tables\Table|\Laravolt\Suitable\Tables\BasicTable */
     public $table;
 
     /** @var array */
@@ -115,6 +115,6 @@ class Module extends DataTransferObject
 
     public function getModel()
     {
-        return \Laravolt\Camunda\Models\Module::where('key', $this->id)->rememberForever()->cacheDriver('array')->firstOrFail();
+        return \Laravolt\Workflow\Models\Module::where('key', $this->id)->rememberForever()->cacheDriver('array')->firstOrFail();
     }
 }

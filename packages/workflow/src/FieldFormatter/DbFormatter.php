@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Camunda\FieldFormatter;
+namespace Laravolt\Workflow\FieldFormatter;
 
 use Illuminate\Support\Arr;
-use Laravolt\Camunda\FieldFormatter\Db\DbFormatterFactory;
+use Laravolt\Workflow\FieldFormatter\Db\DbFormatterFactory;
 
 class DbFormatter
 {
