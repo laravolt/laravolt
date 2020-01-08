@@ -16,7 +16,7 @@ class ModuleController extends Controller
 {
     public function index()
     {
-        $modules = Module::all()->sort(function ($a, $b) {
+        $modules = \Laravolt\Workflow\Models\Module::all()->sort(function ($a, $b) {
             if (! $a->process_definition_key) {
                 return 1;
             }
@@ -29,10 +29,10 @@ class ModuleController extends Controller
         });
 
         $table = (new ModuleTableView($modules))->decorate(function (Builder $builder) {
-            $builder->row('camunda::module._row');
+            $builder->row('workflow::module._row');
         });
 
-        return $table->view('camunda::module.index');
+        return $table->view('workflow::module.index');
     }
 
     public function edit($id)
@@ -43,7 +43,7 @@ class ModuleController extends Controller
             return [$item->getKey() => $item->toArray()];
         });
 
-        return view('camunda::module.edit', compact('module', 'roles', 'moduleRoles'));
+        return view('workflow::module.edit', compact('module', 'roles', 'moduleRoles'));
     }
 
     public function update($id)

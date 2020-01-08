@@ -6,7 +6,6 @@ namespace Laravolt\Workflow\Controllers\Actions;
 
 use Illuminate\Support\Str;
 use Laravolt\Workflow\Entities\Module;
-use Laravolt\Workflow\Models\AutoSave as AutoSaveModel;
 
 class AutoSave
 {
@@ -20,7 +19,7 @@ class AutoSave
             ->reject(function ($value, $key) {
                 return Str::startsWith($key, '_');
             });
-        $autosave = AutoSaveModel::updateOrCreate($primaryData, ['data' => $data]);
+        $autosave = \Laravolt\Workflow\Models\AutoSave::updateOrCreate($primaryData, ['data' => $data]);
 
         return response()->json($autosave->toArray());
     }

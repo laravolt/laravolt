@@ -7,7 +7,7 @@ namespace Laravolt\Workflow\Presenters;
 use App\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Laravolt\Workflow\Models\Task;
+use Laravolt\Camunda\Models\Task;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Enum\TaskStatus;
 use Laravolt\Workflow\Models\AutoSave;
@@ -47,7 +47,7 @@ class TaskForm
     {
         $this->task = $task;
         $this->taskConfig = $module->getTask($this->task->taskDefinitionKey);
-        $this->url = route('camunda::task.store', [$module->id, $this->task->id]);
+        $this->url = route('workflow::task.store', [$module->id, $this->task->id]);
         $this->processInstance = $this->task->processInstance();
         $this->processDefinition = $this->processInstance->processDefinition();
         $this->fields = Form::getFields($this->processDefinition->key, $this->task->taskDefinitionKey);
@@ -86,9 +86,12 @@ class TaskForm
 
             if (! $draft) {
                 $definition = collect($definition)->transform(function ($item) {
-                    if (Arr::get($item, 'value') !== null && Arr::get($item, 'type') !== 'checkbox') {
-                        $item['readonly'] = true;
-                    }
+
+                    // Uncomment this if:
+                    // Value yang sudah diisikan di task sebelumnya tidak bisa diedit
+                    // if (Arr::get($item, 'value') !== null && Arr::get($item, 'type') !== 'checkbox') {
+                    //     $item['readonly'] = true;
+                    // }
 
                     return $item;
                 })->toArray();

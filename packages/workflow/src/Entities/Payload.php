@@ -21,11 +21,11 @@ class Payload extends DataTransferObject
     /** @var Illuminate\Database\Eloquent\Collection */
     public $fields;
 
-    public static function make(string $processDefinitionKey, string $taskName, ?array $rawData)
+    public static function make(Module $module, string $taskName, ?array $rawData)
     {
-        $fields = Form::getFields($processDefinitionKey, $taskName);
+        $fields = Form::getFields($module->processDefinitionKey, $taskName);
 
-        $data = static::mutateData($taskName, $rawData);
+        $data = static::mutateData($module, $taskName, $rawData);
 
         return new self([
             'taskName' => $taskName,
@@ -64,9 +64,8 @@ class Payload extends DataTransferObject
             ->sortBy('type');
     }
 
-    public static function mutateData($taskName, $rawData)
+    protected static function mutateData(Module $module, $taskName, $rawData)
     {
-        $module = request()->route('module');
         $task = $module->getTask($taskName);
 
         $data = [];

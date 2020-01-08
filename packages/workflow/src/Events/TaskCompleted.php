@@ -6,17 +6,17 @@ namespace Laravolt\Workflow\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;
-use Laravolt\Camunda\Models\ProcessInstance;
+use Laravolt\Camunda\Models\Task;
 use Laravolt\Workflow\Entities\Payload;
 
-class ProcessStarted
+class TaskCompleted
 {
     use SerializesModels;
 
     /**
-     * @var ProcessInstance
+     * @var Task
      */
-    public $processInstance;
+    public $task;
 
     /**
      * @var Payload
@@ -31,9 +31,9 @@ class ProcessStarted
     /**
      * ProcessStarted constructor.
      */
-    public function __construct(ProcessInstance $processInstance, Payload $payload, Model $user)
+    public function __construct(Task $task, Payload $payload, Model $user)
     {
-        $this->processInstance = $processInstance;
+        $this->task = $task;
         $this->payload = $payload;
         $this->user = $user;
     }

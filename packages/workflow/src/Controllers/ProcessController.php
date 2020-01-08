@@ -8,8 +8,7 @@ use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Arr;
-use Laravolt\Workflow\Models\ProcessInstanceHistory;
+use Laravolt\Camunda\Models\ProcessInstanceHistory;
 use Laravolt\Jasper\Jasper;
 use Laravolt\Workflow\Contracts\Workflow;
 use Laravolt\Workflow\Entities\Module;
@@ -40,7 +39,7 @@ class ProcessController extends Controller
     {
         $this->authorize('view', $module->getModel());
 
-        $view = $module->view['index'] ?? 'camunda::process.index';
+        $view = $module->view['index'] ?? 'workflow::process.index';
 
         return $module->table->view($view, compact('module'));
     }
@@ -49,13 +48,14 @@ class ProcessController extends Controller
     {
         $this->authorize('create', $module->getModel());
 
-        $view = $module->view['create'] ?? 'camunda::process.create';
+        $view = $module->view['create'] ?? 'workflow::process.create';
 
         try {
             $form = $this->workflow->createStartForm($module);
 
             return view($view, compact('form', 'module'));
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -74,35 +74,37 @@ class ProcessController extends Controller
 
             $nextForm = TaskForm::make($module, $processInstance->currentTask());
 
-            $message = __('camunda::message.process.started',
+            $message = __('workflow::message.process.started',
                 ['current_task' => $form->title(), 'next_task' => $nextForm->title()]);
 
             return redirect()
-                ->route('camunda::process.show', [$module->id, $processInstance->id])
+                ->route('workflow::process.show', [$module->id, $processInstance->id])
                 ->withSuccess($message);
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
 
     public function show(Module $module, $processInstanceId)
     {
-        $view = $module->view['show'] ?? 'camunda::process.show';
+        $this->authorize('view', $module->getModel());
+
+        $view = $module->view['show'] ?? 'workflow::process.show';
 
         try {
             $processInstance = (new ProcessInstanceHistory($processInstanceId))->fetch();
             $tasks = $processInstance->tasks($module->getTasks());
 
             $completedTasks = $this->workflow->completedTasks($processInstanceId, $module->getTasks());
-
             $forms = [];
             $otherTasks = [];
             foreach ($tasks as $task) {
                 $taskConfig = $module->getTask($task->taskDefinitionKey);
-                if (Arr::get($taskConfig, 'attributes.readonly', false)) {
-                    $otherTasks[] = ['model' => $task, 'config' => $taskConfig];
-                } else {
+                if (auth()->user()->can('edit', [$task, $taskConfig])) {
                     $forms[] = TaskForm::make($module, $task);
+                } else {
+                    $otherTasks[] = ['model' => $task, 'config' => $taskConfig];
                 }
             }
 
@@ -111,6 +113,7 @@ class ProcessController extends Controller
                 compact('module', 'processInstance', 'tasks', 'completedTasks', 'forms', 'otherTasks')
             );
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -122,8 +125,9 @@ class ProcessController extends Controller
         try {
             $form = $this->workflow->editStartForm($module, $processInstanceId);
 
-            return view('camunda::process.edit', compact('form'));
+            return view('workflow::process.edit', compact('form'));
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -136,9 +140,10 @@ class ProcessController extends Controller
             $this->workflow->updateProcess($processInstanceId, $request->all());
 
             return redirect()
-                ->route('camunda::process.show', [$module->id, $processInstanceId])
+                ->route('workflow::process.show', [$module->id, $processInstanceId])
                 ->withSuccess('OK');
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -154,6 +159,7 @@ class ProcessController extends Controller
                 ->back()
                 ->withSuccess('Proses berhasil dihapus');
         } catch (ClientException $e) {
+            app('sentry')->captureException($e);
             abort($e->getCode(), $e->getMessage());
         }
     }

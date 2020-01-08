@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Controllers;
 
-use Laravolt\Workflow\Enum\JenisTemplateSurat;
-use Laravolt\Workflow\Models\TemplateSurat;
+use App\Enums\JenisTemplateSurat;
+use App\TemplateSurat;
 use HTMLtoOpenXML\Parser;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use Laravolt\Workflow\Models\ProcessInstanceHistory;
+use Laravolt\Camunda\Models\ProcessInstanceHistory;
 use Laravolt\Jasper\Jasper;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Traits\DataRetrieval;
@@ -42,7 +42,7 @@ class PrintController extends Controller
         }
         $extension = pathinfo($path)['extension'] ?? 'docx';
 
-        return view('camunda::print.index',
+        return view('workflow::print.index',
             compact('path', 'module', 'processInstance', 'completedTasks', 'template', 'extension'));
     }
 
@@ -108,5 +108,14 @@ class PrintController extends Controller
         $document->saveAs(storage_path($storagePath));
 
         return 'storage/' . $assetPath;
+
+        // download file
+        // $tempFile = $template->save("php://output");
+        // header('Content-Type: application/octet-stream');
+        // header("Content-Disposition: attachment; filename=sample.docx;");
+        // header('Content-Length: ' . filesize($tempFile));
+        // readfile($tempFile);
+        // session_write_close();
+        // exit(0);
     }
 }

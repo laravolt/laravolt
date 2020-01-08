@@ -30,8 +30,6 @@ class Module extends DataTransferObject
     /** @var array */
     public $whitelist;
 
-    /** @deprecated */
-
     /** @var array */
     public $action;
 
@@ -43,7 +41,24 @@ class Module extends DataTransferObject
 
     public $index;
 
-    /** @deprecated */
+    public static function make($id): self
+    {
+        $module = config("workflow.modules.$id");
+        $table = $module['table'] ?? null;
+
+        if (! $module) {
+            if (config('app.debug')) {
+                throw new \DomainException("File config config/modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul.");
+            }
+            abort(404);
+        }
+
+        $module['id'] = $module['id'] ?? $id;
+        $module['action'] = $module['action'] ?? [];
+
+        return static::fromConfig($module);
+    }
+
     public static function fromConfig(array $config): self
     {
         $data = collect($config)->mapWithKeys(function ($value, $key) {
@@ -70,12 +85,12 @@ class Module extends DataTransferObject
 
     public function getIndexUrl()
     {
-        return route('camunda::process.index', $this->id);
+        return route('workflow::process.index', $this->id);
     }
 
     public function getCreateUrl()
     {
-        return route('camunda::process.create', $this->id);
+        return route('workflow::process.create', $this->id);
     }
 
     public function getTasks()
@@ -115,6 +130,9 @@ class Module extends DataTransferObject
 
     public function getModel()
     {
-        return \Laravolt\Workflow\Models\Module::where('key', $this->id)->rememberForever()->cacheDriver('array')->firstOrFail();
+        return \Laravolt\Workflow\Models\Module::where('key', $this->id)
+            ->rememberForever()
+            ->cacheDriver('array')
+            ->firstOrFail();
     }
 }

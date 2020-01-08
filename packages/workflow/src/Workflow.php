@@ -4,21 +4,26 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow;
 
+use App\CamundaForm;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
-use Laravolt\Workflow\Models\ProcessDefinition;
-use Laravolt\Workflow\Models\ProcessInstance;
-use Laravolt\Workflow\Models\Task;
+use Laravolt\Camunda\Models\ProcessDefinition;
+use Laravolt\Camunda\Models\ProcessInstance;
+use Laravolt\Camunda\Models\Task;
+use Laravolt\Camunda\Models\TaskHistory;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Entities\Multirow;
 use Laravolt\Workflow\Entities\Payload;
 use Laravolt\Workflow\Enum\FormType;
 use Laravolt\Workflow\Enum\TaskStatus;
 use Laravolt\Workflow\Events\ProcessStarted;
+use Laravolt\Workflow\Events\TaskCompleted;
+use Laravolt\Workflow\Events\TaskDrafted;
+use Laravolt\Workflow\Events\TaskUpdated;
 use Laravolt\Workflow\FieldFormatter\CamundaFormatter;
 use Laravolt\Workflow\FieldFormatter\DbFormatter;
 use Laravolt\Workflow\Models\AutoSave;
@@ -26,7 +31,7 @@ use Laravolt\Workflow\Models\Form;
 use Laravolt\Workflow\Presenters\StartForm;
 use Laravolt\Workflow\Presenters\TaskEditForm;
 
-class Workflow implements \Laravolt\Workflow\Contracts\Workflow
+class Workflow implements Contracts\Workflow
 {
     /**
      * Worflow constructor.
@@ -71,7 +76,7 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
 
         return DB::transaction(function () use ($processDefinition, $module, $data) {
             // Wrap $data hasil inputan user untuk dilakukan proses sanitize, cleansing, dan validating.
-            $payload = Payload::make($module->processDefinitionKey, $module->startTaskName, $data);
+            $payload = Payload::make($module, $module->startTaskName, $data);
 
             // Memulai proses, dengan membuat Process Instance baru di Camunda.
             $processInstance = $processDefinition->startInstance($payload->toCamundaVariables(),
@@ -113,7 +118,8 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
                     'process_definition_key' => $processDefinition->key,
                     'created_at' => now(),
                     'id_kantor' => auth()->user()->kantor->id,
-                    'ref_id' => request('ref_id'),
+                    'ref_id' => $payload->data['ref_id'] ?? request('ref_id'),
+                    'traceable' => json_encode(collect($payload->data)->only(config('laravolt.workflow.traceable')) ?? []),
                 ]);
 
                 event(new ProcessStarted($processInstance, $payload, auth()->user()));
@@ -213,7 +219,7 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
             $data,
             $isDraft
         ) {
-            $payload = Payload::make($module->processDefinitionKey, $task->taskDefinitionKey, $data);
+            $payload = Payload::make($module, $task->taskDefinitionKey, $data);
             if (! $isDraft) {
                 $task->submit($payload->toCamundaVariables());
             }
@@ -257,7 +263,7 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
                             'created_at' => now(),
                             'updated_at' => now(),
                             'id_kantor' => auth()->user()->kantor->id,
-                            'ref_id' => request('ref_id'),
+                            'ref_id' => $payload->data['ref_id']['ref_id'] ?? request('ref_id'),
                         ]
                     );
 
@@ -269,6 +275,13 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
 
                 AutoSave::query()->where('task_id', $task->id)->where('user_id', auth()->id())->delete();
 
+                if ($isDraft) {
+                    event(new TaskDrafted($task, $payload, auth()->user()));
+                } else {
+                    event(new TaskCompleted($task, $payload, auth()->user()));
+                }
+
+                // TODO: deprecated
                 event('workflow.task.saved',
                     [$module, $processInstance, $task->taskDefinitionKey, $table, $data, $formId]);
             }
@@ -288,8 +301,9 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
             throw new \DomainException(sprintf('Tabel %s tidak ditemukan', $table));
         }
 
-        DB::transaction(function () use ($module, $mapping, $taskId, $taskName, $data) {
-            $payload = Payload::make($module->processDefinitionKey, $taskName, $data);
+        $payload = Payload::make($module, $taskName, $data);
+
+        DB::transaction(function () use ($module, $taskId, $payload) {
             $now = now();
             $additionalData = [
                 'updated_by' => auth()->id(),
@@ -312,7 +326,17 @@ class Workflow implements \Laravolt\Workflow\Contracts\Workflow
             }
         });
 
-        return $mapping;
+        $taskHistory = null;
+
+        try {
+            $taskHistory = (new TaskHistory($taskId))->fetch();
+        } catch (ClientException $e) {
+            app('sentry')->captureException($e);
+        } finally {
+            event(new TaskUpdated($taskHistory, $payload, auth()->user()));
+
+            return $mapping;
+        }
     }
 
     public function completedTasks($processInstanceId, array $whitelist = []): array
