@@ -1,9 +1,10 @@
 <?php
 
-namespace Laravolt\Camunda\Console\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Laravolt\Camunda\Models\Module;
+
 
 class SyncModule extends Command
 {
@@ -12,7 +13,7 @@ class SyncModule extends Command
      *
      * @var string
      */
-    protected $signature = 'camunda:sync-module {--prune}';
+    protected $signature = 'app:sync-module {--prune}';
 
     /**
      * The console command description.
@@ -38,7 +39,7 @@ class SyncModule extends Command
      */
     public function handle()
     {
-        foreach (config('laravolt.workflow.modules') as $key => $module) {
+        foreach (config('workflow.modules') as $key => $module) {
             if ($this->validateModule($module)) {
                 Module::updateOrCreate(
                     ['key' => $key],
@@ -48,7 +49,7 @@ class SyncModule extends Command
         }
 
         if ($this->option('prune')) {
-            $keys = collect(config('laravolt.workflow.modules'))->keys();
+            $keys = collect(config('workflow.modules'))->keys();
             $deleted = 0;
             if ($keys->isNotEmpty()) {
                 $deleted = Module::query()->whereNotIn('key', $keys)->delete();
