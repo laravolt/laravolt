@@ -13,7 +13,7 @@ class SyncModule extends Command
      *
      * @var string
      */
-    protected $signature = 'app:sync-module {--prune}';
+    protected $signature = 'camunda:sync-module {--prune}';
 
     /**
      * The console command description.
@@ -39,17 +39,19 @@ class SyncModule extends Command
      */
     public function handle()
     {
-        foreach (config('workflow.modules') as $key => $module) {
-            if ($this->validateModule($module)) {
-                Module::updateOrCreate(
-                    ['key' => $key],
-                    ['label' => $module['label'], 'process_definition_key' => $module['process_definition_key']]
-                );
+        if( config('workflow-modules') != null) {
+            foreach (config('workflow-modules') as $key => $module) {
+                if ($this->validateModule($module)) {
+                    Module::updateOrCreate(
+                        ['key' => $key],
+                        ['label' => $module['label'], 'process_definition_key' => $module['process_definition_key']]
+                    );
+                }
             }
         }
-
+        
         if ($this->option('prune')) {
-            $keys = collect(config('workflow.modules'))->keys();
+            $keys = collect(config('workflow-modules'))->keys();
             $deleted = 0;
             if ($keys->isNotEmpty()) {
                 $deleted = Module::query()->whereNotIn('key', $keys)->delete();
