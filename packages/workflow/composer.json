@@ -1,5 +1,5 @@
 {
-  "name": "laravolt/camunda",
+  "name": "laravolt/workflow",
   "description": "This package is used to connect Laravolt with Camunda BPMN to make it easier.",
   "keywords": [
     "laravel",
