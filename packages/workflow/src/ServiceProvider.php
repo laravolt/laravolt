@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Laravolt\Camunda;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Laravolt\Camunda\Console\ImportCamundaForm;
+use Laravolt\Camunda\Workflow;
+use Illuminate\Support\Facades\Route;
+use Laravolt\Camunda\Console\Commands\GenerateTableByProcessDefinition;
 use Laravolt\Camunda\Entities\Module;
+use Laravolt\Camunda\Console\Commands\ImportCamundaForm;
+use Laravolt\Camunda\Console\Commands\SyncModule;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -22,7 +25,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         $this->commands([
-            ImportCamundaForm::class
+            ImportCamundaForm::class,
+            GenerateTableByProcessDefinition::class,
+            SyncModule::class
         ]);
     }
 

@@ -33,7 +33,7 @@ class CamundaService
     {
         $client = new Client();
         //try {
-        $response = $client->request('GET', config('app.camunda_host') . $url, [
+        $response = $client->request('GET', config('laravolt.camunda.api.url') . $url, [
             'query' => $params,
             'verify' => false
         ]);

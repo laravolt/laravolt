@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Camunda\Console;
+namespace Laravolt\Camunda\Console\Commands;
 
 use Laravolt\Camunda\CamundaForm;
 use Laravolt\Camunda\Services\CamundaService;
