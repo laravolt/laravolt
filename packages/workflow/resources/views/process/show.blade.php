@@ -24,7 +24,7 @@
 
 @section('content')
     @foreach($completedTasks as $task)
-        {!! \Laravolt\Camunda\Presenters\TaskInfo::make($module, $task)->render() !!}
+        {!! \\Laravolt\Workflow\Presenters\TaskInfo::make($module, $task)->render() !!}
     @endforeach
 
     @can('edit', $module->getModel())
