@@ -107,6 +107,10 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootRoutes(): self
     {
+        if (config('laravolt.platform.force_https')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         Route::middleware(['web', 'auth'])
             ->group(platform_path('routes/web.php'));
 
