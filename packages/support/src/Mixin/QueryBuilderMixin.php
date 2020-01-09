@@ -52,8 +52,6 @@ class QueryBuilderMixin
     public function autoSort()
     {
         return function ($sortByKey = 'sort', $sortDirectionKey = 'direction') {
-            $sortByKey = $sortByKey ?? config('suitable.query_string.sort_by');
-            $sortDirectionKey = $sortDirectionKey ?? config('suitable.query_string.sort_direction');
             $direction = request()->get($sortDirectionKey, 'asc');
 
             if (request()->has($sortByKey)) {
