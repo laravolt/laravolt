@@ -35,6 +35,7 @@
         "laravolt/epilog": "~0.4",
         "laravolt/media": "~0.4",
         "laravolt/semantic-form": "^2.7",
+        "laravolt/support": "^2.0",
         "lavary/laravel-menu": "^1.7.7",
         "spatie/laravel-medialibrary": "^7.0",
         "spatie/once": "^2.1",
