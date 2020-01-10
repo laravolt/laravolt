@@ -21,6 +21,12 @@
       "email": "anandiamy@gmail.com",
       "homepage": "http://id-laravel.com",
       "role": "Developer"
+    },
+    {
+      "name": "Damar Huda",
+      "email": "damarhuda@live.com",
+      "homepage": "http://id-laravel.com",
+      "role": "Developer"
     }
   ],
   "require": {
