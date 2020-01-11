@@ -9,7 +9,7 @@ use Laravolt\Workflow\Controllers\TaskController;
 $router->group(
     [
         'prefix' => config('laravolt.workflow.routes.prefix'),
-        'as' => 'camunda::',
+        'as' => 'workflow::',
         'middleware' => config('laravolt.workflow.routes.middleware'),
     ],
     function ($router) {
