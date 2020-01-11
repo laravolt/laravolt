@@ -43,12 +43,12 @@ class Module extends DataTransferObject
 
     public static function make($id): self
     {
-        $module = config("workflow.modules.$id");
+        $module = config("workflow-modules.$id");
         $table = $module['table'] ?? null;
 
         if (! $module) {
             if (config('app.debug')) {
-                throw new \DomainException("File config config/modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul.");
+                throw new \DomainException("File config config/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul.");
             }
             abort(404);
         }
