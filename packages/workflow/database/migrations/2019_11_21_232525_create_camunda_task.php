@@ -19,9 +19,13 @@ class CreateCamundaTask extends Migration
             $table->string('task_name');
             $table->string('task_id')->nullable();
             $table->morphs('form');
+            $table->string('status')->default(\Laravolt\Workflow\Enum\TaskStatus::NEW);
+            $table->string('business_key')->nullable();
+            $table->jsonb('traceable')->nullable();
             $table->timestamps();
 
             $table->unique(['form_type', 'form_id']);
+            $table->index('status');
         });
     }
 
