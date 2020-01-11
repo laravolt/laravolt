@@ -7,6 +7,7 @@ namespace Laravolt\Workflow;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use Laravolt\Workflow\Console\Commands\Import;
+use Laravolt\Workflow\Console\Commands\MakeCommand;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Console\Commands\SyncModule;
 
@@ -23,6 +24,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->commands([
             Import::class,
+            MakeCommand::class,
             SyncModule::class,
         ]);
     }
