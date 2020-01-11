@@ -30,7 +30,7 @@ if ($tasks->isNotEmpty()) {
         </div>
         <div class="menu scrolling">
             @foreach($surat as $item)
-                <div class="item" data-value="{{ route('camunda::print.index', ['module' => $module->id, 'templateId' => $item->getKey(), 'processInstanceId' => $processInstance->id]) }}">
+                <div class="item" data-value="{{ route('workflow::print.index', ['module' => $module->id, 'templateId' => $item->getKey(), 'processInstanceId' => $processInstance->id]) }}">
                     <div class="ui {{ $item->color }} empty circular basic label mini"></div>
                     {{ $item->name }}
                 </div>

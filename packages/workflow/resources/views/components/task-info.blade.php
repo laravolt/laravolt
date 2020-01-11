@@ -6,7 +6,7 @@
             <div class="right menu">
                 <div class="item">
                     @if($editable && auth()->user()->can('edit', $module->getModel()))
-                        <a href="{{ route('camunda::task.edit', [$module->id, $task->task_id]) }}"
+                        <a href="{{ route('workflow::task.edit', [$module->id, $task->task_id]) }}"
                            class='ui basic button small'>
                             <i class='icon edit'></i> Edit
                         </a>

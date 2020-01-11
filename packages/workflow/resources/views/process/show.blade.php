@@ -4,7 +4,7 @@
         '__page' => [
             'title' => $module->label,
             'actions' => [
-                view('camunda::components.button-map', ['id' => $processInstance->id])->render(),
+                view('workflow::components.button-map', ['id' => $processInstance->id])->render(),
                 [
                     'label' => __('Kembali ke Index'),
                     'class' => '',
@@ -18,7 +18,7 @@
 
 @prepend('page.header')
     <div class="item">
-        @include('camunda::components.buttons-surat', ['module' => $module, 'tasks' => $completedTasks, 'processInstance' => $processInstance])
+        @include('workflow::components.buttons-surat', ['module' => $module, 'tasks' => $completedTasks, 'processInstance' => $processInstance])
     </div>
 @endprepend
 
@@ -42,7 +42,7 @@
                     <i class="user clock icon"></i>
                     Task ini sedang dikerjakan oleh Tim lain.
                 </div>
-                @include('camunda::components.button-map', ['id' => $processInstance->id, 'label' => 'Lihat Diagram Proses'])
+                @include('workflow::components.button-map', ['id' => $processInstance->id, 'label' => 'Lihat Diagram Proses'])
             </div>
         @endcomponent
     @endforeach

@@ -7,7 +7,7 @@
     </td>
     <td>{{ $data->process_definition_key }}</td>
     <td class="text-right">
-        <a href="{{ route('camunda::module.edit', $data->getKey()) }}" class="ui primary button small"><i class="icon cogs"></i> Settings</a>
+        <a href="{{ route('workflow::module.edit', $data->getKey()) }}" class="ui primary button small"><i class="icon cogs"></i> Settings</a>
         <a href="{{ $data->getCreateUrl() }}" class="ui button small basic primary"><i class="icon plus circle"></i> New Process</a>
     </td>
 </tr>

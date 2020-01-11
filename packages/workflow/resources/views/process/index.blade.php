@@ -9,7 +9,7 @@
 
 @foreach(\Illuminate\Support\Arr::get($module->routes, 'index.reports', []) as $report)
     @push('page.actions')
-        {!! form()->get(route('camunda::process.report', [$module->id, $report['format'] ?? 'pdf'])) !!}
+        {!! form()->get(route('workflow::process.report', [$module->id, $report['format'] ?? 'pdf'])) !!}
         {!! form()->hidden('ids')->data('role', 'ids') !!}
         {!! form()->hidden('path', $report['path']) !!}
         {!! form()->hidden('download', true) !!}
@@ -27,7 +27,7 @@
         'ui::components.button',
         [
             'action' => [
-                'url' => route('camunda::process.create', [$module->id]),
+                'url' => route('workflow::process.create', [$module->id]),
                 'label' => 'Tambah',
                 'icon' => 'plus',
                 'class' => 'primary'

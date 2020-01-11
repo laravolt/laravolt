@@ -8,7 +8,7 @@
                     'label' => __('Kembali ke Daftar Modul'),
                     'class' => '',
                     'icon' => 'icon arrow left',
-                    'url' => route('camunda::module.index')
+                    'url' => route('workflow::module.index')
                 ],
             ]
         ],
@@ -17,7 +17,7 @@
 
 @section('content')
     @component('ui::components.panel', ['title' => __('Manage Module')])
-        {!! form()->bind($module)->put(route('camunda::module.update', $module->getKey())) !!}
+        {!! form()->bind($module)->put(route('workflow::module.update', $module->getKey())) !!}
         {!! form()->text('key')->label('Key')->disabled() !!}
         {!! form()->text('label')->label('Label')->required() !!}
 
@@ -71,7 +71,7 @@
 
         {!! form()->action([
             form()->submit(__('Simpan')),
-            form()->link(__('Kembali'), route('camunda::module.index'))
+            form()->link(__('Kembali'), route('workflow::module.index'))
         ]) !!}
 
         {!! form()->close() !!}
