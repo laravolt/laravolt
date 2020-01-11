@@ -55,8 +55,7 @@ class ProcessController extends Controller
 
             return view($view, compact('form', 'module'));
         } catch (ClientException $e) {
-            app('sentry')->captureException($e);
-            abort($e->getCode(), $e->getMessage());
+            \capture_exception_and_abort($e);
         }
     }
 
@@ -81,7 +80,7 @@ class ProcessController extends Controller
                 ->route('workflow::process.show', [$module->id, $processInstance->id])
                 ->withSuccess($message);
         } catch (ClientException $e) {
-            app('sentry')->captureException($e);
+            \capture_exception_and_abort($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -113,7 +112,7 @@ class ProcessController extends Controller
                 compact('module', 'processInstance', 'tasks', 'completedTasks', 'forms', 'otherTasks')
             );
         } catch (ClientException $e) {
-            app('sentry')->captureException($e);
+            \capture_exception_and_abort($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -127,7 +126,7 @@ class ProcessController extends Controller
 
             return view('workflow::process.edit', compact('form'));
         } catch (ClientException $e) {
-            app('sentry')->captureException($e);
+            \capture_exception_and_abort($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -143,7 +142,7 @@ class ProcessController extends Controller
                 ->route('workflow::process.show', [$module->id, $processInstanceId])
                 ->withSuccess('OK');
         } catch (ClientException $e) {
-            app('sentry')->captureException($e);
+            \capture_exception_and_abort($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
@@ -159,7 +158,7 @@ class ProcessController extends Controller
                 ->back()
                 ->withSuccess('Proses berhasil dihapus');
         } catch (ClientException $e) {
-            app('sentry')->captureException($e);
+            \capture_exception_and_abort($e);
             abort($e->getCode(), $e->getMessage());
         }
     }
