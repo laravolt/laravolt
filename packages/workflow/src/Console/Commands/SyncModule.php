@@ -13,7 +13,7 @@ class SyncModule extends Command
      *
      * @var string
      */
-    protected $signature = 'camunda:sync-module {--prune}';
+    protected $signature = 'workflow:sync-module {--prune}';
 
     /**
      * The console command description.
@@ -49,7 +49,7 @@ class SyncModule extends Command
                 }
             }
         }
-        
+
         if ($this->option('prune')) {
             $keys = collect(config('workflow-modules'))->keys();
             $deleted = 0;
