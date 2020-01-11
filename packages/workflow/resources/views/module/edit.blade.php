@@ -1,5 +1,5 @@
 @extends(
-    config('laravolt.menu-manager.view.layout'),
+    config('laravolt.workflow.view.layout'),
     [
         '__page' => [
             'title' => __('Module'),
