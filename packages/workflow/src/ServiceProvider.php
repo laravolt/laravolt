@@ -98,7 +98,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bindModule()
     {
         Route::bind('module', function ($id) {
-            $module = config("workflow.modules.$id");
+            $module = config("workflow-modules.$id");
             $table = $module['table'] ?? null;
 
             if (! $module) {
