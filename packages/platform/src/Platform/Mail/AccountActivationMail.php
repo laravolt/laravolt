@@ -8,8 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class AccountActivationMail extends Mailable
 {
-    use Queueable, SerializesModels;
-
+    use Queueable;
+    use SerializesModels;
     public $token;
 
     /**

@@ -21,8 +21,8 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords, ValidatesRequests;
-
+    use ResetsPasswords;
+    use ValidatesRequests;
     protected $redirectTo;
 
     /**
