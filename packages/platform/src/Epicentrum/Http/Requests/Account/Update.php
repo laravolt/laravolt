@@ -25,12 +25,13 @@ class Update extends FormRequest implements \Laravolt\Epicentrum\Contracts\Reque
     public function rules()
     {
         $id = request()->route('account');
+
         return [
             'name'     => 'required|max:255',
             'email'    => [
                 'required',
                 'email',
-                Rule::unique(auth()->user()->getTable())->ignore($id)
+                Rule::unique(auth()->user()->getTable())->ignore($id),
             ],
             'status'   => 'required',
             'timezone' => 'required',

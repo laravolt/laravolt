@@ -27,7 +27,7 @@ class Store extends FormRequest implements \Laravolt\Epicentrum\Contracts\Reques
             'name'     => 'required|max:255',
             'email'    => 'required|email|unique:users',
             'password' => 'required|min:6|max:255',
-            'status'   => 'required'
+            'status'   => 'required',
         ];
     }
 }

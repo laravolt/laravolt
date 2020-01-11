@@ -37,7 +37,6 @@ class ManageRole extends Command
         if ($role) {
             $this->chooseAction($role);
         }
-
     }
 
     protected function validateRole($identifier)
@@ -52,7 +51,7 @@ class ManageRole extends Command
             $role = app('laravolt.epicentrum.role')->whereName($identifier)->first();
         }
 
-        if(!$role) {
+        if (!$role) {
             $createNew = $this->confirm('Role not found, do you want to create a new role named '.$identifier);
 
             if ($createNew) {
@@ -91,6 +90,5 @@ class ManageRole extends Command
 
     protected function actionChangePassword()
     {
-
     }
 }

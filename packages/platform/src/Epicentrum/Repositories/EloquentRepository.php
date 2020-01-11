@@ -2,15 +2,13 @@
 
 namespace Laravolt\Epicentrum\Repositories;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 /**
- * Class UserRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class UserRepositoryEloquent.
  */
 class EloquentRepository implements RepositoryInterface
 {
@@ -25,7 +23,7 @@ class EloquentRepository implements RepositoryInterface
     protected $fieldSearchable = [];
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function __construct()
     {
@@ -49,12 +47,14 @@ class EloquentRepository implements RepositoryInterface
     }
 
     /**
-     * Save a new entity in repository
+     * Save a new entity in repository.
      *
-     * @param  array  $attributes
-     * @param  null  $roles
-     * @return mixed
+     * @param array $attributes
+     * @param null  $roles
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function createByAdmin(array $attributes, $roles = null)
     {
@@ -96,7 +96,7 @@ class EloquentRepository implements RepositoryInterface
         $model = $this->model->query()->findOrFail($id);
 
         if (in_array(SoftDeletes::class, class_uses($this->model))) {
-            $model->email = sprintf("[deleted-%s]%s", $model->id, $model->email);
+            $model->email = sprintf('[deleted-%s]%s', $model->id, $model->email);
             $model->save();
         }
 

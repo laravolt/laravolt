@@ -1,4 +1,5 @@
 <?php
+
 return [
     'epicentrum' => 'User Management',
     'account'    => 'Account',

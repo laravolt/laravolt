@@ -8,6 +8,7 @@ class Delete extends FormRequest implements \Laravolt\Epicentrum\Contracts\Reque
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -22,6 +23,7 @@ class Delete extends FormRequest implements \Laravolt\Epicentrum\Contracts\Reque
 
     /**
      * Get the validation rules that apply to the request.
+     *
      * @return array
      */
     public function rules()

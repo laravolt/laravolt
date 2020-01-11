@@ -25,8 +25,8 @@ class AdminEditProfile extends FormRequest
     {
         return [
             'name'   => 'required|max:255',
-            'email'  => 'required|email|unique:users,id,' . auth()->user()->getAuthIdentifier(),
-            'status' => 'required'
+            'email'  => 'required|email|unique:users,id,'.auth()->user()->getAuthIdentifier(),
+            'status' => 'required',
         ];
     }
 }
