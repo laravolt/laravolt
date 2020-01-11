@@ -5,13 +5,13 @@ namespace Laravolt\Epicentrum\Http\Controllers\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Mail\AccountInformation;
 use Laravolt\Epicentrum\Repositories\RepositoryInterface;
-use Illuminate\Support\Facades\Mail;
-use Laravolt\Support\Contracts\TimezoneRepository;
 use Laravolt\Suitable\TableView;
+use Laravolt\Support\Contracts\TimezoneRepository;
 
 class UserController extends Controller
 {
@@ -27,8 +27,9 @@ class UserController extends Controller
 
     /**
      * UserController constructor.
-     * @param  UserRepositoryEloquent  $repository
-     * @param  TimezoneRepositoryArray  $timezone
+     *
+     * @param UserRepositoryEloquent  $repository
+     * @param TimezoneRepositoryArray $timezone
      */
     public function __construct(RepositoryInterface $repository, TimezoneRepository $timezone)
     {
@@ -39,8 +40,9 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
      * @throws \Exception
+     *
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -71,7 +73,8 @@ class UserController extends Controller
     /**
      * Store the specified resource.
      *
-     * @param  Store  $request
+     * @param Store $request
+     *
      * @return Response
      */
     public function store(Store $request)
@@ -92,7 +95,8 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit($id)

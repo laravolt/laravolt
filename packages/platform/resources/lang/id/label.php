@@ -1,4 +1,5 @@
 <?php
+
 return [
     'roles'                    => 'Roles',
     'permissions'              => 'Hak Akses',

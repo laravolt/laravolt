@@ -20,7 +20,7 @@ class ProfileController extends Controller
      * PasswordController constructor.
      *
      * @param RepositoryInterface $repository
-     * @param TimezoneRepository $timezone
+     * @param TimezoneRepository  $timezone
      */
     public function __construct(RepositoryInterface $repository, TimezoneRepository $timezone)
     {
@@ -30,6 +30,7 @@ class ProfileController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit()

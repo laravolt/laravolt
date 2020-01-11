@@ -5,8 +5,7 @@ namespace Laravolt\Epicentrum\Repositories;
 use Illuminate\Http\Request;
 
 /**
- * Interface UserRepository
- * @package namespace App\Repositories;
+ * Interface UserRepository.
  */
 interface RepositoryInterface
 {

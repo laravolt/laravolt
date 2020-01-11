@@ -21,7 +21,7 @@ $router->group(
 
         $router
             ->namespace('User')
-            ->middleware('can:' . \Laravolt\Platform\Enums\Permission::MANAGE_USER)
+            ->middleware('can:'.\Laravolt\Platform\Enums\Permission::MANAGE_USER)
             ->group(function ($router) {
                 $router->resource('users', 'UserController');
                 $router->resource('account', 'AccountController')->only('edit', 'update');
@@ -31,14 +31,14 @@ $router->group(
             });
 
         $router
-            ->middleware('can:' . \Laravolt\Platform\Enums\Permission::MANAGE_ROLE)
+            ->middleware('can:'.\Laravolt\Platform\Enums\Permission::MANAGE_ROLE)
             ->resource('roles', 'RoleController');
 
         $router
-            ->middleware('can:' . \Laravolt\Platform\Enums\Permission::MANAGE_PERMISSION)
+            ->middleware('can:'.\Laravolt\Platform\Enums\Permission::MANAGE_PERMISSION)
             ->group(function ($router) {
-                $router->get('permissions', ['uses' => "PermissionController@edit", 'as' => 'permissions.edit']);
-                $router->put('permissions', ['uses' => "PermissionController@update", 'as' => 'permissions.update']);
+                $router->get('permissions', ['uses' => 'PermissionController@edit', 'as' => 'permissions.edit']);
+                $router->put('permissions', ['uses' => 'PermissionController@update', 'as' => 'permissions.update']);
             });
     }
 );

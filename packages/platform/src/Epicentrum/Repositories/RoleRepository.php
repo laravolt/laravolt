@@ -2,12 +2,10 @@
 
 namespace Laravolt\Epicentrum\Repositories;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class UserRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class UserRepositoryEloquent.
  */
 class RoleRepository implements RoleRepositoryInterface
 {
@@ -22,7 +20,7 @@ class RoleRepository implements RoleRepositoryInterface
     protected $fieldSearchable = [];
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function __construct()
     {
@@ -41,12 +39,14 @@ class RoleRepository implements RoleRepositoryInterface
     }
 
     /**
-     * Save a new entity in repository
+     * Save a new entity in repository.
      *
-     * @param  array  $attributes
-     * @param  null  $roles
-     * @return mixed
+     * @param array $attributes
+     * @param null  $roles
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function create(array $attributes)
     {

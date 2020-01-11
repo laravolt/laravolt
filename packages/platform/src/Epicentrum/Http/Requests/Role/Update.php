@@ -3,7 +3,6 @@
 namespace Laravolt\Epicentrum\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class Update extends FormRequest
 {
