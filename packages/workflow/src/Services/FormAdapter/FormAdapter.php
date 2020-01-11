@@ -2,10 +2,10 @@
 
 namespace Laravolt\Workflow\Services\FormAdapter;
 
-use App\Services\FormAdapter\Fields\StringAdapter;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
+use Laravolt\Workflow\Services\FormAdapter\Fields\StringAdapter;
 
 class FormAdapter
 {
@@ -89,8 +89,8 @@ class FormAdapter
         $definition = [];
         foreach ($fields as $field) {
             $type = Str::studly($field->field_type);
-
-            $adapter = "\\App\\Services\\FormAdapter\\Fields\\{$type}Adapter";
+            
+            $adapter = "\\Laravolt\\Workflow\\Services\\FormAdapter\\Fields\\{$type}Adapter";
             if (! class_exists($adapter)) {
                 $adapter = StringAdapter::class;
             }

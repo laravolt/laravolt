@@ -44,7 +44,7 @@ class GenerateTableByProcessDefinition extends Command
         $tableGenerateds = [];
         foreach ($camundaForms as $camundaForm) {
             //prefix t
-            $prefixName = 't_'.$camundaForm->form_name;
+            $prefixName = $camundaForm->form_name;
             $tableGenerateds[$prefixName][] = [
                 'name' => $camundaForm->field_name,
                 'type' => $camundaForm->field_type,

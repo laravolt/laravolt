@@ -94,7 +94,7 @@ class Workflow implements Contracts\Workflow
             // Flagnya ada di kolom camunda_form.type
             foreach ($payload->toFormFields() as $form => $fields) {
                 $dbFields = $fields['fields'];
-
+               
                 if ($fields['type'] == FormType::MAIN_FORM) {
                     $data = $dbFields + $additionalData;
                     $formId = $this->insertData($form, $data);
@@ -117,7 +117,6 @@ class Workflow implements Contracts\Workflow
                     'task_name' => $module->startTaskName,
                     'process_definition_key' => $processDefinition->key,
                     'created_at' => now(),
-                    'id_kantor' => auth()->user()->kantor->id,
                     'ref_id' => $payload->data['ref_id'] ?? request('ref_id'),
                     'traceable' => json_encode(collect($payload->data)->only(config('laravolt.workflow.traceable')) ?? []),
                 ]);
@@ -262,7 +261,6 @@ class Workflow implements Contracts\Workflow
                             'status' => $isDraft ? TaskStatus::DRAFT : TaskStatus::UNASSIGNED,
                             'created_at' => now(),
                             'updated_at' => now(),
-                            'id_kantor' => auth()->user()->kantor->id,
                             'ref_id' => $payload->data['ref_id']['ref_id'] ?? request('ref_id'),
                         ]
                     );
@@ -417,11 +415,10 @@ class Workflow implements Contracts\Workflow
         $additionalData = [
             'created_by' => auth()->id(),
             'created_at' => now(),
-            'id_kantor' => auth()->user()->kantor->id,
         ];
 
         [$mainTableData, $hasManyData] = $this->filterAndPartition($data, $table);
-
+        
         $id = DB::table($table)->insertGetId($mainTableData + $additionalData);
 
         $this->saveHasMany($hasManyData, $additionalData, $table, $id);
@@ -434,7 +431,6 @@ class Workflow implements Contracts\Workflow
         $additionalData = [
             'created_by' => auth()->id(),
             'created_at' => now(),
-            'id_kantor' => auth()->user()->kantor->id,
         ];
 
         [$mainTableData, $hasManyData] = $this->filterAndPartition($data, $table);
