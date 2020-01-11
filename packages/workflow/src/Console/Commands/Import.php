@@ -2,74 +2,49 @@
 
 namespace Laravolt\Workflow\Console\Commands;
 
-use Laravolt\Workflow\Models\CamundaForm;
-use Laravolt\Workflow\Services\CamundaService;
-use DB;
 use Illuminate\Console\Command;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Laravolt\Camunda\Models\ProcessDefinition;
+use Laravolt\Workflow\Models\CamundaForm;
 use SimpleXMLElement;
 
-class ImportCamundaForm extends Command
+class Import extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
-    protected $signature = 'camunda:importCamundaForm {processDefKey}';
+    protected $signature = 'workflow:import {processDefKey}';
 
     /**
      * The console command description.
-     *
      * @var string
      */
-    protected $description = 'import semua process definition yang ada ke camunda form';
-
-    /**
-     * @var CamundaService
-     */
-    private $camundaService;
-
-    /**
-     * @var GetCamundaController
-     */
-    private $getCamunda;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param CamundaService $camundaService
-     * @param GetCamundaController $getCamunda
-     */
-    public function __construct(CamundaService $camundaService)
-    {
-        parent::__construct();
-        $this->camundaService = $camundaService;
-    }
+    protected $description = 'Import form definition dari file BPMN via REST API';
 
     /**
      * Execute the console command.
-     *
      * @return mixed
      */
     public function handle()
     {
-        $data = [];
-        $processDefKey = $this->argument('processDefKey');
-        $xml = $this->camundaService->getProcessDefintionXML($processDefKey);
-        $data['instances'] = $xml->bpmn20Xml;
+        $key = $this->argument('processDefKey');
+        $processDefinition = ProcessDefinition::byKey($key);
 
-        $xml = new SimpleXMLElement($data['instances']);
+        $xml = new SimpleXMLElement($processDefinition->xml());
         $xml->registerXPathNamespace('bpmn', 'http://www.omg.org/spec/BPMN/20100524/MODEL');
         $xml->registerXPathNamespace('camunda', 'http://camunda.org/schema/1.0/bpmn');
 
         $calledActivity = $xml->xpath('//bpmn:callActivity');
         foreach ($calledActivity as $call) {
             if (CamundaForm::where('field_name', '=', 'subprocess' . $call['name'])
-                ->where('task_name', '=', $call['id'])
-                ->where('process_definition_key', '=', $processDefKey)
-                ->count() == 0) {
+                    ->where('task_name', '=', $call['id'])
+                    ->where('process_definition_key', '=', $key)
+                    ->count() == 0) {
                 CamundaForm::insert([
-                    'process_definition_key' => $processDefKey,
+                    'process_definition_key' => $key,
                     'task_name' => $call['id'],
                     'form_name' => $call['id'],
                     'field_name' => 'subprocess' . $call['name'],
@@ -85,14 +60,16 @@ class ImportCamundaForm extends Command
             }
         }
         $startEvents = $xml->xpath('//bpmn:startEvent');
-        $this->getField($startEvents, $processDefKey);
+        $this->getField($startEvents, $key);
         $userTasks = $xml->xpath('//bpmn:userTask');
-        $this->getField($userTasks, $processDefKey);
+        $this->getField($userTasks, $key);
+
+        $this->generateTable($key);
 
         return true;
     }
 
-    public function getField($nodes, $processDefKey)
+    protected function getField($nodes, $processDefKey)
     {
         foreach ($nodes as $node) {
             $this->info('Task ' . json_encode($node));
@@ -179,6 +156,87 @@ class ImportCamundaForm extends Command
                         }
                     }
                 }
+            }
+        }
+    }
+
+    protected function columns(Blueprint $table, $columns)
+    {
+        foreach ($columns as $tableColumn) {
+            $fieldName = $tableColumn['name'];
+
+            if (Schema::hasColumn($table->getTable(), $fieldName)) {
+                $this->warn(sprintf('Kolom %s.%s sudah ada, skip.', $table->getTable(), $fieldName));
+
+                continue;
+            }
+
+            switch ($tableColumn['type']) {
+                case 'booelan':
+                    $table->boolean($fieldName)->nullable();
+
+                    break;
+                case 'integer':
+                    $table->integer($fieldName)->nullable();
+
+                    break;
+                case 'date':
+                    $table->date($fieldName)->nullable();
+
+                    break;
+                case 'wysiwyg':
+                case 'text':
+                    $table->text($fieldName)->nullable();
+
+                    break;
+                case 'image':
+                case 'file':
+                case 'dropdownDB':
+                case 'dropdown':
+                case 'string':
+                default:
+                    $table->string($fieldName)->nullable();
+
+                    break;
+            }
+        }
+    }
+
+    protected function generateTable(string $key)
+    {
+        $camundaForms = CamundaForm::where('process_definition_key', $key)->get();
+        $tableGenerateds = [];
+        foreach ($camundaForms as $camundaForm) {
+            $prefixName = $camundaForm->form_name;
+            $tableGenerateds[$prefixName][] = [
+                'name' => $camundaForm->field_name,
+                'type' => $camundaForm->field_type,
+            ];
+        }
+
+        foreach ($tableGenerateds as $tableName => $tableColumns) {
+            $tableColumns = collect($tableColumns)->unique(function ($item) {
+                return $item['name'];
+            });
+
+            if (! Schema::hasTable($tableName)) {
+                Schema::create($tableName, function (Blueprint $table) use ($tableColumns) {
+                    $table->bigIncrements('id');
+                    $table->string('process_instance_id')->nullable();
+                    $table->string('task_id')->nullable();
+                    $this->columns($table, $tableColumns);
+
+                    $table->bigInteger('created_by')->nullable();
+                    $table->bigInteger('updated_by')->nullable();
+                    $table->timestamps();
+                });
+                $this->info($tableName . ' was created');
+            } else {
+                $this->info($tableName . ' is exists, should check new columns');
+                Schema::table($tableName, function (Blueprint $table) use ($tableColumns) {
+                    $this->columns($table, $tableColumns);
+                });
+                $this->info($tableName . ' was created');
             }
         }
     }

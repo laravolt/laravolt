@@ -9,7 +9,6 @@ use Maatwebsite\Excel\Excel;
 use Illuminate\Routing\Controller;
 use Laravolt\Workflow\Models\CamundaForm;
 use Laravolt\Workflow\Traits\DataRetrieval;
-use Laravolt\Workflow\Services\CamundaService;
 use Laravolt\Workflow\Services\FormFieldsExport;
 use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Laravolt\Workflow\TableView\ManagementCamundaTableView;
@@ -17,13 +16,6 @@ use Laravolt\Workflow\TableView\ManagementCamundaTableView;
 class ManagementCamundaController extends Controller
 {
     use DataRetrieval;
-
-    private $camundaService;
-
-    public function __construct(CamundaService $camundaService)
-    {
-        $this->camundaService = $camundaService;
-    }
 
     public function index()
     {
@@ -122,7 +114,9 @@ class ManagementCamundaController extends Controller
         }
         $request->request->add(['field_meta' => json_encode($field_meta)]);
         CamundaForm::where('id', '=', $id)
-            ->update($request->except(['_token', '_method', 'editable', 'dependency', 'validation', 'visibility', 'form']));
+            ->update($request->except([
+                '_token', '_method', 'editable', 'dependency', 'validation', 'visibility', 'form',
+            ]));
 
         return redirect()->route('managementcamunda.index')
             ->withSuccess('Field Berhasil Diubah! ');
@@ -150,7 +144,10 @@ class ManagementCamundaController extends Controller
         if ($request->has('process')) {
             $fields = $this->getFieldsByProcessDefinitionKey($request->process);
         } else {
-            $fields = DB::table('camunda_form')->where('task_name', '=', $request->task)->pluck('field_name', 'field_name')->sort();
+            $fields = DB::table('camunda_form')
+                ->where('task_name', '=', $request->task)
+                ->pluck('field_name', 'field_name')
+                ->sort();
         }
 
         return $fields;
