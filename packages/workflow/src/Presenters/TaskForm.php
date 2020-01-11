@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use App\Services\FormAdapter\FormAdapter;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Camunda\Models\Task;
