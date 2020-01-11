@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Laravolt\Suitable\AutoFilter;
-use Laravolt\Suitable\AutoSort;
+use Laravolt\Support\Traits\AutoFilter;
+use Laravolt\Support\Traits\AutoSort;
 
 class User extends \Laravolt\Platform\Models\User
 {
