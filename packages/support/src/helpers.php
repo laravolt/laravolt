@@ -15,3 +15,22 @@ if (! function_exists('capture_exception')) {
         }
     }
 }
+
+if (! function_exists('capture_exception_and_abort')) {
+    /**
+     * Capture and report exception
+     *
+     * @param Throwable $exception
+     *
+     * @return string
+     * @throws Throwable
+     */
+    function capture_exception_and_abort(Throwable $exception)
+    {
+        capture_exception($exception);
+        if (config('app.debug')) {
+            throw $exception;
+        }
+        abort($exception->getCode(), $exception->getMessage());
+    }
+}
