@@ -37,6 +37,7 @@
         "laravolt/epilog": "~0.4",
         "laravolt/media": "~0.4",
         "laravolt/semantic-form": "^2.7",
+        "laravolt/suitable": "^3.6",
         "laravolt/support": "^2.0",
         "lavary/laravel-menu": "^1.7.7",
         "spatie/laravel-medialibrary": "^7.0",
@@ -45,6 +46,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Laravolt\\Epicentrum\\": "src/Epicentrum/",
             "Laravolt\\Platform\\": "src/Platform/",
             "Laravolt\\Contracts\\": "src/Contracts/"
         },
@@ -62,6 +64,7 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Laravolt\\Platform\\Providers\\EpicentrumServiceProvider",
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
                 "Laravolt\\Platform\\Providers\\UiServiceProvider",
                 "Laravolt\\Platform\\Providers\\AuthServiceProvider"

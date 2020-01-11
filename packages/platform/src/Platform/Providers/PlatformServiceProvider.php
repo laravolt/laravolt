@@ -29,6 +29,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register(): void
     {
+        $this->bootConfig();
+
         $this->commands($this->commands);
 
         $this->registerServices();
@@ -37,7 +39,6 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot(Gate $gate): void
     {
         $this
-            ->bootConfig()
             ->bootViews()
             ->bootTranslations()
             ->bootDatabase()
@@ -69,6 +70,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(platform_path('config/acl.php'), 'laravolt.acl');
         $this->mergeConfigFrom(platform_path('config/password.php'), 'laravolt.password');
         $this->mergeConfigFrom(platform_path('config/auth.php'), 'laravolt.auth');
+        $this->mergeConfigFrom(platform_path('config/epicentrum.php'), 'laravolt.epicentrum');
 
         $this->publishes(
             [
@@ -76,6 +78,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                 platform_path('config/acl.php') => config_path('laravolt/acl.php'),
                 platform_path('config/password.php') => config_path('laravolt/password.php'),
                 platform_path('config/auth.php') => config_path('laravolt/auth.php'),
+                platform_path('config/epicentrum.php') => config_path('laravolt/epicentrum.php'),
                 platform_path('config/menu.php') => config_path('laravolt/menu.php'),
             ],
             'laravolt-config'

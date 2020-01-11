@@ -40,18 +40,23 @@ class LaravoltPreset extends Preset
             app_path('Http/Controllers/Home.php') => platform_path('stubs/Home.php'),
             app_path('Http/Controllers/Dashboard.php') => platform_path('stubs/Dashboard.php'),
             resource_path('views/dashboard.blade.php') => platform_path('stubs/dashboard.blade.php'),
+            base_path('routes/web.php') => platform_path('stubs/routes.php'),
+            app_path('Http/Controllers/Auth') => null,
         ];
 
         foreach ($files as $original => $new) {
-            (new Filesystem())->delete($original);
-            copy($new, $original);
+            if (is_file($original)) {
+                (new Filesystem())->delete($original);
+            } elseif (is_dir($original)) {
+                \File::deleteDirectory($original);
+            }
+
+            if ($new !== null) {
+                copy($new, $original);
+            }
         }
 
         $entries = [
-            base_path('routes/web.php') => [
-                "Route::get('/', 'Home')->name('home');",
-                "Route::get('/dashboard', 'Dashboard')->name('dashboard');",
-            ],
             base_path('.gitignore') => [
                 '/public/laravolt',
             ],
