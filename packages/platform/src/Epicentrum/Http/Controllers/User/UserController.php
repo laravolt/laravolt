@@ -52,7 +52,7 @@ class UserController extends Controller
             throw new \Exception("Table View config must extend Laravolt\Suitable\TableView");
         }
 
-        return config('laravolt.epicentrum.table_view')::make($users)->view('laravolt::index');
+        return config('laravolt.epicentrum.table_view')::make($users)->view('laravolt::users.index');
     }
 
     /**
@@ -67,7 +67,7 @@ class UserController extends Controller
         $multipleRole = config('laravolt.epicentrum.role.multiple');
         $timezones = $this->timezone->all();
 
-        return view('laravolt::create', compact('statuses', 'roles', 'multipleRole', 'timezones'));
+        return view('laravolt::users.create', compact('statuses', 'roles', 'multipleRole', 'timezones'));
     }
 
     /**

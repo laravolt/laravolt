@@ -1,6 +1,8 @@
-@extends('ui::layouts.app')
+@extends(config('laravolt.epicentrum.view.layout'))
+
+@section('page.title', __('laravolt::label.permissions'))
+
 @section('content')
-    <h2 class="ui header">@lang('laravolt::label.permissions')</h2>
 
     {!! form()->open(route('epicentrum::permissions.update'))->put() !!}
 
@@ -13,8 +15,9 @@
         }, __('laravolt::permissions.description'))
     ])->render() !!}
 
-    <div class="ui divider hidden"></div>
-
-    {!! form()->submit('Save') !!}
+    <div class="p-y-1">
+        {!! form()->submit(__('laravolt::action.save')) !!}
+    </div>
     {!! form()->close() !!}
+
 @endsection

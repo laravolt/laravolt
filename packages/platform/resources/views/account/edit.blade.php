@@ -1,4 +1,4 @@
-@extends('epicentrum::edit', ['tab' => 'account'])
+@extends('laravolt::users.edit', ['tab' => 'account'])
 
 @section('content-user-edit')
     {!! form()->bind($user)->open()->put()->action(route('epicentrum::account.update', $user['id'])) !!}
