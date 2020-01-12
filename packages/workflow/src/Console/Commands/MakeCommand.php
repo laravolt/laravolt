@@ -2,10 +2,12 @@
 
 namespace Laravolt\Workflow\Console\Commands;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Laravolt\Camunda\Models\ProcessDefinition;
+use Laravolt\Workflow\Models\Module;
 
 class MakeCommand extends Command
 {
@@ -27,11 +29,30 @@ class MakeCommand extends Command
      */
     public function handle()
     {
-        $name = $this->ask('Human friendly name');
-        $id = $this->ask('Identifier', Str::slug($name));
-        $processDefinitionKey = $this->ask('Process definition key');
+        $name = $this->ask('Human friendly label, akan ditampilkan sebagai di halaman web');
+
+        do {
+            $id = $this->ask('Identifier, akan ditampilkan sebagai URL, direkomendasikan dalam slug format',
+                Str::slug($name));
+            $target = config_path(sprintf('workflow-modules/%s.php', $id));
+            $exists = is_file($target);
+
+            if ($exists) {
+                $this->error(sprintf('File %s sudah ada', $target));
+            }
+        } while ($exists);
+
+        do {
+            $processDefinitionKey = $this->ask('Process definition key, sesuai yang terdaftar di camunda');
+            $processDefinition = null;
+            try {
+                $processDefinition = ProcessDefinition::byKey($processDefinitionKey)->fetch();
+            } catch (ClientException $e) {
+                $this->error($e->getMessage());
+            }
+        } while ($processDefinition === null);
+
         $stub = __DIR__ . '/../../../stubs/config.php';
-        $target = config_path(sprintf('workflow-modules/%s.php', $id));
         $targetDir = dirname($target);
 
         $content = File::get($stub);
@@ -45,6 +66,11 @@ class MakeCommand extends Command
 
         File::put($target, $content);
 
-        Artisan::call('workflow:sync-module', ['--prune' => true]);
+        $this->warn(sprintf('File %s berhasil dibuat, silakan dimodifikasi sesuai kebutuhan dan jangan lupa dicommit ya ☺️', $target));
+
+        Module::updateOrCreate(
+            ['key' => $id],
+            ['label' => $name, 'process_definition_key' => $processDefinitionKey]
+        );
     }
 }
