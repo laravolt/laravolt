@@ -21,7 +21,7 @@ class MenuTableView extends TableView
             }, 'Icon'),
             Text::make('order'),
             Text::make('type'),
-            RestfulButton::make('menu-manager::menu')->except(['view']),
+            RestfulButton::make('menu::menu')->except(['view']),
         ];
     }
 }

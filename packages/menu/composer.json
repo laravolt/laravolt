@@ -1,6 +1,6 @@
 {
     "name": "laravolt/menu",
-    "description": "This package is used to make menu sidebar Laravolt easier.",
+    "description": "This package is used to CRUD Laravolt sidebar.",
     "keywords": [
       "laravel",
       "laravolt",

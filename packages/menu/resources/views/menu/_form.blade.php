@@ -26,5 +26,5 @@
 
 {!! form()->action([
     form()->submit(__('Simpan')),
-    form()->link(__('Kembali'), route('menu-manager::menu.index'))
+    form()->link(__('Kembali'), route('menu::menu.index'))
 ]) !!}

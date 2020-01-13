@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Laravolt\Menu;
 
+use Laravolt\Menu\Models\Menu;
 use Laravolt\Menu\Enum\Permission;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(realpath(__DIR__ . '/../config/menu-manager.php'), 'laravolt.menu-manager');
+        $this->mergeConfigFrom(realpath(__DIR__ . '/../config/menu.php'), 'laravolt.menu');
     }
 
     public function boot()
@@ -19,6 +20,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ->bootMigrations()
             ->bootPermission()
             ->bootViews()
+            ->loadMenuFromDatabase()
             ->bootMenu();
     }
 
@@ -28,7 +30,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $menu->add(__('Menu Manager'), url('menu-manager/menu'))
             ->data('icon', 'bars')
             ->data('permission', Permission::MANAGE_MENU)
-            ->active(config('laravolt.menu-manager.route.prefix') . '/menu/*');
+            ->active(config('laravolt.menu.route.prefix') . '/menu/*');
 
         return $this;
     }
@@ -50,7 +52,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootViews()
     {
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'menu-manager');
+        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'menu');
 
         return $this;
     }
@@ -64,6 +66,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->publishes([
             $path => database_path('migrations'),
         ], 'migrations');
+
+        return $this;
+    }
+
+    protected function loadMenuFromDatabase()
+    {
+        if (\Schema::hasTable('menu')) {
+            app()['laravolt.menu.builder']->loadArray(Menu::toStructuredArray());
+        }
 
         return $this;
     }

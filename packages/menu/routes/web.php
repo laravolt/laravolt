@@ -4,9 +4,9 @@ use Laravolt\Menu\Controllers\MenuController;
 
 $router->group(
     [
-        'prefix' => config('laravolt.menu-manager.route.prefix'),
-        'as' => 'menu-manager::',
-        'middleware' => config('laravolt.menu-manager.route.middleware'),
+        'prefix' => config('laravolt.menu.route.prefix'),
+        'as' => 'menu::',
+        'middleware' => config('laravolt.menu.route.middleware'),
     ],
     function ($router) {
         $router->get('menu', [MenuController::class, 'index'])->name('menu.index');

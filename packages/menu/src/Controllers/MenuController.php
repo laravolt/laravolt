@@ -23,7 +23,7 @@ class MenuController extends Controller
         $menu = Menu::withDepth()->ordered()->search(request('search'))->get()->toFlatTree();
 
         return (new MenuTableView($menu))
-            ->view('menu-manager::menu.index');
+            ->view('menu::menu.index');
     }
 
     public function create()
@@ -35,7 +35,7 @@ class MenuController extends Controller
         $colors = Color::toArray();
         $menu = new Menu();
 
-        return view('menu-manager::menu.create', compact('parent', 'menu', 'type', 'permissions', 'roles', 'colors'));
+        return view('menu::menu.create', compact('parent', 'menu', 'type', 'permissions', 'roles', 'colors'));
     }
 
     public function store(Store $request)
@@ -53,7 +53,7 @@ class MenuController extends Controller
         $roles = Role::pluck('name', 'id');
         $colors = Color::toArray();
 
-        return view('menu-manager::menu.edit', compact('parent', 'menu', 'type', 'permissions', 'roles', 'colors'));
+        return view('menu::menu.edit', compact('parent', 'menu', 'type', 'permissions', 'roles', 'colors'));
     }
 
     public function update(Menu $menu, Update $request)
@@ -67,7 +67,7 @@ class MenuController extends Controller
     {
         $menu->delete();
 
-        return redirect()->route('menu-manager::menu.index')->withSuccess(__('Menu berhasil dihapus'));
+        return redirect()->route('menu::menu.index')->withSuccess(__('Menu berhasil dihapus'));
     }
 
     public function download()
