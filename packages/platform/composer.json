@@ -29,6 +29,7 @@
         "ext-openssl": "*",
         "ext-xml": "*",
         "anhskohbo/no-captcha": "^3.1",
+        "appstract/laravel-blade-directives": "^1.7",
         "bensampo/laravel-enum": "^1.26",
         "illuminate/console": "^6.0",
         "illuminate/database": "^6.0",

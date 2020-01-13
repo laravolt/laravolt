@@ -5,8 +5,13 @@
     <div class="menu right">
         <div class="item">
             @foreach($actions ?? [] as $action)
-                @includeWhen($action['visible'] ?? true, 'laravolt::components.button', ['action' => $action])
+                @if(is_array($action))
+                    @includeWhen($action['visible'] ?? true, 'ui::components.button', ['action' => $action])
+                @else
+                    {!! $action !!}
+                @endif
             @endforeach
+
             @stack('page.actions')
         </div>
     </div>
