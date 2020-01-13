@@ -30,4 +30,9 @@ class Module extends Model
     {
         return route('workflow::process.create', $this->key);
     }
+
+    public function getBpmnUrl()
+    {
+        return route('workflow::process.bpmn', $this->key);
+    }
 }

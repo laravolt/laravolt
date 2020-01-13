@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Camunda\Models\ProcessInstanceHistory;
 use Laravolt\Jasper\Jasper;
 use Laravolt\Workflow\Contracts\Workflow;
@@ -203,5 +204,26 @@ class ProcessController extends Controller
         }
 
         return $response;
+    }
+
+    public function bpmn(Module $module)
+    {
+        $this->authorize('view', $module->getModel());
+
+        try {
+            $xml = (ProcessDefinition::byKey($module->processDefinitionKey))->xml();
+            $filename = sprintf('%s.bpmn', $module->processDefinitionKey);
+
+            $response = response()->make($xml, 200);
+            $response->header('Content-Type', 'text/xml');
+            $response->header('Cache-Control', 'public');
+            $response->header('Content-Description', 'File Transfer');
+            $response->header('Content-Disposition', 'attachment; filename=' . $filename);
+            $response->header('Content-Transfer-Encoding', 'binary');
+
+            return $response;
+        } catch (ClientException $e) {
+            return redirect()->back()->withError($e->getMessage());
+        }
     }
 }

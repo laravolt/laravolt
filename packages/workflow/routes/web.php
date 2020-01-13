@@ -21,6 +21,7 @@ $router->group(
 
         $router->get('{module}/{processInstanceId}/print/{templateId}', [PrintController::class, 'index'])->name('print.index');
 
+        $router->get('{module}.bpmn', [ProcessController::class, 'bpmn'])->name('process.bpmn');
         $router->any('{module}.{format}', [ProcessController::class, 'report'])->name('process.report');
         $router->get('{module}', [ProcessController::class, 'index'])->name('process.index');
         $router->get('{module}/create', [ProcessController::class, 'create'])->name('process.create');
