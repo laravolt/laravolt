@@ -72,50 +72,10 @@ class EpicentrumServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'epicentrum');
-
-        if (config('laravolt.epicentrum.route.enable')) {
-            $this->loadRoutes();
-        }
-
-        if (config('laravolt.epicentrum.menu.enable')) {
-            $this->registerMenu();
-        }
-
         $this->registerBlade();
 
         if ($this->app->bound('laravolt.acl')) {
             $this->app['laravolt.acl']->registerPermission(Permission::toArray());
-        }
-
-        if ($this->app->runningInConsole()) {
-            $this->registerCommand();
-        }
-    }
-
-    protected function loadRoutes()
-    {
-        require platform_path('routes/web.php');
-    }
-
-    protected function registerMenu()
-    {
-        if ($this->app->bound('laravolt.menu')) {
-            $menu = app('laravolt.menu')->system;
-            $menu->add(trans('laravolt::label.users'), route('epicentrum::users.index'))
-                ->data('icon', 'users')
-                ->data('permission', Permission::MANAGE_USER)
-                ->active(config('laravolt.epicentrum.route.prefix').'/users/*');
-
-            $menu->add(trans('laravolt::label.roles'), route('epicentrum::roles.index'))
-                ->data('icon', 'mask')
-                ->data('permission', Permission::MANAGE_ROLE)
-                ->active(config('laravolt.epicentrum.route.prefix').'/roles/*');
-
-            $menu->add(trans('laravolt::label.permissions'), route('epicentrum::permissions.edit'))
-                ->data('icon', 'shield')
-                ->data('permission', Permission::MANAGE_PERMISSION)
-                ->active(config('laravolt.epicentrum.route.prefix').'/permissions/*');
         }
     }
 
@@ -128,16 +88,6 @@ class EpicentrumServiceProvider extends BaseServiceProvider
         Blade::directive('endrole', function () {
             return '<?php endif; ?>';
         });
-    }
-
-    protected function registerCommand()
-    {
-        $this->commands(
-            [
-                ManageUser::class,
-                ManageRole::class,
-            ]
-        );
     }
 
     protected function packagePath($path = '')

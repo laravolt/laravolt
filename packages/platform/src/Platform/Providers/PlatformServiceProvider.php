@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Providers;
 
+use App\ViewComposer\MenuComposer;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\HasRoleAndPermission;
+use Laravolt\Epicentrum\Console\Commands\ManageRole;
+use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\SyncPermission;
@@ -25,6 +29,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         SyncPermission::class,
         AdminCommand::class,
         LinkCommand::class,
+        ManageUser::class,
+        ManageRole::class,
     ];
 
     public function register(): void
@@ -44,6 +50,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             ->bootDatabase()
             ->bootRoutes()
             ->bootAcl($gate)
+            ->bootMenu()
             ->bootPreset();
     }
 
@@ -161,6 +168,15 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                     return $user->hasPermission($permission);
                 });
             }
+        }
+
+        return $this;
+    }
+
+    protected function bootMenu()
+    {
+        if ($this->app->bound('laravolt.menu')) {
+            View::composer(['laravolt::menu.sidebar'], \Laravolt\Platform\Services\MenuComposer::class);
         }
 
         return $this;

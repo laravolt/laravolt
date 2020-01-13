@@ -41,7 +41,6 @@ class LaravoltPreset extends Preset
             app_path('Http/Controllers/Dashboard.php') => platform_path('stubs/Dashboard.php'),
             resource_path('views/dashboard.blade.php') => platform_path('stubs/dashboard.blade.php'),
             base_path('routes/web.php') => platform_path('stubs/routes.php'),
-            app_path('Providers/RouteServiceProvider.php') => platform_path('stubs/RouteServiceProvider.php'),
             app_path('Http/Controllers/Auth') => null,
         ];
 
