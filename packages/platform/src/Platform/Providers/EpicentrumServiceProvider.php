@@ -6,8 +6,6 @@ namespace Laravolt\Platform\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Laravolt\Epicentrum\Console\Commands\ManageRole;
-use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Update;

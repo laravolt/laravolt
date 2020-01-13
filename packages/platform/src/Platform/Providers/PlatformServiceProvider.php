@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Providers;
 
-use App\ViewComposer\MenuComposer;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Auth\Access\Gate;
