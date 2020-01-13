@@ -7,7 +7,9 @@ namespace Laravolt\Support;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Laravolt\Support\Mixin\QueryBuilderMixin;
+use Laravolt\Support\Mixin\StrMixin;
 
 class SupportServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerMacro()
     {
         Builder::mixin(new QueryBuilderMixin());
+        Str::mixin(new StrMixin());
 
         EloquentBuilder::macro('whereLike', function ($attributes, ?string $searchTerm) {
             if ($searchTerm === null) {
