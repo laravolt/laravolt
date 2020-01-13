@@ -4,6 +4,7 @@ namespace Laravolt\Workflow\Console\Commands;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\ProcessDefinition;
@@ -66,11 +67,15 @@ class MakeCommand extends Command
 
         File::put($target, $content);
 
-        $this->warn(sprintf('File %s berhasil dibuat, silakan dimodifikasi sesuai kebutuhan dan jangan lupa dicommit ya ☺️', $target));
+        $this->warn(sprintf('File %s berhasil dibuat, silakan dimodifikasi sesuai kebutuhan dan jangan lupa dicommit ya ☺️',
+            $target));
 
         Module::updateOrCreate(
             ['key' => $id],
             ['label' => $name, 'process_definition_key' => $processDefinitionKey]
         );
+
+        $this->info('Importing form dan tabel...');
+        Artisan::call('workflow:import', ['processDefinitionKey' => $processDefinitionKey]);
     }
 }

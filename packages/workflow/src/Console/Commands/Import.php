@@ -16,7 +16,7 @@ class Import extends Command
      * The name and signature of the console command.
      * @var string
      */
-    protected $signature = 'workflow:import {processDefKey}';
+    protected $signature = 'workflow:import {processDefinitionKey}';
 
     /**
      * The console command description.
@@ -30,7 +30,7 @@ class Import extends Command
      */
     public function handle()
     {
-        $key = $this->argument('processDefKey');
+        $key = $this->argument('processDefinitionKey');
         $processDefinition = ProcessDefinition::byKey($key);
 
         $xml = new SimpleXMLElement($processDefinition->xml());
