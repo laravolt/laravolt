@@ -16,12 +16,6 @@
     ]
 )
 
-@prepend('page.header')
-    <div class="item">
-        @include('workflow::components.buttons-surat', ['module' => $module, 'tasks' => $completedTasks, 'processInstance' => $processInstance])
-    </div>
-@endprepend
-
 @section('content')
     @foreach($completedTasks as $task)
         {!! \Laravolt\Workflow\Presenters\TaskInfo::make($module, $task)->render() !!}
