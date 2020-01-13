@@ -113,3 +113,19 @@ class SomeModuleTableView extends Table
 
 ```
 
+## Mutator
+
+Buat sebuah class dengan struktur:
+
+```php
+class InvoiceNumberGenerator
+{
+  public function execute()
+  {
+   	// do logic
+    return $generatedInvoiceNumber;
+  }
+}
+
+```
+
