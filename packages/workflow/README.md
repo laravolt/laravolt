@@ -90,25 +90,25 @@ use Laravolt\Workflow\Tables\Table;
 
 class SomeModuleTableView extends Table
 {
-	  // query untuk menampilkan data, bisa pakai Query Builder, bisa pakai Eloquent
-    public function source($sqlOnly = false)
-    {
-        return DB::table('foo')->paginate();
-    }
+  // query untuk menampilkan data, bisa pakai Query Builder, bisa pakai Eloquent
+  public function source($sqlOnly = false)
+  {
+    return DB::table('foo')->paginate();
+  }
+  
+  // definisi kolom, sesuai https://laravolt.dev/docs/suitable/
+  protected function columns()
+  {
+    return [
+      Numbering::make('No'),
+      Text::make('process_instance_id'),
+      
+      // dan kolom lainnya sesuai kebutuhan...
 
-  	// definisi kolom, sesuai https://laravolt.dev/docs/suitable/
-    protected function columns()
-    {
-        return [
-            Numbering::make('No'),
-            Text::make('process_instance_id'),
-
-	          // dan kolom lainnya sesuai kebutuhan...
-
-          	// CRUD buttons
-            $this->buttons()
-        ];
-    }
+      // CRUD buttons
+      $this->buttons()
+    ];
+  }
 }
 
 ```
