@@ -70,7 +70,6 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->mergeConfigFrom(platform_path('config/acl.php'), 'laravolt.acl');
         $this->mergeConfigFrom(platform_path('config/password.php'), 'laravolt.password');
         $this->mergeConfigFrom(platform_path('config/auth.php'), 'laravolt.auth');
-        $this->mergeConfigFrom(platform_path('config/epicentrum.php'), 'laravolt.epicentrum');
 
         $this->publishes(
             [

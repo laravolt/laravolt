@@ -35,6 +35,8 @@ class EpicentrumServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(platform_path('config/epicentrum.php'), 'laravolt.epicentrum');
+
         $this->app->bind(
             \Laravolt\Epicentrum\Repositories\RepositoryInterface::class,
             config('laravolt.epicentrum.repository.user')
