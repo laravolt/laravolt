@@ -6,6 +6,14 @@ namespace Laravolt\Tests;
 
 class AclServiceTest extends FeatureTest
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Clear any built-in permissions
+        app('laravolt.acl')->clearPermissions();
+    }
+
     public function testInitialPermissions()
     {
         $service = app('laravolt.acl');
