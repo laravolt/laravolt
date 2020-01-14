@@ -6,6 +6,15 @@ namespace Laravolt\Camunda\Models;
 
 class ProcessInstanceHistory extends ProcessInstance
 {
+    public function fetchByBusinessKey($key)
+    {
+        $url = 'history/process-instance?processInstanceBusinessKey=' . $key;
+
+        $processess = $this->get($url);
+
+        return collect($processess);
+    }
+
     protected function modelUri(): string
     {
         if ($this->key) {
