@@ -125,11 +125,4 @@ class ProcessInstance extends CamundaModel
 
         return $data;
     }
-
-    public function checkSubInstance()
-    {
-        $processDefKey = new ProcessDefinition($this->definitionId);
-
-        return $processDefKey->fetch();
-    }
 }
