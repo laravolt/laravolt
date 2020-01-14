@@ -22,7 +22,7 @@ abstract class CamundaModel
         $baseUrl = parse_url(Config::get('laravolt.camunda.api.url', ''));
 
         $this->client = new Client([
-            'base_uri' => sprintf('%s://%s', $baseUrl['scheme'], $baseUrl['host']),
+            'base_uri' => sprintf('%s://%s:%s', $baseUrl['scheme'], $baseUrl['host'], $baseUrl['port']),
         ]);
 
         $this->id = $id;
