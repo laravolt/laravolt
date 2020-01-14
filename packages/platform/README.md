@@ -3,3 +3,39 @@
 # Laravolt Platform
 Platform untuk mengembangkan sistem informasi dalam 2 minggu
 
+## Instalasi
+Buat sebuah proyek Laravel baru dengan menjalankan:
+
+```bash
+laravel new awesome-application
+```
+
+atau:
+
+```bash
+composer create-project --prefer-dist laravel/laravel awesome-application
+```
+
+
+
+Masuk ke folder aplikasi, lalu tambahkan laravolt/platform:
+
+```bash
+composer require laravolt/platform
+```
+
+Setup skeleton Laravolt dengan menjalankan:
+
+```bash
+php artisan preset laravolt
+```
+
+Untuk menambahkan admin, jalankan perintah:
+
+```bash
+php artisan laravolt:admin
+```
+
+
+
+Jalankan `php artisan serve` atau web server lain kesukaanmu, buka URL aplikasi browser, dan Laravolt siap menebar pesona 😉
