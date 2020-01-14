@@ -15,7 +15,7 @@ class ProcessInstance extends CamundaModel
     {
         $id = $key = null;
         if (! $this->processDefinition) {
-            $id = $this->definitionId ?? null;
+            $id = $this->processDefinitionId ?? $this->definitionId ?? null;
 
             if (! $id) {
                 $key = DB::table('camunda_task')
