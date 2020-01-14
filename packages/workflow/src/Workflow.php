@@ -127,6 +127,32 @@ class Workflow implements Contracts\Workflow
         });
     }
 
+    public function saveSubProcess(ProcessInstance $processInstance): ProcessInstance
+    {
+        return DB::transaction(function () use ($processInstance) {
+            $data = $processInstance->getVariables();
+            $additionalData = [
+                'process_instance_id' => $processInstance->id,
+            ];
+            $data = $data + $additionalData;
+
+            $form = $processInstance->processDefinition()->getStartTaskName();
+            $formId = $this->insertData($form, $data);
+            DB::table('camunda_task')->insert([
+                'task_id' => null,
+                'process_instance_id' => $processInstance->id,
+                'form_type' => $form,
+                'form_id' => $formId,
+                'task_name' => $form,
+                'process_definition_key' => $processInstance->processDefinition()->key,
+                'created_at' => now(),
+                'traceable' => json_encode(collect($data)->only(config('laravolt.workflow.traceable')) ?? []),
+            ]);
+
+            return $processInstance;
+        });
+    }
+
     /**
      * @deprecated
      */
@@ -275,6 +301,14 @@ class Workflow implements Contracts\Workflow
                     event(new TaskDrafted($task, $payload, auth()->user()));
                 } else {
                     event(new TaskCompleted($task, $payload, auth()->user()));
+
+                    // Save sub processes data
+                    $subProcesses = $task->processInstance()->getSubProcess();
+                    if (! empty($subProcesses)) {
+                        foreach ($subProcesses as $process) {
+                            $this->saveSubProcess($process);
+                        }
+                    }
                 }
 
                 // TODO: deprecated
