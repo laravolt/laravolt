@@ -38,4 +38,4 @@ php artisan laravolt:admin
 
 
 
-Jalankan `php artisan serve` atau web server lain kesukaanmu, buka URL aplikasi browser, dan Laravolt siap menebar pesona 😉
+Jalankan `php artisan serve` atau web server lain kesukaanmu, buka URL aplikasi di browser, dan Laravolt siap menebar pesona 😉
