@@ -19,10 +19,15 @@ abstract class CamundaModel
 
     public function __construct($id = null, $attributes = [])
     {
-        $baseUrl = parse_url(Config::get('laravolt.camunda.api.url', ''));
+        $urls = parse_url(Config::get('laravolt.camunda.api.url', ''));
 
+        $port = '';
+        if (isset($urls['port'])) {
+            $port = ':' . $urls['port'];
+        }
+        
         $this->client = new Client([
-            'base_uri' => sprintf('%s://%s:%s', $baseUrl['scheme'], $baseUrl['host'], $baseUrl['port']),
+            'base_uri' => sprintf('%s://%s%s', $urls['scheme'], $urls['host'], $port),
         ]);
 
         $this->id = $id;
