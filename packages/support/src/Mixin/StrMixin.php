@@ -4,8 +4,17 @@ declare(strict_types=1);
 
 namespace Laravolt\Support\Mixin;
 
+use Illuminate\Support\Str;
+
 class StrMixin
 {
+    public function humanize()
+    {
+        return function ($string) {
+            return trim(preg_replace('/\s+/', ' ', Str::title(str_replace('_', ' ', $string))));
+        };
+    }
+
     public function mask()
     {
         return function ($str, $first, $last, $mask = '*') {
