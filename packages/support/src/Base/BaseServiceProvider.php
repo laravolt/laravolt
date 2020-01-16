@@ -8,27 +8,28 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
-class BaseServiceProvider extends ServiceProvider
+abstract class BaseServiceProvider extends ServiceProvider
 {
-    protected $name;
-
     /** @var Collection */
     protected $config;
 
+    abstract public function getIdentifier();
+
     public function register()
     {
-        $file = $this->packagePath("config/{$this->name}.php");
-        $this->mergeConfigFrom($file, "laravolt.{$this->name}");
-        $this->publishes([$file => config_path("laravolt/{$this->name}.php")], 'config');
+        $file = $this->packagePath("config/{$this->getIdentifier()}.php");
+        $this->mergeConfigFrom($file, "laravolt.{$this->getIdentifier()}");
+        $this->publishes([$file => config_path("laravolt/{$this->getIdentifier()}.php")], 'config');
 
-        $this->config = collect(config("laravolt.{$this->name}"));
+        $this->config = collect(config("laravolt.{$this->getIdentifier()}"));
     }
 
     public function boot()
     {
         $this->bootRoutes()
+            ->bootViews()
             ->bootMigrations()
-            ->bootViews();
+            ->bootTranslations();
     }
 
     protected function bootRoutes()
@@ -44,9 +45,9 @@ class BaseServiceProvider extends ServiceProvider
     protected function bootViews()
     {
         $viewFolder = $this->packagePath('resources/views');
-        $this->loadViewsFrom($viewFolder, $this->name);
+        $this->loadViewsFrom($viewFolder, $this->getIdentifier());
         $this->publishes(
-            [$viewFolder => base_path("resources/views/vendor/{$this->name}}")],
+            [$viewFolder => base_path("resources/views/vendor/{$this->getIdentifier()}}")],
             'views'
         );
 
@@ -62,6 +63,13 @@ class BaseServiceProvider extends ServiceProvider
         $this->publishes([
             $databaseFolder => database_path('migrations'),
         ], 'migrations');
+
+        return $this;
+    }
+
+    protected function bootTranslations()
+    {
+        $this->loadTranslationsFrom($this->packagePath('resources/lang'), $this->getIdentifier());
 
         return $this;
     }
