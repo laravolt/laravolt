@@ -91,7 +91,7 @@ class ProcessController extends Controller
         $this->authorize('view', $module->getModel());
 
         $view = $module->view['show'] ?? 'workflow::process.show';
-
+        
         try {
             $processInstance = (new ProcessInstanceHistory($processInstanceId))->fetch();
             $tasks = $processInstance->tasks($module->getTasks());
