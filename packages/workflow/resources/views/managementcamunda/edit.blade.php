@@ -14,6 +14,7 @@
                 {!! form()->text('field_name', $data->field_name)->label('field_name')->id('field_name_cmd_mng')->readonly() !!}
                 {!! form()->dropdown('field_type', $type_options, $data->field_type)->label('Field Type')->id('field_type_cmd_mng') !!}
                 {!! form()->text('field_label', $data->field_label)->label('Field Label')->id('field_label_cmd_mng') !!}
+                {!! form()->text('field_hint', $data->field_hint)->label('Field Hint')->id('field_hint_cmd_mng') !!}
                 {!! form()->text('segment_group', $data->segment_group)->label('Segment Group')->id('segment_group_cmd_mng') !!}
                 {!! form()->text('segment_order', $data->segment_order)->label('Segment Order')->id('field_order_cmd_mng') !!}
                 {!! form()->text('field_order', $data->field_order)->label('Field Order')->id('segment_order_cmd_mng') !!}

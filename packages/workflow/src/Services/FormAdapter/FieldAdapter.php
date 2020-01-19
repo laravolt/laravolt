@@ -36,7 +36,7 @@ abstract class FieldAdapter implements FieldAdapterInterface
             'type' => $this->type,
             'name' => $this->field->field_name,
             'label' => $this->field->field_label,
-            'hint' => '',
+            'hint' => $this->field->field_hint,
             'value' => $this->value,
             'readonly' => $this->readonly,
             'required' => in_array('required', $this->field->validation_rules),

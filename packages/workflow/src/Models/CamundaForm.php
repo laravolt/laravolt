@@ -30,6 +30,7 @@ class CamundaForm extends Model
         'form_name',
         'field_name',
         'field_type',
+        'field_hint',
         'field_label',
         'field_order',
         'field_select_query',

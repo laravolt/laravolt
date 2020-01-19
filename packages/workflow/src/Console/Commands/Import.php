@@ -36,7 +36,7 @@ class Import extends Command
         $xml = new SimpleXMLElement($processDefinition->xml());
         $xml->registerXPathNamespace('bpmn', 'http://www.omg.org/spec/BPMN/20100524/MODEL');
         $xml->registerXPathNamespace('camunda', 'http://camunda.org/schema/1.0/bpmn');
-
+        
         $calledActivity = $xml->xpath('//bpmn:callActivity');
         foreach ($calledActivity as $call) {
             if (CamundaForm::where('field_name', '=', 'subprocess' . $call['name'])
@@ -49,6 +49,7 @@ class Import extends Command
                     'form_name' => $call['id'],
                     'field_name' => 'subprocess' . $call['name'],
                     'field_label' => 'subprocess' . $call['name'],
+                    'field_hint' => null,
                     'field_type' => 'hidden',
                     'field_select_query' => null,
                     'field_order' => 0,
