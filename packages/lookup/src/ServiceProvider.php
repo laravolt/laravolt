@@ -9,7 +9,10 @@ use Laravolt\Support\Base\BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    protected $name = 'lookup';
+    public function getIdentifier()
+    {
+        return 'lookup';
+    }
 
     public function boot()
     {
