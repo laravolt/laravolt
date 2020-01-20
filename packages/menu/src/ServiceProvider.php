@@ -26,18 +26,22 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootMenu()
     {
-        $menu = app('laravolt.menu')->system;
-        $menu->add(__('Menu Manager'), url('menu-manager/menu'))
-            ->data('icon', 'bars')
-            ->data('permission', Permission::MANAGE_MENU)
-            ->active(config('laravolt.menu.route.prefix') . '/menu/*');
+        if (app()->bound('laravolt.menu')) {
+            $menu = app('laravolt.menu')->system;
+            $menu->add(__('Menu Manager'), url('menu-manager/menu'))
+                ->data('icon', 'bars')
+                ->data('permission', Permission::MANAGE_MENU)
+                ->active(config('laravolt.menu.route.prefix') . '/menu/*');
+        }
 
         return $this;
     }
 
     protected function bootPermission()
     {
-        $this->app['laravolt.acl']->registerPermission(Permission::toArray());
+        if (app()->bound('laravolt.acl')) {
+            app('laravolt.acl')->registerPermission(Permission::toArray());
+        }
 
         return $this;
     }
