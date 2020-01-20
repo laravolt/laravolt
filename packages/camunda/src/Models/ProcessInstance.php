@@ -128,6 +128,9 @@ class ProcessInstance extends CamundaModel
 
     public function suspend()
     {
-        return $this->put('process-instance/' . $this->id.'/suspended');
+        $data = [
+            'suspended'=>true
+        ];
+        return $this->put('process-instance/' . $this->id.'/suspended', $data, true);
     }
 }
