@@ -21,6 +21,7 @@ use Laravolt\SemanticForm\Elements\Link;
 use Laravolt\SemanticForm\Elements\Number;
 use Laravolt\SemanticForm\Elements\RadioGroup;
 use Laravolt\SemanticForm\Elements\Redactor;
+use Laravolt\SemanticForm\Elements\Rupiah;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\SelectMultiple;
@@ -508,8 +509,10 @@ class SemanticForm
     {
         \Stolz\Assets\Laravel\Facade::group('laravolt')->add('autoNumeric');
 
-        $input = $this->input($name, $defaultValue)->prependLabel('Rp');
-        $input->getPrimaryControl()->data('role', 'rupiah');
+        $text = $this->text($name, $defaultValue);
+        // $input = $this->input($name, $defaultValue)->prependLabel('Rp');
+        // $input->getPrimaryControl()->data('role', 'rupiah');
+        $input = (new Rupiah($text));
 
         return $input;
     }
