@@ -11,6 +11,8 @@ class ProcessInstance extends CamundaModel
 {
     protected $processDefinition;
 
+    protected $parentProcessInstance;
+
     public function processDefinition(): ?ProcessDefinition
     {
         $id = $key = null;
@@ -31,6 +33,20 @@ class ProcessInstance extends CamundaModel
         }
 
         return $this->processDefinition;
+    }
+
+    public function parent()
+    {
+        if ($this->parentProcessInstance === null) {
+            $url = 'history/process-instance?subProcessInstanceId=' . $this->id;
+            $result = Arr::first($this->get($url));
+
+            if ($result !== null) {
+                $this->parentProcessInstance = new ProcessInstanceHistory($result->id, $result);
+            }
+        }
+
+        return $this->parentProcessInstance;
     }
 
     public function currentTask()
