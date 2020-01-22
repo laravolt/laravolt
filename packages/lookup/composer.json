@@ -19,10 +19,10 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
         "illuminate/support": "^6.0",
         "laravolt/suitable": "^3.6",
-        "laravolt/support": "^2.0.6"
+        "laravolt/support": "^2.0"
     },
     "autoload": {
         "psr-4": {
