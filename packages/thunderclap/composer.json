@@ -1,12 +1,7 @@
 {
     "name": "laravolt/thunderclap",
     "description": "Laravel CRUD generator",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "crud",
-        "generator"
-    ],
+    "keywords": ["laravel", "laravolt", "crud", "generator"],
     "homepage": "https://github.com/laravolt/thunderclap",
     "license": "MIT",
     "authors": [
@@ -18,13 +13,13 @@
         }
     ],
     "require": {
-        "php" : ">=7.0",
-        "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*|6.*",
-        "laravolt/semantic-form": "^2.2",
-        "laravolt/suitable": "^3.3"
+        "php": ">=7.3",
+        "illuminate/support": "^6.0",
+        "laravolt/semantic-form": "^2.7",
+        "laravolt/suitable": "^3.6"
     },
     "require-dev": {
-        "phpunit/phpunit" : "^7.0"
+        "phpunit/phpunit": "^8.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "0.5-dev"
         },
         "laravel": {
             "providers": [
