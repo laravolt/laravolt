@@ -1,13 +1,7 @@
 {
     "name": "laravolt/mailkeeper",
     "description": "Save mail to database for further use",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "mail",
-        "email",
-        "database"
-    ],
+    "keywords": ["laravel", "laravolt", "mail", "email", "database"],
     "homepage": "https://github.com/laravolt/mailkeeper",
     "license": "MIT",
     "authors": [
@@ -19,8 +13,8 @@
         }
     ],
     "require": {
-        "php": "^7.1.3",
-        "illuminate/support": "~5.4|^6.0"
+        "php": ">=7.3",
+        "illuminate/support": "^6.0"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +23,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "0.5-dev"
         },
         "laravel": {
             "providers": [
