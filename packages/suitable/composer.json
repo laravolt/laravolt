@@ -1,14 +1,7 @@
 {
     "name": "laravolt/suitable",
     "description": "Semantic-UI table builder for Laravel application",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "table",
-        "crud",
-        "suitable",
-        "semantic UI"
-    ],
+    "keywords": ["laravel", "laravolt", "table", "crud", "suitable", "semantic UI"],
     "homepage": "https://github.com/laravolt/suitable",
     "license": "MIT",
     "authors": [
@@ -34,7 +27,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0-dev"
+            "dev-master": "0.5-dev"
         },
         "laravel": {
             "providers": [
