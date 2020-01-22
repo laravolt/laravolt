@@ -1,0 +1,20 @@
+<?php
+
+namespace :Namespace:\:ModuleName:\TableView;
+
+use Laravolt\Suitable\Columns\Numbering;
+use Laravolt\Suitable\Columns\RestfulButton;
+use Laravolt\Suitable\Columns\Text;
+use Laravolt\Suitable\TableView;
+
+class IndexTableView extends TableView
+{
+    protected function columns()
+    {
+        return [
+            Numbering::make('No'),
+:TABLE_VIEW_FIELDS:
+            RestfulButton::make(':module-name:'),
+        ];
+    }
+}

@@ -1,0 +1,16 @@
+[data-role="quick-menu-searchbox"]{
+  opacity: .5;
+
+  &:focus, &:active {
+    opacity: 1;
+  }
+}
+
+[data-role="quick-switcher-modal"] {
+  top: 10%;
+
+  .ui.dropdown .menu > .item > .right.floated.label {
+    margin-top: -0.4em;
+  }
+}
+

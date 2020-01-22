@@ -1,0 +1,91 @@
+{
+    "name": "laravolt/platform",
+    "description": "Platform for developing information systems in 2 weeks",
+    "keywords": [
+        "framework",
+        "laravel",
+        "platform",
+        "laravolt",
+        "admin",
+        "crud",
+        "cms"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://laravolt.dev",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com",
+            "homepage": "https://github.com/uyab",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "ext-bcmath": "*",
+        "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-pdo": "*",
+        "ext-xml": "*",
+        "anhskohbo/no-captcha": "^3.1",
+        "appstract/laravel-blade-directives": "^1.7",
+        "bensampo/laravel-enum": "^1.26",
+        "illuminate/console": "^6.0",
+        "illuminate/database": "^6.0",
+        "illuminate/support": "^6.0",
+        "laravolt/avatar": "^3.0",
+        "laravolt/epilog": "~0.4",
+        "laravolt/media": "~0.4",
+        "laravolt/semantic-form": "^2.7",
+        "laravolt/suitable": "^3.6",
+        "laravolt/support": "^2.0",
+        "lavary/laravel-menu": "^1.7.7",
+        "spatie/laravel-medialibrary": "^7.0",
+        "spatie/once": "^2.1",
+        "stolz/assets": "~0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\Epicentrum\\": "src/Epicentrum/",
+            "Laravolt\\Platform\\": "src/Platform/",
+            "Laravolt\\Contracts\\": "src/Contracts/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+        ],
+        "psr-4": {
+            "Laravolt\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Platform\\Providers\\EpicentrumServiceProvider",
+                "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
+                "Laravolt\\Platform\\Providers\\UiServiceProvider",
+                "Laravolt\\Platform\\Providers\\AuthServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.26.2",
+        "mockery/mockery": "^1.2",
+        "orchestra/testbench": "^4.0",
+        "orchestra/testbench-browser-kit": "^4.0",
+        "php-coveralls/php-coveralls": "^2.1"
+    }
+}

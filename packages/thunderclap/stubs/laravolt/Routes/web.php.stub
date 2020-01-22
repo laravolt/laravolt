@@ -1,0 +1,18 @@
+<?php
+
+Route::group(
+    [
+        'prefix'     => ':route-prefix:',
+        'as'         => '',
+        'middleware' => [:route-middleware:],
+    ],
+    function (\Illuminate\Routing\Router $router) {
+        $router->get(':module-name:', ':ModuleName:Controller@index')->name(':module-name:.index');
+        $router->get(':module-name:/create', ':ModuleName:Controller@create')->name(':module-name:.create');
+        $router->post(':module-name:', ':ModuleName:Controller@store')->name(':module-name:.store');
+        $router->get(':module-name:/{:moduleName:}', ':ModuleName:Controller@show')->name(':module-name:.show');
+        $router->get(':module-name:/{:moduleName:}/edit', ':ModuleName:Controller@edit')->name(':module-name:.edit');
+        $router->put(':module-name:/{:moduleName:}', ':ModuleName:Controller@update')->name(':module-name:.update');
+        $router->delete(':module-name:/{:moduleName:}', ':ModuleName:Controller@destroy')->name(':module-name:.destroy');
+    }
+);

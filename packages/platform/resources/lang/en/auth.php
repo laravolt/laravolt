@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'activation_success'       => 'Your account successfully activated.',
+    'activation_subject'       => 'Account Activation',
+    'already_registered?'      => 'Have an account?',
+    'click_to_activate'        => 'Please click <a href=":link">this activation link</a> to activate your account.',
+    'email'                    => 'Email',
+    'failed'                   => 'Invalid credentials',
+    'forgot_password'          => 'Forgot password',
+    'identifier'               => 'Email',
+    'login'                    => 'Login',
+    'login_here'               => 'Login Here',
+    'login_cas'                => 'Login Using CAS',
+    'login_cas_failed'         => 'Cannot find associated user for this CAS account',
+    'name'                     => 'Name',
+    'not_registered_yet?'      => 'Not registered yet?',
+    'password'                 => 'Password',
+    'password_confirmation'    => 'Confirm Your Password',
+    'password_new'             => 'New Password',
+    'password_confirm'         => 'Confirm New Password',
+    'register'                 => 'Register',
+    'register_here'            => 'Register Here',
+    'registration_success'     => 'Registration success. Please check your email to activate your account.',
+    'remember'                 => 'Stay signed in',
+    'reset_password'           => 'Reset Password',
+    'send_reset_password_link' => 'Send Reset Password Link',
+];

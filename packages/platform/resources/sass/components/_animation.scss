@@ -1,0 +1,31 @@
+//Credit: https://github.com/daneden/animate.css
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes shake {
+  from, to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 50%, 90% {
+    transform: translate3d(-7px, 0, 0);
+  }
+
+  30%, 70%{
+    transform: translate3d(7px, 0, 0);
+  }
+}

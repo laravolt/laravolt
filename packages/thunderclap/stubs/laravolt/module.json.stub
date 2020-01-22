@@ -1,0 +1,14 @@
+{
+    "name": ":ModuleName:",
+    "alias": ":moduleName:",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\:ModuleName:\\Providers\\ServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

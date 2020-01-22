@@ -1,0 +1,55 @@
+<?php
+
+namespace :Namespace:\:ModuleName:\Http\Controllers;
+
+use Illuminate\Routing\Controller;
+use :Namespace:\:ModuleName:\Http\Requests\Store;
+use :Namespace:\:ModuleName:\Http\Requests\Update;
+use :Namespace:\:ModuleName:\Models\:ModuleName:;
+use :Namespace:\:ModuleName:\TableView\IndexTableView;
+
+class :ModuleName:Controller extends Controller
+{
+    public function index()
+    {
+        $items = :ModuleName:::autoSort()->latest()->search(request('search'))->paginate();
+
+        return (IndexTableView::make($items))->view(':moduleName:::index');
+    }
+
+    public function create()
+    {
+        return view(':moduleName:::create');
+    }
+
+    public function store(Store $request)
+    {
+        :ModuleName:::create($request->all());
+
+        return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: saved');
+    }
+
+    public function show(:ModuleName: $:moduleName:)
+    {
+        return view(':moduleName:::show', compact(':moduleName:'));
+    }
+
+    public function edit(:ModuleName: $:moduleName:)
+    {
+        return view(':moduleName:::edit', compact(':moduleName:'));
+    }
+
+    public function update(Update $request, :ModuleName: $:moduleName:)
+    {
+        $:moduleName:->update($request->all());
+
+        return redirect()->back()->withSuccess(':ModuleName: saved');
+    }
+
+    public function destroy(:ModuleName: $:moduleName:)
+    {
+        $:moduleName:->delete();
+
+        return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: deleted');
+    }
+}

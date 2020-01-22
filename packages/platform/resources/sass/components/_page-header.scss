@@ -1,0 +1,16 @@
+.ui.menu.page-header {
+  .ui.header:first-child {
+    margin-top: inherit;
+  }
+  .item {
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    .button {
+      margin: inherit;
+    }
+  }
+}

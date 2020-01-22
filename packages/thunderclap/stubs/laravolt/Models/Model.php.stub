@@ -1,0 +1,20 @@
+<?php
+
+namespace :Namespace:\:ModuleName:\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Laravolt\Suitable\AutoFilter;
+use Laravolt\Suitable\AutoSort;
+use Sofa\Eloquence\Eloquence;
+
+class :ModuleName: extends Model
+{
+    use AutoSort, AutoFilter;
+    use Eloquence;
+
+    protected $table = ':table:';
+
+    protected $guarded = [];
+
+    protected $searchableColumns = [:SEARCHABLE_COLUMNS:];
+}

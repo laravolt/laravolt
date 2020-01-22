@@ -1,0 +1,147 @@
+$labelMargin: 2em;
+$labelWidth: 180px;
+$widths: (
+        one: 6.25%,
+        two: 12.5%,
+        three: 18.75%,
+        four: 25%,
+        five: 31.25%,
+        six: 37.5%,
+        seven: 43.75%,
+        eight: 50%,
+        nine: 56.25%,
+        ten: 62.5%,
+        eleven: 68.75%,
+        twelve: 75%,
+        thirteen: 81.25%,
+        fourteen: 87.5%,
+        fifteen: 93.25%,
+        sixteen: 100%
+);
+.ui.form {
+  @media only screen and (max-width: 767px) {
+    &:not(.horizontal) {
+      > .field[class*="wide"] {
+        width: 100% !important;
+      }
+    }
+  }
+  // Hint label
+  .hint {
+    opacity: .7;
+    font-size: .9em;
+  }
+
+  // Avoid double margin for nested field
+  .field > .fields {
+    margin-bottom: 0;
+  }
+
+  .pushed {
+    &:not(:last-child) {
+      margin-bottom: 1em;
+    }
+  }
+
+  // Do not stretch 100% width
+  input[type=time], input[type=date] {
+    width: auto;
+  }
+
+  // Tweak to make native form validation showed on dropdown select
+  .ui.dropdown select[required] {
+    display: initial !important;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+  }
+
+  // Remove transparency from disabled+readonly field
+  .field.disabled.readonly {
+    opacity: 1;
+    cursor: not-allowed;
+
+    > label {
+      opacity: 1;
+    }
+
+    .ui.dropdown {
+      background: #f8f8f8;
+      color: #999;
+    }
+  }
+  input:read-only, input:focus:read-only {
+    background: #f8f8f8;
+    color: #999;
+    cursor: not-allowed;
+  }
+}
+
+.ui.form.horizontal, .ui.form.horizontal .segment {
+  > .field[class*="wide"] {
+    width: 100% !important;
+  }
+
+  @media (min-width: 767px) {
+    > .field {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100% !important;
+
+      > .hint {
+        flex-basis: 100%;
+        margin-left: calc(#{$labelWidth} + #{$labelMargin});
+      }
+
+      > label {
+        flex: 0 0 $labelWidth;
+        text-align: right;
+        margin-right: $labelMargin;
+        margin-top: 0.5em;
+      }
+
+      > :nth-child(2) {
+        flex: 1;
+      }
+
+      @each $width, $percent in $widths {
+        &.#{$width}.wide {
+          > :nth-child(2) {
+            flex: 0 1 calc(#{$percent} - #{$labelWidth} - #{$labelMargin})
+          }
+        }
+      }
+    }
+
+    > .grouped.fields {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      width: 100% !important;
+      align-items: center;
+
+      label {
+        flex: 0 0 $labelWidth;
+        text-align: right;
+        margin-right: $labelMargin;
+        margin-bottom: 0;
+      }
+
+      > .hint {
+        flex-basis: 100%;
+        margin-left: calc(#{$labelWidth} + #{$labelMargin});
+      }
+    }
+    // Make asterisk "*" mark absolute, so all labels (required or not) will correctly align to right
+    > .required.field > .checkbox:after, .required.field > label:after {
+      position: absolute;
+    }
+
+    .pushed {
+      flex-basis: 100%;
+      margin-left: calc(#{$labelWidth} + #{$labelMargin});
+    }
+  }
+}
+

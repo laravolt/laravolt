@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        colors="true"
+        bootstrap="vendor/autoload.php">W
+    <testsuites>
+        <testsuite name="Integration Test">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <env name="APP_KEY" value="base64:Hu6gTLfCq3i6ZB1PLiwnbHfyTWVY1XBK54edL5DqBaY="/>
+        <env name="DB_DATABASE" value="sqlite"/>
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value=""/>
+        <env name="SESSION_DRIVER" value="file"/>
+    </php>
+</phpunit>

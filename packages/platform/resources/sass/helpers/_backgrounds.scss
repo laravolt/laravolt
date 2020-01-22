@@ -1,0 +1,11 @@
+@for $i from 0 through 10 {
+  $level: $i * 10;
+  $alpha: ($i / 10);
+
+  .bg-white-#{$level} {
+    background-color: rgba(white, $alpha) !important;
+  }
+  .bg-black-#{$level} {
+    background-color: rgba(black, $alpha) !important;;
+  }
+}
