@@ -1,0 +1,29 @@
+parameters:
+    # for "merge" command
+    data_to_append:
+        require-dev:
+            phpunit/phpunit: '^8.0'
+            symplify/monorepo-builder: '^7.2'
+
+    merge_sections:
+        # default values
+        - 'require'
+        - 'require-dev'
+        - 'autoload'
+        - 'autoload-dev'
+        - 'repositories'
+        - 'extra'
+
+    # for "split" command
+    directories_to_repositories:
+        packages/comma: 'git@github.com:laravolt/comma.git'
+        packages/epilog: 'git@github.com:laravolt/epilog.git'
+        packages/lookup: 'git@github.com:laravolt/lookup.git'
+        packages/mailkeeper: 'git@github.com:laravolt/mailkeeper.git'
+        packages/media: 'git@github.com:laravolt/media.git'
+        packages/menu: 'git@github.com:laravolt/menu.git'
+        packages/platform: 'git@github.com:laravolt/platform.git'
+        packages/semantic-form: 'git@github.com:laravolt/semantic-form.git'
+        packages/suitable: 'git@github.com:laravolt/suitable.git'
+        packages/support: 'git@github.com:laravolt/support.git'
+        packages/thunderclap: 'git@github.com:laravolt/thunderclap.git'
