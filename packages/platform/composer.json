@@ -22,11 +22,17 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
+        "ext-bcmath": "*",
+        "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-iconv": "*",
+        "ext-intl": "*",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
+        "ext-pdo": "*",
         "ext-xml": "*",
         "anhskohbo/no-captcha": "^3.1",
         "appstract/laravel-blade-directives": "^1.7",
