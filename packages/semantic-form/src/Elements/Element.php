@@ -47,7 +47,7 @@ abstract class Element
             return;
         }
 
-        $this->attributes[$attribute] = form_escape($value);
+        $this->attributes[$attribute] = $value;
     }
 
     protected function removeAttribute($attribute)
@@ -67,7 +67,7 @@ abstract class Element
 
     public function data($attribute, $value)
     {
-        $this->setAttribute('data-'.$attribute, $value);
+        $this->setAttribute('data-' . $attribute, $value);
 
         return $this;
     }
@@ -94,7 +94,7 @@ abstract class Element
 
     public function clear($attribute)
     {
-        if (!isset($this->attributes[$attribute])) {
+        if (! isset($this->attributes[$attribute])) {
             return $this;
         }
 
@@ -105,7 +105,7 @@ abstract class Element
 
     public function addClass($class)
     {
-        if (!$class) {
+        if (! $class) {
             return $this;
         }
 
@@ -123,7 +123,7 @@ abstract class Element
 
     public function removeClass($class)
     {
-        if (!isset($this->attributes['class'])) {
+        if (! isset($this->attributes['class'])) {
             return $this;
         }
 
@@ -203,22 +203,12 @@ abstract class Element
 
     protected function renderAttributes()
     {
-        $result = '';
-        foreach ($this->attributes as $attribute => $value) {
-            $result .= " {$attribute}=\"{$value}\"";
-        }
-
-        return $result;
+        return form_html_attributes($this->attributes ?? []);
     }
 
     protected function renderFieldAttributes()
     {
-        $result = '';
-        foreach ($this->fieldAttributes as $attribute => $value) {
-            $result .= " {$attribute}=\"{$value}\"";
-        }
-
-        return $result;
+        return form_html_attributes($this->fieldAttributes ?? []);
     }
 
     protected function renderHint()
@@ -234,11 +224,11 @@ abstract class Element
     protected function normalizeWidth($width)
     {
         if (is_string($width)) {
-            return $width.' wide';
+            return $width . ' wide';
         }
 
         if (is_numeric($width) && isset($this->widthTranslation[$width])) {
-            return $this->widthTranslation[$width].' wide';
+            return $this->widthTranslation[$width] . ' wide';
         }
 
         return null;

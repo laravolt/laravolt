@@ -588,7 +588,7 @@ class SemanticForm
 
     protected function getOldInput($name)
     {
-        return form_escape($this->oldInput->getOldInput($name));
+        return $this->oldInput->getOldInput($name);
     }
 
     protected function getModelValue($name)
@@ -601,7 +601,7 @@ class SemanticForm
         }
 
         if (is_string($value) || is_numeric($value) || is_bool($value) || is_array($value)) {
-            return form_escape($value);
+            return $value;
         }
 
         return null;

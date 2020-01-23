@@ -27,3 +27,26 @@ if (! function_exists('form_escape')) {
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
 }
+
+if (! function_exists('form_html_attributes')) {
+    /**
+     * Convert array of HTML attributes into string
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    function form_html_attributes(array $attributes)
+    {
+        $result = '';
+        foreach ($attributes as $attribute => $value) {
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+            $value = form_escape($value);
+            $result .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $result;
+    }
+}

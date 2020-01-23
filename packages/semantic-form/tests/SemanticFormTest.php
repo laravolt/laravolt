@@ -503,7 +503,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
         $this->form->setOldInputProvider($oldInput);
 
-        $expected = '<input type="text" name="title" value="Hello &amp;quot;quotes&amp;quot;">';
+        $expected = '<input type="text" name="title" value="Hello &quot;quotes&quot;">';
         $result = (string) $this->form->text('title');
         $this->assertEquals($expected, $result);
     }
@@ -1135,7 +1135,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $object = $this->getStubObject();
         $object->first_name = '" onmouseover="alert(\'xss\')';
         $this->form->bind($object);
-        $expected = '<input type="text" name="first_name" value="&amp;quot; onmouseover=&amp;quot;alert(&amp;#039;xss&amp;#039;)">';
+        $expected = '<input type="text" name="first_name" value="&quot; onmouseover=&quot;alert(&#039;xss&#039;)">';
         $result = (string) $this->form->text('first_name');
         $this->assertEquals($expected, $result);
     }
