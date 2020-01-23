@@ -93,10 +93,10 @@ class Checkbox extends Input
     public function displayValue()
     {
         if ($this->checked) {
-            return '<i class="green icon check"></i>';
+            return '<div class="ui tiny label basic green">Ya</div>';
         }
 
-        return '';
+        return '<div class="ui tiny label basic red">Tidak</div>';
     }
 
     public function setChecked($checked = true)
