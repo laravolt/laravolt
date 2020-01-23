@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Label;
 
 class LabelTest extends \PHPUnit\Framework\TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }

@@ -5,12 +5,12 @@ use Laravolt\SemanticForm\SemanticForm;
 
 class SemanticFormTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->form = new SemanticForm;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }

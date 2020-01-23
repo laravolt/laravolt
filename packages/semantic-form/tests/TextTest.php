@@ -118,7 +118,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
         $result = $text->autofocus()->render();
         $message = "autofocus attribute should be set";
-        $this->assertContains('autofocus="autofocus"', $result, $message);
+        $this->assertStringContainsString('autofocus="autofocus"', $result, $message);
     }
 
     public function testUnfocus()
@@ -128,13 +128,13 @@ class TextTest extends \PHPUnit\Framework\TestCase
 
         $result = $text->unfocus()->render();
         $message = "autofocus attribute should not be set";
-        $this->assertNotContains($pattern, $result, $message);
+        $this->assertStringNotContainsString($pattern, $result, $message);
 
         $text = new Text('');
 
         $result = $text->autofocus()->unfocus()->render();
         $message = "autofocus attribute should be removed";
-        $this->assertNotContains($pattern, $result, $message);
+        $this->assertStringNotContainsString($pattern, $result, $message);
     }
 
     public function testReadonly()
