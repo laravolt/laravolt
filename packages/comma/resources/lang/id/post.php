@@ -1,30 +1,29 @@
 <?php
 
 return [
-    'header'     => [
-        'index'  => 'Post',
+    'header' => [
+        'index' => 'Post',
+        'table' => 'Daftar Post',
         'create' => 'Tulis Konten Baru',
-        'edit'   => 'Tulis Konten',
+        'edit' => 'Edit Konten',
     ],
-    'action'     => [
-        'create'        => 'Buat Postingan Baru',
-        'publish'       => 'Publikasikan',
-        'unpublish'     => 'Unpublish',
-        'save_as_draft' => 'Simpan sebagai draft',
-        'save'          => 'Simpan',
+    'action' => [
+        'create' => 'Buat Postingan Baru',
+        'save' => 'Simpan',
+        'back' => 'Kembali',
+        'cancel' => 'Batal',
     ],
-    'message'    => [
+    'message' => [
         'create_success' => 'Postingan baru berhasil disimpan',
         'update_success' => 'Postingan baru berhasil diperbarui',
     ],
     'attributes' => [
-        'title'          => 'Judul',
-        'content'        => 'Konten',
-        'category'       => 'Kategori',
-        'author'         => 'Penulis',
-        'tags'           => 'Tag',
-        'status'         => 'Status',
-        'date'           => 'Tanggal',
+        'title' => 'Judul',
+        'content' => 'Konten',
+        'author' => 'Penulis',
+        'tags' => 'Tag',
+        'status' => 'Status',
+        'date' => 'Tanggal',
         'featured_image' => 'Gambar Sampul',
     ],
 ];

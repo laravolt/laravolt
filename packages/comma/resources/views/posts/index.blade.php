@@ -1,24 +1,30 @@
-@extends(config('laravolt.comma.view.layout'))
+@extends(
+    config('laravolt.comma.view.layout'),
+    [
+        '__page' => [
+            'title' => __('Posts'),
+            'actions' => [
+                [
+                    'label' => __('Tambah'),
+                    'class' => 'primary',
+                    'icon' => 'icon plus circle',
+                    'url' => route('comma::posts.create', [$collection])
+                ],
+            ]
+        ],
+    ]
+)
 
 @section('content')
-
-    <div class="ui grid two column">
-        <div class="column"><h2 class="ui header">@lang('comma::post.header.index')</h2></div>
-        <div class="column right aligned"><a href="{{ route('comma::posts.create') }}" class="ui button primary"><i class="icon plus"></i> @lang('comma::post.action.create')</a></div>
-    </div>
-
-    <div class="ui divider hidden"></div>
-
     {!! Suitable::source($posts)
+    ->title(__('comma::post.header.table'))
+    ->search(true)
     ->columns([
-        ['header' => trans('comma::post.attributes.title'), 'field' => 'title'],
-        ['header' => trans('comma::post.attributes.author'), 'field' => 'author.name'],
-        ['header' => trans('comma::post.attributes.category'), 'field' => 'category.name'],
-        ['header' => trans('comma::post.attributes.status'), 'field' => 'status'],
-        ['header' => trans('comma::post.attributes.date'), 'raw' => function($item){
-            return $item->displayDate();
-        }],
-        with(new \Laravolt\Suitable\Columns\RestfulButton('comma::posts'))->only(['edit', 'delete'])
+        \Laravolt\Suitable\Columns\Numbering::make('No'),
+        \Laravolt\Suitable\Columns\Text::make('title', __('comma::post.attributes.title'))->sortable(),
+        \Laravolt\Suitable\Columns\Text::make('author.name', __('comma::post.attributes.author'))->sortable(),
+        \Laravolt\Suitable\Columns\Date::make('created_at', __('comma::post.attributes.date'))->sortable(),
+        with(new \Laravolt\Suitable\Columns\RestfulButton('comma::posts'))->only(['edit', 'delete'])->routeParameters(compact('collection'))
     ])
     ->render() !!}
 

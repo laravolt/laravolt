@@ -67,7 +67,7 @@ trait Taggable
 
     public function getTagArrayAttribute()
     {
-        return $this->tags->pluck('name')->toArray();
+        return $this->tags->pluck('name', 'name')->toArray();
     }
 
     protected function normalizeTag($tag)

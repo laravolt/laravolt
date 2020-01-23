@@ -1,25 +1,35 @@
 <?php
+
 /*
  * Set specific configuration variables here
  */
 return [
-    'route'            => [
-        'enabled'    => true,
+    'route' => [
+        'enabled' => true,
         'middleware' => ['web', 'auth'],
-        'prefix'     => 'cms',
+        'prefix' => 'cms',
     ],
-    'view'             => [
+    'view' => [
         'layout' => 'ui::layouts.app',
     ],
-    'menu'             => [
+    'menu' => [
         'enabled' => true,
     ],
-    'models'           => [
-        'category' => \Laravolt\Comma\Models\Category::class,
-        'post'     => \Laravolt\Comma\Models\Post::class,
-        'tag'      => \Laravolt\Comma\Models\Tag::class,
+    'models' => [
+        'post' => \Laravolt\Comma\Models\Post::class,
+        'tag' => \Laravolt\Comma\Models\Tag::class,
     ],
-    'default_title'    => 'Untitled',
-    'default_type'     => 'post',
-    'default_category' => 'Uncategorized',
+    'default_type' => 'post',
+    'collections' => [
+        'default' => [
+            'label' => 'All Posts',
+            'data' => [
+                'icon' => 'newspaper outline',
+                // 'permission' => 'manage-all-posts',
+            ],
+            'filters' => [
+                'type' => 'default',
+            ],
+        ],
+    ],
 ];

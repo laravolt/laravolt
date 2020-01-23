@@ -15,8 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('cms_posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('author_id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedBigInteger('author_id');
             $table->string('type', 255)->default(config('laravolt.comma.default_type'));
             $table->string('title', 255);
             $table->string('slug', 255)->unique()->nullable();
@@ -28,10 +27,6 @@ class CreatePostsTable extends Migration
 
             $table->foreign('author_id')
                   ->references('id')->on(app(config('auth.providers.users.model'))->getTable())
-                  ->onDelete('cascade');
-
-            $table->foreign('category_id')
-                  ->references('id')->on('cms_categories')
                   ->onDelete('cascade');
         });
     }

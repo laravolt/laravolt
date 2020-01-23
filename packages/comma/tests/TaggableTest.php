@@ -8,13 +8,13 @@ class TaggableTest extends TestCase
 {
     protected $post;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $author = $this->createUser();
 
-        $this->post = app('laravolt.comma')->makePost($author, 'New Post', 'Hello world', 'category 1');
+        $this->post = app('laravolt.comma')->makePost($author, 'New Post', 'Hello world');
     }
 
     /**

@@ -12,16 +12,12 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         return ':memory:';
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setUpDatabase();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
+        $this->loadLaravelMigrations();
+        $this->artisan('migrate');
     }
 
     protected function getPackageProviders($app)

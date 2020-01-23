@@ -11,7 +11,11 @@ Route::group(
 
         Route::get('/', ['uses' => 'DefaultController@index', 'as' => 'index']);
 
-        Route::resource('posts', 'PostController', ['except' => ['store']]);
-        Route::resource('categories', 'CategoryController');
+        Route::get('posts/{collection}', ['uses' => 'PostController@index', 'as' => 'posts.index']);
+        Route::get('posts/{collection}/create', ['uses' => 'PostController@create', 'as' => 'posts.create']);
+        Route::post('posts/{collection}', ['uses' => 'PostController@store', 'as' => 'posts.store']);
+        Route::get('posts/{collection}/{id}/edit', ['uses' => 'PostController@edit', 'as' => 'posts.edit']);
+        Route::put('posts/{id}', ['uses' => 'PostController@update', 'as' => 'posts.update']);
+        Route::delete('posts/{id}', ['uses' => 'PostController@destroy', 'as' => 'posts.destroy']);
         Route::resource('media', 'MediaController', ['only' => ['index', 'store']]);
     });

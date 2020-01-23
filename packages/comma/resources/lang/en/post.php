@@ -1,30 +1,28 @@
 <?php
 
 return [
-    'header'     => [
-        'index'  => 'Post',
+    'header' => [
+        'index' => 'Post',
         'create' => 'Write New Post',
-        'edit'   => 'Edit Post',
+        'edit' => 'Edit Post',
     ],
-    'action'     => [
-        'create'        => 'Write New Post',
-        'publish'       => 'Publish',
-        'unpublish'     => 'Unpublish',
-        'save_as_draft' => 'Save as draft',
-        'save'          => 'Save',
+    'action' => [
+        'create' => 'Write New Post',
+        'save' => 'Save',
+        'back' => 'Back',
+        'cancel' => 'Cancel',
     ],
-    'message'    => [
+    'message' => [
         'create_success' => 'Post saved',
         'update_success' => 'Post updated',
     ],
     'attributes' => [
-        'title'          => 'Title',
-        'content'        => 'Content',
-        'category'       => 'Category',
-        'author'         => 'Author',
-        'tags'           => 'Tag',
-        'status'         => 'Status',
-        'date'           => 'Date',
+        'title' => 'Title',
+        'content' => 'Content',
+        'author' => 'Author',
+        'tags' => 'Tag',
+        'status' => 'Status',
+        'date' => 'Date',
         'featured_image' => 'Featured Image',
     ],
 ];
