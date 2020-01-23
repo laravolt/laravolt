@@ -1,4 +1,4 @@
-@extends('epicentrum::edit', ['tab' => 'password'])
+@extends('laravolt::users.edit', ['tab' => 'password'])
 
 @section('content-user-edit')
 
