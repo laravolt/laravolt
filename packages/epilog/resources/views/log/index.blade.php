@@ -27,9 +27,7 @@
                 <th></th>
                 <th>Level</th>
                 <th>Log</th>
-                <th>Waktu
-                    <div>({{ config('app.timezone') }})</div>
-                </th>
+                <th>Waktu</th>
             </tr>
             </thead>
             @foreach($logs as $log)
@@ -51,7 +49,7 @@
                         </div>
 
                     </td>
-                    <td>{{ $log['date']->format('H:i:s') }}</td>
+                    <td>{{ \Carbon\Carbon::instance($log['date'])->setTimezone(auth()->user()->timezone)->format('H:i:s')  }}</td>
                 </tr>
             @endforeach
         </table>
