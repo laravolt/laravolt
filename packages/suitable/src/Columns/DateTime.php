@@ -2,25 +2,20 @@
 
 namespace Laravolt\Suitable\Columns;
 
-class DateTime extends Column implements ColumnInterface
+use Carbon\Carbon;
+
+class DateTime extends Date implements ColumnInterface
 {
-    protected $format = 'j F Y H:i:s';
+    protected $format = 'lll';
 
     public function cell($cell, $collection, $loop)
     {
         try {
-            return \Jenssegers\Date\Date
-                ::createFromFormat('Y-m-d H:i:s', $cell->{$this->field})
-                ->format($this->format);
+            return Carbon::createFromFormat('Y-m-d H:i:s', $cell->{$this->field})
+                ->setTimezone($this->timezone())
+                ->isoFormat($this->format);
         } catch (\InvalidArgumentException $e) {
             return $cell->{$this->field};
         }
-    }
-
-    public function format($format)
-    {
-        $this->format = $format;
-
-        return $this;
     }
 }
