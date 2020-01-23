@@ -20,7 +20,8 @@
         "spatie/laravel-medialibrary": "^7.0",
         "spatie/laravel-translatable": "^4.2",
         "spatie/laravel-tags": "^2.5",
-        "spatie/laravel-schemaless-attributes": "^1.6"
+        "spatie/laravel-schemaless-attributes": "^1.6",
+        "spatie/laravel-activitylog": "^3.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
