@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
 {
@@ -25,7 +26,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
@@ -35,7 +35,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Display the form to request a password reset link.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -48,9 +47,8 @@ class ForgotPasswordController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @throws \Illuminate\Validation\ValidationException
-     *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -69,7 +67,9 @@ class ForgotPasswordController extends Controller
         }
 
         if ($response === Password::RESET_LINK_SENT) {
-            return back()->withSuccess(trans($response));
+            $email = $user->getEmailForPasswordReset();
+
+            return back()->withSuccess(trans($response, ['email' => $email, 'emailMasked' => Str::maskEmail($email)]));
         }
 
         // If an error was returned by the password broker, we will get this message
