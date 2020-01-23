@@ -4,6 +4,7 @@ parameters:
         require-dev:
             barryvdh/laravel-debugbar: '^3.2'
             phpunit/phpunit: '^8.0'
+            spatie/laravel-web-tinker: '1.6'
             symplify/monorepo-builder: '^7.2'
 
     merge_sections:
