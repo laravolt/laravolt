@@ -137,6 +137,9 @@ class FieldCollection extends Collection
                 break;
 
             default:
+                if (!SemanticForm::hasMacro($type)) {
+                    throw new \InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
+                }
                 $element = form()->{$type}($field->toArray());
                 $macro = true;
                 break;
