@@ -36,7 +36,6 @@
         "phpoffice/phpword": "^0.17.0",
         "spatie/data-transfer-object": "^1.10",
         "watson/rememberable": "^3.2",
-        "laravolt/semantic-form": "^4.0",
         "maatwebsite/excel": "^3.1",
         "laravolt/camunda": "^4.0"
     },
