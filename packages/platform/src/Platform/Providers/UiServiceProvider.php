@@ -113,12 +113,6 @@ class UiServiceProvider extends BaseServiceProvider
         // register views within the application with the set namespace
         $this->loadViewsFrom(platform_path('resources/views'), 'ui');
 
-        // allow views to be published to the storage directory
-        $this->publishes(
-            [platform_path('resources/views') => base_path('resources/views/vendor/ui')],
-            'views'
-        );
-
         Paginator::defaultView('laravolt::pagination.default');
         Paginator::defaultSimpleView('laravolt::pagination.simple');
 
