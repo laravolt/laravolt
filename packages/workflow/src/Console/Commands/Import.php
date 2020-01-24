@@ -14,18 +14,21 @@ class Import extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'workflow:import {processDefinitionKey?}';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Import BPMN via REST API to populate transactional table + form definition';
 
     /**
      * Execute the console command.
+     *
      * @return mixed
      */
     public function handle()
