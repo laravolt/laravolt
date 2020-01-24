@@ -1,15 +1,7 @@
 {
     "name": "laravolt/platform",
     "description": "Platform for developing information systems in 2 weeks",
-    "keywords": [
-        "framework",
-        "laravel",
-        "platform",
-        "laravolt",
-        "admin",
-        "crud",
-        "cms"
-    ],
+    "keywords": ["framework", "laravel", "platform", "laravolt", "admin", "crud", "cms"],
     "type": "library",
     "license": "MIT",
     "homepage": "https://laravolt.dev",
@@ -40,12 +32,11 @@
         "illuminate/console": "^6.0",
         "illuminate/database": "^6.0",
         "illuminate/support": "^6.0",
-        "laravolt/avatar": "^3.0",
-        "laravolt/epilog": "~0.4",
-        "laravolt/media": "~0.4",
-        "laravolt/semantic-form": "^2.7",
-        "laravolt/suitable": "^3.6",
-        "laravolt/support": "^2.0",
+        "laravolt/epilog": "^4.0",
+        "laravolt/media": "^4.0",
+        "laravolt/semantic-form": "^4.0",
+        "laravolt/suitable": "^4.0",
+        "laravolt/support": "^4.0",
         "lavary/laravel-menu": "^1.7.7",
         "spatie/laravel-medialibrary": "^7.0",
         "spatie/once": "^2.1",
@@ -62,8 +53,7 @@
         ]
     },
     "autoload-dev": {
-        "classmap": [
-        ],
+        "classmap": [],
         "psr-4": {
             "Laravolt\\Tests\\": "tests/"
         }

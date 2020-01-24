@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Models;
 
 use Illuminate\Foundation\Auth\User as BaseUser;
-use Laravolt\Avatar\Facade;
 use Laravolt\Contracts\CanChangePassword as CanChangePasswordContract;
 use Laravolt\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 use Laravolt\Platform\Concerns\CanChangePassword;
@@ -25,11 +24,22 @@ class User extends BaseUser implements CanChangePasswordContract, HasMedia, HasR
 
     public function getAvatarAttribute()
     {
-        $url = null;
+        $avatar = null;
+
         if ($this instanceof HasMedia) {
-            $url = $this->getFirstMediaUrl('avatar');
+            $avatar = $this->getFirstMediaUrl('avatar');
         }
 
-        return $url ?: Facade::create($this->name)->toBase64();
+        if (!$avatar) {
+            if (app()->bound('avatar')) {
+                $avatar = app('avatar')->create($this->name)->toBase64();
+            }
+        }
+
+        if (!$avatar) {
+            $avatar = asset('laravolt/img/default/avatar.png');
+        }
+
+        return $avatar;
     }
 }
