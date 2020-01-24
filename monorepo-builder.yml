@@ -20,6 +20,7 @@ parameters:
 
     # for "split" command
     directories_to_repositories:
+        packages/camunda: 'git@github.com:laravolt/camunda.git'
         packages/comma: 'git@github.com:laravolt/comma.git'
         packages/epilog: 'git@github.com:laravolt/epilog.git'
         packages/lookup: 'git@github.com:laravolt/lookup.git'
@@ -31,3 +32,4 @@ parameters:
         packages/suitable: 'git@github.com:laravolt/suitable.git'
         packages/support: 'git@github.com:laravolt/support.git'
         packages/thunderclap: 'git@github.com:laravolt/thunderclap.git'
+        packages/workflow: 'git@github.com:laravolt/workflow.git'
