@@ -29,15 +29,15 @@
         "guzzlehttp/guzzle": "^6.5",
         "illuminate/support": "^6.0",
         "illuminate/database": "^6.0",
-        "laravolt/suitable": "^4.1",
-        "laravolt/semantic-form": "^4.1",
+        "laravolt/suitable": "^4.0.1",
+        "laravolt/semantic-form": "^4.0.1",
         "bensampo/laravel-enum": "^1.26",
         "rkorebrits/htmltoopenxml": "^0.1.9",
         "phpoffice/phpword": "^0.17.0",
         "spatie/data-transfer-object": "^1.10",
         "watson/rememberable": "^3.2",
         "maatwebsite/excel": "^3.1",
-        "laravolt/camunda": "^4.1"
+        "laravolt/camunda": "^4.0.1"
     },
     "autoload": {
         "psr-4": {
