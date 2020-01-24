@@ -135,7 +135,7 @@ class Flash
             return 0;
         });
 
-        $script = $this->view->make('ui::flash', compact('bags'))->render();
+        $script = $this->view->make('laravolt::flash', compact('bags'))->render();
 
         if (false !== $pos) {
             $content = substr($content, 0, $pos).$script.substr($content, $pos);

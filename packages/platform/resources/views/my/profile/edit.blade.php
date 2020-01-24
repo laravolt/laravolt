@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('ui::components.panel', ['title' => __('Edit Profil')])
+    @component('laravolt::components.panel', ['title' => __('Edit Profil')])
         {!! form()->bind($user)->put(route('epicentrum::my.profile.update'))->horizontal() !!}
 
         {!! form()->text('name')->label(__('laravolt::users.name')) !!}

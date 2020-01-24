@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('ui::components.panel', ['title' => __('Edit Password')])
+    @component('laravolt::components.panel', ['title' => __('Edit Password')])
         {!! form()->open()->action(route('epicentrum::my.password.update'))->horizontal() !!}
         {!! form()->password('password_current')->label(__('laravolt::users.password_current')) !!}
         {!! form()->password('password')->label(__('laravolt::users.password_new')) !!}

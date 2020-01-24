@@ -119,8 +119,8 @@ class UiServiceProvider extends BaseServiceProvider
             'views'
         );
 
-        Paginator::defaultView('ui::pagination.default');
-        Paginator::defaultSimpleView('ui::pagination.simple');
+        Paginator::defaultView('laravolt::pagination.default');
+        Paginator::defaultSimpleView('laravolt::pagination.simple');
 
         return $this;
     }

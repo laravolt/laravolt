@@ -10,7 +10,7 @@
 
 
 @section('content')
-    @component('ui::components.panel', ['title' => __('laravolt::label.edit_role')])
+    @component('laravolt::components.panel', ['title' => __('laravolt::label.edit_role')])
         {!! SemanticForm::open()->put()->action(route('epicentrum::roles.update', $role['id'])) !!}
         <div class="field required">
             {!! SemanticForm::text('name', old('name', $role['name']))->label(trans('laravolt::roles.name')) !!}

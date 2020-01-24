@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    @component('ui::components.panel', ['title' => __('laravolt::menu.add_user')])
+    @component('laravolt::components.panel', ['title' => __('laravolt::menu.add_user')])
         {!! form()->open()->post()->action(route('epicentrum::users.store')) !!}
         {!! form()->text('name')->label(trans('laravolt::users.name'))->required() !!}
         {!! form()->text('email')->label(trans('laravolt::users.email'))->required() !!}

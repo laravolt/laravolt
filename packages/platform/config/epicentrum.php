@@ -10,7 +10,7 @@ return [
         'prefix' => 'epicentrum',
     ],
     'view' => [
-        'layout' => 'ui::layouts.app',
+        'layout' => 'laravolt::layouts.app',
     ],
     'menu' => [
         'enable' => true,

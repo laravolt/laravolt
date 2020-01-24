@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    @component('ui::components.panel', ['title' => __('laravolt::label.add_role')])
+    @component('laravolt::components.panel', ['title' => __('laravolt::label.add_role')])
         {!! SemanticForm::open()->post()->action(route('epicentrum::roles.store')) !!}
         {!! SemanticForm::text('name', old('name'))->label(trans('laravolt::roles.name'))->required() !!}
 

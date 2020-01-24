@@ -1,4 +1,4 @@
-@extends('ui::layouts.app')
+@extends('laravolt::layouts.app')
 
 @section('content')
     <div style="display: flex; min-height: 600px; align-items: center; justify-content: center; flex-direction: column">
