@@ -14,12 +14,11 @@ namespace Laravolt\Epilog\MonologParser\Reader;
 use Laravolt\Epilog\MonologParser\Parser\LineLogParser;
 
 /**
- * Class AbstractReader
- * @package Dubture\Monolog\Reader
+ * Class AbstractReader.
  */
 class AbstractReader
 {
-    /** @var  string */
+    /** @var string */
     protected $defaultParserPattern;
 
     /**

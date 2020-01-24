@@ -1,8 +1,8 @@
 <?php
 
-if (! function_exists('capture_exception')) {
+if (!function_exists('capture_exception')) {
     /**
-     * Capture and report exception
+     * Capture and report exception.
      *
      * @param Throwable $exception
      *
@@ -16,14 +16,15 @@ if (! function_exists('capture_exception')) {
     }
 }
 
-if (! function_exists('capture_exception_and_abort')) {
+if (!function_exists('capture_exception_and_abort')) {
     /**
-     * Capture and report exception
+     * Capture and report exception.
      *
      * @param Throwable $exception
      *
-     * @return string
      * @throws Throwable
+     *
+     * @return string
      */
     function capture_exception_and_abort(Throwable $exception)
     {

@@ -10,6 +10,7 @@ class Text extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 
     /**
      * Title constructor.
+     *
      * @param string $label
      */
     public function __construct(string $label)
@@ -17,7 +18,7 @@ class Text extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
         $this->label = $label;
     }
 
-    static public function make($label)
+    public static function make($label)
     {
         $toolbar = new static($label);
 

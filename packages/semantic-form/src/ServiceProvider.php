@@ -2,14 +2,12 @@
 
 namespace Laravolt\SemanticForm;
 
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 use Laravolt\SemanticForm\OldInput\IlluminateOldInputProvider;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class PackageServiceProvider
- *
- * @package Laravolt\SemanticForm
+ * Class PackageServiceProvider.
  */
 class ServiceProvider extends BaseServiceProvider
 {
@@ -28,7 +26,6 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('semantic-form', function ($app) {
-
             $builder = new SemanticForm();
             $builder->setErrorStore(new IlluminateErrorStore($app['session.store']));
             $builder->setOldInputProvider(new IlluminateOldInputProvider($app['session.store']));
@@ -38,7 +35,7 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Application is booting
+     * Application is booting.
      *
      * @return void
      */

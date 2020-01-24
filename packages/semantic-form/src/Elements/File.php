@@ -1,8 +1,10 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class File extends Input
 {
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'file',
-    );
+    ];
 }

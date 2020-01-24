@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 
 class TaskEditForm
 {
@@ -33,7 +33,7 @@ class TaskEditForm
         $this->task = $task;
 
         $taskConfig = $this->module->getTask($task->task_name);
-        if (! Arr::get($taskConfig, 'attributes.editable', true)) {
+        if (!Arr::get($taskConfig, 'attributes.editable', true)) {
             throw new \DomainException('Task is non-editable');
         }
 
@@ -75,15 +75,15 @@ class TaskEditForm
             $values = DB::table($this->task->form_type)->find($this->task->form_id);
             $formDefinition = (new FormAdapter($fields, $values))->toArray();
             $output = form()->put($this->url)->id($this->task->task_name)
-                . form()->hidden('_process_definition_key', $this->task->process_definition_key)
-                . form()->hidden('_task_name', $this->task->task_name)
-                . form()->hidden('_form_name', $this->task->form_type)
-                . form()->make($formDefinition)
-                . form()->action(
+                .form()->hidden('_process_definition_key', $this->task->process_definition_key)
+                .form()->hidden('_task_name', $this->task->task_name)
+                .form()->hidden('_form_name', $this->task->form_type)
+                .form()->make($formDefinition)
+                .form()->action(
                     form()->submit('Simpan'), form()->link('Kembali',
                     route('workflow::process.show', [$this->module->id, $this->task->process_instance_id]))
                 )
-                . form()->close();
+                .form()->close();
 
             return $output;
         } catch (\Exception $e) {

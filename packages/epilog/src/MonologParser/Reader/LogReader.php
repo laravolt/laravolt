@@ -10,11 +10,11 @@
  */
 
 namespace Laravolt\Epilog\MonologParser\Reader;
+
 use Dubture\Monolog\Parser\LogParserInterface;
 
 /**
- * Class LogReader
- * @package Dubture\Monolog\Reader
+ * Class LogReader.
  */
 class LogReader extends AbstractReader implements \Iterator, \ArrayAccess, \Countable
 {
@@ -24,7 +24,7 @@ class LogReader extends AbstractReader implements \Iterator, \ArrayAccess, \Coun
     protected $file;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $lineCount;
 
@@ -53,16 +53,17 @@ class LogReader extends AbstractReader implements \Iterator, \ArrayAccess, \Coun
         $this->parser = $this->getDefaultParser();
     }
 
-	/**
-	 * @param LogParserInterface $parser
-	 * @return $this
-	 */
-	public function setParser(LogParserInterface $parser)
-	{
-		$this->parser = $parser;
+    /**
+     * @param LogParserInterface $parser
+     *
+     * @return $this
+     */
+    public function setParser(LogParserInterface $parser)
+    {
+        $this->parser = $parser;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * {@inheritdoc}
@@ -91,7 +92,7 @@ class LogReader extends AbstractReader implements \Iterator, \ArrayAccess, \Coun
      */
     public function offsetSet($offset, $value)
     {
-        throw new \RuntimeException("LogReader is read-only.");
+        throw new \RuntimeException('LogReader is read-only.');
     }
 
     /**
@@ -99,7 +100,7 @@ class LogReader extends AbstractReader implements \Iterator, \ArrayAccess, \Coun
      */
     public function offsetUnset($offset)
     {
-        throw new \RuntimeException("LogReader is read-only.");
+        throw new \RuntimeException('LogReader is read-only.');
     }
 
     /**

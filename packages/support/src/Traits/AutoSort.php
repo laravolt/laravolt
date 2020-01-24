@@ -2,8 +2,8 @@
 
 namespace Laravolt\Support\Traits;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 trait AutoSort
 {
@@ -25,7 +25,7 @@ trait AutoSort
 
                 $query->select($this->getTable().'.*');
                 $query->join($table, $foreignKey, '=', $ownerKey);
-                $query->orderBy($table.".".$column, $direction);
+                $query->orderBy($table.'.'.$column, $direction);
             } else {
                 $query->orderBy($column, $direction);
             }

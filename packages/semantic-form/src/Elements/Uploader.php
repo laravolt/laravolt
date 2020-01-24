@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
@@ -82,7 +84,7 @@ class Uploader extends Input
                     'name' => $media->file_name,
                     'size' => $media->size,
                     'type' => $media->mime_type,
-                    "data" => [
+                    'data' => [
                         'id' => $media->getKey(),
                     ],
                 ];
@@ -104,7 +106,7 @@ class Uploader extends Input
     {
         if (is_array($this->value)) {
             $output = "<div class='ui list'>";
-            $output .= "</div>";
+            $output .= '</div>';
 
             foreach ($this->value as $media) {
                 $output .= sprintf("<div class='item'><a href='%s'>%s</a></div>", $media['file'], $media['name']);

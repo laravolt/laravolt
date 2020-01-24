@@ -2,8 +2,8 @@
 
 namespace Laravolt\Workflow\Models;
 
-use Laravolt\Workflow\Enum\JenisTemplateSurat;
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Workflow\Enum\JenisTemplateSurat;
 
 class TemplateSurat extends Model
 {

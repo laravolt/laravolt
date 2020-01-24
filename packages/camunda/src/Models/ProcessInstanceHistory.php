@@ -8,7 +8,7 @@ class ProcessInstanceHistory extends ProcessInstance
 {
     public function fetchByBusinessKey($key)
     {
-        $url = 'history/process-instance?processInstanceBusinessKey=' . $key;
+        $url = 'history/process-instance?processInstanceBusinessKey='.$key;
 
         $processess = $this->get($url);
 
@@ -18,9 +18,9 @@ class ProcessInstanceHistory extends ProcessInstance
     protected function modelUri(): string
     {
         if ($this->key) {
-            return 'history/process-instance/key/' . $this->key . $this->tenant();
+            return 'history/process-instance/key/'.$this->key.$this->tenant();
         } else {
-            return 'history/process-instance/' . $this->id;
+            return 'history/process-instance/'.$this->id;
         }
     }
 }

@@ -74,7 +74,7 @@ trait DataRetrieval
             ->except(['created_by', 'updated_by', 'created_at', 'updated_at', 'id'])
             ->filter()
             ->reject(function ($item) {
-                return Str::contains($item, " ");
+                return Str::contains($item, ' ');
             })
             ->merge($globalFields)
             ->transform(function ($item) {

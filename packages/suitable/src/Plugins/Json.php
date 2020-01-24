@@ -18,7 +18,8 @@ class Json extends Html implements \Laravolt\Suitable\Contracts\Plugin
         return $this->shouldResponse;
     }
 
-    public function decorate(Builder $table): Builder {
+    public function decorate(Builder $table): Builder
+    {
         return $table;
     }
 

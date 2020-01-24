@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Suitable\Columns;
 
 interface ColumnInterface

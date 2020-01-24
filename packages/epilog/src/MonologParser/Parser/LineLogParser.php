@@ -12,15 +12,15 @@
 namespace Laravolt\Epilog\MonologParser\Parser;
 
 /**
- * Class LineLogParser
- * @package Dubture\Monolog\Parser
+ * Class LineLogParser.
  */
 class LineLogParser implements LogParserInterface
 {
     protected $pattern = '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>.*[^ ]+) (?P<context>[^ ]+) (?P<extra>[^ ]+)/';
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param string $pattern
      */
     public function __construct($pattern = null)
@@ -33,24 +33,24 @@ class LineLogParser implements LogParserInterface
      */
     public function parse($log)
     {
-        if( !is_string($log) || strlen($log) === 0) {
-            return array();
+        if (!is_string($log) || strlen($log) === 0) {
+            return [];
         }
 
         preg_match($this->pattern, $log, $data);
 
         if (!isset($data['date'])) {
-            return array();
+            return [];
         }
 
-        return array(
+        return [
             'date' => \DateTime::createFromFormat('Y-m-d H:i:s', $data['date']),
             'logger' => $data['logger'],
             'level' => strtolower($data['level']),
             'message' => $data['message'],
             'raw' => $log,
             'context' => json_decode($data['context'], true),
-            'extra' => json_decode($data['extra'], true)
-        );
+            'extra' => json_decode($data['extra'], true),
+        ];
     }
 }

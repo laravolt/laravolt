@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow;
 
-use Illuminate\Support\Arr;
-use Laravolt\Camunda\Models\Task;
-use Illuminate\Support\Facades\DB;
-use Laravolt\Workflow\Models\Form;
-use Laravolt\Workflow\Enum\FormType;
-use Illuminate\Support\Facades\Schema;
-use Laravolt\Workflow\Entities\Module;
-use Laravolt\Workflow\Enum\TaskStatus;
-use Laravolt\Workflow\Models\AutoSave;
-use Laravolt\Workflow\Entities\Payload;
-use Laravolt\Camunda\Models\TaskHistory;
-use Laravolt\Workflow\Entities\Multirow;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
+use Laravolt\Camunda\Models\ProcessDefinition;
+use Laravolt\Camunda\Models\ProcessInstance;
+use Laravolt\Camunda\Models\Task;
+use Laravolt\Camunda\Models\TaskHistory;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Entities\Multirow;
+use Laravolt\Workflow\Entities\Payload;
+use Laravolt\Workflow\Enum\FormType;
+use Laravolt\Workflow\Enum\TaskStatus;
+use Laravolt\Workflow\Events\ProcessStarted;
+use Laravolt\Workflow\Events\TaskCompleted;
 use Laravolt\Workflow\Events\TaskDrafted;
 use Laravolt\Workflow\Events\TaskUpdated;
-use Laravolt\Workflow\Models\CamundaForm;
-use Laravolt\Workflow\Events\TaskCompleted;
-use Laravolt\Workflow\Presenters\StartForm;
-use Laravolt\Camunda\Models\ProcessInstance;
-use Laravolt\Workflow\Events\ProcessStarted;
-use Laravolt\Camunda\Models\ProcessDefinition;
-use Laravolt\Workflow\Presenters\TaskEditForm;
-use Laravolt\Workflow\FieldFormatter\DbFormatter;
 use Laravolt\Workflow\FieldFormatter\CamundaFormatter;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Laravolt\Workflow\FieldFormatter\DbFormatter;
+use Laravolt\Workflow\Models\AutoSave;
+use Laravolt\Workflow\Models\CamundaForm;
+use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Presenters\StartForm;
+use Laravolt\Workflow\Presenters\TaskEditForm;
 
 class Workflow implements Contracts\Workflow
 {
@@ -57,7 +57,7 @@ class Workflow implements Contracts\Workflow
             ->whereNull('task_id')
             ->first();
 
-        if (! $mapping) {
+        if (!$mapping) {
             throw (new ModelNotFoundException())->setModel($processInstance);
         }
 
@@ -171,7 +171,7 @@ class Workflow implements Contracts\Workflow
 
         $table = $mapping->form_type;
 
-        if (! $table) {
+        if (!$table) {
             throw new \DomainException(sprintf('Tabel %s tidak ditemukan', $table));
         }
 
@@ -205,7 +205,7 @@ class Workflow implements Contracts\Workflow
         if ($mapping->isEmpty()) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Process instance %s tidak tercatat dalam tabel mapping `camunda_task`, ' .
+                    'Process instance %s tidak tercatat dalam tabel mapping `camunda_task`, '.
                     'silakan hapus secara manual.',
                     $processInstance->id
                 )
@@ -244,7 +244,7 @@ class Workflow implements Contracts\Workflow
             $isDraft
         ) {
             $payload = Payload::make($module, $task->taskDefinitionKey, $data);
-            if (! $isDraft) {
+            if (!$isDraft) {
                 $task->submit($payload->toCamundaVariables());
             }
 
@@ -266,7 +266,7 @@ class Workflow implements Contracts\Workflow
                 $data = $dbFields + $additionalData;
                 $formId = null;
 
-                if (! $existing) {
+                if (!$existing) {
                     $formId = $this->insertData($table, $data);
                 } else {
                     $formId = $this->updateData($existing->id, $table, $data);
@@ -304,7 +304,7 @@ class Workflow implements Contracts\Workflow
 
                     // Save sub processes data
                     $subProcesses = $task->processInstance()->getSubProcess();
-                    if (! empty($subProcesses)) {
+                    if (!empty($subProcesses)) {
                         foreach ($subProcesses as $process) {
                             $this->saveSubProcess($process);
                         }
@@ -327,7 +327,7 @@ class Workflow implements Contracts\Workflow
         $taskName = Arr::get($data, '_task_name', $mapping->task_name);
         $table = Arr::get($data, '_form_name', $mapping->form_type);
 
-        if (! $table) {
+        if (!$table) {
             throw new \DomainException(sprintf('Tabel %s tidak ditemukan', $table));
         }
 
@@ -344,7 +344,7 @@ class Workflow implements Contracts\Workflow
                 $dbFields = $fields['fields'];
 
                 $existing = DB::table($table)->where('task_id', $taskId)->first();
-                if (! $existing) {
+                if (!$existing) {
                     continue;
                 }
 
@@ -376,7 +376,7 @@ class Workflow implements Contracts\Workflow
             ->where('process_instance_id', $processInstanceId)
             ->whereNotIn('status', [TaskStatus::DRAFT]);
 
-        if (! empty($whitelist)) {
+        if (!empty($whitelist)) {
             $query->whereIn('task_name', $whitelist);
         }
 
@@ -391,7 +391,7 @@ class Workflow implements Contracts\Workflow
             ->where('task_id', $taskId)
             ->first();
 
-        if (! $mapping) {
+        if (!$mapping) {
             throw new ModelNotFoundException();
         }
 
@@ -400,7 +400,7 @@ class Workflow implements Contracts\Workflow
 
     protected function validateTaskName(?string $taskName, ProcessDefinition $processDefinition)
     {
-        if (! $taskName) {
+        if (!$taskName) {
             $taskName = $processDefinition->getStartTaskName();
         }
 
@@ -429,7 +429,7 @@ class Workflow implements Contracts\Workflow
     protected function getTable(?string $key, ?string $startTaskName)
     {
         $table = Form::getFormName($key, $startTaskName);
-        if (! $table) {
+        if (!$table) {
             throw new \DomainException(
                 sprintf(
                     'Tabel untuk proses %s->%s tidak ditemukan. Silakan cek kembali mapping di camunda_form.',
@@ -518,7 +518,7 @@ class Workflow implements Contracts\Workflow
             }
         }
 
-        if (! config('workflow.strict')) {
+        if (!config('workflow.strict')) {
             $columnListing = Schema::getColumnListing($table);
             $columnListing = collect($columnListing)->combine($columnListing);
             $mainTableData = collect($mainTableData)->intersectByKeys($columnListing)->toArray();

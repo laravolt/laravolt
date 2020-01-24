@@ -26,7 +26,7 @@ class CamundaForm extends Migration
             $table->integer('field_order')->default(0);
             $table->text('field_select_query')->nullable();
             $table->json('field_meta')->nullable();
-            $table->string('type')->default(\Laravolt\Workflow\Enum\FormType::MAIN_FORM)->comment("See " . \Laravolt\Workflow\Enum\FormType::class);
+            $table->string('type')->default(\Laravolt\Workflow\Enum\FormType::MAIN_FORM)->comment('See '.\Laravolt\Workflow\Enum\FormType::class);
             $table->string('called_element')->nullable();
             $table->timestamps();
             $table->unique(['process_definition_key', 'form_name', 'field_name', 'called_element']);

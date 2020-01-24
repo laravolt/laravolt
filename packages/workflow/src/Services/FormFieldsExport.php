@@ -40,7 +40,7 @@ class FormFieldsExport implements FromCollection, WithHeadings, WithMapping
             $data['field_select_query'] = trim(json_encode($data['field_select_query']));
         }
 
-        if (! $data['field_order']) {
+        if (!$data['field_order']) {
             $data['field_order'] = 1;
         }
 

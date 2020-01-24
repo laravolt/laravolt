@@ -15,7 +15,8 @@ abstract class Plugin
     {
     }
 
-    public function decorate(Builder $table): Builder {
+    public function decorate(Builder $table): Builder
+    {
         return $table;
     }
 

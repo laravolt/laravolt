@@ -7,7 +7,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
     {
-        $this->form = new SemanticForm;
+        $this->form = new SemanticForm();
     }
 
     public function tearDown(): void
@@ -1095,7 +1095,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testBindMagicProperty()
     {
-        $object = new MagicGetter;
+        $object = new MagicGetter();
         $this->form->bind($object);
         $expected = '<input type="text" name="not_set" value="foo">';
         $result = (string) $this->form->text('not_set');
@@ -1216,7 +1216,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     private function getStubObject()
     {
-        $obj = new stdClass;
+        $obj = new stdClass();
         $obj->email = 'johndoe@example.com';
         $obj->first_name = 'John';
         $obj->last_name = 'Doe';

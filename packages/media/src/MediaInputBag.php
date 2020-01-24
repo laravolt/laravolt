@@ -14,6 +14,7 @@ class MediaInputBag
 
     /**
      * MediaInputBag constructor.
+     *
      * @param $key
      */
     public function __construct($key)
@@ -32,7 +33,7 @@ class MediaInputBag
     {
         return json_encode($this->toArray());
     }
-    
+
     public function store(string $collection = 'default'): array
     {
         $key = $this->key;

@@ -16,7 +16,7 @@ class Form extends Model
 
     public function getValidationRulesAttribute()
     {
-        return explode('|', $this->field_meta['validation'] ?? "");
+        return explode('|', $this->field_meta['validation'] ?? '');
     }
 
     public static function getFormName(string $processDefinitionKey, string $taskName)
@@ -27,7 +27,7 @@ class Form extends Model
             ->value('form_name');
     }
 
-    public static function getFields(string $processDefinitionKey, string $taskName, String $formName = null)
+    public static function getFields(string $processDefinitionKey, string $taskName, string $formName = null)
     {
         if ($formName == null) {
             return static::query()

@@ -10,7 +10,7 @@ class Task extends CamundaModel
 
     public function processInstance(): ProcessInstance
     {
-        if (! $this->processInstance) {
+        if (!$this->processInstance) {
             $this->processInstance = (new ProcessInstance($this->processInstanceId))->fetch();
         }
 

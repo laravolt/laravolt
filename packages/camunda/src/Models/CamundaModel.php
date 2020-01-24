@@ -23,9 +23,9 @@ abstract class CamundaModel
 
         $port = '';
         if (isset($urls['port'])) {
-            $port = ':' . $urls['port'];
+            $port = ':'.$urls['port'];
         }
-        
+
         $this->client = new Client([
             'base_uri' => sprintf('%s://%s%s', $urls['scheme'], $urls['host'], $port),
         ]);
@@ -99,25 +99,25 @@ abstract class CamundaModel
 
     protected function buildUrl(string $url): string
     {
-        $modelUri = (empty($this->id) && empty($this->key)) || Str::contains($url, '?') ? '' : $this->modelUri() . '/';
+        $modelUri = (empty($this->id) && empty($this->key)) || Str::contains($url, '?') ? '' : $this->modelUri().'/';
         $baseUrl = parse_url(Config::get('laravolt.camunda.api.url', ''));
-        $path = trim($baseUrl['path'] ?? "", '/');
+        $path = trim($baseUrl['path'] ?? '', '/');
 
-        return $path . '/' . $modelUri . $url;
+        return $path.'/'.$modelUri.$url;
     }
 
     protected function modelUri(): string
     {
         if ($this->key) {
-            return Str::kebab(class_basename($this)) . '/key/' . $this->key . $this->tenant();
+            return Str::kebab(class_basename($this)).'/key/'.$this->key.$this->tenant();
         } else {
-            return Str::kebab(class_basename($this)) . '/' . $this->id;
+            return Str::kebab(class_basename($this)).'/'.$this->id;
         }
     }
 
     protected function tenant(): string
     {
-        return strlen(Config::get('laravolt.camunda.api.tenant-id') ?? '') ? '/tenant-id/' . Config::get('laravolt.camunda.api.tenant-id') : '';
+        return strlen(Config::get('laravolt.camunda.api.tenant-id') ?? '') ? '/tenant-id/'.Config::get('laravolt.camunda.api.tenant-id') : '';
     }
 
     protected function formatVariables(array $data): array

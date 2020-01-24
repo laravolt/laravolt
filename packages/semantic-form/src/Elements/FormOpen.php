@@ -1,15 +1,17 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
 class FormOpen extends Element
 {
-    protected $attributes = array(
+    protected $attributes = [
         'method' => 'POST',
         'action' => '',
         'class'  => 'ui form',
-    );
+    ];
 
     protected $withToken = true;
 
@@ -50,12 +52,12 @@ class FormOpen extends Element
 
     protected function hasToken()
     {
-        return (bool)$this->token;
+        return (bool) $this->token;
     }
 
     protected function hasHiddenMethod()
     {
-        return (bool)$this->hiddenMethod;
+        return (bool) $this->hiddenMethod;
     }
 
     public function post()

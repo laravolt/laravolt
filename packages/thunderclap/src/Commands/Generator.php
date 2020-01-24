@@ -2,13 +2,13 @@
 
 namespace Laravolt\Thunderclap\Commands;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Laravolt\Thunderclap\DBHelper;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Laravolt\Thunderclap\FileTransformer;
+use Illuminate\Support\Str;
 use Laravolt\Thunderclap\ColumnsTransformer;
+use Laravolt\Thunderclap\DBHelper;
+use Laravolt\Thunderclap\FileTransformer;
 
 class Generator extends Command
 {
@@ -17,10 +17,10 @@ class Generator extends Command
      *
      * @var string
      */
-    protected $signature = "laravolt:clap {--table= : Code will be generated based on this table schema}
+    protected $signature = 'laravolt:clap {--table= : Code will be generated based on this table schema}
                     {--template= : Code will be generated based on this stubs structure}
                     {--force : Overwrite files if exists}
-                    {--module= : Custom module name you want}";
+                    {--module= : Custom module name you want}';
 
     /**
      * The console command description.
@@ -66,7 +66,7 @@ class Generator extends Command
         }
 
         $containerPath = config('laravolt.thunderclap.target_dir', base_path('modules'));
-        $modulePath = $containerPath . DIRECTORY_SEPARATOR . $moduleName;
+        $modulePath = $containerPath.DIRECTORY_SEPARATOR.$moduleName;
 
         // 1. check existing module
         if (is_dir($modulePath)) {
@@ -132,7 +132,7 @@ class Generator extends Command
                 }
 
                 if (Str::endsWith($newFile, 'Controller.php')) {
-                    $newFile = Str::replaceLast('Controller', $moduleName."Controller", $newFile);
+                    $newFile = Str::replaceLast('Controller', $moduleName.'Controller', $newFile);
                 }
 
                 if ($newFile) {
@@ -146,7 +146,7 @@ class Generator extends Command
                     $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
                 }
 
-                if (! $newFile) {
+                if (!$newFile) {
                     continue;
                 }
 
@@ -157,16 +157,15 @@ class Generator extends Command
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
-
             }
         }
     }
 
     protected function toArrayElement($array)
     {
-        $str = "";
+        $str = '';
         foreach ($array as $val) {
-            $str .= "'$val'" . ",";
+            $str .= "'$val'".',';
         }
 
         return substr($str, 0, -1);
@@ -175,7 +174,7 @@ class Generator extends Command
     protected function getRouteUrlPrefix($routePrefix, $module)
     {
         if ($routePrefix) {
-            return $routePrefix . '.' . $module;
+            return $routePrefix.'.'.$module;
         }
 
         return $module;

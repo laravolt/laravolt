@@ -1,7 +1,5 @@
 <?php
 
-use Laravolt\SemanticForm\Elements\Button;
-
 class LinkTest extends \PHPUnit\Framework\TestCase
 {
     public function testRenderBasicLink()

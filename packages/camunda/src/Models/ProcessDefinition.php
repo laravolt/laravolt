@@ -8,7 +8,7 @@ class ProcessDefinition extends CamundaModel
 {
     public static function byKey($key)
     {
-        $processDefinition = new self;
+        $processDefinition = new self();
         $processDefinition->key = $key;
 
         return $processDefinition;

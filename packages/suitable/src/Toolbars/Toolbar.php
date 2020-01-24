@@ -18,5 +18,5 @@ abstract class Toolbar
         return $this;
     }
 
-    abstract function render();
+    abstract public function render();
 }
