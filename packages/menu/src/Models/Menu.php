@@ -40,19 +40,27 @@ class Menu extends Model implements Sortable
 
     public static function boot()
     {
-        parent::boot();
-
         static::creating(function (self $model) {
+
+            // Jika order diisi, maka lakukan penyesuaian order secara manual
             if ($model->order) {
+
+                // Skip perhitungan order otomatis dari SortableTrait
                 $model->sortable['sort_when_creating'] = false;
 
+                // Order tidak boleh melebihi jumlah item saat ini
                 $model->order = min($model->order, $model->getHighestOrderNumber());
+
+                // Order tidak boleh negatif atau 0
+                $model->order = max($model->order, 1);
+
                 $model->siblings()->where('order', '>=', $model->order)->increment('order');
             }
         });
 
         static::updating(function (self $model) {
             $model->order = min($model->order, $model->getHighestOrderNumber());
+            $model->order = max($model->order, 1);
             if ($model->isDirty('order')) {
                 $previous = $model->getOriginal('order');
                 $new = $model->order;
@@ -67,6 +75,8 @@ class Menu extends Model implements Sortable
         static::deleting(function (self $model) {
             $model->siblings()->where('order', '>', $model->order)->decrement('order');
         });
+
+        parent::boot();
     }
 
     public function scopeSearch(Builder $query, $keyword)

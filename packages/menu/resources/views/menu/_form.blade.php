@@ -17,7 +17,7 @@
     </div>
 </div>
 
-{!! form()->number('order')->label('Order')->hint('Empty mean last position') !!}
+{!! form()->number('order')->label('Order')->hint('Empty mean last position')->min(1) !!}
 {!! form()->dropdown('type', $type)->label('Type')->required() !!}
 
 <h3 class="ui header section dividing">Menu Visibility</h3>
