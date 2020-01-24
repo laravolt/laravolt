@@ -1,12 +1,7 @@
 {
     "name": "laravolt/epilog",
     "description": "Epic Laravel log viewer",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "log",
-        "viewer"
-    ],
+    "keywords": ["laravel", "laravolt", "log", "viewer"],
     "homepage": "https://github.com/laravolt/epilog",
     "license": "MIT",
     "authors": [

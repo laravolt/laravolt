@@ -1,13 +1,7 @@
 {
     "name": "laravolt/media",
     "description": "File browser and media upload handler",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "media",
-        "upload",
-        "file manager"
-    ],
+    "keywords": ["laravel", "laravolt", "media", "upload", "file manager"],
     "homepage": "https://github.com/laravolt/media",
     "license": "MIT",
     "authors": [

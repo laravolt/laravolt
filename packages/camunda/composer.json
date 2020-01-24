@@ -1,11 +1,7 @@
 {
     "name": "laravolt/camunda",
     "description": "High level model, something like Eloquent, to interact with Camunda resources via REST API",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "camunda"
-    ],
+    "keywords": ["laravel", "laravolt", "camunda"],
     "homepage": "https://github.com/laravolt/camunda",
     "license": "MIT",
     "authors": [
@@ -28,7 +24,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "4.0-dev"
         },
         "laravel": {
             "providers": [

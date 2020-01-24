@@ -1,12 +1,7 @@
 {
     "name": "laravolt/semantic-form",
     "description": "Semantic UI form helpers",
-    "keywords": [
-        "laravel",
-        "laravolt",
-        "form",
-        "semantic UI"
-    ],
+    "keywords": ["laravel", "laravolt", "form", "semantic UI"],
     "homepage": "https://github.com/laravolt/semantic-form",
     "license": "MIT",
     "authors": [
