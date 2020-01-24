@@ -47,7 +47,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
         $this->loadMigrationsFrom([
             '--database' => 'sqlite',
-            '--realpath' => realpath(__DIR__.'/../database/migrations'),
+            '--realpath' => realpath(__DIR__ . '/../database/migrations'),
         ]);
 
         $this->beforeApplicationDestroyed(function () {
@@ -57,7 +57,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function cleanDatabase()
     {
-
     }
 
     protected function createUserTable()

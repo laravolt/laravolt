@@ -94,5 +94,4 @@ class TaggableTest extends TestCase
 
         $this->assertEquals(['tag 1', 'tag 2'], $this->post->tagArray);
     }
-
 }

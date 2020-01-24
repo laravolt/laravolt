@@ -1,8 +1,10 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Password extends Text
 {
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'password',
-    );
+    ];
 }

@@ -45,7 +45,6 @@ class Html extends Element
         );
     }
 
-
     public function displayValue()
     {
         return $this->content;

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 
 class TaskInfo
 {

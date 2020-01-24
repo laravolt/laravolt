@@ -1,11 +1,12 @@
-<?php namespace Laravolt\Epilog;
+<?php
+
+namespace Laravolt\Epilog;
 
 use Illuminate\Support\Str;
 
 /**
- * Class     LogParser
+ * Class     LogParser.
  *
- * @package  Arcanedev\LogViewer\Helpers
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class LogParser
@@ -51,7 +52,7 @@ class LogParser
             for ($i = 0, $j = count($heading); $i < $j; $i++) {
                 self::populateEntries($heading, $data, $i);
             }
-        };
+        }
 
         unset($headings, $data);
 

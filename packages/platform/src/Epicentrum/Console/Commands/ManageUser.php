@@ -86,7 +86,7 @@ class ManageUser extends Command
         $message = sprintf('What do you want to do with user %s (ID: %s)', $user->email, $user->getKey());
         $action = Str::camel($this->choice($message, $this->menu));
 
-        $this->{'action'.$action}($user);
+        $this->{'action' . $action}($user);
     }
 
     protected function actionChangeRole($user)

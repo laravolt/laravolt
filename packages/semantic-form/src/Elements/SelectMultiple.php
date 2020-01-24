@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class SelectMultiple extends Select
 {
@@ -11,7 +13,7 @@ class SelectMultiple extends Select
 
     public function select($selected)
     {
-        $selected = (array)$selected;
+        $selected = (array) $selected;
         $this->selected = $selected ?? [];
         $this->data('value', implode(',', $this->selected));
 

@@ -16,10 +16,10 @@ class ProcessInstance extends CamundaModel
     public function processDefinition(): ?ProcessDefinition
     {
         $id = $key = null;
-        if (! $this->processDefinition) {
+        if (!$this->processDefinition) {
             $id = $this->processDefinitionId ?? $this->definitionId ?? null;
 
-            if (! $id) {
+            if (!$id) {
                 $key = DB::table('camunda_task')
                     ->where('process_instance_id', $this->id)
                     ->value('process_definition_key');
@@ -60,7 +60,7 @@ class ProcessInstance extends CamundaModel
     {
         $url = 'task/?processInstanceId=' . $this->id;
 
-        if (! empty($whitelist)) {
+        if (!empty($whitelist)) {
             $whitelist = implode(',', $whitelist);
             $url .= '&taskDefinitionKeyIn=' . $whitelist;
         }
@@ -136,7 +136,7 @@ class ProcessInstance extends CamundaModel
         $subProcess = $this->get('process-instance?superProcessInstance=' . $this->id);
         $data = [];
         foreach ($subProcess as $sub) {
-            $data[] = new ProcessInstance($sub->id, $sub);
+            $data[] = new self($sub->id, $sub);
         }
 
         return $data;

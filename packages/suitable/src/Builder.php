@@ -49,7 +49,7 @@ class Builder
     public function __construct()
     {
         // Generate default value
-        $this->id = 'suitable'.Str::random();
+        $this->id = 'suitable' . Str::random();
 
         // Add default segment
         $segment = Segment::make('default');

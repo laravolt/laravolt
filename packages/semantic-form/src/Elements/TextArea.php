@@ -1,13 +1,14 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class TextArea extends FormControl
 {
-
-    protected $attributes = array(
+    protected $attributes = [
         'name' => '',
         'rows' => 10,
         'cols' => 50,
-    );
+    ];
 
     protected $value;
 
@@ -16,6 +17,7 @@ class TextArea extends FormControl
         if ($this->label) {
             $element = clone $this;
             $element->label = false;
+
             return $this->decorateField(new Field($this->label, $element))->render();
         }
 
@@ -34,30 +36,34 @@ class TextArea extends FormControl
     public function rows($rows)
     {
         $this->setAttribute('rows', $rows);
+
         return $this;
     }
 
     public function cols($cols)
     {
         $this->setAttribute('cols', $cols);
+
         return $this;
     }
 
     public function value($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
     public function placeholder($placeholder)
     {
         $this->setAttribute('placeholder', $placeholder);
+
         return $this;
     }
 
     public function defaultValue($value)
     {
-        if (! $this->hasValue()) {
+        if (!$this->hasValue()) {
             $this->value($value);
         }
 

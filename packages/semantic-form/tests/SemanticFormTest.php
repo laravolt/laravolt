@@ -7,7 +7,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
     {
-        $this->form = new SemanticForm;
+        $this->form = new SemanticForm();
     }
 
     public function tearDown(): void
@@ -841,7 +841,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $timeOptions = [];
         foreach (range(0, 23) as $hour) {
             if (strlen($hour) == 1) {
-                $hour = '0'.$hour;
+                $hour = '0' . $hour;
             }
             $key = $val = sprintf('%s:%s', $hour, '00');
             $timeOptions[$key] = $val;
@@ -880,7 +880,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $timeOptions = [];
         foreach (range(0, 23) as $hour) {
             if (strlen($hour) == 1) {
-                $hour = '0'.$hour;
+                $hour = '0' . $hour;
             }
             $key = $val = sprintf('%s:%s', $hour, '00');
             $timeOptions[$key] = $val;
@@ -1095,7 +1095,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testBindMagicProperty()
     {
-        $object = new MagicGetter;
+        $object = new MagicGetter();
         $this->form->bind($object);
         $expected = '<input type="text" name="not_set" value="foo">';
         $result = (string) $this->form->text('not_set');
@@ -1179,9 +1179,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testActionWithMultipleComponent()
     {
-        $expected = '<div class="action pushed">'.
-            '<button type="submit" class="ui button primary" name="submit">Sign In</button>'.
-            '<button type="button" class="ui button">Cancel</button>'.
+        $expected = '<div class="action pushed">' .
+            '<button type="submit" class="ui button primary" name="submit">Sign In</button>' .
+            '<button type="button" class="ui button">Cancel</button>' .
             '</div>';
         $submit = $this->form->submit('Sign In', 'submit');
         $cancel = $this->form->button('Cancel');
@@ -1194,9 +1194,9 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testActionWithMacro()
     {
-        $expected = '<div class="action pushed">'.
-            '<button type="submit" class="ui button primary">Submit</button>'.
-            '<button type="button" class="ui button">Cancel</button>'.
+        $expected = '<div class="action pushed">' .
+            '<button type="submit" class="ui button primary">Submit</button>' .
+            '<button type="button" class="ui button">Cancel</button>' .
             '</div>';
 
         $form = $this->form;
@@ -1216,7 +1216,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     private function getStubObject()
     {
-        $obj = new stdClass;
+        $obj = new stdClass();
         $obj->email = 'johndoe@example.com';
         $obj->first_name = 'John';
         $obj->last_name = 'Doe';

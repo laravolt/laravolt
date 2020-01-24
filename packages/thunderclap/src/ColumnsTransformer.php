@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Thunderclap;
 
 use Illuminate\Support\Str;
@@ -6,7 +7,6 @@ use Stringy\Stringy;
 
 class ColumnsTransformer
 {
-
     protected $columns;
 
     protected $fieldTypeTransformer;
@@ -29,9 +29,9 @@ class ColumnsTransformer
         return $columns
                 ->keys()
                 ->map(function ($item) {
-                    return '"'.$item.'"';
+                    return '"' . $item . '"';
                 })
-                ->implode(", ").",";
+                ->implode(', ') . ',';
     }
 
     public function toValidationRules()
@@ -40,33 +40,32 @@ class ColumnsTransformer
         $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
-            <<<TEMPLATE
+            <<<'TEMPLATE'
             '%s' => ['%s']
 TEMPLATE;
 
         return $columns
             ->values()
-            ->map(function ($item) use ($template){
+            ->map(function ($item) use ($template) {
                 return sprintf($template, $item['name'], $item['required'] ? 'required' : '');
             })
-            ->implode(",\n") . ",";
-
+            ->implode(",\n") . ',';
     }
 
     public function toLangFields()
     {
         $columns = $this->removeForeignKeys($this->columns);
         $template =
-            <<<TEMPLATE
+            <<<'TEMPLATE'
     '%s' => '%s'
 TEMPLATE;
 
         return $columns
             ->keys()
-            ->map(function ($item) use ($template){
+            ->map(function ($item) use ($template) {
                 return sprintf($template, $item, ucwords(str_replace('_', ' ', $item)));
             })
-            ->implode(",\n") . ",";
+            ->implode(",\n") . ',';
     }
 
     public function toFormCreateFields()
@@ -78,7 +77,7 @@ TEMPLATE;
             ->map(function ($item) {
                 $template = $this->fieldTypeTransformer->generate($item);
 
-                return sprintf("\t".$template, $item['name'], Stringy::create($item['name'])->humanize());
+                return sprintf("\t" . $template, $item['name'], Stringy::create($item['name'])->humanize());
             })
             ->implode("\n");
     }
@@ -94,13 +93,13 @@ TEMPLATE;
         $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
-            <<<TEMPLATE
+            <<<'TEMPLATE'
                     <th>%s</th>
 TEMPLATE;
 
         return $columns
             ->keys()
-            ->map(function ($item) use ($template){
+            ->map(function ($item) use ($template) {
                 return sprintf($template, Stringy::create($item)->humanize());
             })
             ->implode("\n");
@@ -112,17 +111,16 @@ TEMPLATE;
         $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
-            <<<TEMPLATE
-                    <td>{{ \$item->present('%s') }}</td>
+            <<<'TEMPLATE'
+                    <td>{{ $item->present('%s') }}</td>
 TEMPLATE;
 
         return $columns
             ->keys()
-            ->map(function ($item) use ($template){
+            ->map(function ($item) use ($template) {
                 return sprintf($template, $item);
             })
             ->implode("\n");
-
     }
 
     public function toTableViewFields()
@@ -131,30 +129,29 @@ TEMPLATE;
         $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         $template =
-            <<<TEMPLATE
+            <<<'TEMPLATE'
             Text::make('%s')->sortable(),
 TEMPLATE;
 
         return $columns
             ->keys()
-            ->map(function ($item) use ($template){
+            ->map(function ($item) use ($template) {
                 return sprintf($template, $item);
             })
             ->implode("\n");
-
     }
 
     public function toDetailFields($objectName)
     {
         $columns = $this->columns;
         $template =
-            <<<TEMPLATE
+            <<<'TEMPLATE'
         <tr><td>%s</td><td>{{ $%s->%s }}</td></tr>
 TEMPLATE;
 
         return $columns
             ->keys()
-            ->map(function ($item) use ($template, $objectName){
+            ->map(function ($item) use ($template, $objectName) {
                 return sprintf($template, Stringy::create($item)->humanize(), $objectName, $item);
             })
             ->implode("\n");

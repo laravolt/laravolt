@@ -99,5 +99,4 @@ class CommaTest extends TestCase
             'type'  => 'faq',
         ]);
     }
-
 }

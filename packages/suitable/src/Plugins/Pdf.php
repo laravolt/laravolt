@@ -16,7 +16,8 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     /**
      * Pdf constructor.
-     * @param  string  $filename
+     *
+     * @param string $filename
      */
     public function __construct(string $filename)
     {
@@ -35,7 +36,7 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function decorate(Builder $table): Builder
     {
-        $url = request()->url().'?'.http_build_query(array_merge(request()->input(), ['format' => 'pdf']));
+        $url = request()->url() . '?' . http_build_query(array_merge(request()->input(), ['format' => 'pdf']));
 
         $segment = $table->getDefaultSegment();
         $segment->addLeft(Action::make('file pdf', 'Export To Pdf', $url));
@@ -51,5 +52,4 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
             ::loadView('suitable::layouts.pdf', ['table' => $table->render('suitable::table')])
             ->stream($this->filename);
     }
-
 }

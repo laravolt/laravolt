@@ -24,7 +24,6 @@ class CategoryController extends Controller
     public function store(Store $request)
     {
         try {
-
             app('laravolt.comma.models.category')->create($request->only(['name']));
 
             return redirect()->route('comma::categories.index')->withSuccess(
@@ -61,7 +60,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
-
             $category = app('laravolt.comma.models.category')->findOrFail($id);
 
             if ($category->name === config('laravolt.comma.default_category')) {

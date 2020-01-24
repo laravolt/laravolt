@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -94,7 +96,7 @@ abstract class Element
 
     public function clear($attribute)
     {
-        if (! isset($this->attributes[$attribute])) {
+        if (!isset($this->attributes[$attribute])) {
             return $this;
         }
 
@@ -105,7 +107,7 @@ abstract class Element
 
     public function addClass($class)
     {
-        if (! $class) {
+        if (!$class) {
             return $this;
         }
 
@@ -123,7 +125,7 @@ abstract class Element
 
     public function removeClass($class)
     {
-        if (! isset($this->attributes['class'])) {
+        if (!isset($this->attributes['class'])) {
             return $this;
         }
 
@@ -213,7 +215,7 @@ abstract class Element
 
     protected function renderHint()
     {
-        $output = "";
+        $output = '';
         if ($this->hint instanceof Hint) {
             $output .= $this->hint->render();
         }

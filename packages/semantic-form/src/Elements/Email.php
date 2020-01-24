@@ -1,8 +1,10 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Email extends Text
 {
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'email',
-    );
+    ];
 }

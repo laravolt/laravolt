@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +12,7 @@ use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Camunda\Models\ProcessInstance;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 
 class StartForm
 {
@@ -166,7 +166,7 @@ class StartForm
 
     protected function getValues($formName)
     {
-        if (! $this->processInstance) {
+        if (!$this->processInstance) {
             return [];
         }
 

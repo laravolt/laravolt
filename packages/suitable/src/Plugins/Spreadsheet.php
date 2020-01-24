@@ -21,7 +21,8 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     /**
      * Spreadsheet constructor.
-     * @param  string  $filename
+     *
+     * @param string $filename
      */
     public function __construct(string $filename)
     {
@@ -41,10 +42,10 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function decorate(Builder $table): Builder
     {
-        $url = request()->url().'?'.http_build_query(array_merge(request()->input(), ['format' => $this->format]));
+        $url = request()->url() . '?' . http_build_query(array_merge(request()->input(), ['format' => $this->format]));
 
         $segment = $table->getDefaultSegment();
-        $segment->addLeft(Action::make('file excel', 'Export To '.Str::title($this->format), $url));
+        $segment->addLeft(Action::make('file excel', 'Export To ' . Str::title($this->format), $url));
 
         return $table;
     }

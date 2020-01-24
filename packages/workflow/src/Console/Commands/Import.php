@@ -14,18 +14,21 @@ class Import extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'workflow:import {processDefinitionKey}';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Import form definition dari file BPMN via REST API';
 
     /**
      * Execute the console command.
+     *
      * @return mixed
      */
     public function handle()
@@ -36,7 +39,7 @@ class Import extends Command
         $xml = new SimpleXMLElement($processDefinition->xml());
         $xml->registerXPathNamespace('bpmn', 'http://www.omg.org/spec/BPMN/20100524/MODEL');
         $xml->registerXPathNamespace('camunda', 'http://camunda.org/schema/1.0/bpmn');
-        
+
         $calledActivity = $xml->xpath('//bpmn:callActivity');
         foreach ($calledActivity as $call) {
             if (CamundaForm::where('field_name', '=', 'subprocess' . $call['name'])
@@ -136,7 +139,7 @@ class Import extends Command
                                 ->where('task_name', '=', $node['id'])
                                 ->where('process_definition_key', '=', $processDefKey)
                                 ->count() == 0) {
-                            #$this->info('Field Added'.json_encode($formField));
+                            //$this->info('Field Added'.json_encode($formField));
 
                             DB::table('camunda_form')->insert([
                                 'process_definition_key' => $processDefKey,
@@ -220,7 +223,7 @@ class Import extends Command
                 return $item['name'];
             });
 
-            if (! Schema::hasTable($tableName)) {
+            if (!Schema::hasTable($tableName)) {
                 Schema::create($tableName, function (Blueprint $table) use ($tableColumns) {
                     $table->bigIncrements('id');
                     $table->string('process_instance_id')->nullable();

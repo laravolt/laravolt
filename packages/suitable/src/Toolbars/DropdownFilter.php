@@ -14,6 +14,7 @@ class DropdownFilter extends Toolbar implements \Laravolt\Suitable\Contracts\Too
 
     /**
      * Title constructor.
+     *
      * @param string $name
      * @param array  $options
      */
@@ -23,7 +24,7 @@ class DropdownFilter extends Toolbar implements \Laravolt\Suitable\Contracts\Too
         $this->options = $options;
     }
 
-    static public function make(string $name, array $options)
+    public static function make(string $name, array $options)
     {
         $toolbar = new static($name, $options);
 

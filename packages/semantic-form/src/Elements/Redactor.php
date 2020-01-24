@@ -1,6 +1,7 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
 
-use Illuminate\Database\Eloquent\Model;
+namespace Laravolt\SemanticForm\Elements;
+
 use Illuminate\Support\Facades\Route;
 
 class Redactor extends TextArea

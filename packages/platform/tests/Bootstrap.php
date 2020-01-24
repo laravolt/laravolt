@@ -31,7 +31,7 @@ trait Bootstrap
     {
         $app['config']->set('auth.providers.users.model', User::class);
 
-        $app['view']->addNamespace('dummy', __DIR__.'/Dummy');
+        $app['view']->addNamespace('dummy', __DIR__ . '/Dummy');
         $app['config']->set('laravolt.auth.layout', 'dummy::layout');
 
         \URL::forceRootUrl('http://localhost');

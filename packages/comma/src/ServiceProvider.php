@@ -5,50 +5,52 @@ namespace Laravolt\Comma;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class PackageServiceProvider
- * @package Laravolt\Comma
+ * Class PackageServiceProvider.
  */
 class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
+     *
      * @var bool
      */
     protected $defer = false;
 
     /**
      * Register the service provider.
+     *
      * @return void
      */
     public function register()
     {
         $this->app->singleton(
             'laravolt.comma', function () {
-            return new Comma();
-        }
+                return new Comma();
+            }
         );
 
         $this->app->bind(
             'laravolt.comma.models.category', function () {
-            return $this->app->make(config('laravolt.comma.models.category'));
-        }
+                return $this->app->make(config('laravolt.comma.models.category'));
+            }
         );
 
         $this->app->bind(
             'laravolt.comma.models.post', function () {
-            return $this->app->make(config('laravolt.comma.models.post'));
-        }
+                return $this->app->make(config('laravolt.comma.models.post'));
+            }
         );
 
         $this->app->bind(
             'laravolt.comma.models.tag', function () {
-            return $this->app->make(config('laravolt.comma.models.tag'));
-        }
+                return $this->app->make(config('laravolt.comma.models.tag'));
+            }
         );
     }
 
     /**
-     * Application is booting
+     * Application is booting.
+     *
      * @return void
      */
     public function boot()
@@ -68,7 +70,8 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register the package migrations
+     * Register the package migrations.
+     *
      * @return void
      */
     protected function registerMigrations()
@@ -77,7 +80,8 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register the package configurations
+     * Register the package configurations.
+     *
      * @return void
      */
     protected function registerConfigurations()
@@ -98,7 +102,7 @@ class ServiceProvider extends BaseServiceProvider
             $group = $this->app['laravolt.menu']->add('CMS');
             foreach (config('laravolt.comma.collections') as $key => $collection) {
                 $menu = $group->add($collection['label'], route('comma::posts.index', ['collection' => $key]))
-                    ->active('cms/posts/'.$key);
+                    ->active('cms/posts/' . $key);
                 foreach ($collection['data'] as $dataKey => $dataValue) {
                     $menu->data($dataKey, $dataValue);
                 }
@@ -113,12 +117,14 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Loads a path relative to the package base directory
+     * Loads a path relative to the package base directory.
+     *
      * @param string $path
+     *
      * @return string
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 }

@@ -14,7 +14,7 @@ interface Plugin
 
     public function filter($columns);
 
-    public function shouldResponse():bool;
+    public function shouldResponse(): bool;
 
     public function response($source, Builder $table);
 }

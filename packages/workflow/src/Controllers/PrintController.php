@@ -52,7 +52,7 @@ class PrintController extends Controller
         $path = '/reports/' . ltrim($path, '/');
         $format = request('format', 'pdf');
 
-        $path = sprintf("%s.%s", $path, $format);
+        $path = sprintf('%s.%s', $path, $format);
         $jasper = app(Jasper::class);
         $queryString['process_instance_id'] = $processInstance->id;
 
@@ -62,7 +62,7 @@ class PrintController extends Controller
         $storagePath = sprintf('app/public/%s', $assetPath);
         $directory = dirname(storage_path($storagePath));
 
-        if (! is_dir($directory)) {
+        if (!is_dir($directory)) {
             \File::makeDirectory($directory, 0755, true);
         }
 
@@ -101,7 +101,7 @@ class PrintController extends Controller
         $storagePath = sprintf('app/public/%s', $assetPath);
         $directory = dirname(storage_path($storagePath));
 
-        if (! is_dir($directory)) {
+        if (!is_dir($directory)) {
             \File::makeDirectory($directory, 0755, true);
         }
 

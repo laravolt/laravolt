@@ -14,7 +14,7 @@ class TimezoneRepository implements \Laravolt\Support\Contracts\TimezoneReposito
         $offsets = [];
         foreach ($timezones as $timezone) {
             $tz = new DateTimeZone($timezone);
-            $offsets[$timezone] = $tz->getOffset(new DateTime);
+            $offsets[$timezone] = $tz->getOffset(new DateTime());
         }
 
         // sort timezone by offset

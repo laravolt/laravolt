@@ -25,7 +25,7 @@ abstract class CamundaModel
         if (isset($urls['port'])) {
             $port = ':' . $urls['port'];
         }
-        
+
         $this->client = new Client([
             'base_uri' => sprintf('%s://%s%s', $urls['scheme'], $urls['host'], $port),
         ]);
@@ -101,7 +101,7 @@ abstract class CamundaModel
     {
         $modelUri = (empty($this->id) && empty($this->key)) || Str::contains($url, '?') ? '' : $this->modelUri() . '/';
         $baseUrl = parse_url(Config::get('laravolt.camunda.api.url', ''));
-        $path = trim($baseUrl['path'] ?? "", '/');
+        $path = trim($baseUrl['path'] ?? '', '/');
 
         return $path . '/' . $modelUri . $url;
     }

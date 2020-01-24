@@ -43,7 +43,7 @@ class SelectHeader implements \Laravolt\Suitable\Contracts\Header
         return sprintf(
             '<th %s>%s</th>',
             $this->tagAttributes($this->attributes),
-            form()->select("filter[$this->name]", $this->options, Arr::get(request("filter"), $this->name))
+            form()->select("filter[$this->name]", $this->options, Arr::get(request('filter'), $this->name))
                 ->attribute('form', 'suitable-form-searchable')
         );
     }

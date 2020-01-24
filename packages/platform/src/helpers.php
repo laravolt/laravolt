@@ -10,7 +10,7 @@ if (!function_exists('platform_path')) {
      */
     function platform_path(string $path): string
     {
-        return realpath(__DIR__.'/../'.($path ? DIRECTORY_SEPARATOR.$path : $path));
+        return realpath(__DIR__ . '/../' . ($path ? DIRECTORY_SEPARATOR . $path : $path));
     }
 }
 

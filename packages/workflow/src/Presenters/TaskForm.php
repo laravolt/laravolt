@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Camunda\Models\Task;
@@ -12,6 +11,7 @@ use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Enum\TaskStatus;
 use Laravolt\Workflow\Models\AutoSave;
 use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Laravolt\Workflow\Traits\DataRetrieval;
 
 class TaskForm
@@ -84,7 +84,7 @@ class TaskForm
             $definition = (new FormAdapter($this->fields, $this->data))->toArray();
             $draft = Arr::get($this->data, 'status') == TaskStatus::DRAFT;
 
-            if (! $draft) {
+            if (!$draft) {
                 $definition = collect($definition)->transform(function ($item) {
 
                     // Uncomment this if:
@@ -140,7 +140,7 @@ class TaskForm
         $query = DB::table('camunda_task')
             ->where('process_instance_id', $this->processInstance->id);
 
-        if (! $includeCurrentTask) {
+        if (!$includeCurrentTask) {
             $query->where('task_name', '<>', $this->task->taskDefinitionKey);
         }
 
@@ -180,7 +180,7 @@ class TaskForm
 
     protected function getValues($formName)
     {
-        if (! $this->task) {
+        if (!$this->task) {
             return [];
         }
 

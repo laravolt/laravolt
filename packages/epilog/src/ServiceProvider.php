@@ -5,9 +5,7 @@ namespace Laravolt\Epilog;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class PackageServiceProvider
- *
- * @package Laravolt\Comma
+ * Class PackageServiceProvider.
  */
 class ServiceProvider extends BaseServiceProvider
 {
@@ -28,7 +26,7 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Application is booting
+     * Application is booting.
      *
      * @return void
      */
@@ -52,7 +50,7 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register the package configurations
+     * Register the package configurations.
      *
      * @return void
      */
@@ -87,14 +85,15 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Loads a path relative to the package base directory
+     * Loads a path relative to the package base directory.
      *
      * @param string $path
+     *
      * @return string
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 
     protected function systemMenu()
@@ -106,5 +105,4 @@ class ServiceProvider extends BaseServiceProvider
 
         return $menu;
     }
-
 }

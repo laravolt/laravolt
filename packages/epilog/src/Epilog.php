@@ -4,8 +4,8 @@ namespace Laravolt\Epilog;
 
 use Illuminate\Support\Arr;
 use Laravolt\Epilog\MonologParser\Reader\LogReader;
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 
 class Epilog
 {

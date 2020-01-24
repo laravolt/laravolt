@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Comma\Models;
 
 use Illuminate\Database\Eloquent\Model;

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Laravolt\Workflow\Console\Commands\Import;
 use Laravolt\Workflow\Console\Commands\MakeCommand;
-use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Console\Commands\SyncModule;
+use Laravolt\Workflow\Entities\Module;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -101,7 +101,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $module = config("workflow-modules.$id");
             $table = $module['table'] ?? null;
 
-            if (! $module) {
+            if (!$module) {
                 if (config('app.debug')) {
                     throw new \DomainException("File config config/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul.");
                 }

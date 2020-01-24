@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 
 class TaskEditForm
 {
@@ -33,7 +33,7 @@ class TaskEditForm
         $this->task = $task;
 
         $taskConfig = $this->module->getTask($task->task_name);
-        if (! Arr::get($taskConfig, 'attributes.editable', true)) {
+        if (!Arr::get($taskConfig, 'attributes.editable', true)) {
             throw new \DomainException('Task is non-editable');
         }
 

@@ -12,7 +12,7 @@ class QueryBuilderMixin
     {
         return function () {
             $result = $this->first();
-            if (! $result) {
+            if (!$result) {
                 abort(404);
             }
 

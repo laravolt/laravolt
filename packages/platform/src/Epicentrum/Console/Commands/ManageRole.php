@@ -52,7 +52,7 @@ class ManageRole extends Command
         }
 
         if (!$role) {
-            $createNew = $this->confirm('Role not found, do you want to create a new role named '.$identifier);
+            $createNew = $this->confirm('Role not found, do you want to create a new role named ' . $identifier);
 
             if ($createNew) {
                 $role = app('laravolt.epicentrum.role')->create(['name' => $identifier]);
@@ -71,7 +71,7 @@ class ManageRole extends Command
         $message = sprintf('What do you want to do with role %s (ID: %s)', $role->name, $role->getKey());
         $action = Str::camel($this->choice($message, $this->menu));
 
-        $this->{'action'.$action}($role);
+        $this->{'action' . $action}($role);
     }
 
     protected function actionChangePermission($role)

@@ -61,7 +61,7 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 
         $queryString = array_merge(request()->input(), $sortableQueryString);
 
-        $url = request()->url().'?'.http_build_query($queryString);
+        $url = request()->url() . '?' . http_build_query($queryString);
 
         $this->attributes['class'] = ($this->attributes['class'] ?? '') . ' ' . $headerClass;
         $attributes = $this->tagAttributes($this->attributes);

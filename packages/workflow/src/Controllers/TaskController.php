@@ -55,7 +55,7 @@ class TaskController extends Controller
     {
         try {
             $form = $this->workflow->editTaskForm($module, $taskId);
-            
+
             return view('workflow::task.edit', compact('form', 'module'));
         } catch (ClientException $e) {
             report($e);

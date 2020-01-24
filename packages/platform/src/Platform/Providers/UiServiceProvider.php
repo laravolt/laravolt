@@ -95,7 +95,7 @@ class UiServiceProvider extends BaseServiceProvider
         );
 
         $theme = $this->app['config']->get('laravolt.ui.sidebar_theme');
-        $themeOptions = $this->app['config']->get('laravolt.ui.themes.'.$theme);
+        $themeOptions = $this->app['config']->get('laravolt.ui.themes.' . $theme);
         $this->app['config']->set('laravolt.ui.options', $themeOptions);
 
         return $this;

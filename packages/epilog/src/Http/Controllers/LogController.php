@@ -7,7 +7,6 @@ use Laravolt\Epilog\Epilog;
 
 class LogController extends Controller
 {
-
     private $epilog;
 
     /**

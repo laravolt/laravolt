@@ -88,14 +88,14 @@ class Menu extends Model implements Sortable
 
     public static function toFlatSelect()
     {
-        $result = (new static)->ordered()->withDepth()->get()->toFlatTree();
+        $result = (new static())->ordered()->withDepth()->get()->toFlatTree();
 
         return collect($result)->pluck('label_prefixed', 'id')->toArray();
     }
 
     public static function toStructuredArray()
     {
-        $menu = (new static)->with('children.children')->ordered()->whereNull('parent_id')->withDepth()->get();
+        $menu = (new static())->with('children.children')->ordered()->whereNull('parent_id')->withDepth()->get();
         $structuredArray = [];
         foreach ($menu as $m) {
             if ($m->children->isEmpty()) {

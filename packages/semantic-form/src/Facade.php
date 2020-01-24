@@ -1,10 +1,11 @@
 <?php
+
 namespace Laravolt\SemanticForm;
 
 class Facade extends \Illuminate\Support\Facades\Facade
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function getFacadeAccessor()
     {

@@ -6,8 +6,7 @@ use Illuminate\Mail\MailServiceProvider;
 use Swift_Mailer;
 
 /**
- * Class PackageServiceProvider
-
+ * Class PackageServiceProvider.
  */
 class ServiceProvider extends MailServiceProvider
 {
@@ -15,6 +14,7 @@ class ServiceProvider extends MailServiceProvider
 
     /**
      * Register the service provider.
+     *
      * @return void
      */
     public function registerSwiftMailer()
@@ -29,23 +29,25 @@ class ServiceProvider extends MailServiceProvider
     }
 
     /**
-     * Application is booting
+     * Application is booting.
+     *
      * @return void
      */
     public function boot()
     {
         if ($this->app->runningInConsole() && config('laravolt.mailkeeper.migrations')) {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
         $this->publishes([
-            realpath(__DIR__.'/../database/migrations') => database_path('migrations'),
+            realpath(__DIR__ . '/../database/migrations') => database_path('migrations'),
         ], 'migrations');
 
         $this->registerCommands();
     }
 
-    private function registerDbMailer() {
+    private function registerDbMailer()
+    {
         $this->app->singleton('swift.mailer', function () {
             return new Swift_Mailer(new DbTransport());
         });
@@ -58,7 +60,7 @@ class ServiceProvider extends MailServiceProvider
 
     protected function registerConfig()
     {
-        $path = __DIR__.'/../config/mailkeeper.php';
+        $path = __DIR__ . '/../config/mailkeeper.php';
 
         $this->publishes(
             [

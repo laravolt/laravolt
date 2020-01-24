@@ -21,7 +21,7 @@ class SearchablePost extends Post
             'title'         => $this->title,
             'slug'          => $this->slug,
             'content'       => $this->content,
-            'es_content'    => $this->title.' '.$this->category->name ?? null.' '.$this->tag_list.' '.strip_tags($this->content),
+            'es_content'    => $this->title . ' ' . $this->category->name ?? null . ' ' . $this->tag_list . ' ' . strip_tags($this->content),
             'category_id'   => $this->category_id,
             'category_name' => $this->category->name ?? null,
             'tags'          => $this->tag_array,

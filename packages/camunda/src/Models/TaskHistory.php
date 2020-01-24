@@ -17,7 +17,7 @@ class TaskHistory extends CamundaModel
 
     public function processInstance(): ProcessInstanceHistory
     {
-        if (! $this->processInstance && $this->processInstanceId) {
+        if (!$this->processInstance && $this->processInstanceId) {
             $this->processInstance = (new ProcessInstanceHistory($this->processInstanceId))->fetch();
         }
 

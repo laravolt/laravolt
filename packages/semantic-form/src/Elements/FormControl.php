@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 abstract class FormControl extends Element
 {
@@ -58,7 +60,7 @@ abstract class FormControl extends Element
 
     public function enable($enable = true)
     {
-        $this->disable(! $enable);
+        $this->disable(!$enable);
 
         return $this;
     }

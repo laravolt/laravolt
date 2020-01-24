@@ -1,6 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
 
-use Illuminate\Support\Arr;
+namespace Laravolt\SemanticForm\Elements;
 
 class DatepickerWrapper extends InputWrapper
 {

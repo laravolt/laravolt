@@ -10,7 +10,7 @@ class Numbering extends Column implements ColumnInterface
 
     protected $cellAttributes = ['class' => 'numbering'];
 
-    static public function make($field, $header = null)
+    public static function make($field, $header = null)
     {
         return parent::make($field, $field);
     }

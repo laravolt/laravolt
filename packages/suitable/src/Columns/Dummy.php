@@ -6,6 +6,6 @@ class Dummy extends Column implements ColumnInterface
 {
     public function cell($cell, $collection, $loop)
     {
-        return "";
+        return '';
     }
 }

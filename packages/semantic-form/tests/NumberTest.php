@@ -110,7 +110,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $text = new Number('');
 
         $result = $text->autofocus()->render();
-        $message = "autofocus attribute should be set";
+        $message = 'autofocus attribute should be set';
         $this->assertStringContainsString('autofocus="autofocus"', $result, $message);
     }
 
@@ -120,13 +120,13 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $text = new Number('');
 
         $result = $text->unfocus()->render();
-        $message = "autofocus attribute should not be set";
+        $message = 'autofocus attribute should not be set';
         $this->assertStringNotContainsString($pattern, $result, $message);
 
         $text = new Number('');
 
         $result = $text->autofocus()->unfocus()->render();
-        $message = "autofocus attribute should be removed";
+        $message = 'autofocus attribute should be removed';
         $this->assertStringNotContainsString($pattern, $result, $message);
     }
 
