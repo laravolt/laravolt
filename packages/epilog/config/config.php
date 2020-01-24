@@ -10,7 +10,7 @@ return [
         'prefix' => 'epilog',
     ],
     'view' => [
-        'layout' => 'ui::layouts.app',
+        'layout' => 'laravolt::layouts.app',
     ],
     'menu' => [
         'enabled' => true,

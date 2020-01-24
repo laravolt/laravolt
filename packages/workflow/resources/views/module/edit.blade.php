@@ -16,7 +16,7 @@
 )
 
 @section('content')
-    @component('ui::components.panel', ['title' => __('Manage Module')])
+    @component('laravolt::components.panel', ['title' => __('Manage Module')])
         {!! form()->bind($module)->put(route('workflow::module.update', $module->getKey())) !!}
         {!! form()->text('key')->label('Key')->disabled() !!}
         {!! form()->text('label')->label('Label')->required() !!}

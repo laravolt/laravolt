@@ -10,7 +10,7 @@
 
 @section('content')
 
-    @component('ui::components.panel', ['title' => "<div class='sub header'>Edit</div><div title='{$form->key()}'>{$form->title()}</div>"])
+    @component('laravolt::components.panel', ['title' => "<div class='sub header'>Edit</div><div title='{$form->key()}'>{$form->title()}</div>"])
         {!! $form->render() !!}
     @endcomponent
 

@@ -7,7 +7,7 @@ return [
         'prefix' => 'workflow',
     ],
     'view' => [
-        'layout' => 'ui::layouts.app',
+        'layout' => 'laravolt::layouts.app',
     ],
     'form' => [
         // 'class' => 'horizontal',

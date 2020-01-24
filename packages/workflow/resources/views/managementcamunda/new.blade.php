@@ -1,5 +1,5 @@
 @extends(
-    'ui::layouts.app',
+    'laravolt::layouts.app',
     [
         '__page' => [
             'title' => 'Form Fields',

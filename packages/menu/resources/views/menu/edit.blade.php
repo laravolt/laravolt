@@ -18,7 +18,7 @@
 @section('content')
 
 @section('content')
-    @component('ui::components.panel', ['title' => __('Edit Menu')])
+    @component('laravolt::components.panel', ['title' => __('Edit Menu')])
         {!! form()->bind($menu)->put(route('menu::menu.update', $menu)) !!}
         @include('menu::menu._form')
         {!! form()->close() !!}

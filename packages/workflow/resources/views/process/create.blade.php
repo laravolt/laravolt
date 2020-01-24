@@ -17,7 +17,7 @@
 
 @section('content')
 
-    @component('ui::components.panel', ['title' => $form->title()])
+    @component('laravolt::components.panel', ['title' => $form->title()])
         <div id="startForm">
             {!! $form->render() !!}
         </div>

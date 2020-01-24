@@ -1,4 +1,4 @@
-@extends('ui::layouts.app-surat', ['url' => asset($path), 'extension' => $extension])
+@extends('laravolt::layouts.app-surat', ['url' => asset($path), 'extension' => $extension])
 
 @section('content')
 

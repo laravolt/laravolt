@@ -16,7 +16,7 @@
 )
 
 @section('content')
-    @component('ui::components.panel', ['title' => $config['label'] ?? $collection])
+    @component('laravolt::components.panel', ['title' => $config['label'] ?? $collection])
         {!! form()->bind($lookup)->put(route('lookup::lookup.update', $lookup)) !!}
         @include('lookup::lookup._form')
         {!! form()->close() !!}

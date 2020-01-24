@@ -7,7 +7,7 @@ return [
         'prefix' => '',
     ],
     'view' => [
-        'layout' => 'ui::layouts.app',
+        'layout' => 'laravolt::layouts.app',
     ],
     'menu' => [
         'enable' => true,

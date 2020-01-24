@@ -23,14 +23,14 @@
 
     @can('edit', $module->getModel())
         @foreach($forms as $form)
-            @component('ui::components.panel', ['title' => "<div title='{$form->key()}'>{$form->title()}</div>"])
+            @component('laravolt::components.panel', ['title' => "<div title='{$form->key()}'>{$form->title()}</div>"])
                 {!! $form->render() !!}
             @endcomponent
         @endforeach
     @endcan
 
     @foreach($otherTasks as $task)
-        @component('ui::components.panel', ['title' => "<div title='{$task['model']->taskDefinitionKey}'>{$task['model']->name}</div>"])
+        @component('laravolt::components.panel', ['title' => "<div title='{$task['model']->taskDefinitionKey}'>{$task['model']->name}</div>"])
             <div class="ui placeholder basic segment">
                 <div class="ui icon header">
                     <i class="user clock icon"></i>

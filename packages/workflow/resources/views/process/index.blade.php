@@ -24,7 +24,7 @@
 @push('page.actions')
     @includeWhen(
         auth()->user()->can('create', $module->getModel()),
-        'ui::components.button',
+        'laravolt::components.button',
         [
             'action' => [
                 'url' => route('workflow::process.create', [$module->id]),

@@ -18,7 +18,7 @@
 @section('content')
 
 @section('content')
-    @component('ui::components.panel', ['title' => __('Tambah Menu')])
+    @component('laravolt::components.panel', ['title' => __('Tambah Menu')])
         {!! form()->post(route('menu::menu.store')) !!}
         @include('menu::menu._form')
         {!! form()->close() !!}
