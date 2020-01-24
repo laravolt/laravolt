@@ -30,6 +30,7 @@
         "illuminate/support": "^6.0",
         "illuminate/database": "^6.0",
         "laravolt/suitable": "^4.0",
+        "laravolt/semantic-form": "^4.0",
         "bensampo/laravel-enum": "^1.26",
         "rkorebrits/htmltoopenxml": "^0.1.9",
         "phpoffice/phpword": "^0.17.0",
