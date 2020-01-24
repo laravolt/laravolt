@@ -105,7 +105,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->publishes(
             [platform_path('resources/views') => base_path('resources/views/vendor/laravolt')],
-            'views'
+            'laravolt-views'
         );
 
         return $this;
