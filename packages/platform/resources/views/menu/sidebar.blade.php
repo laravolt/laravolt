@@ -1,7 +1,5 @@
-<?php
+@php($items = app('laravolt.menu.sidebar')->all())
 
-$items = app('laravolt.menu.sidebar')->all();
-?>
 <nav class="sidebar">
     <div class="sidebar__wrapper" data-role="sidebar">
 

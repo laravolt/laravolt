@@ -84,13 +84,13 @@ class Menu extends BaseMenu
             // It means, user only need to have one of the permissions
             if (is_array($permission)) {
                 foreach ($permission as $perm) {
-                    if (auth()->user()->can($perm)) {
+                    if (auth()->check() && auth()->user()->can($perm)) {
                         $permissionCheck = true;
                         break;
                     }
                 }
             } else {
-                $permissionCheck = auth()->user()->can($item->data('permission'));
+                $permissionCheck = auth()->check() && auth()->user()->can($item->data('permission'));
             }
         }
 
