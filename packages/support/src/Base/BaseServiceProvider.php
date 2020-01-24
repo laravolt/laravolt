@@ -45,11 +45,14 @@ abstract class BaseServiceProvider extends ServiceProvider
     protected function bootViews()
     {
         $viewFolder = $this->packagePath('resources/views');
-        $this->loadViewsFrom($viewFolder, $this->getIdentifier());
-        $this->publishes(
-            [$viewFolder => base_path("resources/views/vendor/{$this->getIdentifier()}}")],
-            'views'
-        );
+
+        if (file_exists($viewFolder)) {
+            $this->loadViewsFrom($viewFolder, $this->getIdentifier());
+            $this->publishes(
+                [$viewFolder => base_path("resources/views/vendor/{$this->getIdentifier()}}")],
+                'views'
+            );
+        }
 
         return $this;
     }
@@ -60,9 +63,12 @@ abstract class BaseServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom($databaseFolder);
         }
-        $this->publishes([
-            $databaseFolder => database_path('migrations'),
-        ], 'migrations');
+
+        if (file_exists($databaseFolder)) {
+            $this->publishes([
+                $databaseFolder => database_path('migrations'),
+            ], 'migrations');
+        }
 
         return $this;
     }

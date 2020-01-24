@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Laravolt\Camunda;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
-{
-    public function register()
-    {
-        $this->mergeConfigFrom(realpath(__DIR__.'/../config/camunda.php'), 'laravolt.camunda');
-    }
+use Laravolt\Support\Base\BaseServiceProvider;
 
-    public function boot()
+class ServiceProvider extends BaseServiceProvider
+{
+    public function getIdentifier()
     {
+        return 'camunda';
     }
 }
