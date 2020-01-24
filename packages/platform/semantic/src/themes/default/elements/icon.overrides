@@ -1,5 +1,5 @@
 /*
-* Font Awesome 5.9.0 by @fontawesome [https://fontawesome.com]
+* Font Awesome 5.12.0 by @fontawesome [https://fontawesome.com]
 * License - https://fontawesome.com/license (Icons: CC BY 4.0 License, Fonts: SIL OFL 1.1 License, CSS: MIT License)
 */
 
@@ -64,10 +64,10 @@ i.icon.angle.double.down:before { content: "\f103"; }
 i.icon.angle.double.left:before { content: "\f100"; }
 i.icon.angle.double.right:before { content: "\f101"; }
 i.icon.angle.double.up:before { content: "\f102"; }
+i.icon.angle.down:before { content: "\f107"; }
 i.icon.angle.left:before { content: "\f104"; }
 i.icon.angle.right:before { content: "\f105"; }
 i.icon.angle.up:before { content: "\f106"; }
-i.icon.angle.down:before { content: "\f107"; }
 i.icon.angry:before { content: "\f556"; }
 i.icon.ankh:before { content: "\f644"; }
 i.icon.archive:before { content: "\f187"; }
@@ -80,10 +80,10 @@ i.icon.arrow.circle.down:before { content: "\f0ab"; }
 i.icon.arrow.circle.left:before { content: "\f0a8"; }
 i.icon.arrow.circle.right:before { content: "\f0a9"; }
 i.icon.arrow.circle.up:before { content: "\f0aa"; }
-i.icon.arrow.down:before { content: "\f063"; }
 i.icon.arrow.left:before { content: "\f060"; }
 i.icon.arrow.right:before { content: "\f061"; }
 i.icon.arrow.up:before { content: "\f062"; }
+i.icon.arrow.down:before { content: "\f063"; }
 i.icon.arrows.alternate:before { content: "\f0b2"; }
 i.icon.arrows.alternate.horizontal:before { content: "\f337"; }
 i.icon.arrows.alternate.vertical:before { content: "\f338"; }
@@ -99,6 +99,7 @@ i.icon.baby.carriage:before { content: "\f77d"; }
 i.icon.backspace:before { content: "\f55a"; }
 i.icon.backward:before { content: "\f04a"; }
 i.icon.bacon:before { content: "\f7e5"; }
+i.icon.bahai:before { content: "\f666"; }
 i.icon.balance.scale:before { content: "\f24e"; }
 i.icon.balance.scale.left:before { content: "\f515"; }
 i.icon.balance.scale.right:before { content: "\f516"; }
@@ -183,6 +184,7 @@ i.icon.car.alternate:before { content: "\f5de"; }
 i.icon.car.battery:before { content: "\f5df"; }
 i.icon.car.crash:before { content: "\f5e1"; }
 i.icon.car.side:before { content: "\f5e4"; }
+i.icon.caravan:before { content: "\f8ff"; }
 i.icon.caret.down:before { content: "\f0d7"; }
 i.icon.caret.left:before { content: "\f0d9"; }
 i.icon.caret.right:before { content: "\f0da"; }
@@ -267,6 +269,7 @@ i.icon.comments.dollar:before { content: "\f653"; }
 i.icon.compact.disc:before { content: "\f51f"; }
 i.icon.compass:before { content: "\f14e"; }
 i.icon.compress:before { content: "\f066"; }
+i.icon.compress.alternate:before { content: "\f422"; }
 i.icon.compress.arrows.alternate:before { content: "\f78c"; }
 i.icon.concierge.bell:before { content: "\f562"; }
 i.icon.cookie:before { content: "\f563"; }
@@ -343,6 +346,7 @@ i.icon.exclamation:before { content: "\f12a"; }
 i.icon.exclamation.circle:before { content: "\f06a"; }
 i.icon.exclamation.triangle:before { content: "\f071"; }
 i.icon.expand:before { content: "\f065"; }
+i.icon.expand.alternate:before { content: "\f424"; }
 i.icon.expand.arrows.alternate:before { content: "\f31e"; }
 i.icon.external.alternate:before { content: "\f35d"; }
 i.icon.external.link.square.alternate:before { content: "\f360"; }
@@ -476,8 +480,9 @@ i.icon.handshake:before { content: "\f2b5"; }
 i.icon.hanukiah:before { content: "\f6e6"; }
 i.icon.hard.hat:before { content: "\f807"; }
 i.icon.hashtag:before { content: "\f292"; }
+i.icon.hat.cowboy:before { content: "\f8c0"; }
+i.icon.hat.cowboy.side:before { content: "\f8c1"; }
 i.icon.hat.wizard:before { content: "\f6e8"; }
-i.icon.haykal:before { content: "\f666"; }
 i.icon.hdd:before { content: "\f0a0"; }
 i.icon.heading:before { content: "\f1dc"; }
 i.icon.headphones:before { content: "\f025"; }
@@ -620,6 +625,7 @@ i.icon.mortar.pestle:before { content: "\f5a7"; }
 i.icon.mosque:before { content: "\f678"; }
 i.icon.motorcycle:before { content: "\f21c"; }
 i.icon.mountain:before { content: "\f6fc"; }
+i.icon.mouse:before { content: "\f8cc"; }
 i.icon.mouse.pointer:before { content: "\f245"; }
 i.icon.mug.hot:before { content: "\f7b6"; }
 i.icon.music:before { content: "\f001"; }
@@ -713,6 +719,7 @@ i.icon.radiation.alternate:before { content: "\f7ba"; }
 i.icon.rainbow:before { content: "\f75b"; }
 i.icon.random:before { content: "\f074"; }
 i.icon.receipt:before { content: "\f543"; }
+i.icon.record.vinyl:before { content: "\f8d9"; }
 i.icon.recycle:before { content: "\f1b8"; }
 i.icon.redo:before { content: "\f01e"; }
 i.icon.redo.alternate:before { content: "\f2f9"; }
@@ -907,6 +914,7 @@ i.icon.torii.gate:before { content: "\f6a1"; }
 i.icon.tractor:before { content: "\f722"; }
 i.icon.trademark:before { content: "\f25c"; }
 i.icon.traffic.light:before { content: "\f637"; }
+i.icon.trailer:before { content: "\f941"; }
 i.icon.train:before { content: "\f238"; }
 i.icon.tram:before { content: "\f7da"; }
 i.icon.transgender:before { content: "\f224"; }
@@ -1544,6 +1552,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.btc:before { content: "\f15a"; font-family: @brandFontName; }
   i.icon.buffer:before { content: "\f837"; font-family: @brandFontName; }
   i.icon.buromobelexperte:before { content: "\f37f"; font-family: @brandFontName; }
+  i.icon.buy.n.large:before { content: "\f8a6"; font-family: @brandFontName; }
   i.icon.buysellads:before { content: "\f20d"; font-family: @brandFontName; }
   i.icon.canadian.maple.leaf:before { content: "\f785"; font-family: @brandFontName; }
   i.icon.cc.amazon.pay:before { content: "\f42d"; font-family: @brandFontName; }
@@ -1568,6 +1577,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.confluence:before { content: "\f78d"; font-family: @brandFontName; }
   i.icon.connectdevelop:before { content: "\f20e"; font-family: @brandFontName; }
   i.icon.contao:before { content: "\f26d"; font-family: @brandFontName; }
+  i.icon.cotton.bureau:before { content: "\f89e"; font-family: @brandFontName; }
   i.icon.cpanel:before { content: "\f388"; font-family: @brandFontName; }
   i.icon.creative.commons:before { content: "\f25e"; font-family: @brandFontName; }
   i.icon.creative.commons.by:before { content: "\f4e7"; font-family: @brandFontName; }
@@ -1631,6 +1641,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.fedora:before { content: "\f798"; font-family: @brandFontName; }
   i.icon.figma:before { content: "\f799"; font-family: @brandFontName; }
   i.icon.firefox:before { content: "\f269"; font-family: @brandFontName; }
+  i.icon.firefox.browser:before { content: "\f907"; font-family: @brandFontName; }
   i.icon.first.order:before { content: "\f2b0"; font-family: @brandFontName; }
   i.icon.first.order.alternate:before { content: "\f50a"; font-family: @brandFontName; }
   i.icon.firstdraft:before { content: "\f3a1"; font-family: @brandFontName; }
@@ -1691,6 +1702,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.houzz:before { content: "\f27c"; font-family: @brandFontName; }
   i.icon.html5:before { content: "\f13b"; font-family: @brandFontName; }
   i.icon.hubspot:before { content: "\f3b2"; font-family: @brandFontName; }
+  i.icon.ideal:before { content: "\f913"; font-family: @brandFontName; }
   i.icon.imdb:before { content: "\f2d8"; font-family: @brandFontName; }
   i.icon.instagram:before { content: "\f16d"; font-family: @brandFontName; }
   i.icon.intercom:before { content: "\f7af"; font-family: @brandFontName; }
@@ -1732,6 +1744,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.markdown:before { content: "\f60f"; font-family: @brandFontName; }
   i.icon.mastodon:before { content: "\f4f6"; font-family: @brandFontName; }
   i.icon.maxcdn:before { content: "\f136"; font-family: @brandFontName; }
+  i.icon.mdb:before { content: "\f8ca"; font-family: @brandFontName; }
   i.icon.medapps:before { content: "\f3c6"; font-family: @brandFontName; }
   i.icon.medium:before { content: "\f23a"; font-family: @brandFontName; }
   i.icon.medium.m:before { content: "\f3c7"; font-family: @brandFontName; }
@@ -1739,6 +1752,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.meetup:before { content: "\f2e0"; font-family: @brandFontName; }
   i.icon.megaport:before { content: "\f5a3"; font-family: @brandFontName; }
   i.icon.mendeley:before { content: "\f7b3"; font-family: @brandFontName; }
+  i.icon.microblog:before { content: "\f91a"; font-family: @brandFontName; }
   i.icon.microsoft:before { content: "\f3ca"; font-family: @brandFontName; }
   i.icon.mix:before { content: "\f3cb"; font-family: @brandFontName; }
   i.icon.mixcloud:before { content: "\f289"; font-family: @brandFontName; }
@@ -1760,6 +1774,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.openid:before { content: "\f19b"; font-family: @brandFontName; }
   i.icon.opera:before { content: "\f26a"; font-family: @brandFontName; }
   i.icon.optin.monster:before { content: "\f23c"; font-family: @brandFontName; }
+  i.icon.orcid:before { content: "\f8d2"; font-family: @brandFontName; }
   i.icon.osi:before { content: "\f41a"; font-family: @brandFontName; }
   i.icon.page4:before { content: "\f3d7"; font-family: @brandFontName; }
   i.icon.pagelines:before { content: "\f18c"; font-family: @brandFontName; }
@@ -1776,6 +1791,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.pied.piper.alternate:before { content: "\f1a8"; font-family: @brandFontName; }
   i.icon.pied.piper.hat:before { content: "\f4e5"; font-family: @brandFontName; }
   i.icon.pied.piper.pp:before { content: "\f1a7"; font-family: @brandFontName; }
+  i.icon.pied.piper.square:before { content: "\f91e"; font-family: @brandFontName; }
   i.icon.pinterest:before { content: "\f0d2"; font-family: @brandFontName; }
   i.icon.pinterest.p:before { content: "\f231"; font-family: @brandFontName; }
   i.icon.pinterest.square:before { content: "\f0d3"; font-family: @brandFontName; }
@@ -1852,6 +1868,7 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.superpowers:before { content: "\f2dd"; font-family: @brandFontName; }
   i.icon.supple:before { content: "\f3f9"; font-family: @brandFontName; }
   i.icon.suse:before { content: "\f7d6"; font-family: @brandFontName; }
+  i.icon.swift:before { content: "\f8e1"; font-family: @brandFontName; }
   i.icon.symfony:before { content: "\f83d"; font-family: @brandFontName; }
   i.icon.teamspeak:before { content: "\f4f9"; font-family: @brandFontName; }
   i.icon.telegram:before { content: "\f2c6"; font-family: @brandFontName; }
@@ -1872,7 +1889,9 @@ i.icon.zoom.out:before { content: "\f010"; }
   i.icon.uber:before { content: "\f402"; font-family: @brandFontName; }
   i.icon.ubuntu:before { content: "\f7df"; font-family: @brandFontName; }
   i.icon.uikit:before { content: "\f403"; font-family: @brandFontName; }
+  i.icon.umbraco:before { content: "\f8e8"; font-family: @brandFontName; }
   i.icon.uniregistry:before { content: "\f404"; font-family: @brandFontName; }
+  i.icon.unity:before { content: "\f949"; font-family: @brandFontName; }
   i.icon.untappd:before { content: "\f405"; font-family: @brandFontName; }
   i.icon.ups:before { content: "\f7e0"; font-family: @brandFontName; }
   i.icon.usb:before { content: "\f287"; font-family: @brandFontName; }
