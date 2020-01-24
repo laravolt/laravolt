@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class PackageServiceProvider
+ * Class PackageServiceProvider.
  *
- * @package Laravolt\Ui
  * @see http://laravel.com/docs/master/packages#service-providers
  * @see http://laravel.com/docs/master/providers
  */

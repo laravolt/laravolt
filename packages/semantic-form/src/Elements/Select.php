@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -96,7 +98,7 @@ class Select extends FormControl
         foreach ($options as $value => $label) {
             $result .= $this->renderOption($value, $label);
         }
-        $result .= "</optgroup>";
+        $result .= '</optgroup>';
 
         return $result;
     }

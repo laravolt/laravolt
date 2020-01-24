@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\OldInput;
+<?php
+
+namespace Laravolt\SemanticForm\OldInput;
 
 use Illuminate\Session\Store as Session;
 
@@ -13,7 +15,7 @@ class IlluminateOldInputProvider implements OldInputInterface
 
     public function hasOldInput()
     {
-        return ($this->session->get('_old_input')) ? true : false ;
+        return ($this->session->get('_old_input')) ? true : false;
     }
 
     public function getOldInput($key)
@@ -23,6 +25,6 @@ class IlluminateOldInputProvider implements OldInputInterface
 
     protected function transformKey($key)
     {
-        return str_replace(array('.', '[]', '[', ']'), array('_', '', '.', ''), $key);
+        return str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $key);
     }
 }

@@ -17,11 +17,11 @@ class ModuleController extends Controller
     public function index()
     {
         $modules = \Laravolt\Workflow\Models\Module::all()->sort(function ($a, $b) {
-            if (! $a->process_definition_key) {
+            if (!$a->process_definition_key) {
                 return 1;
             }
 
-            if (! $b->process_definition_key) {
+            if (!$b->process_definition_key) {
                 return -1;
             }
 

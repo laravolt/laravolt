@@ -2,8 +2,8 @@
 
 namespace Laravolt\Suitable;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 trait AutoSort
 {
@@ -27,12 +27,12 @@ trait AutoSort
                     $ownerKey = $relation->getQualifiedOwnerKeyName();
                 } else {
                     $foreignKey = $relation->getForeignKey();
-                    $ownerKey = $table.".".$relation->getOwnerKey();
+                    $ownerKey = $table.'.'.$relation->getOwnerKey();
                 }
 
                 $query->select($this->getTable().'.*');
                 $query->join($table, $foreignKey, '=', $ownerKey);
-                $query->orderBy($table.".".$column, $direction);
+                $query->orderBy($table.'.'.$column, $direction);
             } else {
                 $query->orderBy($column, $direction);
             }

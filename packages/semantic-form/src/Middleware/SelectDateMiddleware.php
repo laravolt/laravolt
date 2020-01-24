@@ -10,13 +10,13 @@ class SelectDateMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-
         $fields = array_slice(func_get_args(), 2);
 
         foreach ($fields as $field) {

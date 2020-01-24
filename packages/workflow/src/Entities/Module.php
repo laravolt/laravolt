@@ -46,7 +46,7 @@ class Module extends DataTransferObject
         $module = config("workflow-modules.$id");
         $table = $module['table'] ?? null;
 
-        if (! $module) {
+        if (!$module) {
             if (config('app.debug')) {
                 throw new \DomainException("File config config/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul.");
             }

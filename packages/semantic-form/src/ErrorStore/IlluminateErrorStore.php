@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\ErrorStore;
+<?php
+
+namespace Laravolt\SemanticForm\ErrorStore;
 
 use Illuminate\Session\Store as Session;
 
@@ -13,21 +15,23 @@ class IlluminateErrorStore implements ErrorStoreInterface
 
     public function hasError($key)
     {
-        if (! $this->hasErrors()) {
+        if (!$this->hasErrors()) {
             return false;
         }
 
         $key = $this->transformKey($key);
+
         return $this->getErrors()->has($key);
     }
 
     public function getError($key)
     {
-        if (! $this->hasError($key)) {
+        if (!$this->hasError($key)) {
             return null;
         }
 
         $key = $this->transformKey($key);
+
         return $this->getErrors()->first($key);
     }
 
@@ -43,6 +47,6 @@ class IlluminateErrorStore implements ErrorStoreInterface
 
     protected function transformKey($key)
     {
-        return str_replace(array('.', '[]', '[', ']'), array('_', '', '.', ''), $key);
+        return str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $key);
     }
 }

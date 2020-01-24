@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
 

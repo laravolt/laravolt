@@ -26,6 +26,7 @@ class ForgotPasswordController extends Controller
 
     /**
      * Create a new controller instance.
+     *
      * @return void
      */
     public function __construct()
@@ -35,6 +36,7 @@ class ForgotPasswordController extends Controller
 
     /**
      * Display the form to request a password reset link.
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -47,8 +49,9 @@ class ForgotPasswordController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {

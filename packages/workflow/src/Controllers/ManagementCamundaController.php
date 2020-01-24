@@ -5,13 +5,13 @@ namespace Laravolt\Workflow\Controllers;
 use DB;
 use Http\Client\Exception;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Excel;
 use Illuminate\Routing\Controller;
 use Laravolt\Workflow\Models\CamundaForm;
-use Laravolt\Workflow\Traits\DataRetrieval;
-use Laravolt\Workflow\Services\FormFieldsExport;
 use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
+use Laravolt\Workflow\Services\FormFieldsExport;
 use Laravolt\Workflow\TableView\ManagementCamundaTableView;
+use Laravolt\Workflow\Traits\DataRetrieval;
+use Maatwebsite\Excel\Excel;
 
 class ManagementCamundaController extends Controller
 {
@@ -46,7 +46,7 @@ class ManagementCamundaController extends Controller
         $attributes = [];
         if ($request->visibility) {
             foreach ($request->visibility as $field) {
-                array_push($attributes, $field['field_name'] . "=='" . $field['field_value'] . "'");
+                array_push($attributes, $field['field_name']."=='".$field['field_value']."'");
             }
             $field_meta['attributes'] = ['v-show' => implode(' && ', $attributes)];
         }
@@ -105,7 +105,7 @@ class ManagementCamundaController extends Controller
         $attributes = [];
         if ($request->visibility) {
             foreach ($request->visibility as $field) {
-                array_push($attributes, $field['field_name'] . "=='" . $field['field_value'] . "'");
+                array_push($attributes, $field['field_name']."=='".$field['field_value']."'");
             }
             $field_meta['attributes'] = ['v-show' => implode(' && ', $attributes)];
         }

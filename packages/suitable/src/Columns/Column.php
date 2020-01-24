@@ -33,7 +33,7 @@ abstract class Column
         $this->header = $header;
     }
 
-    static public function make($field, $header = null)
+    public static function make($field, $header = null)
     {
         if ($header === null && is_string($field)) {
             $header = str_replace('_', ' ', Str::title($field));

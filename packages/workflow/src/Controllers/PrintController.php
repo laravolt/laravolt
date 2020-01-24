@@ -49,10 +49,10 @@ class PrintController extends Controller
     protected function generateTemplateJasper($template, $processInstance)
     {
         $path = $template->body;
-        $path = '/reports/' . ltrim($path, '/');
+        $path = '/reports/'.ltrim($path, '/');
         $format = request('format', 'pdf');
 
-        $path = sprintf("%s.%s", $path, $format);
+        $path = sprintf('%s.%s', $path, $format);
         $jasper = app(Jasper::class);
         $queryString['process_instance_id'] = $processInstance->id;
 
@@ -62,13 +62,13 @@ class PrintController extends Controller
         $storagePath = sprintf('app/public/%s', $assetPath);
         $directory = dirname(storage_path($storagePath));
 
-        if (! is_dir($directory)) {
+        if (!is_dir($directory)) {
             \File::makeDirectory($directory, 0755, true);
         }
 
         \File::put(storage_path($storagePath), (string) $response);
 
-        return 'storage/' . $assetPath;
+        return 'storage/'.$assetPath;
     }
 
     protected function generateTemplateStandard($template, $processInstance)
@@ -101,13 +101,13 @@ class PrintController extends Controller
         $storagePath = sprintf('app/public/%s', $assetPath);
         $directory = dirname(storage_path($storagePath));
 
-        if (! is_dir($directory)) {
+        if (!is_dir($directory)) {
             \File::makeDirectory($directory, 0755, true);
         }
 
         $document->saveAs(storage_path($storagePath));
 
-        return 'storage/' . $assetPath;
+        return 'storage/'.$assetPath;
 
         // download file
         // $tempFile = $template->save("php://output");

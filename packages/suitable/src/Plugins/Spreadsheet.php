@@ -21,7 +21,8 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     /**
      * Spreadsheet constructor.
-     * @param  string  $filename
+     *
+     * @param string $filename
      */
     public function __construct(string $filename)
     {

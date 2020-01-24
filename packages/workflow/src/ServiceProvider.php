@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Laravolt\Workflow\Console\Commands\Import;
 use Laravolt\Workflow\Console\Commands\MakeCommand;
-use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Console\Commands\SyncModule;
+use Laravolt\Workflow\Entities\Module;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(realpath(__DIR__ . '/../config/workflow.php'), 'laravolt.workflow');
+        $this->mergeConfigFrom(realpath(__DIR__.'/../config/workflow.php'), 'laravolt.workflow');
 
         $this->app->singleton('laravolt.workflow', \Laravolt\Workflow\Contracts\Workflow::class);
         $this->app->bind(\Laravolt\Workflow\Contracts\Workflow::class, function () {
@@ -64,7 +64,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if (config('laravolt.workflow.routes.enabled')) {
             $router = $this->app['router'];
-            require __DIR__ . '/../routes/web.php';
+            require __DIR__.'/../routes/web.php';
         }
 
         return $this;
@@ -72,15 +72,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootTranslations()
     {
-        $this->loadTranslationsFrom(realpath(__DIR__ . '/../resources/lang'), 'workflow');
+        $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'workflow');
 
         return $this;
     }
 
     protected function bootViews()
     {
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'workflow');
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views/managementcamunda'), 'managementcamunda');
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'workflow');
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/managementcamunda'), 'managementcamunda');
         $this->loadViewsFrom(storage_path('surat-compiled'), 'surat-compiled');
 
         return $this;
@@ -101,7 +101,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $module = config("workflow-modules.$id");
             $table = $module['table'] ?? null;
 
-            if (! $module) {
+            if (!$module) {
                 if (config('app.debug')) {
                     throw new \DomainException("File config config/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul.");
                 }
@@ -119,7 +119,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootMigrations()
     {
-        $path = realpath(__DIR__ . '/../database/migrations');
+        $path = realpath(__DIR__.'/../database/migrations');
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom($path);
         }

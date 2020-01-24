@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Label extends Element
 {
@@ -23,7 +25,7 @@ class Label extends Element
 
         $result .= $this->renderElement();
 
-        if (! $this->labelBefore) {
+        if (!$this->labelBefore) {
             $result .= $this->text;
         }
 
@@ -35,6 +37,7 @@ class Label extends Element
     public function forId($name)
     {
         $this->setAttribute('for', $name);
+
         return $this;
     }
 
@@ -42,6 +45,7 @@ class Label extends Element
     {
         $this->element = $element;
         $this->labelBefore = true;
+
         return $this;
     }
 
@@ -49,12 +53,13 @@ class Label extends Element
     {
         $this->element = $element;
         $this->labelBefore = false;
+
         return $this;
     }
 
     protected function renderElement()
     {
-        if (! $this->element) {
+        if (!$this->element) {
             return '';
         }
 

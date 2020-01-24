@@ -14,18 +14,21 @@ class MakeCommand extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'workflow:make';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Create new workflow module';
 
     /**
      * Execute the console command.
+     *
      * @return mixed
      */
     public function handle()
@@ -46,6 +49,7 @@ class MakeCommand extends Command
         do {
             $processDefinitionKey = $this->ask('Process definition key, sesuai yang terdaftar di camunda');
             $processDefinition = null;
+
             try {
                 $processDefinition = ProcessDefinition::byKey($processDefinitionKey)->fetch();
             } catch (ClientException $e) {
@@ -53,15 +57,15 @@ class MakeCommand extends Command
             }
         } while ($processDefinition === null);
 
-        $stub = __DIR__ . '/../../../stubs/config.php';
+        $stub = __DIR__.'/../../../stubs/config.php';
         $targetDir = dirname($target);
 
         $content = File::get($stub);
         foreach (['name', 'processDefinitionKey'] as $var) {
-            $content = str_replace('$' . $var, $$var, $content);
+            $content = str_replace('$'.$var, $$var, $content);
         }
 
-        if (! is_dir($targetDir)) {
+        if (!is_dir($targetDir)) {
             File::makeDirectory($targetDir);
         }
 

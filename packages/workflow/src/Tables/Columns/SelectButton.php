@@ -37,7 +37,7 @@ class SelectButton extends Column implements ColumnInterface
             $payload = collect($cell);
         }
 
-        if (! empty($this->fillable)) {
+        if (!empty($this->fillable)) {
             $payload = $payload->only($this->fillable);
         }
 

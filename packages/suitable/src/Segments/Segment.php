@@ -12,6 +12,7 @@ class Segment
 
     /**
      * Segment constructor.
+     *
      * @param $key
      */
     public function __construct($key)
@@ -38,7 +39,9 @@ class Segment
 
     /**
      * @param $toolbar
+     *
      * @return $this
+     *
      * @deprecated
      */
     public function addLeft($toolbar)
@@ -69,7 +72,9 @@ class Segment
 
     /**
      * @param $toolbar
+     *
      * @return $this
+     *
      * @deprecated
      */
     public function addRight($toolbar)

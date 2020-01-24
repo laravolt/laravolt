@@ -88,14 +88,14 @@ class Menu extends Model implements Sortable
 
     public static function toFlatSelect()
     {
-        $result = (new static)->ordered()->withDepth()->get()->toFlatTree();
+        $result = (new static())->ordered()->withDepth()->get()->toFlatTree();
 
         return collect($result)->pluck('label_prefixed', 'id')->toArray();
     }
 
     public static function toStructuredArray()
     {
-        $menu = (new static)->with('children.children')->ordered()->whereNull('parent_id')->withDepth()->get();
+        $menu = (new static())->with('children.children')->ordered()->whereNull('parent_id')->withDepth()->get();
         $structuredArray = [];
         foreach ($menu as $m) {
             if ($m->children->isEmpty()) {
@@ -128,7 +128,7 @@ class Menu extends Model implements Sortable
     public function getLabelPrefixedAttribute()
     {
         if ($this->depth) {
-            return str_repeat('----', $this->depth) . ' ' . $this->label;
+            return str_repeat('----', $this->depth).' '.$this->label;
         }
 
         return $this->label;
@@ -139,7 +139,7 @@ class Menu extends Model implements Sortable
         return [
             'url' => url($this->url),
             'data' => [
-                'icon' => $this->icon . ' ' . $this->color,
+                'icon' => $this->icon.' '.$this->color,
                 'permission' => $this->permission,
                 'roles' => $this->roles,
             ],

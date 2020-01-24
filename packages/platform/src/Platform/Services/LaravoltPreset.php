@@ -13,6 +13,7 @@ class LaravoltPreset extends Preset
 {
     /**
      * Install the preset.
+     *
      * @return void
      */
     public static function install()
@@ -64,7 +65,7 @@ class LaravoltPreset extends Preset
 
         foreach ($entries as $file => $lines) {
             foreach ($lines as $line) {
-                file_put_contents($file, $line . "\n", FILE_APPEND);
+                file_put_contents($file, $line."\n", FILE_APPEND);
             }
         }
     }

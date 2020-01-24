@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Comma\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -17,5 +18,4 @@ class Tag extends Model
     {
         return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
     }
-
 }

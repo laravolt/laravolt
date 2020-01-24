@@ -8,6 +8,7 @@ class Search extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 
     /**
      * Title constructor.
+     *
      * @param string $name
      */
     public function __construct(string $name)
@@ -15,7 +16,7 @@ class Search extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
         $this->name = $name;
     }
 
-    static public function make($name)
+    public static function make($name)
     {
         $toolbar = new static($name);
 

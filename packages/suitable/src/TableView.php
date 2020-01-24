@@ -46,7 +46,7 @@ abstract class TableView implements Responsable
         $source = $this->getSource();
         $table = app('laravolt.suitable')->source($this->html->resolve($source));
 
-        if (is_string($this->title) && $this->title !== "") {
+        if (is_string($this->title) && $this->title !== '') {
             $table->title($this->title);
         }
 

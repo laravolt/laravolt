@@ -133,7 +133,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
     public function testCanSetPlaceholder()
     {
         $input = new InputWrapper();
-        $input->placeholder("Fullname...");
+        $input->placeholder('Fullname...');
 
         $expected = '<div class="ui input"><input type="text" name="" placeholder="Fullname..."></div>';
         $result = $input->render();

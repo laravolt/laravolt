@@ -17,7 +17,7 @@ class FieldCollection extends Collection
 {
     protected $fieldMethod = [
         'api', 'ajax', 'query', 'fieldLabel', 'fieldAttributes', 'limit', 'extensions', 'placeholder', 'value',
-        'readonly', 'required'
+        'readonly', 'required',
     ];
 
     public function __construct($fields = [])
@@ -128,7 +128,7 @@ class FieldCollection extends Collection
                 break;
 
             case 'segment':
-                $element = new Segments(new SegmentTitle($field['label']), new FieldCollection($field['items']));
+                $element = new Segments(new SegmentTitle($field['label']), new self($field['items']));
                 break;
 
             case 'html':
@@ -157,7 +157,7 @@ class FieldCollection extends Collection
 
     public function render()
     {
-        $form = "";
+        $form = '';
         foreach ($this->items as $item) {
             $form .= (string) $item;
         }
@@ -172,25 +172,25 @@ class FieldCollection extends Collection
         });
 
         $table = "<table class='ui definition table'>";
-        $table .= "<tbody>";
+        $table .= '<tbody>';
 
         $i = 0;
         foreach ($items as $item) {
             $i++;
             if ($item instanceof Segments) {
-                $table .= "</tbody>";
-                $table .= "</table>";
+                $table .= '</tbody>';
+                $table .= '</table>';
             }
 
             $table .= $item->display();
 
             if ($item instanceof Segments && $i < count($items)) {
                 $table .= "<table class='ui definition table'>";
-                $table .= "<tbody>";
+                $table .= '<tbody>';
             }
         }
-        $table .= "</tbody>";
-        $table .= "</table>";
+        $table .= '</tbody>';
+        $table .= '</table>';
 
         return $table;
     }

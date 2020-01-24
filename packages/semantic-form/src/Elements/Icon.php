@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Icon extends Element
 {
@@ -8,6 +10,7 @@ class Icon extends Element
 
     /**
      * Icon constructor.
+     *
      * @param string icon name
      */
     public function __construct($icon)

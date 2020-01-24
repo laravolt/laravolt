@@ -3,7 +3,6 @@
 namespace Laravolt\Mailkeeper;
 
 use Illuminate\Console\Command;
-use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Mail\Message;
 
 class SendMailCommand extends Command
@@ -41,7 +40,7 @@ class SendMailCommand extends Command
         $take = config('laravolt.mailkeeper.take');
         $mails = Mail::take($take)->get();
 
-        $this->info(sprintf("Sending %d emails...", $mails->count()));
+        $this->info(sprintf('Sending %d emails...', $mails->count()));
         foreach ($mails as $mail) {
             try {
                 \Illuminate\Support\Facades\Mail::send([], [], function (Message $message) use ($mail) {
@@ -76,6 +75,6 @@ class SendMailCommand extends Command
             }
         }
 
-        $this->info("Finished");
+        $this->info('Finished');
     }
 }

@@ -16,7 +16,7 @@ class Label extends Column implements ColumnInterface
     {
         $label = $cell->{$this->field};
         if ($label) {
-            $class = implode(" ", $this->labelClass);
+            $class = implode(' ', $this->labelClass);
 
             foreach (($this->labelClassIf[$label] ?? []) as $additionalClass) {
                 $class .= " $additionalClass";

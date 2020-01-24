@@ -10,7 +10,6 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  * Place the line below in the providers array inside app/config/app.php
  * <code>'Laravolt\Packer\PackerServiceProvider',</code>
  *
- * @package Packer
  * @author uyab
  *
  **/
@@ -29,7 +28,7 @@ class ServiceProvider extends BaseServiceProvider
      * @var bool
      */
     protected $commands = [
-        'Laravolt\Thunderclap\Commands\Generator'
+        'Laravolt\Thunderclap\Commands\Generator',
     ];
 
     /**
@@ -53,9 +52,10 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register the package configurations
+     * Register the package configurations.
      *
      * @see http://laravel.com/docs/5.1/packages#configuration
+     *
      * @return void
      */
     protected function registerConfigurations()
@@ -69,13 +69,14 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Loads a path relative to the package base directory
+     * Loads a path relative to the package base directory.
      *
      * @param string $path
+     *
      * @return string
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 }

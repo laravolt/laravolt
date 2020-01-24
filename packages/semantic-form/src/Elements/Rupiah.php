@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Rupiah extends InputWrapper
 {
@@ -12,6 +14,6 @@ class Rupiah extends InputWrapper
 
     public function displayValue()
     {
-        return 'Rp' . number_format($this->getPrimaryControl()->displayValue(), 0, ',', '.');
+        return 'Rp'.number_format($this->getPrimaryControl()->displayValue(), 0, ',', '.');
     }
 }

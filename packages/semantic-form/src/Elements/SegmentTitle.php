@@ -30,7 +30,6 @@ class SegmentTitle extends Wrapper
 
         $element->beforeRender();
 
-
         $html = '';
         foreach ($element->controls as $control) {
             $html .= sprintf(static::$template, $control);

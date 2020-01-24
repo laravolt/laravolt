@@ -103,6 +103,7 @@ class Tabular extends Element
                 $newField = $copier->copy($field);
                 $newField->bindAttribute('name', $i);
                 $newField->populateValue($data);
+
                 return $newField;
             });
         }

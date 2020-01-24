@@ -3,10 +3,10 @@
 namespace Laravolt\Suitable\Columns;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class RestfulButton extends Column implements ColumnInterface
 {
@@ -22,6 +22,7 @@ class RestfulButton extends Column implements ColumnInterface
 
     /**
      * RestfulButton constructor.
+     *
      * @param $baseRoute
      */
     public function __construct($baseRoute, $header = null)
@@ -31,7 +32,7 @@ class RestfulButton extends Column implements ColumnInterface
         $this->deleteConfirmation = config('suitable.restul_button.delete_message');
     }
 
-    static public function make($baseRoute, $header = null)
+    public static function make($baseRoute, $header = null)
     {
         $column = new static($baseRoute, $header);
         $column->id = Str::snake($header);

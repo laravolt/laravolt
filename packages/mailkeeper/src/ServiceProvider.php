@@ -6,8 +6,7 @@ use Illuminate\Mail\MailServiceProvider;
 use Swift_Mailer;
 
 /**
- * Class PackageServiceProvider
-
+ * Class PackageServiceProvider.
  */
 class ServiceProvider extends MailServiceProvider
 {
@@ -15,6 +14,7 @@ class ServiceProvider extends MailServiceProvider
 
     /**
      * Register the service provider.
+     *
      * @return void
      */
     public function registerSwiftMailer()
@@ -29,7 +29,8 @@ class ServiceProvider extends MailServiceProvider
     }
 
     /**
-     * Application is booting
+     * Application is booting.
+     *
      * @return void
      */
     public function boot()
@@ -45,7 +46,8 @@ class ServiceProvider extends MailServiceProvider
         $this->registerCommands();
     }
 
-    private function registerDbMailer() {
+    private function registerDbMailer()
+    {
         $this->app->singleton('swift.mailer', function () {
             return new Swift_Mailer(new DbTransport());
         });

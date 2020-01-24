@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Coordinate extends Text
 {
@@ -26,7 +28,7 @@ class Coordinate extends Text
 
     protected function beforeRender()
     {
-        \Stolz\Assets\Laravel\Facade::addJs('http://maps.google.com/maps/api/js?sensor=false&key=' . $this->apiKey);
+        \Stolz\Assets\Laravel\Facade::addJs('http://maps.google.com/maps/api/js?sensor=false&key='.$this->apiKey);
 
         return true;
     }

@@ -10,7 +10,7 @@ class DbFormatterFactory
     {
         $type = ucfirst($type);
         $formatter = "\\Laravolt\\Workflow\\FieldFormatter\\Db\\{$type}Formatter";
-        if (! class_exists($formatter)) {
+        if (!class_exists($formatter)) {
             $formatter = StringFormatter::class;
         }
         $formatter = new $formatter();

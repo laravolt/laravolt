@@ -1,8 +1,9 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Button extends FormControl
 {
-
     protected $attributes = [
         'type'  => 'button',
         'class' => 'ui button',
