@@ -2,6 +2,7 @@ preset: recommended
 
 enabled:
   - concat_with_spaces
+  - binary_operator_spaces
 
 disabled:
   - align_double_arrow
