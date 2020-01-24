@@ -14,26 +14,39 @@ class Import extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
-    protected $signature = 'workflow:import {processDefinitionKey}';
+    protected $signature = 'workflow:import {processDefinitionKey?}';
 
     /**
      * The console command description.
-     *
      * @var string
      */
-    protected $description = 'Import form definition dari file BPMN via REST API';
+    protected $description = 'Import BPMN via REST API to populate transactional table + form definition';
 
     /**
      * Execute the console command.
-     *
      * @return mixed
      */
     public function handle()
     {
-        $key = $this->argument('processDefinitionKey');
+        $keys = (array) $this->argument('processDefinitionKey');
+
+        if (empty($keys)) {
+            $modules = config('workflow-modules');
+            $keys = collect($modules)->unique('process_definition_key')->pluck('process_definition_key')->filter();
+        }
+
+        foreach ($keys as $key) {
+            $this->generateFormField($key);
+            $this->generateTable($key);
+        }
+
+        return true;
+    }
+
+    protected function generateFormField($key)
+    {
         $processDefinition = ProcessDefinition::byKey($key);
 
         $xml = new SimpleXMLElement($processDefinition->xml());
@@ -64,16 +77,12 @@ class Import extends Command
             }
         }
         $startEvents = $xml->xpath('//bpmn:startEvent');
-        $this->getField($startEvents, $key);
+        $this->generateField($startEvents, $key);
         $userTasks = $xml->xpath('//bpmn:userTask');
-        $this->getField($userTasks, $key);
-
-        $this->generateTable($key);
-
-        return true;
+        $this->generateField($userTasks, $key);
     }
 
-    protected function getField($nodes, $processDefKey)
+    protected function generateField($nodes, $processDefKey)
     {
         foreach ($nodes as $node) {
             $this->info('Task '.json_encode($node));
