@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Carbon\Carbon;
 
@@ -34,6 +36,7 @@ class Date extends Text
     public function displayValue()
     {
         $value = $this->getValue();
+
         try {
             return Carbon::createFromIsoFormat(static::$inputFormat, $value)->isoFormat(static::$displayFormat);
         } catch (\Exception $e) {

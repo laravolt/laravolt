@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Presenters;
 
-use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +12,7 @@ use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Camunda\Models\ProcessInstance;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\Form;
+use Laravolt\Workflow\Services\FormAdapter\FormAdapter;
 
 class StartForm
 {
@@ -110,16 +110,16 @@ class StartForm
                 ->open($this->url)
                 ->setHiddenMethod($this->method())
                 ->addClass(config('laravolt.workflow.form.class'))
-            . form()->hidden('_process_definition_key', $this->module->processDefinitionKey)
-            . form()->hidden('_task_name', $this->module->startTaskName)
-            . form()->make($formDefinition)
-            . form()->action(
+            .form()->hidden('_process_definition_key', $this->module->processDefinitionKey)
+            .form()->hidden('_task_name', $this->module->startTaskName)
+            .form()->make($formDefinition)
+            .form()->action(
                 [
                     form()->submit('<i class="icon send"></i>  Simpan'),
                     $this->backButton('Kembali'),
                 ]
             )
-            . form()->close();
+            .form()->close();
 
         return $output;
     }
@@ -166,7 +166,7 @@ class StartForm
 
     protected function getValues($formName)
     {
-        if (! $this->processInstance) {
+        if (!$this->processInstance) {
             return [];
         }
 

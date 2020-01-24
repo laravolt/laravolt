@@ -8,7 +8,6 @@ Route::group(
         'middleware' => config('laravolt.comma.route.middleware'),
     ],
     function () {
-
         Route::get('/', ['uses' => 'DefaultController@index', 'as' => 'index']);
 
         Route::get('posts/{collection}', ['uses' => 'PostController@index', 'as' => 'posts.index']);

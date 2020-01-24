@@ -16,7 +16,8 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     /**
      * Pdf constructor.
-     * @param  string  $filename
+     *
+     * @param string $filename
      */
     public function __construct(string $filename)
     {
@@ -51,5 +52,4 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
             ::loadView('suitable::layouts.pdf', ['table' => $table->render('suitable::table')])
             ->stream($this->filename);
     }
-
 }

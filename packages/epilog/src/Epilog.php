@@ -4,8 +4,8 @@ namespace Laravolt\Epilog;
 
 use Illuminate\Support\Arr;
 use Laravolt\Epilog\MonologParser\Reader\LogReader;
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 
 class Epilog
 {
@@ -30,7 +30,7 @@ class Epilog
             $path .= $year;
         }
         if ($month) {
-            $path .= DIRECTORY_SEPARATOR . $month;
+            $path .= DIRECTORY_SEPARATOR.$month;
         }
 
         return collect($this->filesystem->listContents($path, true))
@@ -46,7 +46,7 @@ class Epilog
             return [];
         }
 
-        $reader = new LogReader($this->basePath . DIRECTORY_SEPARATOR . $path);
+        $reader = new LogReader($this->basePath.DIRECTORY_SEPARATOR.$path);
         $levels = config('laravolt.epilog.levels');
         $logs = [];
         foreach ($reader as $line) {

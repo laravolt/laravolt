@@ -2,10 +2,8 @@
 
 namespace Laravolt\Support\Contracts;
 
-
 /**
- * Interface TimezoneRepository
- * @package namespace App\Repositories;
+ * Interface TimezoneRepository.
  */
 interface TimezoneRepository
 {

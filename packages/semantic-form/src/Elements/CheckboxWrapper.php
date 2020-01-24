@@ -1,8 +1,10 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class CheckboxWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui checkbox'
+        'class' => 'ui checkbox',
     ];
 }

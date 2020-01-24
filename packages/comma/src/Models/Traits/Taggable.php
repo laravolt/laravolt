@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Comma\Models\Traits;
 
 use Illuminate\Support\Str;
@@ -6,7 +7,6 @@ use Laravolt\Comma\Models\Tag;
 
 trait Taggable
 {
-
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'cms_posts_tags', 'post_id');
@@ -16,7 +16,7 @@ trait Taggable
     {
         $existingTagIds = $this->tags->pluck('id', 'id');
 
-        foreach ((array)$tags as $tag) {
+        foreach ((array) $tags as $tag) {
             $tag = $this->normalizeTag($tag);
 
             if (!$existingTagIds->has($tag->getKey())) {
@@ -33,7 +33,7 @@ trait Taggable
     {
         $ids = [];
 
-        foreach ((array)$tags as $tag) {
+        foreach ((array) $tags as $tag) {
             $tag = $this->normalizeTag($tag);
             if ($tag) {
                 $ids[] = $tag->getKey();
@@ -48,7 +48,7 @@ trait Taggable
 
     public function untag($tags = null)
     {
-        foreach ((array)$tags as $tag) {
+        foreach ((array) $tags as $tag) {
             $tag = $this->normalizeTag($tag);
             if ($tag) {
                 $this->tags()->detach($tag);

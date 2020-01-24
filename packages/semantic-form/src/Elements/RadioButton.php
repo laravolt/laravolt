@@ -1,10 +1,12 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class RadioButton extends Checkbox
 {
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'radio',
-    );
+    ];
 
     public function __construct($name, $value = null)
     {

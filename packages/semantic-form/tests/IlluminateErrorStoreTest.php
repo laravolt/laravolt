@@ -1,7 +1,7 @@
 <?php
 
-use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 use Illuminate\Support\MessageBag;
+use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 
 class IlluminateErrorStoreTest extends \PHPUnit\Framework\TestCase
 {

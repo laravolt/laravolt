@@ -24,7 +24,7 @@ class AutofillAdapter extends FieldAdapter
                 [
                     'type' => 'button',
                     'name' => $this->value,
-                    'label' => '<i class="icon search"></i>' . $this->field->field_label,
+                    'label' => '<i class="icon search"></i>'.$this->field->field_label,
                     'value' => $this->value,
                     'fieldAttributes' => $this->attributes,
                     'attributes' => [

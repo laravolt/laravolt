@@ -70,7 +70,8 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         return true;
     }
 
-    public function decorate(Builder $table): Builder {
+    public function decorate(Builder $table): Builder
+    {
         if ($this->search) {
             $table->getDefaultSegment()->right(Search::make($this->search));
         }

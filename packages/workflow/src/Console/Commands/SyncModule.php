@@ -5,7 +5,6 @@ namespace Laravolt\Workflow\Console\Commands;
 use Illuminate\Console\Command;
 use Laravolt\Workflow\Models\Module;
 
-
 class SyncModule extends Command
 {
     /**
@@ -39,7 +38,7 @@ class SyncModule extends Command
      */
     public function handle()
     {
-        if( config('workflow-modules') != null) {
+        if (config('workflow-modules') != null) {
             foreach (config('workflow-modules') as $key => $module) {
                 if ($this->validateModule($module)) {
                     Module::updateOrCreate(

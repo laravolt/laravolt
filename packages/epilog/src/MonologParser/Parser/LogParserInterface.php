@@ -12,13 +12,12 @@
 namespace Laravolt\Epilog\MonologParser\Parser;
 
 /**
- * Interface LogParserInterface
- * @package Dubture\Monolog\Parser
+ * Interface LogParserInterface.
  */
 interface LogParserInterface
 {
     /**
      * @param string $log
      */
-    function parse($log);
+    public function parse($log);
 }

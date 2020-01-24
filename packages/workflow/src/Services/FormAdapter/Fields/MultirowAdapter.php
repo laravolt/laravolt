@@ -2,9 +2,9 @@
 
 namespace Laravolt\Workflow\Services\FormAdapter\Fields;
 
-use Laravolt\Workflow\Services\FormAdapter\FieldAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Laravolt\Workflow\Services\FormAdapter\FieldAdapter;
 
 class MultirowAdapter extends FieldAdapter
 {
@@ -15,7 +15,7 @@ class MultirowAdapter extends FieldAdapter
         $form = $this->field->field_meta['form'] ?? null;
         $items = [];
         if ($form) {
-            $items = config('workflow.forms.' . $form);
+            $items = config('workflow.forms.'.$form);
         }
 
         $data = [];

@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravolt\Thunderclap;
 
 use Doctrine\DBAL\Types\Type;
@@ -6,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class DBHelper
 {
-
     public function listTables()
     {
         $tables = DB::getDoctrineSchemaManager()->listTables();
@@ -27,7 +27,7 @@ class DBHelper
         $columns = \DB::getDoctrineSchemaManager()->listTableColumns($table);
 
         $data = [];
-        foreach($columns as $column) {
+        foreach ($columns as $column) {
             $data[$column->getName()] = [
                 'name'     => $column->getName(),
                 'type'     => $column->getType(),

@@ -2,12 +2,12 @@
 
 namespace Laravolt\Workflow\TableView;
 
-use Laravolt\Suitable\TableView;
-use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\Columns\Numbering;
-use Laravolt\Workflow\Models\CamundaForm;
 use Laravolt\Suitable\Columns\RestfulButton;
+use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\Headers\Search\SelectHeader;
+use Laravolt\Suitable\TableView;
+use Laravolt\Workflow\Models\CamundaForm;
 
 class ManagementCamundaTableView extends TableView
 {

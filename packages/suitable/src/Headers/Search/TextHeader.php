@@ -41,7 +41,7 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
             '<th %s><input type="text" name="filter[%s]" value="%s" form="suitable-form-searchable"></th>',
             $this->tagAttributes($this->attributes),
             $this->name,
-            Arr::get(request("filter"), $this->name)
+            Arr::get(request('filter'), $this->name)
         );
     }
 }

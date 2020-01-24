@@ -2,7 +2,6 @@
 
 namespace Laravolt\Comma\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -15,8 +14,10 @@ use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model implements HasMedia
 {
-    use HasSlug, Taggable, HasMediaTrait, AutoSort;
-
+    use HasSlug;
+    use Taggable;
+    use HasMediaTrait;
+    use AutoSort;
     protected $table = 'cms_posts';
 
     protected $with = ['tags', 'author'];

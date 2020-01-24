@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class UiLabel extends Element
 {
@@ -10,6 +12,7 @@ class UiLabel extends Element
 
     /**
      * Icon constructor.
+     *
      * @param string icon name
      */
     public function __construct($text)
@@ -19,7 +22,6 @@ class UiLabel extends Element
 
     public function render()
     {
-
         $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';

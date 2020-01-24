@@ -91,7 +91,7 @@ class ProcessController extends Controller
         $this->authorize('view', $module->getModel());
 
         $view = $module->view['show'] ?? 'workflow::process.show';
-        
+
         try {
             $processInstance = (new ProcessInstanceHistory($processInstanceId))->fetch();
             $tasks = $processInstance->tasks($module->getTasks());
@@ -168,22 +168,22 @@ class ProcessController extends Controller
     {
         $path = request('path');
 
-        if (! $path) {
+        if (!$path) {
             abort(404);
         }
 
-        $path = '/reports/' . ltrim($path, '/');
+        $path = '/reports/'.ltrim($path, '/');
         $download = request('download', false);
         $ids = json_decode(request('ids', '[]'));
 
-        $path = sprintf("%s.%s", $path, $format);
+        $path = sprintf('%s.%s', $path, $format);
         $jasper = app(Jasper::class);
         $filename = pathinfo($path)['basename'];
         $queryString = collect(request()->query())->except('path', 'download')->toArray();
 
         $query = $module->table->source(true);
         if ($query instanceof Builder) {
-            if (! empty($ids)) {
+            if (!empty($ids)) {
                 $query->whereIn('id', $ids);
             }
             $statement = str_replace(['?'], ['\'%s\''], $query->toSql());
@@ -218,7 +218,7 @@ class ProcessController extends Controller
             $response->header('Content-Type', 'text/xml');
             $response->header('Cache-Control', 'public');
             $response->header('Content-Description', 'File Transfer');
-            $response->header('Content-Disposition', 'attachment; filename=' . $filename);
+            $response->header('Content-Disposition', 'attachment; filename='.$filename);
             $response->header('Content-Transfer-Encoding', 'binary');
 
             return $response;

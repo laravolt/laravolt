@@ -16,10 +16,10 @@ class ProcessInstance extends CamundaModel
     public function processDefinition(): ?ProcessDefinition
     {
         $id = $key = null;
-        if (! $this->processDefinition) {
+        if (!$this->processDefinition) {
             $id = $this->processDefinitionId ?? $this->definitionId ?? null;
 
-            if (! $id) {
+            if (!$id) {
                 $key = DB::table('camunda_task')
                     ->where('process_instance_id', $this->id)
                     ->value('process_definition_key');
@@ -38,7 +38,7 @@ class ProcessInstance extends CamundaModel
     public function parent()
     {
         if ($this->parentProcessInstance === null) {
-            $url = 'history/process-instance?subProcessInstanceId=' . $this->id;
+            $url = 'history/process-instance?subProcessInstanceId='.$this->id;
             $result = Arr::first($this->get($url));
 
             if ($result !== null) {
@@ -58,11 +58,11 @@ class ProcessInstance extends CamundaModel
 
     public function tasks(array $whitelist = [])
     {
-        $url = 'task/?processInstanceId=' . $this->id;
+        $url = 'task/?processInstanceId='.$this->id;
 
-        if (! empty($whitelist)) {
+        if (!empty($whitelist)) {
             $whitelist = implode(',', $whitelist);
-            $url .= '&taskDefinitionKeyIn=' . $whitelist;
+            $url .= '&taskDefinitionKeyIn='.$whitelist;
         }
 
         $tasks = $this->get($url);
@@ -79,7 +79,7 @@ class ProcessInstance extends CamundaModel
 
     public function setVariable($key, $value, $type = 'String')
     {
-        $this->put('variables/' . $key, [
+        $this->put('variables/'.$key, [
             'type' => $type,
             'value' => $value,
         ], true);
@@ -103,7 +103,7 @@ class ProcessInstance extends CamundaModel
 
     public function getVariable($key)
     {
-        return $this->get('variables/' . $key);
+        return $this->get('variables/'.$key);
     }
 
     public function getVariables()
@@ -118,12 +118,12 @@ class ProcessInstance extends CamundaModel
 
     public function ended()
     {
-        return $this->get('history/process-instance/?processInstanceId=' . $this->id)[0]->state == 'COMPLETED';
+        return $this->get('history/process-instance/?processInstanceId='.$this->id)[0]->state == 'COMPLETED';
     }
 
     public function getEndEventId()
     {
-        return optional(Arr::first($this->get('history/activity-instance/?processInstanceId=' . $this->id . '&activityType=noneEndEvent')))->activityId;
+        return optional(Arr::first($this->get('history/activity-instance/?processInstanceId='.$this->id.'&activityType=noneEndEvent')))->activityId;
     }
 
     public function modify($data)
@@ -133,10 +133,10 @@ class ProcessInstance extends CamundaModel
 
     public function getSubProcess()
     {
-        $subProcess = $this->get('process-instance?superProcessInstance=' . $this->id);
+        $subProcess = $this->get('process-instance?superProcessInstance='.$this->id);
         $data = [];
         foreach ($subProcess as $sub) {
-            $data[] = new ProcessInstance($sub->id, $sub);
+            $data[] = new self($sub->id, $sub);
         }
 
         return $data;

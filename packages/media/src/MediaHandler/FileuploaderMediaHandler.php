@@ -27,11 +27,11 @@ class FileuploaderMediaHandler
                     'size' => $media->size,
                     'type' => $media->mime_type,
                     'uploaded' => true,
-                    "data" => [
+                    'data' => [
                         'id' => $media->getKey(),
-                        "url" => $media->getUrl(),
-                        "thumbnail" => $media->getUrl(),
-                        "readerForce" => true,
+                        'url' => $media->getUrl(),
+                        'thumbnail' => $media->getUrl(),
+                        'readerForce' => true,
                     ],
                 ],
             ],

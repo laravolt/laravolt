@@ -1,4 +1,6 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 use Carbon\Carbon;
 use DateTime;
@@ -6,7 +8,7 @@ use DateTime;
 class SelectDateWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'inline fields'
+        'class' => 'inline fields',
     ];
 
     protected $value = null;
@@ -43,6 +45,7 @@ class SelectDateWrapper extends Wrapper
 
     /**
      * @param $value
+     *
      * @return bool|Carbon
      */
     protected function asDateTime($value)

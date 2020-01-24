@@ -16,6 +16,7 @@ abstract class FieldAdapter implements FieldAdapterInterface
 
     /**
      * Field constructor.
+     *
      * @param $field
      * @param $value
      */

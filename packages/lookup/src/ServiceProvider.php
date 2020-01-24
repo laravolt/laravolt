@@ -29,7 +29,7 @@ class ServiceProvider extends BaseServiceProvider
                 ->data('permission', config('laravolt.lookup.permission'));
             foreach (config('laravolt.lookup.collections') as $key => $collection) {
                 $menu = $group->add($collection['label'], url("lookup/{$key}"))
-                    ->active('lookup/' . $key . '/*');
+                    ->active('lookup/'.$key.'/*');
                 foreach ($collection['data'] ?? [] as $dataKey => $dataValue) {
                     $menu->data($dataKey, $dataValue);
                 }

@@ -1,16 +1,19 @@
-<?php namespace Laravolt\SemanticForm\Elements;
+<?php
+
+namespace Laravolt\SemanticForm\Elements;
 
 class Time extends Text
 {
-    protected $attributes = array(
+    protected $attributes = [
         'type' => 'time',
-    );
+    ];
 
     public function value($value)
     {
         if ($value instanceof \DateTime) {
             $value = $value->format('H:i:s');
         }
+
         return parent::value($value);
     }
 
