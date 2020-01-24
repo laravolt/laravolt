@@ -23,6 +23,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "4.1-dev"
+        },
         "laravel": {
             "providers": [
                 "Laravolt\\Epilog\\ServiceProvider"
