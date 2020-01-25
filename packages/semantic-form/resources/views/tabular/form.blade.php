@@ -7,7 +7,7 @@
     <script>
       document.addEventListener("livewire:load", function (event) {
         window.livewire.hook('afterDomUpdate', () => {
-          Laravolt.init($('{{ $id }}'));
+          Laravolt.init($('#{{ $id }}'));
         });
       });
     </script>

@@ -4,6 +4,7 @@ namespace Laravolt\SemanticForm\Liveware;
 
 use DeepCopy\DeepCopy;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Multirow extends Component
@@ -22,7 +23,7 @@ class Multirow extends Component
 
     public $labels = [];
 
-    protected $counter;
+    public $counter;
 
     public function mount($name, $schema, $source, $limit, $allowAddition, $allowRemoval)
     {
@@ -62,7 +63,8 @@ class Multirow extends Component
                 return $newField;
             });
         }
-
+        Log::debug('get rows', $rows);
+        Log::debug('counter', [$this->counter]);
         return $rows;
     }
 
