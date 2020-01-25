@@ -84,6 +84,9 @@
             $(elm).attr('name', name.replace('%s', counter))
           });
 
+          // Re initialize UI component
+          Laravolt.init($(e.delegateTarget).find('tbody tr:last-child'));
+
           $(e.delegateTarget).data('counter', counter + 1);
         });
 

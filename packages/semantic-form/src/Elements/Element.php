@@ -288,8 +288,9 @@ abstract class Element
     public function normalizedName()
     {
         $element = $this->getPrimaryControl();
+        $name = $element->getAttribute('name');
 
-        return str_replace(']', '', str_replace('[', '.', $element->getAttribute('name')));
+        return trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
     }
 
     public function basename()

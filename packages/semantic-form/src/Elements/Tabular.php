@@ -6,6 +6,7 @@ namespace Laravolt\SemanticForm\Elements;
 
 use DeepCopy\DeepCopy;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class Tabular extends Element
 {
@@ -30,7 +31,12 @@ class Tabular extends Element
         $this->schema = collect($schema)->transform(function ($item) {
 
             // produce something like "person[data][$index][name]", to make it easier to handling by Laravel Request
-            $item['name'] = "{$this->name}[%s][{$item['name']}]";
+            if (Str::contains($item['name'], '[]')) {
+                $name = Str::before($item['name'], '[]');
+                $item['name'] = "{$this->name}[%s][{$name}][]";
+            } else {
+                $item['name'] = "{$this->name}[%s][{$item['name']}]";
+            }
 
             return $item;
         })->toArray();
