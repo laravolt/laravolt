@@ -5,7 +5,7 @@
  */
 return [
     'route' => [
-        'enabled' => true,
+        'enabled' => false,
         'middleware' => ['web', 'auth'],
         'prefix' => 'cms',
     ],
@@ -13,7 +13,7 @@ return [
         'layout' => 'laravolt::layouts.app',
     ],
     'menu' => [
-        'enabled' => true,
+        'enabled' => false,
     ],
     'models' => [
         'post' => \Laravolt\Comma\Models\Post::class,
