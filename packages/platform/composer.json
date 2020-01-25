@@ -18,9 +18,9 @@
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "ext-intl": "*",
-        "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
@@ -38,6 +38,7 @@
         "laravolt/suitable": "^4.0",
         "laravolt/support": "^4.0",
         "lavary/laravel-menu": "^1.7.7",
+        "livewire/livewire": "^0.7.0",
         "spatie/laravel-medialibrary": "^7.0",
         "spatie/once": "^2.1",
         "stolz/assets": "~0.1"

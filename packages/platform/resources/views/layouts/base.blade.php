@@ -14,6 +14,11 @@
     @stack('head')
     {!! Assets::group('laravolt')->css() !!}
     {!! Assets::css() !!}
+
+    @if($livewire ?? false)
+        @livewireStyles
+    @endif
+
 </head>
 
 <body data-theme="{{ config('laravolt.ui.sidebar_theme') }}" class="{{ $bodyClass ?? '' }}">
@@ -23,6 +28,10 @@
 <script type="text/javascript" src="{{ mix('js/all.js', 'laravolt') }}"></script>
 {!! Assets::group('laravolt')->js() !!}
 {!! Assets::js() !!}
+@if($livewire ?? false)
+    @livewireScripts
+@endif
+
 @stack('script')
 @stack('body')
 </body>

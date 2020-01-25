@@ -4,7 +4,9 @@ namespace Laravolt\SemanticForm;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
+use Laravolt\SemanticForm\Liveware\Multirow;
 use Laravolt\SemanticForm\OldInput\IlluminateOldInputProvider;
+use Livewire\Livewire;
 
 /**
  * Class PackageServiceProvider.
@@ -43,6 +45,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/'), 'semantic-form');
         require __DIR__.'/../routes/web.php';
+
+        Livewire::component('semantic-form::multirow', Multirow::class);
+
     }
 
     /**

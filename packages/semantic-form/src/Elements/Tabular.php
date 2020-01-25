@@ -11,8 +11,6 @@ class Tabular extends Element
 {
     protected $schema = [];
 
-    protected $labels = [];
-
     protected $rows = 3;
 
     protected $allowAddition = false;
@@ -85,34 +83,11 @@ class Tabular extends Element
         $this->beforeRender();
 
         $rowCount = old($this->name) ? count(old($this->name)) : $this->rows;
-        $fields = collect(form()->make($this->schema)->all())
-            ->transform(function ($item) {
-                $this->labels[] = (string) $item->label;
-                $item->label(null);
-
-                return $item;
-            });
-
-        // reset old values row index
-        $data = [$this->name => array_values(old($this->name, $this->source))];
-
-        $rows = [];
-        for ($i = 0; $i < $rowCount; $i++) {
-            $rows[] = $fields->map(function ($field) use ($data, $i) {
-                $copier = new DeepCopy();
-                $newField = $copier->copy($field);
-                $newField->bindAttribute('name', $i);
-                $newField->populateValue($data);
-
-                return $newField;
-            });
-        }
 
         $payload = [
-            'fields' => $fields,
+            'schema' => $this->schema,
+            'source' => $this->source,
             'name' => $this->name,
-            'rows' => $rows,
-            'labels' => $this->labels,
             'limit' => $rowCount,
             'allowAddition' => $this->allowAddition,
             'allowRemoval' => $this->allowRemoval,

@@ -62,6 +62,11 @@ abstract class Element
         return $this->attributes[$attribute] ?? $default;
     }
 
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
     public function hasAttribute($attribute)
     {
         return isset($this->attributes[$attribute]);
@@ -198,6 +203,7 @@ abstract class Element
         try {
             return $this->render();
         } catch (\Exception $e) {
+            dd($e);
             report($e);
         }
     }
