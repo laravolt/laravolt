@@ -47,7 +47,6 @@ class ServiceProvider extends BaseServiceProvider
         require __DIR__.'/../routes/web.php';
 
         Livewire::component('semantic-form::multirow', Multirow::class);
-
     }
 
     /**

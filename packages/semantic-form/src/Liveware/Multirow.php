@@ -3,7 +3,6 @@
 namespace Laravolt\SemanticForm\Liveware;
 
 use DeepCopy\DeepCopy;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -65,6 +64,7 @@ class Multirow extends Component
         }
         Log::debug('get rows', $rows);
         Log::debug('counter', [$this->counter]);
+
         return $rows;
     }
 
