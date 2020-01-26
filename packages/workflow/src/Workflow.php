@@ -18,6 +18,7 @@ use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Entities\Multirow;
 use Laravolt\Workflow\Entities\Payload;
 use Laravolt\Workflow\Enum\FormType;
+use Laravolt\Workflow\Enum\ProcessStatus;
 use Laravolt\Workflow\Enum\TaskStatus;
 use Laravolt\Workflow\Events\ProcessStarted;
 use Laravolt\Workflow\Events\TaskCompleted;
@@ -110,18 +111,21 @@ class Workflow implements Contracts\Workflow
                 }
 
                 DB::table('camunda_task')->insert([
-                    'task_id' => null,
+                    'process_definition_key' => $processDefinition->key,
                     'process_instance_id' => $processInstance->id,
+                    'task_id' => null,
                     'form_type' => $form,
                     'form_id' => $formId,
                     'task_name' => $module->startTaskName,
-                    'process_definition_key' => $processDefinition->key,
                     'created_at' => now(),
+                    'status' => ProcessStatus::ACTIVE,
                     'traceable' => json_encode(collect($payload->data)->only(config('laravolt.workflow.traceable')) ?? []),
                 ]);
 
                 event(new ProcessStarted($processInstance, $payload, auth()->user()));
             }
+
+            $this->prepareNextTask($processInstance);
 
             return $processInstance;
         });
@@ -139,15 +143,21 @@ class Workflow implements Contracts\Workflow
             $form = $processInstance->processDefinition()->getStartTaskName();
             $formId = $this->insertData($form, $data);
             DB::table('camunda_task')->insert([
-                'task_id' => null,
+                'process_definition_key' => $processInstance->processDefinition()->key,
                 'process_instance_id' => $processInstance->id,
+                'task_id' => null,
+                'task_name' => $form,
                 'form_type' => $form,
                 'form_id' => $formId,
-                'task_name' => $form,
-                'process_definition_key' => $processInstance->processDefinition()->key,
                 'created_at' => now(),
+                'status' => ProcessStatus::ACTIVE,
                 'traceable' => json_encode(collect($data)->only(config('laravolt.workflow.traceable')) ?? []),
             ]);
+
+            $this->prepareNextTask($processInstance);
+
+            $payload = new Payload(['data' => $data]);
+            event(new ProcessStarted($processInstance, $payload, $this->user));
 
             return $processInstance;
         });
@@ -287,21 +297,19 @@ class Workflow implements Contracts\Workflow
                 }
 
                 DB::table('camunda_task')
-                    ->updateOrInsert(
+                    ->where('process_instance_id', $processInstance->id)
+                    ->where('task_id', $task->id)
+                    ->update(
                         [
-                            'task_id' => $task->id,
-                            'process_instance_id' => $processInstance->id,
-                            'form_type' => $table,
                             'form_id' => $formId,
-                            'task_name' => $task->taskDefinitionKey,
-                            'process_definition_key' => $module->processDefinitionKey,
-                        ],
-                        [
-                            'status' => $isDraft ? TaskStatus::DRAFT : TaskStatus::UNASSIGNED,
-                            'created_at' => now(),
+                            'status' => $isDraft ? TaskStatus::DRAFT : TaskStatus::COMPLETED,
                             'updated_at' => now(),
                         ]
                     );
+
+                if (!$isDraft) {
+                    $this->prepareNextTask($processInstance);
+                }
 
                 /*
                  * Finishing touch:
@@ -558,5 +566,24 @@ class Workflow implements Contracts\Workflow
         }
 
         return [$mainTableData, $hasManyData];
+    }
+
+    protected function prepareNextTask($processInstance)
+    {
+        $currentTask = $processInstance->currentTask();
+        $currentTask = $currentTask->fetch();
+
+        if ($currentTask) {
+            DB::table('camunda_task')->insert([
+                'task_id' => $currentTask->id,
+                'process_instance_id' => $processInstance->id,
+                'form_type' => $currentTask->taskDefinitionKey,
+                'form_id' => null,
+                'task_name' => $currentTask->taskDefinitionKey,
+                'process_definition_key' => $processInstance->processDefinition()->key,
+                'status' => TaskStatus::NEW,
+                'created_at' => now(),
+            ]);
+        }
     }
 }
