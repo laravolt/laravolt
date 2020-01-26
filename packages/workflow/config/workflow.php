@@ -53,14 +53,14 @@ return [
         |
         */
         'infrastructure' => [
-            "workflow_module" => 'id',
-            "acl_permissions" => 'id',
-            "workflow_permission" => 'module_id',
-            "menu" => 'id',
-            "surat" => 'id',
-            "camunda_form" => 'id',
-            "segments" => 'id',
-            "lookup" => 'id',
+            'workflow_module' => 'id',
+            'acl_permissions' => 'id',
+            'workflow_permission' => 'module_id',
+            'menu' => 'id',
+            'surat' => 'id',
+            'camunda_form' => 'id',
+            'segments' => 'id',
+            'lookup' => 'id',
         ],
 
         /*
