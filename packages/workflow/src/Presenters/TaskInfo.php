@@ -63,6 +63,21 @@ class TaskInfo
 
         $formDefinition = (new FormAdapter($fields, $values))->readonly()->toArray();
         $task = $this->module->getTask($this->task->task_name);
+        // dump($formDefinition);
+
+        //coba damar
+        foreach ($formDefinition as $keys => $lists) {
+            foreach ($lists as $key => $list) {
+                if ($key == 'data') {
+                    foreach ($list as $k => $v) {
+                        foreach ($v as $p => $vl) {
+                            $str = preg_replace('/["\[\]]/', '', $vl);
+                            $formDefinition[$keys][$key][$k][$p] = $str;
+                        }
+                    }
+                }
+            }
+        }
 
         return view('workflow::components.task-info', [
             'task' => $this->task,

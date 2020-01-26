@@ -243,6 +243,20 @@ class Workflow implements Contracts\Workflow
 
     public function submitTask(Module $module, string $taskId, array $data, bool $isDraft = false)
     {
+        //coba damar
+        foreach ($data as $keys => $lists) {
+            if (is_array($lists)) {
+                foreach ($lists as $key => $list) {
+                    foreach ($list as $k => $v) {
+                        if (is_array($v)) {
+                            $convert = json_encode($v);
+                            $data[$keys][$key][$k] = $convert;
+                        }
+                    }
+                }
+            }
+        }
+
         $task = (new Task($taskId))->fetch();
         $processInstance = $task->processInstance();
 
@@ -510,7 +524,11 @@ class Workflow implements Contracts\Workflow
                 $key = $item->key;
                 $formDefition = config("workflow.forms.$key");
                 $rules = collect($formDefition)->mapWithKeys(function ($item) {
-                    return [$item['name'] => $item['validations']];
+
+                    //coba damar
+                    $nameTemp = str_replace('[]', '', $item['name']);
+
+                    return [$nameTemp => $item['validations']];
                 })->toArray();
 
                 $filteredData = [];
@@ -530,6 +548,21 @@ class Workflow implements Contracts\Workflow
             $columnListing = Schema::getColumnListing($table);
             $columnListing = collect($columnListing)->combine($columnListing);
             $mainTableData = collect($mainTableData)->intersectByKeys($columnListing)->toArray();
+        }
+
+        //coba damar
+
+        foreach ($hasManyData as $keys => $lists) {
+            if (is_array($lists)) {
+                foreach ($lists as $key => $list) {
+                    foreach ($list as $k => $v) {
+                        if (is_array($v)) {
+                            $convert = json_encode($v);
+                            $hasManyData[$keys][$key][$k] = $convert;
+                        }
+                    }
+                }
+            }
         }
 
         return [$mainTableData, $hasManyData];
