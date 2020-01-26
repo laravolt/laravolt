@@ -538,7 +538,6 @@ class Workflow implements Contracts\Workflow
     protected function prepareNextTask($processInstance)
     {
         $currentTask = $processInstance->currentTask();
-        $currentTask = $currentTask->fetch();
 
         if ($currentTask) {
             DB::table('camunda_task')->insert([
