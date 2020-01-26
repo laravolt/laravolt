@@ -68,11 +68,11 @@ class TaskInfo
         //coba damar
         foreach ($formDefinition as $keys => $lists) {
             foreach ($lists as $key => $list) {
-                if($key == 'data') {
+                if ($key == 'data') {
                     foreach ($list as $k => $v) {
                         foreach ($v as $p => $vl) {
                             $str = preg_replace('/["\[\]]/', '', $vl);
-                            $formDefinition[$keys][$key][$k][$p] = $str;   
+                            $formDefinition[$keys][$key][$k][$p] = $str;
                         }
                     }
                 }

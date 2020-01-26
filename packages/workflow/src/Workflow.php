@@ -245,10 +245,10 @@ class Workflow implements Contracts\Workflow
     {
         //coba damar
         foreach ($data as $keys => $lists) {
-            if(is_array($lists)) {
+            if (is_array($lists)) {
                 foreach ($lists as $key => $list) {
                     foreach ($list as $k => $v) {
-                        if(is_array($v)) {
+                        if (is_array($v)) {
                             $convert = json_encode($v);
                             $data[$keys][$key][$k] = $convert;
                         }
@@ -256,7 +256,7 @@ class Workflow implements Contracts\Workflow
                 }
             }
         }
-        
+
         $task = (new Task($taskId))->fetch();
         $processInstance = $task->processInstance();
 
@@ -526,9 +526,9 @@ class Workflow implements Contracts\Workflow
                 $rules = collect($formDefition)->mapWithKeys(function ($item) {
 
                     //coba damar
-                    $nameTemp = str_replace("[]","",$item['name']);
-                    return [$nameTemp => $item['validations']];
+                    $nameTemp = str_replace('[]', '', $item['name']);
 
+                    return [$nameTemp => $item['validations']];
                 })->toArray();
 
                 $filteredData = [];
@@ -553,10 +553,10 @@ class Workflow implements Contracts\Workflow
         //coba damar
 
         foreach ($hasManyData as $keys => $lists) {
-            if(is_array($lists)) {
+            if (is_array($lists)) {
                 foreach ($lists as $key => $list) {
                     foreach ($list as $k => $v) {
-                        if(is_array($v)) {
+                        if (is_array($v)) {
                             $convert = json_encode($v);
                             $hasManyData[$keys][$key][$k] = $convert;
                         }

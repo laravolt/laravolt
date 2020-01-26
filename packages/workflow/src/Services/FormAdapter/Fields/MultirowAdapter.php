@@ -52,7 +52,7 @@ class MultirowAdapter extends FieldAdapter
 
         //coba damar
         foreach ($columns as $key => $value) {
-            $columns[$key] = str_replace("[]","",$value);
+            $columns[$key] = str_replace('[]', '', $value);
         }
 
         if ($ids && $hasManyTable) {
