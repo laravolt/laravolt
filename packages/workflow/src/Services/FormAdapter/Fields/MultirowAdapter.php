@@ -50,6 +50,11 @@ class MultirowAdapter extends FieldAdapter
         $hasManyTable = Arr::first(array_keys($value));
         $columns = collect($items)->pluck('name')->toArray();
 
+        //coba damar
+        foreach ($columns as $key => $value) {
+            $columns[$key] = str_replace("[]","",$value);
+        }
+
         if ($ids && $hasManyTable) {
             return DB::table($hasManyTable)
                 ->whereIn('id', $ids)
