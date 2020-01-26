@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Laravolt\Workflow\Console\Commands\Import;
 use Laravolt\Workflow\Console\Commands\MakeCommand;
+use Laravolt\Workflow\Console\Commands\ResetTransaction;
 use Laravolt\Workflow\Console\Commands\SyncModule;
 use Laravolt\Workflow\Entities\Module;
 
@@ -26,6 +27,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             Import::class,
             MakeCommand::class,
             SyncModule::class,
+            ResetTransaction::class,
         ]);
     }
 

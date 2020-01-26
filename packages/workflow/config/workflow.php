@@ -39,4 +39,46 @@ return [
     |
     */
     'auto_save' => 10000, // in miliseconds
+
+    'tables' => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tabel Infrastruktur
+        |--------------------------------------------------------------------------
+        |
+        | Adalah tabel yang isinya menentukan behaviour aplikasi.
+        | Format: <table_name> => <order_by_column>.
+        | <order_by_column> diperlukan untuk chunking query agar tidak out of memory
+        |
+        */
+        'infrastructure' => [
+            "workflow_module" => 'id',
+            "acl_permissions" => 'id',
+            "workflow_permission" => 'module_id',
+            "menu" => 'id',
+            "surat" => 'id',
+            "camunda_form" => 'id',
+            "segments" => 'id',
+            "lookup" => 'id',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tabel Transaksi
+        |--------------------------------------------------------------------------
+        |
+        | Adalah tabel transaksional yang isinya merupakan hasil dari aktivitas pengguna.
+        |
+        |
+        */
+        'transaction' => [
+            // Semua tabel yang digenerate dari BPMN tidak perlu disebutkan disini.
+            // Cukup daftarkan tabel baru yang biasanya digunakan untuk menyimpan relasi has many.
+            'camunda_task',
+            'parameter_test',
+            'penerimaan_sampel_multirow',
+        ],
+    ],
+
 ];
