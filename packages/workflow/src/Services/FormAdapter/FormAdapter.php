@@ -45,7 +45,7 @@ class FormAdapter
      * FormDefinitionAdapter constructor.
      *
      * @param Collection $localFields
-     * @param array $values
+     * @param array      $values
      */
     public function __construct(Collection $localFields, $values = [])
     {
