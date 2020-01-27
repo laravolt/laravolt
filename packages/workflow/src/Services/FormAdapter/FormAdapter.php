@@ -5,6 +5,7 @@ namespace Laravolt\Workflow\Services\FormAdapter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Laravolt\Workflow\Services\FormAdapter\Fields\MacroAdapter;
 use Laravolt\Workflow\Services\FormAdapter\Fields\StringAdapter;
 
 class FormAdapter
@@ -90,14 +91,16 @@ class FormAdapter
         $definition = [];
         foreach ($fields as $field) {
             $type = Str::studly($field->field_type);
+            $value = $this->values->get($field->field_name) ?? Arr::get($field->field_meta, 'value');
 
             $adapter = "\\Laravolt\\Workflow\\Services\\FormAdapter\\Fields\\{$type}Adapter";
             if (!class_exists($adapter)) {
-                $adapter = StringAdapter::class;
+                $definition = (new MacroAdapter($type, $field, $value, $this->readonly))->setType($field->field_type)->toArray();
+            } else {
+                $definition = (new $adapter($field, $value, $this->readonly))->toArray();
             }
 
-            $value = $this->values->get($field->field_name) ?? Arr::get($field->field_meta, 'value');
-            $definition[] = (new $adapter($field, $value, $this->readonly))->toArray();
+            $definition[] = $definition;
         }
 
         if ($segment) {
