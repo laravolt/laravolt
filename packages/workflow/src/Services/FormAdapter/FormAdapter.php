@@ -5,6 +5,7 @@ namespace Laravolt\Workflow\Services\FormAdapter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Laravolt\SemanticForm\SemanticForm;
 use Laravolt\Workflow\Services\FormAdapter\Fields\MacroAdapter;
 use Laravolt\Workflow\Services\FormAdapter\Fields\StringAdapter;
 
@@ -44,7 +45,7 @@ class FormAdapter
      * FormDefinitionAdapter constructor.
      *
      * @param Collection $localFields
-     * @param array      $values
+     * @param array $values
      */
     public function __construct(Collection $localFields, $values = [])
     {
@@ -95,12 +96,18 @@ class FormAdapter
 
             $adapter = "\\Laravolt\\Workflow\\Services\\FormAdapter\\Fields\\{$type}Adapter";
             if (!class_exists($adapter)) {
-                $definition = (new MacroAdapter($type, $field, $value, $this->readonly))->setType($field->field_type)->toArray();
-            } else {
-                $definition = (new $adapter($field, $value, $this->readonly))->toArray();
-            }
+                $macro = lcfirst($type);
 
-            $definition[] = $definition;
+                if (SemanticForm::hasMacro($macro)) {
+                    $definition[] = (new MacroAdapter($field, $value, $this->readonly))
+                        ->setType($macro)
+                        ->toArray();
+                } else {
+                    $definition[] = (new StringAdapter($field, $value, $this->readonly))->toArray();
+                }
+            } else {
+                $definition[] = (new $adapter($field, $value, $this->readonly))->toArray();
+            }
         }
 
         if ($segment) {
