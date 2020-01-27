@@ -6,79 +6,41 @@ namespace Laravolt\Menu;
 
 use Laravolt\Menu\Enum\Permission;
 use Laravolt\Menu\Models\Menu;
+use Laravolt\Support\Base\BaseServiceProvider;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
-    public function register()
+    public function getIdentifier()
     {
-        $this->mergeConfigFrom(realpath(__DIR__.'/../config/menu.php'), 'laravolt.menu');
+        return 'menu';
     }
 
     public function boot()
     {
-        $this->bootRoutes()
-            ->bootMigrations()
-            ->bootPermission()
-            ->bootViews()
-            ->loadMenuFromDatabase()
+        parent::boot();
+
+        $this->loadMenuFromDatabase()
             ->bootMenu();
     }
 
     protected function bootMenu()
     {
-        if (app()->bound('laravolt.menu')) {
-            $menu = app('laravolt.menu')->system;
-            $menu->add(__('Menu Manager'), url('menu-manager/menu'))
-                ->data('icon', 'bars')
-                ->data('permission', Permission::MANAGE_MENU)
-                ->active(config('laravolt.menu.route.prefix').'/menu/*');
+        if (config('laravolt.menu.menu.enabled')) {
+            app('laravolt.menu.sidebar')->register(function ($menu) {
+                $menu->system
+                    ->add(__('Menu Manager'), route('menu::menu.index'))
+                    ->data('icon', 'bars')
+                    ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_MENU)
+                    ->active(config('laravolt.menu.route.prefix').'/menu/*');
+            });
         }
-
-        return $this;
-    }
-
-    protected function bootPermission()
-    {
-        if (app()->bound('laravolt.acl')) {
-            app('laravolt.acl')->registerPermission(Permission::toArray());
-        }
-
-        return $this;
-    }
-
-    protected function bootRoutes()
-    {
-        $router = $this->app['router'];
-        require __DIR__.'/../routes/web.php';
-
-        return $this;
-    }
-
-    protected function bootViews()
-    {
-        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'menu');
-
-        return $this;
-    }
-
-    protected function bootMigrations()
-    {
-        $path = realpath(__DIR__.'/../database/migrations');
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom($path);
-        }
-        $this->publishes([
-            $path => database_path('migrations'),
-        ], 'migrations');
 
         return $this;
     }
 
     protected function loadMenuFromDatabase()
     {
-        if (\Schema::hasTable('menu')) {
-            app()['laravolt.menu.builder']->loadArray(Menu::toStructuredArray());
-        }
+        app('laravolt.menu.builder')->loadArray(Menu::toStructuredArray());
 
         return $this;
     }

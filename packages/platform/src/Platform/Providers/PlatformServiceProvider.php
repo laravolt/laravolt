@@ -18,6 +18,7 @@ use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltPreset;
 use Laravolt\Platform\Services\Password;
@@ -179,8 +180,24 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootMenu()
     {
-        if ($this->app->bound('laravolt.menu')) {
-            View::composer(['laravolt::menu.sidebar'], \Laravolt\Platform\Services\MenuComposer::class);
+        if (config('laravolt.epicentrum.menu.enabled')) {
+            app('laravolt.menu.sidebar')->register(function ($menu) {
+                $menu = $menu->system;
+                $menu->add(trans('laravolt::label.users'), route('epicentrum::users.index'))
+                    ->data('icon', 'users')
+                    ->data('permission', Permission::MANAGE_USER)
+                    ->active(config('laravolt.epicentrum.route.prefix').'/users/*');
+
+                $menu->add(trans('laravolt::label.roles'), route('epicentrum::roles.index'))
+                    ->data('icon', 'mask')
+                    ->data('permission', Permission::MANAGE_ROLE)
+                    ->active(config('laravolt.epicentrum.route.prefix').'/roles/*');
+
+                $menu->add(trans('laravolt::label.permissions'), route('epicentrum::permissions.edit'))
+                    ->data('icon', 'shield')
+                    ->data('permission', Permission::MANAGE_PERMISSION)
+                    ->active(config('laravolt.epicentrum.route.prefix').'/permissions/*');
+            });
         }
 
         return $this;

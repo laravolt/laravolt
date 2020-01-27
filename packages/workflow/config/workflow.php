@@ -1,10 +1,13 @@
 <?php
 
 return [
-    'routes' => [
+    'route' => [
         'enabled' => true,
         'middleware' => ['web', 'auth'],
         'prefix' => 'workflow',
+    ],
+    'menu' => [
+        'enabled' => true,
     ],
     'view' => [
         'layout' => 'laravolt::layouts.app',

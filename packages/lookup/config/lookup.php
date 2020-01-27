@@ -2,7 +2,7 @@
 
 return [
     'route' => [
-        'enable' => true,
+        'enabled' => true,
         'middleware' => ['web', 'auth'],
         'prefix' => '',
     ],
@@ -10,13 +10,13 @@ return [
         'layout' => 'laravolt::layouts.app',
     ],
     'menu' => [
-        'enable' => true,
+        'enabled' => true,
     ],
     'permission' => [],
     'collections' => [
         // Sample lookup collections
-        // 'pekerjaan' => [
-        //     'label' => 'Pekerjaan',
-        // ],
+        'pekerjaan' => [
+            'label' => 'Pekerjaan',
+        ],
     ],
 ];

@@ -5,7 +5,7 @@
  */
 return [
     'route' => [
-        'enable' => true,
+        'enabled' => true,
         'middleware' => ['web', 'auth'],
         'prefix' => 'epicentrum',
     ],
@@ -13,7 +13,7 @@ return [
         'layout' => 'laravolt::layouts.app',
     ],
     'menu' => [
-        'enable' => true,
+        'enabled' => true,
     ],
     'role' => [
         'multiple' => false,

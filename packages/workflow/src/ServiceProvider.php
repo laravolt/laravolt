@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace Laravolt\Workflow;
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use Laravolt\Support\Base\BaseServiceProvider;
 use Laravolt\Workflow\Console\Commands\Import;
 use Laravolt\Workflow\Console\Commands\MakeCommand;
 use Laravolt\Workflow\Console\Commands\ResetTransaction;
 use Laravolt\Workflow\Console\Commands\SyncModule;
 use Laravolt\Workflow\Entities\Module;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
+    public function getIdentifier()
+    {
+        return 'workflow';
+    }
+
     public function register()
     {
-        $this->mergeConfigFrom(realpath(__DIR__.'/../config/workflow.php'), 'laravolt.workflow');
+        parent::register();
 
         $this->app->singleton('laravolt.workflow', \Laravolt\Workflow\Contracts\Workflow::class);
         $this->app->bind(\Laravolt\Workflow\Contracts\Workflow::class, function () {
@@ -31,68 +36,38 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         ]);
     }
 
-    protected function registerMenu()
-    {
-        if ($this->app->bound('laravolt.menu')) {
-            app('laravolt.menu')->system->add('Form Fields', url('managementcamunda'))
-                ->data('icon', 'wpforms')
-                ->active('managementcamunda/*');
-
-            app('laravolt.menu')->system->add('Segment', url('segment'))
-                ->data('icon', 'wpforms')
-                ->active('segment/*');
-
-            $menu = app('laravolt.menu')->system
-                ->add('Workflow')
-                ->data('icon', 'fork');
-            $menu->add('Module', url('workflow/module '));
-        }
-
-        return $this;
-    }
-
     public function boot()
     {
-        $this->registerMenu()
-            ->bootRoutes()
-            ->bootMigrations()
-            ->bootTranslations()
-            ->bootViews()
-            ->bootMacro()
+        parent::boot();
+
+        $this->bootMenu()
             ->bindModule();
     }
 
-    protected function bootRoutes()
+    protected function bootMenu()
     {
-        if (config('laravolt.workflow.routes.enabled')) {
-            $router = $this->app['router'];
-            require __DIR__.'/../routes/web.php';
+        if (config('laravolt.workflow.menu.enabled')) {
+            app('laravolt.menu.sidebar')->register(function ($menu) {
+                $menu = $menu->system->add('Workflow')->data('icon', 'fork');
+                $menu->add('Module', route('workflow::module.index'))->active('workflow/module');
+                $menu->add('Form Fields', route('managementcamunda.index'))
+                    ->data('icon', 'wpforms')
+                    ->active('managementcamunda/*');
+
+                $menu->add('Segment', route('segment.index'))
+                    ->data('icon', 'wpforms')
+                    ->active('segment/*');
+            });
         }
-
-        return $this;
-    }
-
-    protected function bootTranslations()
-    {
-        $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'workflow');
 
         return $this;
     }
 
     protected function bootViews()
     {
-        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'workflow');
+        parent::bootViews();
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/managementcamunda'), 'managementcamunda');
         $this->loadViewsFrom(storage_path('surat-compiled'), 'surat-compiled');
-
-        return $this;
-    }
-
-    protected function bootMacro()
-    {
-        Str::macro('humanize', function ($string) {
-            return trim(preg_replace('/\s+/', ' ', Str::title(str_replace('_', ' ', $string))));
-        });
 
         return $this;
     }
@@ -115,19 +90,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             return Module::fromConfig($module);
         });
-
-        return $this;
-    }
-
-    protected function bootMigrations()
-    {
-        $path = realpath(__DIR__.'/../database/migrations');
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom($path);
-        }
-        $this->publishes([
-            $path => database_path('migrations'),
-        ], 'migrations');
 
         return $this;
     }

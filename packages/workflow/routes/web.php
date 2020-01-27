@@ -8,9 +8,9 @@ use Laravolt\Workflow\Controllers\TaskController;
 
 $router->group(
     [
-        'prefix' => config('laravolt.workflow.routes.prefix'),
+        'prefix' => config('laravolt.workflow.route.prefix'),
         'as' => 'workflow::',
-        'middleware' => config('laravolt.workflow.routes.middleware'),
+        'middleware' => config('laravolt.workflow.route.middleware'),
     ],
     function ($router) {
         $router->get('module', [\Laravolt\Workflow\Controllers\ModuleController::class, 'index'])->name('module.index');

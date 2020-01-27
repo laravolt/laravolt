@@ -9,6 +9,13 @@ use Lavary\Menu\Menu as BaseMenu;
 
 class Menu extends BaseMenu
 {
+    protected $callbacks = [];
+
+    public function register(\Closure $callback)
+    {
+        $this->callbacks[] = $callback;
+    }
+
     public static function setVisible($children, $visible = 'visible')
     {
         foreach ($children as $child) {
@@ -38,6 +45,10 @@ class Menu extends BaseMenu
     public function all()
     {
         $sidebar = $this->get('sidebar');
+
+        foreach ($this->callbacks as $callback) {
+            call_user_func($callback, $sidebar);
+        }
 
         $items = $sidebar->all()->map(function (Item $item) {
             $item->data('is-parent', $item->hasChildren() || (!$item->hasChildren() && !$item->link->path['url']));
