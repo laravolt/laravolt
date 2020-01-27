@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Menu;
 
-use Laravolt\Menu\Enum\Permission;
 use Laravolt\Menu\Models\Menu;
 use Laravolt\Support\Base\BaseServiceProvider;
 

@@ -10,7 +10,6 @@ use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Epicentrum\Console\Commands\ManageRole;
