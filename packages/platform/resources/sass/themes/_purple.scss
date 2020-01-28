@@ -1,5 +1,8 @@
 $sidebar-color: #594f8d;
+$background-color: linear-gradient(180deg, #5F2DA0 0%, #6E3A98 100%);
 $text-color: #bdb8d7;
+$color-white: #fff;
+$color-purple: #3E0E79;
 $text-color-selected: #e9b92a;
 
 [data-theme="purple"] {
@@ -7,17 +10,35 @@ $text-color-selected: #e9b92a;
 
   .sidebar {
     .sidebar__wrapper {
+      background-repeat: no-repeat;
+      background-image:url(../img/eclipse-purple.svg);
+      background-size: cover;
+      background-position: left top;
       border-right: 0 none;
-      background-color: $sidebar-color;
+      background: $background-color;
 
       .ui.header.brand {
         color: $text-color;
+        background: $color-white;
         overflow: hidden;
+        margin-bottom: 0px;
         //height: 63px;
         font-size: 1.75rem;
         text-align: center;
       }
-
+      .ui.menu.vertical.bg-white {
+        background: $color-white;
+        i.search.icon {
+          background: linear-gradient(180deg, #5F2DA0 0%, #6E3A98 100%);
+          color: #fff;
+          border-radius: 5px;
+          opacity: 1;
+        }
+        input {
+          border: solid #3E0E79;
+          border-radius: 5px;
+        }
+      }
       .ui.menu.vertical {
         background: transparent;
 
@@ -30,7 +51,7 @@ $text-color-selected: #e9b92a;
         .item {
           color: $text-color;
           > .header {
-            color: darken($sidebar-color, 25%);
+            color: #fff;
             font-size: .8em;
             font-weight: 500;
           }
@@ -53,12 +74,12 @@ $text-color-selected: #e9b92a;
     .sidebar__accordion.ui.accordion {
 
       .title {
-        color: $text-color;
+        color: $color-white;
         font-weight: 700;
         text-transform: uppercase;
         font-size: .9em;
         &.active, &:hover {
-          background-color: darken($sidebar-color, 5%);
+          background-color: $color-purple;
         }
         &:hover {
           color: lighten($text-color, 15%);
@@ -69,10 +90,10 @@ $text-color-selected: #e9b92a;
       }
 
       .content {
-        background-color: darken($sidebar-color, 5%);
+        background-color: $color-purple;
         .ui.list {
           .item {
-            color: darken($text-color, 10%);
+            color: $color-white;
             padding-left: 3.7em;
 
             &:hover {
