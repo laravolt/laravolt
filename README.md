@@ -15,3 +15,4 @@ https://laravolt.dev/guidelines/contribution/
 - Nasrul Abdullah Rizal (PT Javan Cipta Solusi) https://github.com/nasrularizal
 - Anandia Muhammad Yudhistira (PT Javan Cipta Solusi) https://github.com/anandiamy
 - Damar Khoirul Huda (PT Javan Cipta Solusi) https://github.com/damarteplok
+- Ginanjar Septian Adhitia (PT Javan Cipta Solusi) https://github.com/ginadhitia
