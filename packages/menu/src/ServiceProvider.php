@@ -43,7 +43,6 @@ class ServiceProvider extends BaseServiceProvider
         try {
             app('laravolt.menu.builder')->loadArray(Menu::toStructuredArray());
         } catch (QueryException $e) {
-
         }
 
         return $this;
