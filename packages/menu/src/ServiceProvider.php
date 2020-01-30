@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Menu;
 
+use Illuminate\Database\QueryException;
 use Laravolt\Menu\Models\Menu;
 use Laravolt\Support\Base\BaseServiceProvider;
 
@@ -39,7 +40,11 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function loadMenuFromDatabase()
     {
-        app('laravolt.menu.builder')->loadArray(Menu::toStructuredArray());
+        try {
+            app('laravolt.menu.builder')->loadArray(Menu::toStructuredArray());
+        } catch (QueryException $e) {
+
+        }
 
         return $this;
     }
