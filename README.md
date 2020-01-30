@@ -13,3 +13,4 @@ https://laravolt.dev/guidelines/contribution/
 ## Core Contributor
 - Bayu Hendra Winata (PT Javan Cipta Solusi) https://github.com/uyab
 - Nasrul Abdullah Rizal (PT Javan Cipta Solusi) https://github.com/nasrularizal
+- Anandia Muhammad Yudhistira (PT Javan Cipta Solusi) https://github.com/anandiamy
