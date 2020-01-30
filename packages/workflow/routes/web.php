@@ -36,6 +36,7 @@ $router->group(
 
         $router->delete('{module}/{id}', [ProcessController::class, 'destroy'])->name('process.destroy');
 
+        $router->get('process-definition/{id}/xml', \Laravolt\Workflow\Controllers\ProcessDefinitionXmlController::class)->name('process-definition.xml');
         $router->get('process/{id}/xml', \Laravolt\Workflow\Controllers\ProcessXmlController::class)->name('process.xml');
 
         $router->post('{module}/task/{id}', [TaskController::class, 'store'])->name('task.store');
