@@ -2,6 +2,7 @@ parameters:
     # for "merge" command
     data_to_append:
         require:
+            doctrine/dbal: '^2.10'
             laravolt/avatar: '^3.0'
         require-dev:
             barryvdh/laravel-debugbar: '^3.2'
