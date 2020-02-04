@@ -12,7 +12,7 @@ class DateTime extends Date implements ColumnInterface
     {
         try {
             return Carbon::createFromFormat('Y-m-d H:i:s', $cell->{$this->field})
-                ->setTimezone($this->timezone())
+                ->setTimezone($this->timezone)
                 ->isoFormat($this->format);
         } catch (\InvalidArgumentException $e) {
             return $cell->{$this->field};
