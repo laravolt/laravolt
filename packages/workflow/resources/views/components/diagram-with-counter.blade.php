@@ -1,6 +1,6 @@
 <?php
 $query = "SELECT DISTINCT process_definition_key, task_name, count
-            FROM workflow_module LEFT JOIN (
+            FROM workflow_module JOIN (
                 SELECT process_definition_key, task_name, count(1) count
                 FROM camunda_task WHERE status = 'NEW'
                     AND task_id IS NOT NULL
@@ -12,9 +12,9 @@ $counter = collect(\DB::select($query));
 $url = route('workflow::process-definition.xml', $key)
 ?>
 
-<div camunda-map-diagram style="cursor: move; height: 500px"></div>
+<div camunda-map-diagram-{{ $key }} style="cursor: move; height: 500px"></div>
 
-@pushonce('script:diagram-with-counter')
+@push('script')
 <script src="https://unpkg.com/bpmn-js@6.2.1/dist/bpmn-navigated-viewer.development.js"></script>
 <style>
     .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
@@ -31,21 +31,19 @@ $url = route('workflow::process-definition.xml', $key)
 
 <script>
     // Render diagram
-    var viewer = new BpmnJS({
-        container: '[camunda-map-diagram]'
+    var viewer_{{ $key }} = new BpmnJS({
+        container: '[camunda-map-diagram-{{ $key }}]'
     });
-    var canvas = viewer.get('canvas');
-    var zoomLevel = 'fit-viewport';
 
     // load + show diagram
     $.get("{{ $url }}", showDiagram, 'text');
 
     function showDiagram(diagramXML) {
-        viewer.importXML(diagramXML, function () {
-            var overlays = viewer.get('overlays');
-            var elementRegistry = viewer.get('elementRegistry');
+        viewer_{{ $key }}.importXML(diagramXML, function () {
+            var overlays = viewer_{{ $key }}.get('overlays');
+            var elementRegistry = viewer_{{ $key }}.get('elementRegistry');
 
-            canvas.zoom(zoomLevel);
+            viewer_{{ $key }}.get('canvas').zoom('fit-viewport');
 
             @foreach($counter as $task)
             var shape = elementRegistry.get('{{ $task->task_name }}');
@@ -76,4 +74,4 @@ $url = route('workflow::process-definition.xml', $key)
         });
     }
 </script>
-@endpushonce
+@endpush
