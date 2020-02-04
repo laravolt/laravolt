@@ -6,9 +6,11 @@ return [
     'already_registered?'      => 'Sudah punya akun?',
     'click_to_activate'        => 'Silakan klik <a href=":link">link aktivasi ini</a> untuk mengaktifkan akun Anda.',
     'email'                    => 'Alamat Email',
+    'username'                 => 'Username',
     'failed'                   => 'Login gagal',
     'forgot_password'          => 'Lupa password',
-    'identifier'               => 'Email',
+    'identifier'               => is_array(config('laravolt.auth.identifier'))
+        ? 'Email / Username' : ucfirst(config('laravolt.auth.identifier')),
     'login'                    => 'Login',
     'login_here'               => 'Login disini',
     'login_cas'                => 'Login via CAS',

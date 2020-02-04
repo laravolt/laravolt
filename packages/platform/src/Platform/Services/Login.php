@@ -24,7 +24,8 @@ class Login implements \Laravolt\Contracts\Login
 
     public function credentials(Request $request)
     {
-        $credential = $request->only($this->identifier(), 'password');
+        $field = $request->get(which_identifier());
+        $credential = $request->only(which_identifier(filter_var($field, FILTER_VALIDATE_EMAIL)), 'password');
 
         if (config('laravolt.auth.activation.enable')) {
             $credential['status'] = config('laravolt.auth.activation.status_after');
@@ -40,6 +41,6 @@ class Login implements \Laravolt\Contracts\Login
 
     protected function identifier()
     {
-        return config('laravolt.auth.identifier');
+        return which_identifier();
     }
 }

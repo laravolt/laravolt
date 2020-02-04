@@ -6,9 +6,11 @@ return [
     'already_registered?'      => 'Have an account?',
     'click_to_activate'        => 'Please click <a href=":link">this activation link</a> to activate your account.',
     'email'                    => 'Email',
+    'username'                 => 'Username',
     'failed'                   => 'Invalid credentials',
     'forgot_password'          => 'Forgot password',
-    'identifier'               => 'Email',
+    'identifier'               => is_array(config('laravolt.auth.identifier'))
+        ? 'Email / Username' : ucfirst(config('laravolt.auth.identifier')),
     'login'                    => 'Login',
     'login_here'               => 'Login Here',
     'login_cas'                => 'Login Using CAS',
