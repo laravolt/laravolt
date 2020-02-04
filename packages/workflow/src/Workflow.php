@@ -317,7 +317,6 @@ class Workflow implements Contracts\Workflow
                 if ($isDraft) {
                     event(new TaskDrafted($task, $payload, auth()->user()));
                 } else {
-
                     $task->submit($payload->toCamundaVariables());
 
                     $this->prepareNextTask($processInstance);
