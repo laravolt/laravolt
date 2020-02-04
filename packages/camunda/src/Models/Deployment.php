@@ -8,7 +8,7 @@ class Deployment extends CamundaModel
 {
     public function create($name, $bpmnFiles)
     {
-        $bpmnFiles = (array)$bpmnFiles;
+        $bpmnFiles = (array) $bpmnFiles;
         $attachments = [];
         foreach ($bpmnFiles as $bpmn) {
             $filename = pathinfo($bpmn)['basename'];
