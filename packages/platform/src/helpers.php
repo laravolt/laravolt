@@ -28,3 +28,20 @@ if (!function_exists('is_sqlite')) {
         return $driver === 'sqlite';
     }
 }
+
+if (!function_exists('which_identifier')) {
+    /**
+     * Determine which identifier to authenticate user.
+     *
+     * @return string
+     */
+    function which_identifier($is_email = null): string
+    {
+        if ($is_email) {
+            return 'email';
+        }
+
+        return is_array(config('laravolt.auth.identifier'))
+            ? 'username' : config('laravolt.auth.identifier');
+    }
+}

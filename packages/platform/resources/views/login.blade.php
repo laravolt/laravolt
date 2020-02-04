@@ -8,8 +8,10 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="ui field left icon input fluid">
-            <input type="text" name="{{ config('laravolt.auth.identifier') }}" placeholder="@lang('laravolt::auth.identifier')" value="{{ old(config('laravolt.auth.identifier')) }}">
-            <i class="mail icon"></i>
+            <input type="text" name="{{ which_identifier()  }}"
+                   placeholder="@lang('laravolt::auth.identifier')"
+                   value="{{ old(which_identifier()) }}">
+            <i class="{{ which_identifier() == 'email' ? 'mail icon' : 'user icon'  }}"></i>
         </div>
         <div class="ui field left icon input fluid">
             <input type="password" name="password" placeholder="@lang('laravolt::auth.password')">

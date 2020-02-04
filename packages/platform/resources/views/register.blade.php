@@ -9,10 +9,18 @@
 
         <div class="ui field left icon input fluid">
             <input type="text" name="name" placeholder="@lang('laravolt::auth.name')" value="{{ old('name') }}">
-            <i class="user icon"></i>
+            <i class="address card icon"></i>
         </div>
+        @if(which_identifier() === 'username' || is_array(config('laravolt.auth.identifier')))
+            <div class="ui field left icon input fluid">
+                <input type="text" name="username"
+                       placeholder="@lang('laravolt::auth.username')"
+                       value="{{ old('username') }}">
+                <i class="user icon"></i>
+            </div>
+        @endif
         <div class="ui field left icon input fluid">
-            <input type="email" name="email" placeholder="@lang('laravolt::auth.identifier')" value="{{ old('email') }}">
+            <input type="email" name="email" placeholder="@lang('laravolt::auth.email')" value="{{ old('email') }}">
             <i class="mail icon"></i>
         </div>
         <div class="ui field left icon input fluid">
