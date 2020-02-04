@@ -6,15 +6,19 @@ namespace Laravolt\Camunda\Models;
 
 class Deployment extends CamundaModel
 {
-    public function create($name, $file)
+    public function create($name, $bpmnFiles)
     {
-        $filename = pathinfo($file)['basename'];
+        $bpmnFiles = (array)$bpmnFiles;
+        $attachments = [];
+        foreach ($bpmnFiles as $bpmn) {
+            $filename = pathinfo($bpmn)['basename'];
 
-        $files[] = [
-            'name' => $name,
-            'contents' => file_get_contents($file),
-            'filename' => $filename,
-        ];
+            $attachments[] = [
+                'name' => $filename,
+                'contents' => file_get_contents($bpmn),
+                'filename' => $filename,
+            ];
+        }
 
         $multipart = [
             [
@@ -27,8 +31,8 @@ class Deployment extends CamundaModel
             ],
         ];
 
-        $this->post('deployment/create', [
-            'multipart' => array_merge($multipart, $files),
+        return $this->post('deployment/create', [
+            'multipart' => array_merge($multipart, $attachments),
         ]);
     }
 }

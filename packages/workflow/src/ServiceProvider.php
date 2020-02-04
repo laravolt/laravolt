@@ -6,6 +6,7 @@ namespace Laravolt\Workflow;
 
 use Illuminate\Support\Facades\Route;
 use Laravolt\Support\Base\BaseServiceProvider;
+use Laravolt\Workflow\Console\Commands\DeployCommand;
 use Laravolt\Workflow\Console\Commands\Import;
 use Laravolt\Workflow\Console\Commands\MakeCommand;
 use Laravolt\Workflow\Console\Commands\ResetTransaction;
@@ -29,6 +30,7 @@ class ServiceProvider extends BaseServiceProvider
         });
 
         $this->commands([
+            DeployCommand::class,
             Import::class,
             MakeCommand::class,
             SyncModule::class,
