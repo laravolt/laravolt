@@ -31,7 +31,7 @@ class ProcessDefinition extends CamundaModel
 
         $processDefinition = $this->post('start', $payload, true);
 
-        return new ProcessInstance($processDefinition->id);
+        return new ProcessInstance($processDefinition->id, ['businessKey' => $businessKey]);
     }
 
     public function xml()

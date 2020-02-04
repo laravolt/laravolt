@@ -18,7 +18,7 @@ class Payload extends DataTransferObject
     /** @var array */
     public $data;
 
-    /** @var Illuminate\Database\Eloquent\Collection */
+    /** @var Illuminate\Database\Eloquent\Collection|null */
     public $fields;
 
     public static function make(Module $module, string $taskName, ?array $rawData)

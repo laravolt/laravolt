@@ -21,7 +21,7 @@ return [
     'authorization' => [
         'enabled' => true,
     ],
-    'business_key' => 'no_agenda',
+    'business_key' => 'bkey',
     /*
     |--------------------------------------------------------------------------
     | Strict mode

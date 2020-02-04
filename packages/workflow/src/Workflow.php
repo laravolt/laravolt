@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Laravolt\Camunda\Models\ProcessDefinition;
 use Laravolt\Camunda\Models\ProcessInstance;
+use Laravolt\Camunda\Models\ProcessInstanceHistory;
 use Laravolt\Camunda\Models\Task;
 use Laravolt\Camunda\Models\TaskHistory;
 use Laravolt\Workflow\Entities\Module;
@@ -20,6 +21,7 @@ use Laravolt\Workflow\Entities\Payload;
 use Laravolt\Workflow\Enum\FormType;
 use Laravolt\Workflow\Enum\ProcessStatus;
 use Laravolt\Workflow\Enum\TaskStatus;
+use Laravolt\Workflow\Events\ProcessCompleted;
 use Laravolt\Workflow\Events\ProcessStarted;
 use Laravolt\Workflow\Events\TaskCompleted;
 use Laravolt\Workflow\Events\TaskDrafted;
@@ -31,9 +33,12 @@ use Laravolt\Workflow\Models\CamundaForm;
 use Laravolt\Workflow\Models\Form;
 use Laravolt\Workflow\Presenters\StartForm;
 use Laravolt\Workflow\Presenters\TaskEditForm;
+use Laravolt\Workflow\Traits\DataRetrieval;
 
 class Workflow implements Contracts\Workflow
 {
+    use DataRetrieval;
+
     /**
      * Worflow constructor.
      */
@@ -75,13 +80,16 @@ class Workflow implements Contracts\Workflow
         // dengan asumsi start_task_name yang valid adalah sesuai BPMN. Tidak ada custom start_task_name.
         $module->startTaskName = $this->validateTaskName($module->startTaskName, $processDefinition);
 
-        return DB::transaction(function () use ($processDefinition, $module, $data) {
-            // Wrap $data hasil inputan user untuk dilakukan proses sanitize, cleansing, dan validating.
-            $payload = Payload::make($module, $module->startTaskName, $data);
+        // Wrap $data hasil inputan user untuk dilakukan proses sanitize, cleansing, dan validating.
+        $payload = Payload::make($module, $module->startTaskName, $data);
+
+        $processInstance = DB::transaction(function () use ($processDefinition, $module, $data, $payload) {
 
             // Memulai proses, dengan membuat Process Instance baru di Camunda.
-            $processInstance = $processDefinition->startInstance($payload->toCamundaVariables(),
-                $payload->getBusinessKey());
+            $processInstance = $processDefinition->startInstance(
+                $payload->toCamundaVariables(),
+                $payload->getBusinessKey()
+            );
 
             $additionalData = [
                 'process_instance_id' => $processInstance->id,
@@ -119,22 +127,24 @@ class Workflow implements Contracts\Workflow
                     'task_name' => $module->startTaskName,
                     'created_at' => now(),
                     'status' => ProcessStatus::ACTIVE,
+                    'business_key' => $payload->getBusinessKey(),
                     'traceable' => json_encode(collect($payload->data)->only(config('laravolt.workflow.traceable')) ?? []),
                 ]);
-
-                event(new ProcessStarted($processInstance, $payload, auth()->user()));
             }
 
             $this->prepareNextTask($processInstance);
 
             return $processInstance;
         });
+
+        event(new ProcessStarted($processInstance, $payload, auth()->user()));
+
+        return $processInstance;
     }
 
-    public function saveSubProcess(ProcessInstance $processInstance): ProcessInstance
+    public function saveSubProcess(ProcessInstance $processInstance, $data): ProcessInstance
     {
-        return DB::transaction(function () use ($processInstance) {
-            $data = $processInstance->getVariables();
+        return DB::transaction(function () use ($processInstance, $data) {
             $additionalData = [
                 'process_instance_id' => $processInstance->id,
             ];
@@ -151,13 +161,13 @@ class Workflow implements Contracts\Workflow
                 'form_id' => $formId,
                 'created_at' => now(),
                 'status' => ProcessStatus::ACTIVE,
-                'traceable' => json_encode(collect($data)->only(config('laravolt.workflow.traceable')) ?? []),
+                'business_key' => $processInstance->businessKey ?? null,
             ]);
 
             $this->prepareNextTask($processInstance);
 
             $payload = new Payload(['data' => $data]);
-            event(new ProcessStarted($processInstance, $payload, $this->user));
+            event(new ProcessStarted($processInstance, $payload, auth()->user()));
 
             return $processInstance;
         });
@@ -268,9 +278,6 @@ class Workflow implements Contracts\Workflow
             $isDraft
         ) {
             $payload = Payload::make($module, $task->taskDefinitionKey, $data);
-            if (!$isDraft) {
-                $task->submit($payload->toCamundaVariables());
-            }
 
             foreach ($payload->toFormFields() as $table => $fields) {
                 $dbFields = $fields['fields'];
@@ -307,31 +314,40 @@ class Workflow implements Contracts\Workflow
                         ]
                     );
 
-                if (!$isDraft) {
-                    $this->prepareNextTask($processInstance);
-                }
-
-                /*
-                 * Finishing touch:
-                 * Delete auto save data for current task + current user
-                 * and trigger event so other part of application can doing some custom logic
-                */
-
-                AutoSave::query()->where('task_id', $task->id)->where('user_id', auth()->id())->delete();
-
                 if ($isDraft) {
                     event(new TaskDrafted($task, $payload, auth()->user()));
                 } else {
+
+                    $task->submit($payload->toCamundaVariables());
+
+                    $this->prepareNextTask($processInstance);
+
                     event(new TaskCompleted($task, $payload, auth()->user()));
 
-                    // Save sub processes data
                     $subProcesses = $task->processInstance()->getSubProcess();
                     if (!empty($subProcesses)) {
                         foreach ($subProcesses as $process) {
-                            $this->saveSubProcess($process);
+                            $this->saveSubProcess($process, $this->getDataByProcessInstanceId($processInstance->id));
                         }
                     }
+
+                    // cek apakah process sudah selesai
+                    $processInstanceHistory = (new ProcessInstanceHistory($processInstance->id))->fetch();
+
+                    $status = $processInstanceHistory->state ?? null;
+                    if ($status == ProcessStatus::COMPLETED) {
+                        // 1. update process status di camunda_task
+                        DB::table('camunda_task')
+                            ->whereNull('task_id')
+                            ->where('process_instance_id', $processInstance->id)
+                            ->update(['status' => $status]);
+
+                        // 2. trigger event ProcessCompleted
+                        event(new ProcessCompleted($processInstance, auth()->user()));
+                    }
                 }
+
+                AutoSave::query()->where('task_id', $task->id)->where('user_id', auth()->id())->delete();
 
                 // TODO: deprecated
                 event('workflow.task.saved',
@@ -581,6 +597,7 @@ class Workflow implements Contracts\Workflow
                 'task_name' => $currentTask->taskDefinitionKey,
                 'process_definition_key' => $processInstance->processDefinition()->key,
                 'status' => TaskStatus::NEW,
+                'business_key' => $processInstance->businessKey ?? null,
                 'created_at' => now(),
             ]);
         }

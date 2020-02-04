@@ -67,6 +67,7 @@ class Module extends DataTransferObject
         $data['view'] = (array) ($data['view'] ?? null);
         $data['action'] = $data['action'] ?? [];
         $data['routes'] = $data['routes'] ?? [];
+        $data['whitelist'] = $data['whitelist'] ?? [];
 
         $table = $data['table'] ?? null;
         if ($table) {
