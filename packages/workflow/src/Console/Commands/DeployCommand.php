@@ -5,14 +5,8 @@ namespace Laravolt\Workflow\Console\Commands;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Console\Command;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 use Laravolt\Camunda\Models\Deployment;
-use Laravolt\Camunda\Models\ProcessDefinition;
-use Laravolt\Workflow\Models\CamundaForm;
-use SimpleXMLElement;
 
 class DeployCommand extends Command
 {
