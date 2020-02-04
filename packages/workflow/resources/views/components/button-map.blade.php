@@ -1,5 +1,17 @@
-@php($tasks = (new \Laravolt\Camunda\Models\ProcessInstanceHistory($id))->tasks())
-@php($url = route('workflow::process.xml', $id))
+<?php
+$processHistory = (new \Laravolt\Camunda\Models\ProcessInstanceHistory($id));
+$tasks = collect($processHistory->tasks())->pluck('taskDefinitionKey');
+
+if ($tasks->isEmpty()) {
+    $subProcessess = $processHistory->getSubProcess();
+    $tasks = [];
+    foreach ($subProcessess as $process) {
+        $tasks[] = optional($process->processDefinition())->key;
+    }
+}
+
+$url = route('workflow::process.xml', $id);
+?>
 
 <button class="ui button" camunda-map-button><i class="icon project diagram"></i> {{ $label ?? 'Diagram Proses' }}</button>
 
@@ -68,13 +80,13 @@
             var shap = "";
             var $overlayHtml = "";
               @foreach ($tasks as $task)
-                shape = elementRegistry.get('{{$task->taskDefinitionKey}}');
+                shape = elementRegistry.get('{{ $task }}');
             $overlayHtml = $('<div class="highlight-overlay">').css({
               width: shape.width,
               height: shape.height
             });
             overlays.add(
-              '{{$task->taskDefinitionKey}}',
+              '{{ $task }}',
               {
                 position: {
                   top: 0,
