@@ -42,8 +42,6 @@ class AuthUsername extends Command
                 $replacement,
                 file_get_contents($authConfig)
             ));
-
-
         } else {
             $this->error('Make sure you have published Laravolt Platform package');
         }
