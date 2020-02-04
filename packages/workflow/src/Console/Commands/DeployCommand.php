@@ -12,18 +12,21 @@ class DeployCommand extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'workflow:deploy {name}';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Deploy BPMN file to Camunda Server';
 
     /**
      * Execute the console command.
+     *
      * @return mixed
      */
     public function handle()
@@ -54,7 +57,7 @@ class DeployCommand extends Command
                 $info[] = [$processDefinition->resource, $processDefinition->id, $processDefinition->key];
             }
             $this->table(['BPMN File', 'Process Definition ID', 'Process Definition Key'], $info);
-        } catch (ServerException|ClientException $e) {
+        } catch (ServerException | ClientException $e) {
             $this->error((string) $e->getResponse()->getBody());
         }
     }
