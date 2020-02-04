@@ -114,6 +114,7 @@ class LoginController extends Controller
     public function username()
     {
         $input = request()->input(which_identifier());
+
         return which_identifier(filter_var($input, FILTER_VALIDATE_EMAIL));
     }
 
