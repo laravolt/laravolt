@@ -6,7 +6,8 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Laravolt\Camunda\Models\ProcessDefinition;
+use Illuminate\Support\Str;
+use Laravolt\Workflow\Models\Bpmn;
 use Laravolt\Workflow\Models\CamundaForm;
 use SimpleXMLElement;
 
@@ -14,30 +15,26 @@ class Import extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
-    protected $signature = 'workflow:import {processDefinitionKey?}';
+    protected $signature = 'workflow:import {key?}';
 
     /**
      * The console command description.
-     *
      * @var string
      */
     protected $description = 'Import BPMN via REST API to populate transactional table + form definition';
 
     /**
      * Execute the console command.
-     *
      * @return mixed
      */
     public function handle()
     {
-        $keys = (array) $this->argument('processDefinitionKey');
+        $keys = (array) $this->argument('key');
 
         if (empty($keys)) {
-            $modules = config('workflow-modules');
-            $keys = collect($modules)->unique('process_definition_key')->pluck('process_definition_key')->filter();
+            $keys = Bpmn::pluck('filename');
         }
 
         foreach ($keys as $key) {
@@ -50,35 +47,19 @@ class Import extends Command
 
     protected function generateFormField($key)
     {
-        $processDefinition = ProcessDefinition::byKey($key);
+        $key = Str::endsWith($key, '.bpmn') ? $key : $key.'.bpmn';
+        $bpmnFile = resource_path("bpmn/$key");
 
-        $xml = new SimpleXMLElement($processDefinition->xml());
+        if (!file_exists($bpmnFile)) {
+            $this->warn(sprintf('File tidak ditemukan: %s', $bpmnFile));
+
+            return false;
+        }
+
+        $xml = new SimpleXMLElement($bpmnFile, 0, true);
         $xml->registerXPathNamespace('bpmn', 'http://www.omg.org/spec/BPMN/20100524/MODEL');
         $xml->registerXPathNamespace('camunda', 'http://camunda.org/schema/1.0/bpmn');
 
-        $calledActivity = $xml->xpath('//bpmn:callActivity');
-        foreach ($calledActivity as $call) {
-            if (CamundaForm::where('field_name', '=', 'subprocess'.$call['name'])
-                    ->where('task_name', '=', $call['id'])
-                    ->where('process_definition_key', '=', $key)
-                    ->count() == 0) {
-                CamundaForm::insert([
-                    'process_definition_key' => $key,
-                    'task_name' => $call['id'],
-                    'form_name' => $call['id'],
-                    'field_name' => 'subprocess'.$call['name'],
-                    'field_label' => 'subprocess'.$call['name'],
-                    'field_hint' => null,
-                    'field_type' => 'hidden',
-                    'field_select_query' => null,
-                    'field_order' => 0,
-                    'field_meta' => null,
-                    'segment_group' => null,
-                    'segment_order' => null,
-                    'called_element' => $call['calledElement'],
-                ]);
-            }
-        }
         $startEvents = $xml->xpath('//bpmn:startEvent');
         $this->generateField($startEvents, $key);
         $userTasks = $xml->xpath('//bpmn:userTask');
@@ -88,8 +69,6 @@ class Import extends Command
     protected function generateField($nodes, $processDefKey)
     {
         foreach ($nodes as $node) {
-            $this->info('Task '.json_encode($node));
-            $called_element = $node['calledElement'];
             $formFields = $node->xpath('bpmn:extensionElements/camunda:formData/camunda:formField');
             if (count($formFields) == 0) {
                 DB::table('camunda_form')->insert([
@@ -109,8 +88,6 @@ class Import extends Command
             } else {
                 foreach ($formFields as $formField) {
                     if ($formField['type'] == 'enum') {
-                        $this->info('Field Enum'.json_encode($formField));
-
                         $options = [];
                         $fieldOptions = $formField->xpath('camunda:value');
                         foreach ($fieldOptions as $fieldOption) {
@@ -118,16 +95,11 @@ class Import extends Command
                                 array_push($options, [$v['id'] => $v['name'] ?? '']);
                             }
                         }
-                        $this->info(CamundaForm::where('field_name', '=', $formField['id'])
-                            ->where('task_name', '=', $node['id'])
-                            ->where('process_definition_key', '=', $processDefKey)
-                            ->count());
 
                         if (CamundaForm::where('field_name', '=', $formField['id'])
                                 ->where('task_name', '=', $node['id'])
                                 ->where('process_definition_key', '=', $processDefKey)
                                 ->count() == 0) {
-                            $this->info('Field Added'.json_encode($formField));
 
                             DB::table('camunda_form')->insert([
                                 'process_definition_key' => $processDefKey,
@@ -141,7 +113,6 @@ class Import extends Command
                                 'field_meta' => null,
                                 'segment_group' => null,
                                 'segment_order' => null,
-                                'called_element' => $called_element,
                             ]);
                         } else {
                             $this->info('Field Exist'.json_encode($formField));
@@ -151,7 +122,6 @@ class Import extends Command
                                 ->where('task_name', '=', $node['id'])
                                 ->where('process_definition_key', '=', $processDefKey)
                                 ->count() == 0) {
-                            //$this->info('Field Added'.json_encode($formField));
 
                             DB::table('camunda_form')->insert([
                                 'process_definition_key' => $processDefKey,
@@ -165,7 +135,6 @@ class Import extends Command
                                 'field_meta' => null,
                                 'segment_group' => null,
                                 'segment_order' => null,
-                                'called_element' => $called_element,
                             ]);
                         } else {
                             $this->info('Field Exist'.json_encode($formField));
@@ -246,13 +215,10 @@ class Import extends Command
                     $table->bigInteger('updated_by')->nullable();
                     $table->timestamps();
                 });
-                $this->info($tableName.' was created');
             } else {
-                $this->info($tableName.' is exists, should check new columns');
                 Schema::table($tableName, function (Blueprint $table) use ($tableColumns) {
                     $this->columns($table, $tableColumns);
                 });
-                $this->info($tableName.' was created');
             }
         }
     }
