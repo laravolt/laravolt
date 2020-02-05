@@ -223,25 +223,25 @@ class Laravolt {
             var i = date.getMinutes();
             var s = date.getSeconds();
             var j = date.getDate();
-            var DD = d = ("0" + date.getDate()).slice(-2);
+            var DD = ("0" + date.getDate()).slice(-2);
+            var d = DD;
             var n = date.getMonth() + 1;
-            var MM = m = ("0" + (date.getMonth() + 1)).slice(-2);
-            var MMMM = F = settings.text.months[date.getMonth()];
+            var MM = ("0" + (date.getMonth() + 1)).slice(-2);
+            var m = MM;
+            var MMMM = settings.text.months[date.getMonth()];
             var M = settings.text.monthsShort[date.getMonth()];
             var YY = date.getFullYear().toString().substr(2, 2);
-            var y = date.getFullYear().toString().substr(2, 2);
             var Y = date.getFullYear();
             var YYYY = date.getFullYear();
 
             return format
-              // .replace('h', h)
-              // .replace('i', i)
-              // .replace('s', s)
+              .replace('h', h)
+              .replace('i', i)
+              .replace('s', s)
               .replace('j', j)
               .replace('d', d)
               .replace('n', n)
               .replace('m', m)
-              .replace('F', F)
               .replace('M', M)
               .replace('Y', Y)
               .replace('DD', DD)

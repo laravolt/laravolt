@@ -59,6 +59,17 @@ class FieldCollection extends Collection
                 }
                 break;
 
+            case 'datepicker':
+                $element = form()
+                    ->{$type}($field['name'])
+                    ->label($field['label'])
+                    ->hint($field['hint'])
+                    ->attributes($field['attributes']);
+                if (isset($field['format'])) {
+                    $element->format($field['format']);
+                }
+                break;
+
             case 'checkbox':
                 $element = form()
                     ->checkbox($field['name'])
