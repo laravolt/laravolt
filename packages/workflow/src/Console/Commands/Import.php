@@ -59,11 +59,14 @@ class Import extends Command
         $xml = new SimpleXMLElement($bpmnFile, 0, true);
         $xml->registerXPathNamespace('bpmn', 'http://www.omg.org/spec/BPMN/20100524/MODEL');
         $xml->registerXPathNamespace('camunda', 'http://camunda.org/schema/1.0/bpmn');
+        $processDefinitionKey = $xml->xpath('//bpmn:process')[0]['id'] ?? null;
 
-        $startEvents = $xml->xpath('//bpmn:startEvent');
-        $this->generateField($startEvents, $key);
-        $userTasks = $xml->xpath('//bpmn:userTask');
-        $this->generateField($userTasks, $key);
+        if ($processDefinitionKey) {
+            $startEvents = $xml->xpath('//bpmn:startEvent');
+            $this->generateField($startEvents, $processDefinitionKey);
+            $userTasks = $xml->xpath('//bpmn:userTask');
+            $this->generateField($userTasks, $processDefinitionKey);
+        }
     }
 
     protected function generateField($nodes, $processDefKey)
@@ -71,20 +74,23 @@ class Import extends Command
         foreach ($nodes as $node) {
             $formFields = $node->xpath('bpmn:extensionElements/camunda:formData/camunda:formField');
             if (count($formFields) == 0) {
-                DB::table('camunda_form')->insert([
-                    'process_definition_key' => $processDefKey,
-                    'task_name' => $node['id'],
-                    'form_name' => $node['id'],
-                    'field_name' => $node['id'],
-                    'field_label' => $node['id'],
-                    'field_type' => 'hidden',
-                    'field_select_query' => null,
-                    'field_order' => 0,
-                    'field_meta' => null,
-                    'segment_group' => null,
-                    'segment_order' => null,
-                    'called_element' => null,
-                ]);
+                DB::table('camunda_form')->updateOrInsert(
+                    [
+                        'process_definition_key' => $processDefKey,
+                        'form_name' => $node['id'],
+                        'field_name' => $node['id'],
+                    ],
+                    [
+                        'task_name' => $node['id'],
+                        'field_label' => $node['id'],
+                        'field_type' => 'hidden',
+                        'field_select_query' => null,
+                        'field_order' => 0,
+                        'field_meta' => null,
+                        'segment_group' => null,
+                        'segment_order' => null,
+                    ]
+                );
             } else {
                 foreach ($formFields as $formField) {
                     if ($formField['type'] == 'enum') {
@@ -100,7 +106,6 @@ class Import extends Command
                                 ->where('task_name', '=', $node['id'])
                                 ->where('process_definition_key', '=', $processDefKey)
                                 ->count() == 0) {
-
                             DB::table('camunda_form')->insert([
                                 'process_definition_key' => $processDefKey,
                                 'task_name' => $node['id'],
@@ -122,7 +127,6 @@ class Import extends Command
                                 ->where('task_name', '=', $node['id'])
                                 ->where('process_definition_key', '=', $processDefKey)
                                 ->count() == 0) {
-
                             DB::table('camunda_form')->insert([
                                 'process_definition_key' => $processDefKey,
                                 'task_name' => $node['id'],
