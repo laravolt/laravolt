@@ -20,11 +20,14 @@ mix.scripts([
     'resources/js/components/keymaster.js',
     'resources/js/components/fileuploader.js',
     'resources/js/components/fuse.min.js',
+], 'public/js/vendor.js');
+
+mix.scripts([
     'resources/js/init/sidebar.js',
     'resources/js/init/ui.js',
     // Somehow, quick-switcher.js must be initialized last, after all other UI elements. Don't know why :(
     'resources/js/init/quick-switcher.js'
-], 'public/js/all.js');
+], 'public/js/platform.js');
 
 mix.sass('resources/sass/app.scss', 'public/css')
     .options({
@@ -41,5 +44,6 @@ mix.copyDirectory('resources/img', 'public/img');
 mix.version([
     './public/semantic/semantic.min.css',
     './public/css/all.css',
-    './public/js/all.js'
+    './public/js/vendor.js',
+    './public/js/platform.js'
 ]);

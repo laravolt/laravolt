@@ -1,6 +1,7 @@
 {
     "/css/app.css": "/css/app.css?id=962630c06230640ef76b",
-    "/js/all.js": "/js/all.js?id=737788438599ca17c640",
+    "/js/vendor.js": "/js/vendor.js?id=5338164c30283b9f276d",
+    "/js/platform.js": "/js/platform.js?id=a0f5e3de4dc624c8d326",
     "/css/all.css": "/css/all.css?id=466caf617cc359b03503",
     "/semantic/semantic.min.css": "/semantic/semantic.min.css?id=d6f8d075be6d66fd1f69"
 }

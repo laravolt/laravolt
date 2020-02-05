@@ -20,7 +20,13 @@
 
 @yield('body')
 
-<script type="text/javascript" src="{{ mix('js/all.js', 'laravolt') }}"></script>
+<script type="text/javascript" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+
+<script>
+    $.fn.calendar.settings.text = @json(form_calendar_text());
+</script>
+
+<script type="text/javascript" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
 {!! Assets::group('laravolt')->js() !!}
 {!! Assets::js() !!}
 @stack('script')

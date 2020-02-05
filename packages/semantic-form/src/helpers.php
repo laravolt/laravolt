@@ -50,3 +50,35 @@ if (!function_exists('form_html_attributes')) {
         return $result;
     }
 }
+
+if (!function_exists('form_calendar_text')) {
+    /**
+     * Mendapatkan localization string untuk ditampilkan di calendar (datepicker, datetimepicker).
+     *
+     * @return array
+     */
+    function form_calendar_text(): array
+    {
+        $now = \Carbon\Carbon::now();
+        $startOfWeek = $now->startOfWeek(\Carbon\Carbon::SUNDAY);
+        $days = $months = $monthsShort = [];
+        for ($i = 0; $i < 7; $i++) {
+            $days[] = $startOfWeek->isoFormat('dd');
+            $startOfWeek->addDay();
+        }
+        for ($i = 1; $i <= 12; $i++) {
+            $day = \Carbon\Carbon::createFromDate(2020, $i);
+            $months[] = $day->isoFormat('MMMM');
+            $monthsShort[] = $day->isoFormat('MMM');
+        }
+        $localization = [
+            'days' => $days,
+            'months' => $months,
+            'monthsShort' => $monthsShort,
+            'today' => __('Hari ini'),
+            'now' => __('Sekarang'),
+        ];
+
+        return $localization;
+    }
+}
