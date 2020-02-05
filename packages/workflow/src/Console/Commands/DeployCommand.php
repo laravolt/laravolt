@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\Deployment;
 use Laravolt\Workflow\Models\Bpmn;
 
@@ -88,11 +89,10 @@ class DeployCommand extends Command
         }
 
         $result = Bpmn::all()->transform(function ($item) use ($existingBpmn, $deployedBpmn) {
-
             if ($existingBpmn->firstWhere('filename', $item->filename)) {
                 if ($deployedBpmn->firstWhere('resource', $item->filename)) {
                     $status = '<fg=yellow>Updated</>';
-                } elseif(!file_exists(resource_path("bpmn/{$item->filename}"))) {
+                } elseif (!file_exists(resource_path("bpmn/{$item->filename}"))) {
                     $status = '<fg=red>Deleted</>';
                 } else {
                     $status = '<fg=white>No Modification</>';
@@ -101,9 +101,20 @@ class DeployCommand extends Command
                 $status = '<fg=green>New</>';
             }
 
-            return [$item->filename, $item->process_definition_id, $item->process_definition_key, $status];
-        })->toArray();
+            return [
+                'filename' => $item->filename,
+                'process_definition_id' => $item->process_definition_id,
+                'process_definition_key' => $item->process_definition_key,
+                'status' => $status,
+            ];
+        });
 
-        $this->table(['BPMN File', 'Process Definition ID', 'Process Definition Key', 'Status'], $result);
+        $this->table(['BPMN File', 'Process Definition ID', 'Process Definition Key', 'Status'], $result->toArray());
+
+        foreach ($result->toArray() as $bpmn) {
+            if (Str::contains($bpmn['status'], ['New', 'Updated'])) {
+                $this->call('workflow:import', ['key' => $bpmn['process_definition_key']]);
+            }
+        }
     }
 }
