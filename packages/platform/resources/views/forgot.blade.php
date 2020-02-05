@@ -11,7 +11,7 @@
     <form class="ui form" method="POST" action="{{ route('auth::forgot') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-        <div class="ui field left icon input fluid">
+        <div class="ui field right icon input fluid">
             <input type="email" name="email" placeholder="@lang('laravolt::auth.email')" value="{{ old('email') }}">
             <i class="mail icon"></i>
         </div>
@@ -20,6 +20,6 @@
 
     @if(config('laravolt.auth.registration.enable'))
         <div class="ui divider hidden section"></div>
-        @lang('laravolt::auth.not_registered_yet?') <a href="{{ route('auth::register') }}">@lang('laravolt::auth.register_here')</a>
+        @lang('laravolt::auth.not_registered_yet?') <a href="{{ route('auth::register') }}" class="link">@lang('laravolt::auth.register_here')</a>
     @endif
 @endsection
