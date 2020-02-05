@@ -14,18 +14,21 @@ class DeployCommand extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'workflow:deploy {name} {--all}';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Deploy BPMN file to Camunda Server and then import form definition and table structure';
 
     /**
      * Execute the console command.
+     *
      * @return mixed
      */
     public function handle()
@@ -88,11 +91,10 @@ class DeployCommand extends Command
         }
 
         $result = Bpmn::all()->transform(function ($item) use ($existingBpmn, $deployedBpmn) {
-
             if ($existingBpmn->firstWhere('filename', $item->filename)) {
                 if ($deployedBpmn->firstWhere('resource', $item->filename)) {
                     $status = '<fg=yellow>Updated</>';
-                } elseif(!file_exists(resource_path("bpmn/{$item->filename}"))) {
+                } elseif (!file_exists(resource_path("bpmn/{$item->filename}"))) {
                     $status = '<fg=red>Deleted</>';
                 } else {
                     $status = '<fg=white>No Modification</>';
