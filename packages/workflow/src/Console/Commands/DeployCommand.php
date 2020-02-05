@@ -15,18 +15,21 @@ class DeployCommand extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'workflow:deploy {name} {--all}';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Deploy BPMN file to Camunda Server and then import form definition and table structure';
 
     /**
      * Execute the console command.
+     *
      * @return mixed
      */
     public function handle()
