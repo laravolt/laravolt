@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\Deployment;
 use Laravolt\Workflow\Models\Bpmn;
 
@@ -53,11 +54,11 @@ class DeployCommand extends Command
             $filesToBeDeployed = collect([$choice]);
         }
 
-        $deployedBpmn = Bpmn::all();
+        $existingBpmn = Bpmn::all();
 
-        $filesToBeDeployed = $filesToBeDeployed->reject(function ($file) use ($deployedBpmn) {
+        $filesToBeDeployed = $filesToBeDeployed->reject(function ($file) use ($existingBpmn) {
             $lastModified = Carbon::createFromTimestamp(File::lastModified($file));
-            $lastDeployed = $deployedBpmn->where('filename', basename($file))->first()->deployed_at ?? false;
+            $lastDeployed = $existingBpmn->where('filename', basename($file))->first()->deployed_at ?? false;
             if (!$lastDeployed) {
                 return false;
             }
@@ -65,28 +66,58 @@ class DeployCommand extends Command
             return $lastModified->isBefore(Carbon::parse($lastDeployed));
         });
 
-        try {
-            $deployName = $this->argument('name');
-            $result = (new Deployment())->create($deployName, $filesToBeDeployed->toArray());
-            $this->info('Deployment ID '.$result->id);
+        $deployedBpmn = collect();
+        if ($filesToBeDeployed->isNotEmpty()) {
+            try {
+                $deployName = $this->argument('name');
+                $result = (new Deployment())->create($deployName, $filesToBeDeployed->toArray());
+                $this->info('Deployment ID '.$result->id);
 
-            $info = [];
-            foreach ($result->deployedProcessDefinitions as $processDefinition) {
-                Bpmn::updateOrCreate(
-                    ['filename' => $processDefinition->resource],
-                    [
-                        'process_definition_id' => $processDefinition->id,
-                        'process_definition_key' => $processDefinition->key,
-                        'version' => $processDefinition->version,
-                        'deployment_id' => $processDefinition->deploymentId,
-                        'deployed_at' => $result->deploymentTime,
-                    ]
-                );
-                $info[] = [$processDefinition->resource, $processDefinition->id, $processDefinition->key];
+                foreach ($result->deployedProcessDefinitions as $processDefinition) {
+                    Bpmn::updateOrCreate(
+                        ['filename' => $processDefinition->resource],
+                        [
+                            'process_definition_id' => $processDefinition->id,
+                            'process_definition_key' => $processDefinition->key,
+                            'version' => $processDefinition->version,
+                            'deployment_id' => $processDefinition->deploymentId,
+                            'deployed_at' => $result->deploymentTime,
+                        ]
+                    );
+                    $deployedBpmn->push($processDefinition);
+                }
+            } catch (ServerException | ClientException $e) {
+                $this->error((string) $e->getResponse()->getBody());
             }
-            $this->table(['BPMN File', 'Process Definition ID', 'Process Definition Key'], $info);
-        } catch (ServerException | ClientException $e) {
-            $this->error((string) $e->getResponse()->getBody());
+        }
+
+        $result = Bpmn::all()->transform(function ($item) use ($existingBpmn, $deployedBpmn) {
+            if ($existingBpmn->firstWhere('filename', $item->filename)) {
+                if ($deployedBpmn->firstWhere('resource', $item->filename)) {
+                    $status = '<fg=yellow>Updated</>';
+                } elseif (!file_exists(resource_path("bpmn/{$item->filename}"))) {
+                    $status = '<fg=red>Deleted</>';
+                } else {
+                    $status = '<fg=white>No Modification</>';
+                }
+            } else {
+                $status = '<fg=green>New</>';
+            }
+
+            return [
+                'filename' => $item->filename,
+                'process_definition_id' => $item->process_definition_id,
+                'process_definition_key' => $item->process_definition_key,
+                'status' => $status,
+            ];
+        });
+
+        $this->table(['BPMN File', 'Process Definition ID', 'Process Definition Key', 'Status'], $result->toArray());
+
+        foreach ($result->toArray() as $bpmn) {
+            if (Str::contains($bpmn['status'], ['New', 'Updated'])) {
+                $this->call('workflow:import', ['key' => $bpmn['process_definition_key']]);
+            }
         }
     }
 }
