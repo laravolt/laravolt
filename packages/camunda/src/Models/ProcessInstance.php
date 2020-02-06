@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Camunda\Models;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -149,5 +150,50 @@ class ProcessInstance extends CamundaModel
         ];
 
         return $this->put('suspended', $data, true);
+    }
+
+    /*
+     * Undo process: cancel last task and move one step backward
+     * See https://docs.camunda.org/manual/7.8/reference/rest/process-instance/post-modification/
+     */
+    public function undo()
+    {
+        $activities = $this->get('history/activity-instance?processInstanceId='.$this->id.'&sortBy=endTime&sortOrder=desc&activityType=userTask');
+        $canceledActivities = $this->get('history/activity-instance?processInstanceId='.$this->id.'&canceled=true');
+        $canceledActivities = collect($canceledActivities)->pluck('id')->toArray();
+
+        $activities = collect($activities)->reject(function ($item) use ($canceledActivities) {
+            return in_array($item->id, $canceledActivities);
+        });
+
+        $currenctActivity = $activities->shift();
+        $previousActivity = $activities->shift();
+
+        if (!$currenctActivity || !$previousActivity) {
+            throw new \DomainException(sprintf('Process instance %s tidak memiliki Activity Instance yang valid',
+                $this->id));
+        }
+
+        $cancellation = new \stdClass();
+        $cancellation->type = 'cancel';
+        $cancellation->activityInstanceId = $currenctActivity->id;
+
+        $moveBackward = new \stdClass();
+        $moveBackward->type = 'startBeforeActivity';
+        $moveBackward->activityId = $previousActivity->activityId;
+
+        $payload = [
+            'skipCustomListeners' => true,
+            'skipIoMappings' => true,
+            'instructions' => [$moveBackward, $cancellation],
+        ];
+
+        try {
+            return $this->post('modification', $payload, true);
+        } catch (ClientException $e) {
+            $message = json_decode((string) $e->getResponse()->getBody())->message ?? $e->getMessage();
+
+            throw new \Exception($message);
+        }
     }
 }
