@@ -15,6 +15,7 @@ mix.setPublicPath('public')
 mix.scripts([
     './node_modules/jquery/dist/jquery.min.js',
     './public/semantic/semantic.min.js',
+    './public/lottiefiles/tgs-player.js',
     './node_modules/simplebar/dist/simplebar.js',
     'resources/js/components/basictable.js',
     'resources/js/components/keymaster.js',

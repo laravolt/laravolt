@@ -16,7 +16,7 @@
     {!! Assets::css() !!}
 </head>
 
-<body data-theme="{{ config('laravolt.ui.sidebar_theme') }}" class="{{ $bodyClass ?? '' }}">
+<body data-theme="{{ config('laravolt.ui.sidebar_theme') }}" login-theme="{{ config('laravolt.ui.login_theme') }}" class="{{ $bodyClass ?? '' }}">
 
 @yield('body')
 
