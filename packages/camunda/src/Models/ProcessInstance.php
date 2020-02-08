@@ -208,8 +208,8 @@ class ProcessInstance extends CamundaModel
             });
 
         $targetActivity = $activities->firstWhere('activityId', $taskDefinitionKey);
-        $targetActivityIndex = $activities->search(function($item) use ($targetActivity) {
-           return  $item->id == $targetActivity->id;
+        $targetActivityIndex = $activities->search(function ($item) use ($targetActivity) {
+            return  $item->id == $targetActivity->id;
         });
 
         if (!$targetActivity) {
