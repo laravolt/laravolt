@@ -158,13 +158,12 @@ class ProcessInstance extends CamundaModel
      */
     public function undo()
     {
-        $activities = $this->get('history/activity-instance?processInstanceId='.$this->id.'&sortBy=endTime&sortOrder=desc&activityType=userTask');
-        $canceledActivities = $this->get('history/activity-instance?processInstanceId='.$this->id.'&canceled=true');
-        $canceledActivities = collect($canceledActivities)->pluck('id')->toArray();
+        $activities = $this->get('history/activity-instance?processInstanceId='.$this->id.'&sortBy=startTime&sortOrder=desc&activityType=userTask');
 
-        $activities = collect($activities)->reject(function ($item) use ($canceledActivities) {
-            return in_array($item->id, $canceledActivities);
-        });
+        $activities = collect($activities)
+            ->reject(function ($item) {
+                return $item->canceled;
+            });
 
         $currenctActivity = $activities->shift();
         $previousActivity = $activities->shift();
@@ -189,7 +188,60 @@ class ProcessInstance extends CamundaModel
         ];
 
         try {
-            return $this->post('modification', $payload, true);
+            $this->post('modification', $payload, true);
+
+            return [$previousActivity, $currenctActivity];
+        } catch (ClientException $e) {
+            $message = json_decode((string) $e->getResponse()->getBody())->message ?? $e->getMessage();
+
+            throw new \Exception($message);
+        }
+    }
+
+    public function moveTo(string $taskDefinitionKey)
+    {
+        $activities = $this->get('history/activity-instance?processInstanceId='.$this->id.'&sortBy=startTime&sortOrder=asc&activityType=userTask');
+
+        $activities = collect($activities)
+            ->reject(function ($item) {
+                return $item->canceled;
+            });
+
+        $targetActivity = $activities->firstWhere('activityId', $taskDefinitionKey);
+        $targetActivityIndex = $activities->search(function($item) use ($targetActivity) {
+           return  $item->id == $targetActivity->id;
+        });
+
+        if (!$targetActivity) {
+            throw new \DomainException(sprintf('Invalid $taskDefinitionKey: %s', $taskDefinitionKey));
+        }
+
+        $canceledActivities = $activities->splice($targetActivityIndex + 1)->where('endTime', null);
+
+        $instructions = [];
+
+        foreach ($canceledActivities as $activity) {
+            $cancellation = new \stdClass();
+            $cancellation->type = 'cancel';
+            $cancellation->activityInstanceId = $activity->id;
+            $instructions[] = $cancellation;
+        }
+
+        $jumpToTargetActivity = new \stdClass();
+        $jumpToTargetActivity->type = 'startBeforeActivity';
+        $jumpToTargetActivity->activityId = $targetActivity->activityId;
+        $instructions[] = $jumpToTargetActivity;
+
+        $payload = [
+            'skipCustomListeners' => true,
+            'skipIoMappings' => true,
+            'instructions' => $instructions,
+        ];
+
+        try {
+            $this->post('modification', $payload, true);
+
+            return $canceledActivities->prepend($targetActivity);
         } catch (ClientException $e) {
             $message = json_decode((string) $e->getResponse()->getBody())->message ?? $e->getMessage();
 

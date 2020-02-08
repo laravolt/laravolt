@@ -216,6 +216,40 @@ class Workflow implements Contracts\Workflow
         return $processInstance;
     }
 
+    public function undoProcess(string $processInstanceId): ProcessInstance
+    {
+        $processInstance = (new ProcessInstance($processInstanceId))->fetch();
+
+        DB::transaction(function () use ($processInstance) {
+            list($previousActivity, $currentActivity) = $processInstance->undo();
+
+            // Delete current active task
+            DB::table('camunda_task')
+                ->where('task_id', $currentActivity->taskId)
+                ->delete();
+
+            // Update last completed task
+            DB::table('camunda_task')
+                ->where('task_id', $previousActivity->taskId)
+                ->update(['status' => TaskStatus::NEW, 'form_id' => null]);
+        });
+
+        return $processInstance;
+    }
+
+    public function moveProcessTo(string $processInstanceId, string $taskDefinitionKey): ProcessInstance
+    {
+        $processInstance = (new ProcessInstance($processInstanceId))->fetch();
+
+        DB::transaction(function () use ($processInstance, $taskDefinitionKey) {
+            $activities = $processInstance->moveTo($taskDefinitionKey);
+
+            //TODO: hapus/update status entri di camunda_task
+        });
+
+        return $processInstance;
+    }
+
     public function deleteProcess(string $processInstanceId)
     {
         $processInstance = (new ProcessInstance($processInstanceId))->fetch();
