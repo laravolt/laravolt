@@ -108,10 +108,10 @@ abstract class CamundaModel
 
     protected function modelUri(): string
     {
-        if ($this->key) {
-            return Str::kebab(class_basename($this)).'/key/'.$this->key.$this->tenant();
-        } else {
+        if ($this->id) {
             return Str::kebab(class_basename($this)).'/'.$this->id;
+        } else {
+            return Str::kebab(class_basename($this)).'/key/'.$this->key.$this->tenant();
         }
     }
 
