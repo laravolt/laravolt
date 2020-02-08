@@ -26,4 +26,6 @@ class TaskStatus extends Enum implements LocalizedEnum
     const DELEGATED = 'DELEGATED';
 
     const COMPLETED = 'COMPLETED';
+
+    const CANCELED = 'CANCELED';
 }

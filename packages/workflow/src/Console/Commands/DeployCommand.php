@@ -18,7 +18,7 @@ class DeployCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'workflow:deploy {name} {--all}';
+    protected $signature = 'workflow:deploy {name} {--all} {--fresh}';
 
     /**
      * The console command description.
@@ -34,6 +34,10 @@ class DeployCommand extends Command
      */
     public function handle()
     {
+        if ($this->option('fresh')) {
+            Bpmn::query()->delete();
+        }
+
         $files = collect(File::allFiles(resource_path('bpmn')))
             ->map(function ($item) {
                 return $item->getPathname();

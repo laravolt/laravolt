@@ -6,6 +6,17 @@ namespace Laravolt\Camunda\Models;
 
 class Deployment extends CamundaModel
 {
+    public static function all()
+    {
+        $results = (new static())->request('deployment', 'get');
+        $deployments = [];
+        foreach ($results as $result) {
+            $deployments[] = new static($result->id, $result);
+        }
+
+        return $deployments;
+    }
+
     public function create($name, $bpmnFiles)
     {
         $bpmnFiles = (array) $bpmnFiles;
@@ -27,7 +38,7 @@ class Deployment extends CamundaModel
             ],
             [
                 'name' => 'tenant-id',
-                'contents' => config('camunda.api.tenant-id'),
+                'contents' => config('laravolt.camunda.api.tenant-id'),
             ],
         ];
 
