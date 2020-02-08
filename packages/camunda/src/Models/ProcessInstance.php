@@ -216,11 +216,12 @@ class ProcessInstance extends CamundaModel
             throw new \DomainException(sprintf('Invalid $taskDefinitionKey: %s', $taskDefinitionKey));
         }
 
-        $canceledActivities = $activities->splice($targetActivityIndex + 1)->where('endTime', null);
+        $canceledActivities = $activities->splice($targetActivityIndex + 1);
+        $toBeCanceled = $canceledActivities->where('endTime', null);
 
         $instructions = [];
 
-        foreach ($canceledActivities as $activity) {
+        foreach ($toBeCanceled as $activity) {
             $cancellation = new \stdClass();
             $cancellation->type = 'cancel';
             $cancellation->activityInstanceId = $activity->id;

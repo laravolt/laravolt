@@ -63,7 +63,7 @@ abstract class CamundaModel
         return $this->request($url, 'put', $this->getData($data, $json));
     }
 
-    protected function delete(string $url, array $data = [], bool $json = true)
+    public function delete(string $url, array $data = [], bool $json = true)
     {
         return $this->request($url, 'delete', $this->getData($data, $json));
     }
@@ -84,7 +84,7 @@ abstract class CamundaModel
         return $this->request($url, 'get');
     }
 
-    private function request($url, $method, $data = [])
+    protected function request($url, $method, $data = [])
     {
         $data['auth'] = [
             Config::get('laravolt.camunda.api.auth.user'), Config::get('laravolt.camunda.api.auth.password'),
@@ -115,9 +115,11 @@ abstract class CamundaModel
         }
     }
 
-    protected function tenant(): string
+    protected function tenant(): ?string
     {
-        return strlen(Config::get('laravolt.camunda.api.tenant-id') ?? '') ? '/tenant-id/'.Config::get('laravolt.camunda.api.tenant-id') : '';
+        $tenantId = Config::get('laravolt.camunda.api.tenant-id');
+
+        return strlen($tenantId ?? '') ? '/tenant-id/'.$tenantId : null;
     }
 
     protected function formatVariables(array $data): array

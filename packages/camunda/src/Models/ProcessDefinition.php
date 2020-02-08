@@ -14,6 +14,17 @@ class ProcessDefinition extends CamundaModel
         return $processDefinition;
     }
 
+    public static function all()
+    {
+        $results = (new static())->request('process-definition', 'get');
+        $processDefinitions = [];
+        foreach ($results as $result) {
+            $processDefinitions[] = new static($result->id, $result);
+        }
+
+        return $processDefinitions;
+    }
+
     public function startInstance($data = [], $businessKey = null)
     {
         // At least one value must be set...

@@ -6,6 +6,7 @@ namespace Laravolt\Workflow;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -84,7 +85,6 @@ class Workflow implements Contracts\Workflow
         $payload = Payload::make($module, $module->startTaskName, $data);
 
         $processInstance = DB::transaction(function () use ($processDefinition, $module, $data, $payload) {
-
             // Memulai proses, dengan membuat Process Instance baru di Camunda.
             $processInstance = $processDefinition->startInstance(
                 $payload->toCamundaVariables(),
@@ -221,7 +221,7 @@ class Workflow implements Contracts\Workflow
         $processInstance = (new ProcessInstance($processInstanceId))->fetch();
 
         DB::transaction(function () use ($processInstance) {
-            list($previousActivity, $currentActivity) = $processInstance->undo();
+            [$previousActivity, $currentActivity] = $processInstance->undo();
 
             // Delete current active task
             DB::table('camunda_task')
@@ -243,8 +243,11 @@ class Workflow implements Contracts\Workflow
 
         DB::transaction(function () use ($processInstance, $taskDefinitionKey) {
             $activities = $processInstance->moveTo($taskDefinitionKey);
+            $ids = $activities->pluck('taskId')->toArray();
 
-            //TODO: hapus/update status entri di camunda_task
+            DB::table('camunda_task')->whereIn('task_id', $ids)->update(['status' => TaskStatus::CANCELED]);
+
+            $this->prepareNextTask($processInstance);
         });
 
         return $processInstance;
@@ -445,7 +448,12 @@ class Workflow implements Contracts\Workflow
         $query = DB::table('camunda_task')
             ->orderBy('created_at')
             ->where('process_instance_id', $processInstanceId)
-            ->whereNotIn('status', [TaskStatus::DRAFT]);
+            ->where(function(Builder $query){
+                $query->whereNull('task_id')->orWhere(function(Builder $query2) {
+                    $query2->where('status', TaskStatus::COMPLETED)
+                        ->whereNotNull('task_id');
+                });
+            });
 
         if (!empty($whitelist)) {
             $query->whereIn('task_name', $whitelist);
@@ -573,7 +581,6 @@ class Workflow implements Contracts\Workflow
                 $key = $item->key;
                 $formDefition = config("workflow.forms.$key");
                 $rules = collect($formDefition)->mapWithKeys(function ($item) {
-
                     //coba damar
                     $nameTemp = str_replace('[]', '', $item['name']);
 
