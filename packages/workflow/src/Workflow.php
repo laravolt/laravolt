@@ -448,8 +448,8 @@ class Workflow implements Contracts\Workflow
         $query = DB::table('camunda_task')
             ->orderBy('created_at')
             ->where('process_instance_id', $processInstanceId)
-            ->where(function(Builder $query){
-                $query->whereNull('task_id')->orWhere(function(Builder $query2) {
+            ->where(function (Builder $query) {
+                $query->whereNull('task_id')->orWhere(function (Builder $query2) {
                     $query2->where('status', TaskStatus::COMPLETED)
                         ->whereNotNull('task_id');
                 });
