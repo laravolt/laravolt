@@ -80,6 +80,6 @@ class MakeCommand extends Command
         );
 
         $this->info('Importing form dan tabel...');
-        Artisan::call('workflow:import', ['processDefinitionKey' => $processDefinitionKey]);
+        Artisan::call('workflow:import', ['key' => $processDefinitionKey]);
     }
 }
