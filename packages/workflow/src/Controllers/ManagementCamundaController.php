@@ -91,7 +91,6 @@ class ManagementCamundaController extends Controller
         $field_meta = json_decode($data['field_meta']);
         $forms = collect(config('workflow.forms'))->keys();
         $forms = $forms->combine($forms)->toArray();
-        \Debugbar::debug($data->toJson());
 
         return view('managementcamunda::edit', compact('type_options', 'data', 'field_meta', 'fields', 'forms'));
     }
