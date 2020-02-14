@@ -1,6 +1,7 @@
 <?php
 
 use Laravolt\Workflow\Controllers\Actions\AutoSave;
+use Laravolt\Workflow\Controllers\CockpitController;
 use Laravolt\Workflow\Controllers\PrintController;
 use Laravolt\Workflow\Controllers\ProcessController;
 use Laravolt\Workflow\Controllers\TableController;
@@ -18,6 +19,7 @@ $router->group(
         $router->put('module/{id}', [\Laravolt\Workflow\Controllers\ModuleController::class, 'update'])->name('module.update');
 
         $router->get('table', [TableController::class, 'index'])->name('table.index');
+        $router->get('cockpit', [CockpitController::class, 'index'])->name('cockpit.index');
 
         $router->get('{module}/{processInstanceId}/print/{templateId}', [PrintController::class, 'index'])->name('print.index');
 

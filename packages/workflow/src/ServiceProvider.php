@@ -52,6 +52,7 @@ class ServiceProvider extends BaseServiceProvider
             app('laravolt.menu.sidebar')->register(function ($menu) {
                 $menu = $menu->system->add('Workflow')->data('icon', 'fork');
                 $menu->add('Module', route('workflow::module.index'))->active('workflow/module');
+                $menu->add('Cockpit', route('workflow::cockpit.index'))->active('workflow/cockpit');
                 $menu->add('Form Fields', route('managementcamunda.index'))
                     ->data('icon', 'wpforms')
                     ->active('managementcamunda/*');
