@@ -41,7 +41,6 @@ class MenuBuilder
     public function loadArray(array $menu)
     {
         foreach ($menu as $title => $option) {
-
             app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option) {
                 $section = $menu->add($title);
                 if (isset($option['menu'])) {
@@ -51,7 +50,6 @@ class MenuBuilder
                     $this->setData($section, $option['data']);
                 }
             });
-
         }
     }
 

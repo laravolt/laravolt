@@ -16,6 +16,7 @@ class ServiceProvider extends BaseServiceProvider
 
     /**
      * Register the service provider.
+     *
      * @return void
      */
     public function register()
@@ -53,6 +54,7 @@ class ServiceProvider extends BaseServiceProvider
 
     /**
      * Application is booting.
+     *
      * @return void
      */
     public function boot()
