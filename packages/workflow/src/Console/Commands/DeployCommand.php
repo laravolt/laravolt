@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Laravolt\Camunda\Models\Deployment;
 use Laravolt\Workflow\Models\Bpmn;
+use ZipStream\Exception;
 
 class DeployCommand extends Command
 {
@@ -78,6 +79,13 @@ class DeployCommand extends Command
                 $this->info('Deployment ID '.$result->id);
 
                 foreach ($result->deployedProcessDefinitions as $processDefinition) {
+
+                    try {
+                        $deployedAt = Carbon::parse($result->deploymentTime);
+                    } catch (Exception $e) {
+                        $deployedAt = now();
+                    }
+
                     Bpmn::updateOrCreate(
                         ['filename' => $processDefinition->resource],
                         [
@@ -85,7 +93,7 @@ class DeployCommand extends Command
                             'process_definition_key' => $processDefinition->key,
                             'version' => $processDefinition->version,
                             'deployment_id' => $processDefinition->deploymentId,
-                            'deployed_at' => $result->deploymentTime,
+                            'deployed_at' => $deployedAt,
                         ]
                     );
                     $deployedBpmn->push($processDefinition);
