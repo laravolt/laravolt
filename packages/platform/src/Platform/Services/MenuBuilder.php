@@ -31,22 +31,27 @@ class MenuBuilder
 
     public function loadSection($name, $menu, $options = [])
     {
-        $section = app('laravolt.menu')->add($name);
-        $this->setData($section, $options);
-
-        $this->addMenu($section, $menu);
+        app('laravolt.menu.sidebar')->register(function ($menu) use ($name, $options) {
+            $section = $menu->add($name);
+            $this->setData($section, $options);
+            $this->addMenu($section, $menu);
+        });
     }
 
     public function loadArray(array $menu)
     {
         foreach ($menu as $title => $option) {
-            $section = app('laravolt.menu')->add($title);
-            if (isset($option['menu'])) {
-                $this->addMenu($section, $option['menu']);
-            }
-            if (isset($option['data'])) {
-                $this->setData($section, $option['data']);
-            }
+
+            app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option) {
+                $section = $menu->add($title);
+                if (isset($option['menu'])) {
+                    $this->addMenu($section, $option['menu']);
+                }
+                if (isset($option['data'])) {
+                    $this->setData($section, $option['data']);
+                }
+            });
+
         }
     }
 

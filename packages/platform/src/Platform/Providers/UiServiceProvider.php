@@ -7,6 +7,7 @@ namespace Laravolt\Platform\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
@@ -35,25 +36,13 @@ class UiServiceProvider extends BaseServiceProvider
             return new Menu();
         });
 
-        $this->app->singleton(
-            'laravolt.menu',
-            function (Application $app) {
-                return app('laravolt.menu.sidebar')->make(
-                    'sidebar',
-                    function (Builder $menu) {
-                        return $menu;
-                    }
-                );
-            }
-        );
-
         $this->bootConfig();
 
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
-        $this->app['laravolt.menu']
-            ->add('System')
-            ->data('order', config('laravolt.ui.system_menu.order'));
+        app('laravolt.menu.sidebar')->register(function ($menu) {
+            $menu->add('System')->data('order', config('laravolt.ui.system_menu.order'));
+        });
 
         $this->registerAssets();
 

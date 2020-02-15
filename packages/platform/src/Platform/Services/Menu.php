@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
+use Lavary\Menu\Builder;
 use Lavary\Menu\Item;
 use Lavary\Menu\Menu as BaseMenu;
 
@@ -44,7 +45,12 @@ class Menu extends BaseMenu
 
     public function all()
     {
-        $sidebar = $this->get('sidebar');
+        $sidebar = app('laravolt.menu.sidebar')->make(
+            'sidebar',
+            function (Builder $menu) {
+                return $menu;
+            }
+        );
 
         foreach ($this->callbacks as $callback) {
             call_user_func($callback, $sidebar);

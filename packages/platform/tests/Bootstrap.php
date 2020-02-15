@@ -10,6 +10,7 @@ use Laravolt\Platform\Providers\AuthServiceProvider;
 use Laravolt\Platform\Providers\EpicentrumServiceProvider;
 use Laravolt\Platform\Providers\PlatformServiceProvider;
 use Laravolt\Platform\Providers\UiServiceProvider;
+use Lavary\Menu\ServiceProvider;
 
 trait Bootstrap
 {
@@ -46,6 +47,7 @@ trait Bootstrap
     protected function getPackageProviders($app)
     {
         return [
+            ServiceProvider::class,
             AuthServiceProvider::class,
             EpicentrumServiceProvider::class,
             NoCaptchaServiceProvider::class,
