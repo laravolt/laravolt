@@ -79,7 +79,6 @@ class DeployCommand extends Command
                 $this->info('Deployment ID '.$result->id);
 
                 foreach ($result->deployedProcessDefinitions as $processDefinition) {
-
                     try {
                         $deployedAt = Carbon::parse($result->deploymentTime);
                     } catch (Exception $e) {
