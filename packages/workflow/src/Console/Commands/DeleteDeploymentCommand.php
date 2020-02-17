@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Console\Command;
 use Laravolt\Camunda\Models\Deployment;
+use Laravolt\Workflow\Models\Bpmn;
 
 class DeleteDeploymentCommand extends Command
 {
@@ -41,6 +42,7 @@ class DeleteDeploymentCommand extends Command
         foreach ($deployments as $deployment) {
             try {
                 $deployment->delete("deployment/{$deployment->id}?cascade=true");
+                Bpmn::query()->where('deployment_id', $deployment->id)->delete();
                 $deleted++;
             } catch (ClientException|ServerException $e) {
                 $this->error(json_decode((string) $e->getResponse()->getBody())->message ?? $e->getMessage());
