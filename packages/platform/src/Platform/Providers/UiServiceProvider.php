@@ -7,12 +7,10 @@ namespace Laravolt\Platform\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
-use Lavary\Menu\Builder;
 use Stolz\Assets\Manager;
 
 /**
