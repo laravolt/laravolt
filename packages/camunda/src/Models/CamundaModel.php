@@ -17,8 +17,11 @@ abstract class CamundaModel
 
     public $key;
 
+    public $tenantId;
+
     public function __construct($id = null, $attributes = [])
     {
+        $this->tenantId = Config::get('laravolt.camunda.api.tenant_id');
         $urls = parse_url(Config::get('laravolt.camunda.api.url', ''));
 
         $port = '';
@@ -117,9 +120,7 @@ abstract class CamundaModel
 
     protected function tenant(): ?string
     {
-        $tenantId = Config::get('laravolt.camunda.api.tenant-id');
-
-        return strlen($tenantId ?? '') ? '/tenant-id/'.$tenantId : null;
+        return strlen($this->tenantId ?? '') ? '/tenant-id/'.$this->tenantId : null;
     }
 
     protected function formatVariables(array $data): array

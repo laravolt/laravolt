@@ -36,11 +36,14 @@ class Deployment extends CamundaModel
                 'name' => 'deployment-name',
                 'contents' => $name,
             ],
-            [
-                'name' => 'tenant-id',
-                'contents' => config('laravolt.camunda.api.tenant-id'),
-            ],
         ];
+
+        if ($this->tenantId) {
+            $multipart[] = [
+                'name' => 'tenant-id',
+                'contents' => $this->tenantId,
+            ];
+        }
 
         return $this->post('deployment/create', [
             'multipart' => array_merge($multipart, $attachments),
