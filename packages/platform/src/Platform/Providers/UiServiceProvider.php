@@ -112,7 +112,7 @@ class UiServiceProvider extends BaseServiceProvider
             return $app->make(Flash::class);
         });
 
-        $this->app->singleton('laravolt.flash.middleware', function (Application $app) {
+        $this->app->singleton(FlashMiddleware::class, function (Application $app) {
             return new FlashMiddleware($app['laravolt.flash']);
         });
     }
