@@ -19,6 +19,7 @@ class CreateBpmnTable extends Migration
             $table->string('process_definition_id');
             $table->string('process_definition_key');
             $table->unsignedInteger('version');
+            $table->jsonb('nodes');
             $table->string('deployment_id');
             $table->timestamp('deployed_at');
             $table->timestamps();

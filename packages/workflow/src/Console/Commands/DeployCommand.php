@@ -16,21 +16,18 @@ class DeployCommand extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'workflow:deploy {name} {--all} {--fresh}';
 
     /**
      * The console command description.
-     *
      * @var string
      */
     protected $description = 'Deploy BPMN file to Camunda Server and then import form definition and table structure';
 
     /**
      * Execute the console command.
-     *
      * @return mixed
      */
     public function handle()
@@ -91,6 +88,7 @@ class DeployCommand extends Command
                             'process_definition_id' => $processDefinition->id,
                             'process_definition_key' => $processDefinition->key,
                             'version' => $processDefinition->version,
+                            'nodes' => $this->getNodes(resource_path('bpmn/'.$processDefinition->resource)),
                             'deployment_id' => $processDefinition->deploymentId,
                             'deployed_at' => $deployedAt,
                         ]
@@ -130,5 +128,34 @@ class DeployCommand extends Command
                 $this->call('workflow:import', ['key' => $bpmn['process_definition_key']]);
             }
         }
+    }
+
+    protected function getNodes($file): array
+    {
+        $xml = new \SimpleXMLElement($file, 0, true);
+        $xml->registerXPathNamespace('bpmn', 'http://www.omg.org/spec/BPMN/20100524/MODEL');
+        $xml->registerXPathNamespace('camunda', 'http://camunda.org/schema/1.0/bpmn');
+
+        $nodesMapping = [
+            'startEvent' => '//bpmn:startEvent',
+            'userTask' => '//bpmn:userTask',
+            'callActivity' => '//bpmn:callActivity',
+        ];
+
+        $nodes = [];
+        foreach ($nodesMapping as $type => $selector) {
+            $elements = $xml->xpath($selector);
+            foreach ($elements as $element) {
+                $id = (string) $element->attributes()['id'] ?? null;
+                if ($id) {
+                    $nodes[] = [
+                        'type' => $type,
+                        'id' => $id,
+                    ];
+                }
+            }
+        }
+
+        return $nodes;
     }
 }

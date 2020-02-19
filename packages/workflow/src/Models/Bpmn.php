@@ -11,4 +11,8 @@ class Bpmn extends Model
     protected $table = 'workflow_bpmn';
 
     protected $guarded = [];
+
+    protected $casts = [
+        'nodes' => 'array',
+    ];
 }
