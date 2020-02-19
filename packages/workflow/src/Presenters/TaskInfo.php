@@ -63,7 +63,6 @@ class TaskInfo
 
         $formDefinition = (new FormAdapter($fields, $values))->readonly()->toArray();
         $task = $this->module->getTask($this->task->task_name);
-        // dump($formDefinition);
 
         //coba damar
         foreach ($formDefinition as $keys => $lists) {
@@ -81,7 +80,7 @@ class TaskInfo
 
         return view('workflow::components.task-info', [
             'task' => $this->task,
-            'taskConfig' => $task,
+            'taskIdentifier' => $task['task'] ?? $this->task->task_name,
             'module' => $this->module,
             'title' => $task['label'] ?? Str::humanize($this->task->task_name),
             'formDefinition' => $formDefinition,
