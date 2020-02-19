@@ -10,7 +10,7 @@ class MakeTableCommnad extends GeneratorCommand
 {
     protected $type = 'Class';
 
-    protected $name = "make:table {name}";
+    protected $name = 'make:table {name}';
 
     protected $description = 'Create a new Table builder';
 

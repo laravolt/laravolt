@@ -65,7 +65,6 @@ abstract class TableView implements Responsable
         $table->columns($this->html->filter($this->columns()));
 
         return $table->render();
-
     }
 
     public function toResponse($request)
