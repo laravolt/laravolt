@@ -16,6 +16,7 @@ use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
+use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
@@ -25,11 +26,12 @@ use Laravolt\Platform\Services\Password;
 class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     protected $commands = [
-        SyncPermission::class,
         AdminCommand::class,
-        LinkCommand::class,
-        ManageUser::class,
+        MakeTableCommnad::class,
         ManageRole::class,
+        ManageUser::class,
+        LinkCommand::class,
+        SyncPermission::class,
     ];
 
     public function register(): void

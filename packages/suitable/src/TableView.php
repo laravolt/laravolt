@@ -22,7 +22,7 @@ abstract class TableView implements Responsable
     /**
      * TableView constructor.
      */
-    public function __construct($source)
+    public function __construct($source = null)
     {
         $this->source = $source;
         $this->html = new Html();
@@ -35,6 +35,37 @@ abstract class TableView implements Responsable
         $table = new static($source);
 
         return $table;
+    }
+
+    public function render()
+    {
+        if ($this->search !== null) {
+            $this->html->search($this->search);
+        }
+
+        $source = $this->getSource();
+        $table = app('laravolt.suitable')->source($this->html->resolve($source));
+
+        if (is_string($this->title) && $this->title !== '') {
+            $table->title($this->title);
+        }
+
+        // Start decorating table
+        // 1. HTML decoration
+        $this->html->decorate($table);
+
+        // 2. User defined decoration
+        if (is_callable($this->decorateCallback)) {
+            call_user_func($this->decorateCallback, $table);
+        }
+
+        // 3. Plugin decoration
+        collect($this->plugins)->each->decorate($table);
+
+        $table->columns($this->html->filter($this->columns()));
+
+        return $table->render();
+
     }
 
     public function toResponse($request)
