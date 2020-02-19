@@ -33,7 +33,7 @@ class MakeCommand extends Command
      */
     public function handle()
     {
-        $name = $this->ask('Human friendly label, akan ditampilkan sebagai di halaman web');
+        $name = $this->ask('Human friendly label, akan ditampilkan sebagai judul halaman web');
 
         do {
             $id = $this->ask('Identifier, akan ditampilkan sebagai URL, direkomendasikan dalam slug format',
