@@ -15,8 +15,8 @@
     "require": {
         "php": ">=7.3",
         "illuminate/support": "^6.0",
-        "laravolt/semantic-form": "^4.0.2",
-        "laravolt/suitable": "^4.0.2"
+        "laravolt/semantic-form": "^4.1",
+        "laravolt/suitable": "^4.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0"
@@ -36,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.x-dev"
+            "dev-master": "4.1-dev"
         },
         "laravel": {
             "providers": [
