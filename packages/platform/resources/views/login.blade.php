@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="ui header brand left aligned">
-        <img src="{{ config('laravolt.ui.brand_image') }}" alt="" class="ui image">
+        <img src="{{ config('laravolt.ui.brand_image') }}" alt="" class="ui big image">
         <span class="brand-name content">{{ config('laravolt.ui.brand_name') }}</span>
     </h2>
 
