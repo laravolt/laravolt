@@ -16,3 +16,4 @@ https://laravolt.dev/guidelines/contribution/
 - Anandia Muhammad Yudhistira (PT Javan Cipta Solusi) https://github.com/anandiamy
 - Damar Khoirul Huda (PT Javan Cipta Solusi) https://github.com/damarteplok
 - Ginanjar Septian Adhitia (PT Javan Cipta Solusi) https://github.com/ginadhitia
+- Dikih Arif Wibowo (Frontend Dev - PT JAVAN CIPTA SOLUSI) https://github.com/dikiharifwibowo
