@@ -4,6 +4,7 @@ $white: #ffffff;
 $green: #27AE60;
 $blue: #2D9CDB;
 $red: #EB5757;
+$orange: #FF6300;
 .layout--full {
   display: flex;
   margin: 0;
@@ -19,7 +20,7 @@ $red: #EB5757;
     font-weight: 600;
     text-align: center;
     font-size: 30px;
-    line-height: 72px;
+    line-height: 45px;
     letter-spacing: -0.02em;
     color: $black;
   }
@@ -173,6 +174,32 @@ $red: #EB5757;
     }
     a.link {
       color: $red;
+      font-weight: bold;
+    }
+  }
+}
+[login-theme="orange"] {
+  .layout--full {
+    background: linear-gradient(180deg, $orange 0%, #FFA973 100%);
+    .ui.form {
+      input {
+        border: 1px solid #FFA973;
+      }
+      i.icon {
+        background: $orange;
+        opacity: 1;
+        color: $white;
+        border-radius: 5px;
+      }
+      button.fluid.button {
+        background: $orange;
+        box-shadow: 0px 10px 50px rgba(255, 99, 0, 0.35);
+        border-radius: 20px;
+        color: $white;
+      }
+    }
+    a.link {
+      color: $orange;
       font-weight: bold;
     }
   }
