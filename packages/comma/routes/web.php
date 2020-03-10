@@ -17,4 +17,5 @@ Route::group(
         Route::put('posts/{id}', ['uses' => 'PostController@update', 'as' => 'posts.update']);
         Route::delete('posts/{id}', ['uses' => 'PostController@destroy', 'as' => 'posts.destroy']);
         Route::resource('media', 'MediaController', ['only' => ['index', 'store']]);
-    });
+    }
+);

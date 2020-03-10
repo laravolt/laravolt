@@ -80,8 +80,11 @@ class TaskEditForm
                 .form()->hidden('_form_name', $this->task->form_type)
                 .form()->make($formDefinition)
                 .form()->action(
-                    form()->submit('Simpan'), form()->link('Kembali',
-                    route('workflow::process.show', [$this->module->id, $this->task->process_instance_id]))
+                    form()->submit('Simpan'),
+                    form()->link(
+                        'Kembali',
+                        route('workflow::process.show', [$this->module->id, $this->task->process_instance_id])
+                    )
                 )
                 .form()->close();
 

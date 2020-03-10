@@ -40,19 +40,28 @@ class SupportServiceProvider extends ServiceProvider
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
                             [$relationName, $relationAttribute] = explode('.', $attribute);
 
-                            $query->orWhereHas($relationName,
+                            $query->orWhereHas(
+                                $relationName,
                                 function (EloquentBuilder $query) use ($relationAttribute, $searchTerm) {
-                                    $query->whereRaw(sprintf("LOWER(%s) LIKE '%%%s%%'", $relationAttribute,
-                                        $searchTerm));
-                                });
+                                    $query->whereRaw(sprintf(
+                                        "LOWER(%s) LIKE '%%%s%%'",
+                                        $relationAttribute,
+                                        $searchTerm
+                                    ));
+                                }
+                            );
                         },
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
                             $table = $query->getModel()->getTable();
                             if (Str::contains($attribute, '->')) {
                                 $query->orWhere($attribute, 'like', "%$searchTerm%");
                             } else {
-                                $query->orWhereRaw(sprintf("LOWER(%s.%s) LIKE '%%%s%%'", $table, $attribute,
-                                    $searchTerm));
+                                $query->orWhereRaw(sprintf(
+                                    "LOWER(%s.%s) LIKE '%%%s%%'",
+                                    $table,
+                                    $attribute,
+                                    $searchTerm
+                                ));
                             }
                         }
                     );

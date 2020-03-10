@@ -135,8 +135,10 @@ class RestfulButton extends Column implements ColumnInterface
         $actions = collect($actions)
             ->reject(
                 function ($verb, $action) use ($policyEnabled, $data) {
-                    return ($policyEnabled && Auth::user()->cannot($action, $data)) || !in_array($action,
-                            $this->buttons);
+                    return ($policyEnabled && Auth::user()->cannot($action, $data)) || !in_array(
+                        $action,
+                        $this->buttons
+                    );
                 }
             )->transform(function ($verb) use ($data) {
                 return $this->getRoute($verb, $this->routeParameters + [$data->getKey()]);

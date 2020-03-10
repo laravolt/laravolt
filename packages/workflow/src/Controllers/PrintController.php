@@ -42,8 +42,10 @@ class PrintController extends Controller
         }
         $extension = pathinfo($path)['extension'] ?? 'docx';
 
-        return view('workflow::print.index',
-            compact('path', 'module', 'processInstance', 'completedTasks', 'template', 'extension'));
+        return view(
+            'workflow::print.index',
+            compact('path', 'module', 'processInstance', 'completedTasks', 'template', 'extension')
+        );
     }
 
     protected function generateTemplateJasper($template, $processInstance)

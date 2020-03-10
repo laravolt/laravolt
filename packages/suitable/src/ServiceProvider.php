@@ -68,7 +68,8 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerConfigurations()
     {
         $this->mergeConfigFrom(
-            $this->packagePath('config/config.php'), 'suitable'
+            $this->packagePath('config/config.php'),
+            'suitable'
         );
 
         $this->publishes([

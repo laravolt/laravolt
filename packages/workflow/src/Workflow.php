@@ -274,8 +274,10 @@ class Workflow implements Contracts\Workflow
             try {
                 $processInstance->deleteProcessInstance();
             } catch (ClientException $e) {
-                \Log::debug(sprintf('Mencoba menghapus non-exists process instance dengan id %s',
-                    $processInstance->id));
+                \Log::debug(sprintf(
+                    'Mencoba menghapus non-exists process instance dengan id %s',
+                    $processInstance->id
+                ));
             } finally {
                 // Delete local data for each form
                 foreach ($mapping as $taskMapping) {
@@ -386,8 +388,10 @@ class Workflow implements Contracts\Workflow
                 AutoSave::query()->where('task_id', $task->id)->where('user_id', auth()->id())->delete();
 
                 // TODO: deprecated
-                event('workflow.task.saved',
-                    [$module, $processInstance, $task->taskDefinitionKey, $table, $data, $formId]);
+                event(
+                    'workflow.task.saved',
+                    [$module, $processInstance, $task->taskDefinitionKey, $table, $data, $formId]
+                );
             }
         });
 

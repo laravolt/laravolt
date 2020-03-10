@@ -74,8 +74,10 @@ class ProcessController extends Controller
 
             $nextForm = TaskForm::make($module, $processInstance->currentTask());
 
-            $message = __('workflow::message.process.started',
-                ['current_task' => $form->title(), 'next_task' => $nextForm->title()]);
+            $message = __(
+                'workflow::message.process.started',
+                ['current_task' => $form->title(), 'next_task' => $nextForm->title()]
+            );
 
             return redirect()
                 ->route('workflow::process.show', [$module->id, $processInstance->id])
