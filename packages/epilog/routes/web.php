@@ -9,4 +9,5 @@ Route::group(
     ],
     function () {
         Route::resource('/', 'LogController', ['only' => ['index']])->names('log');
-    });
+    }
+);

@@ -42,7 +42,9 @@ class DropdownFilter extends Toolbar implements \Laravolt\Suitable\Contracts\Too
     {
         $label = $this->label ?? Str::title($this->name);
 
-        return view('suitable::toolbars.dropdown',
-            ['label' => $label, 'name' => $this->name, 'options' => $this->options])->render();
+        return view(
+            'suitable::toolbars.dropdown',
+            ['label' => $label, 'name' => $this->name, 'options' => $this->options]
+        )->render();
     }
 }

@@ -61,7 +61,8 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerConfigurations()
     {
         $this->mergeConfigFrom(
-            $this->packagePath('config/config.php'), 'laravolt.thunderclap'
+            $this->packagePath('config/config.php'),
+            'laravolt.thunderclap'
         );
         $this->publishes([
             $this->packagePath('config/config.php') => config_path('laravolt/thunderclap.php'),

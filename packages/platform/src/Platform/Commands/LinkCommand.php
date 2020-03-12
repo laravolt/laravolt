@@ -29,7 +29,8 @@ class LinkCommand extends Command
     {
         if (!file_exists(public_path('laravolt'))) {
             $this->laravel->make('files')->link(
-                platform_path('public'), public_path('laravolt')
+                platform_path('public'),
+                public_path('laravolt')
             );
         }
 

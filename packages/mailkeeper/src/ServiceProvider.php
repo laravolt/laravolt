@@ -69,7 +69,8 @@ class ServiceProvider extends MailServiceProvider
         );
 
         $this->mergeConfigFrom(
-            $path, 'laravolt.mailkeeper'
+            $path,
+            'laravolt.mailkeeper'
         );
     }
 }

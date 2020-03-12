@@ -157,8 +157,10 @@ class StartForm
     {
         $backButton = '';
         if ($this->processInstance) {
-            $backButton = form()->link($label,
-                route('workflow::process.show', [$this->module->id, $this->processInstance->id]));
+            $backButton = form()->link(
+                $label,
+                route('workflow::process.show', [$this->module->id, $this->processInstance->id])
+            );
         }
 
         return $backButton;

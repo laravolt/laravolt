@@ -36,8 +36,10 @@ class MakeCommand extends Command
         $name = $this->ask('Human friendly label, akan ditampilkan sebagai judul halaman web');
 
         do {
-            $id = $this->ask('Identifier, akan ditampilkan sebagai URL, direkomendasikan dalam slug format',
-                Str::slug($name));
+            $id = $this->ask(
+                'Identifier, akan ditampilkan sebagai URL, direkomendasikan dalam slug format',
+                Str::slug($name)
+            );
             $target = config_path(sprintf('workflow-modules/%s.php', $id));
             $exists = is_file($target);
 
@@ -71,8 +73,10 @@ class MakeCommand extends Command
 
         File::put($target, $content);
 
-        $this->warn(sprintf('File %s berhasil dibuat, silakan dimodifikasi sesuai kebutuhan dan jangan lupa dicommit ya ☺️',
-            $target));
+        $this->warn(sprintf(
+            'File %s berhasil dibuat, silakan dimodifikasi sesuai kebutuhan dan jangan lupa dicommit ya ☺️',
+            $target
+        ));
 
         Module::updateOrCreate(
             ['key' => $id],

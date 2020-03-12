@@ -169,8 +169,10 @@ class ProcessInstance extends CamundaModel
         $previousActivity = $activities->shift();
 
         if (!$currenctActivity || !$previousActivity) {
-            throw new \DomainException(sprintf('Process instance %s tidak memiliki Activity Instance yang valid',
-                $this->id));
+            throw new \DomainException(sprintf(
+                'Process instance %s tidak memiliki Activity Instance yang valid',
+                $this->id
+            ));
         }
 
         $cancellation = new \stdClass();
