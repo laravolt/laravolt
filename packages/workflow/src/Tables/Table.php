@@ -11,7 +11,6 @@ use Laravolt\Workflow\Traits\WorkflowColumns;
 
 abstract class Table extends TableView implements \Laravolt\Workflow\Contracts\Table
 {
-
     use WorkflowColumns;
 
     public function init()
