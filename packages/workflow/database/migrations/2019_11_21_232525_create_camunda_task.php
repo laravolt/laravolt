@@ -23,6 +23,7 @@ class CreateCamundaTask extends Migration
             $table->string('business_key')->nullable();
             $table->jsonb('traceable')->nullable();
             $table->timestamps();
+            $table->timestamp('completed_at')->nullable();
 
             $table->unique(['form_type', 'form_id']);
             $table->index('status');

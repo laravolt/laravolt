@@ -15,21 +15,18 @@ class Import extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'workflow:import {key?}';
 
     /**
      * The console command description.
-     *
      * @var string
      */
     protected $description = 'Import BPMN via REST API to populate transactional table + form definition';
 
     /**
      * Execute the console command.
-     *
      * @return mixed
      */
     public function handle()
@@ -164,7 +161,7 @@ class Import extends Command
             }
 
             switch ($tableColumn['type']) {
-                case 'booelan':
+                case 'boolean':
                     $table->boolean($fieldName)->nullable();
 
                     break;
@@ -178,16 +175,13 @@ class Import extends Command
                     break;
                 case 'wysiwyg':
                 case 'text':
-                    $table->text($fieldName)->nullable();
-
-                    break;
                 case 'image':
                 case 'file':
                 case 'dropdownDB':
                 case 'dropdown':
                 case 'string':
                 default:
-                    $table->string($fieldName)->nullable();
+                    $table->text($fieldName)->nullable();
 
                     break;
             }
@@ -214,7 +208,8 @@ class Import extends Command
             if (!Schema::hasTable($tableName)) {
                 Schema::create($tableName, function (Blueprint $table) use ($tableColumns) {
                     $table->bigIncrements('id');
-                    $table->string('process_instance_id')->nullable();
+                    $table->text('business_key');
+                    $table->string('process_instance_id');
                     $table->string('task_id')->nullable();
                     $this->columns($table, $tableColumns);
 

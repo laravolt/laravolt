@@ -85,6 +85,9 @@ class Workflow implements Contracts\Workflow
         $payload = Payload::make($module, $module->startTaskName, $data);
 
         $processInstance = DB::transaction(function () use ($processDefinition, $module, $data, $payload) {
+
+            $now = now();
+
             // Memulai proses, dengan membuat Process Instance baru di Camunda.
             $processInstance = $processDefinition->startInstance(
                 $payload->toCamundaVariables(),
@@ -106,7 +109,7 @@ class Workflow implements Contracts\Workflow
 
                 if ($fields['type'] == FormType::MAIN_FORM) {
                     $data = $dbFields + $additionalData;
-                    $formId = $this->insertData($form, $data);
+                    $formId = $this->insertData($form, $payload->getBusinessKey(), $data);
                     $mainFormId = $formId;
                     $mainFormName = $form;
                 } else {
@@ -115,7 +118,7 @@ class Workflow implements Contracts\Workflow
                         'parent_form' => $mainFormName,
                     ];
                     $data = $dbFields + $additionalData + $subForm;
-                    $formId = $this->insertData($form, $data);
+                    $formId = $this->insertData($form, $payload->getBusinessKey(), $data);
                 }
 
                 DB::table('camunda_task')->insert([
@@ -125,7 +128,8 @@ class Workflow implements Contracts\Workflow
                     'form_type' => $form,
                     'form_id' => $formId,
                     'task_name' => $module->startTaskName,
-                    'created_at' => now(),
+                    'created_at' => $now,
+                    'completed_at' => $now,
                     'status' => ProcessStatus::ACTIVE,
                     'business_key' => $payload->getBusinessKey(),
                     'traceable' => json_encode(collect($payload->data)->only(config('laravolt.workflow.traceable')) ?? []),
@@ -151,7 +155,7 @@ class Workflow implements Contracts\Workflow
             $data = $data + $additionalData;
 
             $form = $processInstance->processDefinition()->getStartTaskName();
-            $formId = $this->insertData($form, $data);
+            $formId = $this->insertData($form, $processInstance->businessKey, $data);
             DB::table('camunda_task')->insert([
                 'process_definition_key' => $processInstance->processDefinition()->key,
                 'process_instance_id' => $processInstance->id,
@@ -316,6 +320,7 @@ class Workflow implements Contracts\Workflow
             $data,
             $isDraft
         ) {
+            $now = now();
             $payload = Payload::make($module, $task->taskDefinitionKey, $data);
 
             foreach ($payload->toFormFields() as $table => $fields) {
@@ -330,14 +335,14 @@ class Workflow implements Contracts\Workflow
                     'process_instance_id' => $processInstance->id,
                     'task_id' => $task->id,
                     'updated_by' => auth()->id(),
-                    'updated_at' => now(),
+                    'updated_at' => $now,
                 ];
 
                 $data = $dbFields + $additionalData;
                 $formId = null;
 
                 if (!$existing) {
-                    $formId = $this->insertData($table, $data);
+                    $formId = $this->insertData($table, $processInstance->businessKey, $data);
                 } else {
                     $formId = $this->updateData($existing->id, $table, $data);
                 }
@@ -349,7 +354,7 @@ class Workflow implements Contracts\Workflow
                         [
                             'form_id' => $formId,
                             'status' => $isDraft ? TaskStatus::DRAFT : TaskStatus::COMPLETED,
-                            'updated_at' => now(),
+                            'completed_at' => $now,
                         ]
                     );
 
@@ -450,7 +455,7 @@ class Workflow implements Contracts\Workflow
     public function completedTasks($processInstanceId, array $whitelist = []): array
     {
         $query = DB::table('camunda_task')
-            ->orderBy('created_at')
+            ->orderBy('completed_at')
             ->where('process_instance_id', $processInstanceId)
             ->where(function (Builder $query) {
                 $query->whereNull('task_id')->orWhere(function (Builder $query2) {
@@ -525,11 +530,12 @@ class Workflow implements Contracts\Workflow
         return $table;
     }
 
-    protected function insertData(string $table, array $data)
+    protected function insertData(string $table, string $businessKey, array $data)
     {
         $additionalData = [
             'created_by' => auth()->id(),
             'created_at' => now(),
+            'business_key' => $businessKey,
         ];
 
         [$mainTableData, $hasManyData] = $this->filterAndPartition($data, $table);
