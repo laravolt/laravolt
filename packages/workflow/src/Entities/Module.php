@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravolt\Suitable\Tables\BasicTable;
 use Laravolt\Workflow\Models\CamundaTask;
-use Laravolt\Workflow\Tables\Table;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class Module extends DataTransferObject
