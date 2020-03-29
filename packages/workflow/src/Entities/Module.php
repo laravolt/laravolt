@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Suitable\Tables\BasicTable;
 use Laravolt\Workflow\Models\CamundaTask;
@@ -26,7 +25,7 @@ class Module extends DataTransferObject
     /** @var string|null */
     public $startTaskName;
 
-    /** @var \Laravolt\Workflow\Tables\Table|\Laravolt\Suitable\Tables\BasicTable */
+    /** @var \Laravolt\Workflow\Tables\Table|\Laravolt\Suitable\Tables\BasicTable|\Laravolt\Suitable\TableView */
     public $table;
 
     /** @var array */
@@ -84,7 +83,8 @@ class Module extends DataTransferObject
         }
         $data['table'] = $table;
         $module = new self($data);
-        if ($table instanceof Table) {
+
+        if (method_exists($module->table, 'setModule')) {
             $module->table->setModule($module);
         }
 
