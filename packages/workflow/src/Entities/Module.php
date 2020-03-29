@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Suitable\Tables\BasicTable;
+use Laravolt\Workflow\Models\CamundaTask;
 use Laravolt\Workflow\Tables\Table;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -73,7 +75,12 @@ class Module extends DataTransferObject
         if ($table) {
             $table = $table::make(null);
         } else {
-            $table = BasicTable::make([]);
+            $source = CamundaTask::where('process_definition_key', $config['process_definition_key'])
+                ->groupBy(['business_key', 'process_instance_id'])
+                ->select(['business_key', 'process_instance_id'])
+                ->get();
+
+            $table = BasicTable::make($source)->only(['business_key', 'process_instance_id']);
         }
         $data['table'] = $table;
         $module = new self($data);
