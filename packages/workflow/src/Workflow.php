@@ -85,7 +85,6 @@ class Workflow implements Contracts\Workflow
         $payload = Payload::make($module, $module->startTaskName, $data);
 
         $processInstance = DB::transaction(function () use ($processDefinition, $module, $data, $payload) {
-
             $now = now();
 
             // Memulai proses, dengan membuat Process Instance baru di Camunda.
