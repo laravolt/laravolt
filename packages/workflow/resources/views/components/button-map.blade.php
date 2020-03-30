@@ -1,12 +1,20 @@
 <?php
 $processHistory = (new \Laravolt\Camunda\Models\ProcessInstanceHistory($id));
-$tasks = collect($processHistory->tasks())->pluck('taskDefinitionKey');
+$ids = collect($processHistory->tasks())->pluck('taskDefinitionKey');
 
-if ($tasks->isEmpty()) {
+if ($ids->isEmpty()) {
+    $ids = collect($processHistory->activities())
+        ->filter(function($item) {
+            return $item->activityType == 'noneEndEvent';
+        })
+        ->pluck('activityId');
+}
+
+if ($ids->isEmpty()) {
     $subProcessess = $processHistory->getSubProcess();
-    $tasks = [];
+    $ids = [];
     foreach ($subProcessess as $process) {
-        $tasks[] = optional($process->processDefinition())->key;
+        $ids[] = optional($process->processDefinition())->key;
     }
 }
 
@@ -32,12 +40,11 @@ $url = route('workflow::process.xml', $id);
 @pushonce('style:process-map')
     <style>
         .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
-            fill: green !important; /* color elements as green */
+            {{--fill: {{ config('laravolt.workflow.diagram.highlight_color') }} !important; /* color elements as green */--}}
         }
 
         .highlight-overlay {
-            background-color: green; /* color elements as green */
-            opacity: 0.4;
+            background-color: {{ config('laravolt.workflow.diagram.highlight_color') }};
             pointer-events: none; /* no pointer events, allows clicking through onto the element */
             border-radius: 10px;
         }
@@ -79,14 +86,14 @@ $url = route('workflow::process.xml', $id);
             // Option 1: Color via Overlay
             var shap = "";
             var $overlayHtml = "";
-              @foreach ($tasks as $task)
-                shape = elementRegistry.get('{{ $task }}');
+              @foreach ($ids as $id)
+                shape = elementRegistry.get('{{ $id }}');
             $overlayHtml = $('<div class="highlight-overlay">').css({
               width: shape.width,
               height: shape.height
             });
             overlays.add(
-              '{{ $task }}',
+              '{{ $id }}',
               {
                 position: {
                   top: 0,

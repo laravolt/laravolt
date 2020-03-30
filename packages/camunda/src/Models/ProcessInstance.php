@@ -78,6 +78,21 @@ class ProcessInstance extends CamundaModel
         return $data;
     }
 
+    public function activities()
+    {
+        $url = 'history/activity-instance/?processInstanceId='.$this->id;
+
+        $activities = $this->get($url);
+
+        $data = [];
+        foreach ($activities as $activity) {
+            $activity = new ActivityInstanceHistory($activity->id, $activity);
+            $data[] = $activity;
+        }
+
+        return $data;
+    }
+
     public function setVariable($key, $value, $type = 'String')
     {
         $this->put('variables/'.$key, [

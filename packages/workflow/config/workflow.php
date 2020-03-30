@@ -43,6 +43,10 @@ return [
     */
     'auto_save' => 10000, // in miliseconds
 
+    'diagram' => [
+        'highlight_color' => 'rgba(0, 181, 173, 0.5)',
+    ],
+
     'tables' => [
 
         /*
