@@ -11,6 +11,7 @@ use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Laravel\Ui\UiCommand;
 use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
@@ -206,12 +207,23 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootPreset()
     {
-        PresetCommand::macro('laravolt', function (Command $command) {
-            LaravoltPreset::install();
-            $command->comment('Scaffolding Laravolt skeleton');
-        });
+        if (version_compare(app()->version(), '7', '>=')) {
+            UiCommand::macro('laravolt', function (UiCommand $command) {
+                $this->applyPreset($command);
+            });
+        } else {
+            PresetCommand::macro('laravolt', function (Command $command) {
+                $this->applyPreset($command);
+            });
+        }
 
         return $this;
+    }
+
+    protected function applyPreset($command)
+    {
+        LaravoltPreset::install();
+        $command->comment('Scaffolding Laravolt skeleton');
     }
 
     protected function hasPermissionTable()

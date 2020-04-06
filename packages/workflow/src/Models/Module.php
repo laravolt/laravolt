@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Laravolt\Workflow\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Watson\Rememberable\Rememberable;
 
 class Module extends Model
 {
-    use Rememberable;
-
     protected $table = 'workflow_module';
 
     protected $guarded = [];

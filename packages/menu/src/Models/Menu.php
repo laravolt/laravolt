@@ -7,13 +7,10 @@ namespace Laravolt\Menu\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-use Spatie\EloquentSortable\Sortable;
-use Spatie\EloquentSortable\SortableTrait;
 
-class Menu extends Model implements Sortable
+class Menu extends Model
 {
     use NodeTrait;
-    use SortableTrait;
 
     protected $table = 'menu';
 
@@ -84,6 +81,11 @@ class Menu extends Model implements Sortable
         if ($keyword) {
             $query->whereLike($this->searchableColumns, $keyword);
         }
+    }
+
+    public function scopeOrdered(Builder $query)
+    {
+        
     }
 
     public static function toFlatSelect()

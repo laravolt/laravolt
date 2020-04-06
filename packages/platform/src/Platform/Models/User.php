@@ -10,14 +10,14 @@ use Laravolt\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 use Laravolt\Platform\Concerns\CanChangePassword;
 use Laravolt\Platform\Concerns\CanResetPassword;
 use Laravolt\Platform\Concerns\HasRoleAndPermission;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends BaseUser implements CanChangePasswordContract, HasMedia, HasRoleAndPermissionContract
 {
     use CanChangePassword;
     use CanResetPassword;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use HasRoleAndPermission;
 
     protected $guarded = [];

@@ -23,7 +23,7 @@ class CreateMenuTable extends Migration
                 ->comment('Enumeration, see '.\Laravolt\Menu\Enum\UrlType::class);
             $table->string('icon')->nullable();
             $table->string('permission')->nullable();
-            $table->unsignedSmallInteger('order')->default(0);
+            $table->unsignedSmallInteger('position')->default(0);
             $table->nestedSet();
             $table->timestamps();
         });
