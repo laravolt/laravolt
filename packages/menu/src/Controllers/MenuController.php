@@ -20,7 +20,7 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $menu = Menu::withDepth()->ordered()->search(request('search'))->get()->toFlatTree();
+        $menu = Menu::withDepth()->orderByPosition()->search(request('search'))->get()->toFlatTree();
 
         return (new MenuTableView($menu))
             ->view('menu::menu.index');
