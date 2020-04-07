@@ -12,7 +12,8 @@ use Laravolt\Support\Traits\SortableTrait;
 
 class Menu extends Model implements Sortable
 {
-    use NodeTrait, SortableTrait;
+    use NodeTrait;
+    use SortableTrait;
 
     protected $table = 'menu';
 

@@ -9,27 +9,27 @@ interface Sortable
     /**
      * Move current model position to the beginning.
      */
-    public function moveToFirst():void;
+    public function moveToFirst(): void;
 
     /**
      * Move current model position to the last.
      */
-    public function moveToLast():void;
+    public function moveToLast(): void;
 
     /**
      * Move to specific position.
      */
-    public function moveToPosition(int $position):void;
+    public function moveToPosition(int $position): void;
 
     /**
      * Move current model position before other $model.
      */
-    public function moveBefore(Sortable $model):void;
+    public function moveBefore(self $model): void;
 
     /**
      * Move current model position after other $model.
      */
-    public function moveAfter(Sortable $model):void;
+    public function moveAfter(self $model): void;
 
     /**
      * Move current model position after other $model.
