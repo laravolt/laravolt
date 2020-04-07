@@ -3,11 +3,11 @@
 namespace Laravolt\Support\Traits;
 
 use ArrayAccess;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Laravolt\Support\Contracts\Sortable;
 
 trait SortableTrait
@@ -62,7 +62,7 @@ trait SortableTrait
      * Let's be nice and provide an ordered scope.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $direction
+     * @param string                                $direction
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -77,7 +77,7 @@ trait SortableTrait
      * A starting order number can be optionally supplied (defaults to 1).
      *
      * @param array|\ArrayAccess $ids
-     * @param int $startPosition
+     * @param int                $startPosition
      */
     public static function sort($ids, int $startPosition = 1)
     {
@@ -202,6 +202,7 @@ trait SortableTrait
 
     /**
      * Build eloquent builder of sortable.
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function buildSortableQuery()
@@ -216,7 +217,7 @@ trait SortableTrait
     }
 
     /**
-     * Mutator for position, make sure it always valid
+     * Mutator for position, make sure it always valid.
      *
      * @param int|null $position
      */
