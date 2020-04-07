@@ -10,14 +10,11 @@ use Laravolt\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 use Laravolt\Platform\Concerns\CanChangePassword;
 use Laravolt\Platform\Concerns\CanResetPassword;
 use Laravolt\Platform\Concerns\HasRoleAndPermission;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends BaseUser implements CanChangePasswordContract, HasMedia, HasRoleAndPermissionContract
+class User extends BaseUser implements CanChangePasswordContract, HasRoleAndPermissionContract
 {
     use CanChangePassword;
     use CanResetPassword;
-    use InteractsWithMedia;
     use HasRoleAndPermission;
 
     protected $guarded = [];
@@ -25,10 +22,6 @@ class User extends BaseUser implements CanChangePasswordContract, HasMedia, HasR
     public function getAvatarAttribute()
     {
         $avatar = null;
-
-        if ($this instanceof HasMedia) {
-            $avatar = $this->getFirstMediaUrl('avatar');
-        }
 
         if (!$avatar) {
             if (app()->bound('avatar')) {
