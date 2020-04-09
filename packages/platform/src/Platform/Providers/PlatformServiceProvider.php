@@ -21,7 +21,6 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
-use Laravolt\Platform\Services\LaravoltPreset;
 use Laravolt\Platform\Services\LaravoltUiCommand;
 use Laravolt\Platform\Services\Password;
 
