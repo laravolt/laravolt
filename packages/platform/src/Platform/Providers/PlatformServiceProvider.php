@@ -21,6 +21,7 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
+use Laravolt\Platform\Services\LaravoltPreset;
 use Laravolt\Platform\Services\LaravoltUiCommand;
 use Laravolt\Platform\Services\Password;
 
@@ -209,21 +210,17 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if (version_compare(app()->version(), '7', '>=')) {
             UiCommand::macro('laravolt', function (UiCommand $command) {
-                $this->applyPreset($command);
+                LaravoltUiCommand::install();
+                $command->comment('Scaffolding Laravolt skeleton');
             });
         } else {
             PresetCommand::macro('laravolt', function (Command $command) {
-                $this->applyPreset($command);
+                LaravoltPreset::install();
+                $command->comment('Scaffolding Laravolt skeleton');
             });
         }
 
         return $this;
-    }
-
-    protected function applyPreset($command)
-    {
-        LaravoltUiCommand::install();
-        $command->comment('Scaffolding Laravolt skeleton');
     }
 
     protected function hasPermissionTable()
