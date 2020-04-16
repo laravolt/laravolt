@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -12,7 +11,6 @@ class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
-     *
      * @var array
      */
     protected $dontReport = [
@@ -21,7 +19,6 @@ class Handler extends ExceptionHandler
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
-     *
      * @var array
      */
     protected $dontFlash = [
@@ -33,49 +30,49 @@ class Handler extends ExceptionHandler
     {
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->guest($exception->redirectTo() ?? route('auth::login'))->withWarning(__('Silakan login terlebih dahulu'));
+            : redirect()
+                ->guest($exception->redirectTo() ?? route('auth::login'))
+                ->withWarning(__('Silakan login terlebih dahulu'));
     }
 
     /**
      * Report or log an exception.
      *
-     * @param \Exception $exception
-     *
-     * @throws Exception
+     * @param \Throwable $e
      *
      * @return void
+     * @throws \Exception
      */
-    public function report(Exception $exception)
+    public function report(\Throwable $e)
     {
-        if (app()->bound('sentry') && $this->shouldReport($exception)) {
-            app('sentry')->captureException($exception);
+        if (app()->bound('sentry') && $this->shouldReport($e)) {
+            app('sentry')->captureException($e);
         }
 
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $exception
-     *
-     * @throws Exception
+     * @param Throwable $e
      *
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
-    public function render($request, Exception $exception)
+    public function render($request, \Throwable $e)
     {
-        if ($exception instanceof TokenMismatchException) {
+        if ($e instanceof TokenMismatchException) {
             return back()->withError(__('Kami mendeteksi tidak ada aktivitas cukup lama, silakan ulangi aksi sebelumnya'));
         }
 
-        if ($exception instanceof AuthorizationException) {
+        if ($e instanceof AuthorizationException) {
             return redirect()->back(302, [], route('dashboard'))->withError(
                 __('Anda tidak diizinkan mengakses halaman :url', ['url' => $request->fullUrl()])
             );
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }
