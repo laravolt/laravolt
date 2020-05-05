@@ -12,9 +12,14 @@ class Laravolt {
 
     root.find('.ui.dropdown.tag').each(function () {
 
-      var selected = $(this).data('value').toString().split(',');
-      if (selected.length == 1 && selected[0] == '') {
-        selected = false;
+      var selected = false;
+      if ($(this).data('value')) {
+        var values = $(this).data('value').toString().split(',');
+        if (values.length == 1 && values[0] == '') {
+
+        } else {
+          selected = values;
+        }
       }
 
       $(this).dropdown({
