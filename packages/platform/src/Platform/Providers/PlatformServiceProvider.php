@@ -83,14 +83,15 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->publishes(
             [
-                platform_path('config/platform.php') => config_path('laravolt/platform.php'),
                 platform_path('config/acl.php') => config_path('laravolt/acl.php'),
-                platform_path('config/password.php') => config_path('laravolt/password.php'),
                 platform_path('config/auth.php') => config_path('laravolt/auth.php'),
                 platform_path('config/epicentrum.php') => config_path('laravolt/epicentrum.php'),
                 platform_path('config/menu.php') => config_path('laravolt/menu.php'),
+                platform_path('config/password.php') => config_path('laravolt/password.php'),
+                platform_path('config/platform.php') => config_path('laravolt/platform.php'),
+                platform_path('config/ui.php') => config_path('laravolt/ui.php'),
             ],
-            'laravolt-config'
+            ['laravolt-config', 'config']
         );
 
         return $this;
