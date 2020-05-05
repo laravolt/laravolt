@@ -7,7 +7,6 @@ namespace Laravolt\Menu\Controllers;
 use App\Services\MenuExport;
 use Illuminate\Routing\Controller;
 use Laravolt\Menu\Enum\Color;
-use Laravolt\Menu\Enum\UrlType;
 use Laravolt\Menu\Models\Menu;
 use Laravolt\Menu\Requests\Menu\Store;
 use Laravolt\Menu\Requests\Menu\Update;
@@ -29,13 +28,12 @@ class MenuController extends Controller
     public function create()
     {
         $parent = Menu::toFlatSelect();
-        $type = UrlType::toSelectArray();
         $permissions = Permission::pluck('name', 'name');
         $roles = Role::pluck('name', 'id');
         $colors = Color::toArray();
         $menu = new Menu();
 
-        return view('menu::menu.create', compact('parent', 'menu', 'type', 'permissions', 'roles', 'colors'));
+        return view('menu::menu.create', compact('parent', 'menu', 'permissions', 'roles', 'colors'));
     }
 
     public function store(Store $request)
@@ -48,12 +46,11 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         $parent = Menu::toFlatSelect();
-        $type = UrlType::toSelectArray();
         $permissions = Permission::pluck('name', 'name');
         $roles = Role::pluck('name', 'id');
         $colors = Color::toArray();
 
-        return view('menu::menu.edit', compact('parent', 'menu', 'type', 'permissions', 'roles', 'colors'));
+        return view('menu::menu.edit', compact('parent', 'menu', 'permissions', 'roles', 'colors'));
     }
 
     public function update(Menu $menu, Update $request)

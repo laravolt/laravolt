@@ -19,7 +19,6 @@ class Store extends FormRequest
             'parent_id' => [],
             'label' => ['required'],
             'url' => ['required'],
-            'type' => [],
             'order' => [],
             'icon' => [],
             'permission' => [],

@@ -20,7 +20,6 @@ class MenuTableView extends TableView
                 return sprintf('<i class="icon %s %s"></i>', $item->icon, $item->color);
             }, 'Icon'),
             Text::make('order'),
-            Text::make('type'),
             RestfulButton::make('menu::menu')->except(['view']),
         ];
     }

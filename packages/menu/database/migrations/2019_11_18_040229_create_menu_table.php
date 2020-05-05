@@ -19,11 +19,9 @@ class CreateMenuTable extends Migration
             $table->string('url', 100)->comment('Relative or absolute URL');
             $table->string('color')->nullable();
             $table->text('roles')->nullable();
-            $table->string('type', 20)->default(\Laravolt\Menu\Enum\UrlType::INTERNAL)
-                ->comment('Enumeration, see '.\Laravolt\Menu\Enum\UrlType::class);
             $table->string('icon')->nullable();
             $table->string('permission')->nullable();
-            $table->unsignedSmallInteger('position')->default(0);
+            $table->unsignedSmallInteger('order')->default(0);
             $table->nestedSet();
             $table->timestamps();
         });
