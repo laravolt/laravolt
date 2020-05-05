@@ -11,11 +11,23 @@ class SelectMultiple extends Select
         'multiple' => 'multiple',
     ];
 
+    public function defaultValue($value)
+    {
+        if (empty($this->selected)) {
+            $this->select($value);
+        }
+
+        return $this;
+    }
+
     public function select($selected)
     {
         $selected = (array) $selected;
         $this->selected = $selected ?? [];
-        $this->data('value', implode(',', $this->selected));
+
+        if (!empty($selected)) {
+            $this->data('value', implode(',', $this->selected));
+        }
 
         return $this;
     }

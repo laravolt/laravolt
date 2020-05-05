@@ -1025,6 +1025,17 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testSelectMultipleWithDefaultValue()
+    {
+        $expected = '<select class="ui dropdown search multiple tag" multiple="multiple" name="skills[]" data-value="php"><option value="php" selected>PHP</option><option value="java">Java</option></select>';
+        $result = (string) $this->form->selectMultiple('skills[]', ['php' => 'PHP', 'java' => 'Java'], ['php']);
+        $this->assertEquals($expected, $result);
+
+        $expected = '<select class="ui dropdown search multiple tag" multiple="multiple" name="skills[]" data-value="php,java"><option value="php" selected>PHP</option><option value="java" selected>Java</option></select>';
+        $result = (string) $this->form->selectMultiple('skills[]', ['php' => 'PHP', 'java' => 'Java'], ['php', 'java']);
+        $this->assertEquals($expected, $result);
+    }
+
     public function testBindSelectWithMultipleValues()
     {
         $object = $this->getStubObject();
