@@ -12,7 +12,7 @@ return [
     'menu' => [
         'enabled' => true,
     ],
-    'permission' => [],
+    'permission' => [\Laravolt\Platform\Enums\Permission::MANAGE_LOOKUP],
     'collections' => [
         // Sample lookup collections
         'pekerjaan' => [

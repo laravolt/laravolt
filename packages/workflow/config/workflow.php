@@ -6,6 +6,7 @@ return [
         'middleware' => ['web', 'auth'],
         'prefix' => 'workflow',
     ],
+    'permission' => [\Laravolt\Platform\Enums\Permission::MANAGE_WORKFLOW],
     'menu' => [
         'enabled' => true,
     ],
