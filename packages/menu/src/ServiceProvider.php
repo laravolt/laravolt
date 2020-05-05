@@ -19,23 +19,18 @@ class ServiceProvider extends BaseServiceProvider
     {
         parent::boot();
 
-        $this->loadMenuFromDatabase()
-            ->bootMenu();
+        $this->loadMenuFromDatabase();
     }
 
-    protected function bootMenu()
+    protected function menu()
     {
-        if (config('laravolt.menu.menu.enabled')) {
-            app('laravolt.menu.sidebar')->register(function ($menu) {
-                $menu->system
-                    ->add(__('Menu Manager'), route('menu::menu.index'))
-                    ->data('icon', 'bars')
-                    ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_MENU)
-                    ->active(config('laravolt.menu.route.prefix').'/menu/*');
-            });
-        }
-
-        return $this;
+        app('laravolt.menu.sidebar')->register(function ($menu) {
+            $menu->system
+                ->add(__('Menu Manager'), route('menu::menu.index'))
+                ->data('icon', 'bars')
+                ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_MENU)
+                ->active(config('laravolt.menu.route.prefix').'/menu/*');
+        });
     }
 
     protected function loadMenuFromDatabase()

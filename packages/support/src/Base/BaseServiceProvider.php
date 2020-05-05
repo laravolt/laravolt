@@ -27,6 +27,7 @@ abstract class BaseServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootRoutes()
+            ->bootMenu()
             ->bootViews()
             ->bootMigrations()
             ->bootTranslations();
@@ -37,6 +38,17 @@ abstract class BaseServiceProvider extends ServiceProvider
         if (Arr::get($this->config, 'route.enabled')) {
             $router = $this->app['router'];
             require $this->packagePath('routes/web.php');
+        }
+
+        return $this;
+    }
+
+    protected function bootMenu()
+    {
+        if (Arr::get($this->config, 'menu.enabled')) {
+            if (method_exists($this, 'menu')) {
+                $this->menu();
+            }
         }
 
         return $this;

@@ -11,14 +11,7 @@ class ServiceProvider extends BaseServiceProvider
         return 'epilog';
     }
 
-    public function boot()
-    {
-        parent::boot();
-
-        $this->bootMenu();
-    }
-
-    protected function bootMenu()
+    protected function menu()
     {
         app('laravolt.menu.sidebar')->register(function ($menu) {
             $menu->system
