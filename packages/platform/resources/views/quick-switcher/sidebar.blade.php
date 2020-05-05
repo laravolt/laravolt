@@ -5,7 +5,11 @@
             <i class="search icon"></i>
         </div>
     </div>
-    <div class="items ui accordion sidebar__accordion">
-
-    </div>
+    <div class="items ui accordion sidebar__accordion"></div>
 </div>
+
+<style>
+    [data-role="quick-menu"] .ui.items:empty {
+        margin: 0;
+    }
+</style>
