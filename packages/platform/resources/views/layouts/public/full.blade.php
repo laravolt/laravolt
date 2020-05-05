@@ -12,7 +12,7 @@
                 </div>
                 <div class="eight wide column mobile hidden middle aligned">
                     <lottie-player
-                            src="{{ config('laravolt.ui.animation') }}"  background="transparent" class="mobile hidden" style="height: 100%; width: 100%;"  speed="1" loop  autoplay >
+                            src="{{ asset(config('laravolt.ui.animation')) }}"  background="transparent" class="mobile hidden" style="height: 100%; width: 100%;"  speed="1" loop  autoplay >
                     </lottie-player>
                 </div>
             </div>
