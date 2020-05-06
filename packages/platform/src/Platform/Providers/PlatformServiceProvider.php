@@ -76,23 +76,14 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootConfig(): self
     {
-        $this->mergeConfigFrom(platform_path('config/platform.php'), 'laravolt.platform');
-        $this->mergeConfigFrom(platform_path('config/acl.php'), 'laravolt.acl');
-        $this->mergeConfigFrom(platform_path('config/password.php'), 'laravolt.password');
-        $this->mergeConfigFrom(platform_path('config/auth.php'), 'laravolt.auth');
+        $config = ['acl', 'auth', 'epicentrum', 'menu', 'password', 'platform', 'ui'];
+        $publishes = [];
+        foreach ($config as $c) {
+            $this->mergeConfigFrom(platform_path("config/$c.php"), "laravolt.$c");
+            $publishes[platform_path("config/$c.php")] = config_path("laravolt/$c.php");
+        }
 
-        $this->publishes(
-            [
-                platform_path('config/acl.php') => config_path('laravolt/acl.php'),
-                platform_path('config/auth.php') => config_path('laravolt/auth.php'),
-                platform_path('config/epicentrum.php') => config_path('laravolt/epicentrum.php'),
-                platform_path('config/menu.php') => config_path('laravolt/menu.php'),
-                platform_path('config/password.php') => config_path('laravolt/password.php'),
-                platform_path('config/platform.php') => config_path('laravolt/platform.php'),
-                platform_path('config/ui.php') => config_path('laravolt/ui.php'),
-            ],
-            ['laravolt-config', 'config']
-        );
+        $this->publishes($publishes, ['laravolt-config', 'config']);
 
         return $this;
     }
