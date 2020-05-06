@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="text-uppercase login-text center aligned">@lang('laravolt::auth.register')</div>
+    <h3 class="ui header horizontal divider m-y-2 m-x-1">@lang('laravolt::auth.register')</h3>
 
     <form class="ui form" method="POST" action="{{ route('auth::register') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
