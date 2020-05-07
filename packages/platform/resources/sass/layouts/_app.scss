@@ -1,3 +1,4 @@
+$sidebar-width-none: 0;
 $sidebar-width-thin: 150px;
 $sidebar-width-normal: 220px;
 $sidebar-width-wide: 300px;
@@ -33,6 +34,14 @@ body.auth {
     }
   }
 
+  &.nosidebar {
+    header.ui.menu {
+      left: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
   &.layout--boxed {
     header.ui.menu {
       left: 0;
@@ -58,6 +67,7 @@ body.auth {
     width: $sidebar-width-normal;
     transition: .5s all;
 
+    &.none {width: $sidebar-width-none}
     &.thin {width: $sidebar-width-thin}
     &.wide {width: $sidebar-width-wide}
 
