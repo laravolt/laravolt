@@ -22,9 +22,8 @@ if (!function_exists('capture_exception_and_abort')) {
      *
      * @param Throwable $exception
      *
-     * @throws Throwable
-     *
      * @return string
+     * @throws Throwable
      */
     function capture_exception_and_abort(Throwable $exception)
     {
@@ -33,5 +32,33 @@ if (!function_exists('capture_exception_and_abort')) {
             throw $exception;
         }
         abort($exception->getCode(), $exception->getMessage());
+    }
+}
+
+if (!function_exists('readable_number')) {
+    function readable_number(float $value, int $precision = 1): string
+    {
+        $thresholds = [
+            '' => 900,
+            'K' => 900000,
+            'M' => 900000000,
+            'B' => 900000000000,
+            'T' => 90000000000000,
+        ];
+
+        $default = '900T+';
+
+        foreach ($thresholds as $suffix => $threshold) {
+            if ($value < $threshold) {
+                $formattedNumber = number_format($value / ($threshold / $thresholds['']), $precision);
+                $cleanedNumber = (strpos($formattedNumber, '.') === false)
+                    ? $formattedNumber
+                    : rtrim(rtrim($formattedNumber, '0'), '.');
+
+                return $cleanedNumber.$suffix;
+            }
+        }
+
+        return $default;
     }
 }
