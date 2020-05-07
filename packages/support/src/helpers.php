@@ -22,8 +22,9 @@ if (!function_exists('capture_exception_and_abort')) {
      *
      * @param Throwable $exception
      *
-     * @return string
      * @throws Throwable
+     *
+     * @return string
      */
     function capture_exception_and_abort(Throwable $exception)
     {
