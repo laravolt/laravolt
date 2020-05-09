@@ -12,7 +12,7 @@ class :ModuleName:Controller extends Controller
 {
     public function index()
     {
-        $items = :ModuleName:::autoSort()->latest()->search(request('search'))->paginate();
+        $items = :ModuleName:::autoSort()->latest()->autoSearch(request('search'))->paginate();
 
         return (IndexTableView::make($items))->view(':moduleName:::index');
     }
@@ -24,7 +24,7 @@ class :ModuleName:Controller extends Controller
 
     public function store(Store $request)
     {
-        :ModuleName:::create($request->all());
+        :ModuleName:::create($request->validated());
 
         return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: saved');
     }
@@ -41,7 +41,7 @@ class :ModuleName:Controller extends Controller
 
     public function update(Update $request, :ModuleName: $:moduleName:)
     {
-        $:moduleName:->update($request->all());
+        $:moduleName:->update($request->validated());
 
         return redirect()->back()->withSuccess(':ModuleName: saved');
     }

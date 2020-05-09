@@ -3,7 +3,6 @@
 namespace Laravolt\Thunderclap;
 
 use Illuminate\Support\Str;
-use Stringy\Stringy;
 
 class ColumnsTransformer
 {
@@ -77,7 +76,7 @@ TEMPLATE;
             ->map(function ($item) {
                 $template = $this->fieldTypeTransformer->generate($item);
 
-                return sprintf("\t".$template, $item['name'], Stringy::create($item['name'])->humanize());
+                return sprintf("\t".$template, $item['name'], Str::title($item['name']));
             })
             ->implode("\n");
     }
@@ -100,7 +99,7 @@ TEMPLATE;
         return $columns
             ->keys()
             ->map(function ($item) use ($template) {
-                return sprintf($template, Stringy::create($item)->humanize());
+                return sprintf($template, Str::title($item));
             })
             ->implode("\n");
     }
@@ -152,7 +151,7 @@ TEMPLATE;
         return $columns
             ->keys()
             ->map(function ($item) use ($template, $objectName) {
-                return sprintf($template, Stringy::create($item)->humanize(), $objectName, $item);
+                return sprintf($template, Str::title($item), $objectName, $item);
             })
             ->implode("\n");
     }

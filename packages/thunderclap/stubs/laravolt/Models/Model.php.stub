@@ -3,14 +3,13 @@
 namespace :Namespace:\:ModuleName:\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravolt\Suitable\AutoFilter;
-use Laravolt\Suitable\AutoSort;
-use Sofa\Eloquence\Eloquence;
+use Laravolt\Support\Traits\AutoFilter;
+use Laravolt\Support\Traits\AutoSearch;
+use Laravolt\Support\Traits\AutoSort;
 
 class :ModuleName: extends Model
 {
-    use AutoSort, AutoFilter;
-    use Eloquence;
+    use AutoSearch, AutoSort, AutoFilter;
 
     protected $table = ':table:';
 

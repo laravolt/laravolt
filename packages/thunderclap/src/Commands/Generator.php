@@ -97,7 +97,7 @@ class Generator extends Command
         $replacer = [
             ':Namespace:' => $namespace,
             ':table:' => $table,
-            ':module_name:' => snake_case(Str::singular($table)),
+            ':module_name:' => Str::snake(Str::singular($table)),
             ':module-name:' => $templates['module-name'],
             ':module name:' => str_replace('_', ' ', strtolower(Str::singular($table))),
             ':Module Name:' => $moduleName,
@@ -131,8 +131,16 @@ class Generator extends Command
                     $newFile = Str::replaceLast('Model', $moduleName, $newFile);
                 }
 
+                if (Str::endsWith($newFile, 'ServiceProvider.php')) {
+                    $newFile = Str::replaceLast('ServiceProvider', $moduleName.'ServiceProvider', $newFile);
+                }
+
                 if (Str::endsWith($newFile, 'Controller.php')) {
                     $newFile = Str::replaceLast('Controller', $moduleName.'Controller', $newFile);
+                }
+
+                if (Str::endsWith($newFile, 'config.php')) {
+                    $newFile = Str::replaceLast('config', $templates['module-name'], $newFile);
                 }
 
                 if ($newFile) {

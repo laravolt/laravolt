@@ -3,122 +3,31 @@
 namespace :Namespace:\:ModuleName:\Providers;
 
 use Illuminate\Database\Eloquent\Factory;
+use Laravolt\Support\Base\BaseServiceProvider;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class :ModuleName:ServiceProvider extends BaseServiceProvider
 {
-    /**
-     * Boot the application events.
-     *
-     * @return void
-     */
-    public function boot()
+    public function getIdentifier()
     {
-        $this->bootMenu();
-        $this->bootTranslations();
-        $this->bootConfig();
-        $this->bootViews();
-        $this->bootFactories();
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        return ':module-name:';
     }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
+        $file = $this->packagePath("config/{$this->getIdentifier()}.php");
+        $this->mergeConfigFrom($file, "modules.{$this->getIdentifier()}");
+        $this->publishes([$file => config_path("modules/{$this->getIdentifier()}.php")], 'config');
+
+        $this->config = collect(config("modules.{$this->getIdentifier()}"));
     }
 
-    /**
-     * Boot menu.
-     *
-     * @return void
-     */
-    protected function bootMenu()
+    protected function menu()
     {
-        if ($this->app->bound('laravolt.menu') && ! $this->app->runningInConsole()) {
-            $parent = app('laravolt.menu');
-
-            $parent
-                ->add(':Module Name:', ['route' => ':moduleName:.index'])
+        app('laravolt.menu.sidebar')->register(function ($menu) {
+            $menu->system
+                ->add(':Module Name:', route('modules:::moduleName:.index'))
                 ->data('icon', 'circle outline')
                 ->active(':module-name:/*');
-        }
-    }
-
-    /**
-     * Boot config.
-     *
-     * @return void
-     */
-    protected function bootConfig()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path(':moduleName:.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 
-            ':moduleName:'
-        );
-    }
-
-    /**
-     * Boot views.
-     *
-     * @return void
-     */
-    public function bootViews()
-    {
-        $viewPath = resource_path('views/modules/:moduleName:');
-
-        $sourcePath = __DIR__.'/../Resources/views';
-
-        $this->publishes([
-            $sourcePath => $viewPath
-        ], 'views');
-
-        $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/:moduleName:';
-        }, \Config::get('view.paths')), [$sourcePath]), ':moduleName:');
-    }
-
-    /**
-     * Boot translations.
-     *
-     * @return void
-     */
-    public function bootTranslations()
-    {
-        $langPath = resource_path('lang/modules/:moduleName:');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, ':moduleName:');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', ':moduleName:');
-        }
-    }
-
-    /**
-     * Boot an additional directory of factories.
-     *
-     * @return void
-     */
-    public function bootFactories()
-    {
-        if (! app()->environment('production')) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [];
+        });
     }
 }
