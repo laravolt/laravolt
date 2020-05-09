@@ -230,7 +230,7 @@ img.ui.bordered.image {
 .ui.mini.image {
   width: 35px;
   height: auto;
-  font-size: 0.76923077rem;
+  font-size: 0.8rem;
 }
 .ui.tiny.images .image,
 .ui.tiny.images img,
@@ -238,7 +238,7 @@ img.ui.bordered.image {
 .ui.tiny.image {
   width: 80px;
   height: auto;
-  font-size: 0.84615385rem;
+  font-size: 0.86666667rem;
 }
 .ui.small.images .image,
 .ui.small.images img,
@@ -246,7 +246,7 @@ img.ui.bordered.image {
 .ui.small.image {
   width: 150px;
   height: auto;
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 .ui.large.images .image,
 .ui.large.images img,
@@ -254,7 +254,7 @@ img.ui.bordered.image {
 .ui.large.image {
   width: 450px;
   height: auto;
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 .ui.big.images .image,
 .ui.big.images img,
@@ -262,7 +262,7 @@ img.ui.bordered.image {
 .ui.big.image {
   width: 600px;
   height: auto;
-  font-size: 1.30769231rem;
+  font-size: 1.26666667rem;
 }
 .ui.huge.images .image,
 .ui.huge.images img,
@@ -270,7 +270,7 @@ img.ui.bordered.image {
 .ui.huge.image {
   width: 800px;
   height: auto;
-  font-size: 1.46153846rem;
+  font-size: 1.4rem;
 }
 .ui.massive.images .image,
 .ui.massive.images img,
@@ -278,7 +278,7 @@ img.ui.bordered.image {
 .ui.massive.image {
   width: 960px;
   height: auto;
-  font-size: 1.69230769rem;
+  font-size: 1.73333333rem;
 }
 
 

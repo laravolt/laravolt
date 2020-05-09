@@ -18,7 +18,7 @@ body {
   height: 100%;
 }
 html {
-  font-size: 13px;
+  font-size: 15px;
 }
 body {
   margin: 0;
@@ -27,8 +27,8 @@ body {
   min-width: 320px;
   background: #FFFFFF;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
-  line-height: 1.4285em;
+  font-size: 15px;
+  line-height: 1.5em;
   color: #373e43;
 }
 
@@ -86,7 +86,7 @@ h5:last-child {
 
 p {
   margin: 0 0 1em;
-  line-height: 1.4285em;
+  line-height: 1.5em;
 }
 p:first-child {
   margin-top: 0;

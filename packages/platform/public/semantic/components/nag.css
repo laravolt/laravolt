@@ -30,7 +30,7 @@
   font-size: 1rem;
   text-align: center;
   color: #373e43;
-  border-radius: 0 0 0.30769231rem 0.30769231rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
   -webkit-transition: 0.2s background ease;
   transition: 0.2s background ease;
 }
@@ -99,7 +99,7 @@ a.ui.nag {
 
 .ui.bottom.nags,
 .ui.bottom.nag {
-  border-radius: 0.30769231rem 0.30769231rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
   top: auto;
   bottom: 0;
 }
@@ -129,10 +129,10 @@ a.ui.nag {
   border-radius: 0 !important;
 }
 .ui.nags .nag:last-child {
-  border-radius: 0 0 0.30769231rem 0.30769231rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
 }
 .ui.bottom.nags .nag:last-child {
-  border-radius: 0.30769231rem 0.30769231rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
 }
 
 

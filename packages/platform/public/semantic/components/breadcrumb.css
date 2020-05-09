@@ -14,7 +14,7 @@
 *******************************/
 
 .ui.breadcrumb {
-  line-height: 1.4285em;
+  line-height: 1.5em;
   display: inline-block;
   margin: 0 0;
   vertical-align: middle;
@@ -36,8 +36,8 @@
 .ui.breadcrumb .divider {
   display: inline-block;
   opacity: 0.7;
-  margin: 0 0.23076923rem 0;
-  font-size: 0.92307692em;
+  margin: 0 0.2rem 0;
+  font-size: 0.93333333em;
   color: rgba(0, 0, 0, 0.4);
   vertical-align: baseline;
 }
@@ -52,7 +52,7 @@
 
 /* Icon Divider */
 .ui.breadcrumb .icon.divider {
-  font-size: 0.84615385em;
+  font-size: 0.86666667em;
   vertical-align: baseline;
 }
 
@@ -69,7 +69,7 @@
 /* Loose Coupling */
 .ui.breadcrumb.segment {
   display: inline-block;
-  padding: 0.76923077em 1em;
+  padding: 0.8em 1em;
 }
 
 /* Inverted */
@@ -101,25 +101,25 @@
   font-size: 1rem;
 }
 .ui.mini.breadcrumb {
-  font-size: 0.76923077rem;
+  font-size: 0.8rem;
 }
 .ui.tiny.breadcrumb {
-  font-size: 0.84615385rem;
+  font-size: 0.86666667rem;
 }
 .ui.small.breadcrumb {
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 .ui.large.breadcrumb {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 .ui.big.breadcrumb {
-  font-size: 1.30769231rem;
+  font-size: 1.26666667rem;
 }
 .ui.huge.breadcrumb {
-  font-size: 1.46153846rem;
+  font-size: 1.4rem;
 }
 .ui.massive.breadcrumb {
-  font-size: 1.69230769rem;
+  font-size: 1.73333333rem;
 }
 
 

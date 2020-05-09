@@ -140,7 +140,7 @@
 }
 .ui.items > .item > .content > .header {
   display: inline-block;
-  margin: -0.21425em 0 0;
+  margin: -0.25em 0 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
@@ -148,7 +148,7 @@
 
 /* Default Header Size */
 .ui.items > .item > .content > .header:not(.ui) {
-  font-size: 1.30769231em;
+  font-size: 1.26666667em;
 }
 
 /*--------------
@@ -186,7 +186,7 @@
   margin-top: 0.6em;
   max-width: auto;
   font-size: 1em;
-  line-height: 1.4285em;
+  line-height: 1.5em;
   color: #373e43;
 }
 
@@ -464,25 +464,25 @@
   font-size: 1em;
 }
 .ui.mini.items > .item {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.tiny.items > .item {
-  font-size: 0.84615385em;
+  font-size: 0.86666667em;
 }
 .ui.small.items > .item {
-  font-size: 0.92307692em;
+  font-size: 0.93333333em;
 }
 .ui.large.items > .item {
-  font-size: 1.15384615em;
+  font-size: 1.13333333em;
 }
 .ui.big.items > .item {
-  font-size: 1.30769231em;
+  font-size: 1.26666667em;
 }
 .ui.huge.items > .item {
-  font-size: 1.46153846em;
+  font-size: 1.4em;
 }
 .ui.massive.items > .item {
-  font-size: 1.69230769em;
+  font-size: 1.73333333em;
 }
 
 /*---------------

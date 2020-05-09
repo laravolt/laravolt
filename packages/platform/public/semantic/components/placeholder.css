@@ -94,7 +94,7 @@
 /* Lines */
 .ui.placeholder .line {
   position: relative;
-  height: 0.92307692em;
+  height: 0.8em;
 }
 .ui.placeholder .line:before,
 .ui.placeholder .line:after {
@@ -112,14 +112,14 @@
 
 /* Any Lines */
 .ui.placeholder .line {
-  margin-bottom: 0.53846154em;
+  margin-bottom: 0.46666667em;
 }
 .ui.placeholder .line:before,
 .ui.placeholder .line:after {
-  height: 0.53846154em;
+  height: 0.46666667em;
 }
 .ui.placeholder .line:not(:first-child) {
-  margin-top: 0.53846154em;
+  margin-top: 0.46666667em;
 }
 
 /* Line Outdent */
@@ -147,14 +147,14 @@
 
 /* Header Line 1 & 2*/
 .ui.placeholder .header .line {
-  margin-bottom: 0.69230769em;
+  margin-bottom: 0.6em;
 }
 .ui.placeholder .header .line:before,
 .ui.placeholder .header .line:after {
-  height: 0.69230769em;
+  height: 0.6em;
 }
 .ui.placeholder .header .line:not(:first-child) {
-  margin-top: 0.69230769em;
+  margin-top: 0.6em;
 }
 .ui.placeholder .header .line:after {
   width: 20%;
@@ -167,11 +167,11 @@
   margin-left: 3em;
 }
 .ui.placeholder .image.header .line:before {
-  width: 0.76923077rem;
+  width: 0.66666667rem;
 }
 .ui.placeholder .image.header:after {
   display: block;
-  height: 0.92307692em;
+  height: 0.8em;
   content: '';
   margin-left: 3em;
 }
@@ -185,7 +185,7 @@
 .ui.placeholder .image:not(:first-child):before,
 .ui.placeholder .paragraph:not(:first-child):before,
 .ui.placeholder .header:not(:first-child):before {
-  height: 1.53846154em;
+  height: 1.33333333em;
   content: '';
   display: block;
 }

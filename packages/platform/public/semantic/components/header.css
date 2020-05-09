@@ -134,13 +134,13 @@ h1.ui.header {
   font-size: 2.57142857rem;
 }
 h1.ui.header .sub.header {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 h2.ui.header {
   font-size: 1.71428571rem;
 }
 h2.ui.header .sub.header {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 h3.ui.header {
   font-size: 1.5rem;
@@ -158,13 +158,13 @@ h5.ui.header {
   font-size: 1.14285714rem;
 }
 h5.ui.header .sub.header {
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 h6.ui.header {
   font-size: 0.85714286rem;
 }
 h6.ui.header .sub.header {
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 
 /*--------------
@@ -175,19 +175,19 @@ h6.ui.header .sub.header {
   font-size: 0.85714286em;
 }
 .ui.mini.header .sub.header {
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 .ui.mini.sub.header {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.tiny.header {
   font-size: 1.14285714em;
 }
 .ui.tiny.header .sub.header {
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 .ui.tiny.sub.header {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.small.header {
   font-size: 1.28571429em;
@@ -196,22 +196,22 @@ h6.ui.header .sub.header {
   font-size: 1rem;
 }
 .ui.small.sub.header {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.large.header {
   font-size: 1.71428571em;
 }
 .ui.large.header .sub.header {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 .ui.large.sub.header {
-  font-size: 0.92307692em;
+  font-size: 0.93333333em;
 }
 .ui.big.header {
   font-size: 1.85714286em;
 }
 .ui.big.header .sub.header {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 .ui.big.sub.header {
   font-size: 1em;
@@ -221,7 +221,7 @@ h6.ui.header .sub.header {
   min-height: 1em;
 }
 .ui.huge.header .sub.header {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 .ui.huge.sub.header {
   font-size: 1em;
@@ -231,10 +231,10 @@ h6.ui.header .sub.header {
   min-height: 1em;
 }
 .ui.massive.header .sub.header {
-  font-size: 1.46153846rem;
+  font-size: 1.4rem;
 }
 .ui.massive.sub.header {
-  font-size: 1.15384615em;
+  font-size: 1.13333333em;
 }
 
 /*--------------
@@ -243,9 +243,9 @@ h6.ui.header .sub.header {
 
 .ui.sub.header {
   padding: 0;
-  margin-bottom: 0.15384615rem;
+  margin-bottom: 0.13333333rem;
   font-weight: bold;
-  font-size: 0.84615385em;
+  font-size: 0.86666667em;
   text-transform: uppercase;
   color: '';
 }
@@ -669,11 +669,11 @@ a.ui.inverted.black.header.header.header:hover {
   --------------------*/
 
 .ui.dividing.header {
-  padding-bottom: 0.23076923rem;
+  padding-bottom: 0.2rem;
   border-bottom: 1px solid rgba(34, 36, 38, 0.15);
 }
 .ui.dividing.header .sub.header {
-  padding-bottom: 0.23076923rem;
+  padding-bottom: 0.2rem;
 }
 .ui.dividing.header .icon {
   margin-bottom: 0;
@@ -688,35 +688,35 @@ a.ui.inverted.black.header.header.header:hover {
 
 .ui.block.header {
   background: #F3F4F5;
-  padding: 0.76923077rem 1rem;
+  padding: 0.8rem 1rem;
   -webkit-box-shadow: none;
           box-shadow: none;
   border: 1px solid #D4D4D5;
-  border-radius: 0.30769231rem;
+  border-radius: 0.26666667rem;
 }
 .ui.block.header:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
   font-size: 1rem;
 }
 .ui.mini.block.header {
-  font-size: 0.76923077rem;
+  font-size: 0.8rem;
 }
 .ui.tiny.block.header {
-  font-size: 0.84615385rem;
+  font-size: 0.86666667rem;
 }
 .ui.small.block.header {
-  font-size: 0.92307692rem;
+  font-size: 0.93333333rem;
 }
 .ui.large.block.header {
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 .ui.big.block.header {
-  font-size: 1.30769231rem;
+  font-size: 1.26666667rem;
 }
 .ui.huge.block.header {
-  font-size: 1.46153846rem;
+  font-size: 1.4rem;
 }
 .ui.massive.block.header {
-  font-size: 1.69230769rem;
+  font-size: 1.73333333rem;
 }
 
 /*-------------------
@@ -725,7 +725,7 @@ a.ui.inverted.black.header.header.header:hover {
 
 .ui.attached.header {
   background: #FFFFFF;
-  padding: 0.76923077rem 1rem;
+  padding: 0.8rem 1rem;
   margin: 0 -1px 0 -1px;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -739,10 +739,10 @@ a.ui.inverted.black.header.header.header:hover {
   border-top: none;
 }
 .ui.top.attached.header {
-  border-radius: 0.30769231rem 0.30769231rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
 }
 .ui.bottom.attached.header {
-  border-radius: 0 0 0.30769231rem 0.30769231rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
 }
 
 /* Attached Sizes */
@@ -750,25 +750,25 @@ a.ui.inverted.black.header.header.header:hover {
   font-size: 1em;
 }
 .ui.mini.attached.header {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.tiny.attached.header {
-  font-size: 0.84615385em;
+  font-size: 0.86666667em;
 }
 .ui.small.attached.header {
-  font-size: 0.92307692em;
+  font-size: 0.93333333em;
 }
 .ui.large.attached.header {
-  font-size: 1.15384615em;
+  font-size: 1.13333333em;
 }
 .ui.big.attached.header {
-  font-size: 1.30769231em;
+  font-size: 1.26666667em;
 }
 .ui.huge.attached.header {
-  font-size: 1.46153846em;
+  font-size: 1.4em;
 }
 .ui.massive.attached.header {
-  font-size: 1.69230769em;
+  font-size: 1.73333333em;
 }
 
 /*-------------------

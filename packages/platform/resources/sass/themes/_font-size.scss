@@ -1,0 +1,24 @@
+$font-size-small: 13px;
+$font-size-medium: 14.5px;
+$font-size-big: 16px;
+
+html[data-font-size="small"] {
+  font-size: $font-size-small;
+  body {
+    font-size: $font-size-small;
+  }
+}
+
+html[data-font-size="medium"] {
+  font-size: $font-size-medium;
+  body {
+    font-size: $font-size-medium;
+  }
+}
+
+html[data-font-size="big"] {
+  font-size: $font-size-big;
+  body {
+    font-size: $font-size-big;
+  }
+}

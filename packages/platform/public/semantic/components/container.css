@@ -41,54 +41,54 @@
 /* Tablet */
 @media only screen and (min-width: 768px) and (max-width: 991.98px) {
   .ui.ui.ui.container:not(.fluid) {
-    width: 725px;
+    width: 721px;
     margin-left: auto;
     margin-right: auto;
   }
   .ui.ui.ui.grid.container {
-    width: calc(725px + 2rem);
+    width: calc(721px + 2rem);
   }
   .ui.ui.ui.relaxed.grid.container {
-    width: calc(725px + 3rem);
+    width: calc(721px + 3rem);
   }
   .ui.ui.ui.very.relaxed.grid.container {
-    width: calc(725px + 5rem);
+    width: calc(721px + 5rem);
   }
 }
 
 /* Small Monitor */
 @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
   .ui.ui.ui.container:not(.fluid) {
-    width: 936px;
+    width: 930px;
     margin-left: auto;
     margin-right: auto;
   }
   .ui.ui.ui.grid.container {
-    width: calc(936px + 2rem);
+    width: calc(930px + 2rem);
   }
   .ui.ui.ui.relaxed.grid.container {
-    width: calc(936px + 3rem);
+    width: calc(930px + 3rem);
   }
   .ui.ui.ui.very.relaxed.grid.container {
-    width: calc(936px + 5rem);
+    width: calc(930px + 5rem);
   }
 }
 
 /* Large Monitor */
 @media only screen and (min-width: 1200px) {
   .ui.ui.ui.container:not(.fluid) {
-    width: 1131px;
+    width: 1123px;
     margin-left: auto;
     margin-right: auto;
   }
   .ui.ui.ui.grid.container {
-    width: calc(1131px + 2rem);
+    width: calc(1123px + 2rem);
   }
   .ui.ui.ui.relaxed.grid.container {
-    width: calc(1131px + 3rem);
+    width: calc(1123px + 3rem);
   }
   .ui.ui.ui.very.relaxed.grid.container {
-    width: calc(1131px + 5rem);
+    width: calc(1123px + 5rem);
   }
 }
 
@@ -103,7 +103,7 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   max-width: 700px;
   line-height: 1.5;
-  font-size: 1.15384615rem;
+  font-size: 1.13333333rem;
 }
 
 /* Fluid */

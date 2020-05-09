@@ -19,13 +19,13 @@
   margin: 1em 0;
   background: #F8F8F9;
   padding: 1em 1.5em;
-  line-height: 1.4285em;
+  line-height: 1.5em;
   color: #373e43;
   -webkit-transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, box-shadow 0.1s ease, -webkit-box-shadow 0.1s ease;
-  border-radius: 0.30769231rem;
+  border-radius: 0.26666667rem;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 rgba(0, 0, 0, 0);
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
@@ -51,7 +51,7 @@
 
 /* Default font size */
 .ui.message .header:not(.ui) {
-  font-size: 1.15384615em;
+  font-size: 1.13333333em;
 }
 
 /* Paragraph */
@@ -110,7 +110,7 @@
   cursor: pointer;
   position: absolute;
   margin: 0;
-  top: 0.78575em;
+  top: 0.75em;
   right: 0.5em;
   opacity: 0.7;
   -webkit-transition: opacity 0.1s ease;
@@ -190,7 +190,7 @@
 
 .ui.attached.message {
   margin-bottom: -1px;
-  border-radius: 0.30769231rem 0.30769231rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
   margin-left: -1px;
@@ -202,7 +202,7 @@
 }
 .ui.bottom.attached.message {
   margin-top: -1px;
-  border-radius: 0 0 0.30769231rem 0.30769231rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset, 0 1px 2px 0 rgba(34, 36, 38, 0.15);
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset, 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
@@ -609,25 +609,25 @@
   font-size: 1em;
 }
 .ui.mini.message {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.tiny.message {
-  font-size: 0.84615385em;
+  font-size: 0.86666667em;
 }
 .ui.small.message {
-  font-size: 0.92307692em;
+  font-size: 0.93333333em;
 }
 .ui.large.message {
-  font-size: 1.15384615em;
+  font-size: 1.13333333em;
 }
 .ui.big.message {
-  font-size: 1.30769231em;
+  font-size: 1.26666667em;
 }
 .ui.huge.message {
-  font-size: 1.46153846em;
+  font-size: 1.4em;
 }
 .ui.massive.message {
-  font-size: 1.69230769em;
+  font-size: 1.73333333em;
 }
 
 

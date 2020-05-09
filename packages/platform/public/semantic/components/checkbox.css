@@ -61,7 +61,7 @@
   height: 17px;
   content: '';
   background: #FFFFFF;
-  border-radius: 0.23076923rem;
+  border-radius: 0.2rem;
   -webkit-transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
@@ -349,7 +349,7 @@
   top: 0.4rem;
   background-color: rgba(0, 0, 0, 0.05);
   width: 3.5rem;
-  height: 0.23076923rem;
+  height: 0.2rem;
   border-radius: 500rem;
   -webkit-transition: background 0.3s ease;
   transition: background 0.3s ease;
@@ -610,121 +610,121 @@
 ---------------------*/
 
 .ui.mini.checkbox {
-  font-size: 0.76923077em;
+  font-size: 0.8em;
 }
 .ui.tiny.checkbox {
-  font-size: 0.84615385em;
+  font-size: 0.86666667em;
 }
 .ui.small.checkbox {
-  font-size: 0.92307692em;
+  font-size: 0.93333333em;
 }
 .ui.large.checkbox {
-  font-size: 1.15384615em;
+  font-size: 1.13333333em;
 }
 .ui.large.form .checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.large.checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.large.form .checkbox:not(.slider):not(.toggle):not(.radio) label:before,
 .ui.large.checkbox:not(.slider):not(.toggle):not(.radio) label:before {
-  -webkit-transform: scale(1.15384615);
-          transform: scale(1.15384615);
+  -webkit-transform: scale(1.13333333);
+          transform: scale(1.13333333);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.large.form .checkbox.radio label:before,
 .ui.large.checkbox.radio label:before {
-  -webkit-transform: scale(1.15384615);
-          transform: scale(1.15384615);
+  -webkit-transform: scale(1.13333333);
+          transform: scale(1.13333333);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.large.form .checkbox.radio label:after,
 .ui.large.checkbox.radio label:after {
-  -webkit-transform: scale(0.57692308);
-          transform: scale(0.57692308);
+  -webkit-transform: scale(0.56666667);
+          transform: scale(0.56666667);
   -webkit-transform-origin: left;
           transform-origin: left;
-  left: 0.33846154em;
+  left: 0.33333333em;
 }
 .ui.big.checkbox {
-  font-size: 1.30769231em;
+  font-size: 1.26666667em;
 }
 .ui.big.form .checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.big.checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.big.form .checkbox:not(.slider):not(.toggle):not(.radio) label:before,
 .ui.big.checkbox:not(.slider):not(.toggle):not(.radio) label:before {
-  -webkit-transform: scale(1.30769231);
-          transform: scale(1.30769231);
+  -webkit-transform: scale(1.26666667);
+          transform: scale(1.26666667);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.big.form .checkbox.radio label:before,
 .ui.big.checkbox.radio label:before {
-  -webkit-transform: scale(1.30769231);
-          transform: scale(1.30769231);
+  -webkit-transform: scale(1.26666667);
+          transform: scale(1.26666667);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.big.form .checkbox.radio label:after,
 .ui.big.checkbox.radio label:after {
-  -webkit-transform: scale(0.65384615);
-          transform: scale(0.65384615);
+  -webkit-transform: scale(0.63333333);
+          transform: scale(0.63333333);
   -webkit-transform-origin: left;
           transform-origin: left;
-  left: 0.37692308em;
+  left: 0.36666667em;
 }
 .ui.huge.checkbox {
-  font-size: 1.46153846em;
+  font-size: 1.4em;
 }
 .ui.huge.form .checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.huge.checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.huge.form .checkbox:not(.slider):not(.toggle):not(.radio) label:before,
 .ui.huge.checkbox:not(.slider):not(.toggle):not(.radio) label:before {
-  -webkit-transform: scale(1.46153846);
-          transform: scale(1.46153846);
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.huge.form .checkbox.radio label:before,
 .ui.huge.checkbox.radio label:before {
-  -webkit-transform: scale(1.46153846);
-          transform: scale(1.46153846);
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.huge.form .checkbox.radio label:after,
 .ui.huge.checkbox.radio label:after {
-  -webkit-transform: scale(0.73076923);
-          transform: scale(0.73076923);
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
   -webkit-transform-origin: left;
           transform-origin: left;
-  left: 0.41538462em;
+  left: 0.4em;
 }
 .ui.massive.checkbox {
-  font-size: 1.69230769em;
+  font-size: 1.73333333em;
 }
 .ui.massive.form .checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.massive.checkbox:not(.slider):not(.toggle):not(.radio) label:after,
 .ui.massive.form .checkbox:not(.slider):not(.toggle):not(.radio) label:before,
 .ui.massive.checkbox:not(.slider):not(.toggle):not(.radio) label:before {
-  -webkit-transform: scale(1.69230769);
-          transform: scale(1.69230769);
+  -webkit-transform: scale(1.73333333);
+          transform: scale(1.73333333);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.massive.form .checkbox.radio label:before,
 .ui.massive.checkbox.radio label:before {
-  -webkit-transform: scale(1.69230769);
-          transform: scale(1.69230769);
+  -webkit-transform: scale(1.73333333);
+          transform: scale(1.73333333);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
 .ui.massive.form .checkbox.radio label:after,
 .ui.massive.checkbox.radio label:after {
-  -webkit-transform: scale(0.84615385);
-          transform: scale(0.84615385);
+  -webkit-transform: scale(0.86666667);
+          transform: scale(0.86666667);
   -webkit-transform-origin: left;
           transform-origin: left;
-  left: 0.47307692em;
+  left: 0.48333333em;
 }
 
 
