@@ -64,7 +64,7 @@ $text-color-selected: #D6524D;
         //font-weight: 700;
         //text-transform: uppercase;
         //font-size: .9em;
-        &.active, &:hover {
+        &.selected, &:hover {
           background-color: darken($sidebar-color, 5%);
         }
         &:hover {
@@ -89,7 +89,7 @@ $text-color-selected: #D6524D;
               color: lighten($text-color, 15%);
               background-color: darken($sidebar-color, 5%);
             }
-            &.active {
+            &.selected {
               background-color: darken($sidebar-color, 5%);
               font-weight: normal;
               color: $text-color-selected;

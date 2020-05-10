@@ -28,7 +28,7 @@ class Menu extends BaseMenu
         return $visible = '';
     }
 
-    public static function setActiveParent($children, $isActive, $active = 'active current')
+    public static function setActiveParent($children, $isActive, $active = 'active selected')
     {
         if ($isActive) {
             return $active;

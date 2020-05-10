@@ -1,0 +1,72 @@
+$sidebar-color: #FFFFFF;
+$menu-item-color: #111;
+$menu-item-selected-color: #FFFFFF;
+$menu-item-selected-background: #DB2828;
+
+[data-theme="indonesia"] {
+
+  .sidebar__wrapper {
+    background-color: $sidebar-color;
+
+    .ui.menu.vertical {
+      i.angle.icon {
+        color: $menu-item-selected-background;
+      }
+
+      .item {
+        > .header {
+        }
+
+        &:before {
+        }
+      }
+    }
+  }
+
+  .sidebar__menu {
+    .brand {
+    }
+
+    .ui.menu {
+    }
+  }
+
+  .sidebar__accordion.ui.accordion {
+
+    .title {
+      &:hover {
+        background: darken($sidebar-color, 15%);
+      }
+
+      &.selected {
+      }
+
+      .icon.angle {
+      }
+
+      &.selected {
+        .icon.angle.down {
+        }
+      }
+    }
+
+    .content {
+      background-color: darken($sidebar-color, 5%);
+
+      .ui.list {
+        .item {
+          color: $menu-item-color;
+
+          &:hover {
+            background: darken($sidebar-color, 7.5%);
+          }
+
+          &.selected {
+            color: $menu-item-selected-background;
+          }
+        }
+      }
+    }
+
+  }
+}

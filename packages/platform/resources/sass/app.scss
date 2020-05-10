@@ -1,3 +1,5 @@
+@import "variables";
+
 @import "helpers/allignment";
 @import "helpers/backgrounds";
 @import "helpers/border";
@@ -19,13 +21,12 @@
 @import "layouts/app";
 @import "layouts/full";
 @import "layouts/split";
-
-@import "themes/font-size";
+@import "layouts/font-size";
 
 @import "themes/light";
 @import "themes/dark";
-@import "themes/dark-blue";
 @import "themes/galaxy";
+@import "themes/indonesia";
 @import "themes/purple";
 @import "themes/teal";
 

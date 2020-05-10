@@ -48,12 +48,12 @@ $menu-item-color: #000;
 .sidebar__accordion.ui.accordion {
 
   .title {
-    &:hover, &.active {
+    &:hover, &.selected {
       background: darken($sidebar-color, 15%);
     }
     .icon.angle {
     }
-    &.active {
+    &.selected {
       .icon.angle.down {
       }
     }
@@ -68,7 +68,7 @@ $menu-item-color: #000;
         &:hover{
           background: darken($sidebar-color, 7.5%);
         }
-        &.active  {
+        &.selected  {
           background-color: darken($sidebar-color, 5%);
           font-weight: 700;
         }

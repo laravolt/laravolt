@@ -45,7 +45,7 @@ $menu-item-active-indicator: #a6a8b1;
 
       .title {
         color: $menu-item-color;
-        &.active {
+        &.selected {
           background: darken($sidebar-color, 5%);
           &.empty {
             border-left: 5px solid $menu-item-active-indicator;
@@ -66,7 +66,7 @@ $menu-item-active-indicator: #a6a8b1;
             &:hover {
               background: darken($sidebar-color, 7.5%);
             }
-            &.active {
+            &.selected {
               background: darken($sidebar-color, 7.5%);
               font-weight: normal;
               border-left: 5px solid $menu-item-active-indicator;
