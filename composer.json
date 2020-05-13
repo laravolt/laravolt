@@ -13,41 +13,36 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "ext-xml": "*",
-        "anhskohbo/no-captcha": "^3.1",
+        "anhskohbo/no-captcha": "^3.2",
         "appstract/laravel-blade-directives": "^1.7",
-        "bensampo/laravel-enum": "^1.26",
+        "bensampo/laravel-enum": "^1.37",
         "doctrine/dbal": "^2.10",
-        "guzzlehttp/guzzle": "^6.5",
-        "illuminate/auth": "^6.0|^7.0",
-        "illuminate/console": "^6.0|^7.0",
-        "illuminate/database": "^6.0|^7.0",
-        "illuminate/support": "^6.0|^7.0",
+        "illuminate/auth": "^7.0",
+        "illuminate/console": "^7.0",
+        "illuminate/database": "^7.0",
+        "illuminate/support": "^7.0",
         "kalnoy/nestedset": "^5.0",
         "laravel/ui": "^2.0",
         "laravolt/avatar": "^3.0",
         "lavary/laravel-menu": "^1.7.7",
         "league/flysystem": "^1.0",
-        "maatwebsite/excel": "^3.1",
         "myclabs/deep-copy": "^1.9",
         "nesbot/carbon": "^2.0",
         "niklasravnsborg/laravel-pdf": "^4.0",
-        "phpoffice/phpword": "^0.17.0",
-        "rap2hpoutre/fast-excel": "^1.3.1",
-        "rkorebrits/htmltoopenxml": "^0.1.9",
-        "spatie/data-transfer-object": "^1.10",
+        "rap2hpoutre/fast-excel": "^1.7",
         "spatie/eloquent-sortable": "^3.7",
-        "spatie/laravel-activitylog": "^3.9",
-        "spatie/laravel-medialibrary": "^7.0|^8.0",
+        "spatie/laravel-medialibrary": "^8.0",
         "spatie/once": "^2.1",
         "stolz/assets": "~0.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "codedungeon/phpunit-result-printer": "^0.26.2",
+        "laravel/browser-kit-testing": "^6.0",
         "mockery/mockery": "^1.2",
-        "orchestra/database": "^4.0",
-        "orchestra/testbench": "^4.0",
-        "orchestra/testbench-browser-kit": "^4.0",
+        "orchestra/canvas": "^5.4",
+        "orchestra/testbench": "^5.2",
+        "orchestra/testbench-browser-kit": "^5.0",
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^8.0",
         "spatie/laravel-web-tinker": "1.6",
@@ -61,7 +56,6 @@
             "packages/support/src/helpers.php"
         ],
         "psr-4": {
-            "Laravolt\\Camunda\\": "packages/camunda/src",
             "Laravolt\\Contracts\\": "packages/platform/src/Contracts/",
             "Laravolt\\Epicentrum\\": "packages/platform/src/Epicentrum/",
             "Laravolt\\Epilog\\": "packages/epilog/src",
@@ -73,8 +67,7 @@
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
-            "Laravolt\\Thunderclap\\": "packages/thunderclap/src",
-            "Laravolt\\Workflow\\": "packages/workflow/src"
+            "Laravolt\\Thunderclap\\": "packages/thunderclap/src"
         }
     },
     "autoload-dev": {
@@ -87,7 +80,6 @@
         }
     },
     "replace": {
-        "laravolt/camunda": "self.version",
         "laravolt/epilog": "self.version",
         "laravolt/lookup": "self.version",
         "laravolt/mailkeeper": "self.version",
@@ -97,8 +89,7 @@
         "laravolt/semantic-form": "self.version",
         "laravolt/suitable": "self.version",
         "laravolt/support": "self.version",
-        "laravolt/thunderclap": "self.version",
-        "laravolt/workflow": "self.version"
+        "laravolt/thunderclap": "self.version"
     },
     "extra": {
         "laravel": {
@@ -107,11 +98,9 @@
                 "Laravolt\\Thunderclap\\ServiceProvider",
                 "Laravolt\\Epilog\\ServiceProvider",
                 "Laravolt\\Menu\\ServiceProvider",
-                "Laravolt\\Workflow\\ServiceProvider",
                 "Laravolt\\Support\\SupportServiceProvider",
                 "Laravolt\\Suitable\\ServiceProvider",
                 "Laravolt\\Lookup\\ServiceProvider",
-                "Laravolt\\Camunda\\ServiceProvider",
                 "Laravolt\\Platform\\Providers\\EpicentrumServiceProvider",
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
                 "Laravolt\\Platform\\Providers\\UiServiceProvider",
@@ -121,7 +110,6 @@
             ],
             "aliases": {
                 "Menu": "Laravolt\\Menu\\Facade",
-                "Workflow": "Laravolt\\Workflow\\Facade",
                 "Suitable": "Laravolt\\Suitable\\Facade",
                 "Form": "Laravolt\\SemanticForm\\Facade",
                 "SemanticForm": "Laravolt\\SemanticForm\\Facade"

@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "illuminate/support": "^6.0|^7.0",
+        "illuminate/support": "^7.0",
         "nesbot/carbon": "^2.0",
         "myclabs/deep-copy": "^1.9"
     },
