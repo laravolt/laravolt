@@ -1,14 +1,11 @@
 @extends(config('laravolt.epicentrum.view.layout'))
 
-@section('page.title', __('laravolt::label.roles'))
-
-@push('page.actions')
-    <a href="{{ route('epicentrum::roles.create') }}" class="ui button primary">
-        <i class="icon plus"></i> @lang('laravolt::action.add')
-    </a>
-@endpush
-
 @section('content')
+
+    <x-titlebar title="{{ __('laravolt::label.permissions') }}">
+        <x-button url="{{ route('epicentrum::roles.create') }}" type="primary" icon="plus" label="{{ __('laravolt::action.add') }}"></x-button>
+    </x-titlebar>
+
     <div class="ui grid">
         <div class="column sixteen wide">
             <div class="ui cards three doubling">

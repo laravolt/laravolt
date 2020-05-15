@@ -1,13 +1,9 @@
-@extends(
-    config('laravolt.epilog.view.layout'),
-    [
-        '__page' => [
-            'title' => __('Application Log'),
-            'actions' => []
-        ],
-])
+@extends(config('laravolt.epilog.view.layout'))
 
 @section('content')
+
+    <x-titlebar title="{{ __('Application Log') }}"></x-titlebar>
+
     <div class="ui search selection dropdown fluid">
         <div class="text">{{ basename($selectedFile) }}</div>
         <i class="dropdown icon"></i>

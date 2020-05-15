@@ -19,6 +19,7 @@ use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\BacklinkComponent;
+use Laravolt\Platform\Components\ButtonComponent;
 use Laravolt\Platform\Components\PanelComponent;
 use Laravolt\Platform\Components\TitlebarComponent;
 use Laravolt\Platform\Enums\Permission;
@@ -214,6 +215,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         Blade::components([
             'backlink' => BacklinkComponent::class,
+            'button' => ButtonComponent::class,
             'panel' => PanelComponent::class,
             'titlebar' => TitlebarComponent::class,
         ]);

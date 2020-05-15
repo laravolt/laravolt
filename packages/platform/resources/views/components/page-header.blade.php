@@ -6,7 +6,7 @@
         <div class="item">
             @foreach($actions ?? [] as $action)
                 @if(is_array($action))
-                    @includeWhen($action['visible'] ?? true, 'laravolt::components.button', ['action' => $action])
+                    @includeWhen($action['visible'] ?? true, 'laravolt::components.button', $action)
                 @else
                     {!! $action !!}
                 @endif

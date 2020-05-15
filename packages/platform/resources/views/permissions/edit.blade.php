@@ -1,8 +1,8 @@
 @extends(config('laravolt.epicentrum.view.layout'))
 
-@section('page.title', __('laravolt::label.permissions'))
-
 @section('content')
+
+    <x-titlebar title="{{ __('laravolt::label.permissions') }}"></x-titlebar>
 
     {!! form()->open(route('epicentrum::permissions.update'))->put() !!}
 
