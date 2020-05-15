@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class Date extends Column implements ColumnInterface
 {
-    protected $format = 'LLL';
+    protected $format = 'LL';
 
     protected $timezone;
 

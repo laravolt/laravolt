@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class DateTime extends Date implements ColumnInterface
 {
-    protected $format = 'lll';
+    protected $format = 'LLL';
 
     public function cell($cell, $collection, $loop)
     {
