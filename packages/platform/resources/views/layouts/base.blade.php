@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-font-size="{{ config('laravolt.ui.font_size') }}">
 <head>
     <title>@yield('site.title', "Welcome Home") | {{ config('app.name') }}</title>
 
