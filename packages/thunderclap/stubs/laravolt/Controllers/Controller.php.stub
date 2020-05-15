@@ -1,20 +1,18 @@
 <?php
 
-namespace :Namespace:\:ModuleName:\Http\Controllers;
+namespace :Namespace:\:ModuleName:\Controllers;
 
 use Illuminate\Routing\Controller;
-use :Namespace:\:ModuleName:\Http\Requests\Store;
-use :Namespace:\:ModuleName:\Http\Requests\Update;
+use :Namespace:\:ModuleName:\Requests\Store;
+use :Namespace:\:ModuleName:\Requests\Update;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
-use :Namespace:\:ModuleName:\TableView\IndexTableView;
+use :Namespace:\:ModuleName:\Tables\IndexTableView;
 
 class :ModuleName:Controller extends Controller
 {
     public function index()
     {
-        $items = :ModuleName:::autoSort()->latest()->autoSearch(request('search'))->paginate();
-
-        return (IndexTableView::make($items))->view(':moduleName:::index');
+        return IndexTableView::make()->view(':moduleName:::index');
     }
 
     public function create()
@@ -26,7 +24,7 @@ class :ModuleName:Controller extends Controller
     {
         :ModuleName:::create($request->validated());
 
-        return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: saved');
+        return redirect()->back()->withSuccess(':ModuleName: saved');
     }
 
     public function show(:ModuleName: $:moduleName:)
@@ -50,6 +48,6 @@ class :ModuleName:Controller extends Controller
     {
         $:moduleName:->delete();
 
-        return redirect()->route(':module-name:.index')->withSuccess(':ModuleName: deleted');
+        return redirect()->back()->withSuccess(':ModuleName: deleted');
     }
 }

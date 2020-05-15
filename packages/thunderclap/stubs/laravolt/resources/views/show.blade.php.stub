@@ -1,0 +1,16 @@
+@extends('laravolt::layouts.app')
+
+@section('content')
+
+    <a href="{{ route('modules:::module-name:.index') }}" class="ui button basic">
+        <i class="icon long alternate left arrow"></i>
+        Kembali
+    </a>
+
+    <x-panel title="Detil :Module Name:">
+        <table class="ui table definition">
+:DETAIL_FIELDS:
+        </table>
+    </x-panel>
+
+@stop

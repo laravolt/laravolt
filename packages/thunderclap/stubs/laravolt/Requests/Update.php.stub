@@ -1,0 +1,7 @@
+<?php
+
+namespace :Namespace:\:ModuleName:\Requests;
+
+class Update extends Store
+{
+}

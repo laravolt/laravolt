@@ -1,0 +1,20 @@
+@extends('laravolt::layouts.app')
+
+@section('content')
+
+    <a href="{{ route('modules:::module-name:.index') }}" class="ui button basic">
+        <i class="icon long alternate left arrow"></i>
+        Kembali
+    </a>
+
+    <x-panel title="Tambah :Module Name:">
+    {!! form()->post(route('modules:::module-name:.store'))->horizontal()->multipart() !!}
+:FORM_CREATE_FIELDS:
+    {!! form()->action([
+        form()->submit('Simpan'),
+        form()->link('Batal', route('modules:::module-name:.index'))
+    ]) !!}
+    {!! form()->close() !!}
+    </x-panel>
+
+@stop

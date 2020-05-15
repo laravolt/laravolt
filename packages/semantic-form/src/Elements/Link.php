@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 class Link extends Element
 {
     protected $attributes = [
-        'class' => 'ui button',
+        'class' => 'ui basic button',
     ];
 
     protected $text;

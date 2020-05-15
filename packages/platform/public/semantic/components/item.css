@@ -141,7 +141,7 @@
 .ui.items > .item > .content > .header {
   display: inline-block;
   margin: -0.25em 0 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
 }

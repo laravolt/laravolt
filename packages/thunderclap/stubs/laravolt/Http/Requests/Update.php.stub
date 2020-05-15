@@ -1,7 +1,0 @@
-<?php
-
-namespace :Namespace:\:ModuleName:\Http\Requests;
-
-class Update extends Store
-{
-}

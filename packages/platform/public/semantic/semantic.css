@@ -463,7 +463,7 @@ body {
   overflow-x: hidden;
   min-width: 320px;
   background: #FFFFFF;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 15px;
   line-height: 1.5em;
   color: #373e43;
@@ -478,7 +478,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   line-height: 1.28571429em;
   margin: calc(2rem - 0.1428571428571429em) 0 1rem;
   font-weight: bold;
@@ -487,23 +487,23 @@ h5 {
 
 h1 {
   min-height: 1rem;
-  font-size: 2.57142857rem;
+  font-size: 3rem;
 }
 
 h2 {
-  font-size: 1.71428571rem;
+  font-size: 2rem;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.66666667rem;
 }
 
 h4 {
-  font-size: 1.28571429rem;
+  font-size: 1.33333333rem;
 }
 
 h5 {
-  font-size: 1.14285714rem;
+  font-size: 1rem;
 }
 
 h1:first-child,
@@ -681,7 +681,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   vertical-align: baseline;
   background: #E0E1E2 none;
   color: rgba(0, 0, 0, 0.6);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   margin: 0 0.25em 0 0;
   padding: 0.73333333em 1.5em 0.73333333em;
   text-transform: none;
@@ -5749,7 +5749,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 /* Text Container */
 
 .ui.text.container {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   max-width: 700px;
   line-height: 1.5;
   font-size: 1.13333333rem;
@@ -7406,7 +7406,7 @@ i.flag.zimbabwe:before {
   border: none;
   margin: calc(2rem - 0.1428571428571429em) 0 1rem;
   padding: 0 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-weight: bold;
   line-height: 1.28571429em;
   text-transform: none;
@@ -7523,7 +7523,7 @@ i.flag.zimbabwe:before {
 ---------------*/
 
 h1.ui.header {
-  font-size: 2.57142857rem;
+  font-size: 3rem;
 }
 
 h1.ui.header .sub.header {
@@ -7531,7 +7531,7 @@ h1.ui.header .sub.header {
 }
 
 h2.ui.header {
-  font-size: 1.71428571rem;
+  font-size: 2rem;
 }
 
 h2.ui.header .sub.header {
@@ -7539,7 +7539,7 @@ h2.ui.header .sub.header {
 }
 
 h3.ui.header {
-  font-size: 1.5rem;
+  font-size: 1.66666667rem;
 }
 
 h3.ui.header .sub.header {
@@ -7547,7 +7547,7 @@ h3.ui.header .sub.header {
 }
 
 h4.ui.header {
-  font-size: 1.28571429rem;
+  font-size: 1.33333333rem;
 }
 
 h4.ui.header .sub.header {
@@ -7555,7 +7555,7 @@ h4.ui.header .sub.header {
 }
 
 h5.ui.header {
-  font-size: 1.14285714rem;
+  font-size: 1rem;
 }
 
 h5.ui.header .sub.header {
@@ -7587,7 +7587,7 @@ h6.ui.header .sub.header {
 }
 
 .ui.tiny.header {
-  font-size: 1.14285714em;
+  font-size: 1em;
 }
 
 .ui.tiny.header .sub.header {
@@ -7599,7 +7599,7 @@ h6.ui.header .sub.header {
 }
 
 .ui.small.header {
-  font-size: 1.28571429em;
+  font-size: 1.33333333em;
 }
 
 .ui.small.header .sub.header {
@@ -7611,7 +7611,8 @@ h6.ui.header .sub.header {
 }
 
 .ui.large.header {
-  font-size: 1.71428571em;
+  font-size: 2em;
+  min-height: 1em;
 }
 
 .ui.large.header .sub.header {
@@ -7635,7 +7636,7 @@ h6.ui.header .sub.header {
 }
 
 .ui.huge.header {
-  font-size: 2.57142857em;
+  font-size: 3em;
   min-height: 1em;
 }
 
@@ -8325,7 +8326,7 @@ a.ui.inverted.black.header.header.header:hover {
 --------------------*/
 
 .ui.header:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-  font-size: 1.5em;
+  font-size: 1.66666667em;
 }
 
 /*******************************
@@ -17471,7 +17472,7 @@ img.ui.bordered.image {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   text-align: left;
   line-height: 1.21428571em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   padding: 0.62619048em 0.93333333em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -20783,7 +20784,7 @@ ol.ui.list ol li,
 .ui.list > .item .header {
   display: block;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-weight: bold;
   color: #373e43;
 }
@@ -24532,7 +24533,7 @@ ol.ui.suffixed.list li:before,
 /* Title */
 
 .ui.steps .step .title {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: 1.13333333em;
   font-weight: bold;
 }
@@ -25578,7 +25579,7 @@ span.ui.massive.text {
 .ui.form input[type="text"],
 .ui.form input[type="file"],
 .ui.form input[type="url"] {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   margin: 0;
   outline: none;
   -webkit-appearance: none;
@@ -25614,7 +25615,7 @@ span.ui.massive.text {
   -webkit-transition: color 0.1s ease, border-color 0.1s ease;
   transition: color 0.1s ease, border-color 0.1s ease;
   font-size: 1em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   line-height: 1.2857;
   resize: vertical;
 }
@@ -29849,7 +29850,7 @@ span.ui.massive.text {
   display: -ms-flexbox;
   display: flex;
   margin: 1rem 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background: #FFFFFF;
   font-weight: normal;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -32395,7 +32396,7 @@ Floated Menu / Item
 
 .ui.message .header {
   display: block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-weight: bold;
   margin: -0.14285714em 0 0 0;
 }
@@ -36148,7 +36149,7 @@ Floated Menu / Item
 .ui.card > .content > .header {
   display: block;
   margin: '';
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   color: rgba(0, 0, 0, 0.85);
 }
 
@@ -38270,7 +38271,7 @@ a.inverted.ui.card:hover,
 .ui.items > .item > .content > .header {
   display: inline-block;
   margin: -0.25em 0 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
 }
@@ -38859,7 +38860,7 @@ a.inverted.ui.card:hover,
 
 .ui.statistics .statistic > .value,
 .ui.statistic > .value {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 4rem;
   font-weight: normal;
   line-height: 1em;
@@ -38874,7 +38875,7 @@ a.inverted.ui.card:hover,
 
 .ui.statistics .statistic > .label,
 .ui.statistic > .label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: 1em;
   font-weight: bold;
   color: #373e43;
@@ -39496,7 +39497,7 @@ a.inverted.ui.card:hover,
 
 .ui.accordion .title:not(.ui) {
   padding: 0.5em 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: 1em;
   color: #373e43;
 }
@@ -43631,7 +43632,7 @@ select.ui.dropdown {
 
 .ui.modal > .header {
   display: block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   background: #FFFFFF;
   margin: 0;
   padding: 1.25rem 1.5rem;
@@ -44591,7 +44592,7 @@ a.ui.nag {
 
 .ui.popup > .header {
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: 1.13333333em;
   line-height: 1.2;
   font-weight: bold;
@@ -48014,7 +48015,7 @@ a.ui.nag {
 
 .ui.search > .results .result .title {
   margin: -0.14285714em 0 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-weight: bold;
   font-size: 1em;
   color: rgba(0, 0, 0, 0.85);
@@ -48040,7 +48041,7 @@ a.ui.nag {
 }
 
 .ui.search > .results > .message .header {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: 1rem;
   font-weight: bold;
   color: #373e43;
@@ -48253,7 +48254,7 @@ a.ui.nag {
   width: 100px;
   white-space: nowrap;
   background: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 1em;
   padding: 0.4em 1em;
   font-weight: bold;

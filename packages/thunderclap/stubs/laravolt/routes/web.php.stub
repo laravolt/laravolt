@@ -1,6 +1,6 @@
 <?php
 
-use :Namespace:\:ModuleName:\Http\Controllers\:ModuleName:Controller;
+use :Namespace:\:ModuleName:\Controllers\:ModuleName:Controller;
 
 $router->group(
     [

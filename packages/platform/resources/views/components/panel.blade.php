@@ -1,8 +1,8 @@
 <div class="ui segments">
-    <div class="ui segment secondary">
-        <h4 class="ui header">{!! $title !!}</h4>
+    <div class="ui segment {{ $attributes['headerClass'] ?? '' }}">
+        <h2 class="ui header">{!! $title !!}</h2>
     </div>
-    <div class="ui segment p-1">
+    <div class="ui segment {{ $attributes['contentClass'] ?? 'p-2' }}">
             {!! $slot !!}
     </div>
 </div>

@@ -30,7 +30,7 @@ abstract class TableView implements Responsable
         $this->init();
     }
 
-    public static function make($source)
+    public static function make($source = null)
     {
         $table = new static($source);
 

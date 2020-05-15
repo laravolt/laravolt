@@ -38,7 +38,7 @@
 }
 .ui.popup > .header {
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: inherit;
   font-size: 1.13333333em;
   line-height: 1.2;
   font-weight: bold;

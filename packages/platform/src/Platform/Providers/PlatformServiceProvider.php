@@ -8,6 +8,7 @@ use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Console\PresetCommand;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -19,6 +20,8 @@ use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Components\PanelComponent;
+use Laravolt\Platform\Components\TitlebarComponent;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltPreset;
@@ -54,7 +57,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             ->bootRoutes()
             ->bootAcl($gate)
             ->bootMenu()
-            ->bootPreset();
+            ->bootPreset()
+            ->bootComponents();
     }
 
     protected function registerServices()
@@ -213,6 +217,14 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         return $this;
+    }
+
+    protected function bootComponents()
+    {
+        Blade::components([
+            'panel' => PanelComponent::class,
+            'titlebar' => TitlebarComponent::class,
+        ]);
     }
 
     protected function hasPermissionTable()

@@ -43,7 +43,7 @@ class FieldTypeTransformer
 
     private function date()
     {
-        return "{!! form()->selectDate('%s')->label('%s') !!}";
+        return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
 
     private function datetime()

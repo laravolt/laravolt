@@ -1,20 +1,26 @@
 <?php
 
-namespace :Namespace:\:ModuleName:\TableView;
+namespace :Namespace:\:ModuleName:\Tables;
 
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
+use :Namespace:\:ModuleName:\Models\:ModuleName:;
 
 class IndexTableView extends TableView
 {
+    public function source()
+    {
+        return :ModuleName:::autoSort()->latest()->autoSearch(request('search'))->paginate();
+    }
+
     protected function columns()
     {
         return [
             Numbering::make('No'),
 :TABLE_VIEW_FIELDS:
-            RestfulButton::make(':module-name:'),
+            RestfulButton::make('modules:::module-name:'),
         ];
     }
 }
