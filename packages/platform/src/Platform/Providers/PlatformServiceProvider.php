@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
-use Illuminate\Console\Command;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +22,6 @@ use Laravolt\Platform\Components\PanelComponent;
 use Laravolt\Platform\Components\TitlebarComponent;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
-use Laravolt\Platform\Services\LaravoltPreset;
 use Laravolt\Platform\Services\LaravoltUiCommand;
 use Laravolt\Platform\Services\Password;
 
@@ -204,17 +201,10 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootPreset()
     {
-        if (version_compare(app()->version(), '7', '>=')) {
-            UiCommand::macro('laravolt', function (UiCommand $command) {
-                LaravoltUiCommand::install();
-                $command->comment('Scaffolding Laravolt skeleton');
-            });
-        } else {
-            PresetCommand::macro('laravolt', function (Command $command) {
-                LaravoltPreset::install();
-                $command->comment('Scaffolding Laravolt skeleton');
-            });
-        }
+        UiCommand::macro('laravolt', function (UiCommand $command) {
+            LaravoltUiCommand::install();
+            $command->comment('Scaffolding Laravolt skeleton');
+        });
 
         return $this;
     }
