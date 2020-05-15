@@ -17,9 +17,16 @@ class CreateMailTable extends Migration
             $table->increments('id');
             $table->unsignedTinyInteger('status')->default(0);
             $table->json('from');
+            $table->json('sender')->nullable();
             $table->json('to');
+            $table->json('cc')->nullable();
+            $table->json('bcc')->nullable();
+            $table->json('reply_to')->nullable();
+            $table->unsignedSmallInteger('priority')->nullable();
+            $table->string('content_type', 255)->default('text/plain');
             $table->string('subject');
             $table->text('body');
+            $table->text('error')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
