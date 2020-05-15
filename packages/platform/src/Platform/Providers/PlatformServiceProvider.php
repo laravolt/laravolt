@@ -18,6 +18,7 @@ use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Components\BacklinkComponent;
 use Laravolt\Platform\Components\PanelComponent;
 use Laravolt\Platform\Components\TitlebarComponent;
 use Laravolt\Platform\Enums\Permission;
@@ -212,6 +213,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bootComponents()
     {
         Blade::components([
+            'backlink' => BacklinkComponent::class,
             'panel' => PanelComponent::class,
             'titlebar' => TitlebarComponent::class,
         ]);

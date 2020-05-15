@@ -2,10 +2,7 @@
 
 @section('content')
 
-    <a href="{{ route('modules:::module-name:.index') }}" class="ui button basic">
-        <i class="icon long alternate left arrow"></i>
-        Kembali
-    </a>
+    <x-backlink url="{{ route('modules:::module-name:.index') }}"></x-backlink>
 
     <x-panel title="Tambah :Module Name:">
     {!! form()->post(route('modules:::module-name:.store'))->horizontal()->multipart() !!}
