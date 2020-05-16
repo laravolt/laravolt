@@ -22,7 +22,7 @@ class Label extends Column implements ColumnInterface
                 $class .= " $additionalClass";
             }
 
-            return sprintf('<div class="ui label basic %s">%s</div>', $class, $cell->{$this->field});
+            return sprintf('<div class="ui label %s">%s</div>', $class, $cell->{$this->field});
         }
 
         return '-';
