@@ -27,7 +27,7 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
             $menu->system
                 ->add(':Module Name:', route('modules:::moduleName:.index'))
                 ->data('icon', 'circle outline')
-                ->active(':module-name:/*');
+                ->active('modules/:module-name:/*');
         });
     }
 }
