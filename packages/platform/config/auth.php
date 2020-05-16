@@ -33,13 +33,6 @@ return [
     'cas'          => [
         'enable' => false,
     ],
-    'ldap'         => [
-        'enable'   => false,
-        'resolver' => [
-            'ldap_user'     => \Laravolt\Auth\Services\Resolvers\LdapUserResolver::class,
-            'eloquent_user' => \Laravolt\Auth\Services\Resolvers\EloquentUserResolver::class,
-        ],
-    ],
     'router'       => [
         'middleware' => ['web'],
         'prefix'     => 'auth',
