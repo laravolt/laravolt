@@ -158,7 +158,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bootAcl($gate)
     {
         // register wildcard permission
-        \Illuminate\Support\Facades\Gate::before(function (HasRoleAndPermission $user) {
+        \Illuminate\Support\Facades\Gate::before(function (HasRoleAndPermission $user, $ability, $models) {
             if ($user->hasPermission('*')) {
                 return true;
             }
