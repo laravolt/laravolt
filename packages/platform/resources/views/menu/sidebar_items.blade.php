@@ -1,4 +1,4 @@
-<div class="ui accordion sidebar__accordion" data-role="sidebar-accordion">
+<div class="ui accordion sidebar__accordion m-b-1" data-role="sidebar-accordion">
     @foreach($items as $item)
         @if($item->hasChildren())
             <div class="title {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}">

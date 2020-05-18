@@ -40,9 +40,12 @@ class MenuBuilder
 
     public function loadArray(array $menu)
     {
+        $order = 0;
         foreach ($menu as $title => $option) {
-            app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option) {
-                $section = $menu->add($title);
+            app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option, $order) {
+
+                $section = $menu->add($title, isset($option['route']) ? route($option['route']) : null)->data('order', $order);
+
                 if (isset($option['menu'])) {
                     $this->addMenu($section, $option['menu']);
                 }
@@ -50,6 +53,7 @@ class MenuBuilder
                     $this->setData($section, $option['data']);
                 }
             });
+            $order++;
         }
     }
 

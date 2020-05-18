@@ -22,7 +22,7 @@
                             @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
                         @else
                             <div class="ui accordion sidebar__accordion">
-                                <a class="title empty {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->link->isActive) }}"
+                                <a class="title empty {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}"
                                    href="{{ $item->url() }}">
                                     <i class="left icon {{ $item->data('icon') }}"></i>
                                     <span>{{ $item->title }}</span>
