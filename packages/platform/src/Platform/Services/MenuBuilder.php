@@ -43,7 +43,6 @@ class MenuBuilder
         $order = 0;
         foreach ($menu as $title => $option) {
             app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option, $order) {
-
                 $section = $menu->add($title, isset($option['route']) ? route($option['route']) : null)->data('order', $order);
 
                 if (isset($option['menu'])) {
