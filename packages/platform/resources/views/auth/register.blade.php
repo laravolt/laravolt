@@ -7,23 +7,19 @@
     <form class="ui form" method="POST" action="{{ route('auth::register') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-        <div class="ui field right icon input fluid">
+        <div class="ui field input fluid big">
             <input type="text" name="name" placeholder="@lang('laravolt::auth.name')" value="{{ old('name') }}">
-            <i class="user icon"></i>
         </div>
-        <div class="ui field right icon input fluid">
+        <div class="ui field input fluid big">
             <input type="email" name="email" placeholder="@lang('laravolt::auth.identifier')" value="{{ old('email') }}">
-            <i class="mail icon"></i>
         </div>
-        <div class="ui field right icon input fluid">
+        <div class="ui field input fluid big">
             <input type="password" name="password" placeholder="@lang('laravolt::auth.password')">
-            <i class="lock icon"></i>
         </div>
-        <div class="ui field right icon input fluid">
+        <div class="ui field input fluid big">
             <input type="password" name="password_confirmation" placeholder="@lang('laravolt::auth.password_confirmation')">
-            <i class="lock icon"></i>
         </div>
-        <button type="submit" class="ui button fluid primary">@lang('laravolt::auth.register')</button>
+        <button type="submit" class="ui button fluid primary  big">@lang('laravolt::auth.register')</button>
     </form>
 
     <div class="ui divider hidden section"></div>

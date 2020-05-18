@@ -5,6 +5,9 @@ $menu-item-active-indicator: #a6a8b1;
 
 [data-theme="dark"] {
 
+  [data-role="brand"] .ui.header {
+    color: $menu-item-color;
+  }
   .sidebar {
     .sidebar__wrapper {
       border-right: 1px solid #eaecf0;

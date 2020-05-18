@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'layout'       => 'laravolt::layouts.public.full',
+    'layout'       => 'laravolt::layouts.auth',
     'captcha'      => false,
     'identifier'   => 'email',
     'login'        => [

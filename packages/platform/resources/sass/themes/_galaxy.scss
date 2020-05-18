@@ -5,7 +5,9 @@ $text-color-selected: #D6524D;
 [data-theme="galaxy"] {
   background: #f3f3f7;
 
-
+  [data-role="brand"] .ui.header {
+    color: $text-color;
+  }
   header.ui.menu {
     //background: #282B45;
   }

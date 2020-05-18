@@ -79,7 +79,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('laravolt::login');
+        return view('laravolt::auth.login');
     }
 
     public function login(Request $request)

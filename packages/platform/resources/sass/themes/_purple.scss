@@ -5,6 +5,10 @@ $text-color-selected: #e9b92a;
 [data-theme="purple"] {
   background: #f3f5f9;
 
+  [data-role="brand"] .ui.header {
+    color: $text-color;
+  }
+
   .sidebar {
     .sidebar__wrapper {
       border-right: 0 none;

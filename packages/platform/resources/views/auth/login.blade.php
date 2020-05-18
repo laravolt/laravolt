@@ -7,13 +7,13 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="field">
-            <div class="ui field right icon input fluid">
+            <div class="ui field right icon input fluid big">
                 <input type="text" name="{{ config('laravolt.auth.identifier') }}" placeholder="@lang('laravolt::auth.identifier')" value="{{ old(config('laravolt.auth.identifier')) }}">
                 <i class="at icon"></i>
             </div>
         </div>
         <div class="field">
-            <div class="ui field right icon input fluid">
+            <div class="ui field right icon input fluid big">
                 <input type="password" name="password" placeholder="@lang('laravolt::auth.password')">
                 <i class="lock icon"></i>
             </div>
@@ -25,7 +25,7 @@
             </div>
         @endif
         <div class="ui field">
-            <button type="submit" class="ui fluid button primary">@lang('laravolt::auth.login')</button>
+            <button type="submit" class="ui fluid big button primary">@lang('laravolt::auth.login')</button>
         </div>
         <div class="ui equal width grid">
             <div class="column left aligned">
@@ -40,13 +40,6 @@
         </div>
 
     </form>
-
-    @if(config('laravolt.auth.cas.enable'))
-        <div class="ui horizontal divider">
-            Or
-        </div>
-        <a href="{{ route('auth::cas.login') }}" class="ui fluid button basic">@lang('laravolt::auth.login_cas')</a>
-    @endif
 
     @if(config('laravolt.auth.registration.enable'))
         <div class="ui divider hidden section"></div>

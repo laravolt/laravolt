@@ -4,6 +4,10 @@ $menu-item-color: #000;
 
 [data-theme="light"] {
 
+  [data-role="brand"] .ui.header {
+    color: $menu-item-color;
+  }
+
   header.ui.menu {
     box-shadow: none;
   }

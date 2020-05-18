@@ -49,7 +49,7 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('laravolt::reset')->with(
+        return view('laravolt::auth.reset')->with(
             ['token' => $token, 'email' => urldecode($request->email)]
         );
     }

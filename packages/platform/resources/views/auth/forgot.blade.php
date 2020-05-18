@@ -11,11 +11,11 @@
     <form class="ui form" method="POST" action="{{ route('auth::forgot') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-        <div class="ui field right icon input fluid">
+        <div class="ui field right icon input fluid big">
             <input type="email" name="email" placeholder="@lang('laravolt::auth.email')" value="{{ old('email') }}">
             <i class="mail icon"></i>
         </div>
-        <button type="submit" class="ui fluid button primary">@lang('laravolt::auth.send_reset_password_link')</button>
+        <button type="submit" class="ui fluid button big primary">@lang('laravolt::auth.send_reset_password_link')</button>
     </form>
 
     @if(config('laravolt.auth.registration.enable'))

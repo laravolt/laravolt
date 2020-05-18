@@ -1,31 +1,37 @@
 .layout--split {
   display: flex;
-  min-height: 100%;
-  margin: 0;
-  paddding: 0;
+  min-height: 100vh;
+  justify-content: center;
+
   @media only screen and (max-width: 767px) {
-    flex-direction: column-reverse;
-    min-height: inherit;
+    flex-direction: column;
+    justify-content: flex-start;
+    [data-role="inspire"] {
+      flex: 0 0 50px;
+      .ui.container.text {
+        display: none;
+      }
+    }
+    &[data-role="main"] {
+      flex: 1;
+    }
   }
 
   > div {
     flex: 1;
-  }
-
-  &[data-position="right"] {
-    .content {
-      order: 1;
-    }
-  }
-
-  .content {
     display: flex;
-    background-color: #F2F2F2;
 
-    &--inner {
+    &[data-role="inspire"] {
+
+    }
+
+    &[data-role="main"] {
+      flex: 0 0 500px;
+    }
+
+    [data-role="content"] {
+      align-self: center;
       flex: 1;
-      margin: auto !important;
-      max-width: 500px;
     }
   }
 }

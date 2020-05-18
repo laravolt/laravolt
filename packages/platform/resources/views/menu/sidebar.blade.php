@@ -4,7 +4,7 @@
     <div class="sidebar__wrapper" data-role="sidebar">
 
         <div class="sidebar__menu">
-            @include('laravolt::menu.sidebar_brand')
+            @include('laravolt::components.brand-inline')
 
             @if(!$items->isEmpty())
                 @if(config('laravolt.ui.quick_switcher'))

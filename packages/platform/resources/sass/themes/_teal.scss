@@ -9,6 +9,10 @@ $menu-item-color: #87b9d6;
 
   background: #ededed42;
 
+  [data-role="brand"] .ui.header {
+    color: $menu-item-color;
+  }
+
   header.ui.menu {
     //background-color: darken($teal, 4%);
     .item {

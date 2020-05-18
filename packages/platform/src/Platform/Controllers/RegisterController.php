@@ -59,7 +59,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('laravolt::register');
+        return view('laravolt::auth.register');
     }
 
     /**

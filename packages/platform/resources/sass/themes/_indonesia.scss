@@ -5,6 +5,9 @@ $menu-item-selected-background: #DB2828;
 
 [data-theme="indonesia"] {
 
+  [data-role="brand"] .ui.header {
+    color: $menu-item-color;
+  }
   .sidebar__wrapper {
     background-color: $sidebar-color;
 

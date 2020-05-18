@@ -41,7 +41,7 @@ class ForgotPasswordController extends Controller
      */
     public function create()
     {
-        return view('laravolt::forgot');
+        return view('laravolt::auth.forgot');
     }
 
     /**

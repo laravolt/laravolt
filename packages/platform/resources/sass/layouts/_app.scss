@@ -3,7 +3,7 @@ $sidebar-width-thin: 150px;
 $sidebar-width-normal: 220px;
 $sidebar-width-wide: 300px;
 
-$header-height: 60px;
+$header-height: 80px;
 $header-width: calc(100% - #{$sidebar-width-normal} + 2px);
 
 body.auth {
@@ -96,10 +96,6 @@ body.auth {
     padding: 0;
     width: inherit;
 
-    .ui.header.brand {
-      height: $header-height;
-    }
-
     .ui.menu.vertical {
       background: transparent;
 
@@ -131,15 +127,6 @@ body.auth {
 
   .sidebar__menu {
     padding-bottom: 1.5rem;
-    .brand {
-      text-transform: uppercase;
-      font-weight: 400;
-      height: 63px;
-      line-height: 63px;
-      overflow: hidden;
-      padding-left: 1em;
-      padding-right: 1em;
-    }
     .ui.menu {
       border: 0 none;
       margin: 0;
