@@ -119,7 +119,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootRoutes(): self
     {
-        if (config('laravolt.platform.force_https')) {
+        if (Str::startsWith(config('app.url'), 'https')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
