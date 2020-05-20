@@ -1,32 +1,28 @@
-$sidebar-color: #335875;
-$header-color: #FFFFFF;
-$teal: #1bd9bf;
-$blue: #103b5d;
-$yellow: #ffc000;
-$menu-item-color: #87b9d6;
+$sidebar-color: #0052CC;
+$menu-item-color: #FFFFFF;
+$menu-item-header: #b3d4ff;
+$icon-color: #b3d4ff;
+$menu-item-active-indicator: #b3d4ff;
 
-[data-theme="teal"] {
+[data-theme="orange"] {
 
   .sidebar {
     .sidebar__wrapper {
-      border-right: 0 none;
       background-color: $sidebar-color;
 
       .ui.menu.vertical {
-        background: transparent;
-
         .icon.left {
-
+          color: $icon-color;
         }
 
         i.angle.icon {
-          color: $teal;
+          color: $icon-color;
         }
 
         .item {
           color: $menu-item-color;
           > .header {
-            color: $teal;
+            color: $menu-item-header;
           }
           &:before {
 
@@ -51,7 +47,7 @@ $menu-item-color: #87b9d6;
         &.selected {
           &.empty {
             background: darken($sidebar-color, 5%);
-            border-left: 5px solid $teal;
+            border-left: 5px solid $menu-item-active-indicator;
             padding-left: calc(1.5rem - 5px);
           }
         }
@@ -61,19 +57,19 @@ $menu-item-color: #87b9d6;
       }
 
       .content {
-        background-color: darken($sidebar-color, 5%);
+        //background-color: darken($sidebar-color, 5%);
         .ui.list {
           .item {
-            color: darken($menu-item-color, 10%);
-            padding-left: 3.5rem;
+            color: $menu-item-color;
 
-            &.selected {
-              background: darken($sidebar-color, 5%);
-              border-left: 5px solid $teal;
-              padding-left: calc(3.5rem - 5px);
-            }
             &:hover {
               background: darken($sidebar-color, 7.5%);
+            }
+            &.selected {
+              background: darken($sidebar-color, 7.5%);
+              font-weight: normal;
+              border-left: 5px solid $menu-item-active-indicator;
+              padding-left: calc(4.5rem - 5px);
             }
           }
         }

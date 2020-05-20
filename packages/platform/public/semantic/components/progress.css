@@ -428,7 +428,7 @@
 .ui.indeterminate.primary.progress .bar::before,
 .ui.primary.progress .bar,
 .ui.progress .primary.bar {
-  background-color: #2185D0;
+  background-color: #0052CC;
 }
 .ui.inverted.indeterminate.primary.progress .bar::before,
 .ui.primary.inverted.progress .bar,
@@ -508,7 +508,7 @@
 .ui.indeterminate.blue.progress .bar::before,
 .ui.blue.progress .bar,
 .ui.progress .blue.bar {
-  background-color: #2185D0;
+  background-color: #0052CC;
 }
 .ui.inverted.indeterminate.blue.progress .bar::before,
 .ui.blue.inverted.progress .bar,

@@ -1,22 +1,24 @@
 /*******************************
      User Global Variables
 *******************************/
-@pageFont : -apple-system,"Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,"Helvetica Neue", sans-serif ;
-@headerFont : inherit;
-@importGoogleFonts : false;
+@pageFont: -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+@headerFont: inherit;
+@importGoogleFonts: false;
 
-@emSize   : 15px;
-@fontSize : 15px;
-@lineHeight : 1.5em;
-@paragraphLineHeight : @lineHeight;
+@emSize: 15px;
+@fontSize: 15px;
+@lineHeight: 1.5em;
+@paragraphLineHeight: @lineHeight;
 
-@textColor : #373e43;
-@linkColor : #007be8;
-@inputPlaceholderColor : lighten(@inputColor , 45);
-@inputPlaceholderFocusColor : lighten(@inputColor , 25);
+@blue: #0052CC;
+@textColor: #373e43;
+@linkColor: @blue;
 
-@h1 : unit((45 / 15), rem);
-@h2 : unit((30 / 15), rem);
-@h3 : unit((25 / 15), rem);
-@h4 : unit((20 / 15), rem);
-@h5 : unit((15 / 15), rem);
+@inputPlaceholderColor: lighten(@inputColor, 45);
+@inputPlaceholderFocusColor: lighten(@inputColor, 25);
+
+@h1: unit((45 / 15), rem);
+@h2: unit((30 / 15), rem);
+@h3: unit((25 / 15), rem);
+@h4: unit((20 / 15), rem);
+@h5: unit((15 / 15), rem);

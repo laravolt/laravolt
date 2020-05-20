@@ -4,7 +4,14 @@
     <div class="sidebar__wrapper" data-role="sidebar">
 
         <div class="sidebar__menu">
-            @include('laravolt::components.brand-inline')
+
+            <div class="ui attached vertical menu fluid">
+                <div class="item">
+                    <div class="header brand">
+                        {{ config('laravolt.ui.brand_name') }}
+                    </div>
+                </div>
+            </div>
 
             @if(!$items->isEmpty())
                 @if(config('laravolt.ui.quick_switcher'))

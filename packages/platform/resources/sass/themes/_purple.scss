@@ -1,6 +1,6 @@
 $sidebar-color: #594f8d;
 $text-color: #bdb8d7;
-$text-color-selected: #e9b92a;
+$text-color-selected: $text-color;
 
 [data-theme="purple"] {
   background: #f3f5f9;
@@ -13,14 +13,6 @@ $text-color-selected: #e9b92a;
     .sidebar__wrapper {
       border-right: 0 none;
       background-color: $sidebar-color;
-
-      .ui.header.brand {
-        color: $text-color;
-        overflow: hidden;
-        //height: 63px;
-        font-size: 1.75rem;
-        text-align: center;
-      }
 
       .ui.menu.vertical {
         background: transparent;
@@ -35,8 +27,9 @@ $text-color-selected: #e9b92a;
           color: $text-color;
           > .header {
             color: darken($sidebar-color, 25%);
-            font-size: .8em;
-            font-weight: 500;
+            &.brand {
+              color: $text-color;
+            }
           }
           &:before {
 
@@ -58,13 +51,11 @@ $text-color-selected: #e9b92a;
 
       .title {
         color: $text-color;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: .9em;
-        &.selected, &:hover {
+        &.selected.empty {
           background-color: darken($sidebar-color, 5%);
         }
         &:hover {
+          background-color: darken($sidebar-color, 5%);
           color: lighten($text-color, 15%);
         }
         &.empty.current{

@@ -1,36 +1,34 @@
 $sidebar-width-none: 0;
 $sidebar-width-thin: 150px;
-$sidebar-width-normal: 220px;
+$sidebar-width-normal: 250px;
 $sidebar-width-wide: 300px;
 
 $header-height: 80px;
 $header-width: calc(100% - #{$sidebar-width-normal} + 2px);
-
-body.auth {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-image: url('../img/bg/violet.jpg');
-}
 
 .layout--app {
 
   display: flex;
   flex-direction: row;
 
-  header.ui.menu {
-    height: $header-height;
-    border: 0 none;
-    left: $sidebar-width-normal;
-    width: $header-width;
-    max-width: $header-width;
+  header {
+    &.ui.menu {
+      height: $header-height;
+      border: 0 none;
+      left: $sidebar-width-normal;
+      width: $header-width;
+      max-width: $header-width;
+      background: transparent;
 
-    /* Tablet and below */
-    @media only screen and (max-width: 991px) {
-      left: 0;
-      width: 100%;
-      max-width: 100%;
+      /* Tablet and below */
+      @media only screen and (max-width: 991px) {
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+    .ui.menu, .ui.menu .ui.button:hover {
+      background: transparent;
     }
   }
 
@@ -95,6 +93,7 @@ body.auth {
     border-right: 1px solid #eaecf0;
     padding: 0;
     width: inherit;
+    background: #ffffff;
 
     .ui.menu.vertical {
       background: transparent;
@@ -116,7 +115,10 @@ body.auth {
           text-transform: uppercase;
           margin: 1.5rem .5rem 0;
           letter-spacing: .5px;
-          //text-align: center;
+
+          &.brand {
+            font-size: 1.5rem;
+          }
         }
         &:before {
           height: 0;

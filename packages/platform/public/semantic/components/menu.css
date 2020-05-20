@@ -1365,7 +1365,7 @@ Floated Menu / Item
 .ui.ui.menu .primary.active.item,
 .ui.ui.primary.menu .active.item:hover,
 .ui.ui.primary.menu .active.item {
-  color: #2185D0;
+  color: #0052CC;
 }
 .ui.ui.menu .red.active.item,
 .ui.ui.red.menu .active.item:hover,
@@ -1400,7 +1400,7 @@ Floated Menu / Item
 .ui.ui.menu .blue.active.item,
 .ui.ui.blue.menu .active.item:hover,
 .ui.ui.blue.menu .active.item {
-  color: #2185D0;
+  color: #0052CC;
 }
 .ui.ui.menu .violet.active.item,
 .ui.ui.violet.menu .active.item:hover,
@@ -1555,7 +1555,7 @@ Floated Menu / Item
 
 .ui.ui.inverted.menu .primary.active.item,
 .ui.ui.inverted.primary.menu {
-  background-color: #2185D0;
+  background-color: #0052CC;
 }
 .ui.inverted.primary.menu .item:before {
   background-color: rgba(34, 36, 38, 0.1);
@@ -1564,7 +1564,7 @@ Floated Menu / Item
   background-color: rgba(0, 0, 0, 0.1);
 }
 .ui.inverted.pointing.primary.menu .active.item {
-  background-color: #1678c2;
+  background-color: #0048b3;
 }
 .ui.ui.inverted.menu .red.active.item,
 .ui.ui.inverted.red.menu {
@@ -1646,7 +1646,7 @@ Floated Menu / Item
 }
 .ui.ui.inverted.menu .blue.active.item,
 .ui.ui.inverted.blue.menu {
-  background-color: #2185D0;
+  background-color: #0052CC;
 }
 .ui.inverted.blue.menu .item:before {
   background-color: rgba(34, 36, 38, 0.1);
@@ -1655,7 +1655,7 @@ Floated Menu / Item
   background-color: rgba(0, 0, 0, 0.1);
 }
 .ui.inverted.pointing.blue.menu .active.item {
-  background-color: #1678c2;
+  background-color: #0048b3;
 }
 .ui.ui.inverted.menu .violet.active.item,
 .ui.ui.inverted.violet.menu {
@@ -2005,7 +2005,7 @@ Floated Menu / Item
   background-color: #FFFFFF;
 }
 .ui.inverted.pointing.menu .primary.active.item:after {
-  background-color: #2185D0;
+  background-color: #0052CC;
 }
 .ui.inverted.pointing.menu .secondary.active.item:after {
   background-color: #1B1C1D;
@@ -2029,7 +2029,7 @@ Floated Menu / Item
   background-color: #00B5AD;
 }
 .ui.inverted.pointing.menu .blue.active.item:after {
-  background-color: #2185D0;
+  background-color: #0052CC;
 }
 .ui.inverted.pointing.menu .violet.active.item:after {
   background-color: #6435C9;

@@ -228,12 +228,12 @@
             box-shadow: none !important;
   }
   .ui.ui.ui.ui.table:not(.unstackable) tr.marked.primary.left {
-    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
-            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
+            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
   }
   .ui.ui.ui.ui.table:not(.unstackable) tr.marked.primary.right {
-    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
-            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
+            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
   }
   .ui.ui.ui.ui.inverted.table:not(.unstackable) tr.marked.primary.left {
     -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #54C8FF inset;
@@ -356,12 +356,12 @@
             box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #6DFFFF inset;
   }
   .ui.ui.ui.ui.table:not(.unstackable) tr.marked.blue.left {
-    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
-            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
+            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
   }
   .ui.ui.ui.ui.table:not(.unstackable) tr.marked.blue.right {
-    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
-            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
+            box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
   }
   .ui.ui.ui.ui.inverted.table:not(.unstackable) tr.marked.blue.left {
     -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #54C8FF inset;
@@ -719,12 +719,12 @@
   }
 }
 .ui.ui.ui.ui[class*="tablet stackable"].table tr.marked.primary.left {
-  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
-          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
+          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
 }
 .ui.ui.ui.ui[class*="tablet stackable"].table tr.marked.primary.right {
-  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
-          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
+          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
 }
 .ui.ui.ui.ui[class*="tablet stackable"].inverted.table tr.marked.primary.left {
   -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #54C8FF inset;
@@ -847,12 +847,12 @@
           box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #6DFFFF inset;
 }
 .ui.ui.ui.ui[class*="tablet stackable"].table tr.marked.blue.left {
-  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
-          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
+          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #0052CC inset;
 }
 .ui.ui.ui.ui[class*="tablet stackable"].table tr.marked.blue.right {
-  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
-          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
+          box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #0052CC inset;
 }
 .ui.ui.ui.ui[class*="tablet stackable"].inverted.table tr.marked.blue.left {
   -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #54C8FF inset;
@@ -1163,10 +1163,10 @@
 --------------------*/
 
 .ui.primary.table {
-  border-top: 0.2em solid #2185D0;
+  border-top: 0.2em solid #0052CC;
 }
 .ui.inverted.primary.table {
-  background-color: #2185D0;
+  background-color: #0052CC;
   color: #FFFFFF;
 }
 .ui.ui.ui.ui.table tr.primary:not(.marked),
@@ -1182,13 +1182,13 @@
 }
 .ui.table td.marked.primary.left,
 .ui.table tr.marked.primary.left {
-  -webkit-box-shadow: 0.2em 0 0 0 #2185D0 inset;
-          box-shadow: 0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: 0.2em 0 0 0 #0052CC inset;
+          box-shadow: 0.2em 0 0 0 #0052CC inset;
 }
 .ui.table td.marked.primary.right,
 .ui.table tr.marked.primary.right {
-  -webkit-box-shadow: -0.2em 0 0 0 #2185D0 inset;
-          box-shadow: -0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: -0.2em 0 0 0 #0052CC inset;
+          box-shadow: -0.2em 0 0 0 #0052CC inset;
 }
 .ui.inverted.table td.marked.primary.left,
 .ui.inverted.table tr.marked.primary.left {
@@ -1467,32 +1467,32 @@
           box-shadow: -0.2em 0 0 0 #6DFFFF inset;
 }
 .ui.blue.table {
-  border-top: 0.2em solid #2185D0;
+  border-top: 0.2em solid #0052CC;
 }
 .ui.inverted.blue.table {
-  background-color: #2185D0;
+  background-color: #0052CC;
   color: #FFFFFF;
 }
 .ui.ui.ui.ui.table tr.blue:not(.marked),
 .ui.ui.table td.blue:not(.marked) {
   background: #ddf4ff;
-  color: #2185D0;
+  color: #0052CC;
 }
 .ui.ui.selectable.table tr.blue:not(.marked):hover,
 .ui.table tr td.selectable.blue:not(.marked):hover,
 .ui.selectable.table tr:hover td.blue:not(.marked) {
   background: #d3f1ff;
-  color: #2185D0;
+  color: #0052CC;
 }
 .ui.table td.marked.blue.left,
 .ui.table tr.marked.blue.left {
-  -webkit-box-shadow: 0.2em 0 0 0 #2185D0 inset;
-          box-shadow: 0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: 0.2em 0 0 0 #0052CC inset;
+          box-shadow: 0.2em 0 0 0 #0052CC inset;
 }
 .ui.table td.marked.blue.right,
 .ui.table tr.marked.blue.right {
-  -webkit-box-shadow: -0.2em 0 0 0 #2185D0 inset;
-          box-shadow: -0.2em 0 0 0 #2185D0 inset;
+  -webkit-box-shadow: -0.2em 0 0 0 #0052CC inset;
+          box-shadow: -0.2em 0 0 0 #0052CC inset;
 }
 .ui.inverted.table td.marked.blue.left,
 .ui.inverted.table tr.marked.blue.left {

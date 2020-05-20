@@ -1,4 +1,4 @@
-<header class="ui menu borderless fixed top b-0 bg-white-90">
+<header class="ui menu borderless fixed top b-0">
     <div class="item mobile only tablet only" data-role="sidebar-visibility-switcher"><i class="icon sidebar"></i></div>
 
     @yield('page.back')

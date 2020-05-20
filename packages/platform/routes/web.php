@@ -1,6 +1,18 @@
 <?php
 
+/** @var \Illuminate\Routing\Router $router */
 $router = app('router');
+
+$router->group(
+    [
+        'prefix' => 'platform',
+        'as' => 'platform'
+    ],
+    function (\Illuminate\Routing\Router $router) {
+        $router->view('kitchen-sink', 'laravolt::kitchen-sink.index');
+    }
+);
+
 $router->group(
     [
         'namespace' => '\Laravolt\Epicentrum\Http\Controllers',

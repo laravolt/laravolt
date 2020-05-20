@@ -574,7 +574,7 @@ a.ui.active.label:hover:before {
 a.ui.basic.label:hover {
   text-decoration: none;
   background: none #FFFFFF;
-  color: #0069c5;
+  color: #0046ad;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -619,7 +619,7 @@ a.ui.basic.label:hover {
   background: #1B1C1D;
 }
 .ui.inverted.basic.label:hover {
-  color: #007be8;
+  color: #0052CC;
 }
 
 /*-------------------
@@ -628,36 +628,36 @@ a.ui.basic.label:hover {
 
 .ui.primary.labels .label,
 .ui.ui.ui.primary.label {
-  background-color: #2185D0;
-  border-color: #2185D0;
+  background-color: #0052CC;
+  border-color: #0052CC;
   color: rgba(255, 255, 255, 0.9);
 }
 
 /* Link */
 .ui.primary.labels a.label:hover,
 a.ui.ui.ui.primary.label:hover {
-  background-color: #1678c2;
-  border-color: #1678c2;
+  background-color: #0048b3;
+  border-color: #0048b3;
   color: #FFFFFF;
 }
 
 /* Ribbon */
 .ui.ui.ui.primary.ribbon.label {
-  border-color: #1a69a4;
+  border-color: #003d99;
 }
 
 /* Basic */
 .ui.basic.labels .primary.label,
 .ui.ui.ui.basic.primary.label {
   background: none #FFFFFF;
-  border-color: #2185D0;
-  color: #2185D0;
+  border-color: #0052CC;
+  color: #0052CC;
 }
 .ui.basic.labels a.primary.label:hover,
 a.ui.ui.ui.basic.primary.label:hover {
   background: none #FFFFFF;
-  border-color: #1678c2;
-  color: #1678c2;
+  border-color: #0048b3;
+  color: #0048b3;
 }
 
 /* Inverted */
@@ -1284,36 +1284,36 @@ a.ui.ui.ui.inverted.basic.teal.label:hover {
 }
 .ui.blue.labels .label,
 .ui.ui.ui.blue.label {
-  background-color: #2185D0;
-  border-color: #2185D0;
+  background-color: #0052CC;
+  border-color: #0052CC;
   color: #FFFFFF;
 }
 
 /* Link */
 .ui.blue.labels a.label:hover,
 a.ui.ui.ui.blue.label:hover {
-  background-color: #1678c2;
-  border-color: #1678c2;
+  background-color: #0048b3;
+  border-color: #0048b3;
   color: #FFFFFF;
 }
 
 /* Ribbon */
 .ui.ui.ui.blue.ribbon.label {
-  border-color: #1a69a4;
+  border-color: #003d99;
 }
 
 /* Basic */
 .ui.basic.labels .blue.label,
 .ui.ui.ui.basic.blue.label {
   background: none #FFFFFF;
-  border-color: #2185D0;
-  color: #2185D0;
+  border-color: #0052CC;
+  color: #0052CC;
 }
 .ui.basic.labels a.blue.label:hover,
 a.ui.ui.ui.basic.blue.label:hover {
   background: none #FFFFFF;
-  border-color: #1678c2;
-  color: #1678c2;
+  border-color: #0048b3;
+  color: #0048b3;
 }
 
 /* Inverted */
