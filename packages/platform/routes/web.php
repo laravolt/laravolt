@@ -6,7 +6,7 @@ $router = app('router');
 $router->group(
     [
         'prefix' => 'platform',
-        'as' => 'platform'
+        'as' => 'platform',
     ],
     function (\Illuminate\Routing\Router $router) {
         $router->view('kitchen-sink', 'laravolt::kitchen-sink.index');
