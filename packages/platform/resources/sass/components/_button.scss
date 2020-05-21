@@ -1,0 +1,17 @@
+[themed].ui.button {
+  font-weight: 700;
+}
+
+@each $name, $color in $colors {
+  [themed].ui.button.#{$name}.secondary {
+    border-color: rgba($color, 0.5);
+    box-shadow: 0 0 2px $color inset;
+    color: rgba($color, 0.9);
+    background-color: rgba($color, 0.1);
+  }
+  [themed].ui.button.#{$name}.basic {
+    border-color: rgba($color, 0.5);
+    box-shadow: 0 0 2px $color inset;
+    color: rgba($color, 0.9);
+  }
+}

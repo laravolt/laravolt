@@ -1,0 +1,75 @@
+$sidebar-color: #FFFFFF;
+$menu-item-color: $black;
+$menu-item-header: $black;
+$icon-color: $black;
+
+[data-theme="classic"] {
+
+  .sidebar {
+    .sidebar__wrapper {
+      background-color: $sidebar-color;
+
+      .ui.menu.vertical {
+        .icon.left {
+          color: $icon-color;
+        }
+
+        i.angle.icon {
+          color: $icon-color;
+        }
+
+        .item {
+          color: $menu-item-color;
+          > .header {
+            color: $menu-item-header;
+          }
+          &:before {
+
+          }
+        }
+      }
+    }
+
+    .sidebar__menu {
+      .brand {
+        color: $menu-item-color;
+      }
+      .ui.menu {
+
+      }
+    }
+
+    .sidebar__accordion.ui.accordion {
+
+      .title {
+        color: $menu-item-color;
+        &.selected {
+          &.empty {
+            background: darken($sidebar-color, 5%);
+          }
+        }
+        &:hover {
+          background: darken($sidebar-color, 5%);
+        }
+      }
+
+      .content {
+        .ui.list {
+          .item {
+            color: $menu-item-color;
+
+            &:hover {
+              background: darken($sidebar-color, 7.5%);
+            }
+            &.selected {
+              background: darken($sidebar-color, 7.5%);
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+}

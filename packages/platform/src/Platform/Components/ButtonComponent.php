@@ -2,6 +2,7 @@
 
 namespace Laravolt\Platform\Components;
 
+use Illuminate\Support\Stringable;
 use Illuminate\View\Component;
 
 class ButtonComponent extends Component
@@ -22,7 +23,7 @@ class ButtonComponent extends Component
      * @param string $type
      * @param string $url
      */
-    public function __construct(string $label, string $icon, string $type, string $url)
+    public function __construct(string $label = null, string $type = 'secondary', string $url = null, string $icon = null)
     {
         $this->label = $label;
         $this->icon = $icon;
@@ -32,11 +33,18 @@ class ButtonComponent extends Component
 
     /**
      * Get the view / contents that represent the component.
-     *
      * @return \Illuminate\View\View|string
      */
     public function render()
     {
-        return view('laravolt::components.button');
+        $class = $this->type;
+        $colors = collect(config('laravolt.ui.colors'))->keys();
+        $types = (new Stringable($this->type))->explode(' ');
+
+        if ($types->intersect($colors)->isEmpty()) {
+            $class = config('laravolt.ui.color').' '.$this->type;
+        }
+
+        return view('laravolt::components.button', compact('class'));
     }
 }

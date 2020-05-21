@@ -1,7 +1,7 @@
-<div class="ui segments">
+<div class="ui segments shadow-none">
     @if($title)
     <div class="ui segment {{ $attributes['headerClass'] ?? '' }}">
-        <h3 class="ui header">{!! $title !!}</h3>
+        <h4 class="ui header p-x-1">{!! $title !!}</h4>
     </div>
     @endif
     <div class="ui segment {{ $attributes['contentClass'] ?? 'p-2' }}">

@@ -18,7 +18,7 @@ $header-width: calc(100% - #{$sidebar-width-normal} + 2px);
       left: $sidebar-width-normal;
       width: $header-width;
       max-width: $header-width;
-      background: transparent;
+      background: rgb(255,255,255,.9);
 
       /* Tablet and below */
       @media only screen and (max-width: 991px) {
