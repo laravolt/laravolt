@@ -8,14 +8,18 @@ class PanelComponent extends Component
 {
     public $title = '';
 
+    public $icon = '';
+
     /**
      * PanelComponent constructor.
      *
      * @param string $title
+     * @param string $icon
      */
-    public function __construct(string $title = '')
+    public function __construct(string $title = '', string $icon = '')
     {
         $this->title = $title;
+        $this->icon = $icon;
     }
 
     /**

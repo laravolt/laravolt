@@ -303,6 +303,66 @@
   margin-bottom: 0 !important;
 }
 
+.m-xs {
+  margin: 0.5rem 0.5rem !important;
+}
+
+.m-t-xs {
+  margin-top: 0.5rem !important;
+}
+
+.m-r-xs {
+  margin-right: 0.5rem !important;
+}
+
+.m-b-xs {
+  margin-bottom: 0.5rem !important;
+}
+
+.m-l-xs {
+  margin-left: 0.5rem !important;
+}
+
+.m-x-xs {
+  margin-right: 0.5rem !important;
+  margin-left: 0.5rem !important;
+}
+
+.m-y-xs {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.m-sm {
+  margin: 0.75rem 0.75rem !important;
+}
+
+.m-t-sm {
+  margin-top: 0.75rem !important;
+}
+
+.m-r-sm {
+  margin-right: 0.75rem !important;
+}
+
+.m-b-sm {
+  margin-bottom: 0.75rem !important;
+}
+
+.m-l-sm {
+  margin-left: 0.75rem !important;
+}
+
+.m-x-sm {
+  margin-right: 0.75rem !important;
+  margin-left: 0.75rem !important;
+}
+
+.m-y-sm {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
 .m-1 {
   margin: 1rem 1rem !important;
 }
@@ -481,6 +541,66 @@
 .p-y-0 {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+
+.p-xs {
+  padding: 0.5rem 0.5rem !important;
+}
+
+.p-t-xs {
+  padding-top: 0.5rem !important;
+}
+
+.p-r-xs {
+  padding-right: 0.5rem !important;
+}
+
+.p-b-xs {
+  padding-bottom: 0.5rem !important;
+}
+
+.p-l-xs {
+  padding-left: 0.5rem !important;
+}
+
+.p-x-xs {
+  padding-right: 0.5rem !important;
+  padding-left: 0.5rem !important;
+}
+
+.p-y-xs {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.p-sm {
+  padding: 0.75rem 0.75rem !important;
+}
+
+.p-t-sm {
+  padding-top: 0.75rem !important;
+}
+
+.p-r-sm {
+  padding-right: 0.75rem !important;
+}
+
+.p-b-sm {
+  padding-bottom: 0.75rem !important;
+}
+
+.p-l-sm {
+  padding-left: 0.75rem !important;
+}
+
+.p-x-sm {
+  padding-right: 0.75rem !important;
+  padding-left: 0.75rem !important;
+}
+
+.p-y-sm {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
 }
 
 .p-1 {
@@ -2418,6 +2538,10 @@ table.bt.bt--no-header tbody td::before {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.ui.list.horizontal {
+  font-size: 1rem;
+}
+
 .ui.menu.page-header .ui.header:first-child {
   margin-top: inherit;
 }
@@ -2476,6 +2600,13 @@ table.ui.table.scrolling {
   width: fit-content;
   max-width: 100%;
   display: block;
+}
+table.ui.table.definition caption {
+  font-weight: 700;
+  text-align: left;
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 @media only screen and (max-width: 767px) {

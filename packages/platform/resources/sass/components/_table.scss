@@ -21,6 +21,15 @@ table.ui.table {
     max-width: 100%;
     display: block;
   }
+  &.definition {
+    caption {
+      font-weight: 700;
+      text-align: left;
+      font-size: 1.25rem;
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
+    }
+  }
 }
 
 //Hide pagination number on mobile

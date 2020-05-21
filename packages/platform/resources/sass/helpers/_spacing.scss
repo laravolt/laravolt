@@ -1,5 +1,5 @@
 @each $prop, $abbrev in (margin: m, padding: p) {
-  @each $size, $length in (0: 0, 1: 1rem, 2: 2rem, 3: 4rem, 4: 8rem, 5: 16rem) {
+  @each $size, $length in (0: 0, 'xs': .5rem, 'sm': .75rem, 1: 1rem, 2: 2rem, 3: 4rem, 4: 8rem, 5: 16rem) {
 
     .#{$abbrev}-#{$size} { #{$prop}:        $length $length !important; } // a = All sides
     .#{$abbrev}-t-#{$size} { #{$prop}-top:    $length !important; }
