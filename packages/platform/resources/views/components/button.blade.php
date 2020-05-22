@@ -1,4 +1,4 @@
-<button type="{{ $type }}" {{ $attributes->merge(['class' => 'ui button rounded-full '.$class]) }} themed>
+<button type="{{ $type }}" {{ $attributes->merge(['class' => 'ui button '.$class]) }} themed>
     @if($icon)
         <i class="icon {{ $icon }}"></i>
     @endif

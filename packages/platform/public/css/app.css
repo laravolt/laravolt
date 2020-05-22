@@ -881,10 +881,6 @@ table.bt.bt--no-header tbody td::before {
   display: none;
 }
 
-[themed].ui.button {
-  font-weight: 700;
-}
-
 [themed].ui.button.red.secondary {
   border-color: rgba(219, 40, 40, 0.5);
   box-shadow: 0 0 2px #DB2828 inset;

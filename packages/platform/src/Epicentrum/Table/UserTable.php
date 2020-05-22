@@ -2,6 +2,7 @@
 
 namespace Laravolt\Epicentrum\Table;
 
+use Laravolt\Epicentrum\Repositories\RepositoryInterface;
 use Laravolt\Suitable\Columns\Avatar;
 use Laravolt\Suitable\Columns\Date;
 use Laravolt\Suitable\Columns\Label;
@@ -13,6 +14,11 @@ use Laravolt\Suitable\TableView;
 
 class UserTable extends TableView
 {
+    public function source()
+    {
+        return app(RepositoryInterface::class)->paginate(request());
+    }
+
     protected function columns()
     {
         return [
