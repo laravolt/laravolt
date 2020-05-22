@@ -20,6 +20,7 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\BacklinkComponent;
 use Laravolt\Platform\Components\ButtonComponent;
+use Laravolt\Platform\Components\LabelComponent;
 use Laravolt\Platform\Components\LinkComponent;
 use Laravolt\Platform\Components\PanelComponent;
 use Laravolt\Platform\Components\TitlebarComponent;
@@ -222,6 +223,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             'backlink' => BacklinkComponent::class,
             'button' => ButtonComponent::class,
             'panel' => PanelComponent::class,
+            'label' => LabelComponent::class,
             'link' => LinkComponent::class,
             'titlebar' => TitlebarComponent::class,
         ]);

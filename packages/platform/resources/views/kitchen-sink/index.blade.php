@@ -15,6 +15,9 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, doloribus fugit inventore quaerat
             quas quis ratione saepe sint totam. Distinctio laborum praesentium sit tempore voluptatem. Aspernatur odio
             provident repellat voluptate.</p>
+
+        <div class="ui divider section"></div>
+
         <div class="ui container text">
             <h1 class="ui header">Text Container</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur corporis cumque distinctio dolore
@@ -43,29 +46,24 @@
 
         <div class="ui divider section"></div>
 
-        <x-button label="Negative Button" type="negative"></x-button>
-        <x-button label="Positive Button" type="positive"></x-button>
-
-        <div class="ui divider section"></div>
-
         <div class="ui horizontal list">
             @foreach(config('laravolt.ui.colors') as $color => $hex)
                 <div class="item">
-                    <button class="ui button {{ $color }}">{{ $color }}</button>
+                    <x-button type="{{ $color }}">{{ $color }}</x-button>
                 </div>
             @endforeach
         </div>
         <div class="ui horizontal list">
             @foreach(config('laravolt.ui.colors') as $color => $hex)
                 <div class="item">
-                    <button themed class="ui button secondary {{ $color }}">{{ $color }}</button>
+                    <x-button type="{{ $color }} secondary">{{ $color }}</x-button>
                 </div>
             @endforeach
         </div>
         <div class="ui horizontal list">
             @foreach(config('laravolt.ui.colors') as $color => $hex)
                 <div class="item">
-                    <button themed class="ui button basic {{ $color }}">{{ $color }}</button>
+                    <x-button type="{{ $color }} basic">{{ $color }}</x-button>
                 </div>
             @endforeach
         </div>
@@ -76,14 +74,14 @@
         <div class="ui horizontal list">
             @foreach(config('laravolt.ui.colors') as $color => $hex)
                 <div class="item">
-                    <div class="ui label {{ $color }}">{{ $color }}</div>
+                    <x-label :color="$color">{{ $color }}</x-label>
                 </div>
             @endforeach
         </div>
         <div class="ui horizontal list">
             @foreach(config('laravolt.ui.colors') as $color => $hex)
                 <div class="item">
-                    <div class="ui label basic {{ $color }}">{{ $color }}</div>
+                    <x-label :color="'basic '.$color">{{ $color }}</x-label>
                 </div>
             @endforeach
         </div>

@@ -1,6 +1,6 @@
 @php($icon = $icon ?? false)
 
-<div class="ui segments shadow-none">
+<div class="ui segments">
     @if($title or $icon)
         <div class="ui segment {{ $attributes['headerClass'] ?? '' }}">
             <div class="ui horizontal list m-0">
