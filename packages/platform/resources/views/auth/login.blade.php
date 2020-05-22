@@ -25,7 +25,7 @@
             </div>
         @endif
         <div class="ui field">
-            <button type="submit" class="ui fluid big button primary">@lang('laravolt::auth.login')</button>
+            <x-button class="big fluid">@lang('laravolt::auth.login')</x-button>
         </div>
         <div class="ui equal width grid">
             <div class="column left aligned">

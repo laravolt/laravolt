@@ -1,0 +1,115 @@
+nav.sidebar {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  -webkit-box-flex: 0;
+  width: $sidebar-width-normal;
+  transition: .5s all;
+
+  &.none {width: $sidebar-width-none}
+  &.thin {width: $sidebar-width-thin}
+  &.wide {width: $sidebar-width-wide}
+
+  /* Tablet and below */
+  @media only screen and (max-width: 991px) {
+    position: absolute !important;
+    left: 0 - $sidebar-width-normal !important;
+    top: $header-height;
+
+    &.show {
+      left: 0 !important;
+    }
+    .sidebar__scroller {
+      padding-bottom: $header-height;
+    }
+  }
+
+}
+
+.sidebar__scroller {
+  position: fixed;
+  overflow: hidden;
+  outline: none;
+  height: 100%;
+  border-right: 1px solid #eaecf0;
+  padding: 0;
+  width: inherit;
+  background: #ffffff;
+
+  .ui.attached.menu {
+    background: transparent;
+    border: 0 none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    .icon.left {
+      float: left;
+      margin: 0 1rem 0 0;
+    }
+
+    i.angle.icon {
+      margin: 0 -0.5rem 0 0;
+      float: right;
+      opacity: .5;
+    }
+
+    .item {
+
+      &.brand {
+        font-size: 1.5rem;
+        font-weight: 900;
+      }
+
+      > .header {
+        font-weight: 700;
+        text-transform: uppercase;
+        margin: 1.5rem .5rem 0;
+        letter-spacing: .5px;
+      }
+      &:before {
+        height: 0;
+      }
+    }
+
+    .sidebar__accordion.ui.accordion {
+
+      .title, .ui.list .item {
+        padding: 0.75em 1.5em;
+        line-height: 1.5rem;
+        border: 0 none;
+        border-radius: 0.25rem;
+        margin-bottom: 1px;
+      }
+
+      .title {
+        display: flex;
+
+        span {
+          flex-grow: 1;
+        }
+        .icon.angle {
+          transition: .5s all;
+          width: auto;
+          height: auto;
+          align-self: flex-start;
+          flex-grow: 0;
+        }
+        &.active {
+          .icon.angle.down {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      .content {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        .ui.list .item {
+          padding-left: 3.5em;
+        }
+      }
+
+    }
+
+  }
+}

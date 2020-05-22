@@ -1,15 +1,13 @@
 @php($items = app('laravolt.menu.sidebar')->all())
 
-<nav class="sidebar">
-    <div class="sidebar__wrapper" data-role="sidebar">
+<nav class="sidebar" data-role="sidebar">
+    <div class="sidebar__scroller">
 
         <div class="sidebar__menu">
 
             <div class="ui attached vertical menu fluid">
-                <div class="item">
-                    <div class="header brand">
-                        {{ config('laravolt.ui.brand_name') }}
-                    </div>
+                <div class="item brand">
+                    {{ config('laravolt.ui.brand_name') }}
                 </div>
             </div>
 

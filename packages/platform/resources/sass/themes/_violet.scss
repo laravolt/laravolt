@@ -1,16 +1,18 @@
 $sidebar-color: #594f8d;
 $text-color: #bdb8d7;
-$text-color-selected: $text-color;
+$icon-color: lighten($sidebar-color, 20%);
 
 [data-theme="violet"] {
   background: #f3f5f9;
 
-  [data-role="brand"] .ui.header {
-    color: $text-color;
-  }
 
   .sidebar {
-    .sidebar__wrapper {
+
+    .brand {
+      color: #FFFFFF;
+    }
+
+    .sidebar__scroller {
       border-right: 0 none;
       background-color: $sidebar-color;
 
@@ -18,9 +20,11 @@ $text-color-selected: $text-color;
         background: transparent;
 
         .icon.left {
+          color: $icon-color;
         }
 
         i.angle.icon {
+          color: $icon-color;
         }
 
         .item {
@@ -49,36 +53,26 @@ $text-color-selected: $text-color;
 
     .sidebar__accordion.ui.accordion {
 
-      .title {
-        color: $text-color;
-        &.selected.empty {
-          background-color: darken($sidebar-color, 5%);
-        }
+      .title.empty.selected, .content .ui.list .item.selected {
+        background-color: darken($sidebar-color, 5%);
+        background-color: darken($sidebar-color, 5%);
+        color: lighten($text-color, 15%);
+      }
+
+      .title, .content .item {
         &:hover {
           background-color: darken($sidebar-color, 5%);
-          color: lighten($text-color, 15%);
-        }
-        &.empty.current{
-          color: $text-color-selected;
         }
       }
 
+      .title {
+        color: $text-color;
+      }
+
       .content {
-        background-color: darken($sidebar-color, 5%);
         .ui.list {
           .item {
-            color: darken($text-color, 10%);
-            padding-left: 3.7em;
-
-            &:hover {
-              color: lighten($text-color, 15%);
-              background-color: darken($sidebar-color, 5%);
-            }
-            &.selected {
-              background-color: darken($sidebar-color, 5%);
-              font-weight: normal;
-              color: $text-color-selected;
-            }
+            color: $text-color;
           }
         }
       }

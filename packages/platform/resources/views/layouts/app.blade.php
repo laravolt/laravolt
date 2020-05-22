@@ -6,7 +6,7 @@
         @include('laravolt::menu.topbar')
         @include('laravolt::menu.sidebar')
 
-        <div class="content">
+        <main class="content">
 
             <div class="ui active inverted dimmer" data-page-loader>
                 <div class="ui loader"></div>
@@ -22,6 +22,6 @@
                 </div>
 
             </div>
-        </div>
+        </main>
     </div>
 @endsection

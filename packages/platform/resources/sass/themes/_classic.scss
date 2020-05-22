@@ -6,7 +6,7 @@ $icon-color: $black;
 [data-theme="classic"] {
 
   .sidebar {
-    .sidebar__wrapper {
+    .sidebar__scroller {
       background-color: $sidebar-color;
 
       .ui.menu.vertical {

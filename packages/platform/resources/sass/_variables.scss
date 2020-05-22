@@ -1,3 +1,11 @@
+$sidebar-width-none: 0;
+$sidebar-width-thin: 150px;
+$sidebar-width-normal: 250px;
+$sidebar-width-wide: 300px;
+
+$header-height: 80px;
+$header-width: calc(100% - #{$sidebar-width-normal} + 2px);
+
 $red: #DB2828;
 $orange: #F2711C;
 $yellow: #FBBD08;

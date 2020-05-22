@@ -9,7 +9,7 @@ $menu-item-active-indicator: #a6a8b1;
     color: $menu-item-color;
   }
   .sidebar {
-    .sidebar__wrapper {
+    .sidebar__scroller {
       background-color: $sidebar-color;
 
       .ui.menu.vertical {

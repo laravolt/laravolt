@@ -7,7 +7,7 @@ $menu-item-active-indicator: #b3d4ff;
 [data-theme="blue"] {
 
   .sidebar {
-    .sidebar__wrapper {
+    .sidebar__scroller {
       background-color: $sidebar-color;
 
       .ui.menu.vertical {

@@ -11,7 +11,7 @@ class ButtonComponent extends Component
 
     public $icon = '';
 
-    public $type = '';
+    public $type = 'primary';
 
     public $url = '';
 
@@ -23,17 +23,18 @@ class ButtonComponent extends Component
      * @param string $type
      * @param string $url
      */
-    public function __construct(string $label = null, string $type = 'secondary', string $url = null, string $icon = null)
+    public function __construct(string $label = null, string $type = null, string $url = null, string $icon = null)
     {
         $this->label = $label;
         $this->icon = $icon;
-        $this->type = $type;
+        if ($type) {
+            $this->type = $type;
+        }
         $this->url = $url;
     }
 
     /**
      * Get the view / contents that represent the component.
-     *
      * @return \Illuminate\View\View|string
      */
     public function render()

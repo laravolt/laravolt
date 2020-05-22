@@ -1,6 +1,6 @@
 $(function () {
 
-    var sidebar = $('[data-role="sidebar"]');
+    var sidebar = $('[data-role="sidebar"] .sidebar__scroller');
     if (sidebar.length > 0) {
         new SimpleBar(sidebar[0]);
 

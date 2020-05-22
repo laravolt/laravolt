@@ -2,12 +2,11 @@ $sidebar-color: #DB2828;
 $menu-item-color: #FFFFFF;
 $menu-item-header: #fbcac6;
 $icon-color: #fbcac6;
-$menu-item-active-indicator: #fbcac6;
 
 [data-theme="red"] {
 
   .sidebar {
-    .sidebar__wrapper {
+    .sidebar__scroller {
       background-color: $sidebar-color;
 
       .ui.menu.vertical {
@@ -35,48 +34,22 @@ $menu-item-active-indicator: #fbcac6;
       .brand {
         color: $menu-item-color;
       }
-      .ui.menu {
-
-      }
     }
 
     .sidebar__accordion.ui.accordion {
 
-      .title {
+      .title.empty.selected, .content .ui.list .item.selected {
+        background-color: darken($sidebar-color, 5%);
+        background-color: darken($sidebar-color, 5%);
+        color: lighten($menu-item-color, 15%);
+      }
+
+      .title, .ui.list .item {
         color: $menu-item-color;
-        &.selected {
-          &.empty {
-            background: darken($sidebar-color, 5%);
-            border-left: 5px solid $menu-item-active-indicator;
-            padding-left: calc(1.5rem - 5px);
-          }
-        }
         &:hover {
           background: darken($sidebar-color, 5%);
         }
       }
-
-      .content {
-        //background-color: darken($sidebar-color, 5%);
-        .ui.list {
-          .item {
-            color: $menu-item-color;
-
-            &:hover {
-              background: darken($sidebar-color, 7.5%);
-            }
-            &.selected {
-              background: darken($sidebar-color, 7.5%);
-              font-weight: normal;
-              border-left: 5px solid $menu-item-active-indicator;
-              padding-left: calc(4.5rem - 5px);
-            }
-          }
-        }
-      }
-
     }
-
   }
-
 }
