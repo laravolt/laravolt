@@ -2,7 +2,6 @@
 
 namespace Laravolt\Platform\Components;
 
-use Illuminate\Support\Stringable;
 use Illuminate\View\Component;
 
 class LabelComponent extends Component
@@ -25,6 +24,7 @@ class LabelComponent extends Component
 
     /**
      * Get the view / contents that represent the component.
+     *
      * @return \Illuminate\View\View|string
      */
     public function render()
