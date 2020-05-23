@@ -1,4 +1,4 @@
-<div id="{{ $id }}" data-role="suitable">
+<div id="{{ $id }}" data-role="suitable" class="ui segments panel">
 
     @if($hasSearchableColumns)
         <form id="suitable-form-searchable" action="{{ request()->url() }}" data-role="suitable-form-searchable" style="display: none">

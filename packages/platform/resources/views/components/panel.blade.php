@@ -1,8 +1,8 @@
 @php($icon = $icon ?? false)
 
-<div class="ui segments">
+<div class="ui segments panel">
     @if($title or $icon)
-        <div class="ui segment {{ $attributes['headerClass'] ?? '' }}">
+        <div class="ui segment panel__header {{ $attributes['headerClass'] ?? '' }}">
             <div class="ui horizontal list m-0">
                 @if($icon)
                     <div class="item p-0 p-l-xs m-0">
