@@ -4,6 +4,7 @@
     <x-titlebar title="Kitchen Sink"></x-titlebar>
 
     @include('laravolt::kitchen-sink.components.panel')
+    @include('laravolt::kitchen-sink.components.card')
     @include('laravolt::kitchen-sink.components.form')
     @include('laravolt::kitchen-sink.components.definition')
 

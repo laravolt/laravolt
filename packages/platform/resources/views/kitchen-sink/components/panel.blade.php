@@ -1,3 +1,8 @@
+<h2 class="ui header m-b-2">
+    Panel
+    <div class="sub header">Semua konten yang merupakan satu kesatuan wajib dibungkus dalam sebuah panel</div>
+</h2>
+
 <div class="ui grid equal width">
     <div class="column">
         <x-panel title="Panel">

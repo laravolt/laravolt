@@ -20,6 +20,7 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\BacklinkComponent;
 use Laravolt\Platform\Components\ButtonComponent;
+use Laravolt\Platform\Components\CardComponent;
 use Laravolt\Platform\Components\LabelComponent;
 use Laravolt\Platform\Components\LinkComponent;
 use Laravolt\Platform\Components\PanelComponent;
@@ -222,6 +223,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         Blade::components([
             'backlink' => BacklinkComponent::class,
             'button' => ButtonComponent::class,
+            'card' => CardComponent::class,
             'panel' => PanelComponent::class,
             'label' => LabelComponent::class,
             'link' => LinkComponent::class,
