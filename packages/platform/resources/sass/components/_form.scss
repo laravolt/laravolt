@@ -76,6 +76,24 @@ $widths: (
     color: #999;
     cursor: not-allowed;
   }
+
+  .ui.divider.horizontal {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:before {
+      width: 0;
+    }
+    &:after {
+      background: none;
+      border-bottom: 1px solid rgba(0,0,0,.2);
+      width: 100%;
+      display: table-cell;
+      position: relative;
+      top: -5px;
+      left: 1em;
+    }
+  }
 }
 
 .ui.form.horizontal, .ui.form.horizontal .segment {

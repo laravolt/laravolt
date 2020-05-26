@@ -162,7 +162,9 @@
     .ui.table.definition {
       caption {
         color: $header-color;
-        letter-spacing: 1px;
+        font-size: .9rem;
+        letter-spacing: .05em;
+        text-transform: uppercase;
       }
 
       td {
@@ -193,5 +195,14 @@
 
   [themed].ui.secondary.pointing.menu .active.item {
     color: $header-color;
+  }
+  .ui.form {
+    .ui.divider.horizontal {
+      color: $header-color;
+      font-size: .9rem;
+      &:after {
+        border-color: lighten($header-color, 12%);
+      }
+    }
   }
 }

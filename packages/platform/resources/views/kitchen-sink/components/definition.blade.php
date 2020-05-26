@@ -1,6 +1,6 @@
 <div class="ui grid equal width">
     <div class="column">
-        <x-panel title="Data">
+        <x-panel title="Data Definition">
             <table class="ui table definition">
                 <caption>Profil</caption>
                 <tbody>
