@@ -17,6 +17,11 @@
   }
 
   .sidebar {
+    &.show {
+      .sidebar__scroller {
+        background-color: rgba(255,255,255);
+      }
+    }
 
     .brand {
       color: #0000AF !important;
