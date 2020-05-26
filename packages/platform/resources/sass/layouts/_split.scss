@@ -6,7 +6,7 @@
   @media only screen and (max-width: 767px) {
     flex-direction: column;
     justify-content: flex-start;
-    [data-role="inspire"] {
+    .x-inspire {
       flex: 0 0 50px;
       .ui.container.text {
         display: none;
@@ -18,20 +18,26 @@
   }
 
   > div {
-    flex: 1;
     display: flex;
+  }
 
-    &[data-role="inspire"] {
-
+  .x-inspire {
+    flex: 1;
+    .ui.container.text {
+      font-size: 3rem;
     }
-
-    &[data-role="main"] {
-      flex: 0 0 500px;
-    }
-
-    [data-role="content"] {
+    &__content {
       align-self: center;
       flex: 1;
+    }
+  }
+
+  .x-auth {
+    flex: 0 0 500px;
+    &__content {
+      align-self: center;
+      flex: 1;
+      padding: 4em;
     }
   }
 }

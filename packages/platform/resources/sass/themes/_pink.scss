@@ -5,6 +5,16 @@ $icon-color: lighten($sidebar-color, 25%);
 
 [data-theme="pink"] {
 
+  a, .ui.tabular.menu a.item.active, .ui.tabular.menu a.item.active:hover,.ui.list a.item {
+    color: $pink;
+  }
+  .x-inspire {
+    color: #FFFFFF;
+    background-color: #ff0040;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000' stroke-width='0' stroke-opacity='0.03' %3E%3Ccircle fill='%23ff0040' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23f8003f' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%23f0003d' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23e8003c' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23e0003b' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%23d70039' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23ce0038' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23c50036' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23bb0035' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23b10033' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23a60031' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%239a0030' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%238d002e' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%237f002c' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%236f002a' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%235d0028' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23460026' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23210024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+  }
   .sidebar {
     .sidebar__scroller {
       background-color: $sidebar-color;
