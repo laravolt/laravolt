@@ -1,0 +1,187 @@
+[data-theme="fox"] {
+
+  $body-color: #f9f9fa;
+  $sidebar-color: transparent;
+  $text-color: #5e676f;
+  $header-color: #99c6ff;
+  $icon-color: lighten($text-color, 10%);
+  $blue: #0500AF;
+
+  background-image: linear-gradient(0deg, #CAD9F3 0%, #EAF2FF 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #061058;
+
+  header.ui.menu {
+    background: #EAF2FFEE;
+  }
+
+  .sidebar {
+
+    .brand {
+      color: #0000AF !important;
+    }
+
+    .sidebar__scroller {
+      border-right: 0 none;
+      background-color: $sidebar-color;
+
+      .ui.menu.vertical {
+        background: transparent;
+
+        .icon.left {
+          color: $icon-color;
+          padding-right: 1.5rem;
+        }
+
+        i.angle.icon {
+          color: $icon-color;
+        }
+
+        .item {
+          color: $text-color;
+
+          > .header {
+            color: $header-color;
+          }
+        }
+      }
+    }
+
+    .sidebar__menu {
+      .brand {
+        color: $text-color;
+      }
+
+      .ui.menu {
+
+      }
+    }
+
+    .sidebar__accordion.ui.accordion {
+
+      .title.empty.selected, .content .ui.list .item.selected {
+
+        background: rgba(255,255,255,0.75);
+        box-shadow: 0 5px 10px rgba(6, 16, 88, .1);
+        .icon.left {
+        }
+      }
+
+      .title, .content .item {
+        border-radius: 999px;
+
+        &:hover {
+          background: rgba(255,255,255,0.5);
+        }
+      }
+
+      .title {
+        color: $text-color;
+      }
+
+      .content .ui.list .item {
+        color: $text-color;
+      }
+
+    }
+
+  }
+
+  .panel.ui.segments, .panel.ui.segments {
+    $border-radius: 1rem;
+    $separator-color: rgba(6, 16, 88, .05);
+
+    box-shadow: 0 15px 30px rgba(6, 16, 88, .2);
+    border: 0 none;
+    border-radius: $border-radius;
+
+    .ui.segment, .extra.content {
+      border-color: $separator-color !important;
+    }
+    .ui.segment, &.card {
+      background: rgba(255,255,255, 0.8);
+    }
+
+    > div {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    > div:first-child {
+      border-top-left-radius: $border-radius !important;
+      border-top-right-radius: $border-radius !important;
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+    > :last-child {
+      border-bottom-left-radius: $border-radius !important;
+      border-bottom-right-radius: $border-radius !important;
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+    .panel__header .ui.header, &.card .header {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: $text-color;
+    }
+
+    .ui.table, .ui.table.definition {
+      border: 0 none;
+      background: rgba(255,255,255, 0.8);
+
+      th, td {
+        border: 0 none;
+        box-shadow: 0 1px 0 rgba(160, 175, 185, .05), 0 -1px 0 rgba(160, 175, 185, .05);
+      }
+    }
+
+    .ui.table {
+      th {
+        background-color: transparent;
+        color: darken($header-color, 10%);
+      }
+    }
+
+    [data-role="pagination"].menu {
+      .item {
+        border-radius: 999px;
+        &.active {
+          background: rgba(255,255,255,0.75);
+          box-shadow: 0 5px 10px rgba(6, 16, 88, .1);
+        }
+      }
+    }
+
+    .ui.table.definition {
+      caption {
+        color: $header-color;
+        letter-spacing: 1px;
+      }
+
+      td {
+        background: transparent;
+      }
+    }
+
+    &[data-role="suitable"] {
+      .ui.menu {
+        border: 0 none;
+        background: rgba(255,255,255, 0.8)
+      }
+
+      > .bottom.menu {
+        padding: 1rem;
+
+        .item:before {
+          width: 0;
+        }
+      }
+
+    }
+  }
+
+  .ui.button[themed] {
+    border-radius: 999px;
+  }
+}

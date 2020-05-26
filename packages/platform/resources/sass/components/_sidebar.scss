@@ -70,46 +70,45 @@ nav.sidebar {
         height: 0;
       }
     }
+  }
+  .sidebar__accordion.ui.accordion {
 
-    .sidebar__accordion.ui.accordion {
+    .title, .ui.list .item {
+      padding: 0.75em 1.5em;
+      line-height: 1.5rem;
+      border: 0 none;
+      border-radius: 0.25rem;
+      margin-bottom: 1px;
+    }
 
-      .title, .ui.list .item {
-        padding: 0.75em 1.5em;
-        line-height: 1.5rem;
-        border: 0 none;
-        border-radius: 0.25rem;
-        margin-bottom: 1px;
+    .title {
+      display: flex;
+
+      span {
+        flex-grow: 1;
       }
-
-      .title {
-        display: flex;
-
-        span {
-          flex-grow: 1;
-        }
-        .icon.angle {
-          transition: .5s all;
-          width: auto;
-          height: auto;
-          align-self: flex-start;
-          flex-grow: 0;
-        }
-        &.active {
-          .icon.angle.down {
-            transform: rotate(180deg);
-          }
-        }
+      .icon.angle {
+        transition: .5s all;
+        width: auto;
+        height: auto;
+        align-self: flex-start;
+        flex-grow: 0;
       }
-
-      .content {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        .ui.list .item {
-          padding-left: 3.5em;
+      &.active {
+        .icon.angle.down {
+          transform: rotate(180deg);
         }
       }
+    }
 
+    .content {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      .ui.list .item {
+        padding-left: 4em;
+      }
     }
 
   }
+
 }

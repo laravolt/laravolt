@@ -14,6 +14,8 @@ use Laravolt\Suitable\TableView;
 
 class UserTable extends TableView
 {
+    protected $title = 'Pengguna Terdaftar';
+
     public function source()
     {
         return app(RepositoryInterface::class)->paginate(request());

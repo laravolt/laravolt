@@ -44,7 +44,12 @@ if (!function_exists('form_html_attributes')) {
                 $value = json_encode($value);
             }
             $value = form_escape($value);
-            $result .= " {$attribute}=\"{$value}\"";
+
+            if (is_numeric($attribute)) {
+                $result .= " {$value}";
+            } else {
+                $result .= " {$attribute}=\"{$value}\"";
+            }
         }
 
         return $result;

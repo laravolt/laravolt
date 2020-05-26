@@ -9,6 +9,7 @@ class Button extends FormControl
     protected $attributes = [
         'type'  => 'button',
         'class' => 'ui button',
+        'themed',
     ];
 
     protected $text;
