@@ -19,7 +19,7 @@
   .sidebar {
     &.show {
       .sidebar__scroller {
-        background-color: rgba(255,255,255);
+        background-color: rgba(255, 255, 255);
       }
     }
 
@@ -67,8 +67,9 @@
 
       .title.empty.selected, .content .ui.list .item.selected {
 
-        background: rgba(255,255,255,0.75);
+        background: rgba(255, 255, 255, 0.75);
         box-shadow: 0 5px 10px rgba(6, 16, 88, .1);
+
         .icon.left {
         }
       }
@@ -77,7 +78,7 @@
         border-radius: 999px;
 
         &:hover {
-          background: rgba(255,255,255,0.5);
+          background: rgba(255, 255, 255, 0.5);
         }
       }
 
@@ -104,8 +105,9 @@
     .ui.segment, .extra.content {
       border-color: $separator-color !important;
     }
+
     > .ui.segment, &.card {
-      background: rgba(255,255,255, 0.8);
+      background: rgba(255, 255, 255, 0.8);
     }
 
     > div {
@@ -116,15 +118,13 @@
     > div:first-child {
       border-top-left-radius: $border-radius !important;
       border-top-right-radius: $border-radius !important;
-      padding-top: 1.5rem !important;
-      padding-bottom: 1.5rem !important;
     }
+
     > :last-child {
       border-bottom-left-radius: $border-radius !important;
       border-bottom-right-radius: $border-radius !important;
-      padding-top: 1.5rem !important;
-      padding-bottom: 1.5rem !important;
     }
+
     .panel__header .ui.header, &.card .header {
       font-weight: 700;
       font-size: 1.15rem;
@@ -133,7 +133,7 @@
 
     .ui.table, .ui.table.definition {
       border: 0 none;
-      background: rgba(255,255,255, 0.8);
+      background: rgba(255, 255, 255, 0.8);
 
       th, td {
         border: 0 none;
@@ -151,8 +151,9 @@
     [data-role="pagination"].menu {
       .item {
         border-radius: 999px;
+
         &.active {
-          background: rgba(255,255,255,0.75);
+          background: rgba(255, 255, 255, 0.75);
           box-shadow: 0 5px 10px rgba(6, 16, 88, .1);
         }
       }
@@ -172,7 +173,7 @@
     &[data-role="suitable"] {
       .ui.menu {
         border: 0 none;
-        background: rgba(255,255,255, 0.8)
+        background: rgba(255, 255, 255, 0.8)
       }
 
       > .bottom.menu {
@@ -186,7 +187,11 @@
     }
   }
 
-  .ui.button[themed] {
+  [themed].ui.button {
     border-radius: 999px;
+  }
+
+  [themed].ui.secondary.pointing.menu .active.item {
+    color: $header-color;
   }
 }

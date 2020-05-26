@@ -1,20 +1,12 @@
-@extends(
-    config('laravolt.lookup.view.layout'),
-    [
-        '__page' => [
-            'title' => 'Lookup',
-            'actions' => [
-                [
-                    'label' => __('Tambah'),
-                    'class' => 'primary',
-                    'icon' => 'icon plus circle',
-                    'url' => route('lookup::lookup.create', $collection)
-                ],
-            ]
-        ],
-    ]
-)
+@extends(config('laravolt.lookup.view.layout'))
 
 @section('content')
+    <x-titlebar title="Lookup">
+        <div class="item">
+            <x-link url="{{ route('lookup::lookup.create', $collection) }}">
+                <i class="icon plus"></i> {{ __('Tambah') }}
+            </x-link>
+        </div>
+    </x-titlebar>
     {!! $table !!}
 @endsection
