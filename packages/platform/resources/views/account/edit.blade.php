@@ -1,6 +1,7 @@
 @extends('laravolt::users.edit', ['tab' => 'account'])
 
 @section('content-user-edit')
+
     {!! form()->bind($user)->open()->put()->action(route('epicentrum::account.update', $user['id'])) !!}
 
     {!! form()->text('name')->label(__('laravolt::users.name')) !!}
@@ -47,8 +48,9 @@
             <p>Menghapus pengguna dan semua data yang berhubungan dengan pengguna ini.
                 <br>
                 Aksi ini tidak bisa dibatalkan.</p>
-            <button class="ui button red" type="submit" name="submit" value="1"
-                    onclick="return confirm('@lang('laravolt::message.account_deletion_confirmation')')">@lang('laravolt::action.delete')</button>
+            <x-button type="basic red" value="1">
+                @lang('laravolt::action.delete')
+            </x-button>
             {!! form()->close() !!}
         @endif
     </div>

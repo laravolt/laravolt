@@ -1,15 +1,11 @@
 @extends(config('laravolt.epicentrum.view.layout'))
 
-@section('page.title', __('laravolt::label.users'))
-
-@push('page.actions')
-    <a href="{{ route('epicentrum::users.index') }}" class="ui button">
-        <i class="icon arrow up"></i> Kembali ke Index
-    </a>
-@endpush
-
 @section('content')
-    @component('laravolt::components.panel', ['title' => __('laravolt::menu.add_user')])
+    <x-titlebar :title="__('laravolt::label.users')">
+        <x-backlink url="{{ route('epicentrum::users.index') }}"></x-backlink>
+    </x-titlebar>
+
+    <x-panel :title="__('laravolt::menu.add_user')">
         {!! form()->open()->post()->action(route('epicentrum::users.store')) !!}
         {!! form()->text('name')->label(trans('laravolt::users.name'))->required() !!}
         {!! form()->text('email')->label(trans('laravolt::users.email'))->required() !!}
@@ -34,7 +30,7 @@
         {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.back'), route('epicentrum::users.index'))) !!}
         {!! form()->close() !!}
 
-    @endcomponent
+    </x-panel>
 
 @endsection
 

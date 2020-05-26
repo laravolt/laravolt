@@ -6,7 +6,7 @@
     <p>@lang('laravolt::message.reset_password_manual_intro')</p>
     <form action="{{ route('epicentrum::password.reset', [$user['id']]) }}" method="POST">
     {{ csrf_field() }}
-    <button type="submit" class="ui button" href="">@lang('laravolt::action.send_reset_password_link')</button>
+    <x-button>@lang('laravolt::action.send_reset_password_link')</x-button>
     </form>
 
     <div class="ui divider"></div>
@@ -21,6 +21,6 @@
             <label>@lang('laravolt::users.change_password_on_first_login')</label>
         </div>
     </div>
-    <button type="submit" class="ui button" href="">@lang('laravolt::action.send_new_password')</button>
+    <x-button>@lang('laravolt::action.send_new_password')</x-button>
     {!! SemanticForm::close() !!}
 @endsection

@@ -8,6 +8,7 @@ class Link extends Element
 {
     protected $attributes = [
         'class' => 'ui basic button',
+        'themed'
     ];
 
     protected $text;
