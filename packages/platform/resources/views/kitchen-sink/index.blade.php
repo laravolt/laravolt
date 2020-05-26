@@ -7,6 +7,8 @@
     <div class="ui divider hidden"></div>
     @include('laravolt::kitchen-sink.components.card')
     <div class="ui divider hidden"></div>
+    @include('laravolt::kitchen-sink.components.modal')
+    <div class="ui divider hidden"></div>
     @include('laravolt::kitchen-sink.components.tab')
     <div class="ui divider hidden"></div>
     @include('laravolt::kitchen-sink.components.form')

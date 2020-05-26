@@ -5,6 +5,13 @@
 
     <div class="ui divider section"></div>
 
+    <div class="ui buttons">
+        <x-button label="Primary Button" type="primary"></x-button>
+        <x-button label="Basic Button" type="basic"></x-button>
+    </div>
+
+    <div class="ui divider section"></div>
+
     <div class="ui horizontal list">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
             <div class="item">
