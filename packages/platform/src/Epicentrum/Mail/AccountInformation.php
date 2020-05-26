@@ -33,6 +33,6 @@ class AccountInformation extends Mailable
      */
     public function build()
     {
-        return $this->view('epicentrum::emails.account_information');
+        return $this->view('laravolt::emails.account_information');
     }
 }
