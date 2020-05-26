@@ -600,7 +600,7 @@ class SemanticForm
             $value = $value->pluck('id')->toArray();
         }
 
-        if (is_string($value) || is_numeric($value) || is_bool($value) || is_array($value)) {
+        if (is_string($value) || is_numeric($value) || is_bool($value) || is_array($value) || $value instanceof Carbon) {
             return $value;
         }
 
