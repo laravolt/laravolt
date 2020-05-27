@@ -9,13 +9,13 @@ return [
      * Set default theme
      * Available themes: basik, black, blue, classic, fox, grey, pink, red, teal, violet
      * */
-    'theme' => 'pink',
+    'theme' => 'fox',
     /*
      * Button color
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'pink',
+    'color' => 'blue',
 
     'animation' => env('APP_URL').'laravolt/lottiefiles/scan.json',
     'system_menu' => [

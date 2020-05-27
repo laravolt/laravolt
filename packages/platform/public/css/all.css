@@ -3319,6 +3319,9 @@ html[data-font-size=big] body {
 [data-theme=fox] .ui.form .ui.divider.horizontal:after {
   border-color: #d6e8ff;
 }
+[data-theme=fox] .x-restful-buttons .ui.button {
+  margin-left: 0.25em;
+}
 
 [data-theme=grey] [data-role=brand] .ui.header {
   color: #000;
