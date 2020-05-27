@@ -42,12 +42,12 @@ class Acl
                 if (!is_sqlite()) {
                     DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
                 }
-                app(config('laravolt.acl.models.permission'))->truncate();
+                app(config('laravolt.epicentrum.models.permission'))->truncate();
             }
 
             $items = collect();
             foreach ($this->permissions() as $name) {
-                $permission = app(config('laravolt.acl.models.permission'))->firstOrNew(['name' => $name]);
+                $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
                 $status = 'No Change';
 
                 if (!$permission->exists) {
@@ -60,7 +60,7 @@ class Acl
 
             // delete unused permissions
             $permissions = $this->permissions() + ['*'];
-            $unusedPermissions = app(config('laravolt.acl.models.permission'))
+            $unusedPermissions = app(config('laravolt.epicentrum.models.permission'))
                 ->whereNotIn('name', $permissions)
                 ->get();
 

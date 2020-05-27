@@ -12,7 +12,7 @@ class Role extends Model
 
     public function permissions()
     {
-        return $this->belongsToMany(config('laravolt.acl.models.permission'), 'acl_permission_role');
+        return $this->belongsToMany(config('laravolt.epicentrum.models.permission'), 'acl_permission_role');
     }
 
     public function users()
@@ -23,7 +23,7 @@ class Role extends Model
     public function addPermission($permission): self
     {
         if (is_string($permission)) {
-            $permission = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
+            $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
         }
 
         $this->permissions()->attach($permission);
@@ -34,7 +34,7 @@ class Role extends Model
     public function removePermission($permission): self
     {
         if (is_string($permission)) {
-            $permission = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
+            $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
         }
 
         $this->permissions()->detach($permission);
@@ -55,7 +55,7 @@ class Role extends Model
             if (is_numeric($permission)) {
                 return (int) $permission;
             } elseif (is_string($permission)) {
-                $permissionObject = app(config('laravolt.acl.models.permission'))->firstOrCreate(['name' => $permission]);
+                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
 
                 return $permissionObject->getKey();
             } elseif ($permission instanceof Model) {
@@ -73,9 +73,9 @@ class Role extends Model
         $model = $permission;
 
         if (!$permission instanceof Model) {
-            $model = app(config('laravolt.acl.models.permission'))->find($permission);
+            $model = app(config('laravolt.epicentrum.models.permission'))->find($permission);
             if (!$model) {
-                $model = app(config('laravolt.acl.models.permission'))->where('name', $permission)->first();
+                $model = app(config('laravolt.epicentrum.models.permission'))->where('name', $permission)->first();
             }
         }
 

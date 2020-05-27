@@ -8,7 +8,7 @@ trait HasRoleAndPermission
 {
     public function roles()
     {
-        return $this->belongsToMany(config('laravolt.acl.models.role'), 'acl_role_user', 'user_id', 'role_id');
+        return $this->belongsToMany(config('laravolt.epicentrum.models.role'), 'acl_role_user', 'user_id', 'role_id');
     }
 
     public function assignRole($role): self
@@ -22,7 +22,7 @@ trait HasRoleAndPermission
         }
 
         if (is_string($role)) {
-            $role = app(config('laravolt.acl.models.role'))->firstOrCreate(['name' => $role]);
+            $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
         }
 
         $this->roles()->syncWithoutDetaching($role);
@@ -41,7 +41,7 @@ trait HasRoleAndPermission
         }
 
         if (is_string($role)) {
-            $role = app(config('laravolt.acl.models.role'))->where('name', $role)->first();
+            $role = app(config('laravolt.epicentrum.models.role'))->where('name', $role)->first();
         }
 
         $this->roles()->detach($role);
@@ -91,7 +91,7 @@ trait HasRoleAndPermission
             if (is_numeric($role)) {
                 return (int) $role;
             } elseif (is_string($role)) {
-                $role = app(config('laravolt.acl.models.role'))->firstOrCreate(['name' => $role]);
+                $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
 
                 return $role->getKey();
             } elseif ($role instanceof Model) {
@@ -129,11 +129,11 @@ trait HasRoleAndPermission
         }
 
         if (is_string($permission)) {
-            $permission = app(config('laravolt.acl.models.permission'))->where('name', $permission)->first();
+            $permission = app(config('laravolt.epicentrum.models.permission'))->where('name', $permission)->first();
         }
 
         if (is_int($permission)) {
-            $permission = app(config('laravolt.acl.models.permission'))->find($permission);
+            $permission = app(config('laravolt.epicentrum.models.permission'))->find($permission);
         }
 
         if (!$permission instanceof Model) {

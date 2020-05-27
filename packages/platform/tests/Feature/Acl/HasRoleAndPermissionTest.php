@@ -26,7 +26,7 @@ class HasRoleAndPermissionTest extends FeatureTest
 
     public function testAssignExistingRole()
     {
-        app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
         $user->assignRole('Admin');
 
@@ -35,7 +35,7 @@ class HasRoleAndPermissionTest extends FeatureTest
 
     public function testAssignExistingRoleById()
     {
-        app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
         $user->assignRole(1);
 
@@ -44,7 +44,7 @@ class HasRoleAndPermissionTest extends FeatureTest
 
     public function testAssignExistingRoleByModel()
     {
-        $role = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
         $user->assignRole($role);
 
@@ -53,7 +53,7 @@ class HasRoleAndPermissionTest extends FeatureTest
 
     public function testAssignRoleByArray()
     {
-        $role = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
         $user->assignRole([$role, 'Operator', 'Staff']);
 
@@ -81,7 +81,7 @@ class HasRoleAndPermissionTest extends FeatureTest
 
     public function testRevokeRoleByObject()
     {
-        $admin = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
         $user->assignRole($admin)->assignRole('Operator');
         $user->revokeRole([$admin]);
@@ -124,8 +124,8 @@ class HasRoleAndPermissionTest extends FeatureTest
     public function testSyncRoles()
     {
         $user = $this->createUser();
-        $admin = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
-        $operator = app(config('laravolt.acl.models.role'))->create(['name' => 'Operator']);
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $operator = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Operator']);
         $user->syncRoles([1, $operator, 'Staff']);
 
         $this->assertSame(3, $user->roles->count());
@@ -134,16 +134,16 @@ class HasRoleAndPermissionTest extends FeatureTest
     public function testHasPermission()
     {
         $user = $this->createUser();
-        $admin = app(config('laravolt.acl.models.role'))->create(['name' => 'Admin']);
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $admin->addPermission('create');
         $admin->addPermission('edit');
         $user->assignRole($admin);
-        $smoking = app(config('laravolt.acl.models.permission'))->create(['name' => 'smoking']);
+        $smoking = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'smoking']);
 
         $this->assertTrue($user->hasPermission('create'));
         $this->assertTrue($user->hasPermission(['create', 'edit'], true));
         $this->assertTrue($user->hasPermission([1, 2], true));
-        $this->assertTrue($user->hasPermission([app(config('laravolt.acl.models.permission'))->find(1), 2], true));
+        $this->assertTrue($user->hasPermission([app(config('laravolt.epicentrum.models.permission'))->find(1), 2], true));
         $this->assertFalse($user->hasPermission('smoking'));
         $this->assertTrue($user->hasPermission(['smoking', 'create']));
         $this->assertFalse($user->hasPermission(['smoking', 'create'], true));

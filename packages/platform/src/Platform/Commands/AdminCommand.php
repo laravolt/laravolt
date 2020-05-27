@@ -43,12 +43,12 @@ class AdminCommand extends Command
             $password = $this->ask('Masukkan password:');
         }
 
-        $role = app(config('laravolt.acl.models.role'))->whereHas('permissions', function ($permissions) {
+        $role = app(config('laravolt.epicentrum.models.role'))->whereHas('permissions', function ($permissions) {
             $permissions->whereName('*');
         })->first();
 
         if (!$role) {
-            $role = app(config('laravolt.acl.models.role'))->create(['name' => 'admin']);
+            $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'admin']);
             $role->syncPermission(['*']);
         }
 

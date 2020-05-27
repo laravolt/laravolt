@@ -84,7 +84,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootConfig(): self
     {
-        $config = ['acl', 'auth', 'epicentrum', 'menu', 'password', 'platform', 'ui'];
+        $config = ['auth', 'epicentrum', 'menu', 'password', 'platform', 'ui'];
         $publishes = [];
         foreach ($config as $c) {
             $this->mergeConfigFrom(platform_path("config/$c.php"), "laravolt.$c");
@@ -170,7 +170,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         if ($this->hasPermissionTable()) {
-            $permissions = app(config('laravolt.acl.models.permission'))->all();
+            $permissions = app(config('laravolt.epicentrum.models.permission'))->all();
             foreach ($permissions as $permission) {
                 $gate->define($permission->name, function (HasRoleAndPermission $user) use ($permission) {
                     return $user->hasPermission($permission);
@@ -238,7 +238,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function hasPermissionTable()
     {
         try {
-            $table_permissions_name = app(config('laravolt.acl.models.permission'))->getTable();
+            $table_permissions_name = app(config('laravolt.epicentrum.models.permission'))->getTable();
 
             return Schema::hasTable($table_permissions_name);
         } catch (\PDOException $e) {
