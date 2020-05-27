@@ -7,13 +7,10 @@
     flex-direction: column;
     justify-content: flex-start;
     .x-inspire {
-      flex: 0 0 50px;
+      flex: 0 0 50px !important;
       .ui.container.text {
         display: none;
       }
-    }
-    &[data-role="main"] {
-      flex: 1;
     }
   }
 
