@@ -137,7 +137,7 @@ trait HasRoleAndPermission
         }
 
         if (!$permission instanceof Model) {
-            throw new \InvalidArgumentException('Argument must be integer, existing permission name, or an instance of '.config('laravolt.acl.models.permission'));
+            return false;
         }
 
         foreach ($this->roles as $assignedRole) {

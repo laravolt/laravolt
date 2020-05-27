@@ -164,7 +164,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         // register wildcard permission
         \Illuminate\Support\Facades\Gate::before(function (HasRoleAndPermission $user, $ability, $models) {
-            if ($user->hasPermission('*')) {
+            if ($user->hasPermission('*') && empty($models)) {
                 return true;
             }
         });
