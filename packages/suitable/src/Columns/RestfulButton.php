@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Laravolt\Platform\Enums\Permission;
 
 class RestfulButton extends Column implements ColumnInterface
 {
@@ -49,8 +50,9 @@ class RestfulButton extends Column implements ColumnInterface
     {
         $actions = $this->buildActions($data);
         $deleteConfirmation = $this->buildDeleteConfirmation($data);
+        $key = Str::kebab(get_class($data)).'-'.$data->getKey();
 
-        return View::make('suitable::columns.restful_button', compact('data', 'actions', 'deleteConfirmation'))
+        return View::make('suitable::columns.restful_button', compact('data', 'actions', 'deleteConfirmation', 'key'))
             ->render();
     }
 
@@ -129,18 +131,22 @@ class RestfulButton extends Column implements ColumnInterface
             'delete' => 'destroy',
         ];
 
-        $class = get_class($data);
-        $policyEnabled = Gate::getPolicyFor($class) !== null;
-
         $actions = collect($actions)
             ->reject(
-                function ($verb, $action) use ($policyEnabled, $data) {
-                    return ($policyEnabled && Auth::user()->cannot($action, $data)) || !in_array(
-                        $action,
-                        $this->buttons
-                    );
+                function ($verb, $action) use ($data) {
+                    return !in_array($action, $this->buttons);
                 }
-            )->transform(function ($verb) use ($data) {
+            )->reject(function ($verb, $action) use ($data) {
+
+                if (Auth::user()->hasPermission('*')) {
+                    return false;
+                }
+
+                $policyEnabled = Gate::getPolicyFor(get_class($data)) !== null;
+
+                return ($policyEnabled && Auth::user()->cannot($action, $data));
+            })
+            ->transform(function ($verb) use ($data) {
                 return $this->getRoute($verb, $this->routeParameters + [$data->getKey()]);
             });
 

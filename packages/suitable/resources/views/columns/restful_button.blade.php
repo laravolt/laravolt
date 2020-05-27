@@ -1,23 +1,27 @@
 @if($actions->isNotEmpty())
     @if($actions->count() > 1)
-        <div class="ui icon buttons mini basic">
+        <div class="x-restful-buttons ui buttons">
     @endif
             @if($actions->has('view'))
-                <a class="ui button icon mini basic" href="{{ $actions->get('view') }}"><i class="eye icon"></i></a>
+                <x-link url="{{ $actions->get('view') }}" icon="eye" class="mini icon secondary"></x-link>
             @endif
 
             @if($actions->has('edit'))
-                <a class="ui button icon mini basic" href="{{ $actions->get('edit') }}"><i class="edit icon"></i></a>
+                <x-link url="{{ $actions->get('edit') }}" icon="pencil" class="mini icon secondary"></x-link>
             @endif
 
             @if($actions->has('delete'))
-                <form role="form" action="{{ $actions->get('delete') }}" method="POST" onsubmit="return confirm('{{ $deleteConfirmation }}')">
-                    <input type="hidden" name="_method" value="DELETE">
-                    {{ csrf_field() }}
-                    <button type="submit" class="ui button icon mini basic"><i class="delete icon"></i></button>
-                </form>
+                <x-button form="{{ $key }}" icon="trash alternate" class="icon mini secondary" type="submit"></x-button>
             @endif
     @if($actions->count() > 1)
         </div>
     @endif
+
+    @if($actions->has('delete'))
+        <form id="{{ $key }}" role="form" action="{{ $actions->get('delete') }}" method="POST" onsubmit="return confirm('{{ $deleteConfirmation }}')">
+            <input type="hidden" name="_method" value="DELETE">
+            {{ csrf_field() }}
+        </form>
+    @endif
+
 @endif
