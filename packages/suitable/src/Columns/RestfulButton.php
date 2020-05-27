@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use Laravolt\Platform\Enums\Permission;
 
 class RestfulButton extends Column implements ColumnInterface
 {
@@ -137,14 +136,13 @@ class RestfulButton extends Column implements ColumnInterface
                     return !in_array($action, $this->buttons);
                 }
             )->reject(function ($verb, $action) use ($data) {
-
                 if (Auth::user()->hasPermission('*')) {
                     return false;
                 }
 
                 $policyEnabled = Gate::getPolicyFor(get_class($data)) !== null;
 
-                return ($policyEnabled && Auth::user()->cannot($action, $data));
+                return $policyEnabled && Auth::user()->cannot($action, $data);
             })
             ->transform(function ($verb) use ($data) {
                 return $this->getRoute($verb, $this->routeParameters + [$data->getKey()]);
