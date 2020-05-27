@@ -29,6 +29,8 @@ class LabelComponent extends Component
      */
     public function render()
     {
+        $this->color = str_replace('theme', config('laravolt.ui.color'), $this->color);
+
         return <<<'blade'
         <div class="ui label {{ $color}}">
             {{ $label ?? $slot }}

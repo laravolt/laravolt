@@ -42,3 +42,12 @@ table.ui.table {
     }
   }
 }
+
+.panel.x-suitable {
+  .top.attached.menu {
+    border-top: 0 none;
+  }
+  .bottom.attached.menu {
+    border-bottom: 0 none;
+  }
+}

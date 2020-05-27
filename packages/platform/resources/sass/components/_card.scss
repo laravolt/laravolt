@@ -1,0 +1,19 @@
+.x-card {
+  &__header {
+
+  }
+  &__footer {
+
+  }
+  &__meta {
+    &--before {
+      margin-bottom: 0.5em;
+    }
+    &--after {
+      margin-top: 0.5em;
+    }
+  }
+}
+.ui.cards > .card > .content, .ui.card > .content {
+  border-top: 0 none;
+}

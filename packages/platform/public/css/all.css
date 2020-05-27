@@ -1181,6 +1181,17 @@ table.bt.bt--no-header tbody td::before {
   width: 200px;
 }
 
+.x-card__meta--before {
+  margin-bottom: 0.5em;
+}
+.x-card__meta--after {
+  margin-top: 0.5em;
+}
+
+.ui.cards > .card > .content, .ui.card > .content {
+  border-top: 0 none;
+}
+
 /**
  * Fileuploader
  * Copyright (c) 2019 Innostudio.de
@@ -2459,150 +2470,240 @@ table.bt.bt--no-header tbody td::before {
   }
 }
 
-.ui.ui.ui.label.red.secondary {
+.ui.ui.ui.label.red {
   border-color: transparent;
   color: rgba(219, 40, 40, 0.9);
   background-color: rgba(219, 40, 40, 0.1);
+}
+
+.ui.ui.ui.label.red.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #DB2828;
 }
 
 .ui.ui.ui.label.red.basic {
   border-color: rgba(219, 40, 40, 0.5);
 }
 
-.ui.ui.ui.label.orange.secondary {
+.ui.ui.ui.label.orange {
   border-color: transparent;
   color: rgba(242, 113, 28, 0.9);
   background-color: rgba(242, 113, 28, 0.1);
+}
+
+.ui.ui.ui.label.orange.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #F2711C;
 }
 
 .ui.ui.ui.label.orange.basic {
   border-color: rgba(242, 113, 28, 0.5);
 }
 
-.ui.ui.ui.label.yellow.secondary {
+.ui.ui.ui.label.yellow {
   border-color: transparent;
   color: rgba(251, 189, 8, 0.9);
   background-color: rgba(251, 189, 8, 0.1);
+}
+
+.ui.ui.ui.label.yellow.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #FBBD08;
 }
 
 .ui.ui.ui.label.yellow.basic {
   border-color: rgba(251, 189, 8, 0.5);
 }
 
-.ui.ui.ui.label.olive.secondary {
+.ui.ui.ui.label.olive {
   border-color: transparent;
   color: rgba(181, 204, 24, 0.9);
   background-color: rgba(181, 204, 24, 0.1);
+}
+
+.ui.ui.ui.label.olive.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #B5CC18;
 }
 
 .ui.ui.ui.label.olive.basic {
   border-color: rgba(181, 204, 24, 0.5);
 }
 
-.ui.ui.ui.label.green.secondary {
+.ui.ui.ui.label.green {
   border-color: transparent;
   color: rgba(33, 186, 69, 0.9);
   background-color: rgba(33, 186, 69, 0.1);
+}
+
+.ui.ui.ui.label.green.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #21BA45;
 }
 
 .ui.ui.ui.label.green.basic {
   border-color: rgba(33, 186, 69, 0.5);
 }
 
-.ui.ui.ui.label.teal.secondary {
+.ui.ui.ui.label.teal {
   border-color: transparent;
   color: rgba(0, 181, 173, 0.9);
   background-color: rgba(0, 181, 173, 0.1);
+}
+
+.ui.ui.ui.label.teal.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #00B5AD;
 }
 
 .ui.ui.ui.label.teal.basic {
   border-color: rgba(0, 181, 173, 0.5);
 }
 
-.ui.ui.ui.label.blue.secondary {
+.ui.ui.ui.label.blue {
   border-color: transparent;
   color: rgba(33, 133, 208, 0.9);
   background-color: rgba(33, 133, 208, 0.1);
+}
+
+.ui.ui.ui.label.blue.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #2185D0;
 }
 
 .ui.ui.ui.label.blue.basic {
   border-color: rgba(33, 133, 208, 0.5);
 }
 
-.ui.ui.ui.label.violet.secondary {
+.ui.ui.ui.label.violet {
   border-color: transparent;
   color: rgba(100, 53, 201, 0.9);
   background-color: rgba(100, 53, 201, 0.1);
+}
+
+.ui.ui.ui.label.violet.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #6435C9;
 }
 
 .ui.ui.ui.label.violet.basic {
   border-color: rgba(100, 53, 201, 0.5);
 }
 
-.ui.ui.ui.label.purple.secondary {
+.ui.ui.ui.label.purple {
   border-color: transparent;
   color: rgba(163, 51, 200, 0.9);
   background-color: rgba(163, 51, 200, 0.1);
+}
+
+.ui.ui.ui.label.purple.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #A333C8;
 }
 
 .ui.ui.ui.label.purple.basic {
   border-color: rgba(163, 51, 200, 0.5);
 }
 
-.ui.ui.ui.label.pink.secondary {
+.ui.ui.ui.label.pink {
   border-color: transparent;
   color: rgba(224, 57, 151, 0.9);
   background-color: rgba(224, 57, 151, 0.1);
+}
+
+.ui.ui.ui.label.pink.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #E03997;
 }
 
 .ui.ui.ui.label.pink.basic {
   border-color: rgba(224, 57, 151, 0.5);
 }
 
-.ui.ui.ui.label.brown.secondary {
+.ui.ui.ui.label.brown {
   border-color: transparent;
   color: rgba(165, 103, 63, 0.9);
   background-color: rgba(165, 103, 63, 0.1);
+}
+
+.ui.ui.ui.label.brown.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #A5673F;
 }
 
 .ui.ui.ui.label.brown.basic {
   border-color: rgba(165, 103, 63, 0.5);
 }
 
-.ui.ui.ui.label.grey.secondary {
+.ui.ui.ui.label.grey {
   border-color: transparent;
   color: rgba(118, 118, 118, 0.9);
   background-color: rgba(118, 118, 118, 0.1);
+}
+
+.ui.ui.ui.label.grey.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #767676;
 }
 
 .ui.ui.ui.label.grey.basic {
   border-color: rgba(118, 118, 118, 0.5);
 }
 
-.ui.ui.ui.label.classic.secondary {
+.ui.ui.ui.label.classic {
   border-color: transparent;
   color: rgba(118, 118, 118, 0.9);
   background-color: rgba(118, 118, 118, 0.1);
+}
+
+.ui.ui.ui.label.classic.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #767676;
 }
 
 .ui.ui.ui.label.classic.basic {
   border-color: rgba(118, 118, 118, 0.5);
 }
 
-.ui.ui.ui.label.black.secondary {
+.ui.ui.ui.label.black {
   border-color: transparent;
   color: rgba(27, 28, 29, 0.9);
   background-color: rgba(27, 28, 29, 0.1);
+}
+
+.ui.ui.ui.label.black.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #1B1C1D;
 }
 
 .ui.ui.ui.label.black.basic {
   border-color: rgba(27, 28, 29, 0.5);
 }
 
-.ui.ui.ui.label.white.secondary {
+.ui.ui.ui.label.white {
   border-color: transparent;
   color: rgba(255, 255, 255, 0.9);
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ui.ui.ui.label.white.solid {
+  border-color: transparent;
+  color: #FFFFFF;
+  background-color: #FFFFFF;
 }
 
 .ui.ui.ui.label.white.basic {
@@ -2684,6 +2785,13 @@ table.ui.table.definition caption {
   [data-role=suitable] [data-role=pagination] .item.dots, [data-role=suitable] [data-role=pagination] .item.number {
     display: none;
   }
+}
+
+.panel.x-suitable .top.attached.menu {
+  border-top: 0 none;
+}
+.panel.x-suitable .bottom.attached.menu {
+  border-bottom: 0 none;
 }
 
 .ui.toast-container.top.center {
