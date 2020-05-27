@@ -2815,6 +2815,9 @@ table.bt.bt--no-header tbody td::before {
   color: #999;
   cursor: not-allowed;
 }
+.ui.form .ui.divider.horizontal {
+  font-size: 0.9em;
+}
 .ui.form .ui.divider.horizontal:first-child {
   margin-top: 0;
 }
