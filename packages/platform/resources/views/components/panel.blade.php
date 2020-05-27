@@ -3,7 +3,7 @@
 <div class="ui segments panel" {{ $attributes }}>
     @if($title or $icon)
         <div class="ui segment panel__header {{ $attributes['headerClass'] ?? '' }}">
-            <div class="ui horizontal list m-0">
+            <div class="ui menu secondary borderless m-0 p-0" style="min-height: 0">
                 @if($icon)
                     <div class="item p-0 p-l-xs m-0">
                         <i class="icon {{ $icon }}"></i>
@@ -17,6 +17,15 @@
                         </h4>
                     </div>
                 @endif
+
+                @if(isset($action))
+                <div class="menu right">
+                    <div class="item p-0">
+                        {!! $action !!}
+                    </div>
+                </div>
+                @endif
+
             </div>
         </div>
     @endif
