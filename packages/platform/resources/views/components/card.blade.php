@@ -4,6 +4,12 @@
     <div class="ui card segments panel x-card">
 @endif
 
+    @if($attributes['cover'])
+        <div class="image">
+            <img src="{{ $attributes['cover'] }}" alt="">
+        </div>
+    @endif
+
     @if($title or $content or $attributes['meta.before'] or $attributes['meta.after'])
     <div class="content x-card__header">
 

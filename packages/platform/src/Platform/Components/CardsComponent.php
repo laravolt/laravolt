@@ -9,7 +9,7 @@ class CardsComponent extends Component
     public function render()
     {
         return <<<'blade'
-        <div class="ui cards">
+        <div {{ $attributes->merge(['class' => 'ui stackable cards x-cards'])}} >
             {{ $slot }}
         </div>
         blade;

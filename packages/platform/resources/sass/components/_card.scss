@@ -14,6 +14,8 @@
     }
   }
 }
-.ui.cards > .card > .content, .ui.card > .content {
-  border-top: 0 none;
+.x-cards.ui.cards > .card , .x-cards.ui.card  {
+  > .content, > .extra {
+    border-top: 0 none !important;
+  }
 }

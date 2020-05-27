@@ -1,6 +1,6 @@
 @php($icon = $icon ?? false)
 
-<div class="ui segments panel" {{ $attributes }}>
+<div {{ $attributes->merge(['class' => 'ui segments panel']) }}>
     @if($title or $icon)
         <div class="ui segment panel__header {{ $attributes['headerClass'] ?? '' }}">
             <div class="ui menu secondary borderless m-0 p-0" style="min-height: 0">

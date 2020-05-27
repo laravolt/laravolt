@@ -32,7 +32,7 @@ class LabelComponent extends Component
         $this->color = str_replace('theme', config('laravolt.ui.color'), $this->color);
 
         return <<<'blade'
-        <div class="ui label {{ $color}}">
+        <div {{ $attributes->merge(['class' => 'ui label '.$color])}}>
             {{ $label ?? $slot }}
         </div>
         blade;

@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}"/>
     @stack('style')
     @stack('head')
     {!! Assets::group('laravolt')->css() !!}

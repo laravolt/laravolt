@@ -1,4 +1,7 @@
 @each $name, $color in $colors {
+  .ui.ui.ui.label {
+    margin-bottom: 2px;
+  }
   .ui.ui.ui.label.#{$name} {
     border-color: transparent;
     color: rgba($color, 0.9);
