@@ -26,6 +26,8 @@ use Laravolt\Platform\Components\CardsComponent;
 use Laravolt\Platform\Components\LabelComponent;
 use Laravolt\Platform\Components\LinkComponent;
 use Laravolt\Platform\Components\PanelComponent;
+use Laravolt\Platform\Components\TabComponent;
+use Laravolt\Platform\Components\TabContentComponent;
 use Laravolt\Platform\Components\TitlebarComponent;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
@@ -231,6 +233,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             'panel' => PanelComponent::class,
             'label' => LabelComponent::class,
             'link' => LinkComponent::class,
+            'tab' => TabComponent::class,
+            'tab-content' => TabContentComponent::class,
             'titlebar' => TitlebarComponent::class,
         ]);
     }

@@ -1,5 +1,5 @@
 @if($url)
-    <a href="{{ $url }}" class="ui card segments panel x-card">
+    <a href="{{ $url }}" class="ui card segments panel x-card" style="overflow: hidden">
 @else
     <div class="ui card segments panel x-card">
 @endif
