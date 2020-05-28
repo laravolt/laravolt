@@ -1,20 +1,18 @@
 @each $name, $color in $colors {
-  [themed] {
-    &.ui.ui.ui.label {
-      margin-bottom: 2px;
-    }
-    &.ui.ui.ui.label.#{$name} {
-      border-color: transparent;
-      color: rgba($color, 0.9);
-      background-color: rgba($color, 0.1);
-    }
-    &.ui.ui.ui.label.#{$name}.solid {
-      border-color: transparent;
-      color: #FFFFFF;
-      background-color: $color;
-    }
-    &.ui.ui.ui.label.#{$name}.basic {
-      border-color: rgba($color, 0.5);
-    }
+  .ui.ui.ui.label {
+    margin-bottom: 2px;
+  }
+  .ui.ui.ui.label.#{$name} {
+    border-color: transparent;
+    color: rgba($color, 0.9);
+    background-color: rgba($color, 0.1);
+  }
+  .ui.ui.ui.label.#{$name}.solid {
+    border-color: transparent;
+    color: #FFFFFF;
+    background-color: $color;
+  }
+  .ui.ui.ui.label.#{$name}.basic {
+    border-color: rgba($color, 0.5);
   }
 }
