@@ -7,7 +7,7 @@ class Laravolt {
     root.find('.ui.dropdown:not(.simple):not(.tag)').dropdown({
       forceSelection: false,
       selectOnKeydown: false,
-      fullTextSearch: 'exact',
+      fullTextSearch: true,
     });
 
     root.find('.ui.dropdown.tag:not(.simple)').each(function () {
@@ -25,6 +25,7 @@ class Laravolt {
       $(this).dropdown({
         forceSelection: false,
         allowAdditions: true,
+        fullTextSearch: true,
         keys: {
           delimiter: 13
         }
