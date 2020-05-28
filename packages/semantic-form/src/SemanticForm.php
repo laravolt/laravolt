@@ -385,7 +385,10 @@ class SemanticForm
                 $radio->data($dataKey, $dataValue);
             }
 
-            if (($oldValue !== null && $value == $oldValue) || ($oldValue === null && $value == $checked)) {
+            $singleOldValueChecked = $oldValue !== null && $value == $oldValue;
+            $explicitValueChecked = $oldValue === null && $value == $checked;
+            $valueInArray = is_array($oldValue) && in_array($value, $oldValue);
+            if ($singleOldValueChecked || $explicitValueChecked || $valueInArray) {
                 $radio->check();
             }
             $controls[] = $radio;

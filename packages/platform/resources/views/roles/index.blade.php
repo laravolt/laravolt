@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <x-titlebar title="{{ __('laravolt::label.permissions') }}">
+    <x-titlebar title="{{ __('laravolt::label.roles') }}">
         <div class="item">
-            <x-button url="{{ route('epicentrum::roles.create') }}" type="primary" icon="plus" label="{{ __('laravolt::action.add') }}"></x-button>
+            <x-link url="{{ route('epicentrum::roles.create') }}" icon="plus" label="{{ __('laravolt::action.add') }}"></x-link>
         </div>
     </x-titlebar>
 

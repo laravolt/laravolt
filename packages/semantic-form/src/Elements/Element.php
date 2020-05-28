@@ -123,6 +123,15 @@ abstract class Element
         return $this;
     }
 
+    public function addClassIf($condition, $class)
+    {
+        if ($condition) {
+            $this->addClass($class);
+        }
+
+        return $this;
+    }
+
     public function removeClass($class)
     {
         if (!isset($this->attributes['class'])) {

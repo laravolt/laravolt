@@ -6,7 +6,7 @@
     </x-titlebar>
 
     <x-panel :title="__('laravolt::menu.add_user')">
-        {!! form()->open()->post()->action(route('epicentrum::users.store')) !!}
+        {!! form()->open()->post()->action(route('epicentrum::users.store'))->horizontal() !!}
         {!! form()->text('name')->label(trans('laravolt::users.name'))->required() !!}
         {!! form()->text('email')->label(trans('laravolt::users.email'))->required() !!}
         {!! form()->input('password')->appendButton(trans('laravolt::action.generate_password'), 'randomize')->label(trans('laravolt::users.password'))->required() !!}
@@ -22,8 +22,14 @@
 
         <div class="ui divider section"></div>
 
-        {!! form()->checkbox('send_account_information', 1)->label(__('laravolt::users.send_account_information_via_email')) !!}
-        {!! form()->checkbox('must_change_password', 1)->label(__('laravolt::users.change_password_on_first_login')) !!}
+        <div class="field">
+
+            <label for="">Opsi Tambahan</label>
+            <div class="field">
+                {!! form()->checkbox('send_account_information', 1)->label(__('laravolt::users.send_account_information_via_email')) !!}
+                {!! form()->checkbox('must_change_password', 1)->label(__('laravolt::users.change_password_on_first_login')) !!}
+            </div>
+        </div>
 
         <div class="ui divider section"></div>
 

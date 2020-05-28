@@ -2,14 +2,13 @@
 
 @section('page.title', __('laravolt::label.roles'))
 
-@push('page.actions')
-    <a href="{{ route('epicentrum::roles.index') }}" class="ui button">
-        <i class="icon arrow up"></i> Kembali ke Index
-    </a>
-@endpush
-
 @section('content')
-    @component('laravolt::components.panel', ['title' => __('laravolt::label.add_role')])
+
+    <x-titlebar title="{{ __('laravolt::label.roles') }}">
+        <x-backlink url="{{ route('epicentrum::roles.index') }}"></x-backlink>
+    </x-titlebar>
+
+    <x-panel title="{{ __('laravolt::label.add_role') }}">
         {!! SemanticForm::open()->post()->action(route('epicentrum::roles.store')) !!}
         {!! SemanticForm::text('name', old('name'))->label(trans('laravolt::roles.name'))->required() !!}
 
@@ -44,8 +43,9 @@
 
         <div class="ui divider hidden"></div>
 
-        <button class="ui button primary" type="submit" name="submit" value="1">@lang('laravolt::action.save')</button>
-        <a href="{{ route('epicentrum::roles.index') }}" class="ui button">@lang('laravolt::action.cancel')</a>
+        <x-button>@lang('laravolt::action.save')</x-button>
+        <x-link url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-link>
+
         {!! SemanticForm::close() !!}
-    @endcomponent
+    </x-panel>
 @endsection

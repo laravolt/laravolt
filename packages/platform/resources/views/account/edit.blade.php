@@ -2,35 +2,27 @@
 
 @section('content-user-edit')
 
-    {!! form()->bind($user)->open()->put()->action(route('epicentrum::account.update', $user['id'])) !!}
+    {!! form()->bind($user)->open()->put()->action(route('epicentrum::account.update', $user['id']))->horizontal() !!}
 
     {!! form()->text('name')->label(__('laravolt::users.name')) !!}
     {!! form()->text('email')->label(__('laravolt::users.email')) !!}
     {!! form()->dropdown('status', $statuses)->label(__('laravolt::users.status')) !!}
     {!! form()->dropdown('timezone', $timezones)->label(__('laravolt::users.timezone')) !!}
 
-    <div class="ui segments">
-        <div class="ui segment">
-            <div class="grouped fields">
-                <label>@lang('laravolt::users.roles')</label>
-                @foreach($roles as $role)
-                    <div class="field {{ $roleEditable ? '' : 'disabled' }}">
-                        <div class="ui checkbox {{ $multipleRole?'':'radio' }}">
-                            <input type="{{ $multipleRole?'checkbox':'radio' }}" name="roles[]"
-                                   value="{{ $role->id }}" {{ ($user->hasRole($role))?'checked=checked':'' }}>
-                            <label>{{ $role->name }}</label>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        @unless($roleEditable)
-            <div class="ui secondary segment">
+    @if($multipleRole)
+        {!! form()->checkboxGroup('roles', $roles)->label(trans('laravolt::users.roles'))->addClassIf(!$roleEditable, 'disabled') !!}
+    @else
+        {!! form()->radioGroup('roles', $roles)->label(trans('laravolt::users.roles'))->addClassIf(!$roleEditable, 'disabled') !!}
+    @endif
 
-                <span class="ui grey text"><i>Editing role are disabled by system</i></span>
-            </div>
-        @endif
-    </div>
+
+    @unless($roleEditable)
+        <div class="field">
+            <label for="">&nbsp;</label>
+            <div class="ui message m-t-0">Editing role are disabled by system configuration.</div>
+        </div>
+    @endif
+
 
     {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.back'), route('epicentrum::users.index'))) !!}
     {!! form()->close() !!}
@@ -38,8 +30,8 @@
 
     <div class="ui divider section"></div>
 
-    <div class="ui red segment p-1">
-        <h3>@lang('laravolt::users.delete_account')</h3>
+    <div class="ui red segment p-2">
+        <h4 class="ui header">@lang('laravolt::users.delete_account')</h4>
 
         @if($user['id'] == auth()->id())
             <div class="ui message warning">@lang('laravolt::message.cannot_delete_yourself')</div>
@@ -48,8 +40,8 @@
             <p>Menghapus pengguna dan semua data yang berhubungan dengan pengguna ini.
                 <br>
                 Aksi ini tidak bisa dibatalkan.</p>
-            <x-button type="basic red" value="1">
-                @lang('laravolt::action.delete')
+            <x-button class="red" value="1">
+                @lang('laravolt::action.delete') {{ $user->name }}
             </x-button>
             {!! form()->close() !!}
         @endif

@@ -50,12 +50,13 @@
             </tbody>
         </table>
 
-        <button class="ui button primary" type="submit" name="submit" value="1">@lang('laravolt::action.save')</button>
-        <a href="{{ route('epicentrum::roles.index') }}" class="ui button">@lang('laravolt::action.cancel')</a>
+        <x-button>@lang('laravolt::action.save')</x-button>
+        <x-link url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-link>
+
         {!! SemanticForm::close() !!}
     </x-panel>
 
-    <div class="ui divider section hidden"></div>
+    <div class="ui divider hidden"></div>
 
     <x-panel title="{{ __('laravolt::label.delete_role') }}" icon="warning red">
         <p>@lang('laravolt::message.delete_role_intro', ['count' => $role->users->count()])</p>
