@@ -11,7 +11,7 @@
         <div class="text"><div class="ui circular empty label {{ strtolower($menu->color) }}"></div>{{ $menu->color }}</div>
         <div class="menu">
             @foreach($colors as $color)
-                <div class="item" data-value="{{ $color }}"><div class="ui circular empty label {{ strtolower($color) }}"></div> {{ $color }}</div>
+                <div class="item" data-value="{{ $color }}"><div class="ui circular empty label solid {{ strtolower($color) }}"></div> {{ $color }}</div>
             @endforeach
         </div>
     </div>
