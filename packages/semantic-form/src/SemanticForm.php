@@ -174,8 +174,13 @@ class SemanticForm
 
         return (new DatepickerWrapper($input))
             ->format($format)
-            ->prependIcon('calendar alternate outline')
+            ->prependIcon('calendar outline')
             ->addClass('calendar');
+    }
+
+    public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d')
+    {
+        return $this->datepicker($name, $defaultValue, $format)->withTime(true);
     }
 
     public function time($name, $defaultValue = null)
