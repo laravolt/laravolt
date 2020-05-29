@@ -466,9 +466,11 @@ class Laravolt {
   }
 }
 
-$(function () {
+var Turbolinks = require("turbolinks")
+Turbolinks.start();
+
+$(document).on('turbolinks:load',function() {
   Laravolt.init($('body'));
-  $('[data-page-loader]').removeClass('active');
 });
 
 

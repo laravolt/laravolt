@@ -202,6 +202,12 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                     ->data('icon', 'shield')
                     ->data('permission', Permission::MANAGE_PERMISSION)
                     ->active(config('laravolt.epicentrum.route.prefix').'/permissions/*');
+
+                $menu->add(__('Settings'), route('platform::settings'))
+                    ->data('icon', 'sliders horizontal')
+                    ->data('permission', Permission::MANAGE_SETTINGS)
+                    ->active('platform/settings/*');
+
                 $menu->add(__('Kitchen Sink'), route('platform::kitchen-sink.index'))
                     ->data('icon', 'utensils')
                     ->data('permission', Permission::MANAGE_PERMISSION)

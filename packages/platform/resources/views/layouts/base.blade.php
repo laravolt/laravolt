@@ -15,20 +15,22 @@
     @stack('head')
     {!! Assets::group('laravolt')->css() !!}
     {!! Assets::css() !!}
+
+    <script defer src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+
+    <script>
+        $.fn.calendar.settings.text = @json(form_calendar_text());
+    </script>
+
+    <script defer src="{{ mix('js/platform.js', 'laravolt') }}"></script>
+    {!! Assets::group('laravolt')->js() !!}
+
 </head>
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" login-theme="{{ config('laravolt.ui.login_theme') }}" class="{{ $bodyClass ?? '' }}">
 
 @yield('body')
 
-<script type="text/javascript" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
-
-<script>
-    $.fn.calendar.settings.text = @json(form_calendar_text());
-</script>
-
-<script type="text/javascript" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
-{!! Assets::group('laravolt')->js() !!}
 {!! Assets::js() !!}
 @stack('script')
 @stack('body')

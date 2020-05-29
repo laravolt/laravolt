@@ -8,10 +8,6 @@
 
         <main class="content">
 
-            <div class="ui active inverted dimmer" data-page-loader>
-                <div class="ui loader"></div>
-            </div>
-
             <div class="content__inner">
                 <div class="ui container-fluid content__body p-2">
                     @isset($__page)
