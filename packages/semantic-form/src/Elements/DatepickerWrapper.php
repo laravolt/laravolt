@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 class DatepickerWrapper extends InputWrapper
 {
     protected $format;
-    
+
     protected $type = 'date';
 
     public function format(string $format)
