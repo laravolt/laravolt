@@ -61,7 +61,7 @@ abstract class BaseServiceProvider extends ServiceProvider
         if (file_exists($viewFolder)) {
             $this->loadViewsFrom($viewFolder, $this->getIdentifier());
             $this->publishes(
-                [$viewFolder => base_path("resources/views/vendor/{$this->getIdentifier()}}")],
+                [$viewFolder => base_path("resources/views/vendor/{$this->getIdentifier()}")],
                 'views'
             );
         }
