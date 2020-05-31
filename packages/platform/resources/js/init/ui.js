@@ -473,4 +473,9 @@ $(document).on('turbolinks:load',function() {
   Laravolt.init($('body'));
 });
 
+// Keep menu scroll position
+$(document).on('turbolinks:render',function(event) {
+  $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
+});
+
 

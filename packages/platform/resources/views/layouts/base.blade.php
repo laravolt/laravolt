@@ -6,28 +6,26 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="turbolinks-cache-control" content="no-cache">
+
     @stack('meta')
 
-    <link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}"/>
+    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css"data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
     @stack('style')
     @stack('head')
     {!! Assets::group('laravolt')->css() !!}
     {!! Assets::css() !!}
 
-    <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+    <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
         $.fn.calendar.settings.text = @json(form_calendar_text());
     </script>
 
-    <script defer src="{{ mix('js/platform.js', 'laravolt') }}"></script>
+    <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Assets::group('laravolt')->js() !!}
-
-    <script>
-        Turbolinks.start();
-    </script>
 
 </head>
 

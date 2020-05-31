@@ -5444,6 +5444,29 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function () {
+    var context = this,
+        args = arguments;
+
+    var later = function later() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
+;
 $(function () {
   var sidebar = $('[data-role="sidebar"] .sidebar__scroller');
 
@@ -5455,7 +5478,8 @@ $(function () {
       sidebarVisibilitySwitcher.on('click', function () {
         sidebar.parent().toggleClass('show');
       });
-    }
+    } // Hide sidebar ketika user click element di luar sidebar ketika sidebar ditampilkan di perangkat mobile
+
 
     $(document).click(function (event) {
       if ($('nav.sidebar').hasClass('show')) {
@@ -5463,13 +5487,21 @@ $(function () {
           $('nav.sidebar').removeClass('show');
         }
       }
-    });
+    }); // Track scroll position
+
+    $('#sidebar .simplebar-scroll-content').scroll(debounce(function () {
+      $('#sidebar').data('scroll', $('#sidebar .simplebar-scroll-content').scrollTop());
+    }, 500));
   }
 
   $('[data-role="sidebar-accordion"]').accordion({
     selector: {
       trigger: '.title:not(.empty)'
     }
+  });
+  $('#sidebar').on('click', 'a.item, a.title.empty', function (e) {
+    $(e.delegateTarget).find('.selected').removeClass('selected');
+    $(this).addClass('selected');
   });
 });
 
@@ -5931,6 +5963,10 @@ var Turbolinks = __webpack_require__(/*! turbolinks */ "./node_modules/turbolink
 Turbolinks.start();
 $(document).on('turbolinks:load', function () {
   Laravolt.init($('body'));
+}); // Keep menu scroll position
+
+$(document).on('turbolinks:render', function (event) {
+  $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
 });
 
 /***/ }),

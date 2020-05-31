@@ -9,7 +9,7 @@
 
     @yield('page.actions')
 
-    <div class="menu right p-r-1">
+    <div class="menu right p-r-1" id="userbar" data-turbolinks-permanent>
         @auth
             <div class="item">
                 <div class="ui compact menu b-0">
