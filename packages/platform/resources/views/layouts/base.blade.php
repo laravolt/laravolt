@@ -16,7 +16,7 @@
     {!! Assets::group('laravolt')->css() !!}
     {!! Assets::css() !!}
 
-    <script defer src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+    <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
         $.fn.calendar.settings.text = @json(form_calendar_text());
@@ -25,9 +25,13 @@
     <script defer src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Assets::group('laravolt')->js() !!}
 
+    <script>
+        Turbolinks.start();
+    </script>
+
 </head>
 
-<body data-theme="{{ config('laravolt.ui.theme') }}" login-theme="{{ config('laravolt.ui.login_theme') }}" class="{{ $bodyClass ?? '' }}">
+<body id="body" data-theme="{{ config('laravolt.ui.theme') }}" login-theme="{{ config('laravolt.ui.login_theme') }}" class="{{ $bodyClass ?? '' }}">
 
 @yield('body')
 

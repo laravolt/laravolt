@@ -1,24 +1,13 @@
-@extends(
-    config('laravolt.lookup.view.layout'),
-    [
-        '__page' => [
-            'title' => __('Tambah Lookup'),
-            'actions' => [
-                [
-                    'label' => __('Kembali ke Index'),
-                    'class' => '',
-                    'icon' => 'icon arrow left',
-                    'url' => route('lookup::lookup.index', $collection)
-                ],
-            ]
-        ],
-    ]
-)
+@extends(config('laravolt.lookup.view.layout'))
 
 @section('content')
-    @component('laravolt::components.panel', ['title' => $config['label'] ?? $collection])
+    <x-titlebar title="Lookup">
+        <x-backlink url="{{ route('lookup::lookup.index', $collection) }}">Kembali ke Index</x-backlink>
+    </x-titlebar>
+
+    <x-panel title="Tambah {{ $config['label'] ?? $collection }}">
         {!! form()->post(route('lookup::lookup.store', $collection)) !!}
         @include('lookup::lookup._form')
         {!! form()->close() !!}
-    @endcomponent
+    </x-panel>
 @endsection
