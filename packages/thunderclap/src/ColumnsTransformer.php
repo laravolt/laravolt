@@ -76,7 +76,7 @@ TEMPLATE;
             ->map(function ($item) {
                 $template = $this->fieldTypeTransformer->generate($item);
 
-                return sprintf("\t".$template, $item['name'], Str::title($item['name']));
+                return sprintf("\t".$template, $item['name'], Str::humanize($item['name']));
             })
             ->implode("\n");
     }
@@ -99,7 +99,7 @@ TEMPLATE;
         return $columns
             ->keys()
             ->map(function ($item) use ($template) {
-                return sprintf($template, Str::title($item));
+                return sprintf($template, Str::humanize($item));
             })
             ->implode("\n");
     }
@@ -151,7 +151,7 @@ TEMPLATE;
         return $columns
             ->keys()
             ->map(function ($item) use ($template, $objectName) {
-                return sprintf($template, Str::title($item), $objectName, $item);
+                return sprintf($template, Str::humanize($item), $objectName, $item);
             })
             ->implode("\n");
     }

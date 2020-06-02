@@ -8,7 +8,7 @@ use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
 
-class IndexTableView extends TableView
+class :ModuleName:TableView extends TableView
 {
     public function source()
     {

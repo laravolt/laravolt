@@ -6,13 +6,13 @@ use Illuminate\Routing\Controller;
 use :Namespace:\:ModuleName:\Requests\Store;
 use :Namespace:\:ModuleName:\Requests\Update;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
-use :Namespace:\:ModuleName:\Tables\IndexTableView;
+use :Namespace:\:ModuleName:\Tables\:ModuleName:TableView;
 
 class :ModuleName:Controller extends Controller
 {
     public function index()
     {
-        return IndexTableView::make()->view(':moduleName:::index');
+        return :ModuleName:TableView::make()->view(':moduleName:::index');
     }
 
     public function create()

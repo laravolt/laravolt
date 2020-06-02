@@ -139,6 +139,10 @@ class Generator extends Command
                     $newFile = Str::replaceLast('Controller', $moduleName.'Controller', $newFile);
                 }
 
+                if (Str::endsWith($newFile, 'TableView.php')) {
+                    $newFile = Str::replaceLast('TableView', $moduleName.'TableView', $newFile);
+                }
+
                 if (Str::endsWith($newFile, 'config.php')) {
                     $newFile = Str::replaceLast('config', $templates['module-name'], $newFile);
                 }

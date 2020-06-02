@@ -1,0 +1,5 @@
+:FORM_CREATE_FIELDS:
+{!! form()->action([
+    form()->submit('Simpan'),
+    form()->link('Batal', route('modules:::module-name:.index'))
+]) !!}

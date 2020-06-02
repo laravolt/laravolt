@@ -4,9 +4,9 @@
 
 
     <x-titlebar title=":Module Name:">
-        <a href="{{ route('modules:::module-name:.create') }}" class="ui button primary">
-            <i class="icon plus"></i> Tambah
-        </a>
+        <x-item>
+            <x-link label="Tambah" icon="plus" url="{{ route('modules:::module-name:.create') }}"></x-link>
+        </x-item>
     </x-titlebar>
 
     {!! $table !!}

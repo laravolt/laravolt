@@ -23,6 +23,7 @@ use Laravolt\Platform\Components\ButtonComponent;
 use Laravolt\Platform\Components\CardComponent;
 use Laravolt\Platform\Components\CardFooterComponent;
 use Laravolt\Platform\Components\CardsComponent;
+use Laravolt\Platform\Components\ItemComponent;
 use Laravolt\Platform\Components\LabelComponent;
 use Laravolt\Platform\Components\LinkComponent;
 use Laravolt\Platform\Components\PanelComponent;
@@ -236,9 +237,10 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             'cards' => CardsComponent::class,
             'card' => CardComponent::class,
             'card-footer' => CardFooterComponent::class,
-            'panel' => PanelComponent::class,
+            'item' => ItemComponent::class,
             'label' => LabelComponent::class,
             'link' => LinkComponent::class,
+            'panel' => PanelComponent::class,
             'tab' => TabComponent::class,
             'tab-content' => TabContentComponent::class,
             'titlebar' => TitlebarComponent::class,

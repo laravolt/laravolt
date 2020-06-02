@@ -24,7 +24,7 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
     protected function menu()
     {
         app('laravolt.menu.sidebar')->register(function ($menu) {
-            $menu->system
+            $menu->modules
                 ->add(':Module Name:', route('modules:::moduleName:.index'))
                 ->data('icon', 'circle outline')
                 ->data('permission', $this->config['permission'] ?? [])
