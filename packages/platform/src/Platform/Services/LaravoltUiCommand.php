@@ -43,6 +43,9 @@ class LaravoltUiCommand extends UiCommand
             resource_path('views/dashboard.blade.php') => platform_path('stubs/dashboard.blade.php'),
             base_path('routes/web.php') => platform_path('stubs/routes.php'),
             app_path('Http/Controllers/Auth') => null,
+            public_path('js/app.js') => platform_path('stubs/app.js'),
+            public_path('css/app.css') => platform_path('stubs/app.css'),
+            base_path('webpack.mix.js') => platform_path('stubs/webpack.mix.js'),
         ];
 
         foreach ($files as $original => $new) {

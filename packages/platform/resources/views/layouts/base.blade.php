@@ -28,6 +28,7 @@
     <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Assets::group('laravolt')->js() !!}
 
+    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body id="body" data-theme="{{ config('laravolt.ui.theme') }}" login-theme="{{ config('laravolt.ui.login_theme') }}" class="{{ $bodyClass ?? '' }}">
