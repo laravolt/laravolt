@@ -2846,11 +2846,11 @@ table.bt.bt--no-header tbody td::before {
   }
   .ui.form.horizontal > .field > .hint, .ui.form.horizontal .segment > .field > .hint {
     flex-basis: 100%;
-    margin-left: calc(30% + 2em);
+    margin-left: calc(20% + 2em);
   }
   .ui.form.horizontal > .field > label, .ui.form.horizontal .segment > .field > label {
     -webkit-box-flex: 0;
-            flex: 0 0 30%;
+            flex: 0 0 20%;
     text-align: right;
     margin-right: 2em;
     margin-top: 0.5em;
@@ -2861,67 +2861,67 @@ table.bt.bt--no-header tbody td::before {
   }
   .ui.form.horizontal > .field.one.wide > :nth-child(2), .ui.form.horizontal .segment > .field.one.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(6.25% - 30% - 2em);
+            flex: 0 1 calc(6.25% - 20% - 2em);
   }
   .ui.form.horizontal > .field.two.wide > :nth-child(2), .ui.form.horizontal .segment > .field.two.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(12.5% - 30% - 2em);
+            flex: 0 1 calc(12.5% - 20% - 2em);
   }
   .ui.form.horizontal > .field.three.wide > :nth-child(2), .ui.form.horizontal .segment > .field.three.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(18.75% - 30% - 2em);
+            flex: 0 1 calc(18.75% - 20% - 2em);
   }
   .ui.form.horizontal > .field.four.wide > :nth-child(2), .ui.form.horizontal .segment > .field.four.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(25% - 30% - 2em);
+            flex: 0 1 calc(25% - 20% - 2em);
   }
   .ui.form.horizontal > .field.five.wide > :nth-child(2), .ui.form.horizontal .segment > .field.five.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(31.25% - 30% - 2em);
+            flex: 0 1 calc(31.25% - 20% - 2em);
   }
   .ui.form.horizontal > .field.six.wide > :nth-child(2), .ui.form.horizontal .segment > .field.six.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(37.5% - 30% - 2em);
+            flex: 0 1 calc(37.5% - 20% - 2em);
   }
   .ui.form.horizontal > .field.seven.wide > :nth-child(2), .ui.form.horizontal .segment > .field.seven.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(43.75% - 30% - 2em);
+            flex: 0 1 calc(43.75% - 20% - 2em);
   }
   .ui.form.horizontal > .field.eight.wide > :nth-child(2), .ui.form.horizontal .segment > .field.eight.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(50% - 30% - 2em);
+            flex: 0 1 calc(50% - 20% - 2em);
   }
   .ui.form.horizontal > .field.nine.wide > :nth-child(2), .ui.form.horizontal .segment > .field.nine.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(56.25% - 30% - 2em);
+            flex: 0 1 calc(56.25% - 20% - 2em);
   }
   .ui.form.horizontal > .field.ten.wide > :nth-child(2), .ui.form.horizontal .segment > .field.ten.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(62.5% - 30% - 2em);
+            flex: 0 1 calc(62.5% - 20% - 2em);
   }
   .ui.form.horizontal > .field.eleven.wide > :nth-child(2), .ui.form.horizontal .segment > .field.eleven.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(68.75% - 30% - 2em);
+            flex: 0 1 calc(68.75% - 20% - 2em);
   }
   .ui.form.horizontal > .field.twelve.wide > :nth-child(2), .ui.form.horizontal .segment > .field.twelve.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(75% - 30% - 2em);
+            flex: 0 1 calc(75% - 20% - 2em);
   }
   .ui.form.horizontal > .field.thirteen.wide > :nth-child(2), .ui.form.horizontal .segment > .field.thirteen.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(81.25% - 30% - 2em);
+            flex: 0 1 calc(81.25% - 20% - 2em);
   }
   .ui.form.horizontal > .field.fourteen.wide > :nth-child(2), .ui.form.horizontal .segment > .field.fourteen.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(87.5% - 30% - 2em);
+            flex: 0 1 calc(87.5% - 20% - 2em);
   }
   .ui.form.horizontal > .field.fifteen.wide > :nth-child(2), .ui.form.horizontal .segment > .field.fifteen.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(93.25% - 30% - 2em);
+            flex: 0 1 calc(93.25% - 20% - 2em);
   }
   .ui.form.horizontal > .field.sixteen.wide > :nth-child(2), .ui.form.horizontal .segment > .field.sixteen.wide > :nth-child(2) {
     -webkit-box-flex: 0;
-            flex: 0 1 calc(100% - 30% - 2em);
+            flex: 0 1 calc(100% - 20% - 2em);
   }
   .ui.form.horizontal > .grouped.fields, .ui.form.horizontal .segment > .grouped.fields {
     display: -webkit-box;
@@ -2936,21 +2936,21 @@ table.bt.bt--no-header tbody td::before {
   }
   .ui.form.horizontal > .grouped.fields label, .ui.form.horizontal .segment > .grouped.fields label {
     -webkit-box-flex: 0;
-            flex: 0 0 30%;
+            flex: 0 0 20%;
     text-align: right;
     margin-right: 2em;
     margin-bottom: 0;
   }
   .ui.form.horizontal > .grouped.fields > .hint, .ui.form.horizontal .segment > .grouped.fields > .hint {
     flex-basis: 100%;
-    margin-left: calc(30% + 2em);
+    margin-left: calc(20% + 2em);
   }
   .ui.form.horizontal > .required.field > .checkbox:after, .ui.form.horizontal .required.field > label:after, .ui.form.horizontal .segment > .required.field > .checkbox:after, .ui.form.horizontal .segment .required.field > label:after {
     position: absolute;
   }
   .ui.form.horizontal .pushed, .ui.form.horizontal .segment .pushed {
     flex-basis: 100%;
-    margin-left: calc(30% + 2em);
+    margin-left: calc(20% + 2em);
   }
 }
 
