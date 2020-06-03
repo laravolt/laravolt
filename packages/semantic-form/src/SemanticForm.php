@@ -525,9 +525,9 @@ class SemanticForm
         return $input;
     }
 
-    public function input($name, $defaultValue = null)
+    public function input($name, $defaultValue = null, $type = 'text')
     {
-        $text = $this->text($name, $defaultValue);
+        $text = $this->$type($name, $defaultValue);
 
         return new InputWrapper($text);
     }
