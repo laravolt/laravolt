@@ -3262,19 +3262,6 @@ table.bt.bt--no-header tbody td::before {
   font-size: 1rem;
 }
 
-.ui.menu.page-header .ui.header:first-child {
-  margin-top: inherit;
-}
-.ui.menu.page-header .item:first-child {
-  padding-left: 0;
-}
-.ui.menu.page-header .item:last-child {
-  padding-right: 0;
-}
-.ui.menu.page-header .item .button {
-  margin: inherit;
-}
-
 [data-role=quick-menu-searchbox] {
   opacity: 0.5;
 }
@@ -3344,6 +3331,10 @@ table.ui.table.definition caption {
 
 .ui.toast-container.top.center {
   top: 3em;
+}
+
+#titlebar .button {
+  margin-right: 0.5em;
 }
 
 nav.sidebar {

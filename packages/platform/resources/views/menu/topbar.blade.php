@@ -3,11 +3,13 @@
 
     @yield('page.back')
 
-    <div class="item">
-        <h2 class="ui header m-l-1">@yield('page.title')</h2>
-    </div>
+    <div class="menu" id="titlebar">
+        <div class="item">
+            <h2 class="ui header m-l-1">@yield('page.title')</h2>
+        </div>
 
-    @yield('page.actions')
+        @yield('page.actions')
+    </div>
 
     <div class="menu right p-r-1" id="userbar" data-turbolinks-permanent>
         @auth
