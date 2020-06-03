@@ -3824,7 +3824,7 @@ html[data-font-size=big] body {
 [data-theme=cool] .x-card.ui.card .content .ui.label {
   margin-bottom: 2px;
 }
-[data-theme=cool] .x-card.ui.card:hover {
+[data-theme=cool] a.x-card.ui.card:hover {
   box-shadow: 0 1px 3px 0 #b49fe4, 0 0 0 1px #c3b2e9;
 }
 
