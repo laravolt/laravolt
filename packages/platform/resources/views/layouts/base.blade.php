@@ -19,6 +19,7 @@
     {!! Assets::css() !!}
 
     <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+    {!! Assets::js() !!}
 
     <script>
         $.fn.calendar.settings.text = @json(form_calendar_text());
@@ -33,7 +34,6 @@
 
 @yield('body')
 
-{!! Assets::js() !!}
 @stack('script')
 @stack('body')
 </body>
