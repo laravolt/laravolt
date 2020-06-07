@@ -359,64 +359,6 @@ class Laravolt {
       });
     }
 
-    if (jQuery().redactor) {
-      root.find('[data-role="redactor"]').each(function () {
-        $(this).redactor({
-          plugins: [
-            'fontcolor',
-            'alignment',
-            'video',
-            'fullscreen',
-            'table',
-          ],
-          toolbarFixedTopOffset: 50,
-          minHeight: '300px',
-          imageUpload: $(this).data('upload-url'),
-          imageResizable: true,
-          imagePosition: true,
-          imageData: {
-            '_token': $(this).data('token'),
-          },
-          fontcolors: [
-            '#000000',
-            '#111111',
-            '#222222',
-            '#333333',
-            '#666666',
-            '#999999',
-            '#BBBBBB',
-            '#CCCCCC',
-            '#DDDDDD',
-            '#EEEEEE',
-            '#FFFFFF',
-            '#f44336',
-            '#f44336',
-            '#E91E63',
-            '#9C27B0',
-            '#673AB7',
-            '#3F51B5',
-            '#2196F3',
-            '#03A9F4',
-            '#00BCD4',
-            '#009688',
-            '#4CAF50',
-            '#8BC34A',
-            '#CDDC39',
-            '#FFC107',
-            '#FF9800',
-            '#FF5722',
-            '#FF0000',
-            '#b026fe',
-            '#0000ff',
-            '#00FF00',
-            '#fff000',
-            '#ff6000',
-          ],
-        });
-      });
-    }
-
-
     if (typeof google === 'object' && typeof google.maps === 'object') {
       root.find('[data-form-coordinate]').each(function () {
         var input = $(this);
