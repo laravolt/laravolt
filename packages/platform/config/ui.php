@@ -9,7 +9,7 @@ return [
      * Set default theme
      * Available themes: basik, black, blue, classic, fox, grey, pink, red, teal, violet
      * */
-    'theme' => 'fox',
+    'theme' => 'black',
     /*
      * Button color
      * Choose one of the following colors that match closely with the theme
