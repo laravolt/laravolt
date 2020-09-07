@@ -24,7 +24,7 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     public function __construct(string $filename, array $config = [])
     {
         $this->filename = $filename;
-        $this->config   = $config;
+        $this->config = $config;
     }
 
     public function init()
