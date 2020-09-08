@@ -49,6 +49,11 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function response($source, Builder $table)
     {
+        $columns = $table->getColumns();
+        foreach ($columns as $column) {
+            $column->sortable(false);
+        }
+        
         $table->source($this->overriddenSource ?? $this->resolve($source));
 
         return \niklasravnsborg\LaravelPdf\Facades\Pdf
