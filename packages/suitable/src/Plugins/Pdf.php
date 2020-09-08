@@ -52,7 +52,7 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     {
         $columns = $table->getColumns();
         foreach ($columns as $key => $column) {
-            if ($column->id() === 'action' OR $column instanceof RestfulButton) {
+            if ($column->id() === 'action' or $column instanceof RestfulButton) {
                 $columns->forget($key);
                 continue;
             }
