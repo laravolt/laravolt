@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable\Plugins;
 
 use Laravolt\Suitable\Builder;
+use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Concerns\SourceOverridden;
 use Laravolt\Suitable\Toolbars\Action;
 
@@ -50,7 +51,12 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     public function response($source, Builder $table)
     {
         $columns = $table->getColumns();
-        foreach ($columns as $column) {
+        foreach ($columns as $key => $column) {
+            if ($column->id() === 'action' OR $column instanceof RestfulButton) {
+                $columns->forget($key);
+                continue;
+            }
+
             $column->sortable(false);
         }
 
