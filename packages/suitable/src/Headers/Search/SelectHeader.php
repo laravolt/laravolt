@@ -45,6 +45,7 @@ class SelectHeader implements \Laravolt\Suitable\Contracts\Header
             $this->tagAttributes($this->attributes),
             form()->select("filter[$this->name]", $this->options, Arr::get(request('filter'), $this->name))
                 ->attribute('form', 'suitable-form-searchable')
+                ->attribute('onchange', 'this.form.submit()')
         );
     }
 }
