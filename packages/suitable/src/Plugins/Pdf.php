@@ -57,7 +57,7 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
                 continue;
             }
 
-            $column->sortable(false);
+            $column->sortable(false)->searchable(false);
         }
 
         $table->source($this->overriddenSource ?? $this->resolve($source));
