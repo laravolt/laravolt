@@ -23,6 +23,7 @@ class Select extends FormControl
 
         $this->setName($name);
         $this->setOptions($options);
+        $this->addClass('clearable selection');
     }
 
     public function select($option)
