@@ -12,7 +12,7 @@ class Select extends FormControl
     protected $selected;
 
     protected $attributes = [
-        'class' => 'ui dropdown search',
+        'class' => 'ui dropdown search clearable selection',
     ];
 
     public function __construct($name, $options = [])
@@ -23,7 +23,6 @@ class Select extends FormControl
 
         $this->setName($name);
         $this->setOptions($options);
-        $this->addClass('clearable selection');
     }
 
     public function select($option)
