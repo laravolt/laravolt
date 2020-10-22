@@ -247,12 +247,12 @@ class Laravolt {
               .replace('j', j)
               .replace('d', d)
               .replace('n', n)
+              .replace('MMMM', MMMM)
+              .replace('MM', MM)
               .replace('m', m)
               .replace('M', M)
               .replace('Y', Y)
               .replace('DD', DD)
-              .replace('MMMM', MMMM)
-              .replace('MM', MM)
               .replace('YYYY', YYYY)
               .replace('YY', YY);
           }
