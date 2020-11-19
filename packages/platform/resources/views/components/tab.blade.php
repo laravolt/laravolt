@@ -6,9 +6,11 @@
     @stack("tab.contents.$key")
 </div>
 
-@pushonce('script::laravolt.tab')
-    <script>
-        $('.menu .item').tab();
-    </script>
-@endpushonce
+@once
+    @push('script')
+        <script>
+            $('.menu .item').tab();
+        </script>
+    @endpush
+@endonce
 
