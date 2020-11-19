@@ -66,7 +66,7 @@ class EpicentrumServiceProvider extends BaseServiceProvider
         $this->registerBlade();
 
         if ($this->app->bound('laravolt.acl')) {
-            $this->app['laravolt.acl']->registerPermission(Permission::toArray());
+            $this->app['laravolt.acl']->registerPermission(Permission::asArray());
         }
     }
 
