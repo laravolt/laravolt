@@ -62,8 +62,9 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
         $table->source($this->overriddenSource ?? $this->resolve($source));
 
-        return \niklasravnsborg\LaravelPdf\Facades\Pdf
-            ::loadView('suitable::layouts.pdf', ['table' => $table->render('suitable::table')], [], $this->config)
-            ->stream($this->filename);
+        return \PDF::loadView(
+            'suitable::layouts.pdf',
+            ['table' => $table->render('suitable::table')]
+        )->stream($this->filename);
     }
 }
