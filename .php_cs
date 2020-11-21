@@ -130,6 +130,8 @@ $project_path = getcwd();
 $finder = Finder::create()
     ->in([
         $project_path.'/packages/*/src',
+        $project_path.'/packages/*/database/migrations',
+        $project_path.'/packages/platform/stubs',
     ])
     ->name('*.php')
     ->notName('*.blade.php')
