@@ -2,6 +2,7 @@
 
 namespace Laravolt\Platform\Controllers;
 
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -68,6 +69,9 @@ class ResetPasswordController extends Controller
         );
 
         if ($response == Password::PASSWORD_RESET) {
+
+            event(new PasswordReset($user));
+
             if (config('laravolt.auth.password.reset.auto_login')) {
                 auth()->login($user);
             }
