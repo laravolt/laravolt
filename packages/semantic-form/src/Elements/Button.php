@@ -7,7 +7,7 @@ use Illuminate\Support\Stringable;
 class Button extends FormControl
 {
     protected $attributes = [
-        'type'  => 'button',
+        'type' => 'button',
         'class' => 'ui button',
         'themed',
     ];
@@ -33,7 +33,9 @@ class Button extends FormControl
             $element = clone $this;
             $element->label = false;
 
-            return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
+            return $this->decorateField(new Field($this->label, $element))
+                ->addClass($this->fieldWidth)
+                ->render();
         }
 
         $result = '<button';

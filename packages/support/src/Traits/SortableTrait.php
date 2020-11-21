@@ -25,8 +25,8 @@ trait SortableTrait
                 // If there are another models with same position,
                 // increment theirs position by 1
                 if ($model->buildSortableQuery()
-                        ->where($model->getSortableField(), $model->getPosition())
-                        ->count() >= 1) {
+                    ->where($model->getSortableField(), $model->getPosition())
+                    ->count() >= 1) {
                     $model->buildSortableQuery()
                         ->whereKeyNot($model->getKey())
                         ->where('order', '>=', $model->getPosition())

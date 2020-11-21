@@ -65,6 +65,7 @@ $rules = [
     ],
     'no_multiline_whitespace_around_double_arrow' => true,
     'no_unused_imports' => true,
+    'method_chaining_indentation' => true,
     'multiline_whitespace_before_semicolons' => [
         'strategy' => 'no_multi_line'
     ],

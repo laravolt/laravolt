@@ -26,11 +26,10 @@ class ColumnsTransformer
         $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
         return $columns
-                ->keys()
-                ->map(function ($item) {
-                    return '"'.$item.'"';
-                })
-                ->implode(', ').',';
+            ->keys()->map(function ($item) {
+                return '"'.$item.'"';
+            })
+            ->implode(', ').',';
     }
 
     public function toValidationRules()
