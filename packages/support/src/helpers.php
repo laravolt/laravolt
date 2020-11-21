@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('capture_exception')) {
+if (! function_exists('capture_exception')) {
     /**
      * Capture and report exception.
      *
@@ -16,7 +16,7 @@ if (!function_exists('capture_exception')) {
     }
 }
 
-if (!function_exists('capture_exception_and_abort')) {
+if (! function_exists('capture_exception_and_abort')) {
     /**
      * Capture and report exception.
      *
@@ -36,7 +36,7 @@ if (!function_exists('capture_exception_and_abort')) {
     }
 }
 
-if (!function_exists('readable_number')) {
+if (! function_exists('readable_number')) {
     function readable_number(float $value, int $precision = 1): string
     {
         $thresholds = [

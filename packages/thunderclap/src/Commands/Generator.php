@@ -158,7 +158,7 @@ class Generator extends Command
                     $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
                 }
 
-                if (!$newFile) {
+                if (! $newFile) {
                     continue;
                 }
 

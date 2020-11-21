@@ -111,7 +111,7 @@ class SemanticForm
     {
         $text = new Text($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $text->value($value);
         }
 
@@ -128,7 +128,7 @@ class SemanticForm
     {
         $number = new Number($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $number->value($value);
         }
 
@@ -145,7 +145,7 @@ class SemanticForm
     {
         $date = new Date($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $date->value($value);
         }
 
@@ -162,7 +162,7 @@ class SemanticForm
     {
         $input = new Datepicker($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $input->value($value);
         }
 
@@ -187,7 +187,7 @@ class SemanticForm
     {
         $date = new Time($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $date->value($value);
         }
 
@@ -204,7 +204,7 @@ class SemanticForm
     {
         $input = new Datepicker($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $input->value($value);
         }
 
@@ -224,7 +224,7 @@ class SemanticForm
     {
         $email = new Email($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $email->value($value);
         }
 
@@ -242,7 +242,7 @@ class SemanticForm
         $hidden = new Hidden($name);
         $hidden->value($value);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $hidden->value($value);
         }
 
@@ -253,7 +253,7 @@ class SemanticForm
     {
         $textarea = new TextArea($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $textarea->value($value);
         }
 
@@ -272,7 +272,7 @@ class SemanticForm
 
         $redactor = new Redactor($name);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $redactor->value($value);
         }
 
@@ -541,7 +541,7 @@ class SemanticForm
 
     public function hasError($name)
     {
-        if (!isset($this->errorStore)) {
+        if (! isset($this->errorStore)) {
             return false;
         }
 
@@ -550,11 +550,11 @@ class SemanticForm
 
     public function getError($name, $format = null)
     {
-        if (!isset($this->errorStore)) {
+        if (! isset($this->errorStore)) {
             return null;
         }
 
-        if (!$this->hasError($name)) {
+        if (! $this->hasError($name)) {
             return '';
         }
 
@@ -587,7 +587,7 @@ class SemanticForm
 
     protected function hasOldInput()
     {
-        if (!isset($this->oldInput)) {
+        if (! isset($this->oldInput)) {
             return false;
         }
 
@@ -639,7 +639,7 @@ class SemanticForm
 
     public function selectDate($name, $beginYear = 1900, $endYear = null)
     {
-        if (!$endYear) {
+        if (! $endYear) {
             $endYear = date('Y') + 10;
         }
 
@@ -652,7 +652,7 @@ class SemanticForm
 
     public function selectDateTime($name, $beginYear = 1900, $endYear = null, $interval = 30)
     {
-        if (!$endYear) {
+        if (! $endYear) {
             $endYear = date('Y') + 10;
         }
 
@@ -666,7 +666,7 @@ class SemanticForm
 
         $control = new SelectDateTimeWrapper($date, $month, $year, $time);
 
-        if (!is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($name))) {
             $control->value($value);
         }
 

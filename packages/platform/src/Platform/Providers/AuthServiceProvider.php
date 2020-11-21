@@ -69,7 +69,7 @@ class AuthServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        if (!$this->app->routesAreCached()) {
+        if (! $this->app->routesAreCached()) {
             $this->bootRoutes();
         }
 

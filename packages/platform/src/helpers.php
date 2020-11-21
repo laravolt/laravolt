@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('platform_path')) {
+if (! function_exists('platform_path')) {
     /**
      * Get Laravolt platform absolute directory path.
      *
@@ -14,7 +14,7 @@ if (!function_exists('platform_path')) {
     }
 }
 
-if (!function_exists('is_sqlite')) {
+if (! function_exists('is_sqlite')) {
     /**
      * Determine whether current database connection driver was SQLite or not.
      *

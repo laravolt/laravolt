@@ -103,7 +103,7 @@ class Segment
 
     public function isNotEmpty()
     {
-        return !$this->isEmpty();
+        return ! $this->isEmpty();
     }
 
     public function render()

@@ -39,7 +39,7 @@ class Acl
     {
         return DB::transaction(function () use ($refresh) {
             if ($refresh) {
-                if (!is_sqlite()) {
+                if (! is_sqlite()) {
                     DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
                 }
                 app(config('laravolt.epicentrum.models.permission'))->truncate();
@@ -50,7 +50,7 @@ class Acl
                 $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
                 $status = 'No Change';
 
-                if (!$permission->exists) {
+                if (! $permission->exists) {
                     $permission->save();
                     $status = 'New';
                 }

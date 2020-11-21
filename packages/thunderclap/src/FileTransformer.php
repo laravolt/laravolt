@@ -103,7 +103,7 @@ class FileTransformer
      */
     public function makeDir($path)
     {
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             return mkdir($path);
         }
     }

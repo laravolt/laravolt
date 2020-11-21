@@ -65,7 +65,7 @@ class UiServiceProvider extends BaseServiceProvider
             ->bootViews()
             ->buildMenuFromConfig();
 
-        if (!$this->app->runningInConsole() && !class_exists('Laravolt\Ui\ServiceProvider')) {
+        if (! $this->app->runningInConsole() && ! class_exists('Laravolt\Ui\ServiceProvider')) {
             $this->app['router']->pushMiddlewareToGroup('web', FlashMiddleware::class);
         }
     }
@@ -136,7 +136,7 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function registerAssets()
     {
-        if (!$this->app->bound('stolz.assets.group.laravolt')) {
+        if (! $this->app->bound('stolz.assets.group.laravolt')) {
             $this->app->singleton('stolz.assets.group.laravolt', function () {
                 return new Manager([
                     'public_dir' => public_path('laravolt'),

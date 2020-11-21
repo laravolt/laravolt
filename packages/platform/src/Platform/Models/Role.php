@@ -72,14 +72,14 @@ class Role extends Model
     {
         $model = $permission;
 
-        if (!$permission instanceof Model) {
+        if (! $permission instanceof Model) {
             $model = app(config('laravolt.epicentrum.models.permission'))->find($permission);
-            if (!$model) {
+            if (! $model) {
                 $model = app(config('laravolt.epicentrum.models.permission'))->where('name', $permission)->first();
             }
         }
 
-        if (!$model instanceof Model) {
+        if (! $model instanceof Model) {
             return false;
         }
 

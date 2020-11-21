@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $users = $this->repository->paginate($request);
 
-        if (!is_subclass_of(config('laravolt.epicentrum.table_view'), TableView::class)) {
+        if (! is_subclass_of(config('laravolt.epicentrum.table_view'), TableView::class)) {
             throw new \Exception("Table View config must extend Laravolt\Suitable\TableView");
         }
 

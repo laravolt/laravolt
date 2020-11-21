@@ -91,7 +91,7 @@ class Builder
 
     public function search($search = true)
     {
-        if (!is_bool($search) && !is_string($search)) {
+        if (! is_bool($search) && ! is_string($search)) {
             throw new \InvalidArgumentException('Only boolean or string allowed');
         }
         if ($search === true) {
@@ -181,7 +181,7 @@ class Builder
             'hasSearchableColumns' => optional(optional($this->columns)->first)->isSearchable() !== null,
             'showPagination' => $this->showPagination,
             'showHeader' => collect($this->segments)->first->isNotEmpty(),
-            'showFooter' => $this->showPagination && !$this->collection->isEmpty(),
+            'showFooter' => $this->showPagination && ! $this->collection->isEmpty(),
             'paginationView' => $this->paginationView,
             'row' => $this->row,
             'format' => $this->format,
@@ -194,7 +194,7 @@ class Builder
 
     public function summary()
     {
-        if (!$this->collection instanceof LengthAwarePaginator) {
+        if (! $this->collection instanceof LengthAwarePaginator) {
             return false;
         }
 
@@ -216,7 +216,7 @@ class Builder
 
     public function pager()
     {
-        if (!$this->collection instanceof LengthAwarePaginator) {
+        if (! $this->collection instanceof LengthAwarePaginator) {
             return $this->total();
         }
 

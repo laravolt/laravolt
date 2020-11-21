@@ -42,7 +42,7 @@ class Epilog
 
     public function logs($path)
     {
-        if (!$this->filesystem->has($path)) {
+        if (! $this->filesystem->has($path)) {
             return [];
         }
 
@@ -50,7 +50,7 @@ class Epilog
         $levels = config('laravolt.epilog.levels');
         $logs = [];
         foreach ($reader as $line) {
-            if (!empty($line)) {
+            if (! empty($line)) {
                 $line['class'] = $levels[$line['level']]['class'] ?? '';
                 $logs[] = $line;
             }

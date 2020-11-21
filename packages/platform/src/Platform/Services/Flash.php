@@ -160,7 +160,7 @@ class Flash
 
     public function hasMessage()
     {
-        return !empty($this->bags);
+        return ! empty($this->bags);
     }
 
     public function inExceptArray(Request $request)

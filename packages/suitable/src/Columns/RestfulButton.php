@@ -133,7 +133,7 @@ class RestfulButton extends Column implements ColumnInterface
         $actions = collect($actions)
             ->reject(
                 function ($verb, $action) {
-                    return !in_array($action, $this->buttons);
+                    return ! in_array($action, $this->buttons);
                 }
             )->reject(function ($verb, $action) use ($data) {
                 if (Auth::user()->hasPermission('*')) {

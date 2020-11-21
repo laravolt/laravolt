@@ -36,7 +36,7 @@ class SelectDateWrapper extends Wrapper
 
     public function defaultValue($value)
     {
-        if (!$this->hasValue()) {
+        if (! $this->hasValue()) {
             return $this->value($value);
         }
 

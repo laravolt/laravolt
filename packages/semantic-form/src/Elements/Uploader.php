@@ -48,7 +48,7 @@ class Uploader extends Input
     {
         $url = $this->mediaUrl;
 
-        if (!$url) {
+        if (! $url) {
             $url = Route::has($this->fallbackMediaUrl) ?
                 URL::route($this->fallbackMediaUrl, ['handler' => 'fileuploader'])
                 : false;
@@ -72,7 +72,7 @@ class Uploader extends Input
             }
         }
 
-        if (!is_iterable($mediaCollection)) {
+        if (! is_iterable($mediaCollection)) {
             return $this;
         }
 

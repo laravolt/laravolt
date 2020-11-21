@@ -71,7 +71,7 @@ class LookupController extends Controller
     protected function validateCollection(string $collection)
     {
         $key = "laravolt.lookup.collections.$collection";
-        if (!config()->has($key)) {
+        if (! config()->has($key)) {
             abort(404);
         }
 

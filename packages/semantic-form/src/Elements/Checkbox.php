@@ -48,7 +48,7 @@ class Checkbox extends Input
 
     public function defaultToChecked()
     {
-        if (!isset($this->checked)) {
+        if (! isset($this->checked)) {
             $this->check();
         }
 
@@ -57,7 +57,7 @@ class Checkbox extends Input
 
     public function defaultToUnchecked()
     {
-        if (!isset($this->checked)) {
+        if (! isset($this->checked)) {
             $this->uncheck();
         }
 

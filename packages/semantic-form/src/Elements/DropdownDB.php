@@ -32,7 +32,7 @@ class DropdownDB extends Select
             }
         }
 
-        if (!Str::contains($this->query, ['%s', '%1$s'])) {
+        if (! Str::contains($this->query, ['%s', '%1$s'])) {
             $this->populateOptions();
         }
     }
@@ -111,7 +111,7 @@ class DropdownDB extends Select
 
     private function setupDependency()
     {
-        if (!empty($this->dependency)) {
+        if (! empty($this->dependency)) {
             $payload = [
                 'query_key_column' => $this->keyColumn,
                 'query_display_column' => $this->displayColumn,

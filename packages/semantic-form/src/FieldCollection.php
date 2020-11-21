@@ -148,7 +148,7 @@ class FieldCollection extends Collection
                 break;
 
             default:
-                if (!SemanticForm::hasMacro($type)) {
+                if (! SemanticForm::hasMacro($type)) {
                     throw new \InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
                 }
                 $element = form()->{$type}($field->toArray());
@@ -156,7 +156,7 @@ class FieldCollection extends Collection
                 break;
         }
 
-        if (!$macro) {
+        if (! $macro) {
             foreach ($field->only($this->fieldMethod) as $method => $param) {
                 if ($param !== null) {
                     $element->{$method}($param);

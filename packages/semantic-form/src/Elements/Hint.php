@@ -17,7 +17,7 @@ class Hint extends Element
     {
         $this->text = $text;
 
-        if (!$cssClass) {
+        if (! $cssClass) {
             $cssClass = self::$defaultClass;
         }
 

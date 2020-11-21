@@ -72,7 +72,7 @@ trait HasRoleAndPermission
             $role = $this->roles->firstWhere('id', $role);
         }
 
-        if (!$role instanceof Model) {
+        if (! $role instanceof Model) {
             return false;
         }
 
@@ -136,7 +136,7 @@ trait HasRoleAndPermission
             $permission = app(config('laravolt.epicentrum.models.permission'))->find($permission);
         }
 
-        if (!$permission instanceof Model) {
+        if (! $permission instanceof Model) {
             return false;
         }
 

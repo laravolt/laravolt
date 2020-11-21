@@ -58,15 +58,15 @@ class Password
 
     public function changePasswordByToken($user, $password, $token)
     {
-        if (!$user instanceof CanResetPassword) {
+        if (! $user instanceof CanResetPassword) {
             throw new UnexpectedValueException('User must implement CanResetPassword interface.');
         }
 
-        if (!$user instanceof CanChangePassword) {
+        if (! $user instanceof CanChangePassword) {
             throw new UnexpectedValueException('User must implement CanChangePasswordContract interface.');
         }
 
-        if (!$this->token->exists($user, $token)) {
+        if (! $this->token->exists($user, $token)) {
             return \Illuminate\Support\Facades\Password::INVALID_TOKEN;
         }
 

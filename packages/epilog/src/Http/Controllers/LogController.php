@@ -23,7 +23,7 @@ class LogController extends Controller
 
         $files = $this->epilog->files();
 
-        if (!$selectedFile) {
+        if (! $selectedFile) {
             $selectedFile = $files->first()['path'];
         }
 
