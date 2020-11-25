@@ -320,6 +320,7 @@ class Laravolt {
       $(elm).fileuploader({
         theme: 'simple',
         limit: $(elm).data('limit'),
+        fileMaxSize: $(elm).data('file-max-size'),
         extensions: extensions,
         addMore: true,
         upload: upload,

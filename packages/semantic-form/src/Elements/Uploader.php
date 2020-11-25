@@ -12,6 +12,7 @@ class Uploader extends Input
         'type' => 'file',
         'class' => 'uploader',
         'data-limit' => 1,
+        'data-file-max-size' => 1000
     ];
 
     protected $ajax = true;
@@ -23,6 +24,11 @@ class Uploader extends Input
     public function limit(int $limit)
     {
         return $this->data('limit', $limit);
+    }
+
+    public function fileMaxSize(int $size)
+    {
+        return $this->data('file-max-size', $size);
     }
 
     public function extensions(array $extensions)
