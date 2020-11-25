@@ -74,6 +74,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 }
