@@ -9,16 +9,19 @@
     ]
 )
 
-@push('page.actions')
-    {!! form()->open()->route('database-monitor::backup.store') !!}
-    <button type="submit" class="ui button primary">
-        <i class="icon folder plus"></i> Backup Now
-    </button>
-    {!! form()->close() !!}
-
-    @include('database-monitor::backup._restore-button')
-@endpush
-
 @section('content')
-    {!! app('laravolt.file-manager')->openDisk('local-backup-folder')->render() !!}
+    <x-titlebar title="{{ __('Database Backup') }}">
+        <x-item>
+            {!! form()->open()->route('database-monitor::backup.store') !!}
+            <button type="submit" class="ui button primary">
+                <i class="icon folder plus"></i> @lang('Backup Now')
+            </button>
+            {!! form()->close() !!}
+
+            @include('database-monitor::backup._restore-button')
+
+        </x-item>
+    </x-titlebar>
+
+    {!! app('laravolt.file-manager')->openDisk($disk)->render() !!}
 @endsection

@@ -2,7 +2,6 @@
 
 namespace Laravolt\FileManager;
 
-use Hashids\Hashids;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
@@ -25,9 +24,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->bind('laravolt.file-manager', function ($app) {
-            $hashids = new Hashids(config('app.key'));
-
-            return new FileManager($hashids);
+            return new FileManager();
         });
     }
 

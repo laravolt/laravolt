@@ -2,30 +2,30 @@
 
 namespace Laravolt\DatabaseMonitor\Controllers;
 
-use App\Jobs\BackupData;
 use App\Notifications\BackupNotifiable;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
+use Laravolt\DatabaseMonitor\Jobs\BackupDatabaseJob;
 
 class BackupController extends Controller
 {
     public function index()
     {
-        return view('database-monitor::backup.index');
+        $disk = config('laravolt.database-monitor.disk');
+
+        return view('database-monitor::backup.index', compact('disk'));
     }
 
     public function store()
     {
         try {
-            // Artisan::call('backup:run', ['--disable-notifications' => true]);
-            BackupData::dispatch();
+            BackupDatabaseJob::dispatch();
 
             return redirect()
                 ->back()
                 ->withInfo(
                     sprintf(
                         'Proses backup sedang dijalankan. Email notifikasi akan dikirimkan ke %s setelah proses selesai.',
-                        (new BackupNotifiable())->routeNotificationForMail()
+                        auth()->user()->email
                     )
                 );
         } catch (\Exception $e) {

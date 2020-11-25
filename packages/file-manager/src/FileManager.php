@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Hashids\Hashids;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,9 +32,8 @@ class FileManager
     /**
      * FileManager constructor.
      */
-    public function __construct(Hashids $encoder)
+    public function __construct()
     {
-        $this->encoder = $encoder;
         $this->key = config('laravolt.file-manager.query_string');
     }
 
@@ -194,12 +194,12 @@ class FileManager
 
     public function encode($path)
     {
-        return $this->encoder->encodeHex(bin2hex($path));
+        return Crypt::encryptString(bin2hex($path));
     }
 
     public function decode($hash)
     {
-        return hex2bin($this->encoder->decodeHex($hash));
+        return hex2bin(Crypt::decryptString($hash));
     }
 
     public function allFiles(string $path = null)
