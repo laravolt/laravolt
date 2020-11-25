@@ -59,8 +59,10 @@
         ],
         "psr-4": {
             "Laravolt\\Contracts\\": "packages/platform/src/Contracts/",
+            "Laravolt\\DatabaseMonitor\\": "packages/database-monitor/src",
             "Laravolt\\Epicentrum\\": "packages/platform/src/Epicentrum/",
             "Laravolt\\Epilog\\": "packages/epilog/src",
+            "Laravolt\\FileManager\\": "packages/file-manager/src",
             "Laravolt\\Lookup\\": "packages/lookup/src",
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
@@ -82,7 +84,9 @@
         }
     },
     "replace": {
+        "laravolt/database-monitor": "self.version",
         "laravolt/epilog": "self.version",
+        "laravolt/file-manager": "self.version",
         "laravolt/lookup": "self.version",
         "laravolt/mailkeeper": "self.version",
         "laravolt/media": "self.version",
@@ -98,7 +102,9 @@
             "providers": [
                 "Laravolt\\Media\\ServiceProvider",
                 "Laravolt\\Thunderclap\\ServiceProvider",
+                "Laravolt\\DatabaseMonitor\\ServiceProvider",
                 "Laravolt\\Epilog\\ServiceProvider",
+                "Laravolt\\FileManager\\ServiceProvider",
                 "Laravolt\\Menu\\ServiceProvider",
                 "Laravolt\\Support\\SupportServiceProvider",
                 "Laravolt\\Suitable\\ServiceProvider",

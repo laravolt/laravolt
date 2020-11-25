@@ -14,7 +14,7 @@ final class Permission extends Enum
 
     const MANAGE_APPLICATION_LOG = 'laravolt::manage-application-log';
 
-    const MANAGE_DB_BACKUP = 'laravolt::manage-database-backup';
+    const MANAGE_DB = 'laravolt::manage-database';
 
     const MANAGE_MENU = 'laravolt::manage-menu';
 
