@@ -48,8 +48,8 @@ class FileManager
 
     public function openFile($hash)
     {
-        [$disk, $file] = explode("::", $this->decode($hash));
-        $file = config("filesystems.disks.{$disk}.root") . DIRECTORY_SEPARATOR . $file;
+        [$disk, $file] = explode('::', $this->decode($hash));
+        $file = config("filesystems.disks.{$disk}.root").DIRECTORY_SEPARATOR.$file;
 
         if (file_exists($file)) {
             $this->file = $file;
@@ -93,7 +93,7 @@ class FileManager
         $parentPath = dirname($path);
 
         if ($parentPath !== '.') {
-            $parentUrl .= "?{$this->key}=" . $this->encode($parentPath);
+            $parentUrl .= "?{$this->key}=".$this->encode($parentPath);
         }
 
         return view('file-manager::index', compact('files', 'isRoot', 'parentUrl'));
@@ -105,12 +105,12 @@ class FileManager
 
         $fileCount = $key = null;
         if (File::isFile($filePath)) {
-            $key = $this->encode($this->disk . '::' . $file);
+            $key = $this->encode($this->disk.'::'.$file);
             $sizeInByte = File::size($filePath);
             $fileCount = 1;
             $type = 'file';
             $extension = File::extension($filePath);
-            $label = File::name($file) . '.' . $extension;
+            $label = File::name($file).'.'.$extension;
             $permalink = route('file-manager::file.download',
                 [$this->key => $key]);
         } else {
@@ -120,7 +120,7 @@ class FileManager
             $fileCount = $folderInfo[1];
             $extension = $type = 'dir';
             $label = File::basename($file);
-            $permalink = url()->current() . "?{$this->key}=" . $key;
+            $permalink = url()->current()."?{$this->key}=".$key;
         }
 
         return [
@@ -141,7 +141,7 @@ class FileManager
 
     public function filePath($path)
     {
-        return $this->baseDirectory . DIRECTORY_SEPARATOR . $path;
+        return $this->baseDirectory.DIRECTORY_SEPARATOR.$path;
     }
 
     protected function filesizeForHuman($bytes, $decimals = 0)
@@ -149,7 +149,7 @@ class FileManager
         $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $factor = floor((strlen($bytes) - 1) / 3);
 
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).' '.@$size[$factor];
     }
 
     protected function folderInfo($dir)
@@ -158,14 +158,14 @@ class FileManager
         $count = 0;
         $dir_array = scandir($dir);
         foreach ($dir_array as $key => $filename) {
-            if ($filename != ".." && $filename != ".") {
-                if (is_dir($dir . "/" . $filename)) {
-                    $new_foldersize = $this->folderInfo($dir . "/" . $filename);
+            if ($filename != '..' && $filename != '.') {
+                if (is_dir($dir.'/'.$filename)) {
+                    $new_foldersize = $this->folderInfo($dir.'/'.$filename);
                     $count_size = $count_size + $new_foldersize[0];
                     $count = $count + $new_foldersize[1];
                 } else {
-                    if (is_file($dir . "/" . $filename)) {
-                        $count_size = $count_size + filesize($dir . "/" . $filename);
+                    if (is_file($dir.'/'.$filename)) {
+                        $count_size = $count_size + filesize($dir.'/'.$filename);
                         $count++;
                     }
                 }
