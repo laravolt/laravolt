@@ -518,8 +518,6 @@ class SemanticForm
         \Stolz\Assets\Laravel\Facade::group('laravolt')->add('autoNumeric');
 
         $text = $this->text($name, $defaultValue);
-        // $input = $this->input($name, $defaultValue)->prependLabel('Rp');
-        // $input->getPrimaryControl()->data('role', 'rupiah');
         $input = (new Rupiah($text));
 
         return $input;
