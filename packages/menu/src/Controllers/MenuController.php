@@ -30,7 +30,7 @@ class MenuController extends Controller
         $parent = Menu::toFlatSelect();
         $permissions = Permission::pluck('name', 'name');
         $roles = Role::pluck('name', 'id');
-        $colors = Color::toArray();
+        $colors = Color::asSelectArray();
         $menu = new Menu();
 
         return view('menu::menu.create', compact('parent', 'menu', 'permissions', 'roles', 'colors'));
@@ -48,7 +48,7 @@ class MenuController extends Controller
         $parent = Menu::toFlatSelect();
         $permissions = Permission::pluck('name', 'name');
         $roles = Role::pluck('name', 'id');
-        $colors = Color::toArray();
+        $colors = Color::asSelectArray();
 
         return view('menu::menu.edit', compact('parent', 'menu', 'permissions', 'roles', 'colors'));
     }
