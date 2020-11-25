@@ -15,5 +15,5 @@ return [
     'menu' => [
         'enabled' => true,
     ],
-    'disk' => env('DB_BACKUP_DISK', 'local-backup')
+    'disk' => env('DB_BACKUP_DISK', 'local-backup'),
 ];

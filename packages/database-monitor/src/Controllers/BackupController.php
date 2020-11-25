@@ -2,7 +2,6 @@
 
 namespace Laravolt\DatabaseMonitor\Controllers;
 
-use App\Notifications\BackupNotifiable;
 use Illuminate\Routing\Controller;
 use Laravolt\DatabaseMonitor\Jobs\BackupDatabaseJob;
 

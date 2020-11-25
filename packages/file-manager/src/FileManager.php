@@ -3,7 +3,6 @@
 namespace Laravolt\FileManager;
 
 use Carbon\Carbon;
-use Hashids\Hashids;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
