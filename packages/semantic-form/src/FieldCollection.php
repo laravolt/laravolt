@@ -156,15 +156,7 @@ class FieldCollection extends Collection
                 break;
         }
 
-        $validations = $field->get('validations');
-
-        if (
-            $validations
-                ? in_array('required', $validations)
-                : false
-        ) {
-            $field['required'] = true;
-        }
+        $field = $this->htmlValidation($field);
 
         if (! $macro) {
             foreach ($field->only($this->fieldMethod) as $method => $param) {
@@ -222,5 +214,39 @@ class FieldCollection extends Collection
     public function __toString()
     {
         return $this->render();
+    }
+
+    private function htmlValidation($field)
+    {
+        $validations = $field->get('validations');
+
+        if (! is_array($validations)) {
+            $validations = explode('|', $validations);
+        }
+
+        if (in_array('required', $validations)) {
+            $field['required'] = true;
+        }
+
+        unset($validations['required']);
+
+        foreach ($validations as $validation) {
+            $rule = explode(':', $validation);
+
+            if (count($rule)) {
+                $ruleName = $rule[0];
+                $rule = $rule[1];
+
+                if (
+                    $ruleName === 'min' ||
+                    $ruleName === 'max' ||
+                    $ruleName === 'pattern'
+                ) {
+                    $field[$ruleName] = $rule;
+                }
+            }
+        }
+
+        return $field;
     }
 }
