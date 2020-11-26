@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravolt\Support\Traits\AutoFilter;
 use Laravolt\Support\Traits\AutoSort;
 
 class User extends \Laravolt\Platform\Models\User
 {
+    use HasFactory;
     use Notifiable;
     use AutoSort;
     use AutoFilter;
