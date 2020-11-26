@@ -156,6 +156,16 @@ class FieldCollection extends Collection
                 break;
         }
 
+        $validations = $field->get('validations');
+
+        if (
+            $validations
+                ? in_array('required', $validations)
+                : false
+        ) {
+            $field['required'] = true;
+        }
+
         if (! $macro) {
             foreach ($field->only($this->fieldMethod) as $method => $param) {
                 if ($param !== null) {
