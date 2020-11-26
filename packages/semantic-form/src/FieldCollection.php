@@ -234,15 +234,15 @@ class FieldCollection extends Collection
             $rule = explode(':', $validation);
 
             if (count($rule)) {
-                $ruleName = $rule[0];
+                $name = $rule[0];
                 $rule = $rule[1];
 
                 if (
-                    $ruleName === 'min' ||
-                    $ruleName === 'max' ||
-                    $ruleName === 'pattern'
+                    $name === 'min' ||
+                    $name === 'max' ||
+                    $name === 'pattern'
                 ) {
-                    $field[$ruleName] = $rule;
+                    $field[$name] = $rule;
                 }
             }
         }
