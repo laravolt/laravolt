@@ -230,23 +230,6 @@ class FieldCollection extends Collection
 
         unset($validations['required']);
 
-        foreach ($validations as $validation) {
-            $rule = explode(':', $validation);
-
-            if (count($rule)) {
-                $name = $rule[0];
-                $rule = $rule[1];
-
-                if (
-                    $name === 'min' ||
-                    $name === 'max' ||
-                    $name === 'pattern'
-                ) {
-                    $field[$name] = $rule;
-                }
-            }
-        }
-
         return $field;
     }
 }
