@@ -9,27 +9,10 @@ use Illuminate\Session\TokenMismatchException;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array
-     */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
-     */
-    protected $dontFlash = [
-        'password',
-        'password_confirmation',
-    ];
-
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
+    protected function unauthenticated(
+        $request,
+        AuthenticationException $exception
+    ) {
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)
             : redirect()
@@ -40,15 +23,14 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param \Throwable $e
-     *
-     * @throws \Exception
+     * @param  \Throwable  $e
      *
      * @return void
+     * @throws \Throwable
      */
     public function report(\Throwable $e)
     {
-        if (app()->bound('sentry') && $this->shouldReport($e)) {
+        if ($this->shouldReport($e) && app()->bound('sentry')) {
             app('sentry')->captureException($e);
         }
 
@@ -58,12 +40,11 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Throwable                $e
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $e
      *
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Throwable
-     *
-     * @return \Illuminate\Http\Response
      */
     public function render($request, \Throwable $e)
     {
@@ -73,7 +54,8 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof AuthorizationException) {
             return redirect()->back(302, [], route('dashboard'))->withError(
-                __('Anda tidak diizinkan mengakses halaman :url', ['url' => $request->fullUrl()])
+                __('Anda tidak diizinkan mengakses halaman :url',
+                    ['url' => $request->fullUrl()])
             );
         }
 
