@@ -156,6 +156,8 @@ class FieldCollection extends Collection
                 break;
         }
 
+        $field = $this->applyRequiredValidation($field);
+
         if (! $macro) {
             foreach ($field->only($this->fieldMethod) as $method => $param) {
                 if ($param !== null) {
@@ -212,5 +214,20 @@ class FieldCollection extends Collection
     public function __toString()
     {
         return $this->render();
+    }
+
+    private function applyRequiredValidation($field)
+    {
+        $validations = $field->get('validations');
+
+        if (is_string($validations)) {
+            $validations = explode('|', $validations);
+        }
+
+        if (in_array('required', $validations)) {
+            $field['required'] = true;
+        }
+
+        return $field;
     }
 }
