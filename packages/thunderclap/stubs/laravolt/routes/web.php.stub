@@ -2,13 +2,13 @@
 
 use :Namespace:\:ModuleName:\Controllers\:ModuleName:Controller;
 
-$router->group(
+Route::group(
     [
         'prefix' => config('modules.:module-name:.route.prefix'),
         'as' => 'modules::',
         'middleware' => config('modules.:module-name:.route.middleware'),
     ],
-    function ($router) {
-        $router->resource(':module-name:', :ModuleName:Controller::class);
+    function () {
+        Route::resource(':module-name:', :ModuleName:Controller::class);
     }
 );
