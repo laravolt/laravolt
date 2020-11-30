@@ -2,7 +2,6 @@
 
 namespace Laravolt\Epicentrum\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -13,7 +12,7 @@ use Illuminate\Support\Arr;
 class EloquentRepository implements RepositoryInterface
 {
     /**
-     * @var Model
+     * @var \Laravolt\Platform\Models\User
      */
     protected $model;
 
