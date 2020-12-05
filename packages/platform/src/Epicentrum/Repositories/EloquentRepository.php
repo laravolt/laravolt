@@ -26,7 +26,7 @@ class EloquentRepository implements RepositoryInterface
      */
     public function __construct()
     {
-        $this->model = app(config('auth.providers.users.model'))->with('roles');
+        $this->model = app(config('auth.providers.users.model'));
         $this->fieldSearchable = config('laravolt.epicentrum.repository.searchable', []);
     }
 
@@ -37,7 +37,7 @@ class EloquentRepository implements RepositoryInterface
 
     public function paginate(Request $request)
     {
-        $query = $this->model->autoSort()->autoFilter()->latest();
+        $query = $this->model->with('roles')->autoSort()->autoFilter()->latest();
         if (($search = $request->get('search')) !== null) {
             $query->whereLike($this->fieldSearchable, $search);
         }
