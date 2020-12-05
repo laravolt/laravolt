@@ -17,12 +17,9 @@
                             <h3 class="header link">{{ $role['name'] }}</h3>
                         </div>
                         <div class="extra content">
-                            <i class="icon users"></i>{{ $role->users->count() }}
-                            <span class="right floated"><i class="icon options"></i> {{ $role->permissions()->count() }}</span>
+                            <i class="icon users"></i>{{ $role->users_count }}
+                            <span class="right floated"><i class="icon options"></i> {{ $role->permissions_count }}</span>
                         </div>
-                        {{--<div class="extra content">--}}
-                        {{--<a href="{{ route('epicentrum::roles.edit', $role['id']) }}" class="ui button fluid"><i class="icon setting"></i> @lang('laravolt::action.manage')</a>--}}
-                        {{--</div>--}}
                     </a>
                 @endforeach
             </div>
