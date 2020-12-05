@@ -2,6 +2,6 @@
 
 return [
     'features' => [
-        'kitchen_sink' => true
+        'kitchen_sink' => true,
     ],
 ];
