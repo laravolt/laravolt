@@ -44,7 +44,7 @@ class LoginTest extends FeatureTest
              ->type('andi@laravolt.com', 'email')
              ->type('asdf1234', 'password')
              ->press('Login')
-             ->seeRouteIs('auth::login');
+             ->seeRouteIs('auth::login.action');
     }
 
     /**
@@ -56,7 +56,7 @@ class LoginTest extends FeatureTest
             ->type('wrong@email.com', 'email')
             ->type('wrongpassword', 'password')
             ->press('Login')
-            ->seeRouteIs('auth::login');
+            ->seeRouteIs('auth::login.action');
     }
 
     /**
@@ -81,7 +81,7 @@ class LoginTest extends FeatureTest
             ->type('andi@laravolt.com', 'email')
             ->type('asdf1234', 'password')
             ->press('Login')
-            ->seeRouteIs('auth::login');
+            ->seeRouteIs('auth::login.action');
     }
 
     /**
@@ -95,7 +95,7 @@ class LoginTest extends FeatureTest
             ->type('andi@laravolt.com', 'email')
             ->type('asdf1234', 'password')
             ->press('Login')
-            ->seeRouteIs('auth::login');
+            ->seeRouteIs('auth::login.action');
     }
 
     /**
@@ -107,7 +107,7 @@ class LoginTest extends FeatureTest
             ->type('', 'email')
             ->type('', 'password')
             ->press('Login')
-            ->seeRouteIs('auth::login');
+            ->seeRouteIs('auth::login.action');
     }
 
     /**
@@ -115,7 +115,7 @@ class LoginTest extends FeatureTest
      */
     public function it_has_errors_if_failed()
     {
-        $this->post(route('auth::login'))->assertSessionHasErrors();
+        $this->post(route('auth::login.action'))->assertSessionHasErrors();
     }
 
     /**

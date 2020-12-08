@@ -98,6 +98,6 @@ class ResetPasswordTest extends FeatureTest
      */
     public function it_has_errors_if_failed()
     {
-        $this->post(route('auth::reset', 'asdf1234'))->assertSessionHasErrors();
+        $this->post(route('auth::reset.action', 'asdf1234'))->assertSessionHasErrors();
     }
 }
