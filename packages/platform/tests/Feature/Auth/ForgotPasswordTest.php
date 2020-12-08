@@ -30,7 +30,7 @@ class ForgotPasswordTest extends FeatureTest
         $this->visitRoute('auth::forgot')
             ->type('jon@dodo.com', 'email')
             ->press(trans('laravolt::auth.send_reset_password_link'))
-            ->seeRouteIs('auth::forgot');
+            ->seeRouteIs('auth::forgot.action');
     }
 
     /**
@@ -41,7 +41,7 @@ class ForgotPasswordTest extends FeatureTest
         $this->visitRoute('auth::forgot')
              ->type('jon@dodo.com', 'email')
              ->press(trans('laravolt::auth.send_reset_password_link'))
-             ->seeRouteIs('auth::forgot');
+             ->seeRouteIs('auth::forgot.action');
     }
 
     /**
@@ -52,7 +52,7 @@ class ForgotPasswordTest extends FeatureTest
         $this->visitRoute('auth::forgot')
              ->type('invalid-email-format', 'email')
              ->press(trans('laravolt::auth.send_reset_password_link'))
-             ->seeRouteIs('auth::forgot');
+             ->seeRouteIs('auth::forgot.action');
     }
 
     /**
@@ -60,7 +60,7 @@ class ForgotPasswordTest extends FeatureTest
      */
     public function it_has_errors_if_failed()
     {
-        $this->post(route('auth::forgot'))->assertSessionHasErrors();
+        $this->post(route('auth::forgot.action'))->assertSessionHasErrors();
     }
 
     /**

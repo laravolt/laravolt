@@ -79,7 +79,7 @@ class RegisterTest extends FeatureTest
              ->type('asdf1234', 'password')
              ->type('asdf1234', 'password_confirmation')
              ->press(trans('laravolt::auth.register'))
-             ->seeRouteIs('auth::register');
+             ->seeRouteIs('auth::register.action');
 
         Mail::assertSent(AccountActivationMail::class, function ($mail) use ($email) {
             return $mail->hasTo($email);
@@ -104,7 +104,7 @@ class RegisterTest extends FeatureTest
      */
     public function it_has_errors_if_failed()
     {
-        $this->post(route('auth::register'))
+        $this->post(route('auth::register.action'))
             ->assertSessionHasErrors();
     }
 
@@ -119,6 +119,6 @@ class RegisterTest extends FeatureTest
              ->type('asdf1234', 'password')
              ->type('qwer5678', 'password_confirmation')
              ->press(trans('laravolt::auth.register'))
-             ->seeRouteIs('auth::register');
+             ->seeRouteIs('auth::register.action');
     }
 }

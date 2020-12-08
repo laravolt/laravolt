@@ -8,7 +8,7 @@
 
     <h3 class="ui header horizontal divider m-y-2 m-x-1">@lang('laravolt::auth.forgot_password')</h3>
 
-    <form class="ui form" method="POST" action="{{ route('auth::forgot') }}">
+    <form class="ui form" method="POST" action="{{ route('auth::forgot.action') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="ui field right icon input fluid big">
