@@ -99,19 +99,19 @@ class AuthServiceProvider extends BaseServiceProvider
             ],
             function (Router $router) {
                 // Authentication Routes...
-                $router->get('login', 'LoginController@showLoginForm')->name('login');
+                $router->get('login', 'LoginController@showLoginForm')->name('login-form');
                 $router->post('login', 'LoginController@login')->name('login');
                 $router->any('logout', 'LoginController@logout')->name('logout');
 
                 // Password Reset Routes...
-                $router->get('forgot', 'ForgotPasswordController@create')->name('forgot');
+                $router->get('forgot', 'ForgotPasswordController@create')->name('forgot-form');
                 $router->post('forgot', 'ForgotPasswordController@store')->name('forgot');
-                $router->get('reset/{token}', 'ResetPasswordController@showResetForm')->name('reset');
+                $router->get('reset/{token}', 'ResetPasswordController@showResetForm')->name('reset-form');
                 $router->post('reset/{token}', 'ResetPasswordController@reset')->name('reset');
 
                 if (config('laravolt.auth.registration.enable')) {
                     // Registration Routes...
-                    $router->get('register', 'RegisterController@showRegistrationForm')->name('register');
+                    $router->get('register', 'RegisterController@showRegistrationForm')->name('register-form');
                     $router->post('register', 'RegisterController@register')->name('register');
 
                     // Activation Routes...

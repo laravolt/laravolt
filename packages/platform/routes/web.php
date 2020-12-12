@@ -11,7 +11,7 @@ $router->group(
     function (\Illuminate\Routing\Router $router) {
         $router->view('kitchen-sink', 'laravolt::kitchen-sink.index')->name('kitchen-sink.index');
         $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings');
-        $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings');
+        $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings-update');
     }
 );
 
