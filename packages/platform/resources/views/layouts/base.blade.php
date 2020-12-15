@@ -7,6 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <meta name="turbolinks-cache-control" content="no-cache">
+    <meta name="turbolinks-enabled" content="{{ config('laravolt.platform.features.turbolinks') }}">
 
     @stack('meta')
 
