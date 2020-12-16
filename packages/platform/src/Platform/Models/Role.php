@@ -10,6 +10,8 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
+    protected $with = ['permissions'];
+
     public function permissions()
     {
         return $this->belongsToMany(config('laravolt.epicentrum.models.permission'), 'acl_permission_role');
