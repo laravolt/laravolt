@@ -207,12 +207,12 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         if (config('laravolt.platform.features.kitchen_sink')) {
-            app('laravolt.menu.sidebar')->register(function ($menu) {
-                $menu = $menu->system;
-                $menu->add(__('Kitchen Sink'), route('platform::kitchen-sink.index'))
-                    ->data('icon', 'utensils')
+            app('laravolt.menu.sidebar')->register(function ($sidebar) {
+                $group = $sidebar->system;
+                $menu = $group->add(__('Kitchen Sink'))->data('icon', 'utensils');
+                $menu->add(__('UI Component'), route('platform::playground.ui'))
                     ->data('permission', Permission::MANAGE_PERMISSION)
-                    ->active('platform/kitchen-sink');
+                    ->active('platform/playground');
             });
         }
 

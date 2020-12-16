@@ -9,7 +9,9 @@ $router->group(
         'as' => 'platform::',
     ],
     function (\Illuminate\Routing\Router $router) {
-        $router->view('kitchen-sink', 'laravolt::kitchen-sink.index')->name('kitchen-sink.index');
+        $router->group(['prefix' => 'playground'], function(\Illuminate\Routing\Router $router) {
+            $router->view('ui', 'laravolt::playground.ui')->name('playground.ui');
+        });
         $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings');
         $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings.action');
     }

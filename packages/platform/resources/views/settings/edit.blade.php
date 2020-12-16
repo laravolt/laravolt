@@ -1,4 +1,4 @@
-@extends(config('laravolt.platform.layout'))
+@extends('laravolt::layouts.app')
 
 @section('content')
 
