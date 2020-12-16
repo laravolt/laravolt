@@ -16,7 +16,7 @@ class Permission extends Model
         parent::boot();
 
         static::addGlobalScope('orderByName', function (Builder $builder) {
-            $builder->orderBy('name');
+            $builder->orderBy('acl_permissions.name');
         });
     }
 }
