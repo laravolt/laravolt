@@ -16,8 +16,8 @@ return [
         'enabled' => true,
     ],
     'role' => [
-        'multiple' => false,
-        'editable' => false,
+        'multiple' => true,
+        'editable' => true,
     ],
     'repository' => [
         'user' => \Laravolt\Epicentrum\Repositories\EloquentRepository::class,
