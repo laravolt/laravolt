@@ -10,7 +10,7 @@
         "cross-env": "^5.2.1",
         "fomantic-ui": "^2.8.3",
         "jquery": "^3.4.1",
-        "laravel-mix": "^4.1.4",
+        "laravel-mix": "^5.0.9",
         "sass": "^1.24.0",
         "sass-loader": "^7.3.1",
         "simplebar": "3.0.0-beta.0",
@@ -18,5 +18,6 @@
     },
     "dependencies": {
         "turbolinks": "^5.2.0"
-    }
+    },
+    "name": "platform"
 }

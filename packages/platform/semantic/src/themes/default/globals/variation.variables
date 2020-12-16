@@ -207,6 +207,7 @@
 /* Text */
 @variationTextInverted: true;
 @variationTextDisabled: true;
+@variationTextStates: true;
 @variationTextSizes: @variationAllSizes;
 
 
@@ -366,6 +367,7 @@
 @variationAccordionFluid: true;
 
 /* Calendar */
+@variationCalendarInverted: true;
 @variationCalendarDisabled: true;
 
 /* Checkbox */
@@ -412,6 +414,7 @@
 @variationDropdownFluid: true;
 @variationDropdownFloating: true;
 @variationDropdownPointing: true;
+@variationDropdownScrollhint: true;
 @variationDropdownSizes: @variationAllSizes;
 
 /* Embed */
@@ -473,6 +476,9 @@
 @variationSearchLoading: true;
 @variationSearchAligned: true;
 @variationSearchFluid: true;
+@variationSearchShort: true;
+@variationSearchLong: true;
+@variationSearchScrolling: true;
 @variationSearchSizes: @variationAllSizes;
 
 /* Shape */
@@ -529,9 +535,25 @@
 @variationToastVertical: true;
 @variationToastAttached: true;
 
-/* Loading */
+/* Transition */
 @variationTransitionDisabled: true;
 @variationTransitionLoading: true;
+@variationTransitionBrowse: true;
+@variationTransitionDrop: true;
+@variationTransitionFade: true;
+@variationTransitionFlip: true;
+@variationTransitionScale: true;
+@variationTransitionFly: true;
+@variationTransitionSlide: true;
+@variationTransitionSwing: true;
+@variationTransitionZoom: true;
+@variationTransitionFlash: true;
+@variationTransitionShake: true;
+@variationTransitionBounce: true;
+@variationTransitionTada: true;
+@variationTransitionPulse: true;
+@variationTransitionJiggle: true;
+@variationTransitionGlow: true;
 
 /* Emojis */
 @variationEmojiColons: true;
