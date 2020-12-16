@@ -3,6 +3,7 @@
 namespace Laravolt\Platform\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 trait HasRoleAndPermission
 {
@@ -21,7 +22,7 @@ trait HasRoleAndPermission
             return $this;
         }
 
-        if (is_string($role)) {
+        if (is_string($role) && ! Str::isUuid($role)) {
             $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
         }
 
@@ -40,7 +41,7 @@ trait HasRoleAndPermission
             return $this;
         }
 
-        if (is_string($role)) {
+        if (is_string($role) && ! Str::isUuid($role)) {
             $role = app(config('laravolt.epicentrum.models.role'))->where('name', $role)->first();
         }
 
@@ -62,6 +63,10 @@ trait HasRoleAndPermission
             } else {
                 return $match > 0;
             }
+        }
+
+        if (Str::isUuid($role)) {
+            $role = $this->roles->firstWhere('id', $role);
         }
 
         if (is_string($role)) {
@@ -126,6 +131,10 @@ trait HasRoleAndPermission
             } else {
                 return $match > 0;
             }
+        }
+
+        if (Str::isUuid($permission)) {
+            $permission = app(config('laravolt.epicentrum.models.permission'))->find($permission);
         }
 
         if (is_string($permission)) {
