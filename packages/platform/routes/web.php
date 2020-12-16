@@ -9,7 +9,7 @@ $router->group(
         'as' => 'platform::',
     ],
     function (\Illuminate\Routing\Router $router) {
-        $router->group(['prefix' => 'playground'], function(\Illuminate\Routing\Router $router) {
+        $router->group(['prefix' => 'playground'], function (\Illuminate\Routing\Router $router) {
             $router->view('ui', 'laravolt::playground.ui')->name('playground.ui');
         });
         $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings');
