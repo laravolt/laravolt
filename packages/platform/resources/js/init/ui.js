@@ -412,21 +412,21 @@ class Laravolt {
 const TURBOLINK_ENABLED = $('meta[name="turbolinks-enabled"]').attr('content') === '1';
 
 if (TURBOLINK_ENABLED) {
-  var Turbolinks = require("turbolinks")
-  Turbolinks.start();
+    var Turbolinks = require("turbolinks")
+    Turbolinks.start();
 
-  $(document).on('turbolinks:load', function () {
-    Laravolt.init($('body'));
-  });
+    $(document).on('turbolinks:load', function () {
+        Laravolt.init($('body'));
+    });
 
 // Keep menu scroll position
-  $(document).on('turbolinks:render', function (event) {
-    $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
-  });
+    $(document).on('turbolinks:render', function (event) {
+        $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
+    });
 } else {
-  $(document).on('DOMContentLoaded', function () {
-    Laravolt.init($('body'));
-  });
+    $(document).on('DOMContentLoaded', function () {
+        Laravolt.init($('body'));
+    });
 }
 
 
