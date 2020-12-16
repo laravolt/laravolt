@@ -2,14 +2,39 @@
 
 namespace Laravolt\Platform\Concerns;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Laravolt\Platform\Models\Permission;
 
 trait HasRoleAndPermission
 {
     public function roles()
     {
         return $this->belongsToMany(config('laravolt.epicentrum.models.role'), 'acl_role_user', 'user_id', 'role_id');
+    }
+
+    public function permissions(): Collection
+    {
+        return Cache::driver('array')->rememberForever("users.{$this->getKey()}.permissions", function() {
+            /** @var Permission $permissionModel */
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+            return $permissionModel
+                ->newModelQuery()
+                ->selectRaw('acl_permissions.*')
+                ->join('acl_permission_role', 'acl_permissions.id', '=', 'acl_permission_role.permission_id')
+                ->join('acl_role_user', 'acl_role_user.role_id', '=', 'acl_permission_role.role_id')
+                ->join('users', 'users.id', '=', 'acl_role_user.user_id')
+                ->where('users.id', $this->getKey())
+                ->get()->unique();
+        });
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return $this->permissions();
     }
 
     public function assignRole($role): self
@@ -134,25 +159,15 @@ trait HasRoleAndPermission
         }
 
         if (Str::isUuid($permission)) {
-            $permission = app(config('laravolt.epicentrum.models.permission'))->find($permission);
+            return (bool) $this->permissions()->firstWhere('id', $permission);
         }
 
         if (is_string($permission)) {
-            $permission = app(config('laravolt.epicentrum.models.permission'))->where('name', $permission)->first();
+            return (bool) $this->permissions()->firstWhere('name', $permission);
         }
 
         if (is_int($permission)) {
-            $permission = app(config('laravolt.epicentrum.models.permission'))->find($permission);
-        }
-
-        if (! $permission instanceof Model) {
-            return false;
-        }
-
-        foreach ($this->roles as $assignedRole) {
-            if ($assignedRole->hasPermission($permission)) {
-                return true;
-            }
+            return (bool) $this->permissions()->firstWhere('id', $permission);
         }
 
         return false;
