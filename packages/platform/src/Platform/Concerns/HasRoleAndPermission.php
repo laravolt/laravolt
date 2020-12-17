@@ -17,7 +17,7 @@ trait HasRoleAndPermission
 
     public function permissions(): Collection
     {
-        return Cache::driver('array')->rememberForever("users.{$this->getKey()}.permissions", function() {
+        return Cache::driver('array')->rememberForever("users.{$this->getKey()}.permissions", function () {
             /** @var Permission $permissionModel */
             $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
