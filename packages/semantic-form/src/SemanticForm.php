@@ -458,7 +458,7 @@ class SemanticForm
 
     public function dropdownDB($name, $query, $keyColumn = null, $valueColumn = null)
     {
-        $element = (new DropdownDB($name, []))->query($query)->keyColumn($keyColumn)->label($valueColumn);
+        $element = (new DropdownDB($name, []))->query($query)->keyColumn($keyColumn)->displayColumn($valueColumn);
 
         $selected = $this->getValueFor($name);
         $element->select($selected);
