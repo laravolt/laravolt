@@ -25,7 +25,6 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the service provider.
      *
      * @see    http://laravel.com/docs/master/providers#the-register-method
-     *
      * @return void
      */
     public function register()
@@ -56,7 +55,6 @@ class UiServiceProvider extends BaseServiceProvider
      * Application is booting.
      *
      * @see    http://laravel.com/docs/master/providers#the-boot-method
-     *
      * @return void
      */
     public function boot()
@@ -95,7 +93,6 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the package views.
      *
      * @see    http://laravel.com/docs/master/packages#views
-     *
      * @return void
      */
     protected function bootViews()
@@ -129,7 +126,12 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function buildMenuFromConfig()
     {
-        $this->app['laravolt.menu.builder']->loadArray(config('menu') ?? []);
+        $this->app->booted(function () {
+            foreach (new \FilesystemIterator(base_path('menu')) as $file) {
+                $menu = include $file->getPathname();
+                $this->app['laravolt.menu.builder']->loadArray($menu);
+            }
+        });
 
         return $this;
     }
