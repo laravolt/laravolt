@@ -170,6 +170,10 @@ trait HasRoleAndPermission
             return (bool) $this->permissions()->firstWhere('id', $permission);
         }
 
+        if ($permission instanceof Model) {
+            return (bool)$this->permissions()->firstWhere('id', $permission->getKey());
+        }
+
         return false;
     }
 }
