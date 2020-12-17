@@ -129,7 +129,7 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function buildMenuFromConfig()
     {
-        $this->app['laravolt.menu.builder']->loadArray(config('laravolt.menu') ?? []);
+        $this->app['laravolt.menu.builder']->loadArray(config('menu') ?? []);
 
         return $this;
     }
