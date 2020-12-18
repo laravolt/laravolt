@@ -25,7 +25,7 @@
         "illuminate/database": "7.*|8.*",
         "illuminate/support": "7.*|8.*",
         "kalnoy/nestedset": "^5.0",
-        "laravel/ui": "^2.0",
+        "laravel/ui": "^2.0|^3.0",
         "laravolt/avatar": "^4.0",
         "lavary/laravel-menu": "^1.7.7",
         "league/flysystem": "^1.0",
