@@ -34,7 +34,7 @@
         "rap2hpoutre/fast-excel": "^2.2",
         "spatie/eloquent-sortable": "^3.7",
         "spatie/laravel-backup": "^6.12",
-        "spatie/laravel-medialibrary": "^8.0",
+        "spatie/laravel-medialibrary": "^8.0|^9.0",
         "spatie/once": "^2.1",
         "stolz/assets": "~0.1"
     },
