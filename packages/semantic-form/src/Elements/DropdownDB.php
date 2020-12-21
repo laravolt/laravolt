@@ -4,6 +4,7 @@ namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class DropdownDB extends Select
@@ -120,8 +121,9 @@ class DropdownDB extends Select
             $payload = encrypt($payload);
 
             $this->data('depend-on', $this->dependency);
-            $this->data('api', route('laravolt::proxy').'?parent={parent}&payload={payload}');
+            $this->data('api', route('laravolt::proxy'));
             $this->data('payload', $payload);
+            $this->data('token', Session::token());
         }
     }
 }

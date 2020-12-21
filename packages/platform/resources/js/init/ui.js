@@ -76,11 +76,12 @@ class Laravolt {
                         } else {
                             let url = child.data('api');
                             let payload = child.data('payload');
+                            let token = child.data('token');
 
                             child.api({
                                 url: url,
                                 method: 'post',
-                                urlData: {parent: value, payload: payload},
+                                data: {parent: value, payload: payload, _token: token},
                                 on: 'now',
                                 beforeSend: function (settings) {
                                     child.dropdown('clear');
@@ -116,10 +117,12 @@ class Laravolt {
                     } else {
                         let url = child.data('api');
                         let payload = child.data('payload');
+                        let token = child.data('token');
 
                         child.api({
                             url: url,
-                            urlData: {parent: value, payload: payload},
+                            method: 'post',
+                            data: {parent: value, payload: payload, _token: token},
                             on: 'now',
                             beforeSend: function (settings) {
                                 child.dropdown('clear');

@@ -38,6 +38,8 @@
             <h3 class="ui horizontal divider section">Localization</h3>
             {!! form()->dropdown('language', ['Indonesia', 'Malaysia'])->label('Language') !!}
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
+            {!! form()->dropdownDB('user1', 'select id, email as name from users')->label('User 1') !!}
+            {!! form()->dropdownDB('user2', 'select id, email as name from users where id = %s')->label('User 2')->dependency('user1') !!}
             {!! form()->submit('Simpan') !!}
             {!! form()->action(form()->close()) !!}
         </x-panel>
