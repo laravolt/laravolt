@@ -8,6 +8,6 @@
         'middleware' => ['web'],
     ],
     function ($router) {
-        $router->any('proxy', \Laravolt\SemanticForm\DbProxy::class)->name('proxy');
+        $router->post('proxy', \Laravolt\SemanticForm\DbProxy::class)->name('proxy');
     }
 );
