@@ -97,7 +97,7 @@ class DropdownDB extends Select
         $options = [];
 
         if ($this->query) {
-            $options = collect(DB::select($this->query))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
+            $options = collect(DB::select(DB::raw($this->query)))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
                 $item = (array) $item;
 
                 return [Arr::get($item, $keyColumn) => Arr::get($item, $valueColumn)];
