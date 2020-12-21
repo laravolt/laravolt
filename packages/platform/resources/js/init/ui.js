@@ -79,6 +79,7 @@ class Laravolt {
 
                             child.api({
                                 url: url,
+                                method: 'post',
                                 urlData: {parent: value, payload: payload},
                                 on: 'now',
                                 beforeSend: function (settings) {
