@@ -8,6 +8,6 @@
         'middleware' => ['web'],
     ],
     function ($router) {
-        $router->post('proxy', \Laravolt\SemanticForm\DbProxy::class)->name('proxy');
+        $router->post('laravolt/api/dropdown', \Laravolt\SemanticForm\DbProxy::class)->name('api.dropdown');
     }
 );

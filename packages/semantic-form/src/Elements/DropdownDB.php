@@ -121,7 +121,7 @@ class DropdownDB extends Select
             $payload = encrypt($payload);
 
             $this->data('depend-on', $this->dependency);
-            $this->data('api', route('laravolt::proxy'));
+            $this->data('api', route('laravolt::api.dropdown'));
             $this->data('payload', $payload);
             $this->data('token', Session::token());
         }
