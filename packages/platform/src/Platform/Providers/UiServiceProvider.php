@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
@@ -126,15 +127,15 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function buildMenuFromConfig()
     {
-        $this->app->booted(function () {
-            $menuDir = base_path('menu');
-            if (is_dir($menuDir)) {
+        $menuDir = base_path('menu');
+        if (is_dir($menuDir)) {
+            View::composer('laravolt::menu.sidebar', function () use ($menuDir) {
                 foreach (new \FilesystemIterator($menuDir) as $file) {
                     $menu = include $file->getPathname();
                     $this->app['laravolt.menu.builder']->loadArray($menu);
                 }
-            }
-        });
+            });
+        }
 
         return $this;
     }
