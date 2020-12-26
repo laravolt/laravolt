@@ -31,6 +31,8 @@ class Builder
 
     protected $showPagination = false;
 
+    protected $showPerPage = false;
+
     protected $paginationView = 'suitable::pagination.simple';
 
     protected $search;
@@ -78,6 +80,13 @@ class Builder
     public function id($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function showPerPage($show = true)
+    {
+        $this->showPerPage = $show;
 
         return $this;
     }
@@ -183,6 +192,7 @@ class Builder
             'showHeader' => collect($this->segments)->first->isNotEmpty(),
             'showFooter' => $this->showPagination && ! $this->collection->isEmpty(),
             'paginationView' => $this->paginationView,
+            'showPerPage' => $this->showPerPage,
             'row' => $this->row,
             'format' => $this->format,
             'segments' => $this->segments,

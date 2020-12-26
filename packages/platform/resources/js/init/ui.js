@@ -4,10 +4,22 @@ class Laravolt {
 
         root.find('.ui.checkbox').checkbox();
 
-        root.find('.ui.dropdown:not(.simple):not(.tag)').dropdown({
-            forceSelection: false,
-            selectOnKeydown: false,
-            fullTextSearch: true,
+        root.find('.ui.dropdown:not(.simple):not(.tag)').each(function () {
+            let options = {
+                forceSelection: false,
+                selectOnKeydown: false,
+                fullTextSearch: true,
+                action: 'activate'
+            };
+            let elm = $(this);
+            if ($(this).hasClass('link')) {
+                options.onChange = function(value, text, $selectedItem) {
+                    window.location.href = value;
+                };
+            }
+
+            $(this).dropdown(options);
+
         });
 
         root.find('.ui.dropdown.tag:not(.simple)').each(function () {

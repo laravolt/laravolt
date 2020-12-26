@@ -15,6 +15,8 @@ abstract class TableView implements Responsable
 
     protected $title = '';
 
+    protected $showPerPage = false;
+
     protected $html;
 
     protected $decorateCallback;
@@ -32,9 +34,7 @@ abstract class TableView implements Responsable
 
     public static function make($source = null)
     {
-        $table = new static($source);
-
-        return $table;
+        return new static($source);
     }
 
     public function render()
@@ -49,6 +49,8 @@ abstract class TableView implements Responsable
         if (is_string($this->title) && $this->title !== '') {
             $table->title($this->title);
         }
+
+        $table->showPerPage($this->showPerPage);
 
         // Start decorating table
         // 1. HTML decoration
@@ -79,6 +81,8 @@ abstract class TableView implements Responsable
         if (is_string($this->title) && $this->title !== '') {
             $table->title($this->title);
         }
+
+        $table->showPerPage($this->showPerPage);
 
         // Start decorating table
         // 1. HTML decoration
@@ -145,6 +149,13 @@ abstract class TableView implements Responsable
     public function search($search)
     {
         $this->search = $search;
+
+        return $this;
+    }
+
+    public function showPerPage($show = true)
+    {
+        $this->showPerPage = $show;
 
         return $this;
     }

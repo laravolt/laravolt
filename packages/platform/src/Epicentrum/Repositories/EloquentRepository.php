@@ -42,7 +42,7 @@ class EloquentRepository implements RepositoryInterface
             $query->whereLike($this->fieldSearchable, $search);
         }
 
-        return $query->paginate();
+        return $query->paginate(request('per_page'));
     }
 
     /**
