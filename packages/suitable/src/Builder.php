@@ -183,6 +183,14 @@ class Builder
             $this->getDefaultSegment()->right(Search::make($this->search));
         }
 
+
+        $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->collection->perPage()]));
+        sort($perPageOptions);
+
+        if (request('page', 1) > $this->collection->lastPage()) {
+            //TODO auto redirect to last page
+        }
+
         $data = [
             'collection' => $this->collection,
             'id' => $this->id,
@@ -190,9 +198,10 @@ class Builder
             'hasSearchableColumns' => optional(optional($this->columns)->first)->isSearchable() !== null,
             'showPagination' => $this->showPagination,
             'showHeader' => collect($this->segments)->first->isNotEmpty(),
-            'showFooter' => $this->showPagination && ! $this->collection->isEmpty(),
+            'showFooter' => $this->showPagination && ($this->collection->isNotEmpty() || $this->collection->total() > 0),
             'paginationView' => $this->paginationView,
             'showPerPage' => $this->showPerPage,
+            'perPageOptions' => $perPageOptions,
             'row' => $this->row,
             'format' => $this->format,
             'segments' => $this->segments,
