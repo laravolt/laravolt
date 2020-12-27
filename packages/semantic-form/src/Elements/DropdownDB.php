@@ -78,7 +78,7 @@ class DropdownDB extends Select
     public function displayValue()
     {
         if (is_string($this->value)) {
-            if (strlen(trim($this->value)) === 0) {
+            if (trim($this->value) === '') {
                 return null;
             }
 

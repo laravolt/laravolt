@@ -107,6 +107,13 @@ class Laravolt {
                                 },
                                 onComplete: function (response, element, xhr) {
                                     child.parent().removeClass('loading');
+                                },
+                                onError: function (errorMessage, element, xhr) {
+                                    if (typeof xhr.responseJSON.exception !== 'undefined') {
+                                        alert(xhr.responseJSON.exception + ' in ' + xhr.responseJSON.file + ' line ' + xhr.responseJSON.line + ': ' + xhr.responseJSON.message);
+                                    } else {
+                                        alert('Something goes wrong with DropdownDB, but APP_DEBUG off. See application log (usually in storage/logs/laravel.log) for complete error message.');
+                                    }
                                 }
                             });
                         }
