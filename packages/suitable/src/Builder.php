@@ -183,11 +183,10 @@ class Builder
             $this->getDefaultSegment()->right(Search::make($this->search));
         }
 
-        $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->collection->perPage()]));
-        sort($perPageOptions);
-
-        if (request('page', 1) > $this->collection->lastPage()) {
-            //TODO auto redirect to last page
+        $perPageOptions = [];
+        if ($this->showPagination) {
+            $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->collection->perPage()]));
+            sort($perPageOptions);
         }
 
         $data = [
