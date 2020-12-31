@@ -1,6 +1,9 @@
 <?php
 
 /** @var \Illuminate\Routing\Router $router */
+
+use Laravolt\Platform\Controllers\DumpRequestController;
+
 $router = app('router');
 
 $router->group(
@@ -14,6 +17,8 @@ $router->group(
         });
         $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings');
         $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings.action');
+
+        $router->any('dump', DumpRequestController::class)->name('dump');
     }
 );
 

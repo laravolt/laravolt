@@ -19,21 +19,14 @@ class DropdownDB extends Select
 
     protected $dependencyValue;
 
+    protected $ajax = false;
+
     protected function beforeRender()
     {
         $this->setupDependency();
         $this->data('class', $this->getAttribute('class'));
 
-        if ($this->dependency) {
-            $dependencyValue = old($this->dependency) ?? $this->dependencyValue;
-
-            if ($dependencyValue) {
-                $query = sprintf($this->query, $dependencyValue);
-                $this->query($query);
-            }
-        }
-
-        if (! Str::contains($this->query, ['%s', '%1$s'])) {
+        if (! $this->ajax && ! Str::contains($this->query, ['%s', '%1$s'])) {
             $this->populateOptions();
         }
     }
@@ -75,6 +68,13 @@ class DropdownDB extends Select
         return $this;
     }
 
+    public function ajax(bool $ajax = true)
+    {
+        $this->ajax = $ajax;
+
+        return $this;
+    }
+
     public function displayValue()
     {
         if (is_string($this->value)) {
@@ -112,7 +112,7 @@ class DropdownDB extends Select
 
     private function setupDependency()
     {
-        if (! empty($this->dependency)) {
+        if ($this->ajax || ! empty($this->dependency)) {
             $payload = [
                 'query_key_column' => $this->keyColumn,
                 'query_display_column' => $this->displayColumn,
@@ -124,6 +124,19 @@ class DropdownDB extends Select
             $this->data('api', route('laravolt::api.dropdown'));
             $this->data('payload', $payload);
             $this->data('token', Session::token());
+
+            if ($this->ajax) {
+                $this->data('ajax', true);
+            }
+
+            // Jika parent dropdown sudah diketahui valuenya,
+            // maka child dropdown otomatis di-populate juga options-nya
+            $dependencyValue = old($this->dependency) ?? $this->dependencyValue;
+
+            if ($dependencyValue) {
+                $query = sprintf($this->query, $dependencyValue);
+                $this->query($query);
+            }
         }
     }
 }

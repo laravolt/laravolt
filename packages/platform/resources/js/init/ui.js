@@ -18,6 +18,19 @@ class Laravolt {
                 };
             }
 
+            if ($(this).data('ajax')) {
+                let url = elm.data('api');
+                let payload = elm.data('payload');
+                let token = elm.data('token');
+
+                options.minCharacters = 2;
+                options.apiSettings = {
+                    url: elm.data('api') + '?term={query}',
+                    method: 'post',
+                    data: {payload: payload, _token: token},
+                }
+            }
+
             $(this).dropdown(options);
 
         });
@@ -93,7 +106,7 @@ class Laravolt {
                             child.api({
                                 url: url,
                                 method: 'post',
-                                data: {parent: value, payload: payload, _token: token},
+                                data: {term: value, payload: payload, _token: token},
                                 on: 'now',
                                 beforeSend: function (settings) {
                                     child.dropdown('clear');
@@ -141,7 +154,7 @@ class Laravolt {
                         child.api({
                             url: url,
                             method: 'post',
-                            data: {parent: value, payload: payload, _token: token},
+                            data: {term: value, payload: payload, _token: token},
                             on: 'now',
                             beforeSend: function (settings) {
                                 child.dropdown('clear');
