@@ -10,7 +10,8 @@
             {!! form()->rupiah('rupiah1')->label('Rupiah') !!}
             {!! form()->rupiah('rupiah2')->label('Rupiah (dengan koma)') !!}
             {!! form()->coordinate('koordinat')->label('Koordinat') !!}
-            {!! form()->uploader('attachments')->label('File Upload') !!}
+            {!! form()->uploader('avatar')->label('Single File Upload') !!}
+            {!! form()->uploader('attachments')->limit(10)->label('Multiple File Upload') !!}
             {!! form()->close() !!}
         </x-panel>
     </div>
