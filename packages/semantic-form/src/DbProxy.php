@@ -19,7 +19,7 @@ class DbProxy
                 $payload = decrypt(request('payload'));
                 $query = sprintf($payload['query'], trim($term));
                 $results = collect(DB::select($query))->transform(function ($item) use ($payload) {
-                    $item = (array)$item;
+                    $item = (array) $item;
 
                     return [
                         'name' => Arr::get($item, $payload['query_display_column']),
