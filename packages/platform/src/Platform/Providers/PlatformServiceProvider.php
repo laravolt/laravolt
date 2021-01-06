@@ -132,7 +132,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
-        Route::middleware(['web', 'auth'])
+        Route::middleware(['web'])
             ->group(platform_path('routes/web.php'));
 
         return $this;
