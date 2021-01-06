@@ -20,7 +20,7 @@ if (! function_exists('platform_max_file_upload')) {
      *
      * @param  bool  $shorthand
      *
-     * @return integer|string
+     * @return int|string
      */
     function platform_max_file_upload($shorthand = false)
     {
@@ -43,7 +43,7 @@ if (! function_exists('shorthand_to_byte')) {
     function shorthand_to_byte($shorthand): int
     {
         $shorthand = trim($shorthand);
-        $val = (int)$shorthand;
+        $val = (int) $shorthand;
         $last = strtolower($shorthand[strlen($shorthand) - 1]);
 
         switch ($last) {
