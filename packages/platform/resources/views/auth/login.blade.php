@@ -8,8 +8,12 @@
 
         <div class="field">
             <div class="ui field right icon input fluid big">
-                <input type="text" name="{{ config('laravolt.auth.identifier') }}" placeholder="@lang('laravolt::auth.identifier')" value="{{ old(config('laravolt.auth.identifier')) }}">
-                <i class="at icon"></i>
+                @php
+                    $isEmail = config('laravolt.auth.identifier') === 'email';
+                @endphp
+
+                <input type="{{ $isEmail ? 'email' : 'text' }}" name="{{ config('laravolt.auth.identifier') }}" placeholder="@lang('laravolt::auth.identifier')" value="{{ old(config('laravolt.auth.identifier')) }}">
+                <i class="{{ $isEmail ? 'at' : 'id badge' }} icon"></i>
             </div>
         </div>
         <div class="field">

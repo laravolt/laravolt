@@ -8,7 +8,7 @@ return [
     'email'                    => 'Alamat Email',
     'failed'                   => 'Login gagal',
     'forgot_password'          => 'Lupa password',
-    'identifier'               => 'Email',
+    'identifier'               => config('laravolt.auth.identifier') === 'email' ? 'Email' : 'Username',
     'login'                    => 'Login',
     'login_here'               => 'Login disini',
     'login_cas'                => 'Login via CAS',

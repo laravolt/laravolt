@@ -8,7 +8,7 @@ return [
     'email'                    => 'Email',
     'failed'                   => 'Invalid credentials',
     'forgot_password'          => 'Forgot password',
-    'identifier'               => 'Email',
+    'identifier'               => config('laravolt.auth.identifier') === 'email' ? 'Email' : 'Username',
     'login'                    => 'Login',
     'login_here'               => 'Login Here',
     'login_cas'                => 'Login Using CAS',
