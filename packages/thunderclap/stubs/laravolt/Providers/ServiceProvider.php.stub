@@ -42,7 +42,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $parent = app('laravolt.menu');
 
             $parent
-                ->add(':Module Name:', ['route' => ':moduleName:.index'])
+                ->add(':Module Name:', ['route' => ':module-name:.index'])
                 ->data('icon', 'circle outline')
                 ->active(':module-name:/*');
         }
