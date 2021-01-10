@@ -1,20 +1,18 @@
 <?php
 
-namespace :Namespace:\:ModuleName:\Http\Controllers;
+namespace :Namespace:\:ModuleName:\Controllers;
 
 use Illuminate\Routing\Controller;
-use :Namespace:\:ModuleName:\Http\Requests\Store;
-use :Namespace:\:ModuleName:\Http\Requests\Update;
+use :Namespace:\:ModuleName:\Requests\Store;
+use :Namespace:\:ModuleName:\Requests\Update;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
-use :Namespace:\:ModuleName:\TableView\IndexTableView;
+use :Namespace:\:ModuleName:\Tables\:ModuleName:TableView;
 
 class :ModuleName:Controller extends Controller
 {
     public function index()
     {
-        $items = :ModuleName:::autoSort()->latest()->search(request('search'))->paginate();
-
-        return (IndexTableView::make($items))->view(':module-name:::index');
+        return :ModuleName:TableView::make()->view(':module-name:::index');
     }
 
     public function create()
@@ -24,9 +22,9 @@ class :ModuleName:Controller extends Controller
 
     public function store(Store $request)
     {
-        :ModuleName:::create($request->all());
+        :ModuleName:::create($request->validated());
 
-        return redirect()->route(':module-name:.index')->withSuccess(':Module Name: saved');
+        return redirect()->back()->withSuccess(':Module Name: saved');
     }
 
     public function show(:ModuleName: $:moduleName:)
@@ -41,7 +39,7 @@ class :ModuleName:Controller extends Controller
 
     public function update(Update $request, :ModuleName: $:moduleName:)
     {
-        $:moduleName:->update($request->all());
+        $:moduleName:->update($request->validated());
 
         return redirect()->back()->withSuccess(':Module Name: saved');
     }
@@ -50,6 +48,6 @@ class :ModuleName:Controller extends Controller
     {
         $:moduleName:->delete();
 
-        return redirect()->route(':module-name:.index')->withSuccess(':Module Name: deleted');
+        return redirect()->back()->withSuccess(':Module Name: deleted');
     }
 }
