@@ -8,10 +8,10 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="ui field input fluid big">
-            <input type="text" name="name" placeholder="@lang('laravolt::auth.name')" value="{{ old('name') }}">
+            <input type="text" name="name" placeholder="@lang('laravolt::auth.username')" value="{{ old('name') }}">
         </div>
         <div class="ui field input fluid big">
-            <input type="email" name="email" placeholder="@lang('laravolt::auth.identifier')" value="{{ old('email') }}">
+            <input type="email" name="email" placeholder="@lang('laravolt::auth.email')" value="{{ old('email') }}">
         </div>
         <div class="ui field input fluid big">
             <input type="password" name="password" placeholder="@lang('laravolt::auth.password')">

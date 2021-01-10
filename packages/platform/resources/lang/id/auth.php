@@ -25,4 +25,5 @@ return [
     'remember'                 => 'Ingat sesi login saya',
     'reset_password'           => 'Reset Password',
     'send_reset_password_link' => 'Kirim Link Reset Password',
+    'username'                 => 'Username',
 ];

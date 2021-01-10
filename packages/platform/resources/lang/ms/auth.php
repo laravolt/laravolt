@@ -24,4 +24,5 @@ return [
     'remember'                 => 'Ingat saya di komputer ini',
     'reset_password'           => 'Reset Kata Laluan',
     'send_reset_password_link' => 'Kirim Link Reset Kata Laluan',
+    'username'                 => 'Username',
 ];

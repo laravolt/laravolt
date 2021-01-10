@@ -25,4 +25,5 @@ return [
     'remember'                 => 'Stay signed in',
     'reset_password'           => 'Reset Password',
     'send_reset_password_link' => 'Send Reset Password Link',
+    'username'                 => 'Username',
 ];
