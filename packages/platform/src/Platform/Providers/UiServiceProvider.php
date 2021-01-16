@@ -93,7 +93,7 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the package views.
      *
      * @see    http://laravel.com/docs/master/packages#views
-     * @return void
+     * @return self
      */
     protected function bootViews()
     {
@@ -130,7 +130,7 @@ class UiServiceProvider extends BaseServiceProvider
          * @deprecated
          * This is old menu location, will be removed in next release
          */
-        $this->app['laravolt.menu.builder']->loadArray(config('menu'));
+        $this->app['laravolt.menu.builder']->loadArray(config('laravolt.menu'));
 
         $menuDir = base_path('menu');
         if (is_dir($menuDir)) {
