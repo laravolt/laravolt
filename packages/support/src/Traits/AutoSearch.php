@@ -4,10 +4,13 @@ namespace Laravolt\Support\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 
+/** @mixin Builder */
 trait AutoSearch
 {
-    public function scopeAutoSearch(Builder $query, $keyword)
+    public function scopeAutoSearch(Builder $query, ?string $keyword)
     {
-        $query->whereLike($this->searchableColumns, $keyword);
+        if ($keyword !== null) {
+            $query->whereLike($this->searchableColumns, $keyword);
+        }
     }
 }
