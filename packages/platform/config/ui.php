@@ -10,6 +10,7 @@ return [
      * Available themes: basik, black, blue, classic, fox, grey, pink, red, teal, violet
      * */
     'theme' => 'black',
+
     /*
      * Button color
      * Choose one of the following colors that match closely with the theme
@@ -17,7 +18,6 @@ return [
      * */
     'color' => 'blue',
 
-    'animation' => env('APP_URL').'laravolt/lottiefiles/scan.json',
     'system_menu' => [
         'order' => 99,
     ],
