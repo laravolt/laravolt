@@ -33,7 +33,7 @@ class SupportServiceProvider extends ServiceProvider
                 return $this;
             }
 
-            $searchTerm = strtolower($searchTerm);
+            $searchTerm = addslashes(strtolower($searchTerm));
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(

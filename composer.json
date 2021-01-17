@@ -67,7 +67,6 @@
             "Laravolt\\Lookup\\": "packages/lookup/src",
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
-            "Laravolt\\Menu\\": "packages/menu/src",
             "Laravolt\\Platform\\": "packages/platform/src/Platform/",
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
@@ -91,7 +90,6 @@
         "laravolt/lookup": "self.version",
         "laravolt/mailkeeper": "self.version",
         "laravolt/media": "self.version",
-        "laravolt/menu": "self.version",
         "laravolt/platform": "self.version",
         "laravolt/semantic-form": "self.version",
         "laravolt/suitable": "self.version",
@@ -106,7 +104,6 @@
                 "Laravolt\\DatabaseMonitor\\ServiceProvider",
                 "Laravolt\\Epilog\\ServiceProvider",
                 "Laravolt\\FileManager\\ServiceProvider",
-                "Laravolt\\Menu\\ServiceProvider",
                 "Laravolt\\Support\\SupportServiceProvider",
                 "Laravolt\\Suitable\\ServiceProvider",
                 "Laravolt\\Lookup\\ServiceProvider",
@@ -118,7 +115,6 @@
                 "Laravolt\\Mailkeeper\\ServiceProvider"
             ],
             "aliases": {
-                "Menu": "Laravolt\\Menu\\Facade",
                 "Suitable": "Laravolt\\Suitable\\Facade",
                 "Form": "Laravolt\\SemanticForm\\Facade",
                 "SemanticForm": "Laravolt\\SemanticForm\\Facade"
