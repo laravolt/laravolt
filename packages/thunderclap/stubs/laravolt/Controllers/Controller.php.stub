@@ -12,42 +12,42 @@ class :ModuleName:Controller extends Controller
 {
     public function index()
     {
-        return :ModuleName:TableView::make()->view(':moduleName:::index');
+        return :ModuleName:TableView::make()->view(':module-name:::index');
     }
 
     public function create()
     {
-        return view(':moduleName:::create');
+        return view(':module-name:::create');
     }
 
     public function store(Store $request)
     {
         :ModuleName:::create($request->validated());
 
-        return redirect()->back()->withSuccess(':ModuleName: saved');
+        return redirect()->back()->withSuccess(':Module Name: saved');
     }
 
     public function show(:ModuleName: $:moduleName:)
     {
-        return view(':moduleName:::show', compact(':moduleName:'));
+        return view(':module-name:::show', compact(':moduleName:'));
     }
 
     public function edit(:ModuleName: $:moduleName:)
     {
-        return view(':moduleName:::edit', compact(':moduleName:'));
+        return view(':module-name:::edit', compact(':moduleName:'));
     }
 
     public function update(Update $request, :ModuleName: $:moduleName:)
     {
         $:moduleName:->update($request->validated());
 
-        return redirect()->back()->withSuccess(':ModuleName: saved');
+        return redirect()->back()->withSuccess(':Module Name: saved');
     }
 
     public function destroy(:ModuleName: $:moduleName:)
     {
         $:moduleName:->delete();
 
-        return redirect()->back()->withSuccess(':ModuleName: deleted');
+        return redirect()->back()->withSuccess(':Module Name: deleted');
     }
 }

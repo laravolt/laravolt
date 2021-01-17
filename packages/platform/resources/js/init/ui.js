@@ -4,10 +4,35 @@ class Laravolt {
 
         root.find('.ui.checkbox').checkbox();
 
-        root.find('.ui.dropdown:not(.simple):not(.tag)').dropdown({
-            forceSelection: false,
-            selectOnKeydown: false,
-            fullTextSearch: true,
+        root.find('.ui.dropdown:not(.simple):not(.tag)').each(function () {
+            let options = {
+                forceSelection: false,
+                selectOnKeydown: false,
+                fullTextSearch: true,
+                action: 'activate'
+            };
+            let elm = $(this);
+            if ($(this).hasClass('link')) {
+                options.onChange = function(value, text, $selectedItem) {
+                    window.location.href = value;
+                };
+            }
+
+            if ($(this).data('ajax')) {
+                let url = elm.data('api');
+                let payload = elm.data('payload');
+                let token = elm.data('token');
+
+                options.minCharacters = 2;
+                options.apiSettings = {
+                    url: elm.data('api') + '?term={query}',
+                    method: 'post',
+                    data: {payload: payload, _token: token},
+                }
+            }
+
+            $(this).dropdown(options);
+
         });
 
         root.find('.ui.dropdown.tag:not(.simple)').each(function () {
@@ -76,10 +101,12 @@ class Laravolt {
                         } else {
                             let url = child.data('api');
                             let payload = child.data('payload');
+                            let token = child.data('token');
 
                             child.api({
                                 url: url,
-                                urlData: {parent: value, payload: payload},
+                                method: 'post',
+                                data: {term: value, payload: payload, _token: token},
                                 on: 'now',
                                 beforeSend: function (settings) {
                                     child.dropdown('clear');
@@ -93,6 +120,13 @@ class Laravolt {
                                 },
                                 onComplete: function (response, element, xhr) {
                                     child.parent().removeClass('loading');
+                                },
+                                onError: function (errorMessage, element, xhr) {
+                                    if (typeof xhr.responseJSON.exception !== 'undefined') {
+                                        alert(xhr.responseJSON.exception + ' in ' + xhr.responseJSON.file + ' line ' + xhr.responseJSON.line + ': ' + xhr.responseJSON.message);
+                                    } else {
+                                        alert('Something goes wrong with DropdownDB, but APP_DEBUG off. See application log (usually in storage/logs/laravel.log) for complete error message.');
+                                    }
                                 }
                             });
                         }
@@ -115,10 +149,12 @@ class Laravolt {
                     } else {
                         let url = child.data('api');
                         let payload = child.data('payload');
+                        let token = child.data('token');
 
                         child.api({
                             url: url,
-                            urlData: {parent: value, payload: payload},
+                            method: 'post',
+                            data: {term: value, payload: payload, _token: token},
                             on: 'now',
                             beforeSend: function (settings) {
                                 child.dropdown('clear');

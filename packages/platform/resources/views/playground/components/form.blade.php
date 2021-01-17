@@ -1,7 +1,7 @@
 <div class="ui grid">
     <div class="column">
         <x-panel title="Form Fields">
-            {!! form()->open()->multipart() !!}
+            {!! form()->open(route('platform::dump'))->multipart() !!}
             {!! form()->text('text')->label('Text') !!}
             {!! form()->email('email')->label('Email') !!}
             {!! form()->number('number')->label('Number') !!}
@@ -9,8 +9,16 @@
             {!! form()->time('time')->label('Time') !!}
             {!! form()->rupiah('rupiah1')->label('Rupiah') !!}
             {!! form()->rupiah('rupiah2')->label('Rupiah (dengan koma)') !!}
+            {!! form()->uploader('avatar')->label('Single File Upload') !!}
+            {!! form()->uploader('attachments')->limit(10)->label('Multiple File Upload') !!}
+            <h3 class="ui divider horizontal section">Chained Dropdown</h3>
+            <p class="ui message">Silakan pilih salah satu user, makan dropdown kedua akan otomatis ter-update dengan menampilkan daftar user yang berhubungan</p>
+            {!! form()->dropdownDB('user1', 'select id, email as name from users')->label('User') !!}
+            {!! form()->dropdownDB('user2', 'select id, email as name from users where id = %s')->label('Similar User')->dependency('user1') !!}
+            <h3 class="ui divider horizontal section">Dropdown With Remove Content</h3>
+            {!! form()->dropdownDB('user3', 'select id, email as name from users where email like "%%%s%%" limit 10')->prependOption(2, 'Foo')->ajax()->label('Search User') !!}
             {!! form()->coordinate('koordinat')->label('Koordinat') !!}
-            {!! form()->uploader('attachments')->label('File Upload') !!}
+            {!! form()->submit('Submit') !!}
             {!! form()->close() !!}
         </x-panel>
     </div>

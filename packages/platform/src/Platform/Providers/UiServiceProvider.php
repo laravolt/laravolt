@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
@@ -63,7 +64,7 @@ class UiServiceProvider extends BaseServiceProvider
             ->bootViews()
             ->buildMenuFromConfig();
 
-        if (! $this->app->runningInConsole() && ! class_exists('Laravolt\Ui\ServiceProvider')) {
+        if (! $this->app->runningInConsole()) {
             $this->app['router']->pushMiddlewareToGroup('web', FlashMiddleware::class);
         }
     }
@@ -78,7 +79,6 @@ class UiServiceProvider extends BaseServiceProvider
         $this->publishes(
             [
                 platform_path('config/ui.php') => config_path('laravolt/ui.php'),
-                platform_path('config/menu.php') => config_path('laravolt/menu.php'),
             ]
         );
 
@@ -93,7 +93,7 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the package views.
      *
      * @see    http://laravel.com/docs/master/packages#views
-     * @return void
+     * @return self
      */
     protected function bootViews()
     {
@@ -126,12 +126,21 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function buildMenuFromConfig()
     {
-        $this->app->booted(function () {
-            foreach (new \FilesystemIterator(base_path('menu')) as $file) {
-                $menu = include $file->getPathname();
-                $this->app['laravolt.menu.builder']->loadArray($menu);
-            }
-        });
+        /**
+         * @deprecated
+         * This is old menu location, will be removed in next release
+         */
+        $this->app['laravolt.menu.builder']->loadArray(config('laravolt.menu'));
+
+        $menuDir = base_path('menu');
+        if (is_dir($menuDir)) {
+            View::composer('laravolt::menu.sidebar', function () use ($menuDir) {
+                foreach (new \FilesystemIterator($menuDir) as $file) {
+                    $menu = include $file->getPathname();
+                    $this->app['laravolt.menu.builder']->loadArray($menu);
+                }
+            });
+        }
 
         return $this;
     }

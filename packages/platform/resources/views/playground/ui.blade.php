@@ -24,5 +24,7 @@
     @include('laravolt::playground.components.button')
     <div class="ui divider hidden"></div>
     @include('laravolt::playground.components.label')
+    <div class="ui divider hidden"></div>
+    @include('laravolt::playground.components.media')
 
 @endsection

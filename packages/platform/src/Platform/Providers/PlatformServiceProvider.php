@@ -26,6 +26,7 @@ use Laravolt\Platform\Components\CardsComponent;
 use Laravolt\Platform\Components\ItemComponent;
 use Laravolt\Platform\Components\LabelComponent;
 use Laravolt\Platform\Components\LinkComponent;
+use Laravolt\Platform\Components\MediaLibraryComponent;
 use Laravolt\Platform\Components\PanelComponent;
 use Laravolt\Platform\Components\TabComponent;
 use Laravolt\Platform\Components\TabContentComponent;
@@ -131,7 +132,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
-        Route::middleware(['web', 'auth'])
+        Route::middleware(['web'])
             ->group(platform_path('routes/web.php'));
 
         return $this;
@@ -240,6 +241,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
             'item' => ItemComponent::class,
             'label' => LabelComponent::class,
             'link' => LinkComponent::class,
+            'media-library' => MediaLibraryComponent::class,
             'panel' => PanelComponent::class,
             'tab' => TabComponent::class,
             'tab-content' => TabContentComponent::class,

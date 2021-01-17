@@ -12,16 +12,22 @@ class DbProxy
     public function __invoke()
     {
         try {
-            $payload = decrypt(request('payload'));
-            $query = sprintf($payload['query'], trim(request('parent')));
-            $results = collect(DB::select($query))->transform(function ($item) use ($payload) {
-                $item = (array) $item;
+            $results = [];
+            $term = request('term');
 
-                return [
-                    'name' => Arr::get($item, $payload['query_display_column']),
-                    'value' => Arr::get($item, $payload['query_key_column']),
-                ];
-            });
+            if ($term) {
+                $payload = decrypt(request('payload'));
+                $query = sprintf($payload['query'], trim($term));
+                $results = collect(DB::select($query))->transform(function ($item) use ($payload) {
+                    $item = (array) $item;
+
+                    return [
+                        'name' => Arr::get($item, $payload['query_display_column']),
+                        'value' => Arr::get($item, $payload['query_key_column']),
+                    ];
+                });
+            }
+
             $json = ['success' => true, 'results' => $results];
 
             return response()->json($json);

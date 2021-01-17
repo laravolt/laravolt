@@ -5,6 +5,7 @@ namespace Laravolt\Media\Controllers;
 use Illuminate\Routing\Controller;
 use Laravolt\Media\MediaHandler\FileuploaderMediaHandler;
 use Laravolt\Media\MediaHandler\RedactorMediaHandler;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaController extends Controller
 {
@@ -21,5 +22,12 @@ class MediaController extends Controller
         }
 
         return $handler();
+    }
+
+    public function destroy($id)
+    {
+        Media::findOrfail($id)->delete();
+
+        return redirect()->back()->withSuccess(__('Media deleted'));
     }
 }

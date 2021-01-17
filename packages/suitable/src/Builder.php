@@ -31,6 +31,8 @@ class Builder
 
     protected $showPagination = false;
 
+    protected $showPerPage = false;
+
     protected $paginationView = 'suitable::pagination.simple';
 
     protected $search;
@@ -78,6 +80,13 @@ class Builder
     public function id($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function showPerPage($show = true)
+    {
+        $this->showPerPage = $show;
 
         return $this;
     }
@@ -174,6 +183,12 @@ class Builder
             $this->getDefaultSegment()->right(Search::make($this->search));
         }
 
+        $perPageOptions = [];
+        if ($this->showPagination) {
+            $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->collection->perPage()]));
+            sort($perPageOptions);
+        }
+
         $data = [
             'collection' => $this->collection,
             'id' => $this->id,
@@ -181,8 +196,10 @@ class Builder
             'hasSearchableColumns' => optional(optional($this->columns)->first)->isSearchable() !== null,
             'showPagination' => $this->showPagination,
             'showHeader' => collect($this->segments)->first->isNotEmpty(),
-            'showFooter' => $this->showPagination && ! $this->collection->isEmpty(),
+            'showFooter' => $this->showPagination && ($this->collection->isNotEmpty() || $this->collection->total() > 0),
             'paginationView' => $this->paginationView,
+            'showPerPage' => $this->showPerPage,
+            'perPageOptions' => $perPageOptions,
             'row' => $this->row,
             'format' => $this->format,
             'segments' => $this->segments,

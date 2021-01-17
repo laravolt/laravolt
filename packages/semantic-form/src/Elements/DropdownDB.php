@@ -4,6 +4,7 @@ namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class DropdownDB extends Select
@@ -18,21 +19,14 @@ class DropdownDB extends Select
 
     protected $dependencyValue;
 
+    protected $ajax = false;
+
     protected function beforeRender()
     {
         $this->setupDependency();
         $this->data('class', $this->getAttribute('class'));
 
-        if ($this->dependency) {
-            $dependencyValue = old($this->dependency) ?? $this->dependencyValue;
-
-            if ($dependencyValue) {
-                $query = sprintf($this->query, $dependencyValue);
-                $this->query($query);
-            }
-        }
-
-        if (! Str::contains($this->query, ['%s', '%1$s'])) {
+        if (! $this->ajax && ! Str::contains($this->query, ['%s', '%1$s'])) {
             $this->populateOptions();
         }
     }
@@ -74,10 +68,17 @@ class DropdownDB extends Select
         return $this;
     }
 
+    public function ajax(bool $ajax = true)
+    {
+        $this->ajax = $ajax;
+
+        return $this;
+    }
+
     public function displayValue()
     {
         if (is_string($this->value)) {
-            if (strlen(trim($this->value)) === 0) {
+            if (trim($this->value) === '') {
                 return null;
             }
 
@@ -97,7 +98,7 @@ class DropdownDB extends Select
         $options = [];
 
         if ($this->query) {
-            $options = collect(DB::select($this->query))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
+            $options = collect(DB::select(DB::raw($this->query)))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
                 $item = (array) $item;
 
                 return [Arr::get($item, $keyColumn) => Arr::get($item, $valueColumn)];
@@ -111,7 +112,7 @@ class DropdownDB extends Select
 
     private function setupDependency()
     {
-        if (! empty($this->dependency)) {
+        if ($this->ajax || ! empty($this->dependency)) {
             $payload = [
                 'query_key_column' => $this->keyColumn,
                 'query_display_column' => $this->displayColumn,
@@ -120,8 +121,22 @@ class DropdownDB extends Select
             $payload = encrypt($payload);
 
             $this->data('depend-on', $this->dependency);
-            $this->data('api', route('laravolt::proxy').'?parent={parent}&payload={payload}');
+            $this->data('api', route('laravolt::api.dropdown'));
             $this->data('payload', $payload);
+            $this->data('token', Session::token());
+
+            if ($this->ajax) {
+                $this->data('ajax', true);
+            }
+
+            // Jika parent dropdown sudah diketahui valuenya,
+            // maka child dropdown otomatis di-populate juga options-nya
+            $dependencyValue = old($this->dependency) ?? $this->dependencyValue;
+
+            if ($dependencyValue) {
+                $query = sprintf($this->query, $dependencyValue);
+                $this->query($query);
+            }
         }
     }
 }
