@@ -12,12 +12,12 @@ class :ModuleName:Controller extends Controller
 {
     public function index()
     {
-        return :ModuleName:TableView::make()->view(':moduleName:::index');
+        return :ModuleName:TableView::make()->view(':module-name:::index');
     }
 
     public function create()
     {
-        return view(':moduleName:::create');
+        return view(':module-name:::create');
     }
 
     public function store(Store $request)
@@ -29,12 +29,12 @@ class :ModuleName:Controller extends Controller
 
     public function show(:ModuleName: $:moduleName:)
     {
-        return view(':moduleName:::show', compact(':moduleName:'));
+        return view(':module-name:::show', compact(':moduleName:'));
     }
 
     public function edit(:ModuleName: $:moduleName:)
     {
-        return view(':moduleName:::edit', compact(':moduleName:'));
+        return view(':module-name:::edit', compact(':moduleName:'));
     }
 
     public function update(Update $request, :ModuleName: $:moduleName:)

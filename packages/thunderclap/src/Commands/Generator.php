@@ -100,7 +100,7 @@ class Generator extends Command
             ':module_name:' => Str::snake(Str::singular($table)),
             ':module-name:' => $templates['module-name'],
             ':module name:' => str_replace('_', ' ', strtolower(Str::singular($table))),
-            ':Module Name:' => $moduleName,
+            ':Module Name:' => Str::singular(str_replace('_', ' ', Str::title($table))),
             ':moduleName:' => lcfirst($moduleName),
             ':ModuleName:' => $moduleName,
             ':SEARCHABLE_COLUMNS:' => $this->transformer->toSearchableColumns(),
