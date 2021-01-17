@@ -24,7 +24,7 @@ class :ModuleName:Controller extends Controller
     {
         :ModuleName:::create($request->validated());
 
-        return redirect()->back()->withSuccess(':ModuleName: saved');
+        return redirect()->back()->withSuccess(':Module Name: saved');
     }
 
     public function show(:ModuleName: $:moduleName:)
@@ -41,13 +41,13 @@ class :ModuleName:Controller extends Controller
     {
         $:moduleName:->update($request->validated());
 
-        return redirect()->back()->withSuccess(':ModuleName: saved');
+        return redirect()->back()->withSuccess(':Module Name: saved');
     }
 
     public function destroy(:ModuleName: $:moduleName:)
     {
         $:moduleName:->delete();
 
-        return redirect()->back()->withSuccess(':ModuleName: deleted');
+        return redirect()->back()->withSuccess(':Module Name: deleted');
     }
 }
