@@ -2,7 +2,6 @@
 
 namespace Laravolt\SemanticForm\Elements;
 
-use Illuminate\Support\Stringable;
 use Laravolt\SemanticForm\Traits\Themeable;
 
 class Button extends FormControl

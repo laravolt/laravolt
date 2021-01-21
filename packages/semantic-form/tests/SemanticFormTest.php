@@ -7,7 +7,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
     {
-        $config  = [
+        $config = [
             'color' => 'blue',
             'colors' => [
                 'red' => '#DB2828',
