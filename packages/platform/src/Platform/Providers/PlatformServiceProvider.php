@@ -88,7 +88,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootConfig(): self
     {
-        $config = ['auth', 'epicentrum', 'menu', 'password', 'platform', 'ui'];
+        $config = ['asset', 'auth', 'epicentrum', 'password', 'platform', 'ui'];
         $publishes = [];
         foreach ($config as $c) {
             $this->mergeConfigFrom(platform_path("config/$c.php"), "laravolt.$c");

@@ -127,12 +127,6 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function buildMenuFromConfig()
     {
-        /**
-         * @deprecated
-         * This is old menu location, will be removed in next release
-         */
-        $this->app['laravolt.menu.builder']->loadArray(config('laravolt.menu'));
-
         $menuDir = base_path('menu');
         if (is_dir($menuDir)) {
             View::composer('laravolt::menu.sidebar', function () use ($menuDir) {
