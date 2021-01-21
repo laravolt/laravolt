@@ -105,7 +105,7 @@ class AssetManager
      *
      * @return self
      */
-    public function add(string|array $asset)
+    public function add(string | array $asset)
     {
         // More than one asset
         if (is_array($asset)) {
@@ -205,7 +205,7 @@ class AssetManager
         }
 
         // Build attributes
-        $attributes = (array)$attributes;
+        $attributes = (array) $attributes;
         unset($attributes['href']);
 
         if (! array_key_exists('type', $attributes)) {
@@ -244,7 +244,7 @@ class AssetManager
         }
 
         // Build attributes
-        $attributes = (array)$attributes;
+        $attributes = (array) $attributes;
         unset($attributes['src']);
 
         if (! array_key_exists('type', $attributes)) {
@@ -319,7 +319,7 @@ class AssetManager
 
     /**
      * Determine whether a link is local or remote.
-     * Undestands both "http://" and "https://" as well as protocol agnostic links "//"
+     * Undestands both "http://" and "https://" as well as protocol agnostic links "//".
      *
      * @param  string  $link
      *
@@ -327,8 +327,7 @@ class AssetManager
      */
     protected function isRemoteLink($link)
     {
-        return (
-            str_starts_with($link, 'http://') || str_starts_with($link, 'https://') || str_starts_with($link, '//')
-        );
+        return
+            str_starts_with($link, 'http://') || str_starts_with($link, 'https://') || str_starts_with($link, '//');
     }
 }
