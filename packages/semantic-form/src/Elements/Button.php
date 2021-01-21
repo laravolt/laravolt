@@ -3,9 +3,12 @@
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Stringable;
+use Laravolt\SemanticForm\Traits\Themeable;
 
 class Button extends FormControl
 {
+    use Themeable;
+
     protected $attributes = [
         'type' => 'button',
         'class' => 'ui button',
@@ -22,12 +25,7 @@ class Button extends FormControl
 
     public function render()
     {
-        $colors = collect(config('laravolt.ui.colors'))->keys();
-        $types = (new Stringable($this->attributes['class']))->explode(' ');
-
-        if ($types->intersect($colors)->isEmpty()) {
-            $this->addClass(config('laravolt.ui.color'));
-        }
+        $this->applyTheme();
 
         if ($this->label) {
             $element = clone $this;

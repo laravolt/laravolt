@@ -26,7 +26,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('semantic-form', function ($app) {
-            $builder = new SemanticForm();
+            $builder = new SemanticForm($app['config']->get('laravolt.ui'));
             $builder->setErrorStore(new IlluminateErrorStore($app['session.store']));
             $builder->setOldInputProvider(new IlluminateOldInputProvider($app['session.store']));
 

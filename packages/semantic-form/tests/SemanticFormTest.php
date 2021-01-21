@@ -7,7 +7,26 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
     {
-        $this->form = new SemanticForm();
+        $config  = [
+            'color' => 'blue',
+            'colors' => [
+                'red' => '#DB2828',
+                'orange' => '#F2711C',
+                'yellow' => '#FBBD08',
+                'olive' => '#B5CC18',
+                'green' => '#21BA45',
+                'teal' => '#00B5AD',
+                'blue' => '#0052CC',
+                'violet' => '#6435C9',
+                'purple' => '#A333C8',
+                'pink' => '#E03997',
+                'brown' => '#A5673F',
+                'grey' => '#767676',
+                'black' => '#1B1C1D',
+            ],
+        ];
+
+        $this->form = new SemanticForm($config);
     }
 
     public function tearDown(): void
@@ -389,7 +408,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testSubmit()
     {
-        $expected = '<button type="submit" class="ui button primary" name="submit">Sign In</button>';
+        $expected = '<button type="submit" class="ui button primary" themed name="submit">Sign In</button>';
         $result = (string) $this->form->submit('Sign In', 'submit');
         $this->assertEquals($expected, $result);
     }
@@ -408,45 +427,45 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         return [
             [
                 'Click Me', 'click-me', 'save',
-                '<button type="button" class="ui button" name="click-me" value="save">Click Me</button>',
+                '<button type="button" class="ui button" themed name="click-me" value="save">Click Me</button>',
             ],
-            ['Click Me', null, 'save', '<button type="button" class="ui button" value="save">Click Me</button>'],
-            ['Click Me', null, null, '<button type="button" class="ui button">Click Me</button>'],
+            ['Click Me', null, 'save', '<button type="button" class="ui button" themed value="save">Click Me</button>'],
+            ['Click Me', null, null, '<button type="button" class="ui button" themed>Click Me</button>'],
         ];
     }
 
     public function testSelect()
     {
-        $expected = '<select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue']);
         $this->assertEquals($expected, $result);
 
-        $expected = '<select class="ui dropdown search" name="fruit"><option value="apple">Granny Smith</option><option value="berry">Blueberry</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="fruit"><option value="apple">Granny Smith</option><option value="berry">Blueberry</option></select>';
         $result = (string) $this->form->select('fruit', ['apple' => 'Granny Smith', 'berry' => 'Blueberry']);
         $this->assertEquals($expected, $result);
 
-        $expected = '<select class="ui dropdown search" name="fruit"><option value="apple" selected>Granny Smith</option><option value="berry">Blueberry</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="fruit"><option value="apple" selected>Granny Smith</option><option value="berry">Blueberry</option></select>';
         $result = (string) $this->form->select('fruit', ['apple' => 'Granny Smith', 'berry' => 'Blueberry'], 'apple');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectWithLabel()
     {
-        $expected = '<div class="field"><label>Color</label><select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue">Blue</option></select></div>';
+        $expected = '<div class="field"><label>Color</label><select class="ui dropdown search clearable selection" name="color"><option value="red">Red</option><option value="blue">Blue</option></select></div>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue'])->label('Color');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanPrependOption()
     {
-        $expected = '<select class="ui dropdown search" name="color"><option value="">First</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="">First</option><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue'])->prependOption('', 'First');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanHavePlaceholder()
     {
-        $expected = '<select class="ui dropdown search" name="color"><option value="">Please Select</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="">Please Select</option><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue'])
             ->placeholder('Please Select');
         $this->assertEquals($expected, $result);
@@ -454,14 +473,14 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testSelectCanHavePlaceholderWithDefaultLabel()
     {
-        $expected = '<select class="ui dropdown search" name="color"><option value="">-- Select --</option><option value="red">Red</option><option value="blue">Blue</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="">-- Select --</option><option value="red">Red</option><option value="blue">Blue</option></select>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue'])->placeholder();
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectCanAppendOption()
     {
-        $expected = '<select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue">Blue</option><option value="">Last</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="red">Red</option><option value="blue">Blue</option><option value="">Last</option></select>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue'])->appendOption('', 'Last');
         $this->assertEquals($expected, $result);
     }
@@ -542,7 +561,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
         $this->form->setOldInputProvider($oldInput);
 
-        $expected = '<select class="ui dropdown search" name="color"><option value="red">Red</option><option value="blue" selected>Blue</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="red">Red</option><option value="blue" selected>Blue</option></select>';
         $result = (string) $this->form->select('color', ['red' => 'Red', 'blue' => 'Blue']);
         $this->assertEquals($expected, $result);
     }
@@ -748,14 +767,14 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testSelectMonth()
     {
-        $expected = '<select class="ui dropdown search" name="month"><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="month"><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select>';
         $result = (string) $this->form->selectMonth('month');
         $this->assertEquals($expected, $result);
     }
 
     public function testSelectRange()
     {
-        $expected = '<select class="ui dropdown search" name="age"><option value="1">1</option><option value="2">2</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="age"><option value="1">1</option><option value="2">2</option></select>';
         $result = (string) $this->form->selectRange('age', 1, 2);
         $this->assertEquals($expected, $result);
     }
@@ -933,7 +952,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         \Illuminate\Support\Facades\Route::shouldReceive('has')->once()->andReturn(true);
 
         $result = (string) $this->form->uploader('avatar');
-        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
+        $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -941,7 +960,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testUploaderWithCustomLimit()
     {
         $result = (string) $this->form->uploader('avatar')->limit(3);
-        $expected = '<input type="file" class="uploader" data-limit="3" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
+        $expected = '<input type="file" class="uploader" data-limit="3" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -949,7 +968,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testUploaderWithCustomExtensions()
     {
         $result = (string) $this->form->uploader('avatar')->extensions(['jpg', 'png']);
-        $expected = '<input type="file" class="uploader" data-limit="1" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-extensions="jpg,png" data-media-url="/test">';
+        $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-extensions="jpg,png" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -1020,7 +1039,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     {
         $object = $this->getStubObject();
         $this->form->bind($object);
-        $expected = '<select class="ui dropdown search" name="gender"><option value="male" selected>Male</option><option value="female">Female</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="gender"><option value="male" selected>Male</option><option value="female">Female</option></select>';
         $result = (string) $this->form->select('gender', ['male' => 'Male', 'female' => 'Female']);
         $this->assertEquals($expected, $result);
     }
@@ -1040,7 +1059,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     {
         $object = $this->getStubObject();
         $this->form->bind($object);
-        $expected = '<select class="ui dropdown search" name="skills[]" multiple="multiple"><option value="php" selected>PHP</option><option value="java" selected>Java</option></select>';
+        $expected = '<select class="ui dropdown search clearable selection" name="skills[]" multiple="multiple"><option value="php" selected>PHP</option><option value="java" selected>Java</option></select>';
         $result = (string) $this->form->select('skills', ['php' => 'PHP', 'java' => 'Java'])->multiple();
         $this->assertEquals($expected, $result);
     }
@@ -1181,7 +1200,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testActionWithSingleComponent()
     {
-        $expected = '<div class="action pushed"><button type="submit" class="ui button primary" name="submit">Sign In</button></div>';
+        $expected = '<div class="action pushed"><button type="submit" class="ui button primary" themed name="submit">Sign In</button></div>';
         $submit = $this->form->submit('Sign In', 'submit');
         $result = $this->form->action($submit)->render();
 
@@ -1191,8 +1210,8 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testActionWithMultipleComponent()
     {
         $expected = '<div class="action pushed">'.
-            '<button type="submit" class="ui button primary" name="submit">Sign In</button>'.
-            '<button type="button" class="ui button">Cancel</button>'.
+            '<button type="submit" class="ui button primary" themed name="submit">Sign In</button>'.
+            '<button type="button" class="ui button" themed>Cancel</button>'.
             '</div>';
         $submit = $this->form->submit('Sign In', 'submit');
         $cancel = $this->form->button('Cancel');
@@ -1206,8 +1225,8 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function testActionWithMacro()
     {
         $expected = '<div class="action pushed">'.
-            '<button type="submit" class="ui button primary">Submit</button>'.
-            '<button type="button" class="ui button">Cancel</button>'.
+            '<button type="submit" class="ui button primary" themed>Submit</button>'.
+            '<button type="button" class="ui button" themed>Cancel</button>'.
             '</div>';
 
         $form = $this->form;
