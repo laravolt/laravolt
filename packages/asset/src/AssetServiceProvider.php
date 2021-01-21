@@ -17,7 +17,7 @@ class AssetServiceProvider extends BaseServiceProvider
 
         $config = $this->config;
         foreach ($config as $groupName => $groupConfig) {
-            $this->registerAssetsManagerInstance($groupName, (array)$groupConfig);
+            $this->registerAssetsManagerInstance($groupName, (array) $groupConfig);
         }
     }
 

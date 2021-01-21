@@ -47,7 +47,7 @@ return [
          *
          * @var array
          */
-        'collections' => array(
+        'collections' => [
 
             // jQuery (CDN)
             // 'jquery-cdn' => array('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'),
@@ -65,7 +65,7 @@ return [
             //     '//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css',
             //     '//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
             // ),
-        ),
+        ],
 
         /**
          * Preload assets.
