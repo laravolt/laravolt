@@ -18,6 +18,7 @@
             <h3 class="ui divider horizontal section">Dropdown With Remove Content</h3>
             {!! form()->dropdownDB('user3', 'select id, email as name from users where email like "%%%s%%" limit 10')->prependOption(2, 'Foo')->ajax()->label('Search User') !!}
             {!! form()->coordinate('koordinat')->label('Koordinat') !!}
+            {!! form()->redactor('redactor')->label('WYSIWYG (Redactor)') !!}
             {!! form()->submit('Submit') !!}
             {!! form()->close() !!}
         </x-panel>

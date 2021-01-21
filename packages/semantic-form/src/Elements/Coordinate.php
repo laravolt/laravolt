@@ -2,6 +2,8 @@
 
 namespace Laravolt\SemanticForm\Elements;
 
+use Laravolt\Asset\AssetFacade;
+
 class Coordinate extends Text
 {
     protected static $sharedApiKey;
@@ -28,7 +30,7 @@ class Coordinate extends Text
 
     protected function beforeRender()
     {
-        \Stolz\Assets\Laravel\Facade::addJs('http://maps.google.com/maps/api/js?sensor=false&key='.$this->apiKey);
+        AssetFacade::addJs('http://maps.google.com/maps/api/js?sensor=false&key='.$this->apiKey);
 
         return true;
     }

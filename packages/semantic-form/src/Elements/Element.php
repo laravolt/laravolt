@@ -207,7 +207,7 @@ abstract class Element
         try {
             return $this->render();
         } catch (\Exception $e) {
-            report($e);
+            return $e->getMessage();
         }
     }
 

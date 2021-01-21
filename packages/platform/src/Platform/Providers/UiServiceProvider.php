@@ -8,11 +8,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laravolt\Asset\AssetFacade;
+use Laravolt\Asset\AssetManager;
 use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
-use Stolz\Assets\Manager;
 
 /**
  * Class PackageServiceProvider.
@@ -147,9 +148,9 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function registerAssets()
     {
-        if (! $this->app->bound('stolz.assets.group.laravolt')) {
-            $this->app->singleton('stolz.assets.group.laravolt', function () {
-                return new Manager([
+        if (! $this->app->bound('laravolt.asset.group.laravolt')) {
+            $this->app->singleton('laravolt.asset.group.laravolt', function () {
+                return new AssetManager([
                     'public_dir' => public_path('laravolt'),
                     'css_dir' => '',
                     'js_dir' => '',
@@ -157,14 +158,8 @@ class UiServiceProvider extends BaseServiceProvider
             });
         }
 
-        \Stolz\Assets\Laravel\Facade::group('laravolt')
+        AssetFacade::group('laravolt')
             ->registerCollection(
-                'vegas',
-                [
-                    'laravolt/plugins/vegas/vegas.min.css',
-                    'laravolt/plugins/vegas/vegas.min.js',
-                ]
-            )->registerCollection(
                 'autoNumeric',
                 [
                     'laravolt/plugins/autoNumeric.min.js',

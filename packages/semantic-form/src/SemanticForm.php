@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
+use Laravolt\Asset\AssetFacade;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\Button;
 use Laravolt\SemanticForm\Elements\Checkbox;
@@ -268,7 +269,7 @@ class SemanticForm
 
     public function redactor($name, $defaultValue = null)
     {
-        \Stolz\Assets\Laravel\Facade::add('redactor');
+        AssetFacade::add('redactor');
 
         $redactor = new Redactor($name);
 
@@ -515,7 +516,7 @@ class SemanticForm
 
     public function rupiah($name, $defaultValue = null)
     {
-        \Stolz\Assets\Laravel\Facade::group('laravolt')->add('autoNumeric');
+        AssetFacade::group('laravolt')->add('autoNumeric');
 
         $text = $this->text($name, $defaultValue);
         $input = (new Rupiah($text));

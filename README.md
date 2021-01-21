@@ -17,3 +17,6 @@ https://laravolt.dev/guidelines/contribution/
 - Damar Khoirul Huda (PT Javan Cipta Solusi) https://github.com/damarteplok
 - Ginanjar Septian Adhitia (PT Javan Cipta Solusi) https://github.com/ginadhitia
 - Dikih Arif Wibowo (Frontend Dev - PT JAVAN CIPTA SOLUSI) https://github.com/dikiharifwibowo
+
+## Credits
+- Code for `laravolt/asset` taken from https://github.com/Stolz/Assets with some modification and simplification

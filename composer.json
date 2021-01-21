@@ -6,7 +6,7 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
@@ -19,7 +19,6 @@
         "anhskohbo/no-captcha": "^3.3",
         "barryvdh/laravel-dompdf": "^0.8.7",
         "bensampo/laravel-enum": "^3.1",
-        "codedungeon/phpunit-result-printer": "^0.30.1",
         "doctrine/dbal": "^3.0",
         "illuminate/auth": "8.*",
         "illuminate/console": "8.*",
@@ -39,6 +38,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
+        "codedungeon/phpunit-result-printer": "^0.30.1",
         "laravel/browser-kit-testing": "^6.0",
         "mockery/mockery": "^1.2",
         "orchestra/canvas": "^6.1",
@@ -56,6 +56,7 @@
             "packages/support/src/helpers.php"
         ],
         "psr-4": {
+            "Laravolt\\Asset\\": "packages/asset/src",
             "Laravolt\\Contracts\\": "packages/platform/src/Contracts/",
             "Laravolt\\DatabaseMonitor\\": "packages/database-monitor/src",
             "Laravolt\\Epicentrum\\": "packages/platform/src/Epicentrum/",
@@ -96,6 +97,7 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Laravolt\\Asset\\AssetServiceProvider",
                 "Laravolt\\Media\\ServiceProvider",
                 "Laravolt\\Thunderclap\\ServiceProvider",
                 "Laravolt\\DatabaseMonitor\\ServiceProvider",
@@ -112,6 +114,7 @@
                 "Laravolt\\Mailkeeper\\ServiceProvider"
             ],
             "aliases": {
+                "Asset": "Laravolt\\Asset\\AssetFacade",
                 "Suitable": "Laravolt\\Suitable\\Facade",
                 "Form": "Laravolt\\SemanticForm\\Facade",
                 "SemanticForm": "Laravolt\\SemanticForm\\Facade"

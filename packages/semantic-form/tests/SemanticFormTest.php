@@ -956,7 +956,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testRupiah()
     {
-        $mock1 = Mockery::mock('alias:Stolz\Assets\Laravel\Facade');
+        $mock1 = Mockery::mock('alias:Laravolt\Asset\AssetFacade');
         $mock1->shouldReceive('group')->andReturnSelf();
         $mock1->shouldReceive('add')->andReturnSelf();
 

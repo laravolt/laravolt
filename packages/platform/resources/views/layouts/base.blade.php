@@ -16,8 +16,8 @@
     <link rel="stylesheet" type="text/css"data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
     @stack('style')
     @stack('head')
-    {!! Assets::group('laravolt')->css() !!}
-    {!! Assets::css() !!}
+    {!! Asset::group('laravolt')->css() !!}
+    {!! Asset::css() !!}
 
     <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
@@ -26,7 +26,7 @@
     </script>
 
     <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
-    {!! Assets::group('laravolt')->js() !!}
+    {!! Asset::group('laravolt')->js() !!}
 
     <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
 </head>
@@ -35,7 +35,7 @@
 
 @yield('body')
 
-{!! Assets::js() !!}
+{!! Asset::js() !!}
 @stack('script')
 @stack('body')
 </body>
