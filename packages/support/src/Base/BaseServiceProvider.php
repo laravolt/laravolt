@@ -20,7 +20,10 @@ abstract class BaseServiceProvider extends ServiceProvider
         $file = $this->packagePath("config/{$this->getIdentifier()}.php");
         if (file_exists($file)) {
             $this->mergeConfigFrom($file, "laravolt.{$this->getIdentifier()}");
-            $this->publishes([$file => config_path("laravolt/{$this->getIdentifier()}.php")], 'config');
+            $this->publishes(
+                [$file => config_path("laravolt/{$this->getIdentifier()}.php")],
+                ['config', 'laravolt-config']
+            );
         }
 
         $this->config = collect(config("laravolt.{$this->getIdentifier()}"));

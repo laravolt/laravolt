@@ -49,7 +49,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register(): void
     {
-        $this->bootConfig();
+        $this->registerConfig();
 
         $this->commands($this->commands);
 
@@ -86,9 +86,9 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         });
     }
 
-    protected function bootConfig(): self
+    protected function registerConfig(): self
     {
-        $config = ['asset', 'auth', 'epicentrum', 'password', 'platform', 'ui'];
+        $config = ['auth', 'epicentrum', 'password', 'platform', 'ui'];
         $publishes = [];
         foreach ($config as $c) {
             $this->mergeConfigFrom(platform_path("config/$c.php"), "laravolt.$c");
