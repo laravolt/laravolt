@@ -2,7 +2,6 @@
 
 namespace Laravolt\Thunderclap;
 
-use Doctrine\DBAL\Types\Type;
 use Illuminate\Support\Facades\DB;
 
 class DBHelper
@@ -27,8 +26,8 @@ class DBHelper
         foreach ($columns as $column) {
             $columnName = $column->getName();
             $data[$columnName] = [
-                'name'     => $columnName,
-                'type'     => $column->getType(),
+                'name' => $columnName,
+                'type' => $column->getType(),
                 'required' => $column->getNotnull(),
             ];
         }
