@@ -21,15 +21,13 @@ class DBHelper
 
     public function listColumns($table)
     {
-        $platform = DB::getDoctrineConnection()->getDatabasePlatform();
-        $platform->registerDoctrineTypeMapping('enum', Type::STRING);
-
         $columns = \DB::getDoctrineSchemaManager()->listTableColumns($table);
 
         $data = [];
         foreach ($columns as $column) {
-            $data[$column->getName()] = [
-                'name'     => $column->getName(),
+            $columnName = $column->getName();
+            $data[$columnName] = [
+                'name'     => $columnName,
                 'type'     => $column->getType(),
                 'required' => $column->getNotnull(),
             ];
