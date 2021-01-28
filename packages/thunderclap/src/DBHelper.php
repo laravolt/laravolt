@@ -2,7 +2,6 @@
 
 namespace Laravolt\Thunderclap;
 
-use Doctrine\DBAL\Types\Type;
 use Illuminate\Support\Facades\DB;
 
 class DBHelper
