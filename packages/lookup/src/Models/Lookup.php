@@ -6,8 +6,8 @@ namespace Laravolt\Lookup\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Laravolt\Support\Traits\AutoFilter;
-use Laravolt\Support\Traits\AutoSort;
+use Laravolt\Suitable\AutoFilter;
+use Laravolt\Suitable\AutoSort;
 use Spatie\SchemalessAttributes\SchemalessAttributes;
 
 class Lookup extends Model

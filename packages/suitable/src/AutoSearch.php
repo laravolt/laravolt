@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Support\Traits;
+namespace Laravolt\Suitable;
 
 use Illuminate\Database\Eloquent\Builder;
 
