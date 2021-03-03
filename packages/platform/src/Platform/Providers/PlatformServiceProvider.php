@@ -212,8 +212,11 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
                 $group = $sidebar->system;
                 $menu = $group->add(__('Kitchen Sink'))->data('icon', 'utensils');
                 $menu->add(__('UI Component'), route('platform::playground.ui'))
-                    ->data('permission', Permission::MANAGE_PERMISSION)
+                    ->data('permission', Permission::VIEW_PLAYGROUND)
                     ->active('platform/playground');
+                $menu->add(__('Article Editor'), route('platform::playground.article'))
+                    ->data('permission', Permission::VIEW_PLAYGROUND)
+                    ->active('platform/article');
             });
         }
 
