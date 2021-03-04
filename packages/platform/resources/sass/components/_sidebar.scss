@@ -42,6 +42,10 @@ nav.sidebar {
     padding-left: 1rem;
     padding-right: 1rem;
 
+    .icon {
+      line-height: 1.5 !important;
+    }
+
     .icon.left {
       float: left;
       margin: 0 1rem 0 0;

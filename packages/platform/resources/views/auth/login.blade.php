@@ -11,7 +11,7 @@
         @endif
     </h2>
 
-    {!! form()->open(route('auth::login.action'))->addClass('big') !!}
+    {!! form()->open(route('auth::login.action')) !!}
     {!! form()->email(config('laravolt.auth.identifier'))->label(__('laravolt::auth.identifier')) !!}
     {!! form()->password('password')->label(__('laravolt::auth.password')) !!}
 
@@ -36,7 +36,7 @@
     </div>
 
     <div class="ui field">
-        <x-button class="big fluid">@lang('laravolt::auth.login')</x-button>
+        <x-button class="fluid">@lang('laravolt::auth.login')</x-button>
     </div>
 
     {!! form()->close() !!}

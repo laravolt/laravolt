@@ -51,9 +51,10 @@ class Laravolt {
                 forceSelection: false,
                 allowAdditions: true,
                 fullTextSearch: true,
-                keys: {
-                    delimiter: 13
-                }
+                selectOnKeydown: false,
+                // keys: {
+                //     delimiter: 13
+                // }
             }).dropdown('set selected', selected);
         });
 

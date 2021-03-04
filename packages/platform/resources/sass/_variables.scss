@@ -3,7 +3,7 @@ $sidebar-width-thin: 150px;
 $sidebar-width-normal: 250px;
 $sidebar-width-wide: 300px;
 
-$header-height: 80px;
+$header-height: 65px;
 $header-width: calc(100% - #{$sidebar-width-normal} + 2px);
 
 $red: #DB2828;
@@ -22,6 +22,10 @@ $classic: $grey;
 $black: #1B1C1D;
 $white: #FFFFFF;
 
+$coolGrey: #fbfdfe;
+$warmGrey: #FAFAF9;
+$trueGrey: #FAFAFA;
+
 $colors: (
         'red':$red,
         'orange': $orange,
@@ -39,3 +43,9 @@ $colors: (
         'black':$black,
         'white':$white
 );
+
+:root {
+  @each $name, $color in $colors {
+    --#{$name}: #{$color};
+  }
+}

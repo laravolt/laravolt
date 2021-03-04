@@ -1,13 +1,15 @@
 @each $name, $color in $colors {
   .ui.button.#{$name}.secondary {
     border-color: rgba($color, 0.5);
-    box-shadow: 0 0 2px $color inset;
-    color: rgba($color, 0.9);
+    color: darken($color, 10%);
     background-color: rgba($color, 0.1);
+
+    &:hover, &:focus {
+      background-color: rgba($color, 0.2);
+    }
   }
   .ui.button.#{$name}.basic {
-    border-color: rgba($color, 0.5);
-    box-shadow: 0 0 2px $color inset;
-    color: rgba($color, 0.9);
+    color: darken($color, 10%);
+    box-shadow: 0 0 0 1px rgba($color, 0.5) inset;
   }
 }

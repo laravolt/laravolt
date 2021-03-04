@@ -1,5 +1,5 @@
 @each $prop, $abbrev in (margin: m, padding: p) {
-  @each $size, $length in (0: 0, 'xs': .5rem, 'sm': .75rem, 1: 1rem, 2: 2rem, 3: 4rem, 4: 6rem, 5: 8rem) {
+  @each $size, $length in (0: 0, 'xs': .5rem, 'sm': .75rem, 1: 1rem, 2: 1.5rem, 3: 2rem, 4: 4rem, 5: 6rem, 6: 8rem) {
 
     .#{$abbrev}-#{$size} { #{$prop}:        $length $length !important; } // a = All sides
     .#{$abbrev}-t-#{$size} { #{$prop}-top:    $length !important; }
@@ -21,7 +21,7 @@
 
 @media only screen and (max-width: 767px) {
   @each $prop, $abbrev in (margin: m, padding: p) {
-    @each $size, $length in (0: 0, 'xs': .25rem, 'sm': .5rem, 1: 0.75rem, 2: 1rem, 3: 1.5rem, 4: 3rem, 5: 5rem) {
+    @each $size, $length in (0: 0, 'xs': .25rem, 'sm': .5rem, 1: 0.75rem, 2: 1rem, 3: 1.5rem, 4: 3rem, 5: 5rem, 6: 6rem) {
 
       .#{$abbrev}-#{$size} { #{$prop}:        $length $length !important; } // a = All sides
       .#{$abbrev}-t-#{$size} { #{$prop}-top:    $length !important; }

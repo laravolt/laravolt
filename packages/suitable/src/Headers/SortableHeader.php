@@ -66,6 +66,6 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
         $this->attributes['class'] = ($this->attributes['class'] ?? '').' '.$headerClass;
         $attributes = $this->tagAttributes($this->attributes);
 
-        return sprintf('<th %s><a href="%s">%s %s</a></th>', $attributes, $url, htmlentities($this->title), $icon);
+        return sprintf('<th %s><a themed href="%s">%s %s</a></th>', $attributes, $url, htmlentities($this->title), $icon);
     }
 }

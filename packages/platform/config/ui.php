@@ -10,14 +10,14 @@ return [
      * Set default theme
      * Available themes: basik, black, blue, classic, fox, grey, pink, red, teal, violet
      * */
-    'theme' => 'black',
+    'theme' => 'dark',
 
     /*
      * Button color
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'blue',
+    'color' => 'teal',
 
     'system_menu' => [
         'order' => 99,

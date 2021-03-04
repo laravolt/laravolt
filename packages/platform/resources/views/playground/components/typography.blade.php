@@ -21,7 +21,7 @@
     </div>
 
     <div class="ui divider section"></div>
-    <div class="ui right floated horizontal list">
+    <div class="ui right floated horizontal list" themed>
         <div class="disabled item" href="#">© GitHub, Inc.</div>
         <a class="item" href="#">Terms</a>
         <a class="item" href="#">Privacy</a>

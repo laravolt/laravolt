@@ -14,9 +14,14 @@
 
         <div class="x-auth">
             <div class="x-auth__content p-4">
-                @include('laravolt::components.brand')
 
-                <div class="ui divider hidden m-b-4"></div>
+                <img
+                        src="{{ config('laravolt.ui.brand_image') }}"
+                        alt=""
+                        class="ui image tiny centered"
+                >
+
+                <div class="ui divider hidden"></div>
 
                 @yield('content')
 

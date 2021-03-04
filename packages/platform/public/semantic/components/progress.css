@@ -23,7 +23,7 @@
           box-shadow: none;
   background: rgba(0, 0, 0, 0.1);
   padding: 0;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
 }
 .ui.progress:first-child {
   margin: 0 0 2.5em;
@@ -46,7 +46,7 @@
   width: 0;
   min-width: 2em;
   background: #888888;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   -webkit-transition: width 0.1s ease, background-color 0.1s ease;
   transition: width 0.1s ease, background-color 0.1s ease;
   overflow: hidden;
@@ -324,7 +324,7 @@
   right: 0;
   bottom: 0;
   background: #FFFFFF;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   -webkit-animation: progress-active 2s ease infinite;
           animation: progress-active 2s ease infinite;
   -webkit-transform-origin: left;
@@ -419,7 +419,7 @@
   height: 0.2rem;
   padding: 0;
   overflow: hidden;
-  border-radius: 0 0 0.26666667rem 0.26666667rem;
+  border-radius: 0 0 0.4rem 0.4rem;
 }
 .ui.progress.attached .bar {
   border-radius: 0;
@@ -429,7 +429,7 @@
 .ui.progress.top.attached,
 .ui.progress.top.attached .bar {
   top: 0;
-  border-radius: 0.26666667rem 0.26666667rem 0 0;
+  border-radius: 0.4rem 0.4rem 0 0;
 }
 .ui.progress.top.attached .bar {
   border-radius: 0;
@@ -675,7 +675,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   -webkit-animation: progress-pulsating 2s ease infinite;
           animation: progress-pulsating 2s ease infinite;
   -webkit-transform-origin: center;

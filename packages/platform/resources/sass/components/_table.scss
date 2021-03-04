@@ -5,15 +5,18 @@ table.ui.table {
     font-size: .8em;
     color: #686f73;
   }
-  thead th {
+  thead > tr > th {
     font-weight: 700;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
   }
   thead th.numbering {
 
   }
   tbody td.numbering {
     text-align: center;
-    background: #f9fafb;
+    background: $coolGrey;
+    font-weight: 700;
   }
   &.scrolling {
     overflow-x: auto;
@@ -49,5 +52,6 @@ table.ui.table {
   }
   .bottom.attached.menu {
     border-bottom: 0 none;
+    background: $coolGrey;
   }
 }

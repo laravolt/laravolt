@@ -106,14 +106,14 @@
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   line-height: 1.21428571em;
-  padding: 0.62619048em 0.93333333em;
+  padding: 0.95952381em 0.93333333em;
   font-size: 1em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   color: #24272d;
-  border-radius: 0.26666667rem;
-  -webkit-box-shadow: 0 0 0 0 transparent inset;
-          box-shadow: 0 0 0 0 transparent inset;
+  border-radius: 0.4rem;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   -webkit-transition: color 0.1s ease, border-color 0.1s ease;
   transition: color 0.1s ease, border-color 0.1s ease;
 }
@@ -124,14 +124,14 @@
   margin: 0;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  padding: 0.73333333em 0.93333333em;
+  padding: 1.06666667em 0.93333333em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   outline: none;
   color: #24272d;
-  border-radius: 0.26666667rem;
-  -webkit-box-shadow: 0 0 0 0 transparent inset;
-          box-shadow: 0 0 0 0 transparent inset;
+  border-radius: 0.4rem;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   -webkit-transition: color 0.1s ease, border-color 0.1s ease;
   transition: color 0.1s ease, border-color 0.1s ease;
   font-size: 1em;
@@ -182,7 +182,7 @@
 .ui.form .field .transparent.input:not(.icon) input,
 .ui.form .field input.transparent,
 .ui.form .field textarea.transparent {
-  padding: 0.62619048em 0.93333333em;
+  padding: 0.95952381em 0.93333333em;
 }
 .ui.form .field input.transparent,
 .ui.form .field textarea.transparent {
@@ -210,9 +210,9 @@
   width: 100%;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 0.26666667rem;
-  -webkit-box-shadow: 0 0 0 0 transparent inset;
-          box-shadow: 0 0 0 0 transparent inset;
+  border-radius: 0.4rem;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   padding: 0.62em 0.93333333em;
   color: #24272d;
   -webkit-transition: color 0.1s ease, border-color 0.1s ease;
@@ -401,7 +401,7 @@
 .ui.form input[type="url"]:focus {
   color: rgba(0, 0, 0, 0.95);
   border-color: #85B7D9;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   background: #FFFFFF;
   -webkit-box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
           box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
@@ -439,7 +439,7 @@
 .ui.form textarea:focus {
   color: rgba(0, 0, 0, 0.95);
   border-color: #85B7D9;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   background: #FFFFFF;
   -webkit-box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
           box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
@@ -1341,7 +1341,7 @@
   z-index: 100;
 }
 .ui.loading.form.segments:before {
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
 }
 .ui.loading.form:after {
   position: absolute;

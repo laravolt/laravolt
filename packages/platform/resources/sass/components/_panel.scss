@@ -1,0 +1,16 @@
+.panel.ui.segments {
+
+  @extend .b-0;
+  @extend .shadow-md;
+
+  .panel__header.ui.segment {
+    background: $coolGrey;
+    @extend .p-2;
+  }
+
+  &.x-suitable {
+    .ui.table>thead>tr>th {
+      background: $coolGrey;
+    }
+  }
+}

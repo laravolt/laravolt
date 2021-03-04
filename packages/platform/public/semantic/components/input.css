@@ -38,11 +38,11 @@
   text-align: left;
   line-height: 1.21428571em;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  padding: 0.62619048em 0.93333333em;
+  padding: 0.95952381em 0.93333333em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
   color: #24272d;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   -webkit-transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: box-shadow 0.1s ease, border-color 0.1s ease;
@@ -296,7 +296,7 @@
   border-radius: 0 !important;
 }
 .field .ui.transparent.input > textarea {
-  padding: 0.62619048em 0.93333333em;
+  padding: 0.95952381em 0.93333333em;
 }
 
 /* Transparent Icon */
@@ -343,9 +343,9 @@
   right: 0;
   margin: 0;
   height: 100%;
-  width: 2.56666667em;
+  width: 3.23333333em;
   opacity: 0.5;
-  border-radius: 0 0.26666667rem 0.26666667rem 0;
+  border-radius: 0 0.4rem 0.4rem 0;
   -webkit-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
 }
@@ -354,7 +354,7 @@
 }
 .ui.ui.ui.ui.icon.input > textarea,
 .ui.ui.ui.ui.icon.input > input {
-  padding-right: 2.56666667em;
+  padding-right: 3.23333333em;
 }
 .ui.icon.input > i.icon:before,
 .ui.icon.input > i.icon:after {
@@ -377,7 +377,7 @@
 .ui[class*="left icon"].input > i.icon {
   right: auto;
   left: 1px;
-  border-radius: 0.26666667rem 0 0 0.26666667rem;
+  border-radius: 0.4rem 0 0 0.4rem;
 }
 .ui[class*="left icon"].input > i.circular.icon {
   right: auto;
@@ -385,7 +385,7 @@
 }
 .ui.ui.ui.ui[class*="left icon"].input > textarea,
 .ui.ui.ui.ui[class*="left icon"].input > input {
-  padding-left: 2.56666667em;
+  padding-left: 3.23333333em;
   padding-right: 0.93333333em;
 }
 
@@ -409,8 +409,8 @@
   font-size: 1em;
 }
 .ui.labeled.input > .label:not(.corner) {
-  padding-top: 0.73333333em;
-  padding-bottom: 0.73333333em;
+  padding-top: 1.06666667em;
+  padding-bottom: 1.06666667em;
 }
 
 /* Regular Label on Left */
@@ -446,7 +446,7 @@
   top: 1px;
   right: 1px;
   font-size: 0.6em;
-  border-radius: 0 0.26666667rem 0 0;
+  border-radius: 0 0.4rem 0 0;
 }
 
 /* Spacing with corner label */
@@ -603,8 +603,8 @@
 }
 .ui.action.input > .button,
 .ui.action.input > .buttons > .button {
-  padding-top: 0.73333333em;
-  padding-bottom: 0.73333333em;
+  padding-top: 1.06666667em;
+  padding-bottom: 1.06666667em;
   margin: 0;
 }
 
@@ -624,7 +624,7 @@
 .ui.action.input > .dropdown:first-child,
 .ui.action.input > .button:first-child,
 .ui.action.input > .buttons:first-child > .button {
-  border-radius: 0.26666667rem 0 0 0.26666667rem;
+  border-radius: 0.4rem 0 0 0.4rem;
 }
 .ui.action.input > .dropdown:not(:first-child),
 .ui.action.input > .button:not(:first-child),
@@ -634,7 +634,7 @@
 .ui.action.input > .dropdown:last-child,
 .ui.action.input > .button:last-child,
 .ui.action.input > .buttons:last-child > .button {
-  border-radius: 0 0.26666667rem 0.26666667rem 0;
+  border-radius: 0 0.4rem 0.4rem 0;
 }
 
 /* Input Focus */

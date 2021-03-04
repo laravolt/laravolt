@@ -1,11 +1,19 @@
-<header class="ui menu borderless fixed top b-0">
+<header class="ui menu fixed top borderless">
     <div class="item mobile only tablet only" data-role="sidebar-visibility-switcher"><i class="icon sidebar"></i></div>
 
     @yield('page.back')
 
     <div class="menu" id="titlebar">
         <div class="item">
-            <h2 class="ui header m-l-1">@yield('page.title')</h2>
+            <div class="ui breadcrumb big">
+                <a class="section"> <i aria-hidden="true" class="icon home m-0"></i></a>
+                <span class="divider">/</span>
+                <div class="active section">
+                    <h4 class="ui header">@yield('page.title')</h4>
+                </div>
+            </div>
+        </div>
+        <div class="item">
         </div>
 
         @yield('page.actions')
@@ -15,7 +23,7 @@
         @auth
             <div class="item">
                 <div class="ui compact menu b-0">
-                    <div class="ui simple dropdown basic button top right pointing b-0 p-0">
+                    <div class="ui simple dropdown basic button top right pointing b-0 p-x-0">
                         <img src="{{ auth()->user()->avatar }}" alt="" class="ui image avatar">
                         <i class="dropdown icon m-l-0 {{ config('laravolt.ui.color') }}"></i>
                         <div class="menu">

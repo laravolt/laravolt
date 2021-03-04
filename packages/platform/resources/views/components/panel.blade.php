@@ -30,13 +30,13 @@
         </div>
     @endif
 
-    <div class="ui segment {{ $attributes['contentClass'] ?? 'p-2' }}">
+    <div class="ui segment {{ $attributes['contentClass'] ?? 'p-3' }}">
         {!! $slot !!}
     </div>
 
     @if(isset($footer))
         <div class="ui segment">
-            footer
+            {!! $footer !!}
         </div>
     @endif
 </div>

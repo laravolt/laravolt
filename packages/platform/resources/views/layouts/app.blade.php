@@ -9,7 +9,7 @@
         <main class="content">
 
             <div class="content__inner">
-                <div class="ui container-fluid content__body p-2">
+                <div class="ui container-fluid content__body p-4">
                     @yield('content')
                 </div>
 

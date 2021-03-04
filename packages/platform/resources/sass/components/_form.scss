@@ -43,6 +43,11 @@ $widths: (
     }
   }
 
+  // action buttons
+  .action {
+    margin-top: 2em;
+  }
+
   // Do not stretch 100% width
   input[type=time], input[type=date] {
     width: auto;
@@ -79,6 +84,7 @@ $widths: (
 
   .ui.divider.horizontal {
     font-size: .9em;
+    color: var(--app-accent-color);
     &:first-child {
       margin-top: 0;
     }
@@ -87,7 +93,7 @@ $widths: (
     }
     &:after {
       background: none;
-      border-bottom: 1px solid rgba(0,0,0,.2);
+      border-bottom: 1px solid #e2e8f0;
       width: 100%;
       display: table-cell;
       position: relative;

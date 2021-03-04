@@ -25,7 +25,7 @@
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, box-shadow 0.1s ease, -webkit-box-shadow 0.1s ease;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 rgba(0, 0, 0, 0);
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
@@ -190,7 +190,7 @@
 
 .ui.attached.message {
   margin-bottom: -1px;
-  border-radius: 0.26666667rem 0.26666667rem 0 0;
+  border-radius: 0.4rem 0.4rem 0 0;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
   margin-left: -1px;
@@ -202,7 +202,7 @@
 }
 .ui.bottom.attached.message {
   margin-top: -1px;
-  border-radius: 0 0 0.26666667rem 0.26666667rem;
+  border-radius: 0 0 0.4rem 0.4rem;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset, 0 1px 2px 0 rgba(34, 36, 38, 0.15);
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset, 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }

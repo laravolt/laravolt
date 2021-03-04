@@ -1313,7 +1313,7 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
     }
     .fileuploader-input-inner {
         span {
-            color: #0275ff;
+            color: var(--app-accent-color);
         }
     }
 }

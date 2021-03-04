@@ -11,6 +11,12 @@
 
     @stack('meta')
 
+    <style>
+        :root {
+            --app-accent-color: var(--{{ config('laravolt.ui.color') }});
+        }
+    </style>
+
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
@@ -28,7 +34,7 @@
     <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Asset::group('laravolt')->js() !!}
 
-    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
+    {{--<script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>--}}
 </head>
 
 <body id="body" data-theme="{{ config('laravolt.ui.theme') }}" login-theme="{{ config('laravolt.ui.login_theme') }}" class="{{ $bodyClass ?? '' }}">

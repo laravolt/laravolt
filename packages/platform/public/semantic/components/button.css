@@ -24,7 +24,7 @@
   color: rgba(0, 0, 0, 0.6);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   margin: 0 0.25em 0 0;
-  padding: 0.73333333em 1.5em 0.73333333em;
+  padding: 1em 2em 1em;
   text-transform: none;
   text-shadow: none;
   font-weight: normal;
@@ -32,7 +32,7 @@
   font-style: normal;
   text-align: center;
   text-decoration: none;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   -webkit-box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
           box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
   -webkit-user-select: none;
@@ -216,7 +216,7 @@
 }
 .ui.animated.button .visible.content {
   position: relative;
-  margin-right: 1.5em;
+  margin-right: 2em;
 }
 .ui.animated.button .hidden.content {
   position: absolute;
@@ -677,19 +677,19 @@
 
 .ui.compact.buttons .button,
 .ui.compact.button {
-  padding: 0.55em 1.125em 0.55em;
+  padding: 0.75em 1.5em 0.75em;
 }
 .ui.compact.icon.buttons .button,
 .ui.compact.icon.button {
-  padding: 0.55em 0.55em 0.55em;
+  padding: 0.75em 0.75em 0.75em;
 }
 .ui.compact.labeled.icon.buttons .button,
 .ui.compact.labeled.icon.button {
-  padding: 0.55em 3.59166667em 0.55em;
+  padding: 0.75em 4.5em 0.75em;
 }
 .ui.compact.labeled.icon.buttons .button > .icon,
 .ui.compact.labeled.icon.button > .icon {
-  padding: 0.55em 0 0.55em 0;
+  padding: 0.75em 0 0.75em 0;
 }
 
 /*-------------------
@@ -757,7 +757,7 @@
 
 .ui.icon.buttons .button,
 .ui.icon.button:not(.animated):not(.compact) {
-  padding: 0.73333333em 0.73333333em 0.73333333em;
+  padding: 1em 1em 1em;
 }
 .ui.animated.icon.button > .content > .icon,
 .ui.icon.buttons .button > .icon,
@@ -779,7 +779,7 @@
   background: transparent none;
   color: rgba(0, 0, 0, 0.6);
   font-weight: normal;
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
   text-transform: none;
   text-shadow: none !important;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
@@ -789,7 +789,7 @@
   -webkit-box-shadow: none;
           box-shadow: none;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
 }
 .ui.basic.buttons .button {
   border-radius: 0;
@@ -908,7 +908,7 @@
   -webkit-transition: color 0.1s ease !important;
   transition: color 0.1s ease !important;
   border-radius: 0;
-  margin: 0.23333333em 0.25em 0.23333333em 0 !important;
+  margin: 0.5em 0.25em 0.5em 0 !important;
   padding: 0.5em !important;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -930,7 +930,7 @@
 .ui.tertiary.button:active {
   -webkit-box-shadow: inset 0 -0.2em 0 #999999;
           box-shadow: inset 0 -0.2em 0 #999999;
-  border-radius: 0.26666667rem 0.26666667rem 0 0;
+  border-radius: 0.4rem 0.4rem 0 0;
   color: #666666;
   background: none;
 }
@@ -942,8 +942,8 @@
 .ui.labeled.icon.buttons .button,
 .ui.labeled.icon.button {
   position: relative;
-  padding-left: 3.96666667em !important;
-  padding-right: 1.5em !important;
+  padding-left: 5em !important;
+  padding-right: 2em !important;
 }
 
 /* Left Labeled */
@@ -960,9 +960,9 @@
   text-align: center;
   -webkit-animation: none;
           animation: none;
-  padding: 0.73333333em 0 0.73333333em 0;
+  padding: 1em 0 1em 0;
   margin: 0;
-  width: 2.46666667em;
+  width: 3em;
   background-color: rgba(0, 0, 0, 0.05);
   color: '';
   -webkit-box-shadow: -1px 0 0 0 transparent inset;
@@ -971,8 +971,8 @@
 
 /* Right Labeled */
 .ui[class*="right labeled"].icon.button {
-  padding-right: 3.96666667em !important;
-  padding-left: 1.5em !important;
+  padding-right: 5em !important;
+  padding-left: 2em !important;
 }
 .ui[class*="right labeled"].icon.button > .icon {
   left: auto;
@@ -997,20 +997,20 @@
   border-radius: 0;
 }
 .ui.labeled.icon.buttons .button:first-child > .icon {
-  border-top-left-radius: 0.26666667rem;
-  border-bottom-left-radius: 0.26666667rem;
+  border-top-left-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
 }
 .ui.labeled.icon.buttons .button:last-child > .icon {
-  border-top-right-radius: 0.26666667rem;
-  border-bottom-right-radius: 0.26666667rem;
+  border-top-right-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
 }
 .ui.vertical.labeled.icon.buttons .button:first-child > .icon {
   border-radius: 0;
-  border-top-left-radius: 0.26666667rem;
+  border-top-left-radius: 0.4rem;
 }
 .ui.vertical.labeled.icon.buttons .button:last-child > .icon {
   border-radius: 0;
-  border-bottom-left-radius: 0.26666667rem;
+  border-bottom-left-radius: 0.4rem;
 }
 
 /* Loading Icon in Labeled Button */
@@ -1059,7 +1059,7 @@
 .ui.buttons .or {
   position: relative;
   width: 0.3em;
-  height: 2.46666667em;
+  height: 3em;
   z-index: 3;
 }
 .ui.buttons .or:before {
@@ -1071,11 +1071,11 @@
   left: 50%;
   background-color: #FFFFFF;
   text-shadow: none;
-  margin-top: -0.86666667em;
-  margin-left: -0.86666667em;
-  width: 1.73333333em;
-  height: 1.73333333em;
-  line-height: 1.73333333em;
+  margin-top: -1em;
+  margin-left: -1em;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
   color: rgba(0, 0, 0, 0.4);
   font-style: normal;
   font-weight: bold;
@@ -1111,10 +1111,10 @@
 
 /* Top / Bottom */
 .ui.attached.top.button {
-  border-radius: 0.26666667rem 0.26666667rem 0 0;
+  border-radius: 0.4rem 0.4rem 0 0;
 }
 .ui.attached.bottom.button {
-  border-radius: 0 0 0.26666667rem 0.26666667rem;
+  border-radius: 0 0 0.4rem 0.4rem;
 }
 
 /* Left / Right */
@@ -1123,13 +1123,13 @@
   border-left: none;
   text-align: right;
   padding-right: 0.75em;
-  border-radius: 0.26666667rem 0 0 0.26666667rem;
+  border-radius: 0.4rem 0 0 0.4rem;
 }
 .ui.right.attached.button {
   display: inline-block;
   text-align: left;
   padding-left: 0.75em;
-  border-radius: 0 0.26666667rem 0.26666667rem 0;
+  border-radius: 0 0.4rem 0.4rem 0;
 }
 
 /* Plural */
@@ -1157,23 +1157,23 @@
 /* Top / Bottom */
 .ui[class*="top attached"].buttons {
   margin-bottom: -1px;
-  border-radius: 0.26666667rem 0.26666667rem 0 0;
+  border-radius: 0.4rem 0.4rem 0 0;
 }
 .ui[class*="top attached"].buttons .button:first-child {
-  border-radius: 0.26666667rem 0 0 0;
+  border-radius: 0.4rem 0 0 0;
 }
 .ui[class*="top attached"].buttons .button:last-child {
-  border-radius: 0 0.26666667rem 0 0;
+  border-radius: 0 0.4rem 0 0;
 }
 .ui[class*="bottom attached"].buttons {
   margin-top: -1px;
-  border-radius: 0 0 0.26666667rem 0.26666667rem;
+  border-radius: 0 0 0.4rem 0.4rem;
 }
 .ui[class*="bottom attached"].buttons .button:first-child {
-  border-radius: 0 0 0 0.26666667rem;
+  border-radius: 0 0 0 0.4rem;
 }
 .ui[class*="bottom attached"].buttons .button:last-child {
-  border-radius: 0 0 0.26666667rem 0;
+  border-radius: 0 0 0.4rem 0;
 }
 
 /* Left / Right */
@@ -1183,15 +1183,15 @@
   display: inline-flex;
   margin-right: 0;
   margin-left: -1px;
-  border-radius: 0 0.26666667rem 0.26666667rem 0;
+  border-radius: 0 0.4rem 0.4rem 0;
 }
 .ui[class*="left attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0 0.26666667rem 0 0;
+  border-radius: 0 0.4rem 0 0;
 }
 .ui[class*="left attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0 0 0.26666667rem 0;
+  border-radius: 0 0 0.4rem 0;
 }
 .ui[class*="right attached"].buttons {
   display: -webkit-inline-box;
@@ -1199,15 +1199,15 @@
   display: inline-flex;
   margin-left: 0;
   margin-right: -1px;
-  border-radius: 0.26666667rem 0 0 0.26666667rem;
+  border-radius: 0.4rem 0 0 0.4rem;
 }
 .ui[class*="right attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0.26666667rem 0 0 0;
+  border-radius: 0.4rem 0 0 0;
 }
 .ui[class*="right attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0 0 0 0.26666667rem;
+  border-radius: 0 0 0 0.4rem;
 }
 
 /*-------------------
@@ -4325,12 +4325,12 @@
 .ui.buttons .button:first-child {
   border-left: none;
   margin-left: 0;
-  border-top-left-radius: 0.26666667rem;
-  border-bottom-left-radius: 0.26666667rem;
+  border-top-left-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
 }
 .ui.buttons .button:last-child {
-  border-top-right-radius: 0.26666667rem;
-  border-bottom-right-radius: 0.26666667rem;
+  border-top-right-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
 }
 
 /* Vertical  Style */
@@ -4353,16 +4353,16 @@
   border-radius: 0;
 }
 .ui.vertical.buttons .button:first-child {
-  border-top-left-radius: 0.26666667rem;
-  border-top-right-radius: 0.26666667rem;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
 }
 .ui.vertical.buttons .button:last-child {
   margin-bottom: 0;
-  border-bottom-left-radius: 0.26666667rem;
-  border-bottom-right-radius: 0.26666667rem;
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
 }
 .ui.vertical.buttons .button:only-child {
-  border-radius: 0.26666667rem;
+  border-radius: 0.4rem;
 }
 
 
