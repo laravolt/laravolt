@@ -318,7 +318,7 @@
 }
 .ui.cards > .card .meta > a:not(.ui):hover,
 .ui.card .meta > a:not(.ui):hover {
-  color: #373e43;
+  color: #24272d;
 }
 
 /*--------------
@@ -345,7 +345,7 @@
 
 .ui.cards > .card .dimmer,
 .ui.card .dimmer {
-  background-color: '';
+  background: '';
   z-index: 10;
 }
 

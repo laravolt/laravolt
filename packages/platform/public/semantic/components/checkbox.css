@@ -82,7 +82,7 @@
   height: 17px;
   text-align: center;
   opacity: 0;
-  color: #373e43;
+  color: #24272d;
   -webkit-transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
@@ -97,7 +97,7 @@
 /* Inside */
 .ui.checkbox label,
 .ui.checkbox + label {
-  color: #373e43;
+  color: #24272d;
   -webkit-transition: color 0.1s ease;
   transition: color 0.1s ease;
 }
@@ -220,6 +220,7 @@
   cursor: default !important;
   opacity: 0.5;
   color: #000000;
+  pointer-events: none;
 }
 
 /*--------------
@@ -283,7 +284,7 @@
   border-radius: 500rem;
   -webkit-transform: scale(0.46666667);
           transform: scale(0.46666667);
-  background-color: #373e43;
+  background-color: #24272d;
 }
 
 /* Focus */
@@ -429,7 +430,7 @@
 .ui.toggle.checkbox label {
   min-height: 1.5rem;
   padding-left: 4.5rem;
-  color: #373e43;
+  color: #24272d;
 }
 .ui.toggle.checkbox label {
   padding-top: 0.15em;

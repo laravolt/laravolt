@@ -140,19 +140,19 @@ ol.ui.list ol li,
 .ui.list .list > .item > .content,
 .ui.list > .item > .content {
   line-height: 1.13333333em;
-  color: #373e43;
+  color: #24272d;
 }
 .ui.list .list > .item > .image + .content,
-.ui.list .list > .item > .icon + .content,
+.ui.list .list > .item > i.icon + .content,
 .ui.list > .item > .image + .content,
-.ui.list > .item > .icon + .content {
+.ui.list > .item > i.icon + .content {
   display: table-cell;
   width: 100%;
   padding: 0 0 0 0.5em;
   vertical-align: top;
 }
-.ui.list .list > .item > .loading.icon + .content,
-.ui.list > .item > .loading.icon + .content {
+.ui.list .list > .item > i.loading.icon + .content,
+.ui.list > .item > i.loading.icon + .content {
   padding-left: calc(0.26666666666666666em + 0.5em);
 }
 .ui.list .list > .item > img.image + .content,
@@ -173,7 +173,7 @@ ol.ui.list ol li,
   margin: 0;
   font-family: inherit;
   font-weight: bold;
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Description */
@@ -295,8 +295,8 @@ ol.ui.list ol li,
 }
 .ui.horizontal.list > .item > .image,
 .ui.horizontal.list .list > .item > .image,
-.ui.horizontal.list > .item > .icon,
-.ui.horizontal.list .list > .item > .icon,
+.ui.horizontal.list > .item > i.icon,
+.ui.horizontal.list .list > .item > i.icon,
 .ui.horizontal.list > .item > .content,
 .ui.horizontal.list .list > .item > .content {
   vertical-align: middle;
@@ -316,8 +316,8 @@ ol.ui.list ol li,
   padding: 0 0.25em 0 0;
 }
 .ui.horizontal.list > .item > .image + .content,
-.ui.horizontal.list > .item > .icon,
-.ui.horizontal.list > .item > .icon + .content {
+.ui.horizontal.list > .item > i.icon,
+.ui.horizontal.list > .item > i.icon + .content {
   float: none;
   display: inline-block;
   width: auto;
@@ -352,9 +352,9 @@ ol.ui.list ol li,
 
 .ui.list .list > a.item:hover > .icons,
 .ui.list > a.item:hover > .icons,
-.ui.list .list > a.item:hover > .icon,
-.ui.list > a.item:hover > .icon {
-  color: #373e43;
+.ui.list .list > a.item:hover > i.icon,
+.ui.list > a.item:hover > i.icon {
+  color: #24272d;
 }
 
 
@@ -367,8 +367,8 @@ ol.ui.list ol li,
          Inverted
   --------------------*/
 
-.ui.inverted.list .list > a.item > .icon,
-.ui.inverted.list > a.item > .icon {
+.ui.inverted.list .list > a.item > i.icon,
+.ui.inverted.list > a.item > i.icon {
   color: rgba(255, 255, 255, 0.7);
 }
 .ui.inverted.list .list > .item .header,
@@ -588,7 +588,7 @@ ul.ui.list li:before,
 ul.ui.list li:before,
 .ui.bulleted.list .list > a.item:before,
 .ui.bulleted.list > a.item:before {
-  color: #373e43;
+  color: #24272d;
 }
 ul.ui.list ul,
 .ui.bulleted.list .list:not(.icon) {
@@ -610,7 +610,7 @@ ul.ui.horizontal.bulleted.list li:first-child,
 }
 ul.ui.horizontal.bulleted.list li::before,
 .ui.horizontal.bulleted.list > .item::before {
-  color: #373e43;
+  color: #24272d;
 }
 ul.ui.horizontal.bulleted.list li:first-child::before,
 .ui.horizontal.bulleted.list > .item:first-child::before {
@@ -650,7 +650,7 @@ ol.ui.list li:before,
   counter-increment: ordered;
   content: counters(ordered, ".") " ";
   text-align: right;
-  color: #373e43;
+  color: #24272d;
   vertical-align: middle;
   opacity: 0.8;
 }

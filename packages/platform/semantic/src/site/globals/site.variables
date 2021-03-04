@@ -11,7 +11,7 @@
 @paragraphLineHeight: @lineHeight;
 
 @blue: #0052CC;
-@textColor: #373e43;
+@textColor: #24272d;
 @linkColor: @blue;
 
 @inputPlaceholderColor: lighten(@inputColor, 45);

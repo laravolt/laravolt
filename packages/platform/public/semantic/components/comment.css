@@ -105,7 +105,7 @@
 
 .ui.comments .comment .author {
   font-size: 1em;
-  color: #373e43;
+  color: #24272d;
   font-weight: bold;
 }
 .ui.comments .comment a.author {
@@ -141,7 +141,7 @@
   margin: 0.25em 0 0.5em;
   font-size: 1em;
   word-wrap: break-word;
-  color: #373e43;
+  color: #24272d;
   line-height: 1.3;
 }
 

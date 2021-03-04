@@ -25,7 +25,7 @@
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  color: #373e43;
+  color: #24272d;
 }
 .ui.input > input {
   margin: 0;
@@ -41,7 +41,7 @@
   padding: 0.62619048em 0.93333333em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  color: #373e43;
+  color: #24272d;
   border-radius: 0.26666667rem;
   -webkit-transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
@@ -58,13 +58,13 @@
 
 /* browsers require these rules separate */
 .ui.input > input::-webkit-input-placeholder {
-  color: #a8b1b8;
+  color: #9098a6;
 }
 .ui.input > input::-moz-placeholder {
-  color: #a8b1b8;
+  color: #9098a6;
 }
 .ui.input > input:-ms-input-placeholder {
-  color: #a8b1b8;
+  color: #9098a6;
 }
 
 
@@ -94,7 +94,7 @@
 .ui.input.down input {
   border-color: rgba(0, 0, 0, 0.3);
   background: #FAFAFA;
-  color: #373e43;
+  color: #24272d;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -144,15 +144,15 @@
 }
 .ui.input.focus > input::-webkit-input-placeholder,
 .ui.input > input:focus::-webkit-input-placeholder {
-  color: #707f89;
+  color: #5d6474;
 }
 .ui.input.focus > input::-moz-placeholder,
 .ui.input > input:focus::-moz-placeholder {
-  color: #707f89;
+  color: #5d6474;
 }
 .ui.input.focus > input:-ms-input-placeholder,
 .ui.input > input:focus:-ms-input-placeholder {
-  color: #707f89;
+  color: #5d6474;
 }
 
 /*--------------------
@@ -458,7 +458,7 @@
 .ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"]) > input {
   padding-right: 3.25em !important;
 }
-.ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"]) > .icon {
+.ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"]) > i.icon {
   margin-right: 1.25em;
 }
 
@@ -471,13 +471,13 @@
 .ui[class*="left corner labeled"].icon.input > input {
   padding-left: 3.25em !important;
 }
-.ui[class*="left corner labeled"].icon.input > .icon {
+.ui[class*="left corner labeled"].icon.input > i.icon {
   margin-left: 1.25em;
 }
-.ui.icon.input > textarea ~ .icon {
+.ui.icon.input > textarea ~ i.icon {
   height: 3em;
 }
-:not(.field) > .ui.transparent.icon.input > textarea ~ .icon {
+:not(.field) > .ui.transparent.icon.input > textarea ~ i.icon {
   height: 1.3em;
 }
 
@@ -492,95 +492,95 @@
 }
 
 /* Labeled and action input states */
-.ui.form > .field.error > .ui.action.input > .ui.button,
-.ui.form > .field.error > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
+.ui.form .field.error > .ui.action.input > .ui.button,
+.ui.form .field.error > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
 .ui.action.input.error > .ui.button,
 .ui.labeled.input.error:not([class*="corner labeled"]) > .ui.label {
   border-top: 1px solid #E0B4B4;
   border-bottom: 1px solid #E0B4B4;
 }
-.ui.form > .field.error > .ui.left.action.input > .ui.button,
-.ui.form > .field.error > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
-.ui.left.action.input.error > .ui.button,
+.ui.form .field.error > .ui[class*="left action"].input > .ui.button,
+.ui.form .field.error > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
+.ui[class*="left action"].input.error > .ui.button,
 .ui.labeled.input.error:not(.right):not([class*="corner labeled"]) > .ui.label {
   border-left: 1px solid #E0B4B4;
 }
-.ui.form > .field.error > .ui.action.input:not(.left) > input + .ui.button,
-.ui.form > .field.error > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
-.ui.action.input.error:not(.left) > input + .ui.button,
+.ui.form .field.error > .ui.action.input:not([class*="left action"]) > input + .ui.button,
+.ui.form .field.error > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
+.ui.action.input.error:not([class*="left action"]) > input + .ui.button,
 .ui.right.labeled.input.error:not([class*="corner labeled"]) > input + .ui.label {
   border-right: 1px solid #E0B4B4;
 }
-.ui.form > .field.error > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
+.ui.form .field.error > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
 .ui.right.labeled.input.error:not([class*="corner labeled"]) > .ui.label:first-child {
   border-left: 1px solid #E0B4B4;
 }
-.ui.form > .field.info > .ui.action.input > .ui.button,
-.ui.form > .field.info > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
+.ui.form .field.info > .ui.action.input > .ui.button,
+.ui.form .field.info > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
 .ui.action.input.info > .ui.button,
 .ui.labeled.input.info:not([class*="corner labeled"]) > .ui.label {
   border-top: 1px solid #A9D5DE;
   border-bottom: 1px solid #A9D5DE;
 }
-.ui.form > .field.info > .ui.left.action.input > .ui.button,
-.ui.form > .field.info > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
-.ui.left.action.input.info > .ui.button,
+.ui.form .field.info > .ui[class*="left action"].input > .ui.button,
+.ui.form .field.info > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
+.ui[class*="left action"].input.info > .ui.button,
 .ui.labeled.input.info:not(.right):not([class*="corner labeled"]) > .ui.label {
   border-left: 1px solid #A9D5DE;
 }
-.ui.form > .field.info > .ui.action.input:not(.left) > input + .ui.button,
-.ui.form > .field.info > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
-.ui.action.input.info:not(.left) > input + .ui.button,
+.ui.form .field.info > .ui.action.input:not([class*="left action"]) > input + .ui.button,
+.ui.form .field.info > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
+.ui.action.input.info:not([class*="left action"]) > input + .ui.button,
 .ui.right.labeled.input.info:not([class*="corner labeled"]) > input + .ui.label {
   border-right: 1px solid #A9D5DE;
 }
-.ui.form > .field.info > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
+.ui.form .field.info > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
 .ui.right.labeled.input.info:not([class*="corner labeled"]) > .ui.label:first-child {
   border-left: 1px solid #A9D5DE;
 }
-.ui.form > .field.success > .ui.action.input > .ui.button,
-.ui.form > .field.success > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
+.ui.form .field.success > .ui.action.input > .ui.button,
+.ui.form .field.success > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
 .ui.action.input.success > .ui.button,
 .ui.labeled.input.success:not([class*="corner labeled"]) > .ui.label {
   border-top: 1px solid #A3C293;
   border-bottom: 1px solid #A3C293;
 }
-.ui.form > .field.success > .ui.left.action.input > .ui.button,
-.ui.form > .field.success > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
-.ui.left.action.input.success > .ui.button,
+.ui.form .field.success > .ui[class*="left action"].input > .ui.button,
+.ui.form .field.success > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
+.ui[class*="left action"].input.success > .ui.button,
 .ui.labeled.input.success:not(.right):not([class*="corner labeled"]) > .ui.label {
   border-left: 1px solid #A3C293;
 }
-.ui.form > .field.success > .ui.action.input:not(.left) > input + .ui.button,
-.ui.form > .field.success > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
-.ui.action.input.success:not(.left) > input + .ui.button,
+.ui.form .field.success > .ui.action.input:not([class*="left action"]) > input + .ui.button,
+.ui.form .field.success > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
+.ui.action.input.success:not([class*="left action"]) > input + .ui.button,
 .ui.right.labeled.input.success:not([class*="corner labeled"]) > input + .ui.label {
   border-right: 1px solid #A3C293;
 }
-.ui.form > .field.success > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
+.ui.form .field.success > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
 .ui.right.labeled.input.success:not([class*="corner labeled"]) > .ui.label:first-child {
   border-left: 1px solid #A3C293;
 }
-.ui.form > .field.warning > .ui.action.input > .ui.button,
-.ui.form > .field.warning > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
+.ui.form .field.warning > .ui.action.input > .ui.button,
+.ui.form .field.warning > .ui.labeled.input:not([class*="corner labeled"]) > .ui.label,
 .ui.action.input.warning > .ui.button,
 .ui.labeled.input.warning:not([class*="corner labeled"]) > .ui.label {
   border-top: 1px solid #C9BA9B;
   border-bottom: 1px solid #C9BA9B;
 }
-.ui.form > .field.warning > .ui.left.action.input > .ui.button,
-.ui.form > .field.warning > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
-.ui.left.action.input.warning > .ui.button,
+.ui.form .field.warning > .ui[class*="left action"].input > .ui.button,
+.ui.form .field.warning > .ui.labeled.input:not(.right):not([class*="corner labeled"]) > .ui.label,
+.ui[class*="left action"].input.warning > .ui.button,
 .ui.labeled.input.warning:not(.right):not([class*="corner labeled"]) > .ui.label {
   border-left: 1px solid #C9BA9B;
 }
-.ui.form > .field.warning > .ui.action.input:not(.left) > input + .ui.button,
-.ui.form > .field.warning > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
-.ui.action.input.warning:not(.left) > input + .ui.button,
+.ui.form .field.warning > .ui.action.input:not([class*="left action"]) > input + .ui.button,
+.ui.form .field.warning > .ui.right.labeled.input:not([class*="corner labeled"]) > input + .ui.label,
+.ui.action.input.warning:not([class*="left action"]) > input + .ui.button,
 .ui.right.labeled.input.warning:not([class*="corner labeled"]) > input + .ui.label {
   border-right: 1px solid #C9BA9B;
 }
-.ui.form > .field.warning > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
+.ui.form .field.warning > .ui.right.labeled.input:not([class*="corner labeled"]) > .ui.label:first-child,
 .ui.right.labeled.input.warning:not([class*="corner labeled"]) > .ui.label:first-child {
   border-left: 1px solid #C9BA9B;
 }

@@ -33,7 +33,7 @@
   padding: 0.5em 0;
   font-family: inherit;
   font-size: 1em;
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Default Styling */
@@ -156,12 +156,12 @@
 .ui.styled.accordion .accordion .title:hover,
 .ui.styled.accordion .accordion .active.title {
   background: transparent;
-  color: #373e43;
+  color: #24272d;
 }
 .ui.styled.accordion .accordion .title:hover,
 .ui.styled.accordion .accordion .active.title {
   background: transparent;
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Active */

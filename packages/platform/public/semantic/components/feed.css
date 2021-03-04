@@ -129,7 +129,7 @@
   margin: 0;
   font-size: 1em;
   font-weight: bold;
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Summary Image */
@@ -184,7 +184,7 @@
   margin: 0.5em 0 0;
   background: none;
   padding: 0;
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Images */
@@ -237,10 +237,10 @@
   -webkit-transition: 0.2s color ease;
   transition: 0.2s color ease;
 }
-.ui.feed > .event > .content .meta .like:hover .icon {
+.ui.feed > .event > .content .meta .like:hover i.icon {
   color: #FF2733;
 }
-.ui.feed > .event > .content .meta .active.like .icon {
+.ui.feed > .event > .content .meta .active.like i.icon {
   color: #EF404A;
 }
 
@@ -254,7 +254,7 @@
 
 /* Action */
 .ui.feed > .event > .content .meta a,
-.ui.feed > .event > .content .meta > .icon {
+.ui.feed > .event > .content .meta > i.icon {
   cursor: pointer;
   opacity: 1;
   color: rgba(0, 0, 0, 0.5);
@@ -262,8 +262,8 @@
   transition: color 0.1s ease;
 }
 .ui.feed > .event > .content .meta a:hover,
-.ui.feed > .event > .content .meta a:hover .icon,
-.ui.feed > .event > .content .meta > .icon:hover {
+.ui.feed > .event > .content .meta a:hover i.icon,
+.ui.feed > .event > .content .meta > i.icon:hover {
   color: rgba(0, 0, 0, 0.95);
 }
 

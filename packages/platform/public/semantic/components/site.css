@@ -29,7 +29,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 15px;
   line-height: 1.5em;
-  color: #373e43;
+  color: #24272d;
 }
 
 
@@ -123,36 +123,36 @@ a:hover {
 /* Site */
 ::-webkit-selection {
   background-color: #CCE2FF;
-  color: #373e43;
+  color: #24272d;
 }
 ::-moz-selection {
   background-color: #CCE2FF;
-  color: #373e43;
+  color: #24272d;
 }
 ::selection {
   background-color: #CCE2FF;
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Form */
 textarea::-webkit-selection,
 input::-webkit-selection {
   background-color: rgba(100, 100, 100, 0.4);
-  color: #373e43;
+  color: #24272d;
 }
 textarea::-moz-selection,
 input::-moz-selection {
   background-color: rgba(100, 100, 100, 0.4);
-  color: #373e43;
+  color: #24272d;
 }
 textarea::-moz-selection, input::-moz-selection {
   background-color: rgba(100, 100, 100, 0.4);
-  color: #373e43;
+  color: #24272d;
 }
 textarea::selection,
 input::selection {
   background-color: rgba(100, 100, 100, 0.4);
-  color: #373e43;
+  color: #24272d;
 }
 
 /* Force Simple Scrollbars */

@@ -3,6 +3,7 @@
 return [
     'brand_name' => env('APP_NAME', 'Laravolt'),
     'brand_image' => env('APP_URL').'/img/app.png',
+    'brand_description' => env('APP_DESCRIPTION', 'Sample application powered by Laravolt'),
     'font_size' => 'small',
 
     /*

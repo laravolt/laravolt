@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css"data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
+    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
     @stack('style')
     @stack('head')
     {!! Asset::group('laravolt')->css() !!}

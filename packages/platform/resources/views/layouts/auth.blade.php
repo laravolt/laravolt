@@ -5,7 +5,7 @@
 
         <div class="x-inspire">
             <div class="x-inspire__content">
-                <div class="ui container text text-center p-3">
+                <div class="ui container text text-center p-4">
                     @include('laravolt::components.inspire')
                 </div>
             </div>
@@ -13,7 +13,7 @@
 
 
         <div class="x-auth">
-            <div class="x-auth__content">
+            <div class="x-auth__content p-4">
                 @include('laravolt::components.brand')
 
                 <div class="ui divider hidden m-b-4"></div>

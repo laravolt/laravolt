@@ -1,4 +1,4 @@
-<div class="text-center" data-role="brand">
+<div class="text-center" data-role="">
     @if(strlen(config('laravolt.ui.brand_image')) > 0)
         <img src="{{ config('laravolt.ui.brand_image') }}" alt="" class="ui image centered {{ $class ?? 'tiny' }}">
     @endif
