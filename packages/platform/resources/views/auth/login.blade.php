@@ -1,15 +1,7 @@
 @extends(config('laravolt.auth.layout'))
 
 @section('content')
-    <h2 class="ui header m-b-3">
-        @lang('laravolt::auth.login')
-        @if(config('laravolt.auth.registration.enable'))
-            <div class="sub header">
-                @lang('laravolt::auth.not_registered_yet?')
-                <a href="{{ route('auth::register') }}" class="link">@lang('laravolt::auth.register_here')</a>
-            </div>
-        @endif
-    </h2>
+    <h3 class="ui header horizontal divider section">@lang('laravolt::auth.login')</h3>
 
     {!! form()->open(route('auth::login.action')) !!}
     {!! form()->email(config('laravolt.auth.identifier'))->label(__('laravolt::auth.identifier')) !!}
@@ -30,14 +22,21 @@
                 </div>
             </div>
             <div class="column right aligned">
-                <a href="{{ route('auth::forgot') }}" class="link">@lang('laravolt::auth.forgot_password')</a>
+                <a themed href="{{ route('auth::forgot') }}" class="link">@lang('laravolt::auth.forgot_password')</a>
             </div>
         </div>
     </div>
 
-    <div class="ui field">
+    <div class="field action">
         <x-button class="fluid">@lang('laravolt::auth.login')</x-button>
     </div>
+
+    @if(config('laravolt.auth.registration.enable'))
+        <div>
+            @lang('laravolt::auth.not_registered_yet?')
+            <a themed href="{{ route('auth::register') }}" class="link">@lang('laravolt::auth.register_here')</a>
+        </div>
+    @endif
 
     {!! form()->close() !!}
 
