@@ -50,8 +50,11 @@ table.ui.table {
   .top.attached.menu {
     border-top: 0 none;
   }
-  .bottom.attached.menu {
+  .ui.bottom.attached.menu {
     border-bottom: 0 none;
     background: $coolGrey;
+    .item {
+      color: #8090a0;
+    }
   }
 }

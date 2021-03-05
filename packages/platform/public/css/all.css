@@ -3536,9 +3536,12 @@ table.ui.table.definition caption {
 .panel.x-suitable .top.attached.menu {
   border-top: 0 none;
 }
-.panel.x-suitable .bottom.attached.menu {
+.panel.x-suitable .ui.bottom.attached.menu {
   border-bottom: 0 none;
   background: #fbfdfe;
+}
+.panel.x-suitable .ui.bottom.attached.menu .item {
+  color: #8090a0;
 }
 
 .ui.toast-container.top.center {

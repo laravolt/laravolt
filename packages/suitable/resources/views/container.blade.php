@@ -18,7 +18,7 @@
     @include('suitable::table')
 
     @if($showFooter)
-        <div class="ui bottom attached menu">
+        <footer class="ui bottom attached menu">
             <div class="item">
                 <small>{{ $builder->summary() }}</small>
             </div>
@@ -38,6 +38,6 @@
             @endif
 
             {!! $collection->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
-        </div>
+        </footer>
     @endif
 </div>
