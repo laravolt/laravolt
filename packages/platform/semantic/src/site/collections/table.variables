@@ -3,5 +3,5 @@
 *******************************/
 @borderColor: #e2e8f0;
 @internalBorderColor: @borderColor;
-@solidBorderColor: #e2e8f0;
+@solidBorderColor: #dbe0e6;
 @solidSelectedBorderColor: #cfd7e3;

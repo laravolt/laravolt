@@ -1100,7 +1100,7 @@
   max-width: calc(100% + 2px);
   -webkit-box-shadow: none;
           box-shadow: none;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
 }
 .ui.attached + .ui.attached.table:not(.top) {
   border-top: none;

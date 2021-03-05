@@ -5,12 +5,18 @@
 
     <div class="menu" id="titlebar">
         <div class="item">
-            <div class="ui breadcrumb big">
-                <a class="section"> <i aria-hidden="true" class="icon home m-0"></i></a>
-                <span class="divider">/</span>
-                <div class="active section">
-                    <h4 class="ui header">@yield('page.title')</h4>
-                </div>
+            <div class="ui huge breadcrumb">
+                <a class="section">
+                    <img
+                            style="height: 25px"
+                            src="{{ config('laravolt.ui.brand_image') }}"
+                            alt=""
+                    >
+                </a>
+                <i class="right chevron icon divider"></i>
+                <a class="section">Registration</a>
+                <i class="right chevron icon divider"></i>
+                <div class="active section">Personal Information</div>
             </div>
         </div>
         <div class="item">

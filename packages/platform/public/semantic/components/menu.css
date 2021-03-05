@@ -661,7 +661,7 @@ Floated Menu / Item
           box-shadow: none !important;
   border: none;
   background: none transparent;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #dbe0e6;
 }
 .ui.tabular.fluid.menu {
   width: calc(100% + 2px) !important;
@@ -690,7 +690,7 @@ Floated Menu / Item
   background: none #FFFFFF;
   color: rgba(0, 0, 0, 0.95);
   border-top-width: 1px;
-  border-color: #e2e8f0;
+  border-color: #dbe0e6;
   font-weight: bold;
   margin-bottom: -1px;
   -webkit-box-shadow: none;
@@ -720,7 +720,7 @@ Floated Menu / Item
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   border-bottom: none;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe0e6;
 }
 .ui.bottom.tabular.menu .item {
   background: none;
@@ -732,7 +732,7 @@ Floated Menu / Item
 .ui.bottom.tabular.menu .active.item {
   background: none #FFFFFF;
   color: rgba(0, 0, 0, 0.95);
-  border-color: #e2e8f0;
+  border-color: #dbe0e6;
   margin: -1px 0 0 0;
   border-radius: 0 0 0.4rem 0.4rem !important;
 }
@@ -744,7 +744,7 @@ Floated Menu / Item
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   border-bottom: none;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid #dbe0e6;
 }
 .ui.vertical.tabular.menu .item {
   background: none;
@@ -756,7 +756,7 @@ Floated Menu / Item
 .ui.vertical.tabular.menu .active.item {
   background: none #FFFFFF;
   color: rgba(0, 0, 0, 0.95);
-  border-color: #e2e8f0;
+  border-color: #dbe0e6;
   margin: 0 -1px 0 0;
   border-radius: 0.4rem 0 0 0.4rem !important;
 }
@@ -769,7 +769,7 @@ Floated Menu / Item
           box-shadow: none !important;
   border-bottom: none;
   border-right: none;
-  border-left: 1px solid #e2e8f0;
+  border-left: 1px solid #dbe0e6;
 }
 .ui.vertical.right.tabular.menu .item {
   background: none;
@@ -781,7 +781,7 @@ Floated Menu / Item
 .ui.vertical.right.tabular.menu .active.item {
   background: none #FFFFFF;
   color: rgba(0, 0, 0, 0.95);
-  border-color: #e2e8f0;
+  border-color: #dbe0e6;
   margin: 0 0 0 -1px;
   border-radius: 0 0.4rem 0.4rem 0 !important;
 }
@@ -1948,8 +1948,8 @@ Floated Menu / Item
   width: 0.53333333em;
   height: 0.53333333em;
   border: none;
-  border-bottom: 1px solid #e2e8f0;
-  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #dbe0e6;
+  border-right: 1px solid #dbe0e6;
   z-index: 2;
   -webkit-transition: background 0.1s ease;
   transition: background 0.1s ease;
@@ -1964,8 +1964,8 @@ Floated Menu / Item
           transform: translateX(50%) translateY(-50%) rotate(45deg);
   margin: 0 -0.5px 0 0;
   border: none;
-  border-top: 1px solid #e2e8f0;
-  border-right: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe0e6;
+  border-right: 1px solid #dbe0e6;
 }
 .ui.pointing.menu .ui.dropdown .menu .item:after,
 .ui.vertical.pointing.menu .ui.dropdown .menu .item:after {
@@ -2107,7 +2107,7 @@ Floated Menu / Item
 
 /* Tabular Attached */
 .ui.attached.menu:not(.tabular) {
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
 }
 .ui.attached.inverted.menu {
   border: none;

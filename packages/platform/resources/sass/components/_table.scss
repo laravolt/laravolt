@@ -33,6 +33,12 @@ table.ui.table {
       margin-bottom: 1rem;
     }
   }
+
+  .placeholder {
+    .ui.header, .ui.header i.icon {
+      color: #bdc5ca;
+    }
+  }
 }
 
 //Hide pagination number on mobile

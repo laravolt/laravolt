@@ -16,12 +16,12 @@
 .ui.segment {
   position: relative;
   background: #FFFFFF;
-  -webkit-box-shadow: 0 1px 2px 0 #e2e8f0;
-          box-shadow: 0 1px 2px 0 #e2e8f0;
+  -webkit-box-shadow: 0 1px 2px 0 #dbe0e6;
+          box-shadow: 0 1px 2px 0 #dbe0e6;
   margin: 1rem 0;
   padding: 1em 1em;
   border-radius: 0.4rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
 }
 .ui.segment:first-child {
   margin-top: 0;
@@ -40,7 +40,7 @@
   -webkit-box-shadow: none;
           box-shadow: none;
   border: none;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #dbe0e6;
 }
 .ui.vertical.segment:last-child {
   border-bottom: none;
@@ -90,9 +90,9 @@
 /* Table */
 .ui.basic.table.segment {
   background: #FFFFFF;
-  border: 1px solid #e2e8f0;
-  -webkit-box-shadow: 0 1px 2px 0 #e2e8f0;
-          box-shadow: 0 1px 2px 0 #e2e8f0;
+  border: 1px solid #dbe0e6;
+  -webkit-box-shadow: 0 1px 2px 0 #dbe0e6;
+          box-shadow: 0 1px 2px 0 #dbe0e6;
 }
 .ui[class*="very basic"].table.segment {
   padding: 1em 1em;
@@ -134,7 +134,7 @@
   padding: 1em 1em;
   min-height: 18rem;
   background: #F9FAFB;
-  border-color: #e2e8f0;
+  border-color: #dbe0e6;
   -webkit-box-shadow: 0 2px 25px 0 rgba(34, 36, 38, 0.05) inset;
           box-shadow: 0 2px 25px 0 rgba(34, 36, 38, 0.05) inset;
 }
@@ -200,7 +200,7 @@
   left: 0;
   position: absolute;
   width: 100%;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
   -webkit-box-shadow: '';
           box-shadow: '';
 }
@@ -250,7 +250,7 @@
   position: absolute;
   bottom: -3px;
   left: 0;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe0e6;
   background: rgba(0, 0, 0, 0.03);
   width: 100%;
   height: 6px;
@@ -353,9 +353,9 @@
           flex-direction: column;
   position: relative;
   margin: 1rem 0;
-  border: 1px solid #e2e8f0;
-  -webkit-box-shadow: 0 1px 2px 0 #e2e8f0;
-          box-shadow: 0 1px 2px 0 #e2e8f0;
+  border: 1px solid #dbe0e6;
+  -webkit-box-shadow: 0 1px 2px 0 #dbe0e6;
+          box-shadow: 0 1px 2px 0 #dbe0e6;
   border-radius: 0.4rem;
 }
 .ui.segments:first-child {
@@ -375,7 +375,7 @@
   -webkit-box-shadow: none;
           box-shadow: none;
   border: none;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe0e6;
 }
 .ui.segments:not(.horizontal) > .segment:first-child {
   top: 0;
@@ -392,8 +392,8 @@
   bottom: 0;
   margin-top: 0;
   margin-bottom: 0;
-  -webkit-box-shadow: 0 1px 2px 0 #e2e8f0, none;
-          box-shadow: 0 1px 2px 0 #e2e8f0, none;
+  -webkit-box-shadow: 0 1px 2px 0 #dbe0e6, none;
+          box-shadow: 0 1px 2px 0 #dbe0e6, none;
   border-radius: 0 0 0.4rem 0.4rem;
 }
 
@@ -404,7 +404,7 @@
 
 /* Nested Group */
 .ui.segments > .ui.segments {
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe0e6;
   margin: 1rem 1rem;
 }
 .ui.segments > .segments:first-child {
@@ -425,11 +425,11 @@
           flex-direction: row;
   background-color: transparent;
   padding: 0;
-  -webkit-box-shadow: 0 1px 2px 0 #e2e8f0;
-          box-shadow: 0 1px 2px 0 #e2e8f0;
+  -webkit-box-shadow: 0 1px 2px 0 #dbe0e6;
+          box-shadow: 0 1px 2px 0 #dbe0e6;
   margin: 1rem 0;
   border-radius: 0.4rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
 }
 .ui.stackable.horizontal.segments {
   -ms-flex-wrap: wrap;
@@ -444,7 +444,7 @@
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe0e6;
 }
 
 /* Horizontal Segment */
@@ -462,7 +462,7 @@
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
-  border-left: 1px solid #e2e8f0;
+  border-left: 1px solid #dbe0e6;
 }
 
 /* Border Fixes */
@@ -769,7 +769,7 @@
   max-width: calc(100% + 2px);
   -webkit-box-shadow: none;
           box-shadow: none;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
 }
 .ui.attached:not(.message) + .ui.attached.segment:not(.top) {
   border-top: none;
@@ -793,8 +793,8 @@
   margin-top: 0;
   top: 0;
   margin-bottom: 1rem;
-  -webkit-box-shadow: 0 1px 2px 0 #e2e8f0, none;
-          box-shadow: 0 1px 2px 0 #e2e8f0, none;
+  -webkit-box-shadow: 0 1px 2px 0 #dbe0e6, none;
+          box-shadow: 0 1px 2px 0 #dbe0e6, none;
   border-radius: 0 0 0.4rem 0.4rem;
 }
 .ui.segment[class*="bottom attached"]:last-child {
