@@ -3,26 +3,39 @@
 
     @yield('page.back')
 
-    <div class="menu" id="titlebar">
-        <div class="item">
-            <div class="ui huge breadcrumb">
-                <a class="section">
-                    <img
-                            style="height: 25px"
-                            src="{{ config('laravolt.ui.brand_image') }}"
-                            alt=""
-                    >
-                </a>
-                <i class="right chevron icon divider"></i>
-                <a class="section">Registration</a>
-                <i class="right chevron icon divider"></i>
-                <div class="active section">Personal Information</div>
+    <div class="menu p-l-2" id="titlebar">
+        <div class="left menu">
+            <div class="item">
+                <img
+                        style="height: 25px"
+                        class="ui image"
+                        src="{{ config('laravolt.ui.brand_image') }}"
+                        alt=""
+                >
+            </div>
+            <div class="item divider">
+                <svg class="icon line-color" width="20" height="20"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19,12,14,3m5,9-5,9"
+                          style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 0.5;"></path>
+                </svg>
+            </div>
+            <div class="item">
+                <a href="#">Section</a>
+            </div>
+            <div class="item divider">
+                <svg class="icon line-color" width="20" height="20"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19,12,14,3m5,9-5,9"
+                          style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 0.5;"></path>
+                </svg>
+            </div>
+            <div class="item">
+                <a href="#">Page</a>
             </div>
         </div>
-        <div class="item">
-        </div>
 
-        @yield('page.actions')
+{{--        @yield('page.actions')--}}
     </div>
 
     <div class="menu right p-r-1" id="userbar" data-turbolinks-permanent>
