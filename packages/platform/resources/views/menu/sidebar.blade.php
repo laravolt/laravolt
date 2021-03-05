@@ -5,15 +5,28 @@
 
         <div class="sidebar__menu">
 
-            <div class="ui attached vertical menu fluid">
-                <div class="item brand">
-                    {{ config('laravolt.ui.brand_name') }}
-                </div>
+            <div class="m-b-0 p-0 ui basic segment text-center">
+                <div class="ui divider hidden"></div>
+                {{--<img src="{{ auth()->user()->avatar }}" alt="" class="ui image tiny centered avatar">--}}
+                <img src="https://treo.pulsethemes.com/angular/demo/assets/images/avatars/andrew-watkins.jpg"
+                     alt="{{ auth()->user()->name }}"
+                     class="ui image tiny centered avatar">
+                <h4 class="ui header inverted blue m-b-3">
+                    {{ auth()->user()->name }}
+                    <div class="sub header">{!!  auth()->user()->roles->map(fn($role) => "{$role->name}")->implode(' &bull; ')  !!}</span>
+                </h4>
+                <div class="ui divider inverted"></div>
             </div>
 
+            {{--<div class="ui attached vertical menu fluid">--}}
+            {{--    <div class="item brand">--}}
+            {{--        {{ config('laravolt.ui.brand_name') }}--}}
+            {{--    </div>--}}
+            {{--</div>--}}
+
             @if(!$items->isEmpty())
-                @if(config('laravolt.ui.quick_switcher'))
-                    @include('laravolt::quick-switcher.sidebar')
+                @if(config('laravolt.platform.features.quick_switcher'))
+{{--                    @include('laravolt::quick-switcher.sidebar')--}}
                     @include('laravolt::quick-switcher.modal')
                 @endif
 

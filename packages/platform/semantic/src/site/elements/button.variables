@@ -4,3 +4,4 @@
 @fontWeight: @normal;
 @verticalPadding: @relative15px;
 @horizontalPadding: 2em;
+@borderRadius: @4px;

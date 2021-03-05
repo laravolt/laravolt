@@ -3562,7 +3562,7 @@ table.ui.table .placeholder .ui.header, table.ui.table .placeholder .ui.header i
   font-weight: 700;
 }
 #titlebar .left.menu .item.divider {
-  padding: 0 0.5rem 0 0;
+  padding: 0 0.5rem;
 }
 #titlebar .button {
   margin-right: 0.5em;
@@ -3591,13 +3591,13 @@ nav.sidebar.wide {
   nav.sidebar {
     position: absolute !important;
     left: -250px !important;
-    top: 65px;
+    top: 40px;
   }
   nav.sidebar.show {
     left: 0 !important;
   }
   nav.sidebar .sidebar__scroller {
-    padding-bottom: 65px;
+    padding-bottom: 40px;
   }
 }
 
@@ -3617,17 +3617,16 @@ nav.sidebar.wide {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.sidebar__scroller .ui.attached.menu .icon {
-  line-height: 1.5 !important;
-}
 .sidebar__scroller .ui.attached.menu .icon.left {
   float: left;
   margin: 0 1rem 0 0;
+  line-height: 1.5 !important;
 }
 .sidebar__scroller .ui.attached.menu i.angle.icon {
   margin: 0 -0.5rem 0 0;
   float: right;
   opacity: 0.5;
+  line-height: 1.5 !important;
 }
 .sidebar__scroller .ui.attached.menu .item.brand {
   font-size: 1.5rem;
@@ -3717,7 +3716,7 @@ a[themed]:not(.ui.button) {
           flex-direction: row;
 }
 .layout--app header.ui.menu {
-  height: 65px;
+  height: 40px;
   border: 0 none;
   left: 250px;
   width: calc(100% - 250px + 2px);
@@ -3743,7 +3742,7 @@ a[themed]:not(.ui.button) {
   min-height: 800px;
 }
 .layout--app > .content .content__body {
-  margin-top: 65px;
+  margin-top: 40px;
 }
 
 .layout--split {

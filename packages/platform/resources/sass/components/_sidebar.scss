@@ -42,19 +42,17 @@ nav.sidebar {
     padding-left: 1rem;
     padding-right: 1rem;
 
-    .icon {
-      line-height: 1.5 !important;
-    }
-
     .icon.left {
       float: left;
       margin: 0 1rem 0 0;
+      line-height: 1.5 !important;
     }
 
     i.angle.icon {
       margin: 0 -0.5rem 0 0;
       float: right;
       opacity: .5;
+      line-height: 1.5 !important;
     }
 
     .item {

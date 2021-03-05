@@ -691,7 +691,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   font-style: normal;
   text-align: center;
   text-decoration: none;
-  border-radius: 0.4rem;
+  border-radius: 0.26666667rem;
   -webkit-box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
   box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
   -webkit-user-select: none;
@@ -1519,7 +1519,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   background: transparent none;
   color: rgba(0, 0, 0, 0.6);
   font-weight: normal;
-  border-radius: 0.4rem;
+  border-radius: 0.26666667rem;
   text-transform: none;
   text-shadow: none !important;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
@@ -1530,7 +1530,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   -webkit-box-shadow: none;
   box-shadow: none;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 0.4rem;
+  border-radius: 0.26666667rem;
 }
 
 .ui.basic.buttons .button {
@@ -1692,7 +1692,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 .ui.tertiary.button:active {
   -webkit-box-shadow: inset 0 -0.2em 0 #999999;
   box-shadow: inset 0 -0.2em 0 #999999;
-  border-radius: 0.4rem 0.4rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
   color: #666666;
   background: none;
 }
@@ -1765,23 +1765,23 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 }
 
 .ui.labeled.icon.buttons .button:first-child > .icon {
-  border-top-left-radius: 0.4rem;
-  border-bottom-left-radius: 0.4rem;
+  border-top-left-radius: 0.26666667rem;
+  border-bottom-left-radius: 0.26666667rem;
 }
 
 .ui.labeled.icon.buttons .button:last-child > .icon {
-  border-top-right-radius: 0.4rem;
-  border-bottom-right-radius: 0.4rem;
+  border-top-right-radius: 0.26666667rem;
+  border-bottom-right-radius: 0.26666667rem;
 }
 
 .ui.vertical.labeled.icon.buttons .button:first-child > .icon {
   border-radius: 0;
-  border-top-left-radius: 0.4rem;
+  border-top-left-radius: 0.26666667rem;
 }
 
 .ui.vertical.labeled.icon.buttons .button:last-child > .icon {
   border-radius: 0;
-  border-bottom-left-radius: 0.4rem;
+  border-bottom-left-radius: 0.26666667rem;
 }
 
 /* Loading Icon in Labeled Button */
@@ -1890,11 +1890,11 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 /* Top / Bottom */
 
 .ui.attached.top.button {
-  border-radius: 0.4rem 0.4rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
 }
 
 .ui.attached.bottom.button {
-  border-radius: 0 0 0.4rem 0.4rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
 }
 
 /* Left / Right */
@@ -1904,14 +1904,14 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   border-left: none;
   text-align: right;
   padding-right: 0.75em;
-  border-radius: 0.4rem 0 0 0.4rem;
+  border-radius: 0.26666667rem 0 0 0.26666667rem;
 }
 
 .ui.right.attached.button {
   display: inline-block;
   text-align: left;
   padding-left: 0.75em;
-  border-radius: 0 0.4rem 0.4rem 0;
+  border-radius: 0 0.26666667rem 0.26666667rem 0;
 }
 
 /* Plural */
@@ -1944,28 +1944,28 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 
 .ui[class*="top attached"].buttons {
   margin-bottom: -1px;
-  border-radius: 0.4rem 0.4rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
 }
 
 .ui[class*="top attached"].buttons .button:first-child {
-  border-radius: 0.4rem 0 0 0;
+  border-radius: 0.26666667rem 0 0 0;
 }
 
 .ui[class*="top attached"].buttons .button:last-child {
-  border-radius: 0 0.4rem 0 0;
+  border-radius: 0 0.26666667rem 0 0;
 }
 
 .ui[class*="bottom attached"].buttons {
   margin-top: -1px;
-  border-radius: 0 0 0.4rem 0.4rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
 }
 
 .ui[class*="bottom attached"].buttons .button:first-child {
-  border-radius: 0 0 0 0.4rem;
+  border-radius: 0 0 0 0.26666667rem;
 }
 
 .ui[class*="bottom attached"].buttons .button:last-child {
-  border-radius: 0 0 0.4rem 0;
+  border-radius: 0 0 0.26666667rem 0;
 }
 
 /* Left / Right */
@@ -1976,17 +1976,17 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   display: inline-flex;
   margin-right: 0;
   margin-left: -1px;
-  border-radius: 0 0.4rem 0.4rem 0;
+  border-radius: 0 0.26666667rem 0.26666667rem 0;
 }
 
 .ui[class*="left attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0 0.4rem 0 0;
+  border-radius: 0 0.26666667rem 0 0;
 }
 
 .ui[class*="left attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0 0 0.4rem 0;
+  border-radius: 0 0 0.26666667rem 0;
 }
 
 .ui[class*="right attached"].buttons {
@@ -1995,17 +1995,17 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   display: inline-flex;
   margin-left: 0;
   margin-right: -1px;
-  border-radius: 0.4rem 0 0 0.4rem;
+  border-radius: 0.26666667rem 0 0 0.26666667rem;
 }
 
 .ui[class*="right attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0.4rem 0 0 0;
+  border-radius: 0.26666667rem 0 0 0;
 }
 
 .ui[class*="right attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0 0 0 0.4rem;
+  border-radius: 0 0 0 0.26666667rem;
 }
 
 /*-------------------
@@ -5588,13 +5588,13 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 .ui.buttons .button:first-child {
   border-left: none;
   margin-left: 0;
-  border-top-left-radius: 0.4rem;
-  border-bottom-left-radius: 0.4rem;
+  border-top-left-radius: 0.26666667rem;
+  border-bottom-left-radius: 0.26666667rem;
 }
 
 .ui.buttons .button:last-child {
-  border-top-right-radius: 0.4rem;
-  border-bottom-right-radius: 0.4rem;
+  border-top-right-radius: 0.26666667rem;
+  border-bottom-right-radius: 0.26666667rem;
 }
 
 /* Vertical  Style */
@@ -5620,18 +5620,18 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 }
 
 .ui.vertical.buttons .button:first-child {
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
+  border-top-left-radius: 0.26666667rem;
+  border-top-right-radius: 0.26666667rem;
 }
 
 .ui.vertical.buttons .button:last-child {
   margin-bottom: 0;
-  border-bottom-left-radius: 0.4rem;
-  border-bottom-right-radius: 0.4rem;
+  border-bottom-left-radius: 0.26666667rem;
+  border-bottom-right-radius: 0.26666667rem;
 }
 
 .ui.vertical.buttons .button:only-child {
-  border-radius: 0.4rem;
+  border-radius: 0.26666667rem;
 }
 
 /*******************************
@@ -18452,7 +18452,7 @@ img.ui.bordered.image {
   text-transform: none;
   font-weight: bold;
   border: 0 solid transparent;
-  border-radius: 0.4rem;
+  border-radius: 0.26666667rem;
   -webkit-transition: background 0.1s ease;
   transition: background 0.1s ease;
 }
@@ -18636,7 +18636,7 @@ a.ui.label {
   text-transform: none;
   background: #E8E8E8;
   padding: 0.5833em 0.833em 0.5833em 0.5em;
-  border-radius: 0.4rem;
+  border-radius: 0.26666667rem;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
@@ -18650,14 +18650,14 @@ a.ui.label {
   vertical-align: top;
   height: 2.1666em;
   margin: -0.5833em 0.5em -0.5833em -0.5em;
-  border-radius: 0.4rem 0 0 0.4rem;
+  border-radius: 0.26666667rem 0 0 0.26666667rem;
 }
 
 .ui.image.label .detail {
   background: rgba(0, 0, 0, 0.1);
   margin: -0.5833em -0.833em -0.5833em 0.5em;
   padding: 0.5833em 0.833em;
-  border-radius: 0 0.4rem 0.4rem 0;
+  border-radius: 0 0.26666667rem 0.26666667rem 0;
 }
 
 .ui.bottom.attached.image.label:not(.right) > img,
@@ -18680,7 +18680,7 @@ a.ui.label {
   position: relative;
   padding-left: 1.5em;
   padding-right: 1.5em;
-  border-radius: 0 0.4rem 0.4rem 0;
+  border-radius: 0 0.26666667rem 0.26666667rem 0;
   -webkit-transition: none;
   transition: none;
 }
@@ -18826,7 +18826,7 @@ a.ui.label {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
-  border-radius: 0 0.4rem 0.4rem 0;
+  border-radius: 0 0.26666667rem 0.26666667rem 0;
   border-color: rgba(0, 0, 0, 0.15);
 }
 
@@ -18892,7 +18892,7 @@ a.ui.label {
   text-align: left;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  border-radius: 0.4rem 0 0 0.4rem;
+  border-radius: 0.26666667rem 0 0 0.26666667rem;
 }
 
 .ui[class*="right ribbon"].label:after {
@@ -18958,21 +18958,21 @@ a.ui.label {
 .ui[class*="top left attached"].label {
   width: auto;
   margin-top: 0;
-  border-radius: 0.2rem 0 0.4rem 0;
+  border-radius: 0.2rem 0 0.26666667rem 0;
 }
 
 .ui[class*="top right attached"].label {
   width: auto;
   left: auto;
   right: 0;
-  border-radius: 0 0.2rem 0 0.4rem;
+  border-radius: 0 0.2rem 0 0.26666667rem;
 }
 
 .ui[class*="bottom left attached"].label {
   width: auto;
   top: auto;
   bottom: 0;
-  border-radius: 0 0.4rem 0 0.2rem;
+  border-radius: 0 0.26666667rem 0 0.2rem;
 }
 
 .ui[class*="bottom right attached"].label {
@@ -18981,7 +18981,7 @@ a.ui.label {
   left: auto;
   right: 0;
   width: auto;
-  border-radius: 0.4rem 0 0.2rem 0;
+  border-radius: 0.26666667rem 0 0.2rem 0;
 }
 
 /*******************************

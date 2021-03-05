@@ -17,12 +17,11 @@ return [
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'red',
+    'color' => 'blue',
 
     'system_menu' => [
         'order' => 99,
     ],
-    'quick_switcher' => false,
     'flash' => [
         'attributes' => [
             'class' => 'black',

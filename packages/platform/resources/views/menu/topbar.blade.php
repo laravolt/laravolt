@@ -8,31 +8,31 @@
             <div class="item">
                 <img
                         style="height: 25px"
-                        class="ui image"
+                        class="ui image m-r-1"
                         src="{{ config('laravolt.ui.brand_image') }}"
                         alt=""
                 >
+                {{ config('laravolt.ui.brand_name') }}
+                <div class="ui label violet small">V 1.2.3</div>
             </div>
-            <div class="item divider">
-                <svg class="icon line-color" width="20" height="20"
-                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19,12,14,3m5,9-5,9"
-                          style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 0.5;"></path>
-                </svg>
-            </div>
-            <div class="item">
-                <a href="#">Section</a>
-            </div>
-            <div class="item divider">
-                <svg class="icon line-color" width="20" height="20"
-                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19,12,14,3m5,9-5,9"
-                          style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 0.5;"></path>
-                </svg>
-            </div>
-            <div class="item">
-                <a href="#">Page</a>
-            </div>
+            {{--<div class="item divider">--}}
+            {{--    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+            {{--        <path d="M15.5 0L25 18.9429L15.5 39.5"--}}
+            {{--              style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1;"/>--}}
+            {{--    </svg>--}}
+            {{--</div>--}}
+            {{--<div class="item">--}}
+            {{--    <a href="#">Section</a>--}}
+            {{--</div>--}}
+            {{--<div class="item divider">--}}
+            {{--    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+            {{--        <path d="M15.5 0L25 18.9429L15.5 39.5"--}}
+            {{--              style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1;"/>--}}
+            {{--    </svg>--}}
+            {{--</div>--}}
+            {{--<div class="item">--}}
+            {{--    <a href="#">Page</a>--}}
+            {{--</div>--}}
         </div>
 
 {{--        @yield('page.actions')--}}
