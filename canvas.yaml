@@ -1,0 +1,27 @@
+preset: package
+
+namespace: Laravolt\Platform
+user-auth-provider: App\User
+
+paths:
+  src: packages/platform/src/Platform
+  resource: packages/platform/resources
+
+factory:
+  path: packages/platform/database/factories
+
+migration:
+  path: packages/platform/database/migrations
+  prefix: ''
+
+console:
+  namespace: Laravolt\Platform\Console
+
+model:
+  namespace: Laravolt\Platform\Models
+
+provider:
+  namespace: Laravolt\Platform\Providers
+
+testing:
+  namespace: Laravolt\Platform\Tests

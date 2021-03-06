@@ -686,7 +686,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
   padding: 1em 2em 1em;
   text-transform: none;
   text-shadow: none;
-  font-weight: normal;
+  font-weight: bold;
   line-height: 1em;
   font-style: normal;
   text-align: center;

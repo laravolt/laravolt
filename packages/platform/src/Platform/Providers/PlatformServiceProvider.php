@@ -6,9 +6,9 @@ namespace Laravolt\Platform\Providers;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Ui\UiCommand;
 use Laravolt\Contracts\HasRoleAndPermission;
@@ -35,8 +35,9 @@ use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltUiCommand;
 use Laravolt\Platform\Services\Password;
+use Laravolt\Platform\View\Components\BrandImage;
 
-class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
+class PlatformServiceProvider extends ServiceProvider
 {
     protected $commands = [
         AdminCommand::class,
@@ -235,20 +236,21 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootComponents()
     {
-        Blade::components([
-            'backlink' => BacklinkComponent::class,
-            'button' => ButtonComponent::class,
-            'cards' => CardsComponent::class,
-            'card' => CardComponent::class,
-            'card-footer' => CardFooterComponent::class,
-            'item' => ItemComponent::class,
-            'label' => LabelComponent::class,
-            'link' => LinkComponent::class,
-            'media-library' => MediaLibraryComponent::class,
-            'panel' => PanelComponent::class,
-            'tab' => TabComponent::class,
-            'tab-content' => TabContentComponent::class,
-            'titlebar' => TitlebarComponent::class,
+        $this->loadViewComponentsAs('volt', [
+            BacklinkComponent::class,
+            BrandImage::class,
+            ButtonComponent::class,
+            CardsComponent::class,
+            CardComponent::class,
+            CardFooterComponent::class,
+            ItemComponent::class,
+            LabelComponent::class,
+            LinkComponent::class,
+            MediaLibraryComponent::class,
+            PanelComponent::class,
+            TabComponent::class,
+            TabContentComponent::class,
+            TitlebarComponent::class,
         ]);
     }
 

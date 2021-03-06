@@ -3,17 +3,6 @@
   min-height: 100vh;
   justify-content: center;
 
-  @media only screen and (max-width: 767px) {
-    flex-direction: column;
-    justify-content: flex-start;
-    .x-inspire {
-      flex: 0 0 50px !important;
-      .ui.container.text {
-        display: none;
-      }
-    }
-  }
-
   > div {
     display: flex;
   }
@@ -38,4 +27,20 @@
       padding: 4em;
     }
   }
+
+  @media only screen and (max-width: 991px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    .x-inspire {
+      flex: 0 0 50px !important;
+
+      .ui.container.text {
+        display: none;
+      }
+    }
+    .x-auth {
+      flex-grow: 1;
+    }
+  }
+
 }

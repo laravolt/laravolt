@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(119, 0, 70); display: block; z-index: 1; position: relative; shape-rendering: auto;" width="500" height="350" preserveAspectRatio="xMidYMid" viewBox="0 0 500 350">
+<g transform=""><linearGradient id="ldb-nq4q5u6dq7r-lg" x1="0" y1="0" x2="0" y2="1">
+  <stop stop-color="#004e53" offset="0"></stop>
+  <stop stop-color="#95ff27" offset="1"></stop>
+</linearGradient><rect x="-27.77777777777778" y="-350" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(-0.836995 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-2s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="27.77777777777778" y="-306.25" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(-2.69058 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-1.75s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="83.33333333333334" y="-262.5" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(-2.96524 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-1.5s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="138.88888888888889" y="-218.75" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(-1.59812 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-1.25s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="194.44444444444446" y="-175" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(0.836996 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-1s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="250" y="-131.25" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(2.69058 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-0.75s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="305.55555555555554" y="-87.5" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(2.96524 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-0.5s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="361.11111111111114" y="-43.75" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(1.59812 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="-0.25s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect><rect x="416.6666666666667" y="0" width="111.11111111111111" height="700" fill="url(#ldb-nq4q5u6dq7r-lg)" transform="translate(-0.836995 0)">
+  <animateTransform attributeName="transform" type="translate" repeatCount="indefinite" dur="2s" begin="0s" keyTimes="0;0.5;1" values="-3.055555555555556;3.055555555555556;-3.055555555555556" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" calcMode="spline"></animateTransform>
+</rect></g>
+<style type="text/css">.lded > .content, .lded > .content > .inner { height: 100%; }
+.lded > .content > .inner > .viewer { width: 100%; height: 100%; max-width: 100%; }
+.lded > .content > .inner > .panel {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  opacity: 0.3;
+}
+.lded > .content > .inner > .panel:hover { opacity: 1; }
+.lded > .content > .inner > .ctrl {
+  position: absolute;
+  bottom: 13px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.lded > .content > .inner > .ctrl:hover {
+  z-index: 10;
+}
+#editor > .inner > .title {
+  position: absolute;
+  bottom: 195px;
+  left: 0;
+  right: 0;
+  z-index: 11;
+}
+#editor > .inner > .title > a:first-child {
+  margin-left: 0!important;
+#editor .lded .viewer { border-radius: 0 }</style></svg>
