@@ -19,9 +19,6 @@
                     <div class="ui divider hidden"></div>
 
                     @yield('content')
-
-                    <div class="ui divider hidden m-b-5"></div>
-
                 </div>
             </div>
 
