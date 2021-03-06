@@ -263,7 +263,7 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
 }
 
-.shadow-md {
+.shadow-md, .layout--auth.is-boxed .layout--auth__container {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
@@ -3745,58 +3745,162 @@ a[themed]:not(.ui.button) {
   margin-top: 40px;
 }
 
-.layout--split {
+.layout--auth .x-inspire__content {
+  font-size: 2em;
+  line-height: 1.5em;
+  text-align: center;
+  padding: 2rem;
+}
+.layout--auth.is-fullscreen {
   display: -webkit-box;
   display: flex;
   min-height: 100vh;
   -webkit-box-pack: center;
           justify-content: center;
 }
-.layout--split > div {
+.layout--auth.is-fullscreen .layout--auth__container {
   display: -webkit-box;
   display: flex;
-}
-.layout--split .x-inspire {
-  -webkit-box-flex: 1;
-          flex: 1;
-}
-.layout--split .x-inspire .ui.container.text {
-  font-size: 3rem;
-}
-.layout--split .x-inspire__content {
-  align-self: center;
-  -webkit-box-flex: 1;
-          flex: 1;
-}
-.layout--split .x-auth {
-  -webkit-box-flex: 0;
-          flex: 0 0 500px;
-  background: #FFFFFF;
-}
-.layout--split .x-auth__content {
-  align-self: center;
-  -webkit-box-flex: 1;
-          flex: 1;
-  padding: 4em;
+  width: 100%;
 }
 @media only screen and (max-width: 991px) {
-  .layout--split {
+  .layout--auth.is-fullscreen .layout--auth__container {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
             flex-direction: column;
     -webkit-box-pack: start;
             justify-content: flex-start;
   }
-  .layout--split .x-inspire {
+}
+.layout--auth.is-fullscreen .layout--auth__container > div {
+  display: -webkit-box;
+  display: flex;
+  padding: 3em;
+}
+.layout--auth.is-fullscreen .x-inspire {
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-fullscreen .x-inspire {
     -webkit-box-flex: 0 !important;
             flex: 0 0 50px !important;
   }
-  .layout--split .x-inspire .ui.container.text {
+}
+.layout--auth.is-fullscreen .x-inspire__text {
+  font-size: 3rem;
+  line-height: 1.5em;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-fullscreen .x-inspire__text {
     display: none;
   }
-  .layout--split .x-auth {
+}
+.layout--auth.is-fullscreen .x-inspire__content {
+  align-self: center;
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+.layout--auth.is-fullscreen .x-auth {
+  -webkit-box-flex: 2;
+          flex: 2;
+  background: #FFFFFF;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-fullscreen .x-auth {
     -webkit-box-flex: 1;
             flex-grow: 1;
+  }
+}
+.layout--auth.is-fullscreen .x-auth__content {
+  align-self: center;
+  -webkit-box-flex: 1;
+          flex: 1;
+  max-width: 480px;
+  padding: 4em;
+}
+@media only screen and (max-width: 1824px) {
+  .layout--auth.is-fullscreen .x-auth__content {
+    margin: auto;
+    align-self: flex-start;
+  }
+}
+.layout--auth.is-boxed {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+          flex: 1 1 auto;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+.layout--auth.is-boxed .layout--auth__container {
+  display: -webkit-box;
+  display: flex;
+  align-content: center;
+  width: 960px;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-boxed .layout--auth__container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+    -webkit-box-pack: start;
+            justify-content: flex-start;
+    width: 95%;
+  }
+}
+.layout--auth.is-boxed .layout--auth__container > div {
+  width: 50%;
+  display: -webkit-box;
+  display: flex;
+  padding: 2em;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-boxed .layout--auth__container > div {
+    width: 100%;
+    padding: 1em;
+  }
+}
+.layout--auth.is-boxed .x-inspire {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-boxed .x-inspire__text {
+    display: none;
+  }
+}
+.layout--auth.is-boxed .x-auth {
+  background: #FFFFFF;
+}
+@media only screen and (max-width: 991px) {
+  .layout--auth.is-boxed .x-auth {
+    -webkit-box-flex: 1;
+            flex-grow: 1;
+  }
+}
+.layout--auth.is-boxed .x-auth__content {
+  align-self: center;
+  -webkit-box-flex: 1;
+          flex: 1;
+  padding: 2em;
+}
+@media only screen and (max-width: 1824px) {
+  .layout--auth.is-boxed .x-auth__content {
+    margin: auto;
+    align-self: flex-start;
   }
 }
 
