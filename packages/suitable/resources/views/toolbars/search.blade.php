@@ -1,5 +1,5 @@
 <form method="GET" action="{{ url()->current() }}">
-    <div class="ui action input">
+    <div class="ui action input small">
         @foreach(collect(request()->query())->except('page', $name) as $queryString => $value)
             @if(is_string($value))
             <input type="hidden" name="{{ $queryString }}" value="{{ $value }}">

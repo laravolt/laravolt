@@ -10,7 +10,7 @@
     {!! form()->password('password')->label(__('laravolt::auth.password')) !!}
     {!! form()->password('password_confirmation')->label(__('laravolt::auth.password_confirmation')) !!}
     <div class="field action">
-        <x-button class="fluid">@lang('laravolt::auth.register')</x-button>
+        <x-laravolt::button class="fluid">@lang('laravolt::auth.register')</x-laravolt::button>
     </div>
 
     <div>

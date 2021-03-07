@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <x-panel title="{{ __('Edit Profil') }}">
+    <x-laravolt::panel title="{{ __('Edit Profil') }}">
         {!! form()->bind($user)->put(route('epicentrum::my.profile.update'))->horizontal() !!}
 
         {!! form()->text('name')->label(__('laravolt::users.name')) !!}
@@ -11,5 +11,5 @@
 
         {!! form()->action(form()->submit(__('laravolt::action.save'))) !!}
         {!! form()->close() !!}
-    </x-panel>
+    </x-laravolt::panel>
 @endsection

@@ -5,7 +5,7 @@
 
 <div class="ui grid equal width">
     <div class="column">
-        <x-panel title="Panel">
+        <x-laravolt::panel title="Panel">
             <div class="ui placeholder">
                 <div class="image header">
                     <div class="line"></div>
@@ -16,10 +16,10 @@
                     <div class="line"></div>
                 </div>
             </div>
-        </x-panel>
+        </x-laravolt::panel>
     </div>
     <div class="column">
-        <x-panel title="Panel With Icon" icon="github">
+        <x-laravolt::panel title="Panel With Icon" icon="github">
             <div class="ui placeholder">
                 <div class="image header">
                     <div class="line"></div>
@@ -30,11 +30,11 @@
                     <div class="line"></div>
                 </div>
             </div>
-        </x-panel>
+        </x-laravolt::panel>
     </div>
     <div class="row">
         <div class="column">
-            <x-panel title="Panel With Footer">
+            <x-laravolt::panel title="Panel With Footer">
                 <div class="ui placeholder">
                     <div class="image header">
                         <div class="line"></div>
@@ -45,13 +45,13 @@
                         <div class="line"></div>
                     </div>
                 </div>
-                <x-slot name="footer">
+                <x-laravolt::slot name="footer">
                     Footer
-                </x-slot>
-            </x-panel>
+                </x-laravolt::slot>
+            </x-laravolt::panel>
         </div>
         <div class="column">
-            <x-panel title="Panel With Action">
+            <x-laravolt::panel title="Panel With Action">
                 <div class="ui placeholder">
                     <div class="image header">
                         <div class="line"></div>
@@ -62,13 +62,13 @@
                         <div class="line"></div>
                     </div>
                 </div>
-                <x-slot name="action">
-                    <x-link url="#" icon="edit" class="mini">Edit</x-link>
-                </x-slot>
-                <x-slot name="footer">
+                <x-laravolt::slot name="action">
+                    <x-laravolt::link url="#" icon="edit" class="mini">Edit</x-laravolt::link>
+                </x-laravolt::slot>
+                <x-laravolt::slot name="footer">
                     Footer
-                </x-slot>
-            </x-panel>
+                </x-laravolt::slot>
+            </x-laravolt::panel>
         </div>
 
     </div>

@@ -1,4 +1,4 @@
-<div class="extra content x-card__footer">
+<div class="extra content x-laravolt::card__footer">
     <span class="left floated">
         {!! $left !!}
     </span>

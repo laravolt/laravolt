@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <x-titlebar title="{{ __('laravolt::label.roles') }}">
+    <x-laravolt::titlebar title="{{ __('laravolt::label.roles') }}">
         <div class="item">
-            <x-link url="{{ route('epicentrum::roles.create') }}" icon="plus" label="{{ __('laravolt::action.add') }}"></x-link>
+            <x-laravolt::link url="{{ route('epicentrum::roles.create') }}" icon="plus" label="{{ __('laravolt::action.add') }}"></x-laravolt::link>
         </div>
-    </x-titlebar>
+    </x-laravolt::titlebar>
 
     <div class="ui grid">
         <div class="column sixteen wide">

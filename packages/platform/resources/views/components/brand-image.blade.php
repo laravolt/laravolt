@@ -1,4 +1,4 @@
-<div data-role="x-volt-brand-image" {{ $attributes }}>
+<div data-role="x-laravolt::volt-brand-image" {{ $attributes }}>
     @if($isSvg)
         {!! $brandImage !!}
     @else

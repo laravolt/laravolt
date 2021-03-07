@@ -40,9 +40,9 @@
             <p>Menghapus pengguna dan semua data yang berhubungan dengan pengguna ini.
                 <br>
                 Aksi ini tidak bisa dibatalkan.</p>
-            <x-button class="red" value="1">
+            <x-laravolt::button class="red" value="1">
                 @lang('laravolt::action.delete') {{ $user->name }}
-            </x-button>
+            </x-laravolt::button>
             {!! form()->close() !!}
         @endif
     </div>

@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <x-titlebar title="{{ __('laravolt::label.permissions') }}"></x-titlebar>
+    <x-laravolt::titlebar title="{{ __('laravolt::label.permissions') }}"></x-laravolt::titlebar>
 
-    <x-panel title="Atur Deskripsi Hak Akses">
+    <x-laravolt::panel title="Atur Deskripsi Hak Akses">
         <div class="ui icon message compact">
             <i class="lightbulb outline icon"></i>
             <div class="content">
@@ -34,6 +34,6 @@
         </div>
         {!! form()->close() !!}
 
-    </x-panel>
+    </x-laravolt::panel>
 
 @endsection

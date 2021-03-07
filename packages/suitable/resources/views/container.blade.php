@@ -1,16 +1,14 @@
 <div id="{{ $id }}" data-role="suitable" class="ui segments panel x-suitable">
 
-    @if($hasSearchableColumns)
-        <form id="suitable-form-searchable" action="{{ request()->url() }}" data-role="suitable-form-searchable"
-              style="display: none">
-            <input type="submit">
-        </form>
-    @endif
-
     @foreach($segments as $segment)
         @unless($segment->isEmpty())
-            <div class="ui borderless menu {{ $loop->first ? 'top' : '' }} attached">
+            <div class="ui borderless stackable menu {{ $loop->first ? 'top' : '' }} attached">
                 {!! $segment->render() !!}
+                <div class="menu right">
+                    <div class="item">
+                        {!! $collection->appends(request()->input())->onEachSide(1)->links('laravolt::pagination.simple') !!}
+                    </div>
+                </div>
             </div>
         @endunless
     @endforeach
@@ -41,3 +39,10 @@
         </footer>
     @endif
 </div>
+
+@if($hasSearchableColumns)
+    <form id="suitable-form-searchable" action="{{ request()->url() }}" data-role="suitable-form-searchable"
+          style="display: none">
+        <input type="submit">
+    </form>
+@endif

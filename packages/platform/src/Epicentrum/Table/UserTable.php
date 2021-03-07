@@ -14,8 +14,6 @@ use Laravolt\Suitable\TableView;
 
 class UserTable extends TableView
 {
-    protected $title = 'Pengguna Terdaftar';
-
     protected $showPerPage = true;
 
     public function source()

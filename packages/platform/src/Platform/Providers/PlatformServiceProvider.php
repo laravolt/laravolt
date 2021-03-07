@@ -19,13 +19,13 @@ use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\BacklinkComponent;
-use Laravolt\Platform\Components\ButtonComponent;
+use Laravolt\Platform\Components\Button;
 use Laravolt\Platform\Components\CardComponent;
 use Laravolt\Platform\Components\CardFooterComponent;
 use Laravolt\Platform\Components\CardsComponent;
 use Laravolt\Platform\Components\ItemComponent;
 use Laravolt\Platform\Components\LabelComponent;
-use Laravolt\Platform\Components\LinkComponent;
+use Laravolt\Platform\Components\LinkButton;
 use Laravolt\Platform\Components\MediaLibraryComponent;
 use Laravolt\Platform\Components\PanelComponent;
 use Laravolt\Platform\Components\TabComponent;
@@ -236,22 +236,7 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootComponents()
     {
-        $this->loadViewComponentsAs('volt', [
-            BacklinkComponent::class,
-            BrandImage::class,
-            ButtonComponent::class,
-            CardsComponent::class,
-            CardComponent::class,
-            CardFooterComponent::class,
-            ItemComponent::class,
-            LabelComponent::class,
-            LinkComponent::class,
-            MediaLibraryComponent::class,
-            PanelComponent::class,
-            TabComponent::class,
-            TabContentComponent::class,
-            TitlebarComponent::class,
-        ]);
+        \Blade::componentNamespace('Laravolt\\Platform\\Components', 'laravolt');
     }
 
     protected function hasPermissionTable()

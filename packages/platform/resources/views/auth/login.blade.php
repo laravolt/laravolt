@@ -28,7 +28,7 @@
     </div>
 
     <div class="field action">
-        <x-button class="fluid">@lang('laravolt::auth.login')</x-button>
+        <x-laravolt::button class="fluid">@lang('laravolt::auth.login')</x-laravolt::button>
     </div>
 
     @if(config('laravolt.auth.registration.enable'))

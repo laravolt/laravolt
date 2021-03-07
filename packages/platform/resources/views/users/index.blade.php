@@ -2,13 +2,13 @@
 
 @section('content')
 
-    <x-titlebar :title="__('laravolt::label.users')">
+    <x-laravolt::titlebar :title="__('laravolt::label.users')">
         <div class="item">
-            <x-link url="{{ route('epicentrum::users.create') }}">
+            <x-laravolt::link-button url="{{ route('epicentrum::users.create') }}">
                 <i class="icon plus"></i> @lang('laravolt::action.add')
-            </x-link>
+            </x-laravolt::link-button>
         </div>
-    </x-titlebar>
+    </x-laravolt::titlebar>
 
     {!! $table !!}
 @endsection

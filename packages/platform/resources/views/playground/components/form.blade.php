@@ -1,6 +1,6 @@
 <div class="ui grid">
     <div class="column">
-        <x-panel title="Form Fields">
+        <x-laravolt::panel title="Form Fields">
             {!! form()->open(route('platform::dump'))->multipart() !!}
             {!! form()->text('text')->label('Text') !!}
             {!! form()->email('email')->label('Email') !!}
@@ -21,12 +21,12 @@
             {!! form()->redactor('redactor')->label('WYSIWYG (Redactor)') !!}
             {!! form()->submit('Submit') !!}
             {!! form()->close() !!}
-        </x-panel>
+        </x-laravolt::panel>
     </div>
 </div>
 <div class="ui grid equal width">
     <div class="column">
-        <x-panel title="Horizontal Form">
+        <x-laravolt::panel title="Horizontal Form">
             {!! form()->get()->horizontal() !!}
             <h3 class="ui horizontal divider section">Basic Info</h3>
             {!! form()->text('nama')->label('Nama') !!}
@@ -36,10 +36,10 @@
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->action(form()->submit('Simpan')) !!}
             {!! form()->close() !!}
-        </x-panel>
+        </x-laravolt::panel>
     </div>
     <div class="column">
-        <x-panel title="Vertical Form">
+        <x-laravolt::panel title="Vertical Form">
             {!! form()->get() !!}
             <h3 class="ui horizontal divider section">Basic Info</h3>
             {!! form()->text('nama')->label('Nama') !!}
@@ -49,6 +49,6 @@
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->submit('Simpan') !!}
             {!! form()->action(form()->close()) !!}
-        </x-panel>
+        </x-laravolt::panel>
     </div>
 </div>

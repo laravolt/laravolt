@@ -32,7 +32,7 @@
       min-height: 800px;
     }
 
-    .content__body {
+    .content__body:first-child {
       margin-top: $header-height;
     }
   }

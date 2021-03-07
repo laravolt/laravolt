@@ -1,8 +1,8 @@
-@section('page.back')
-    <div class="item p-r-0">
-        <a href="{{ $url }}" class="ui button basic b-0">
+@section('page.actions')
+    <div class="item">
+        <a href="{{ $url }}" class="ui tertiary blue button">
             <i class="icon long alternate left arrow"></i>
-            {{ $label ?? 'Kembali' }}
+            {{ $label ?? 'Kembali ke index' }}
         </a>
     </div>
 @endsection

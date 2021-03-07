@@ -4,11 +4,11 @@
 
 @section('content')
 
-    <x-titlebar title="{{ __('laravolt::label.roles') }}">
-        <x-backlink url="{{ route('epicentrum::roles.index') }}"></x-backlink>
-    </x-titlebar>
+    <x-laravolt::titlebar title="{{ __('laravolt::label.roles') }}">
+        <x-laravolt::backlink url="{{ route('epicentrum::roles.index') }}"></x-laravolt::backlink>
+    </x-laravolt::titlebar>
 
-    <x-panel title="{{ __('laravolt::label.add_role') }}">
+    <x-laravolt::panel title="{{ __('laravolt::label.add_role') }}">
         {!! SemanticForm::open()->post()->action(route('epicentrum::roles.store')) !!}
         {!! SemanticForm::text('name', old('name'))->label(trans('laravolt::roles.name'))->required() !!}
 
@@ -43,9 +43,9 @@
 
         <div class="ui divider hidden"></div>
 
-        <x-button>@lang('laravolt::action.save')</x-button>
-        <x-link url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-link>
+        <x-laravolt::button>@lang('laravolt::action.save')</x-laravolt::button>
+        <x-laravolt::link url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-laravolt::link>
 
         {!! SemanticForm::close() !!}
-    </x-panel>
+    </x-laravolt::panel>
 @endsection

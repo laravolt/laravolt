@@ -1,4 +1,4 @@
-<x-panel title="Typography">
+<x-laravolt::panel title="Typography">
     <h1 class="ui header">Heading 1</h1>
     <h2 class="ui header">Heading 2</h2>
     <h3 class="ui header">Heading 3</h3>
@@ -32,4 +32,4 @@
         <a class="item" href="#">Jobs</a>
     </div>
 
-</x-panel>
+</x-laravolt::panel>

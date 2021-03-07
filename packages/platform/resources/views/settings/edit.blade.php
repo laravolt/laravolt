@@ -2,6 +2,6 @@
 
 @section('content')
 
-    <x-titlebar title="{{ __('Settings') }}"></x-titlebar>
+    <x-laravolt::titlebar title="{{ __('Settings') }}"></x-laravolt::titlebar>
 
 @endsection
