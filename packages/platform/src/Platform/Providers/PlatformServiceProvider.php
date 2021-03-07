@@ -18,24 +18,10 @@ use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
-use Laravolt\Platform\Components\BacklinkComponent;
-use Laravolt\Platform\Components\Button;
-use Laravolt\Platform\Components\CardComponent;
-use Laravolt\Platform\Components\CardFooterComponent;
-use Laravolt\Platform\Components\CardsComponent;
-use Laravolt\Platform\Components\ItemComponent;
-use Laravolt\Platform\Components\LabelComponent;
-use Laravolt\Platform\Components\LinkButton;
-use Laravolt\Platform\Components\MediaLibraryComponent;
-use Laravolt\Platform\Components\PanelComponent;
-use Laravolt\Platform\Components\TabComponent;
-use Laravolt\Platform\Components\TabContentComponent;
-use Laravolt\Platform\Components\TitlebarComponent;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltUiCommand;
 use Laravolt\Platform\Services\Password;
-use Laravolt\Platform\View\Components\BrandImage;
 
 class PlatformServiceProvider extends ServiceProvider
 {
