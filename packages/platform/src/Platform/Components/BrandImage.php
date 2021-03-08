@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Platform\View\Components;
+namespace Laravolt\Platform\Components;
 
 use Illuminate\Support\Str;
 use Illuminate\View\Component;

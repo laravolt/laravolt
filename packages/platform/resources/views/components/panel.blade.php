@@ -12,7 +12,7 @@
 
                 @if($title)
                     <div class="item p-0 m-0">
-                        <h4 class="ui header p-x-laravolt::sm p-y-0">
+                        <h4 class="ui header p-x-sm p-y-0">
                             {!! $title !!}
                         </h4>
                     </div>

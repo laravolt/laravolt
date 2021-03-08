@@ -29,9 +29,8 @@
             }, __('laravolt::permissions.description'))
         ])->render() !!}
 
-        <div class="p-y-1">
-            {!! form()->submit(__('laravolt::action.save')) !!}
-        </div>
+        {!! form()->submit(__('laravolt::action.save')) !!}
+
         {!! form()->close() !!}
 
     </x-laravolt::panel>

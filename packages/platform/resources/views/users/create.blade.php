@@ -1,11 +1,11 @@
 @extends(config('laravolt.epicentrum.view.layout'))
 
 @section('content')
-    <x-laravolt::titlebar :title="__('laravolt::label.users')">
+    <x-laravolt::titlebar :title="__('laravolt::menu.add_user')">
         <x-laravolt::backlink url="{{ route('epicentrum::users.index') }}"></x-laravolt::backlink>
     </x-laravolt::titlebar>
 
-    <x-laravolt::panel :title="__('laravolt::menu.add_user')">
+    <x-laravolt::panel title="Form Tambah Pengguna" icon="user add">
         {!! form()->open()->post()->action(route('epicentrum::users.store'))->horizontal() !!}
         {!! form()->text('name')->label(trans('laravolt::users.name'))->required() !!}
         {!! form()->text('email')->label(trans('laravolt::users.email'))->required() !!}
@@ -33,7 +33,7 @@
 
         <div class="ui divider section"></div>
 
-        {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.back'), route('epicentrum::users.index'))) !!}
+        {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.cancel'), route('epicentrum::users.index'))) !!}
         {!! form()->close() !!}
 
     </x-laravolt::panel>

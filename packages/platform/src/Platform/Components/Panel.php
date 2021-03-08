@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class PanelComponent extends Component
+class Panel extends Component
 {
     public $title = '';
 
