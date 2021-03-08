@@ -1,6 +1,4 @@
-@extends(config('laravolt.auth.layout'))
-
-@section('content')
+<x-laravolt::layout.auth>
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.login')</h3>
 
     {!! form()->open(route('auth::login.action')) !!}
@@ -40,10 +38,10 @@
 
     {!! form()->close() !!}
 
-@endsection
+    @push('script')
+        @if(config('laravolt.auth.captcha'))
+            {!! app('captcha')->renderJs() !!}
+        @endif
+    @endpush
 
-@push('script')
-    @if(config('laravolt.auth.captcha'))
-        {!! app('captcha')->renderJs() !!}
-    @endif
-@endpush
+</x-laravolt::layout.auth>

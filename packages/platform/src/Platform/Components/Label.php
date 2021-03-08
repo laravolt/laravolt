@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class LabelComponent extends Component
+class Label extends Component
 {
     public $label;
 

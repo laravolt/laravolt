@@ -1,6 +1,4 @@
-@extends(config('laravolt.auth.layout'))
-
-@section('content')
+<x-laravolt::layout.auth>
 
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.register')</h3>
 
@@ -20,4 +18,4 @@
 
     {!! form()->close() !!}
 
-@endsection
+</x-laravolt::layout.auth>>

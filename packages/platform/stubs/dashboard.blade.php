@@ -1,6 +1,4 @@
-@extends('laravolt::layouts.app')
-
-@section('content')
+<x-laravolt::layout.app title="Dashboard">
     <div style="display: flex; min-height: 600px; align-items: center; justify-content: center; flex-direction: column">
         <h1 class="ui header" style="font-size: 5em; font-weight: 100; letter-spacing: .15em">
             Your Awesome Dashboard
@@ -11,4 +9,4 @@
         </div>
 
     </div>
-@endsection
+</x-laravolt::layout.app>

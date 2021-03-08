@@ -1,9 +1,8 @@
-@extends(config('laravolt.epicentrum.view.layout'))
+<x-laravolt::layout.app :title="__('laravolt::menu.add_user')">
 
-@section('content')
-    <x-laravolt::titlebar :title="__('laravolt::menu.add_user')">
-        <x-laravolt::backlink url="{{ route('epicentrum::users.index') }}"></x-laravolt::backlink>
-    </x-laravolt::titlebar>
+    <x-slot name="actions">
+        <x-laravolt::backlink :url="route('epicentrum::users.index')"/>
+    </x-slot>
 
     <x-laravolt::panel title="Form Tambah Pengguna" icon="user add">
         {!! form()->open()->post()->action(route('epicentrum::users.store'))->horizontal() !!}
@@ -38,15 +37,16 @@
 
     </x-laravolt::panel>
 
-@endsection
+    @push('body')
+        <script>
+            $(function () {
+                $('.randomize').on('click', function (e) {
+                    $(e.currentTarget).prev().val(Math.random().toString(36).substr(2, 8));
+                });
+            });
+        </script>
+    @endpush
+
+</x-laravolt::layout.app>>
 
 
-@push('body')
-    <script>
-      $(function () {
-        $('.randomize').on('click', function (e) {
-          $(e.currentTarget).prev().val(Math.random().toString(36).substr(2, 8));
-        });
-      });
-    </script>
-@endpush

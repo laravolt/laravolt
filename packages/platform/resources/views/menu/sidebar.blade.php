@@ -5,8 +5,7 @@
 
         <div class="sidebar__menu">
 
-            <div class="m-b-0 p-0 ui basic segment text-center">
-                <div class="ui divider hidden"></div>
+            <div class="m-b-0 p-0 p-t-2 ui basic segment text-center">
                 {{--<img src="{{ auth()->user()->avatar }}" alt="" class="ui image tiny centered avatar">--}}
                 <img src="https://treo.pulsethemes.com/angular/demo/assets/images/avatars/andrew-watkins.jpg"
                      alt="{{ auth()->user()->name }}"
@@ -17,12 +16,6 @@
                 </h4>
                 <div class="ui divider inverted"></div>
             </div>
-
-            {{--<div class="ui attached vertical menu fluid">--}}
-            {{--    <div class="item brand">--}}
-            {{--        {{ config('laravolt.ui.brand_name') }}--}}
-            {{--    </div>--}}
-            {{--</div>--}}
 
             @if(!$items->isEmpty())
                 @if(config('laravolt.platform.features.quick_switcher'))

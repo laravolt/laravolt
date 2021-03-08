@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class TabContentComponent extends Component
+class TabContent extends Component
 {
     /**
      * @var string

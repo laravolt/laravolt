@@ -15,14 +15,14 @@
             content="Many people also have their own barometers for what makes a cute dog."
             url="#"
     >
-        <x-laravolt::slot name="body">
+        <x-slot name="body">
             <div class="content">
                 <div class="description">
                     <x-laravolt::label label="foo" color="theme solid"></x-laravolt::label>
                     <x-laravolt::label label="bar" color="theme secondary"></x-laravolt::label>
                 </div>
             </div>
-        </x-laravolt::slot>
+        </x-slot>
         <x-laravolt::card-footer left='<i class="icon check"></i> 121 votes' right="right" />
     </x-laravolt::card>
     <x-laravolt::card

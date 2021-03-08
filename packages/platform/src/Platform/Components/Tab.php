@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class TabComponent extends Component
+class Tab extends Component
 {
     protected static $activeTab;
 

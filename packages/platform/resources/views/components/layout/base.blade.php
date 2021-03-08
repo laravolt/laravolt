@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}" data-font-size="{{ config('laravolt.ui.font_size') }}">
 <head>
-    <title>@yield('site.title', "Welcome Home") | {{ config('app.name') }}</title>
+    <title>{{ $title ?? '' }} | {{ config('app.name') }}</title>
 
     <meta charset="UTF-8"/>
     <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1"/>
@@ -18,7 +18,8 @@
     </style>
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload"
+          href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
 
@@ -41,7 +42,7 @@
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }}">
 
-@yield('body')
+{{ $slot }}
 
 {!! Asset::js() !!}
 @stack('script')

@@ -5,7 +5,7 @@ namespace Laravolt\Platform\Components;
 use Illuminate\View\Component;
 use Spatie\MediaLibrary\MediaCollections\MediaCollection;
 
-class MediaLibraryComponent extends Component
+class MediaLibrary extends Component
 {
     /** @var MediaCollection */
     public $collection;

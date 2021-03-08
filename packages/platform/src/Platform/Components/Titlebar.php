@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class TitlebarComponent extends Component
+class Titlebar extends Component
 {
     public $title = '';
 

@@ -30,20 +30,20 @@
             width: 100% !important;
         }
 
-        @media screen and (max-laravolt::width: 500px) {
+        @media screen and (max-width: 500px) {
             .img-max {
                 width: 100% !important;
-                max-laravolt::width: 100% !important;
+                max-width: 100% !important;
                 height: auto !important;
             }
 
-            .max-laravolt::width {
-                max-laravolt::width: 100% !important;
+            .max-width {
+                max-width: 100% !important;
             }
 
             .mobile-wrapper {
                 width: 85% !important;
-                max-laravolt::width: 85% !important;
+                max-width: 85% !important;
             }
 
             .mobile-padding {
@@ -57,7 +57,7 @@
 <body style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; height: 100% !important; margin: 0; padding: 0; width: 100% !important;"
       bgcolor="{{ config('laravolt.ui.mail.body') }}">
 <!-- HIDDEN PREHEADER TEXT -->
-<div style="display: none; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 1px; line-height: 1px; max-laravolt::height: 0px; max-laravolt::width: 0px; opacity: 0; overflow: hidden;">
+<div style="display: none; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
     {{ $preheader ?? '' }}
 </div>
 <table border="0" cellpadding="0" cellspacing="0"
@@ -74,18 +74,18 @@
                     <td align="center" valign="top" width="500">
             <![endif]-->
             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
-                   style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; max-laravolt::width: 500px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                   style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; max-width: 500px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                 <tbody>
                 <tr>
                     <td align="center" bgcolor="{{ config('laravolt.ui.mail.content.background') }}"
                         style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-radius: 10px 10px 0 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                         <div class="header"
-                             style="-moz-osx-laravolt::font-smoothing: grayscale; -webkit-font-smoothing: antialiased; border-bottom-color: rgba(0, 0, 0, 0.1); border-bottom-style: solid; border-width: 0 0 1px; font-size: normal; font-style: normal; font-variant: normal; font-weight: normal; line-height: normal; margin: auto 30px; padding: 30px 60px; vertical-align: baseline;">
+                             style="-moz-osx-::font-smoothing: grayscale; -webkit-font-smoothing: antialiased; border-bottom-color: rgba(0, 0, 0, 0.1); border-bottom-style: solid; border-width: 0 0 1px; font-size: normal; font-style: normal; font-variant: normal; font-weight: normal; line-height: normal; margin: auto 30px; padding: 30px 60px; vertical-align: baseline;">
 
                             <img src="{{ config('laravolt.ui.brand_image') }}" border="0"
                                  style="-ms-interpolation-mode: bicubic; border: 0; display: block; width: 50px; line-height: 100%; outline: none; text-decoration: none;margin: 0 0 10px 0;">
 
-                            <h2 style="-moz-osx-laravolt::font-smoothing: grayscale; -webkit-font-smoothing: antialiased; border: 0; color: {{ config('laravolt.ui.mail.content.color') }}; font: 400 16px/24px apple-system, BlinkMacSystemFont, Arial, 'Segoe UI', 'Helvetica Neue', sans-serif; margin: 0; vertical-align: baseline;"
+                            <h2 style="-moz-osx-::font-smoothing: grayscale; -webkit-font-smoothing: antialiased; border: 0; color: {{ config('laravolt.ui.mail.content.color') }}; font: 400 16px/24px apple-system, BlinkMacSystemFont, Arial, 'Segoe UI', 'Helvetica Neue', sans-serif; margin: 0; vertical-align: baseline;"
                                 align="center">{{ config('app.name') }}</h2>
                         </div>
                     </td>
@@ -109,7 +109,7 @@
                     <td align="center" valign="top" width="500">
             <![endif]-->
             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
-                   style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; max-laravolt::width: 500px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                   style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; max-width: 500px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                 <tbody>
                 <tr>
                     <td align="center" valign="top"
@@ -145,7 +145,7 @@
                     <td align="center" valign="top" width="500">
             <![endif]-->
             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
-                   style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; max-laravolt::width: 500px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                   style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; max-width: 500px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                 <tbody>
                 <tr>
                     <td align="center" valign="top"

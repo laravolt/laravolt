@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class CardFooterComponent extends Component
+class CardFooter extends Component
 {
     /**
      * @var string

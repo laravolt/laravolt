@@ -1,6 +1,4 @@
-@extends(config('laravolt.auth.layout'))
-
-@section('content')
+<x-laravolt::layout.auth>
 
     @if (session('status'))
         <?php flash()->success(session('status')); ?>
@@ -21,4 +19,4 @@
 
     {!! form()->close() !!}
 
-@endsection
+</x-laravolt::layout.auth>>

@@ -4,7 +4,7 @@ namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
-class BacklinkComponent extends Component
+class Backlink extends Component
 {
     public $label = '';
 

@@ -1,7 +1,4 @@
-@extends('laravolt::layouts.app')
-
-@section('content')
-    <x-laravolt::titlebar title="Kitchen Sink"></x-laravolt::titlebar>
+<x-laravolt::layout.app title="Kitchen Sink">
 
     @include('laravolt::playground.components.panel')
     <div class="ui divider hidden"></div>
@@ -27,4 +24,4 @@
     <div class="ui divider hidden"></div>
     @include('laravolt::playground.components.media')
 
-@endsection
+</x-laravolt::layout.app>

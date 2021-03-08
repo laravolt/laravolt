@@ -1,8 +1,8 @@
-@if($url)
-    <a href="{{ $url }}" class="ui card segments panel x-laravolt::card" style="overflow: hidden">
+@isset($url)
+    <a href="{{ $url }}" class="ui card segments panel x-card" style="overflow: hidden">
 @else
-    <div class="ui card segments panel x-laravolt::card">
-@endif
+    <div class="ui card segments panel x-card">
+@endisset
 
     @if($attributes['cover'])
         <div class="image">
@@ -11,10 +11,10 @@
     @endif
 
     @if($title or $content or $attributes['meta.before'] or $attributes['meta.after'])
-    <div class="content x-laravolt::card__header">
+    <div class="content x-card__header">
 
         @if($attributes['meta.before'])
-        <div class="meta x-laravolt::card__meta--before">{!! $attributes['meta.before'] !!}</div>
+        <div class="meta x-card__meta--before">{!! $attributes['meta.before'] !!}</div>
         @endif
 
         @if($title)
@@ -22,7 +22,7 @@
         @endif
 
         @if($attributes['meta.after'])
-        <div class="meta x-laravolt::card__meta--after">{!! $attributes['meta.after'] !!}</div>
+        <div class="meta x-card__meta--after">{!! $attributes['meta.after'] !!}</div>
         @endif
 
         @if($content)
@@ -38,9 +38,9 @@
 
     {{ $slot }}
 
-@if($url)
+@isset($url)
     </a>
 @else
     </div>
-@endif
+@endisset
 

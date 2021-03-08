@@ -1,12 +1,12 @@
-@extends(config('laravolt.epicentrum.view.layout'))
+<x-laravolt::layout.app :title="__('laravolt::label.users')">
 
-@section('content')
-
-    <x-laravolt::titlebar :title="__('laravolt::label.users')">
-        <x-laravolt::link-button url="{{ route('epicentrum::users.create') }}"
-                                 icon="plus"
-                                 label="{{ __('laravolt::action.add') }}"/>
-    </x-laravolt::titlebar>
+    <x-slot name="actions">
+        <x-laravolt::link-button
+                :url="route('epicentrum::users.create')"
+                icon="plus"
+                :label="__('laravolt::action.add')"/>
+    </x-slot>
 
     {!! $table !!}
-@endsection
+
+</x-laravolt::layout.app>

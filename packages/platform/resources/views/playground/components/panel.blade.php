@@ -45,9 +45,9 @@
                         <div class="line"></div>
                     </div>
                 </div>
-                <x-laravolt::slot name="footer">
+                <x-slot name="footer">
                     Footer
-                </x-laravolt::slot>
+                </x-slot>
             </x-laravolt::panel>
         </div>
         <div class="column">
@@ -62,12 +62,12 @@
                         <div class="line"></div>
                     </div>
                 </div>
-                <x-laravolt::slot name="action">
-                    <x-laravolt::link url="#" icon="edit" class="mini">Edit</x-laravolt::link>
-                </x-laravolt::slot>
-                <x-laravolt::slot name="footer">
+                <x-slot name="action">
+                    <x-laravolt::link-button url="#" icon="edit" class="mini">Edit</x-laravolt::link-button>
+                </x-slot>
+                <x-slot name="footer">
                     Footer
-                </x-laravolt::slot>
+                </x-slot>
             </x-laravolt::panel>
         </div>
 

@@ -1,6 +1,4 @@
-@extends(config('laravolt.auth.layout'))
-
-@section('content')
+<x-laravolt::layout.auth>
 
     @if (session('status'))
         <?php flash()->success(session('status')); ?>
@@ -26,4 +24,5 @@
 
     <div class="ui divider hidden section"></div>
     @lang('laravolt::auth.already_registered?') <a href="{{ route('auth::login') }}">@lang('laravolt::auth.login_here')</a>
-@endsection
+
+</x-laravolt::layout.auth>>

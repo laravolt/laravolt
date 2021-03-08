@@ -1,4 +1,4 @@
-<div themed class="x-laravolt::tab">
+<div themed class="x-tab">
     <div class="ui top attached secondary pointing tabular menu">
         @stack("tab.titles.$key")
     </div>
