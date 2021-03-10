@@ -1,15 +1,9 @@
-@extends(config('laravolt.epicentrum.view.layout'))
+<x-laravolt::layout.app :title="__('laravolt::label.roles')">
 
-@section('page.title', __('laravolt::label.roles'))
+    <x-slot name="actions">
+        <x-laravolt::backlink url="{{ route('epicentrum::roles.index') }}"></x-laravolt::backlink>
+    </x-slot>
 
-@push('page.actions')
-    <a href="{{ route('epicentrum::roles.index') }}" class="ui button">
-        <i class="icon arrow up"></i> Kembali ke Index
-    </a>
-@endpush
-
-
-@section('content')
     <x-laravolt::panel title="{{ __('laravolt::label.edit_role') }}">
         {!! SemanticForm::open()->put()->action(route('epicentrum::roles.update', $role['id'])) !!}
         <div class="field required">
@@ -51,7 +45,8 @@
         </table>
 
         <x-laravolt::button>@lang('laravolt::action.save')</x-laravolt::button>
-        <x-laravolt::link url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-laravolt::link>
+        <x-laravolt::link-button
+                url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-laravolt::link-button>
 
         {!! SemanticForm::close() !!}
     </x-laravolt::panel>
@@ -68,4 +63,4 @@
         {!! SemanticForm::close() !!}
     </x-laravolt::panel>
 
-@endsection
+</x-laravolt::layout.app>

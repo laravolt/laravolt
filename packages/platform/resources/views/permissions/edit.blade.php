@@ -1,8 +1,4 @@
-@extends(config('laravolt.epicentrum.view.layout'))
-
-@section('content')
-
-    <x-laravolt::titlebar title="{{ __('laravolt::label.permissions') }}"></x-laravolt::titlebar>
+<x-laravolt::layout.app :title="__('laravolt::label.permissions')">
 
     <x-laravolt::panel title="Atur Deskripsi Hak Akses">
         <div class="ui icon message compact">
@@ -35,4 +31,4 @@
 
     </x-laravolt::panel>
 
-@endsection
+</x-laravolt::layout.app>

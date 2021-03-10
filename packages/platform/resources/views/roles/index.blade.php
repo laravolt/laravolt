@@ -1,12 +1,11 @@
-@extends(config('laravolt.epicentrum.view.layout'))
+<x-laravolt::layout.app :title="__('laravolt::label.roles')">
 
-@section('content')
-
-    <x-laravolt::titlebar title="{{ __('laravolt::label.roles') }}">
-        <div class="item">
-            <x-laravolt::link url="{{ route('epicentrum::roles.create') }}" icon="plus" label="{{ __('laravolt::action.add') }}"></x-laravolt::link>
-        </div>
-    </x-laravolt::titlebar>
+    <x-slot name="actions">
+        <x-laravolt::link-button
+                :url="route('epicentrum::roles.create')"
+                icon="plus"
+                :label="__('laravolt::action.add')"/>
+    </x-slot>
 
     <div class="ui grid">
         <div class="column sixteen wide">
@@ -18,7 +17,8 @@
                         </div>
                         <div class="extra content">
                             <i class="icon users"></i>{{ $role->users_count }}
-                            <span class="right floated"><i class="icon options"></i> {{ $role->permissions_count }}</span>
+                            <span class="right floated">
+                                <i class="icon options"></i> {{ $role->permissions_count }}</span>
                         </div>
                     </a>
                 @endforeach
@@ -26,4 +26,4 @@
         </div>
     </div>
 
-@endsection
+</x-laravolt::layout.app>

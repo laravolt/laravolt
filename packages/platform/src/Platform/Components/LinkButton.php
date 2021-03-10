@@ -45,6 +45,6 @@ class LinkButton extends Component
             $this->class = config('laravolt.ui.color').' '.$this->class;
         }
 
-        return view('laravolt::components.link');
+        return view('laravolt::components.link-button');
     }
 }
