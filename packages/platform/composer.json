@@ -30,7 +30,6 @@
         "illuminate/console": "^7.0",
         "illuminate/database": "^7.0",
         "illuminate/support": "^7.0",
-        "laravel/ui": "^2.0",
         "laravolt/epilog": "^4.2",
         "laravolt/media": "^4.2",
         "laravolt/semantic-form": "^4.2",

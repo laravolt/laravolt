@@ -10,23 +10,23 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Laravel\Ui\UiCommand;
 use Laravolt\Contracts\HasRoleAndPermission;
 use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
+use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
-use Laravolt\Platform\Services\LaravoltUiCommand;
 use Laravolt\Platform\Services\Password;
 
 class PlatformServiceProvider extends ServiceProvider
 {
     protected $commands = [
         AdminCommand::class,
+        InstallCommand::class,
         MakeTableCommnad::class,
         ManageRole::class,
         ManageUser::class,
@@ -52,7 +52,6 @@ class PlatformServiceProvider extends ServiceProvider
             ->bootRoutes()
             ->bootAcl($gate)
             ->bootMenu()
-            ->bootPreset()
             ->bootComponents();
     }
 
@@ -211,16 +210,6 @@ class PlatformServiceProvider extends ServiceProvider
                     ->active('platform/article');
             });
         }
-
-        return $this;
-    }
-
-    protected function bootPreset()
-    {
-        UiCommand::macro('laravolt', function (UiCommand $command) {
-            LaravoltUiCommand::install();
-            $command->comment('Scaffolding Laravolt skeleton');
-        });
 
         return $this;
     }

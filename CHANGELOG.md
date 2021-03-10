@@ -7,3 +7,7 @@
 
 ## Migrations
 - migrations script harus dipublish dulu dengan `php artisan vendor:publish --tag=laravolt-migrations` atau `php artisan laravolt:install`
+
+## Installation
+- Tidak perlu compile assets dulu
+- Ganti `php artisan ui laravolt` menjadi `php artisan laravolt:install`

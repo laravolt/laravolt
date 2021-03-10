@@ -2,25 +2,58 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Platform\Services;
+namespace Laravolt\Platform\Commands;
 
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
-use Laravel\Ui\UiCommand;
-use Laravolt\Platform\Commands\LinkCommand;
 
-class LaravoltUiCommand extends UiCommand
+class InstallCommand extends Command
 {
     /**
-     * Install the preset.
+     * The name and signature of the console command.
      *
-     * @return void
+     * @var string
      */
-    public static function install()
+    protected $signature = 'laravolt:install';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Prepare Laravolt skeleton files';
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
     {
         Artisan::call(LinkCommand::class);
-        Artisan::call('vendor:publish', ['--tag' => 'migrations']);
         static::replaceFiles();
+        Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
+
+        $username = 'admin@example.com';
+        $password = 'asdf1234';
+
+        Artisan::call(
+            AdminCommand::class,
+            [
+                'name' => 'Administrator',
+                'email' => $username,
+                'password' => $password
+
+            ]);
+
+        $this->newLine();
+        $this->info('Application ready...');
+        $this->info(sprintf('URL: %s', url('/')));
+        $this->info(sprintf('Login: %s', $username));
+        $this->info(sprintf('Password: %s', $password));
+
+        return 1;
     }
 
     protected static function replaceFiles()
@@ -45,6 +78,7 @@ class LaravoltUiCommand extends UiCommand
             app_path('Http/Controllers/Auth') => null,
             public_path('js/app.js') => platform_path('stubs/app.js'),
             public_path('css/app.css') => platform_path('stubs/app.css'),
+            public_path('mix-manifest.json') => platform_path('stubs/mix-manifest.json'),
             base_path('webpack.mix.js') => platform_path('stubs/webpack.mix.js'),
         ];
 
