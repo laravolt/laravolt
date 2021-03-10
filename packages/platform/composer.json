@@ -42,9 +42,10 @@
     },
     "autoload": {
         "psr-4": {
+            "Laravolt\\Contracts\\": "src/Contracts/",
             "Laravolt\\Epicentrum\\": "src/Epicentrum/",
-            "Laravolt\\Platform\\": "src/Platform/",
-            "Laravolt\\Contracts\\": "src/Contracts/"
+            "Laravolt\\Middleware\\": "src/Middleware/",
+            "Laravolt\\Platform\\": "src/Platform/"
         },
         "files": [
             "src/helpers.php"

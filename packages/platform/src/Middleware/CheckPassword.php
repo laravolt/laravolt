@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Platform\Http\Middleware;
+namespace Laravolt\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Laravolt\Contracts\CanChangePassword;
 
 class CheckPassword
 {
@@ -23,7 +24,8 @@ class CheckPassword
             return $next($request);
         }
 
-        if (auth()->user()->passwordMustBeChanged(config('laravolt.password.duration'))) {
+        $authUser = auth()->user();
+        if (($authUser instanceof CanChangePassword) && $authUser->passwordMustBeChanged(config('laravolt.password.duration'))) {
             return redirect(config('laravolt.password.redirect'))->withWarning(trans('laravolt::password.must_change_password'));
         }
 

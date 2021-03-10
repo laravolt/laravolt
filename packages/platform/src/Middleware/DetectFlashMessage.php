@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Platform\Http\Middleware;
+namespace Laravolt\Middleware;
 
 use Closure;
 use Illuminate\Support\ViewErrorBag;
 use Laravolt\Platform\Services\Flash;
 
-class FlashMiddleware
+class DetectFlashMessage
 {
     /**
      * The Flash instance.

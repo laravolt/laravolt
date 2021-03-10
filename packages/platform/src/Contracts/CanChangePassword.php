@@ -6,9 +6,9 @@ namespace Laravolt\Contracts;
 
 interface CanChangePassword
 {
-    public function setPassword($password, $mustBeChanged = false);
+    public function setPassword($password, $mustBeChanged = false): bool;
 
-    public function passwordMustBeChanged();
+    public function passwordMustBeChanged($durationInDays = null): bool;
 
-    public function getEmailForNewPassword();
+    public function getEmailForNewPassword(): string;
 }

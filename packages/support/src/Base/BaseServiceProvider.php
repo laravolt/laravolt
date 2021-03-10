@@ -77,14 +77,11 @@ abstract class BaseServiceProvider extends ServiceProvider
     protected function bootMigrations()
     {
         $databaseFolder = $this->packagePath('database/migrations');
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom($databaseFolder);
-        }
 
         if (file_exists($databaseFolder)) {
             $this->publishes([
                 $databaseFolder => database_path('migrations'),
-            ], 'migrations');
+            ], 'laravolt-migrations');
         }
 
         return $this;

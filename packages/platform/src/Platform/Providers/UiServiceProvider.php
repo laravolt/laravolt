@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetFacade;
 use Laravolt\Asset\AssetManager;
-use Laravolt\Platform\Http\Middleware\FlashMiddleware;
 use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
@@ -64,10 +63,6 @@ class UiServiceProvider extends BaseServiceProvider
         $this
             ->bootViews()
             ->buildMenuFromConfig();
-
-        if (! $this->app->runningInConsole()) {
-            $this->app['router']->pushMiddlewareToGroup('web', FlashMiddleware::class);
-        }
     }
 
     protected function bootConfig()

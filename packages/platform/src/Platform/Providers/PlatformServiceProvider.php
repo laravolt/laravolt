@@ -89,7 +89,12 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootDatabase(): self
     {
-        $this->loadMigrationsFrom(platform_path('database/migrations'));
+        $migrationFolder = 'database/migrations';
+
+        $this->publishes(
+            [platform_path($migrationFolder) => base_path($migrationFolder)],
+            'laravolt-migrations'
+        );
 
         return $this;
     }

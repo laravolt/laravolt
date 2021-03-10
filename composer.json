@@ -66,6 +66,7 @@
             "Laravolt\\Lookup\\": "packages/lookup/src",
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
+            "Laravolt\\Middleware\\": "packages/platform/src/Middleware/",
             "Laravolt\\Platform\\": "packages/platform/src/Platform/",
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
@@ -117,8 +118,7 @@
             "aliases": {
                 "Asset": "Laravolt\\Asset\\AssetFacade",
                 "Suitable": "Laravolt\\Suitable\\Facade",
-                "Form": "Laravolt\\SemanticForm\\Facade",
-                "SemanticForm": "Laravolt\\SemanticForm\\Facade"
+                "Form": "Laravolt\\SemanticForm\\Facade"
             }
         }
     }

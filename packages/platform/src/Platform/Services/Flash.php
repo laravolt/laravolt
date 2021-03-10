@@ -25,7 +25,7 @@ class Flash
         'class' => 'basic',
         'closeIcon' => false,
         'displayTime' => 'auto',
-        'minDisplayTime' => 3000,
+        'minDisplayTime' => 10000,
         'opacity' => 1,
         'position' => 'top center',
         'compact' => false,
