@@ -4,6 +4,15 @@
     background: $coolGrey;
     @extend .p-2;
   }
+  .panel__title.ui.header {
+    font-size: .85em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #789;
+  }
+  .panel__icon {
+    color: #789;
+  }
 
   &.x-suitable {
     .ui.table>thead>tr>th {

@@ -74,7 +74,7 @@ class FileManager
         $files = collect($items)->sort(function ($a, $b) {
             if ($a['type'] == 'dir') {
                 if ($b['type'] == 'dir') {
-                    return $a['modified'] < $b['modified'];
+                    return (int) ($a['modified'] < $b['modified']);
                 } else {
                     return -1;
                 }
@@ -82,7 +82,7 @@ class FileManager
                 if ($b['type'] == 'dir') {
                     return 1;
                 } else {
-                    return $a['modified'] < $b['modified'];
+                    return (int) ($a['modified'] < $b['modified']);
                 }
             }
         });

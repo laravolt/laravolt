@@ -1,27 +1,14 @@
-@extends(
-    config('laravolt.database-monitor.view.layout'),
-    [
-        '__page' => [
-            'title' => 'Backup & Restore',
-            'actions' => [
-            ]
-        ],
-    ]
-)
+<x-laravolt::layout.app :title="__('Backup & Restore')">
+    <x-slot name="actions">
+        @include('database-monitor::backup._restore-button')
+        <x-laravolt::button form="form-backup">
+            <i class="icon folder plus"></i> @lang('Backup Now')
+        </x-laravolt::button>
+    </x-slot>
 
-@section('content')
-    <x-titlebar title="{{ __('Database Backup') }}">
-        <x-item>
-            {!! form()->open()->route('database-monitor::backup.store') !!}
-            <button type="submit" class="ui button primary">
-                <i class="icon folder plus"></i> @lang('Backup Now')
-            </button>
-            {!! form()->close() !!}
-
-            @include('database-monitor::backup._restore-button')
-
-        </x-item>
-    </x-titlebar>
+    {!! form()->open()->route('database-monitor::backup.store')->id('form-backup') !!}
+    {!! form()->close() !!}
 
     {!! app('laravolt.file-manager')->openDisk($disk)->render() !!}
-@endsection
+
+</x-laravolt::layout.app>

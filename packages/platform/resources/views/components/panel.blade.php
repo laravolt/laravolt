@@ -5,14 +5,14 @@
         <div class="ui segment panel__header {{ $attributes['headerClass'] ?? '' }}">
             <div class="ui menu secondary borderless m-0 p-0" style="min-height: 0">
                 @if($icon)
-                    <div class="item p-0 p-l-xs m-0">
+                    <div class="panel__icon item p-0 p-l-xs m-0">
                         <i aria-hidden="true" class="icon {{ $icon }}"></i>
                     </div>
                 @endif
 
                 @if($title)
                     <div class="item p-0 m-0">
-                        <h4 class="ui header p-x-sm p-y-0">
+                        <h4 class="panel__title ui header p-x-sm p-y-0">
                             {!! $title !!}
                         </h4>
                     </div>
