@@ -43,7 +43,7 @@ class InstallCommand extends Command
             [
                 'name' => 'Administrator',
                 'email' => $username,
-                'password' => $password
+                'password' => $password,
 
             ]);
 
