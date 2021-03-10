@@ -1,12 +1,9 @@
-@extends(config('laravolt.lookup.view.layout'))
+<x-laravolt::layout.app :title="$title">
+    <x-slot name="actions">
+        <x-laravolt::link-button :label="__('Tambah')" url="{{ route('lookup::lookup.create', $collection) }}" icon="plus">
+        </x-laravolt::link-button>
+    </x-slot>
 
-@section('content')
-    <x-titlebar title="Lookup">
-        <div class="item">
-            <x-link url="{{ route('lookup::lookup.create', $collection) }}">
-                <i class="icon plus"></i> {{ __('Tambah') }}
-            </x-link>
-        </div>
-    </x-titlebar>
     {!! $table !!}
-@endsection
+
+</x-laravolt::layout.app>

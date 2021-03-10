@@ -18,6 +18,7 @@ class LookupController extends Controller
     public function index(string $collection)
     {
         $lookup = $this->validateCollection($collection);
+        $title = $lookup['label'] ?? $collection;
 
         $source = Lookup::query()
             ->with('parent')
@@ -27,7 +28,7 @@ class LookupController extends Controller
             ->search(request('search'))
             ->paginate();
 
-        return LookupTableView::make($source)->config($lookup)->title($lookup['label'] ?? $collection)->view('lookup::lookup.index', compact('collection'));
+        return LookupTableView::make($source)->config($lookup)->view('lookup::lookup.index', compact('collection', 'title'));
     }
 
     public function create(string $collection)

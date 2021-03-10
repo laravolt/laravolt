@@ -3,13 +3,15 @@
         @lang('Folder is empty')
     </div>
 @else
-    <table class="ui table padded">
+    <table class="ui table">
         @if(!$isRoot)
+            <thead>
             <tr>
-                <td colspan="4">
+                <th colspan="4">
                     <a href="{{ $parentUrl }}"><i class="icon up long arrow"></i> Ke Atas...</a>
-                </td>
+                </th>
             </tr>
+            </thead>
         @endif
 
         @foreach($files as $file)
