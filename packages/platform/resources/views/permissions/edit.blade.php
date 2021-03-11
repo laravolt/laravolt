@@ -21,7 +21,7 @@
             \Laravolt\Suitable\Columns\Text::make('name', __('laravolt::permissions.name'))
                 ->setHeaderAttributes(['width' => '250px']),
             \Laravolt\Suitable\Columns\Raw::make(function($item) {
-                return SemanticForm::textarea('permission['.$item->getKey().']')->value($item->description)->rows(2);
+                return Form::textarea('permission['.$item->getKey().']')->value($item->description)->rows(2);
             }, __('laravolt::permissions.description'))
         ])->render() !!}
 

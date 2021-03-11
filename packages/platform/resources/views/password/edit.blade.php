@@ -13,7 +13,7 @@
 
     <h4>@lang('laravolt::label.reset_password_automatic')</h4>
     <p>@lang('laravolt::message.reset_password_automatic_intro')</p>
-    {!! SemanticForm::open()->post()->action(route('epicentrum::password.generate', $user['id'])) !!}
+    {!! Form::open()->post()->action(route('epicentrum::password.generate', $user['id'])) !!}
     {{ csrf_field() }}
     <div class="field">
         <div class="ui checkbox">
@@ -22,5 +22,5 @@
         </div>
     </div>
     <x-laravolt::button>@lang('laravolt::action.send_new_password')</x-laravolt::button>
-    {!! SemanticForm::close() !!}
+    {!! Form::close() !!}
 @endsection

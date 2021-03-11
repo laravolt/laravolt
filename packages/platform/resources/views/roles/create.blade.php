@@ -5,8 +5,8 @@
     </x-slot>
 
     <x-laravolt::panel title="{{ __('laravolt::label.add_role') }}">
-        {!! SemanticForm::open()->post()->action(route('epicentrum::roles.store')) !!}
-        {!! SemanticForm::text('name', old('name'))->label(trans('laravolt::roles.name'))->required() !!}
+        {!! Form::open()->post()->action(route('epicentrum::roles.store')) !!}
+        {!! Form::text('name', old('name'))->label(trans('laravolt::roles.name'))->required() !!}
 
         <table class="ui table">
             <thead>
@@ -44,7 +44,7 @@
                 url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')
         </x-laravolt::link-button>
 
-        {!! SemanticForm::close() !!}
+        {!! Form::close() !!}
     </x-laravolt::panel>
 
 </x-laravolt::layout.app>

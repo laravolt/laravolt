@@ -5,9 +5,9 @@
     </x-slot>
 
     <x-laravolt::panel title="{{ __('laravolt::label.edit_role') }}">
-        {!! SemanticForm::open()->put()->action(route('epicentrum::roles.update', $role['id'])) !!}
+        {!! Form::open()->put()->action(route('epicentrum::roles.update', $role['id'])) !!}
         <div class="field required">
-            {!! SemanticForm::text('name', old('name', $role['name']))->label(trans('laravolt::roles.name')) !!}
+            {!! Form::text('name', old('name', $role['name']))->label(trans('laravolt::roles.name')) !!}
         </div>
 
         <table class="ui table padded">
@@ -48,19 +48,19 @@
         <x-laravolt::link-button
                 url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-laravolt::link-button>
 
-        {!! SemanticForm::close() !!}
+        {!! Form::close() !!}
     </x-laravolt::panel>
 
     <div class="ui divider hidden"></div>
 
-    <x-laravolt::panel title="{{ __('laravolt::label.delete_role') }}" icon="warning red">
+    <x-laravolt::panel title="{{ __('laravolt::label.delete_role') }}" icon="exclamation-triangle">
         <p>@lang('laravolt::message.delete_role_intro', ['count' => $role->users->count()])</p>
 
-        {!! SemanticForm::open()->delete()->action(route('epicentrum::roles.destroy', $role['id'])) !!}
+        {!! Form::open()->delete()->action(route('epicentrum::roles.destroy', $role['id'])) !!}
         <button class="ui button red" type="submit" name="submit" value="1"
                 onclick="return confirm('@lang('laravolt::message.role_deletion_confirmation')')">@lang('laravolt::action.delete')
         </button>
-        {!! SemanticForm::close() !!}
+        {!! Form::close() !!}
     </x-laravolt::panel>
 
 </x-laravolt::layout.app>
