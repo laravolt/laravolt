@@ -10,7 +10,6 @@ use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
-use Laravolt\Suitable\Headers\Search\SelectHeader;
 use Laravolt\Suitable\TableView;
 
 class UserTable extends TableView
