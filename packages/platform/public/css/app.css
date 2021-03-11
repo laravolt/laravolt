@@ -2949,6 +2949,13 @@ table.bt.bt--no-header tbody td::before {
   }
 }
 
+.x-icon {
+  margin-right: 0.5em;
+  display: inline-block;
+  fill: var(--app-accent-color);
+  vertical-align: middle;
+}
+
 .ui.ui.ui.label.red.solid {
   border-color: transparent;
   color: #FFFFFF;
@@ -3469,20 +3476,17 @@ nav.sidebar.wide {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.sidebar__scroller .ui.attached.menu .icon.left {
+.sidebar__scroller .ui.attached.menu .x-icon.left {
   float: left;
   margin: 0 1rem 0 0;
   line-height: 1.5 !important;
+  width: 16px;
 }
-.sidebar__scroller .ui.attached.menu i.angle.icon {
+.sidebar__scroller .ui.attached.menu i.angle.x-icon {
   margin: 0 -0.5rem 0 0;
   float: right;
   opacity: 0.5;
   line-height: 1.5 !important;
-}
-.sidebar__scroller .ui.attached.menu .item.brand {
-  font-size: 1.5rem;
-  font-weight: 900;
 }
 .sidebar__scroller .ui.attached.menu .item > .header {
   font-weight: 700;
@@ -3494,7 +3498,7 @@ nav.sidebar.wide {
   height: 0;
 }
 .sidebar__scroller .sidebar__accordion.ui.accordion .title, .sidebar__scroller .sidebar__accordion.ui.accordion .ui.list .item {
-  padding: 0.75em 1.5em;
+  padding: 1em 1.5em;
   line-height: 1.5rem;
   border: 0 none;
   border-radius: 0.25rem;
@@ -3508,7 +3512,7 @@ nav.sidebar.wide {
   -webkit-box-flex: 1;
           flex-grow: 1;
 }
-.sidebar__scroller .sidebar__accordion.ui.accordion .title .icon.angle {
+.sidebar__scroller .sidebar__accordion.ui.accordion .title .x-icon.angle {
   -webkit-transition: 0.5s all;
   transition: 0.5s all;
   width: auto;
@@ -3517,7 +3521,7 @@ nav.sidebar.wide {
   -webkit-box-flex: 0;
           flex-grow: 0;
 }
-.sidebar__scroller .sidebar__accordion.ui.accordion .title.active .icon.angle.down {
+.sidebar__scroller .sidebar__accordion.ui.accordion .title.active .x-icon.angle.down {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }

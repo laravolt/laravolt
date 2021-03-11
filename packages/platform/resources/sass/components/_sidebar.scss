@@ -42,13 +42,14 @@ nav.sidebar {
     padding-left: 1rem;
     padding-right: 1rem;
 
-    .icon.left {
+    .x-icon.left {
       float: left;
       margin: 0 1rem 0 0;
       line-height: 1.5 !important;
+      width: 16px;
     }
 
-    i.angle.icon {
+    i.angle.x-icon {
       margin: 0 -0.5rem 0 0;
       float: right;
       opacity: .5;
@@ -56,11 +57,6 @@ nav.sidebar {
     }
 
     .item {
-
-      &.brand {
-        font-size: 1.5rem;
-        font-weight: 900;
-      }
 
       > .header {
         font-weight: 700;
@@ -76,7 +72,7 @@ nav.sidebar {
   .sidebar__accordion.ui.accordion {
 
     .title, .ui.list .item {
-      padding: 0.75em 1.5em;
+      padding: 1em 1.5em;
       line-height: 1.5rem;
       border: 0 none;
       border-radius: 0.25rem;
@@ -89,7 +85,7 @@ nav.sidebar {
       span {
         flex-grow: 1;
       }
-      .icon.angle {
+      .x-icon.angle {
         transition: .5s all;
         width: auto;
         height: auto;
@@ -97,7 +93,7 @@ nav.sidebar {
         flex-grow: 0;
       }
       &.active {
-        .icon.angle.down {
+        .x-icon.angle.down {
           transform: rotate(180deg);
         }
       }

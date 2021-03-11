@@ -2,7 +2,7 @@
     @foreach($items as $item)
         @if($item->hasChildren())
             <div class="title {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}">
-                <i class="left icon {{ $item->data('icon') }}"></i>
+                <x-laravolt::icon :name="$item->data('icon')" class="left" />
                 <span>{{ $item->title }}</span>
                 <i class="angle down icon"></i>
             </div>
@@ -20,7 +20,7 @@
             <a class="title empty {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}"
                href="{{ $item->url() }}"
                data-parent="{{ $item->parent()->title }}">
-                <i class="left icon {{ $item->data('icon') }}"></i>
+                <x-laravolt::icon :name="$item->data('icon')" class="left" />
                 <span>{{ $item->title }}</span>
             </a>
             <div class="content"></div>

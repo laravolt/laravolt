@@ -18,7 +18,7 @@ class ServiceProvider extends BaseServiceProvider
                 ->add(__('Application Log'), route('epilog::log.index'))
                 ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_APPLICATION_LOG)
                 ->active('epilog/*')
-                ->data('icon', 'file text');
+                ->data('icon', 'bug');
         });
     }
 }

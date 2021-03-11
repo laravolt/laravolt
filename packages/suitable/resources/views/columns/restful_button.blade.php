@@ -11,7 +11,7 @@
             @endif
 
             @if($actions->has('delete'))
-                <x-laravolt::button form="{{ $key }}" icon="trash alternate" class="icon mini secondary" type="submit"></x-laravolt::button>
+                <x-laravolt::button form="{{ $key }}" icon="times" class="icon mini secondary" type="submit"></x-laravolt::button>
             @endif
     @if($actions->count() > 1)
         </div>

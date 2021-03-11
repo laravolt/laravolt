@@ -11,3 +11,6 @@
 ## Installation
 - Tidak perlu compile assets dulu
 - Ganti `php artisan ui laravolt` menjadi `php artisan laravolt:install`
+
+## Facade
+- `SemanticForm` dihapus, pakai `Form`

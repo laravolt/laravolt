@@ -19,7 +19,7 @@
         </x-laravolt::panel>
     </div>
     <div class="column">
-        <x-laravolt::panel title="Panel With Icon" icon="github">
+        <x-laravolt::panel title="Panel With Icon" icon="rocket">
             <div class="ui placeholder">
                 <div class="image header">
                     <div class="line"></div>
