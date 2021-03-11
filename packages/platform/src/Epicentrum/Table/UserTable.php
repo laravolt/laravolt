@@ -10,7 +10,6 @@ use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
-use Laravolt\Suitable\Headers\Search\SelectHeader;
 use Laravolt\Suitable\TableView;
 
 class UserTable extends TableView
@@ -30,7 +29,7 @@ class UserTable extends TableView
             Text::make('name', trans('laravolt::users.name'))->sortable(),
             Text::make('email', trans('laravolt::users.email'))
                 ->sortable()
-                ->searchable('email', \Laravolt\Suitable\Headers\Search\SelectHeader::make('email', [1,2,3])),
+                ->searchable('email', \Laravolt\Suitable\Headers\Search\SelectHeader::make('email', [1, 2, 3])),
             Raw::make(
                 function ($data) {
                     return $data->roles->implode('name', ', ');

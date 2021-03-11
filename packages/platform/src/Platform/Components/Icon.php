@@ -2,7 +2,6 @@
 
 namespace Laravolt\Platform\Components;
 
-use Illuminate\Support\Stringable;
 use Illuminate\View\Component;
 
 class Icon extends Component
