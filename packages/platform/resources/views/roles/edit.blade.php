@@ -53,11 +53,11 @@
 
     <div class="ui divider hidden"></div>
 
-    <x-laravolt::panel title="{{ __('laravolt::label.delete_role') }}" icon="exclamation-triangle">
+    <x-laravolt::panel title="{{ __('laravolt::label.delete_role') }}" icon="exclamation-triangle" icon-class="text-red-500">
         <p>@lang('laravolt::message.delete_role_intro', ['count' => $role->users->count()])</p>
 
         {!! Form::open()->delete()->action(route('epicentrum::roles.destroy', $role['id'])) !!}
-        <button class="ui button red" type="submit" name="submit" value="1"
+        <button class="ui button basic red" type="submit" name="submit" value="1"
                 onclick="return confirm('@lang('laravolt::message.role_deletion_confirmation')')">@lang('laravolt::action.delete')
         </button>
         {!! Form::close() !!}

@@ -10,16 +10,20 @@ class Panel extends Component
 
     public $icon = '';
 
+    public $iconClass = '';
+
     /**
      * PanelComponent constructor.
      *
      * @param string $title
      * @param string $icon
+     * @param string $iconClass
      */
-    public function __construct(string $title = '', string $icon = '')
+    public function __construct(string $title = '', string $icon = '', string $iconClass = '')
     {
         $this->title = $title;
         $this->icon = $icon;
+        $this->iconClass = $iconClass;
     }
 
     /**

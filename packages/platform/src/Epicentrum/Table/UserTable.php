@@ -28,9 +28,7 @@ class UserTable extends TableView
             Numbering::make('No'),
             Avatar::make('name', ''),
             Text::make('name', trans('laravolt::users.name'))->sortable(),
-            Text::make('email', trans('laravolt::users.email'))
-                ->sortable()
-                ->searchable('email', \Laravolt\Suitable\Headers\Search\SelectHeader::make('email', [1,2,3])),
+            Text::make('email', trans('laravolt::users.email'))->sortable(),
             Raw::make(
                 function ($data) {
                     return $data->roles->implode('name', ', ');

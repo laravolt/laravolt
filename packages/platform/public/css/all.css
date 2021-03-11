@@ -1555,6 +1555,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.red.basic {
   color: #b21e1e;
   box-shadow: 0 0 0 1px rgba(219, 40, 40, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.orange.secondary {
@@ -1569,6 +1570,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.orange.basic {
   color: #cf590c;
   box-shadow: 0 0 0 1px rgba(242, 113, 28, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.yellow.secondary {
@@ -1583,6 +1585,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.yellow.basic {
   color: #cd9903;
   box-shadow: 0 0 0 1px rgba(251, 189, 8, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.olive.secondary {
@@ -1597,6 +1600,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.olive.basic {
   color: #8d9e13;
   box-shadow: 0 0 0 1px rgba(181, 204, 24, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.green.secondary {
@@ -1611,6 +1615,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.green.basic {
   color: #198f35;
   box-shadow: 0 0 0 1px rgba(33, 186, 69, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.teal.secondary {
@@ -1625,6 +1630,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.teal.basic {
   color: #00827c;
   box-shadow: 0 0 0 1px rgba(0, 181, 173, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.blue.secondary {
@@ -1639,6 +1645,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.blue.basic {
   color: #1a69a4;
   box-shadow: 0 0 0 1px rgba(33, 133, 208, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.violet.secondary {
@@ -1653,6 +1660,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.violet.basic {
   color: #502aa1;
   box-shadow: 0 0 0 1px rgba(100, 53, 201, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.purple.secondary {
@@ -1667,6 +1675,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.purple.basic {
   color: #82299f;
   box-shadow: 0 0 0 1px rgba(163, 51, 200, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.pink.secondary {
@@ -1681,6 +1690,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.pink.basic {
   color: #c71f7e;
   box-shadow: 0 0 0 1px rgba(224, 57, 151, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.brown.secondary {
@@ -1695,6 +1705,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.brown.basic {
   color: #805031;
   box-shadow: 0 0 0 1px rgba(165, 103, 63, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.grey.secondary {
@@ -1709,6 +1720,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.grey.basic {
   color: #5d5d5d;
   box-shadow: 0 0 0 1px rgba(118, 118, 118, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.classic.secondary {
@@ -1723,6 +1735,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.classic.basic {
   color: #5d5d5d;
   box-shadow: 0 0 0 1px rgba(118, 118, 118, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.black.secondary {
@@ -1737,6 +1750,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.black.basic {
   color: #020303;
   box-shadow: 0 0 0 1px rgba(27, 28, 29, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.button.white.secondary {
@@ -1751,6 +1765,7 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.white.basic {
   color: #e6e6e6;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  font-weight: 700;
 }
 
 .ui.form .ui.input.calendar, .ui.form .field .ui.input.calendar {
@@ -3053,7 +3068,7 @@ table.bt.bt--no-header tbody td::before {
 .x-icon {
   margin-right: 0;
   display: inline-block;
-  fill: var(--app-accent-color);
+  fill: currentColor;
   vertical-align: middle;
 }
 
@@ -3582,6 +3597,7 @@ nav.sidebar.wide {
   margin: 0 1rem 0 0;
   line-height: 1.5 !important;
   width: 16px;
+  color: var(--app-accent-color);
 }
 .sidebar__scroller .ui.attached.menu i.angle.x-icon {
   margin: 0 -0.5rem 0 0;
