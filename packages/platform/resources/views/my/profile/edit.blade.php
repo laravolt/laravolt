@@ -1,8 +1,5 @@
-@extends(config('laravolt.epicentrum.view.layout'))
-
-@section('content')
-
-    <x-laravolt::panel title="{{ __('Edit Profil') }}">
+<x-laravolt::layout.app :title="__('Edit Profil')">
+    <x-laravolt::panel title="{{ __('Edit Profil') }}" icon="user-edit">
         {!! form()->bind($user)->put(route('epicentrum::my.profile.update'))->horizontal() !!}
 
         {!! form()->text('name')->label(__('laravolt::users.name')) !!}
@@ -12,4 +9,4 @@
         {!! form()->action(form()->submit(__('laravolt::action.save'))) !!}
         {!! form()->close() !!}
     </x-laravolt::panel>
-@endsection
+</x-laravolt::layout.app>

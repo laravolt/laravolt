@@ -4,7 +4,7 @@
         <x-laravolt::backlink :url="route('epicentrum::users.index')"/>
     </x-slot>
 
-    <x-laravolt::panel title="Form Tambah Pengguna" icon="user add">
+    <x-laravolt::panel title="Form Tambah Pengguna" icon="user-plus">
         {!! form()->open()->post()->action(route('epicentrum::users.store'))->horizontal() !!}
         {!! form()->text('name')->label(trans('laravolt::users.name'))->required() !!}
         {!! form()->text('email')->label(trans('laravolt::users.email'))->required() !!}

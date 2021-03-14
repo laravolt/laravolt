@@ -4,4 +4,4 @@
 @fontWeight: @bold;
 @verticalPadding: @relative15px;
 @horizontalPadding: 2em;
-@borderRadius: @4px;
+@borderRadius: @6px;

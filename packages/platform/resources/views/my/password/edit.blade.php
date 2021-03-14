@@ -1,7 +1,5 @@
-@extends(config('laravolt.epicentrum.view.layout'))
-
-@section('content')
-    <x-laravolt::panel title="{{ __('Edit Password') }}">
+<x-laravolt::layout.app :title="__('Edit Password')">
+    <x-laravolt::panel title="{{ __('Edit Password') }}" icon="user-lock">
         {!! form()->open()->action(route('epicentrum::my.password.update'))->horizontal() !!}
         {!! form()->password('password_current')->label(__('laravolt::users.password_current')) !!}
         {!! form()->password('password')->label(__('laravolt::users.password_new')) !!}
@@ -9,4 +7,4 @@
         {!! form()->action(form()->submit(__('laravolt::action.save'))) !!}
         {!! form()->close() !!}
     </x-laravolt::panel>
-@endsection
+</x-laravolt::layout.app>

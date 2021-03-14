@@ -7,7 +7,8 @@
         <main class="content">
 
             <div class="content__inner">
-                <div class="ui two column grid content__body p-x-3 p-y-1 shadow m-b-0" style="background: #FFF">
+
+                <div data-x-titlebar class="ui two column grid content__body p-x-3 p-y-1 shadow m-b-0" style="background: #FFF">
                     <div class="column middle aligned">
                         <h3 class="ui header m-t-xs">
                             {{ $title }}
