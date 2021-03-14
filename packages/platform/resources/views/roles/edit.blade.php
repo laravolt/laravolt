@@ -4,7 +4,7 @@
         <x-laravolt::backlink url="{{ route('epicentrum::roles.index') }}"></x-laravolt::backlink>
     </x-slot>
 
-    <x-laravolt::panel title="{{ __('laravolt::label.edit_role') }}">
+    <x-laravolt::panel title="{{ __('laravolt::label.edit_role') }}" icon="user-astronaut">
         {!! Form::open()->put()->action(route('epicentrum::roles.update', $role['id'])) !!}
         <div class="field required">
             {!! Form::text('name', old('name', $role['name']))->label(trans('laravolt::roles.name')) !!}
@@ -44,9 +44,12 @@
             </tbody>
         </table>
 
-        <x-laravolt::button>@lang('laravolt::action.save')</x-laravolt::button>
-        <x-laravolt::link-button
-                url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')</x-laravolt::link-button>
+        <div class="actions">
+            <x-laravolt::button>@lang('laravolt::action.save')</x-laravolt::button>
+            <x-laravolt::link-button url="{{ route('epicentrum::roles.index') }}">
+                @lang('laravolt::action.cancel')
+            </x-laravolt::link-button>
+        </div>
 
         {!! Form::close() !!}
     </x-laravolt::panel>
@@ -57,9 +60,11 @@
         <p>@lang('laravolt::message.delete_role_intro', ['count' => $role->users->count()])</p>
 
         {!! Form::open()->delete()->action(route('epicentrum::roles.destroy', $role['id'])) !!}
-        <button class="ui button basic red" type="submit" name="submit" value="1"
-                onclick="return confirm('@lang('laravolt::message.role_deletion_confirmation')')">@lang('laravolt::action.delete')
-        </button>
+        <div class="actions">
+            <button class="ui button basic red" type="submit" name="submit" value="1"
+                    onclick="return confirm('@lang('laravolt::message.role_deletion_confirmation')')">@lang('laravolt::action.delete')
+            </button>
+        </div>
         {!! Form::close() !!}
     </x-laravolt::panel>
 

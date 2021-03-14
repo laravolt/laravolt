@@ -182,17 +182,17 @@ class PlatformServiceProvider extends ServiceProvider
             app('laravolt.menu.sidebar')->register(function ($menu) {
                 $menu = $menu->system;
                 $menu->add(trans('laravolt::label.users'), route('epicentrum::users.index'))
-                    ->data('icon', 'users')
+                    ->data('icon', 'user-friends')
                     ->data('permission', Permission::MANAGE_USER)
                     ->active(config('laravolt.epicentrum.route.prefix').'/users/*');
 
                 $menu->add(trans('laravolt::label.roles'), route('epicentrum::roles.index'))
-                    ->data('icon', 'mask')
+                    ->data('icon', 'user-astronaut')
                     ->data('permission', Permission::MANAGE_ROLE)
                     ->active(config('laravolt.epicentrum.route.prefix').'/roles/*');
 
                 $menu->add(trans('laravolt::label.permissions'), route('epicentrum::permissions.edit'))
-                    ->data('icon', 'shield')
+                    ->data('icon', 'shield-check')
                     ->data('permission', Permission::MANAGE_PERMISSION)
                     ->active(config('laravolt.epicentrum.route.prefix').'/permissions/*');
             });
