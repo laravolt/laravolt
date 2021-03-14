@@ -14,3 +14,6 @@
 
 ## Facade
 - `SemanticForm` dihapus, pakai `Form`
+
+## Layout
+- ubah dari @extends menjadi component based
