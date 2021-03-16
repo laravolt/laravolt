@@ -30,7 +30,8 @@ return [
             'auto_login' => false,
         ],
     ],
-    'router'       => [
+    'routes'       => [
+        'enabled'    => true,
         'middleware' => ['web'],
         'prefix'     => 'auth',
     ],

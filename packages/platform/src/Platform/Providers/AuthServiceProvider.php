@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Contracts\ForgotPassword;
+use Laravolt\Platform\Routes;
 
 /**
  * Class PackageServiceProvider.
@@ -79,7 +79,7 @@ class AuthServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        if (! $this->app->routesAreCached()) {
+        if ((! $this->app->routesAreCached()) && config('laravolt.auth.routes.enabled')) {
             $this->bootRoutes();
         }
 
@@ -98,34 +98,13 @@ class AuthServiceProvider extends BaseServiceProvider
      */
     protected function bootRoutes()
     {
-        $this->app['router']->group(
+        Routes::auth(
             [
                 'namespace' => '\Laravolt\Platform\Controllers',
-                'middleware' => config('laravolt.auth.router.middleware'),
-                'prefix' => config('laravolt.auth.router.prefix'),
+                'middleware' => config('laravolt.auth.routes.middleware'),
+                'prefix' => config('laravolt.auth.routes.prefix'),
                 'as' => 'auth::',
-            ],
-            function (Router $router) {
-                // Authentication Routes...
-                $router->get('login', 'LoginController@showLoginForm')->name('login');
-                $router->post('login', 'LoginController@login')->name('login.action');
-                $router->any('logout', 'LoginController@logout')->name('logout');
-
-                // Password Reset Routes...
-                $router->get('forgot', 'ForgotPasswordController@create')->name('forgot');
-                $router->post('forgot', 'ForgotPasswordController@store')->name('forgot.action');
-                $router->get('reset/{token}', 'ResetPasswordController@showResetForm')->name('reset');
-                $router->post('reset/{token}', 'ResetPasswordController@reset')->name('reset.action');
-
-                if (config('laravolt.auth.registration.enable')) {
-                    // Registration Routes...
-                    $router->get('register', 'RegisterController@showRegistrationForm')->name('register');
-                    $router->post('register', 'RegisterController@register')->name('register.action');
-
-                    // Activation Routes...
-                    $router->get('activate/{token}', 'ActivationController@activate')->name('activate');
-                }
-            }
+            ]
         );
     }
 }
