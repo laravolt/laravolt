@@ -6,7 +6,7 @@
 
     <h3 class="ui header">@lang('laravolt::auth.reset_password')</h3>
 
-    <form class="ui form" method="POST" action="{{ route('auth::reset.action', $token) }}">
+    <form class="ui form" method="POST" action="">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="token" value="{{ $token }}">
 
