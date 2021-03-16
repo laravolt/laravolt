@@ -20,51 +20,61 @@ class AuthServiceProvider extends BaseServiceProvider
      * Register the service provider.
      *
      * @see    http://laravel.com/docs/master/providers#the-register-method
-     *
      * @return void
      */
     public function register()
     {
-        $this->app->bind('laravolt.auth.registrar', function () {
-            $class = config('laravolt.auth.registration.implementation');
+        $this->app->bind(
+            'laravolt.auth.registrar',
+            function () {
+                $class = config('laravolt.auth.registration.implementation');
 
-            return new $class();
-        });
-
-        $this->app->bind('laravolt.auth.login', function () {
-            $class = config('laravolt.auth.login.implementation');
-
-            return new $class();
-        });
-
-        $this->app->bind('laravolt.auth.password.forgot', function () {
-            $class = app(config('laravolt.auth.password.forgot.implementation'));
-            if ($class instanceof ForgotPassword) {
-                return $class;
+                return new $class();
             }
+        );
 
-            throw new \InvalidArgumentException(
-                sprintf('We expect %s instance, but you give %s.', ForgotPassword::class, get_class($class))
-            );
-        });
+        $this->app->bind(
+            'laravolt.auth.login',
+            function () {
+                $class = config('laravolt.auth.login.implementation');
 
-        $this->app->bind('laravolt.auth.password.reset', function () {
-            $class = app(config('laravolt.auth.password.reset.implementation'));
-            if ($class instanceof ForgotPassword) {
-                return $class;
+                return new $class();
             }
+        );
 
-            throw new \InvalidArgumentException(
-                sprintf('We expect %s instance, but you give %s.', ForgotPassword::class, get_class($class))
-            );
-        });
+        $this->app->bind(
+            'laravolt.auth.password.forgot',
+            function () {
+                $class = app(config('laravolt.auth.password.forgot.implementation'));
+                if ($class instanceof ForgotPassword) {
+                    return $class;
+                }
+
+                throw new \InvalidArgumentException(
+                    sprintf('We expect %s instance, but you give %s.', ForgotPassword::class, get_class($class))
+                );
+            }
+        );
+
+        $this->app->bind(
+            'laravolt.auth.password.reset',
+            function () {
+                $class = app(config('laravolt.auth.password.reset.implementation'));
+                if ($class instanceof ForgotPassword) {
+                    return $class;
+                }
+
+                throw new \InvalidArgumentException(
+                    sprintf('We expect %s instance, but you give %s.', ForgotPassword::class, get_class($class))
+                );
+            }
+        );
     }
 
     /**
      * Application is booting.
      *
      * @see    http://laravel.com/docs/master/providers#the-boot-method
-     *
      * @return void
      */
     public function boot()
@@ -82,20 +92,18 @@ class AuthServiceProvider extends BaseServiceProvider
      * Register the package routes.
      *
      * @warn   consider allowing routes to be disabled
-     *
      * @see    http://laravel.com/docs/master/routing
      * @see    http://laravel.com/docs/master/packages#routing
-     *
      * @return void
      */
     protected function bootRoutes()
     {
         $this->app['router']->group(
             [
-                'namespace'  => '\Laravolt\Platform\Controllers',
+                'namespace' => '\Laravolt\Platform\Controllers',
                 'middleware' => config('laravolt.auth.router.middleware'),
-                'prefix'     => config('laravolt.auth.router.prefix'),
-                'as'         => 'auth::',
+                'prefix' => config('laravolt.auth.router.prefix'),
+                'as' => 'auth::',
             ],
             function (Router $router) {
                 // Authentication Routes...
@@ -116,11 +124,6 @@ class AuthServiceProvider extends BaseServiceProvider
 
                     // Activation Routes...
                     $router->get('activate/{token}', 'ActivationController@activate')->name('activate');
-                }
-
-                if (config('laravolt.auth.cas.enable')) {
-                    $router->get('cas/login', 'Cas\Login')->name('cas.login');
-                    $router->post('cas/logout', 'Cas\Logout')->name('cas.logout');
                 }
             }
         );

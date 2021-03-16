@@ -30,9 +30,6 @@ return [
             'auto_login' => false,
         ],
     ],
-    'cas'          => [
-        'enable' => false,
-    ],
     'router'       => [
         'middleware' => ['web'],
         'prefix'     => 'auth',
