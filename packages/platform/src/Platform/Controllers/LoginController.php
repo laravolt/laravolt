@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Laravolt\Auth\Services\LdapService;
 
 class LoginController extends Controller
 {
@@ -23,8 +22,7 @@ class LoginController extends Controller
 
     use ValidatesRequests;
     use AuthenticatesUsers {
-        login as defaultLogin;
-        sendFailedLoginResponse as defaultSendFailedLoginResponse;
+        AuthenticatesUsers::sendFailedLoginResponse as defaultSendFailedLoginResponse;
     }
 
     /**
@@ -32,14 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
-    /**
-     * Whether LDAP authentication enabled or not.
-     *
-     * @var bool
-     */
-    protected $ldapEnabled = false;
+    protected $redirectTo = '';
 
     /**
      * The custom login contract instance.
@@ -63,8 +54,6 @@ class LoginController extends Controller
 
         $this->redirectTo = config('laravolt.auth.redirect.after_login');
 
-        $this->ldapEnabled = config('laravolt.auth.ldap.enable');
-
         $this->maxAttempts = config('laravolt.auth.login.max_attempts');
 
         $this->decayMinutes = config('laravolt.auth.login.decay_minutes');
@@ -77,38 +66,19 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    public function show()
     {
         return view('laravolt::auth.login');
     }
 
-    public function login(Request $request)
+    public function store(Request $request)
     {
-        if ($this->ldapEnabled) {
-            try {
-                return $this->ldapLogin($request);
-            } catch (\Exception $e) {
-                return $this->defaultLogin($request);
-            }
-        }
-
-        return $this->defaultLogin($request);
+        return $this->login($request);
     }
 
-    protected function ldapLogin(Request $request)
+    public function destroy(Request $request)
     {
-        $ldapService = app(LdapService::class);
-
-        $ldapService->resolveUser($this->credentials($request));
-        $user = $ldapService->eloquentUser();
-
-        if ($user && auth()->login($user)) {
-            $request->merge(['_auth' => 'ldap']);
-
-            return $this->sendLoginResponse($request);
-        }
-
-        return $this->sendFailedLoginResponse($request);
+        return $this->logout($request);
     }
 
     public function username()

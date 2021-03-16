@@ -18,9 +18,9 @@ class Routes
             ],
             function (Router $router) {
                 // Authentication Routes...
-                $router->get('login', 'LoginController@showLoginForm')->name('login');
-                $router->post('login', 'LoginController@login')->name('login.action');
-                $router->any('logout', 'LoginController@logout')->name('logout');
+                $router->get('login', 'LoginController@show')->name('login');
+                $router->post('login', 'LoginController@store')->name('login.action');
+                $router->any('logout', 'LoginController@destroy')->name('logout');
 
                 // Password Reset Routes...
                 $router->get('forgot', 'ForgotPasswordController@create')->name('forgot');
