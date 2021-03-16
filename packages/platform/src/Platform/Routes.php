@@ -20,7 +20,7 @@ class Routes
                 // Authentication Routes...
                 $router->get('login', 'LoginController@show')->name('login');
                 $router->post('login', 'LoginController@store')->name('login.action');
-                $router->any('logout', 'LoginController@destroy')->name('logout');
+                $router->any('logout', 'LogoutController')->name('logout');
 
                 // Password Reset Routes...
                 $router->get('forgot', 'ForgotPasswordController@create')->name('forgot');
