@@ -16,6 +16,7 @@ mix.scripts([
     './node_modules/jquery/dist/jquery.min.js',
     './public/semantic/semantic.min.js',
     './node_modules/simplebar/dist/simplebar.js',
+    './node_modules/autonumeric/dist/autoNumeric.js',
     'resources/js/components/basictable.js',
     'resources/js/components/keymaster.js',
     'resources/js/components/fileuploader.js',

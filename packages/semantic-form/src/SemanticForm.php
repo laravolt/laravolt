@@ -528,8 +528,6 @@ class SemanticForm
 
     public function rupiah($name, $defaultValue = null)
     {
-        AssetFacade::group('laravolt')->add('autoNumeric');
-
         $text = $this->text($name, $defaultValue);
         $input = (new Rupiah($text));
 

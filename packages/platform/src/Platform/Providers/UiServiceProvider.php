@@ -8,7 +8,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Laravolt\Asset\AssetFacade;
 use Laravolt\Asset\AssetManager;
 use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
@@ -146,13 +145,5 @@ class UiServiceProvider extends BaseServiceProvider
                 ]);
             });
         }
-
-        AssetFacade::group('laravolt')
-            ->registerCollection(
-                'autoNumeric',
-                [
-                    'laravolt/plugins/autoNumeric.min.js',
-                ]
-            );
     }
 }

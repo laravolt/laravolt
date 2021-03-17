@@ -17,6 +17,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "autonumeric": "^4.6.0",
         "turbolinks": "^5.2.0"
     },
     "name": "platform"

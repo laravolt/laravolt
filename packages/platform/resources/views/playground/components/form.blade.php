@@ -5,12 +5,13 @@
             {!! form()->text('text')->label('Text') !!}
             {!! form()->email('email')->label('Email') !!}
             {!! form()->number('number')->label('Number') !!}
-            {!! form()->date('date')->label('Date') !!}
             {!! form()->time('time')->label('Time') !!}
+            {!! form()->date('date')->label('Date') !!}
+            {!! form()->datepicker('datepicker')->label('Datepicker') !!}
             {!! form()->rupiah('rupiah1')->label('Rupiah') !!}
-            {!! form()->rupiah('rupiah2')->label('Rupiah (dengan koma)') !!}
             {!! form()->uploader('avatar')->label('Single File Upload') !!}
             {!! form()->uploader('attachments')->limit(10)->label('Multiple File Upload') !!}
+            {!! form()->uploader('attachments_non_ajax')->ajax(false)->limit(10)->label('Multiple File Upload Wihout Ajax') !!}
             <h3 class="ui divider horizontal section">Chained Dropdown</h3>
             <p class="ui message">Silakan pilih salah satu user, makan dropdown kedua akan otomatis ter-update dengan menampilkan daftar user yang berhubungan</p>
             {!! form()->dropdownDB('user1', 'select id, email as name from users')->label('User') !!}
