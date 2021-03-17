@@ -1200,7 +1200,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testActionWithSingleComponent()
     {
-        $expected = '<div class="action pushed"><button type="submit" class="ui button primary" themed name="submit">Sign In</button></div>';
+        $expected = '<div class="actions action pushed"><button type="submit" class="ui button primary" themed name="submit">Sign In</button></div>';
         $submit = $this->form->submit('Sign In', 'submit');
         $result = $this->form->action($submit)->render();
 
@@ -1209,7 +1209,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testActionWithMultipleComponent()
     {
-        $expected = '<div class="action pushed">'.
+        $expected = '<div class="actions action pushed">'.
             '<button type="submit" class="ui button primary" themed name="submit">Sign In</button>'.
             '<button type="button" class="ui button" themed>Cancel</button>'.
             '</div>';
@@ -1224,7 +1224,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function testActionWithMacro()
     {
-        $expected = '<div class="action pushed">'.
+        $expected = '<div class="actions action pushed">'.
             '<button type="submit" class="ui button primary" themed>Submit</button>'.
             '<button type="button" class="ui button" themed>Cancel</button>'.
             '</div>';

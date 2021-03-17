@@ -8,8 +8,6 @@
     <div class="ui divider hidden"></div>
     @include('laravolt::playground.components.tab')
     <div class="ui divider hidden"></div>
-    @include('laravolt::playground.components.form')
-    <div class="ui divider hidden"></div>
     @include('laravolt::playground.components.definition')
 
     <div class="ui divider hidden"></div>

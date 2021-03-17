@@ -202,9 +202,12 @@ class PlatformServiceProvider extends ServiceProvider
             app('laravolt.menu.sidebar')->register(function ($sidebar) {
                 $group = $sidebar->system;
                 $menu = $group->add(__('Kitchen Sink'))->data('icon', 'utensils');
+                $menu->add(__('Form'), route('platform::playground.form'))
+                    ->data('permission', Permission::VIEW_PLAYGROUND)
+                    ->active('platform/playground/form');
                 $menu->add(__('UI Component'), route('platform::playground.ui'))
                     ->data('permission', Permission::VIEW_PLAYGROUND)
-                    ->active('platform/playground');
+                    ->active('platform/playground/ui');
                 $menu->add(__('Article Editor'), route('platform::playground.article'))
                     ->data('permission', Permission::VIEW_PLAYGROUND)
                     ->active('platform/article');

@@ -17,7 +17,7 @@ abstract class Element
 
     protected $fieldCallback = null;
 
-    protected $hint = false;
+    protected $hint = [];
 
     protected $widthTranslation = [
         1 => 'one',
@@ -195,7 +195,7 @@ abstract class Element
 
     public function hint($text, $class = null)
     {
-        $this->hint = new Hint($text, $class);
+        $this->hint[] = new Hint($text, $class);
 
         return $this;
     }
@@ -229,8 +229,10 @@ abstract class Element
     protected function renderHint()
     {
         $output = '';
-        if ($this->hint instanceof Hint) {
-            $output .= $this->hint->render();
+        foreach ($this->hint as $hint) {
+            if ($hint instanceof Hint) {
+                $output .= $hint->render();
+            }
         }
 
         return $output;

@@ -14,6 +14,7 @@ $router->group(
     function (\Illuminate\Routing\Router $router) {
         $router->group(['prefix' => 'playground'], function (\Illuminate\Routing\Router $router) {
             $router->view('ui', 'laravolt::playground.ui')->name('playground.ui');
+            $router->view('form', 'laravolt::playground.form')->name('playground.form');
             $router->view('article', 'laravolt::playground.article')->name('playground.article');
         });
         $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings');

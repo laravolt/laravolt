@@ -30,6 +30,11 @@ $widths: (
   .hint {
     opacity: .7;
     font-size: .9em;
+    line-height: 1.25rem;
+    &:first-child {
+      margin-top: .5rem;
+    }
+
   }
 
   // Avoid double margin for nested field
@@ -115,7 +120,7 @@ $widths: (
 
       > .hint {
         flex-basis: 100%;
-        margin-left: calc(#{$labelWidth} + #{$labelMargin});
+        margin-left: calc(#{$labelWidth} + #{$labelMargin} + 0.5em);
       }
 
       > label {
