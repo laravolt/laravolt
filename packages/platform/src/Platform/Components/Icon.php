@@ -26,9 +26,9 @@ class Icon extends Component
     public function render()
     {
         return function (array $data) {
-            $prefix = 'fad';
+            $iconset = config('laravolt.ui.iconset');
 
-            return svg("$prefix-{$this->name}", null, $data['attributes']->merge(['class' => 'x-icon'])->getAttributes())
+            return svg("$iconset-{$this->name}", null, $data['attributes']->merge(['class' => 'x-icon'])->getAttributes())
                 ->width('16px')
                 ->toHtml();
         };

@@ -22,6 +22,15 @@ $menu-item-active-indicator: #a6a8b1;
     .sidebar__scroller {
       background-color: $sidebar-bg;
 
+      .sidebar__profile {
+        .ui.header {
+          color: var(--app-accent-color);
+          .sub.header {
+            color: $menu-item-color;
+          }
+        }
+      }
+
       .ui.menu.vertical {
         background: transparent;
 

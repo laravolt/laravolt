@@ -8,7 +8,7 @@ return [
 
     /*
      * Set default theme
-     * Available themes: basik, black, blue, classic, fox, grey, pink, red, teal, violet
+     * Available themes: dark, light
      * */
     'theme' => 'dark',
 
@@ -18,6 +18,13 @@ return [
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
     'color' => 'blue',
+
+    /*
+     * Iconset
+     * Available options: fad (two tone), fal (light), far (regular)
+     * Browse icons at https://fontawesome.com/icons?d=gallery&p=2&s=duotone&m=pro
+     */
+    'iconset' => 'fad',
 
     'system_menu' => [
         'order' => 99,
