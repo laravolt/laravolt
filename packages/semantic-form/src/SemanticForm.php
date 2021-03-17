@@ -12,6 +12,7 @@ use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\Button;
 use Laravolt\SemanticForm\Elements\Checkbox;
 use Laravolt\SemanticForm\Elements\CheckboxGroup;
+use Laravolt\SemanticForm\Elements\Color;
 use Laravolt\SemanticForm\Elements\Coordinate;
 use Laravolt\SemanticForm\Elements\Date;
 use Laravolt\SemanticForm\Elements\Datepicker;
@@ -308,6 +309,17 @@ class SemanticForm
     public function password($name)
     {
         $password = new Password($name);
+
+        if ($this->hasError($name)) {
+            $password->setError();
+        }
+
+        return $password;
+    }
+
+    public function color($name)
+    {
+        $password = new Color($name);
 
         if ($this->hasError($name)) {
             $password->setError();

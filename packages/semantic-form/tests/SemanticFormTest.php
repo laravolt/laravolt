@@ -135,6 +135,13 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testInputColor()
+    {
+        $expected = '<input type="color" name="background">';
+        $result = (string)$this->form->color('background');
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCheckbox()
     {
         $expected = '<input type="checkbox" name="terms" value="1">';

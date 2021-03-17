@@ -3,6 +3,8 @@
     {!! form()->text('text')->label('Text') !!}
     {!! form()->email('email')->label('Email') !!}
     {!! form()->number('number')->label('Number') !!}
+    {!! form()->password('password')->label('Password') !!}
+    {!! form()->color('color')->label('Color') !!}
     {!! form()->time('time')->label('Time') !!}
     {!! form()->date('date')->label('Date') !!}
     {!! form()->datepicker('datepicker')->label('Datepicker') !!}
