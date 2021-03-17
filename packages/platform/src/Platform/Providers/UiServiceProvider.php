@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Providers;
 
+use BladeUI\Icons\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -29,22 +30,31 @@ class UiServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('laravolt.menu.sidebar', function () {
-            return new Menu();
-        });
+        $this->app->singleton(
+            'laravolt.menu.sidebar',
+            function () {
+                return new Menu();
+            }
+        );
 
         $this->bootConfig();
 
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
-        app('laravolt.menu.sidebar')->register(function ($menu) {
-            $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'));
-        });
-        app('laravolt.menu.sidebar')->register(function ($menu) {
-            $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1);
-        });
+        app('laravolt.menu.sidebar')->register(
+            function ($menu) {
+                $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'));
+            }
+        );
+        app('laravolt.menu.sidebar')->register(
+            function ($menu) {
+                $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1);
+            }
+        );
 
         $this->registerAssets();
+
+        $this->registerIcons();
 
         $this->registerMenuBuilder();
 
@@ -103,32 +113,44 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function registerFlash()
     {
-        $this->app->singleton('laravolt.flash', function (Application $app) {
-            return $app->make(Flash::class);
-        });
+        $this->app->singleton(
+            'laravolt.flash',
+            function (Application $app) {
+                return $app->make(Flash::class);
+            }
+        );
 
-        $this->app->singleton(FlashMiddleware::class, function (Application $app) {
-            return new FlashMiddleware($app['laravolt.flash']);
-        });
+        $this->app->singleton(
+            FlashMiddleware::class,
+            function (Application $app) {
+                return new FlashMiddleware($app['laravolt.flash']);
+            }
+        );
     }
 
     protected function registerMenuBuilder()
     {
-        $this->app->singleton('laravolt.menu.builder', function (Application $app) {
-            return $app->make(MenuBuilder::class);
-        });
+        $this->app->singleton(
+            'laravolt.menu.builder',
+            function (Application $app) {
+                return $app->make(MenuBuilder::class);
+            }
+        );
     }
 
     protected function buildMenuFromConfig()
     {
         $menuDir = base_path('menu');
         if (is_dir($menuDir)) {
-            View::composer('laravolt::menu.sidebar', function () use ($menuDir) {
-                foreach (new \FilesystemIterator($menuDir) as $file) {
-                    $menu = include $file->getPathname();
-                    $this->app['laravolt.menu.builder']->loadArray($menu);
+            View::composer(
+                'laravolt::menu.sidebar',
+                function () use ($menuDir) {
+                    foreach (new \FilesystemIterator($menuDir) as $file) {
+                        $menu = include $file->getPathname();
+                        $this->app['laravolt.menu.builder']->loadArray($menu);
+                    }
                 }
-            });
+            );
         }
 
         return $this;
@@ -137,13 +159,36 @@ class UiServiceProvider extends BaseServiceProvider
     protected function registerAssets()
     {
         if (! $this->app->bound('laravolt.asset.group.laravolt')) {
-            $this->app->singleton('laravolt.asset.group.laravolt', function () {
-                return new AssetManager([
-                    'public_dir' => public_path('laravolt'),
-                    'css_dir' => '',
-                    'js_dir' => '',
-                ]);
-            });
+            $this->app->singleton(
+                'laravolt.asset.group.laravolt',
+                function () {
+                    return new AssetManager(
+                        [
+                            'public_dir' => public_path('laravolt'),
+                            'css_dir' => '',
+                            'js_dir' => '',
+                        ]
+                    );
+                }
+            );
         }
+    }
+
+    private function registerIcons()
+    {
+        $this->callAfterResolving(
+            Factory::class,
+            function (Factory $factory) {
+                $icons = [
+                    'fad' => platform_path('resources/icons/duotone'),
+                    'far' => platform_path('resources/icons/regular'),
+                    'fal' => platform_path('resources/icons/light'),
+                    'fas' => platform_path('resources/icons/solid'),
+                ];
+                foreach ($icons as $prefix => $path) {
+                    $factory->add($prefix, ['path' => $path, 'prefix' => $prefix]);
+                }
+            }
+        );
     }
 }

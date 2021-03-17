@@ -17,3 +17,6 @@
 
 ## Layout
 - ubah dari @extends menjadi component based
+
+## New Feature
+- font awesome 5 pro icon: regular, solid, light, duotone
