@@ -29,7 +29,7 @@ class Label extends Component
      */
     public function render()
     {
-        $this->color = str_replace('theme', config('laravolt.ui.color'), $this->color);
+        $this->color ??= config('laravolt.ui.color');
 
         return <<<'blade'
         <div themed {{ $attributes->merge(['class' => 'ui label '.$color])}}>

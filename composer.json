@@ -32,6 +32,7 @@
         "league/flysystem": "^1.1",
         "myclabs/deep-copy": "^1.10",
         "nesbot/carbon": "^2.0",
+        "pragmarx/version": "dev-master",
         "spatie/eloquent-sortable": "^3.10",
         "spatie/laravel-backup": "^7.0",
         "spatie/laravel-medialibrary": "^9.0",

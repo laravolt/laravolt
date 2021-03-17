@@ -13,7 +13,7 @@
                         alt=""
                 >
                 {{ config('laravolt.ui.brand_name') }}
-                <div class="ui label violet small">V 1.2.3</div>
+                <x-laravolt::label>@version('compact')</x-laravolt::label>
             </div>
         </div>
     </div>
