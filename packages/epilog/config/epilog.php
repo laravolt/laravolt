@@ -4,7 +4,7 @@
  * Set specific configuration variables here
  */
 return [
-    'route' => [
+    'routes' => [
         'enabled' => true,
         'middleware' => ['web', 'auth'],
         'prefix' => 'epilog',

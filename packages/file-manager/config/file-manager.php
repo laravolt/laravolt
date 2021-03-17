@@ -4,7 +4,7 @@
  * Set specific configuration variables here
  */
 return [
-    'route' => [
+    'routes' => [
         'middleware' => ['web', 'auth'],
         'prefix' => 'file-manager',
     ],

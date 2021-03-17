@@ -15,32 +15,41 @@ abstract class BaseServiceProvider extends ServiceProvider
 
     abstract public function getIdentifier();
 
+    protected function enabled()
+    {
+        return config('laravolt.platform.features.'.$this->getIdentifier()) ?? true;
+    }
+
     public function register()
     {
-        $file = $this->packagePath("config/{$this->getIdentifier()}.php");
-        if (file_exists($file)) {
-            $this->mergeConfigFrom($file, "laravolt.{$this->getIdentifier()}");
-            $this->publishes(
-                [$file => config_path("laravolt/{$this->getIdentifier()}.php")],
-                ['config', 'laravolt-config']
-            );
-        }
+        if ($this->enabled()) {
+            $file = $this->packagePath("config/{$this->getIdentifier()}.php");
+            if (file_exists($file)) {
+                $this->mergeConfigFrom($file, "laravolt.{$this->getIdentifier()}");
+                $this->publishes(
+                    [$file => config_path("laravolt/{$this->getIdentifier()}.php")],
+                    ['config', 'laravolt-config']
+                );
+            }
 
-        $this->config = collect(config("laravolt.{$this->getIdentifier()}"));
+            $this->config = collect(config("laravolt.{$this->getIdentifier()}"));
+        }
     }
 
     public function boot()
     {
-        $this->bootRoutes()
-            ->bootMenu()
-            ->bootViews()
-            ->bootMigrations()
-            ->bootTranslations();
+        if ($this->enabled()) {
+            $this->bootRoutes()
+                ->bootMenu()
+                ->bootViews()
+                ->bootMigrations()
+                ->bootTranslations();
+        }
     }
 
     protected function bootRoutes()
     {
-        if (Arr::get($this->config, 'route.enabled')) {
+        if (Arr::get($this->config, 'routes.enabled') && !$this->app->routesAreCached()) {
             $router = $this->app['router'];
             require $this->packagePath('routes/web.php');
         }

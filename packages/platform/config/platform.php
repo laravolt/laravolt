@@ -2,10 +2,11 @@
 
 return [
     'features' => [
-        'application_log' => false,
-        'database_backup' => false,
-        'database_monitor' => false,
-        'kitchen_sink' => true,
+        'epilog' => false,
+        'database-monitor' => false,
+        'mailkeeper' => false,
+        'lookup' => false,
+        'kitchen_sink' => false,
         'turbolinks' => true,
         'quick_switcher' => true,
     ],

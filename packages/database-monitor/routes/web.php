@@ -2,9 +2,9 @@
 
 Route::group(
     [
-        'prefix' => config('laravolt.database-monitor.route.prefix'),
+        'prefix' => config('laravolt.database-monitor.routes.prefix'),
         'as' => 'database-monitor::',
-        'middleware' => config('laravolt.database-monitor.route.middleware'),
+        'middleware' => config('laravolt.database-monitor.routes.middleware'),
     ],
     function () {
         Route::get('backup', [\Laravolt\DatabaseMonitor\Controllers\BackupController::class, 'index'])
