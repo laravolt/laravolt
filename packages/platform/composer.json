@@ -25,7 +25,6 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "anhskohbo/no-captcha": "^3.2",
-        "appstract/laravel-blade-directives": "^1.7",
         "bensampo/laravel-enum": "^1.37",
         "illuminate/console": "^7.0",
         "illuminate/database": "^7.0",

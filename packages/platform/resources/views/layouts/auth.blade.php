@@ -4,7 +4,7 @@
     <div class="layout--auth is-boxed">
         <div class="layout--auth__container">
             <div class="x-inspire"
-                 style="background-image: url('{!! asset('laravolt/img/wallpaper/animated-svg/blue.svg') !!}')"
+                 style="background-image: url('{!! config('laravolt.platform.background_login') !!}')"
             >
                 <div class="x-inspire__content">
                     <div class="x-inspire__text">@include('laravolt::components.inspire')</div>

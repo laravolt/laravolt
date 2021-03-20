@@ -1,8 +1,8 @@
 <x-laravolt::layout.base>
-    <div class="layout--auth is-boxed">
+    <div class="layout--auth is-{!! config('laravolt.ui.login.layout') !!}">
         <div class="layout--auth__container">
             <div class="x-inspire"
-                 style="background-image: url('{!! asset('laravolt/img/wallpaper/animated-svg/blue.svg') !!}')"
+                 style="background-image: url('{!! config('laravolt.ui.login.background') !!}')"
             >
                 <div class="x-inspire__content">
                     <div class="x-inspire__text">

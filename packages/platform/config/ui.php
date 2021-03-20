@@ -22,14 +22,24 @@ return [
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'blue',
+    'color' => 'yellow',
+
+    /*
+     * Login page settings
+     */
+    'login' => [
+        'background' => asset('laravolt/img/wallpaper/animated-svg/dark.svg'),
+
+        // Available options: 'boxed', 'fullscreen', 'classic'
+        'layout' => 'boxed',
+    ],
 
     /*
      * Iconset
      * Available options: fad (two tone), fal (light), far (regular)
      * Browse icons at https://fontawesome.com/icons?d=gallery&p=2&s=duotone&m=pro
      */
-    'iconset' => 'fad',
+    'iconset' => 'fal',
 
     'system_menu' => [
         'order' => 99,
