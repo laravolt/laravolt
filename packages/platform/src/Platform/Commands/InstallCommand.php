@@ -58,7 +58,6 @@ class InstallCommand extends Command
 
     private function addEntries()
     {
-
         $entries = [
             base_path('.gitignore') => [
                 '/public/laravolt',

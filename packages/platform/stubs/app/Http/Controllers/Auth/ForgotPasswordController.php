@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
@@ -12,7 +10,6 @@ use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
 {
-
     /**
      * Display the form to request a password reset link.
      *
