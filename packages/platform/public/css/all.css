@@ -1557,6 +1557,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.red.link {
+  color: #b21e1e;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.orange.secondary {
   color: #cf590c;
   background-color: rgba(242, 113, 28, 0.1);
@@ -1568,6 +1574,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.orange.basic {
   color: #cf590c;
   box-shadow: 0 0 0 1px rgba(242, 113, 28, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.orange.link {
+  color: #cf590c;
+  background-color: transparent;
   font-weight: 700;
 }
 
@@ -1585,6 +1597,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.yellow.link {
+  color: #cd9903;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.olive.secondary {
   color: #8d9e13;
   background-color: rgba(181, 204, 24, 0.1);
@@ -1596,6 +1614,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.olive.basic {
   color: #8d9e13;
   box-shadow: 0 0 0 1px rgba(181, 204, 24, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.olive.link {
+  color: #8d9e13;
+  background-color: transparent;
   font-weight: 700;
 }
 
@@ -1613,6 +1637,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.green.link {
+  color: #198f35;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.teal.secondary {
   color: #00827c;
   background-color: rgba(0, 181, 173, 0.1);
@@ -1624,6 +1654,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.teal.basic {
   color: #00827c;
   box-shadow: 0 0 0 1px rgba(0, 181, 173, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.teal.link {
+  color: #00827c;
+  background-color: transparent;
   font-weight: 700;
 }
 
@@ -1641,6 +1677,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.blue.link {
+  color: #1a69a4;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.violet.secondary {
   color: #502aa1;
   background-color: rgba(100, 53, 201, 0.1);
@@ -1652,6 +1694,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.violet.basic {
   color: #502aa1;
   box-shadow: 0 0 0 1px rgba(100, 53, 201, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.violet.link {
+  color: #502aa1;
+  background-color: transparent;
   font-weight: 700;
 }
 
@@ -1669,6 +1717,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.purple.link {
+  color: #82299f;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.pink.secondary {
   color: #c71f7e;
   background-color: rgba(224, 57, 151, 0.1);
@@ -1680,6 +1734,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.pink.basic {
   color: #c71f7e;
   box-shadow: 0 0 0 1px rgba(224, 57, 151, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.pink.link {
+  color: #c71f7e;
+  background-color: transparent;
   font-weight: 700;
 }
 
@@ -1697,6 +1757,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.brown.link {
+  color: #805031;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.grey.secondary {
   color: #5d5d5d;
   background-color: rgba(118, 118, 118, 0.1);
@@ -1708,6 +1774,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.grey.basic {
   color: #5d5d5d;
   box-shadow: 0 0 0 1px rgba(118, 118, 118, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.grey.link {
+  color: #5d5d5d;
+  background-color: transparent;
   font-weight: 700;
 }
 
@@ -1725,6 +1797,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.classic.link {
+  color: #5d5d5d;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.black.secondary {
   color: #020303;
   background-color: rgba(27, 28, 29, 0.1);
@@ -1739,6 +1817,12 @@ table.bt.bt--no-header tbody td::before {
   font-weight: 700;
 }
 
+.ui.button.black.link {
+  color: #020303;
+  background-color: transparent;
+  font-weight: 700;
+}
+
 .ui.button.white.secondary {
   color: #e6e6e6;
   background-color: rgba(255, 255, 255, 0.1);
@@ -1750,6 +1834,12 @@ table.bt.bt--no-header tbody td::before {
 .ui.button.white.basic {
   color: #e6e6e6;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  font-weight: 700;
+}
+
+.ui.button.white.link {
+  color: #e6e6e6;
+  background-color: transparent;
   font-weight: 700;
 }
 

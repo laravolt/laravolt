@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as BaseUser;
 use Laravolt\Contracts\CanChangePassword as CanChangePasswordContract;
 use Laravolt\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
@@ -13,7 +14,7 @@ use Laravolt\Platform\Concerns\HasRoleAndPermission;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends BaseUser implements CanChangePasswordContract, HasRoleAndPermissionContract, HasMedia
+class User extends BaseUser implements CanChangePasswordContract, HasRoleAndPermissionContract, HasMedia, MustVerifyEmail
 {
     use CanChangePassword;
     use CanResetPassword;

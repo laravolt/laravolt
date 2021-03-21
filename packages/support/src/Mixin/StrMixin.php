@@ -15,9 +15,9 @@ class StrMixin
         };
     }
 
-    public function mask()
+    public function mask(): \Closure
     {
-        return function ($str, $first, $last, $mask = '*') {
+        return static function ($str, $first, $last, $mask = '*') {
             $len = strlen($str);
             $toShow = $first + $last;
 
@@ -28,14 +28,14 @@ class StrMixin
         };
     }
 
-    public function maskEmail()
+    public function maskEmail(): \Closure
     {
         return function ($email) {
             $mails = explode('@', $email);
             $domain = $mails[1] ?? '';
 
-            $mails[0] = Str::mask($mails[0], 3, 2);
-            $domain = Str::mask($domain, 3, 2);
+            $mails[0] = Str::mask($mails[0], 2, 2);
+            $domain = Str::mask($domain, 2, 5);
             $mails[1] = $domain;
 
             return implode('@', $mails);

@@ -70,11 +70,15 @@ class PlatformServiceProvider extends ServiceProvider
 
             return new Password($token, $app['mailer'], $app['config']['laravolt.password.emails.new']);
         });
+
+        if (config('laravolt.platform.features.captcha')) {
+            $this->app->register('Anhskohbo\NoCaptcha\NoCaptchaServiceProvider');
+        }
     }
 
     protected function registerConfig(): self
     {
-        $config = ['auth', 'epicentrum', 'password', 'platform', 'ui'];
+        $config = ['epicentrum', 'password', 'platform', 'ui'];
         $publishes = [];
         foreach ($config as $c) {
             $this->mergeConfigFrom(platform_path("config/$c.php"), "laravolt.$c");

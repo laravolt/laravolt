@@ -11,4 +11,10 @@
     box-shadow: 0 0 0 1px rgba($color, .5) inset;
     font-weight: 700;
   }
+
+  .ui.button.#{$name}.link {
+    color: darken($color, 10%);
+    background-color: transparent;
+    font-weight: 700;
+  }
 }

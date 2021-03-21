@@ -9,7 +9,7 @@
         <br> Untuk melanjutkan proses, silakan klik tombol di bawah ini:
     @endcomponent
 
-    @component('laravolt::mail.button', ['url' => route('auth::reset', compact('token', 'email'))])
+    @component('laravolt::mail.button', ['url' => route('auth::reset.show', compact('token', 'email'))])
         Reset Password
     @endcomponent
 

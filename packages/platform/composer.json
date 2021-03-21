@@ -60,8 +60,7 @@
             "providers": [
                 "Laravolt\\Platform\\Providers\\EpicentrumServiceProvider",
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
-                "Laravolt\\Platform\\Providers\\UiServiceProvider",
-                "Laravolt\\Platform\\Providers\\AuthServiceProvider"
+                "Laravolt\\Platform\\Providers\\UiServiceProvider"
             ]
         }
     },
