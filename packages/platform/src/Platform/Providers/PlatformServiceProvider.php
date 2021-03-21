@@ -41,6 +41,8 @@ class PlatformServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 
         $this->registerServices();
+
+        $this->publishSkeleton();
     }
 
     public function boot(Gate $gate): void
@@ -235,5 +237,13 @@ class PlatformServiceProvider extends ServiceProvider
         } catch (\PDOException $e) {
             return false;
         }
+    }
+
+    private function publishSkeleton()
+    {
+        $this->publishes(
+            [platform_path('stubs') => base_path()],
+            ['laravolt-skeleton']
+        );
     }
 }
