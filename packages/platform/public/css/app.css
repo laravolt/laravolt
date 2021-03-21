@@ -3793,8 +3793,7 @@ a[themed]:not(.ui.button) {
   min-height: 100vh;
   -webkit-box-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  padding-top: 10vh;
 }
 .layout--auth.is-boxed .layout--auth__container {
   display: -webkit-box;
