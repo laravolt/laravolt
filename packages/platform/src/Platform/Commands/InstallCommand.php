@@ -15,7 +15,6 @@ class InstallCommand extends Command
      * @var string
      */
     protected $signature = 'laravolt:install';
-
     /**
      * The console command description.
      *
@@ -45,7 +44,8 @@ class InstallCommand extends Command
                 'email' => $username,
                 'password' => $password,
 
-            ]);
+            ]
+        );
 
         $this->newLine();
         $this->info('Application ready...');
@@ -58,7 +58,6 @@ class InstallCommand extends Command
 
     private function addEntries()
     {
-
         $entries = [
             base_path('.gitignore') => [
                 '/public/laravolt',
@@ -66,8 +65,12 @@ class InstallCommand extends Command
         ];
 
         foreach ($entries as $file => $lines) {
+            $contents = explode("\n", file_get_contents($file));
             foreach ($lines as $line) {
-                file_put_contents($file, $line."\n", FILE_APPEND);
+                // Only put entry if not exists
+                if (! in_array($line, $contents, true)) {
+                    file_put_contents($file, $line."\n", FILE_APPEND);
+                }
             }
         }
     }
