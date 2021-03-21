@@ -1,13 +1,9 @@
-@extends('laravolt::layouts.app')
+<x-laravolt::layout.app :title="__('laravolt::action.edit') . ' :Module Name:'">
+    <x-laravolt::backlink url="{{ route('modules:::module-name:.index') }}"></x-backlink>
 
-@section('content')
-
-    <x-backlink url="{{ route('modules:::module-name:.index') }}"></x-backlink>
-
-    <x-panel title="Edit :Module Name:">
+    <x-laravolt::panel title="Tambah :Module Name:">
         {!! form()->bind($:moduleName:)->put(route('modules:::module-name:.update', $:moduleName:->getKey()))->horizontal()->multipart() !!}
-        @include(':module-name:::_form')
+            @include(':module-name:::_form')
         {!! form()->close() !!}
-    </x-panel>
-
-@stop
+    </x-laravolt::panel>
+</x-laravolt::layout.app>
