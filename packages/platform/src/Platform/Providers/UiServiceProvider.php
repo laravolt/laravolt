@@ -10,7 +10,6 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
-use Laravolt\Platform\Services\Flash;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
 
@@ -57,8 +56,6 @@ class UiServiceProvider extends BaseServiceProvider
         $this->registerIcons();
 
         $this->registerMenuBuilder();
-
-        $this->registerFlash();
     }
 
     /**
@@ -109,23 +106,6 @@ class UiServiceProvider extends BaseServiceProvider
         Paginator::defaultSimpleView('laravolt::pagination.simple');
 
         return $this;
-    }
-
-    protected function registerFlash()
-    {
-        $this->app->singleton(
-            'laravolt.flash',
-            function (Application $app) {
-                return $app->make(Flash::class);
-            }
-        );
-
-        $this->app->singleton(
-            FlashMiddleware::class,
-            function (Application $app) {
-                return new FlashMiddleware($app['laravolt.flash']);
-            }
-        );
     }
 
     protected function registerMenuBuilder()
