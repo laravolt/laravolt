@@ -4,9 +4,9 @@ use :Namespace:\:ModuleName:\Controllers\:ModuleName:Controller;
 
 Route::group(
     [
-        'prefix' => config('modules.:module-name:.route.prefix'),
+        'prefix' => config('modules.:module-name:.routes.prefix'),
         'as' => 'modules::',
-        'middleware' => config('modules.:module-name:.route.middleware'),
+        'middleware' => config('modules.:module-name:.routes.middleware'),
     ],
     function () {
         Route::resource(':module-name:', :ModuleName:Controller::class);
