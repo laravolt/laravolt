@@ -39,7 +39,7 @@ return [
      * Available options: fad (two tone), fal (light), far (regular)
      * Browse icons at https://fontawesome.com/icons?d=gallery&p=2&s=duotone&m=pro
      */
-    'iconset' => 'fal',
+    'iconset' => 'fad',
 
     'system_menu' => [
         'order' => 99,
