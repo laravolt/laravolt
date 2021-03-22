@@ -184,8 +184,8 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootMenu()
     {
-        $menu = platform_path("config/menu/system.php");
-        $this->mergeConfigFrom($menu, "laravolt.menu.system");
+        $menu = platform_path('config/menu/system.php');
+        $this->mergeConfigFrom($menu, 'laravolt.menu.system');
         $this->publishes([$menu => config_path('laravolt/menu/system.php')], ['laravolt-config', 'config']);
 
         return $this;
