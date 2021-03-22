@@ -20,3 +20,6 @@
 
 ## New Feature
 - font awesome 5 pro icon: regular, solid, light, duotone
+
+## Configurations
+- Config key `route` diubah menjadi `routes` supaya align dengan folder `routes` Laravel
