@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\Activate;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\Logout;
@@ -14,7 +13,6 @@ Route::group(
         'prefix' => 'auth',
     ],
     function (Router $router) {
-
         $router->get('login', [LoginController::class, 'show'])->name('auth::login.show');
         $router->post('login', [LoginController::class, 'store'])->name('auth::login.store');
         $router->any('logout', Logout::class)->name('auth::logout');
@@ -42,7 +40,6 @@ Route::group(
             Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'update'])
                 ->middleware(['auth', 'signed', 'throttle:6,1'])
                 ->name('verification.verify');
-
         }
     }
 );

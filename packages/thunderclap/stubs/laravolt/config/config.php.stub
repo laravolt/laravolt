@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'route' => [
+    'routes' => [
         'enabled' => true,
         'middleware' => ['web', 'auth'],
         'prefix' => 'modules',
