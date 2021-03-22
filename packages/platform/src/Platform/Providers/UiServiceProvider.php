@@ -140,18 +140,14 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function buildMenuFromConfig()
     {
-        $menuDir = base_path('menu');
-        if (is_dir($menuDir)) {
-            View::composer(
-                'laravolt::menu.sidebar',
-                function () use ($menuDir) {
-                    foreach (new \FilesystemIterator($menuDir) as $file) {
-                        $menu = include $file->getPathname();
-                        $this->app['laravolt.menu.builder']->loadArray($menu);
-                    }
+        View::composer(
+            'laravolt::menu.sidebar',
+            function () {
+                foreach (config('laravolt.menu') as $menu) {
+                    $this->app['laravolt.menu.builder']->loadArray($menu);
                 }
-            );
-        }
+            }
+        );
 
         return $this;
     }

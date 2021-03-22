@@ -184,41 +184,9 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootMenu()
     {
-        if (config('laravolt.epicentrum.menu.enabled')) {
-            app('laravolt.menu.sidebar')->register(function ($menu) {
-                $menu = $menu->system;
-                $menu->add(trans('laravolt::label.users'), route('epicentrum::users.index'))
-                    ->data('icon', 'user-friends')
-                    ->data('permission', Permission::MANAGE_USER)
-                    ->active(config('laravolt.epicentrum.routes.prefix').'/users/*');
-
-                $menu->add(trans('laravolt::label.roles'), route('epicentrum::roles.index'))
-                    ->data('icon', 'user-astronaut')
-                    ->data('permission', Permission::MANAGE_ROLE)
-                    ->active(config('laravolt.epicentrum.routes.prefix').'/roles/*');
-
-                $menu->add(trans('laravolt::label.permissions'), route('epicentrum::permissions.edit'))
-                    ->data('icon', 'shield-check')
-                    ->data('permission', Permission::MANAGE_PERMISSION)
-                    ->active(config('laravolt.epicentrum.routes.prefix').'/permissions/*');
-            });
-        }
-
-        if (config('laravolt.platform.features.kitchen_sink')) {
-            app('laravolt.menu.sidebar')->register(function ($sidebar) {
-                $group = $sidebar->system;
-                $menu = $group->add(__('Kitchen Sink'))->data('icon', 'utensils');
-                $menu->add(__('Form'), route('platform::playground.form'))
-                    ->data('permission', Permission::VIEW_PLAYGROUND)
-                    ->active('platform/playground/form');
-                $menu->add(__('UI Component'), route('platform::playground.ui'))
-                    ->data('permission', Permission::VIEW_PLAYGROUND)
-                    ->active('platform/playground/ui');
-                $menu->add(__('Article Editor'), route('platform::playground.article'))
-                    ->data('permission', Permission::VIEW_PLAYGROUND)
-                    ->active('platform/article');
-            });
-        }
+        $menu = platform_path("config/menu/system.php");
+        $this->mergeConfigFrom($menu, "laravolt.menu.system");
+        $this->publishes([$menu => config_path('laravolt/menu/system.php')], ['laravolt-config', 'config']);
 
         return $this;
     }

@@ -23,3 +23,6 @@
 
 ## Configurations
 - Config key `route` diubah menjadi `routes` supaya align dengan folder `routes` Laravel
+
+- route('dashboard') dihilangkan, pindah ke route('home')
+- registrasi menu di config `config/laravolt/menu/`, tidak boleh ada pemanggilan fungsi helper, semuanya harus static text

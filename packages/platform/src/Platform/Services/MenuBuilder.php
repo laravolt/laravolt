@@ -40,8 +40,11 @@ class MenuBuilder
 
     public function loadArray(array $menu)
     {
-        $order = 0;
+        $order = null;
         foreach ($menu as $title => $option) {
+            if ($order === null) {
+                $order = $option['order'] ?? 0;
+            }
             app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option, $order) {
                 $section = $menu->add($title, isset($option['route']) ? route($option['route']) : null)->data('order', $order);
 

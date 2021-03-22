@@ -27,7 +27,6 @@
         "illuminate/support": "8.*",
         "kalnoy/nestedset": "^5.0",
         "kirschbaum-development/eloquent-power-joins": "^2.3",
-        "laravel/ui": "^3.2",
         "laravolt/avatar": "^4.0",
         "lavary/laravel-menu": "^1.7.7",
         "league/flysystem": "^1.1",
