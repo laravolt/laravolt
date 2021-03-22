@@ -70,6 +70,7 @@
             "Laravolt\\Media\\": "packages/media/src",
             "Laravolt\\Middleware\\": "packages/platform/src/Middleware/",
             "Laravolt\\Platform\\": "packages/platform/src/Platform/",
+            "Laravolt\\Rules\\": "packages/platform/src/Rules/",
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
