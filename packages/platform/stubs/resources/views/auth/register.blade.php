@@ -4,7 +4,7 @@
 
     {!! form()->open() !!}
     {!! form()->text('name')->label(__('laravolt::auth.name')) !!}
-    {!! form()->email(config('laravolt.auth.identifier'))->label(__('laravolt::auth.identifier')) !!}
+    {!! form()->email('email')->label(__('laravolt::auth.identifier')) !!}
     {!! form()->password('password')->label(__('laravolt::auth.password')) !!}
     {!! form()->password('password_confirmation')->label(__('laravolt::auth.password_confirmation')) !!}
     <div class="field action">

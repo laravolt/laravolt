@@ -2,7 +2,7 @@
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.login')</h3>
 
     {!! form()->open() !!}
-    {!! form()->email(config('laravolt.auth.identifier'))->label(__('laravolt::auth.identifier')) !!}
+    {!! form()->email('email')->label(__('laravolt::auth.identifier')) !!}
     {!! form()->password('password')->label(__('laravolt::auth.password')) !!}
 
     @if(config('laravolt.auth.captcha'))
