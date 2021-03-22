@@ -2,9 +2,9 @@
 
 \Illuminate\Support\Facades\Route::group(
     [
-        'prefix' => config('laravolt.lookup.route.prefix'),
+        'prefix' => config('laravolt.lookup.routes.prefix'),
         'as' => 'lookup::',
-        'middleware' => config('laravolt.lookup.route.middleware'),
+        'middleware' => config('laravolt.lookup.routes.middleware'),
     ],
     function (\Illuminate\Routing\Router $router) {
         $router->get('lookup/{collection}', [\Laravolt\Lookup\Controllers\LookupController::class, 'index'])

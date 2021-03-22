@@ -3,9 +3,9 @@
 Route::group(
     [
         'namespace' => '\Laravolt\FileManager\Controllers',
-        'prefix' => config('laravolt.file-manager.route.prefix'),
+        'prefix' => config('laravolt.file-manager.routes.prefix'),
         'as' => 'file-manager::',
-        'middleware' => config('laravolt.file-manager.route.middleware'),
+        'middleware' => config('laravolt.file-manager.routes.middleware'),
     ],
     function () {
         Route::delete('{id}', ['uses' => 'FileController@destroy', 'as' => 'file.destroy']);
