@@ -4,7 +4,7 @@
  * Set specific configuration variables here
  */
 return [
-    'route' => [
+    'routes' => [
         'enabled' => true,
         'middleware' => ['web', 'auth'],
         'prefix' => 'epicentrum',
@@ -41,8 +41,5 @@ return [
         'permission' => \Laravolt\Platform\Models\Permission::class,
     ],
 
-    // Whether to auto load migrations or not.
-    // If set to false, then you must publish the migration files first before running the migrate command
-    'migrations' => true,
     'table_view' => \Laravolt\Epicentrum\Table\UserTable::class,
 ];

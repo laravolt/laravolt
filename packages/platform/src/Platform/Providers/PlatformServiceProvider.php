@@ -190,17 +190,17 @@ class PlatformServiceProvider extends ServiceProvider
                 $menu->add(trans('laravolt::label.users'), route('epicentrum::users.index'))
                     ->data('icon', 'user-friends')
                     ->data('permission', Permission::MANAGE_USER)
-                    ->active(config('laravolt.epicentrum.route.prefix').'/users/*');
+                    ->active(config('laravolt.epicentrum.routes.prefix').'/users/*');
 
                 $menu->add(trans('laravolt::label.roles'), route('epicentrum::roles.index'))
                     ->data('icon', 'user-astronaut')
                     ->data('permission', Permission::MANAGE_ROLE)
-                    ->active(config('laravolt.epicentrum.route.prefix').'/roles/*');
+                    ->active(config('laravolt.epicentrum.routes.prefix').'/roles/*');
 
                 $menu->add(trans('laravolt::label.permissions'), route('epicentrum::permissions.edit'))
                     ->data('icon', 'shield-check')
                     ->data('permission', Permission::MANAGE_PERMISSION)
-                    ->active(config('laravolt.epicentrum.route.prefix').'/permissions/*');
+                    ->active(config('laravolt.epicentrum.routes.prefix').'/permissions/*');
             });
         }
 

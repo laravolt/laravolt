@@ -28,9 +28,9 @@ $router->group(
 $router->group(
     [
         'namespace' => '\Laravolt\Epicentrum\Http\Controllers',
-        'prefix' => config('laravolt.epicentrum.route.prefix'),
+        'prefix' => config('laravolt.epicentrum.routes.prefix'),
         'as' => 'epicentrum::',
-        'middleware' => config('laravolt.epicentrum.route.middleware'),
+        'middleware' => config('laravolt.epicentrum.routes.middleware'),
     ],
     function ($router) {
         $router->get('/', ['uses' => 'DefaultController@index', 'as' => 'index']);
