@@ -11,6 +11,10 @@ class VerificationController extends Controller
 {
     public function show()
     {
+        if (auth()->user()->hasVerifiedEmail()) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
         return view('auth.verify-email');
     }
 

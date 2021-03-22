@@ -1,12 +1,12 @@
 <?php
 
-$router->group(
+\Illuminate\Support\Facades\Route::group(
     [
         'prefix' => config('laravolt.lookup.route.prefix'),
         'as' => 'lookup::',
         'middleware' => config('laravolt.lookup.route.middleware'),
     ],
-    function ($router) {
+    function (\Illuminate\Routing\Router $router) {
         $router->get('lookup/{collection}', [\Laravolt\Lookup\Controllers\LookupController::class, 'index'])
             ->name('lookup.index');
         $router->get('lookup/{collection}/create', [\Laravolt\Lookup\Controllers\LookupController::class, 'create'])

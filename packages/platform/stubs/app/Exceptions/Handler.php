@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof AuthorizationException) {
-            return redirect()->back(302, [], route('dashboard'))->withError(
+            return redirect()->back(302, [], route('home'))->withError(
                 __('Anda tidak diizinkan mengakses halaman :url',
                     ['url' => $request->fullUrl()])
             );
