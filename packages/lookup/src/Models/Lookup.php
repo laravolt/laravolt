@@ -45,7 +45,7 @@ class Lookup extends Model
         return SchemalessAttributes::scopeWithSchemalessAttributes('meta');
     }
 
-    public function scopefromCollection(Builder $query, string $collection = null)
+    public function scopeFromCollection(Builder $query, string $collection = null)
     {
         if ($collection) {
             $query->where('category', $collection);
