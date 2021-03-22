@@ -28,7 +28,7 @@ return [
      * Login page settings
      */
     'login' => [
-        'background' => asset('laravolt/img/wallpaper/animated-svg/dark.svg'),
+        'background' => '/laravolt/img/wallpaper/animated-svg/dark.svg',
 
         // Available options: 'boxed', 'fullscreen', 'classic'
         'layout' => 'boxed',
