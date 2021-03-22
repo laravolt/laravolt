@@ -50,7 +50,6 @@ abstract class BaseServiceProvider extends ServiceProvider
     protected function bootRoutes()
     {
         if (Arr::get($this->config, 'routes.enabled') && ! $this->app->routesAreCached()) {
-            $router = $this->app['router'];
             require $this->packagePath('routes/web.php');
         }
 
