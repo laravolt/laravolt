@@ -63,6 +63,7 @@ return [
     'ipv4'                 => ':attribute harus berupa alamat IPv4 yang valid.',
     'ipv6'                 => ':attribute harus berupa alamat IPv6 yang valid.',
     'json'                 => ':attribute harus berupa JSON string yang valid.',
+    'lookup'               => ':attribute harus berupa lookup yang valid.',
     'lt'                   => [
         'numeric' => ':attribute harus bernilai kurang dari :value.',
         'file'    => ':attribute harus berukuran kurang dari :value kilobita.',

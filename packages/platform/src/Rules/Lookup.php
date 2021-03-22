@@ -27,7 +27,10 @@ class Lookup implements Rule
      */
     public function passes($attribute, $value)
     {
-        dd($attribute, $value);
+        return \Laravolt\Lookup\Models\Lookup::query()
+            ->fromCollection($this->collection)
+            ->where('lookup_key', $value)
+            ->exists();
     }
 
     /**
@@ -37,6 +40,6 @@ class Lookup implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return __('validation.lookup');
     }
 }
