@@ -30,8 +30,8 @@
 
                             <div class="divider"></div>
 
-                            <a href="{{ route('epicentrum::my.profile.edit') }}" class="item">@lang('Edit Profil')</a>
-                            <a href="{{ route('epicentrum::my.password.edit') }}" class="item">@lang('Edit Password')</a>
+                            <a href="{{ route('my::profile.edit') }}" class="item">@lang('Edit Profil')</a>
+                            <a href="{{ route('my::password.edit') }}" class="item">@lang('Edit Password')</a>
 
                             <div class="divider"></div>
 

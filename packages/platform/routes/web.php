@@ -35,14 +35,6 @@ $router->group(
     function ($router) {
         $router->get('/', ['uses' => 'DefaultController@index', 'as' => 'index']);
 
-        // My Profile
-        $router->get('my/profile', ['uses' => 'My\ProfileController@edit', 'as' => 'my.profile.edit']);
-        $router->put('my/profile', ['uses' => 'My\ProfileController@update', 'as' => 'my.profile.update']);
-
-        // My Password
-        $router->get('my/password', ['uses' => 'My\PasswordController@edit', 'as' => 'my.password.edit']);
-        $router->post('my/password', ['uses' => 'My\PasswordController@update', 'as' => 'my.password.update']);
-
         $router
             ->namespace('User')
             ->middleware('can:'.\Laravolt\Platform\Enums\Permission::MANAGE_USER)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Epicentrum\Http\Controllers\My;
+namespace App\Http\Controllers\My;
 
 use Illuminate\Routing\Controller;
 use Laravolt\Epicentrum\Http\Requests\My\Profile\Update;
@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $timezones = $this->timezone->all();
 
-        return view('laravolt::my.profile.edit', compact('user', 'timezones'));
+        return view('my.profile.edit', compact('user', 'timezones'));
     }
 
     public function update(Update $request)

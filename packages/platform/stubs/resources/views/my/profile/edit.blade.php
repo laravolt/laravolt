@@ -1,6 +1,6 @@
 <x-laravolt::layout.app :title="__('Edit Profil')">
     <x-laravolt::panel title="{{ __('Edit Profil') }}" icon="user-edit">
-        {!! form()->bind($user)->put(route('epicentrum::my.profile.update'))->horizontal() !!}
+        {!! form()->bind($user)->put(route('my::profile.update'))->horizontal() !!}
 
         {!! form()->text('name')->label(__('laravolt::users.name')) !!}
         {!! form()->text('email')->label(__('laravolt::users.email'))->readonly() !!}

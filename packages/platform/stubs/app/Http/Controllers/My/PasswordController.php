@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Epicentrum\Http\Controllers\My;
+namespace App\Http\Controllers\My;
 
 use Illuminate\Routing\Controller;
 use Laravolt\Epicentrum\Http\Requests\My\Password\Update;
@@ -40,7 +40,7 @@ class PasswordController extends Controller
     {
         $user = auth()->user();
 
-        return view('laravolt::my.password.edit', compact('user'));
+        return view('my.password.edit', compact('user'));
     }
 
     public function update(Update $request)
