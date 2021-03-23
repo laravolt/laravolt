@@ -99,9 +99,6 @@ class UiServiceProvider extends BaseServiceProvider
      */
     protected function bootViews()
     {
-        // register views within the application with the set namespace
-        $this->loadViewsFrom(platform_path('resources/views'), 'ui');
-
         Paginator::defaultView('laravolt::pagination.default');
         Paginator::defaultSimpleView('laravolt::pagination.simple');
 

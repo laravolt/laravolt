@@ -45,8 +45,13 @@ class MenuBuilder
             if ($order === null) {
                 $order = $option['order'] ?? 0;
             }
+
             app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option, $order) {
+                /** @var \Lavary\Menu\Builder $section */
                 $section = $menu->add($title, isset($option['route']) ? route($option['route']) : null)->data('order', $order);
+
+                $section->data('icon', $option['icon'] ?? null);
+                $section->data('permissions', $option['permissions'] ?? null);
 
                 if (isset($option['menu'])) {
                     $this->addMenu($section, $option['menu']);
@@ -70,7 +75,7 @@ class MenuBuilder
             if (! isset($option['menu'])) {
                 $menu = $parent->add(
                     $name,
-                    $option['url'] ?? (isset($option['route']) ? route($option['route']) : '#')
+                    ($option['route'] ?? null) ? route($option['route']) : '#'
                 );
                 if (isset($option['active'])) {
                     $menu->active($option['active']);
@@ -82,6 +87,9 @@ class MenuBuilder
             if (isset($option['data'])) {
                 $this->setData($menu, $option['data']);
             }
+
+            $menu->data('icon', $option['icon'] ?? null);
+            $menu->data('permissions', $option['permissions'] ?? null);
         }
     }
 

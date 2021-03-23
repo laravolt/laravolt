@@ -25,7 +25,7 @@ class Menu extends BaseMenu
             }
         }
 
-        return $visible = '';
+        return '';
     }
 
     public static function setActiveParent($children, $isActive, $active = 'active selected')
@@ -40,7 +40,7 @@ class Menu extends BaseMenu
             }
         }
 
-        return $active = '';
+        return '';
     }
 
     public function all()
@@ -57,7 +57,7 @@ class Menu extends BaseMenu
         }
 
         $items = $sidebar->all()->map(function (Item $item) {
-            $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! $item->link->path['url']));
+            $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! ($item->link->path['url'] ?? true)));
 
             return $item;
         });
