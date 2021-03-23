@@ -26,7 +26,7 @@ return [
         ],
         [
             'type' => 'html',
-            'content' => '<div class="ui divider section"></div>'
+            'content' => '<div class="ui divider section"></div>',
         ],
         [
             'type' => 'dropdown',
@@ -50,7 +50,7 @@ return [
         ],
         [
             'type' => 'html',
-            'content' => '<div class="ui divider section"></div>'
+            'content' => '<div class="ui divider section"></div>',
         ],
         [
             'type' => 'dropdown',
