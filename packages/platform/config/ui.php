@@ -22,7 +22,7 @@ return [
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'green',
+    'color' => 'violet',
 
     /*
      * Login page settings
@@ -31,7 +31,7 @@ return [
     'login_layout' => 'modern',
 
     // Background image
-    'login_background' => '/laravolt/img/wallpaper/animated-svg/wave.svg',
+    'login_background' => '/laravolt/img/wallpaper/animated-svg/dark.svg',
 
     /*
      * Iconset
