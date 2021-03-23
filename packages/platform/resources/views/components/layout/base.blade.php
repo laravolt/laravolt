@@ -14,6 +14,7 @@
     <style>
         :root {
             --app-accent-color: var(--{{ config('laravolt.ui.color') }});
+            --app-login-background: url('{{ url(config('laravolt.ui.login_background')) }}');
         }
     </style>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">

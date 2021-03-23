@@ -27,12 +27,11 @@ return [
     /*
      * Login page settings
      */
-    'login' => [
-        'background' => '/laravolt/img/wallpaper/animated-svg/dark.svg',
+    // Layout, Available options: 'modern', 'fullscreen', 'classic'
+    'login_layout' => 'modern',
 
-        // Available options: 'boxed', 'fullscreen', 'classic'
-        'layout' => 'boxed',
-    ],
+    // Background image
+    'login_background' => '/laravolt/img/wallpaper/animated-svg/wave.svg',
 
     /*
      * Iconset

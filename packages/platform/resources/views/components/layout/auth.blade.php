@@ -1,8 +1,8 @@
 <x-laravolt::layout.base>
-    <div class="layout--auth is-{!! config('laravolt.ui.login.layout') !!}">
+    <div class="layout--auth is-{!! config('laravolt.ui.login_layout') !!}">
         <div class="layout--auth__container">
             <div class="x-inspire"
-                 style="background-image: url('{!! config('laravolt.ui.login.background') !!}')"
+                 style="background-image: url('{!! config('laravolt.ui.login_background') !!}')"
             >
                 <div class="x-inspire__content">
                     <div class="x-inspire__text">

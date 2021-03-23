@@ -1,5 +1,17 @@
 .layout--auth {
 
+  .x-inspire {
+    font-weight: 100;
+    color: #FFFFFF;
+    background-color: #0c296a;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media only screen and (min-width: 991px) and (max-width: 1824px) {
+      background-size: inherit;
+    }
+  }
+
   .x-inspire__content {
     font-size: 2em;
     line-height: 1.5em;
@@ -28,6 +40,7 @@
 
     .x-inspire {
       flex: 1;
+
       @media only screen and (max-width: 991px) {
         flex: 0 0 50px !important;
       }
@@ -66,7 +79,7 @@
     }
   }
 
-  &.is-boxed {
+  &.is-modern {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
@@ -127,6 +140,38 @@
           align-self: flex-start;
         }
       }
+    }
+  }
+
+  &.is-classic {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    align-items: center;
+    padding-top: 10vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: var(--app-login-background);
+    background-color: #0c296a;
+
+    .layout--auth__container {
+      @extend .shadow-md;
+      background: #fff;
+      display: flex;
+      align-content: center;
+      border-radius: .5em;
+      overflow: hidden;
+      min-width: 480px;
+    }
+    .x-inspire {
+      display: none;
+    }
+    .x-auth {
+      flex: 1;
+      padding: 4em;
     }
   }
 }

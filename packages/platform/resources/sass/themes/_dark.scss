@@ -6,13 +6,6 @@ $menu-item-active-indicator: #a6a8b1;
 
 [data-theme="dark"] {
   background: $body-bg;
-  .x-inspire {
-    font-weight: 100;
-    color: #FFFFFF;
-    background-color: #0c296a;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
 
   [data-role="brand"] .ui.header {
     color: $menu-item-color;
