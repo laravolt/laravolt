@@ -112,6 +112,10 @@ $widths: (
     width: 100% !important;
   }
 
+  .inline.fields {
+    flex-wrap: wrap;
+  }
+
   @media (min-width: 767px) {
     > .field {
       display: flex;
@@ -166,7 +170,6 @@ $widths: (
     > .required.field > .checkbox:after, .required.field > label:after {
       position: absolute;
     }
-
     .pushed {
       flex-basis: 100%;
       margin-left: calc(#{$labelWidth} + #{$labelMargin});

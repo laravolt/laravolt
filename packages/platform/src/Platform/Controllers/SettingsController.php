@@ -15,6 +15,13 @@ class SettingsController extends Controller
 
     public function update()
     {
+        $keys = collect(config("laravolt.platform.settings"))->pluck('name')->filter()->toArray();
+        foreach ($keys as $key) {
+            setting(["laravolt.ui.$key" => request($key, '')]);
+        }
+
+        setting()->save();
+
         return redirect()->back()->withSuccess(__('Application settings updated'));
     }
 }

@@ -39,6 +39,7 @@ class FieldCollection extends Collection
         $macro = false;
 
         switch ($type) {
+            case 'color':
             case 'date':
             case 'email':
             case 'hidden':
@@ -112,10 +113,12 @@ class FieldCollection extends Collection
             case 'checkboxGroup':
             case 'radioGroup':
             case 'dropdown':
+            case 'dropdownColor':
                 $element = form()
-                    ->{$type}($field['name'], $field['options'])
+                    ->{$type}($field['name'], $field['options'] ?? [])
                     ->label($field['label'])
                     ->hint($field['hint'])
+                    ->inline($field['inline'] ?? false)
                     ->attributes($field['attributes']);
                 break;
 
@@ -211,6 +214,17 @@ class FieldCollection extends Collection
         return $table;
     }
 
+    public function bindValues(array $values)
+    {
+        foreach ($values as $key => $value) {
+            if (($element = $this->get($key)) !== null) {
+                $element->value($value);
+            }
+        }
+
+        return $this;
+    }
+
     public function __toString()
     {
         return $this->render();
@@ -218,7 +232,7 @@ class FieldCollection extends Collection
 
     private function applyRequiredValidation($field)
     {
-        $validations = $field->get('validations');
+        $validations = $field->get('validations') ?? [];
 
         if (is_string($validations)) {
             $validations = explode('|', $validations);

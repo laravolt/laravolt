@@ -16,6 +16,7 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "ext-xml": "*",
+        "akaunting/laravel-setting": "^1.2",
         "anhskohbo/no-captcha": "^3.3",
         "barryvdh/laravel-dompdf": "^0.8.7",
         "bensampo/laravel-enum": "^3.1",

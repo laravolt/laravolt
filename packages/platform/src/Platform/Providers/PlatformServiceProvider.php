@@ -18,7 +18,6 @@ use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
-use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\Password;
 
@@ -129,8 +128,7 @@ class PlatformServiceProvider extends ServiceProvider
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
-        Route::middleware(['web'])
-            ->group(platform_path('routes/web.php'));
+        include platform_path('routes/web.php');
 
         return $this;
     }

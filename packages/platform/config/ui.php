@@ -9,7 +9,7 @@ return [
      * Font Size
      * Available options:
      * */
-    'font_size' => 'sm',
+    'font_size' => 'md',
 
     /*
      * Set default theme

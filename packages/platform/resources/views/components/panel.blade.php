@@ -14,6 +14,9 @@
                     <div class="item p-0 m-0">
                         <h4 class="panel__title ui header p-x-sm p-y-0">
                             {!! $title !!}
+                            @if($description)
+                            <div class="sub header">{!! $description !!}</div>
+                            @endif
                         </h4>
                     </div>
                 @endif

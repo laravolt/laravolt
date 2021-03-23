@@ -51,6 +51,8 @@ class UiServiceProvider extends BaseServiceProvider
             }
         );
 
+        $this->overrideUi();
+
         $this->registerAssets();
 
         $this->registerIcons();
@@ -163,5 +165,21 @@ class UiServiceProvider extends BaseServiceProvider
                 }
             }
         );
+    }
+
+    private function overrideUi()
+    {
+        $this->app->booted(function () {
+            $uiSettings = collect(config('laravolt.platform.settings'))->pluck('name')->filter()
+                ->transform(
+                    function ($item) {
+                        return "laravolt.ui.$item";
+                    }
+                )
+                ->toArray();
+            foreach ($uiSettings as $key) {
+                config([$key => setting($key)]);
+            }
+        });
     }
 }

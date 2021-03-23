@@ -22,6 +22,12 @@ return [
                 'icon' => 'shield-check',
                 'permissions' => [\Laravolt\Platform\Enums\Permission::MANAGE_PERMISSION],
             ],
+            'Settings' => [
+                'route' => 'platform::settings.edit',
+                'active' => 'platform/settings/*',
+                'icon' => 'sliders-v',
+                'permissions' => [\Laravolt\Platform\Enums\Permission::MANAGE_SETTINGS],
+            ],
         ],
     ],
 ];

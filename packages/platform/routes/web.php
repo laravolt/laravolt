@@ -4,10 +4,12 @@
 
 use Laravolt\Platform\Controllers\DumpRequestController;
 
+/** @var \Illuminate\Support\Facades\Route $router */
 $router = app('router');
 
 $router->group(
     [
+        'middleware' => ['web', 'auth'],
         'prefix' => 'platform',
         'as' => 'platform::',
     ],
@@ -17,8 +19,8 @@ $router->group(
             $router->view('form', 'laravolt::playground.form')->name('playground.form');
             $router->view('article', 'laravolt::playground.article')->name('playground.article');
         });
-        $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings');
-        $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings.action');
+        $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings.edit');
+        $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings.update');
 
         $router->view('check', 'laravolt::platform.check')->name('check');
         $router->any('dump', DumpRequestController::class)->name('dump');

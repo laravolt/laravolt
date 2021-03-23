@@ -495,6 +495,15 @@ class SemanticForm
         return $element;
     }
 
+    public function dropdownColor($name, $defaultValue)
+    {
+        $options = collect(config('laravolt.ui.colors'))->mapWithKeys(function ($item, $key) {
+            return [$key => $key];
+        });
+
+        return $this->dropdown($name, $options, $defaultValue);
+    }
+
     /**
      * @deprecated
      */

@@ -16,9 +16,11 @@ class CheckboxGroup extends Wrapper
 
     protected $controls = [];
 
-    public function inline()
+    public function inline($inline = true)
     {
-        $this->setAttribute('class', 'inline fields');
+        if ($inline) {
+            $this->setAttribute('class', 'inline fields');
+        }
 
         return $this;
     }
