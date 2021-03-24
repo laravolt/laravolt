@@ -2,100 +2,66 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
-
-    use ResetsPasswords;
-    use ValidatesRequests;
-
-    protected $redirectTo;
-
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-
-        $this->redirectTo = config('laravolt.auth.redirect.after_reset_password');
-    }
-
-    /**
-     * Display the password reset view for the given token.
-     * If no token is present, display the link request form.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string|null  $token
+     * Display the password reset view.
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function show(Request $request, $token = null)
+    public function show(Request $request, string $token = null)
     {
-        return view(
-            'auth.reset',
-            [
-                'token' => $token,
-                'email' => urldecode($request->email),
-            ],
-        );
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, app('laravolt.auth.password.reset')->rules());
-
-        $identifierColumn = config('laravolt.auth.password.reset.identifier') ?? config('laravolt.auth.identifier');
-        $user = app('laravolt.auth.password.reset')->getUserByIdentifier($request->get($identifierColumn));
-
-        $response = app('laravolt.password')->changePasswordByToken(
-            $user,
-            $request->password,
-            $request->token
-        );
-
-        if ($response == Password::PASSWORD_RESET) {
-            event(new PasswordReset($user));
-
-            if (config('laravolt.auth.password.reset.auto_login')) {
-                auth()->login($user);
-            }
-
-            return $this->sendResetResponse($request, $response);
-        }
-
-        return $this->sendResetFailedResponse($request, $response);
+        return view('auth.reset', ['token' => $token]);
     }
 
     /**
-     * Get the response for a successful password reset.
+     * Handle an incoming new password request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    protected function sendResetResponse(Request $request, $response)
+    public function store(Request $request)
     {
-        return redirect($this->redirectPath())
-            ->with('success', trans($response));
+        $request->validate(
+            [
+                'token' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|string|confirmed|min:8',
+            ]
+        );
+
+        // Here we will attempt to reset the user's password. If it is successful we
+        // will update the password on an actual user model and persist it to the
+        // database. Otherwise we will parse the error and return the response.
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user) use ($request) {
+                $user->forceFill(
+                    [
+                        'password' => Hash::make($request->password),
+                        'remember_token' => Str::random(60),
+                    ]
+                )->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        // If the password was successfully reset, we will redirect the user back to
+        // the application's home authenticated view. If there is an error we can
+        // redirect them back to where they came from with their error message.
+        return $status == Password::PASSWORD_RESET
+            ? redirect()->route('auth::login.show')->with('status', __($status))
+            : back()->withInput($request->only('email'))
+                ->withErrors(['email' => __($status)]);
     }
 }
