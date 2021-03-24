@@ -177,7 +177,10 @@ class UiServiceProvider extends BaseServiceProvider
                 )
                 ->toArray();
             foreach ($uiSettings as $key) {
-                config([$key => setting($key)]);
+                $userConfig = setting($key);
+                if ($userConfig) {
+                    config([$key => $userConfig]);
+                }
             }
         });
     }
