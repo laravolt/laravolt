@@ -6,7 +6,6 @@ namespace Laravolt\Tests;
 
 use Anhskohbo\NoCaptcha\NoCaptchaServiceProvider;
 use Laravolt\Platform\Models\User;
-use Laravolt\Platform\Providers\AuthServiceProvider;
 use Laravolt\Platform\Providers\EpicentrumServiceProvider;
 use Laravolt\Platform\Providers\PlatformServiceProvider;
 use Laravolt\Platform\Providers\UiServiceProvider;
@@ -48,7 +47,6 @@ trait Bootstrap
     {
         return [
             ServiceProvider::class,
-            AuthServiceProvider::class,
             EpicentrumServiceProvider::class,
             NoCaptchaServiceProvider::class,
             PlatformServiceProvider::class,

@@ -51,13 +51,12 @@ class UiServiceProvider extends BaseServiceProvider
             }
         );
 
-        $this->overrideUi();
-
-        $this->registerAssets();
-
-        $this->registerIcons();
-
-        $this->registerMenuBuilder();
+        if (! $this->app->runningInConsole()) {
+            $this->overrideUi();
+            $this->registerAssets();
+            $this->registerIcons();
+            $this->registerMenuBuilder();
+        }
     }
 
     /**
