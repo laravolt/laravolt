@@ -26,3 +26,4 @@
 
 - route('dashboard') dihilangkan, pindah ke route('home')
 - registrasi menu di config `config/laravolt/menu/`, tidak boleh ada pemanggilan fungsi helper, semuanya harus static text
+- flatten menu array, ubah `permission` jadi `permissions`

@@ -85,7 +85,7 @@ class Menu extends BaseMenu
 
     protected function filterByVisibility(Item $item)
     {
-        $permission = $item->data('permission');
+        $permission = $item->data('permissions') ?? $item->data('permission');
         $roles = $item->data('roles');
         $permissionCheck = $rolesCheck = true;
 
@@ -107,7 +107,7 @@ class Menu extends BaseMenu
                     }
                 }
             } else {
-                $permissionCheck = auth()->check() && auth()->user()->can($item->data('permission'));
+                $permissionCheck = auth()->check() && auth()->user()->can($permission);
             }
         }
 
