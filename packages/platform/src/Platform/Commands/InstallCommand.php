@@ -33,9 +33,12 @@ class InstallCommand extends Command
         Artisan::call(LinkCommand::class);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
+        Artisan::call('vendor:publish', ['--tag' => 'setting']);
+        Artisan::call('migrate:fresh', ['--force' => true]);
 
-        $username = 'admin@example.com';
-        $password = 'asdf1234';
+        $appName = strtolower(config('app.name'));
+        $username = "admin@$appName.test";
+        $password = 'secret';
 
         Artisan::call(
             AdminCommand::class,
@@ -43,7 +46,6 @@ class InstallCommand extends Command
                 'name' => 'Administrator',
                 'email' => $username,
                 'password' => $password,
-
             ]
         );
 
