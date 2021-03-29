@@ -19,6 +19,7 @@ class ServiceProvider extends BaseServiceProvider
             $menu = $menu->system;
             $group = $menu->add(__('Lookup'))
                 ->data('icon', 'list')
+                ->data('order', 10)
                 ->data('permission', config('laravolt.lookup.permission'));
 
             foreach (config('laravolt.lookup.collections') as $key => $collection) {

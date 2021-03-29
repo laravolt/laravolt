@@ -1,5 +1,5 @@
 <div class="ui accordion sidebar__accordion m-b-1" data-role="sidebar-accordion">
-    @foreach($items as $item)
+    @foreach($items->sortBy(fn($item) => $item->data('order')) as $item)
         @if($item->hasChildren())
             <div class="title {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}">
                 <x-laravolt::icon :name="$item->data('icon')" class="left" />
@@ -9,7 +9,7 @@
             <div class="content {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }} ">
                 @if($item->hasChildren())
                     <div class="ui list">
-                        @foreach($item->children() as $child)
+                        @foreach($item->children()->sortBy(fn($item) => $item->data('order')) as $child)
                             <a href="{{ $child->url() }}" data-parent="{{ $child->parent()->title }}"
                                class="item {{ ($child->isActive)?'selected':'' }} ">{{ $child->title }}</a>
                         @endforeach

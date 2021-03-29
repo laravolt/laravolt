@@ -47,8 +47,14 @@ class MenuBuilder
             }
 
             app('laravolt.menu.sidebar')->register(function ($menu) use ($title, $option, $order) {
+
                 /** @var \Lavary\Menu\Builder $section */
-                $section = $menu->add($title, isset($option['route']) ? route($option['route']) : null)->data('order', $order);
+                $section = $menu->get(strtolower(trim($title)));
+                if ($section === null) {
+                    $section = $menu
+                        ->add($title, isset($option['route']) ? route($option['route']) : null)
+                        ->data('order', $order);
+                }
 
                 $section->data('icon', $option['icon'] ?? null);
                 $section->data('permissions', $option['permissions'] ?? null);
