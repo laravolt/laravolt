@@ -4,37 +4,13 @@ namespace App\Http\Controllers\My;
 
 use Illuminate\Routing\Controller;
 use Laravolt\Epicentrum\Http\Requests\My\Password\Update;
-use Laravolt\Epicentrum\Repositories\RepositoryInterface;
 
 class PasswordController extends Controller
 {
     /**
-     * @var UserRepositoryEloquent
-     */
-    private $repository;
-
-    /**
-     * @var Password
-     */
-    private $password;
-
-    /**
-     * PasswordController constructor.
-     *
-     * @param UserRepositoryEloquent $repository
-     */
-    public function __construct(RepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-        $this->password = app('laravolt.password');
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit()
     {
