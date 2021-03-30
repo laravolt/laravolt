@@ -51,8 +51,9 @@ class MenuBuilder
                 /** @var \Lavary\Menu\Builder $section */
                 $section = $menu->get(strtolower(trim($title)));
                 if ($section === null) {
+                    $url = $this->generateUrl($option);
                     $section = $menu
-                        ->add($title, isset($option['route']) ? route($option['route']) : null)
+                        ->add($title, $url)
                         ->data('order', $order);
                 }
 
@@ -79,10 +80,7 @@ class MenuBuilder
             }
 
             if (! isset($option['menu'])) {
-                $menu = $parent->add(
-                    $name,
-                    ($option['route'] ?? null) ? route($option['route']) : '#'
-                );
+                $menu = $parent->add($name, $this->generateUrl($option));
                 if (isset($option['active'])) {
                     $menu->active($option['active']);
                 }
@@ -104,5 +102,10 @@ class MenuBuilder
         foreach ($data as $key => $value) {
             $menu->data($key, $value);
         }
+    }
+
+    private function generateUrl($option)
+    {
+        return isset($option['route']) ? route($option['route']) : url($option['url'] ?? '#');
     }
 }
