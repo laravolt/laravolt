@@ -49,13 +49,18 @@ class Handler extends ExceptionHandler
     public function render($request, \Throwable $e)
     {
         if ($e instanceof TokenMismatchException) {
-            return back()->withError(__('Kami mendeteksi tidak ada aktivitas cukup lama, silakan ulangi aksi sebelumnya'));
+            return back()->with(
+                'error',
+                __('Kami mendeteksi tidak ada aktivitas cukup lama, silakan kirim ulang form.')
+            );
         }
 
         if ($e instanceof AuthorizationException) {
             return redirect()->back(302, [], route('home'))->withError(
-                __('Anda tidak diizinkan mengakses halaman :url',
-                    ['url' => $request->fullUrl()])
+                __(
+                    'Anda tidak diizinkan mengakses halaman :url',
+                    ['url' => $request->fullUrl()]
+                )
             );
         }
 
