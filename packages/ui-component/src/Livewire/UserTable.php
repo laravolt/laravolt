@@ -19,7 +19,7 @@ class UserTable extends TableView
         sleep(1);
         $sortPayload = [
             'sort' => $this->sort,
-            'direction' => $this->direction
+            'direction' => $this->direction,
         ];
         $query = User::with('roles')->autoSort('sort', 'direction', $sortPayload)->autoFilter()->latest();
         $keyword = trim($this->search);

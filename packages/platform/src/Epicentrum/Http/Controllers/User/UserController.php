@@ -9,7 +9,6 @@ use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Mail\AccountInformation;
 use Laravolt\Epicentrum\Repositories\RepositoryInterface;
-use Laravolt\Suitable\TableView;
 use Laravolt\Support\Contracts\TimezoneRepository;
 
 class UserController extends Controller
