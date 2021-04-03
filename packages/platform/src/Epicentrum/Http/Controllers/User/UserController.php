@@ -3,7 +3,6 @@
 namespace Laravolt\Epicentrum\Http\Controllers\User;
 
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
@@ -15,21 +14,15 @@ use Laravolt\Support\Contracts\TimezoneRepository;
 
 class UserController extends Controller
 {
-    /**
-     * @var UserRepositoryEloquent
-     */
-    protected $repository;
+    protected RepositoryInterface $repository;
 
-    /**
-     * @var TimezoneRepositoryArray
-     */
-    protected $timezone;
+    protected TimezoneRepository $timezone;
 
     /**
      * UserController constructor.
      *
-     * @param UserRepositoryEloquent  $repository
-     * @param TimezoneRepositoryArray $timezone
+     * @param  \Laravolt\Epicentrum\Repositories\RepositoryInterface  $repository
+     * @param  \Laravolt\Support\Contracts\TimezoneRepository  $timezone
      */
     public function __construct(RepositoryInterface $repository, TimezoneRepository $timezone)
     {
@@ -41,18 +34,10 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @throws \Exception
-     *
-     * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $users = $this->repository->paginate($request);
-
-        if (! is_subclass_of(config('laravolt.epicentrum.table_view'), TableView::class)) {
-            throw new \Exception("Table View config must extend Laravolt\Suitable\TableView");
-        }
-
-        return config('laravolt.epicentrum.table_view')::make($users)->view('laravolt::users.index');
+        return view('laravolt::users.index');
     }
 
     /**

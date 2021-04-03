@@ -5,13 +5,13 @@ class Laravolt {
         root.find('.ui.checkbox').checkbox();
 
         root.find('.ui.dropdown:not(.simple):not(.tag)').each(function () {
+            let elm = $(this);
             let options = {
                 forceSelection: false,
                 selectOnKeydown: false,
                 fullTextSearch: true,
-                action: 'activate'
+                action: elm.data('action') !== undefined ? elm.data('action') : 'activate',
             };
-            let elm = $(this);
             if ($(this).hasClass('link')) {
                 options.onChange = function(value, text, $selectedItem) {
                     window.location.href = value;

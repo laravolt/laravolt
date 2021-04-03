@@ -128,4 +128,14 @@ abstract class Column
     {
         return (bool) $this->searchableColumn;
     }
+
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+    public function getSortableColumn()
+    {
+        return $this->sortableColumn;
+    }
 }

@@ -68,4 +68,19 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 
         return sprintf('<th %s><a themed href="%s">%s %s</a></th>', $attributes, $url, htmlentities($this->title), $icon);
     }
+
+    public function getAttributesString(): string
+    {
+        return $this->tagAttributes($this->attributes);
+    }
+
+    public function getContent(): string
+    {
+        return $this->title;
+    }
+
+    public function getSortableColumn(): string
+    {
+        return $this->column;
+    }
 }

@@ -7,6 +7,6 @@
                 :label="__('laravolt::action.add')"/>
     </x-slot>
 
-    {!! $table !!}
+    @livewire('laravolt::user-table')
 
 </x-laravolt::layout.app>

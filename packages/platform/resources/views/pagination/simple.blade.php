@@ -1,15 +1,22 @@
 <div class="ui buttons basic icon mini" themed>
-    <!-- Previous Page Link -->
+
     @if ($paginator->onFirstPage())
-        <div class="ui button disabled "><i class="icon left chevron"></i></div>
+        <div class="ui button disabled "><i class="icon left chevron" aria-hidden="true"></i></div>
     @else
-        <a class="ui button " href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="icon left chevron"></i></a>
+        <button class="ui button" wire:click.prevent="previousPage">
+            <i class="icon left chevron" aria-hidden="true"></i>
+        </button>
     @endif
+
     <div class="ui button ">{{ $paginator->currentPage() }}/{{ $paginator->lastPage() }}</div>
-<!-- Next Page Link -->
+
     @if ($paginator->hasMorePages())
-        <a class="ui button " href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="icon right chevron"></i></a>
+        <button class="ui button" wire:click.prevent="nextPage">
+            <i class="icon right chevron" aria-hidden="true"></i>
+        </button>
     @else
-        <div class="ui button disabled "><i class="icon right chevron"></i></div>
+        <div class="ui button disabled">
+            <i class="icon right chevron" aria-hidden="true"></i>
+        </div>
     @endif
 </div>

@@ -41,13 +41,22 @@ table.ui.table {
   }
 }
 
-//Hide pagination number on mobile
 [data-role="suitable"] {
+  background: #FFFFFF;
+
+  //Hide pagination number on mobile
   [data-role="pagination"] {
     .item.dots, .item.number {
       @media only screen and (max-width: 767px) {
         display: none;
       }
+    }
+  }
+
+  .ui.progress.attached {
+    .bar {
+      background-color: transparent;
+      height: .2em;
     }
   }
 }

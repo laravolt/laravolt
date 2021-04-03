@@ -31,6 +31,7 @@
         "laravolt/avatar": "^4.0",
         "lavary/laravel-menu": "^1.7.7",
         "league/flysystem": "^1.1",
+        "livewire/livewire": "^2.4",
         "myclabs/deep-copy": "^1.10",
         "nesbot/carbon": "^2.0",
         "pragmarx/version": "dev-master",
@@ -42,6 +43,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "codedungeon/phpunit-result-printer": "^0.30.1",
+        "laravel-shift/blueprint": "^1.23",
         "laravel/browser-kit-testing": "^6.0",
         "mockery/mockery": "^1.2",
         "orchestra/canvas": "^6.1",
@@ -65,6 +67,7 @@
             "Laravolt\\Epicentrum\\": "packages/platform/src/Epicentrum/",
             "Laravolt\\Epilog\\": "packages/epilog/src",
             "Laravolt\\FileManager\\": "packages/file-manager/src",
+            "Laravolt\\Livewire\\": "packages/platform/src/Livewire",
             "Laravolt\\Lookup\\": "packages/lookup/src",
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
@@ -74,7 +77,8 @@
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
-            "Laravolt\\Thunderclap\\": "packages/thunderclap/src"
+            "Laravolt\\Thunderclap\\": "packages/thunderclap/src",
+            "Laravolt\\UiComponent\\": "packages/ui-component/src"
         }
     },
     "autoload-dev": {
@@ -115,7 +119,8 @@
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
                 "Laravolt\\Platform\\Providers\\UiServiceProvider",
                 "Laravolt\\SemanticForm\\ServiceProvider",
-                "Laravolt\\Mailkeeper\\ServiceProvider"
+                "Laravolt\\Mailkeeper\\ServiceProvider",
+                "Laravolt\\UiComponent\\UiComponentServiceProvider"
             ],
             "aliases": {
                 "Asset": "Laravolt\\Asset\\AssetFacade",

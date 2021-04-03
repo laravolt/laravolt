@@ -10,8 +10,10 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
+use Laravolt\Livewire\Table;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
+use Livewire\Livewire;
 
 /**
  * Class PackageServiceProvider.
@@ -29,27 +31,21 @@ class UiServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(
-            'laravolt.menu.sidebar',
-            function () {
-                return new Menu();
-            }
-        );
-
         $this->bootConfig();
+
+        $this->app->singleton('laravolt.menu.sidebar', fn() => new Menu());
 
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
-        app('laravolt.menu.sidebar')->register(
-            function ($menu) {
-                $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'));
-            }
-        );
-        app('laravolt.menu.sidebar')->register(
-            function ($menu) {
-                $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1);
-            }
-        );
+        app('laravolt.menu.sidebar')
+            ->register(
+                fn($menu) => $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'))
+            );
+
+        app('laravolt.menu.sidebar')
+            ->register(
+                fn($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
+            );
 
         if (! $this->app->runningInConsole()) {
             $this->overrideUi();
@@ -69,6 +65,7 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this
             ->bootViews()
+            ->registerLivewireComponent()
             ->buildMenuFromConfig();
     }
 
@@ -168,20 +165,28 @@ class UiServiceProvider extends BaseServiceProvider
 
     private function overrideUi()
     {
-        $this->app->booted(function () {
-            $uiSettings = collect(config('laravolt.platform.settings'))->pluck('name')->filter()
-                ->transform(
-                    function ($item) {
-                        return "laravolt.ui.$item";
+        $this->app->booted(
+            function () {
+                $uiSettings = collect(config('laravolt.platform.settings'))->pluck('name')->filter()
+                    ->transform(
+                        function ($item) {
+                            return "laravolt.ui.$item";
+                        }
+                    )
+                    ->toArray();
+                foreach ($uiSettings as $key) {
+                    $userConfig = setting($key);
+                    if ($userConfig) {
+                        config([$key => $userConfig]);
                     }
-                )
-                ->toArray();
-            foreach ($uiSettings as $key) {
-                $userConfig = setting($key);
-                if ($userConfig) {
-                    config([$key => $userConfig]);
                 }
             }
-        });
+        );
+    }
+
+    private function registerLivewireComponent(): self
+    {
+        Livewire::component('table', Table::class);
+        return $this;
     }
 }

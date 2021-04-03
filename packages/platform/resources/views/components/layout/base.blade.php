@@ -17,7 +17,6 @@
             --app-login-background: url('{{ url(config('laravolt.ui.login_background')) }}');
         }
     </style>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload"
           href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
@@ -37,7 +36,10 @@
     <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Asset::group('laravolt')->js() !!}
 
-    {{--<script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>--}}
+    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.1/dist/alpine.min.js" defer></script>
+
+    @livewireStyles
 </head>
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }}">
@@ -47,5 +49,6 @@
 {!! Asset::js() !!}
 @stack('script')
 @stack('body')
+@livewireScripts
 </body>
 </html>

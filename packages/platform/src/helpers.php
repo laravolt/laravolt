@@ -91,3 +91,17 @@ if (! function_exists('is_sqlite')) {
         return $driver === 'sqlite';
     }
 }
+
+if (! function_exists('array_to_html_attributes')) {
+    function array_to_html_attributes(array $attributes)
+    {
+        $tagAttributes = '';
+
+        foreach ($attributes as $attribute => $value) {
+            $tagAttributes .= " {$attribute}=\"{$value}\"";
+        }
+
+        return $tagAttributes;
+    }
+}
+
