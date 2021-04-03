@@ -104,4 +104,3 @@ if (! function_exists('array_to_html_attributes')) {
         return $tagAttributes;
     }
 }
-

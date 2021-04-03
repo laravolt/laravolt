@@ -33,18 +33,18 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this->bootConfig();
 
-        $this->app->singleton('laravolt.menu.sidebar', fn() => new Menu());
+        $this->app->singleton('laravolt.menu.sidebar', fn () => new Menu());
 
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
         app('laravolt.menu.sidebar')
             ->register(
-                fn($menu) => $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'))
+                fn ($menu) => $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'))
             );
 
         app('laravolt.menu.sidebar')
             ->register(
-                fn($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
+                fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
             );
 
         if (! $this->app->runningInConsole()) {
@@ -187,6 +187,7 @@ class UiServiceProvider extends BaseServiceProvider
     private function registerLivewireComponent(): self
     {
         Livewire::component('table', Table::class);
+
         return $this;
     }
 }
