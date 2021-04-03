@@ -16,7 +16,6 @@ class UserTable extends TableView
 {
     public function data()
     {
-        sleep(1);
         $sortPayload = [
             'sort' => $this->sort,
             'direction' => $this->direction,
