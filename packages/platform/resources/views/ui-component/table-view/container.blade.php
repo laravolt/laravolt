@@ -1,9 +1,9 @@
 <div id="{{ $id }}" data-role="suitable" class="ui segments panel x-suitable">
-    <div class="ui {{ config('laravolt.ui.color') }} progress sliding top attached" wire:loading.class="indeterminate">
+    <div class="ui {{ config('laravolt.ui.color') }} progress swinging top attached" wire:loading.class="indeterminate">
         <div class="bar"></div>
     </div>
 
-    <div class="ui borderless stackable menu attached">
+    <div class="ui borderless stackable menu attached" data-role="suitable-header">
         <div class="menu">
             <div class="item">
                 @include('laravolt::ui-component.shared.searchbox', ['name' => $search])
@@ -11,7 +11,7 @@
         </div>
         <div class="menu right">
             <div class="item">
-                {!! $collection->appends(request()->input())->onEachSide(1)->links('laravolt::pagination.simple') !!}
+                @include('laravolt::ui-component.table-view.filter')
             </div>
         </div>
     </div>

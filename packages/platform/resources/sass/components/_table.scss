@@ -5,25 +5,30 @@ table.ui.table {
     font-size: .8em;
     color: #686f73;
   }
+
   thead > tr > th {
     font-weight: 700;
     padding-top: 1.5em;
     padding-bottom: 1.5em;
   }
+
   thead th.numbering {
 
   }
+
   tbody td.numbering {
     text-align: center;
     background: $coolGrey;
     font-weight: 700;
   }
+
   &.scrolling {
     overflow-x: auto;
     width: fit-content;
     max-width: 100%;
     display: block;
   }
+
   &.definition {
     caption {
       font-weight: 700;
@@ -42,7 +47,7 @@ table.ui.table {
 }
 
 [data-role="suitable"] {
-  background: #FFFFFF;
+  background: $coolGrey;
 
   //Hide pagination number on mobile
   [data-role="pagination"] {
@@ -65,11 +70,28 @@ table.ui.table {
   .top.attached.menu {
     border-top: 0 none;
   }
+
   .ui.bottom.attached.menu {
     border-bottom: 0 none;
     background: $coolGrey;
+
     .item {
       color: #8090a0;
     }
   }
 }
+
+[data-role="suitable-header"] {
+  &.ui.menu {
+    background-color: $coolGrey;
+  }
+}
+
+[data-role="suitable-filter"] {
+  .ui.form .field > label {
+    font-size: .85em;
+    text-transform: uppercase;
+    color: var(--app-accent-color);
+  }
+}
+
