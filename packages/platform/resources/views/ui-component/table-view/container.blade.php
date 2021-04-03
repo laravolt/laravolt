@@ -18,13 +18,12 @@
 
     @include('laravolt::ui-component.table-view.table')
 
-    @if($showFooter)
-        <footer class="ui bottom attached menu">
-            <div class="item">
-                <small>{{ $builder->summary() }}</small>
-            </div>
+    <footer class="ui bottom attached menu">
+        <div class="item">
+            <small>{{ $builder->summary() }}</small>
+        </div>
 
-            @if($showPerPage)
+        @if($showPerPage)
             <div class="ui item p-0">
                 <div class="ui dropdown item">
                     <span class="text">{{ request('per_page', $collection->perPage()) }}</span>
@@ -38,11 +37,11 @@
                     </div>
                 </div>
             </div>
-            @endif
+        @endif
 
-            {!! $collection->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
-        </footer>
-    @endif
+        {!! $collection->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
+    </footer>
+
 </div>
 
 @if($hasSearchableColumns)

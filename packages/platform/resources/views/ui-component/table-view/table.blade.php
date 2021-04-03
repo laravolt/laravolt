@@ -1,16 +1,4 @@
-<?php
-
-$tableClass = '';
-if ($showHeader && $showFooter) {
-    $tableClass = 'attached';
-} elseif ($showHeader) {
-    $tableClass = 'bottom attached';
-} elseif ($showFooter) {
-    $tableClass = 'top attached';
-}
-?>
-
-<table class="ui {{ $tableClass }} table unstackable responsive" aria-label="table">
+<table class="ui attached table unstackable responsive m-b-0" aria-label="table">
     <thead>
     <tr>
         @foreach($columns as $column)
