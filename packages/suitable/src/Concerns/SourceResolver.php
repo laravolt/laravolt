@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable\Concerns;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ trait SourceResolver
 {
     public function resolve($source)
     {
-        if ($source instanceof \Illuminate\Database\Eloquent\Builder) {
+        if ($source instanceof Builder) {
             return $source->get();
         } elseif (is_subclass_of($source, Model::class)) {
             return (new $source())->all();
