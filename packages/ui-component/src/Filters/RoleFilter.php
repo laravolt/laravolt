@@ -11,7 +11,7 @@ class RoleFilter extends DropdownFilter
     public function apply($data, $value)
     {
         if ($value) {
-            $data->whereHas('roles', fn($query) => $query->where('id', $value));
+            $data->whereHas('roles', fn ($query) => $query->where('id', $value));
         }
 
         return $data;
