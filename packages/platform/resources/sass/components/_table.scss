@@ -91,7 +91,10 @@ table.ui.table {
   .ui.form .field > label {
     font-size: .85em;
     text-transform: uppercase;
-    color: var(--app-accent-color);
+  }
+
+  .ui.form .field .grouped.fields .field .ui.checkbox {
+    margin-top: 0;
   }
 }
 

@@ -6,7 +6,7 @@
                 <th scope="col"
                     style="cursor: pointer"
                     wire:click.prevent="sortBy('{{ $column->getSortableColumn() }}')"
-                    {{ array_to_html_attributes($column->headerAttributes()) }}>
+                        {{ array_to_html_attributes($column->headerAttributes()) }}>
 
                     @if($column->getSortableColumn() === $sort)
                         <i class="icon caret {{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -23,30 +23,15 @@
 
         @endforeach
     </tr>
-    @if($hasSearchableColumns)
-        <tr class="ui form" data-role="suitable-header-searchable">
-            @foreach($columns as $column)
-                @if($column->isSearchable())
-                    {!! $column->searchableHeader()->render() !!}
-                @else
-                    <th></th>
-                @endif
-            @endforeach
-        </tr>
-    @endif
     </thead>
     <tbody class="collection">
-    @forelse($collection as $data)
+    @forelse($data as $item)
         @php($outerLoop = $loop)
-        @if($row)
-            @include($row)
-        @else
-            <tr>
-                @foreach($columns as $column)
-                    <td {!! $column->cellAttributes($data) !!}>{!! $column->cell($data, $collection, $outerLoop) !!}</td>
-                @endforeach
-            </tr>
-        @endif
+        <tr>
+            @foreach($columns as $column)
+                <td {!! $column->cellAttributes($item) !!}>{!! $column->cell($item, $data, $outerLoop) !!}</td>
+            @endforeach
+        </tr>
     @empty
         @include('laravolt::ui-component.table-view.empty')
     @endforelse

@@ -2,8 +2,8 @@
 
 namespace Laravolt\UiComponent\Livewire\Base;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Laravolt\Suitable\Concerns\SourceResolver;
-use Laravolt\Suitable\Toolbars\Search;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +17,8 @@ abstract class TableView extends Component
     protected bool $showPerPage = true;
     protected string $searchName = 'search';
     protected string $title = '';
+    protected mixed $data;
+    protected $paginationView = 'laravolt::pagination.simple';
     protected $queryString = [
         'page' => ['except' => 1],
         'search' => ['except' => ''],
@@ -28,10 +30,21 @@ abstract class TableView extends Component
     public int $perPage = self::DEFAULT_PER_PAGE;
     public ?string $sort = null;
     public ?string $direction = null;
+    public array $filters = [];
 
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function updatingFilters()
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters()
+    {
+        $this->filters = [];
     }
 
     public function changePerPage($perPage)
@@ -52,32 +65,70 @@ abstract class TableView extends Component
         };
     }
 
+    public function summary(): string
+    {
+        if (! $this->data instanceof LengthAwarePaginator) {
+            return '';
+        }
+
+        $from = (($this->data->currentPage() - 1) * $this->data->perPage()) + 1;
+        $total = $this->data->total();
+
+        if ($this->data->hasMorePages()) {
+            $to = $from + $this->data->perPage() - 1;
+        } else {
+            $to = $total;
+        }
+
+        if ($total > 0) {
+            return trans('suitable::pagination.summary', compact('from', 'to', 'total'));
+        }
+
+        return trans('suitable::pagination.empty');
+    }
+
     public function render()
     {
-        /** @var \Laravolt\UiComponent\TableBuilder $table */
-        $table = app('laravolt.table.builder')->source($this->resolve($this->data()));
-
-        if (is_string($this->title) && $this->title !== '') {
-            $table->title($this->title);
+        $this->data = $this->data();
+        $filterClasses = collect($this->filters())->keyBy(fn($item) => $item->key());
+        foreach ($this->filters as $key => $value) {
+            if ($filterClasses->has($key)) {
+                $this->data = $filterClasses->get($key)->apply($this->data, $value);
+            }
         }
 
-        $table->showPerPage($this->showPerPage);
+        $this->data = $this->resolve($this->data);
 
-        if ($this->showSearchbox) {
-            $table->getDefaultSegment()->appendLeft(Search::make($this->searchName));
+        $perPageOptions = [];
+        if ($this->data instanceof LengthAwarePaginator) {
+            $this->paginationView = 'laravolt::pagination.default';
+            if ($this->showPerPage) {
+                $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->data->perPage()]));
+                sort($perPageOptions);
+            }
         }
 
-        $table->columns($this->columns());
-
-        return $table->render(
+        return view(
+            'laravolt::ui-component.table-view.container',
             [
+                'data' => $this->data,
+                'columns' => $this->columns(),
+                'filters' => $this->filters,
                 'sort' => $this->sort,
                 'direction' => $this->direction,
+                'showPerPage' => $this->showPerPage,
+                'perPageOptions' => $perPageOptions,
+                'paginationView' => $this->paginationView,
             ]
         );
     }
 
-    abstract protected function data();
+    abstract public function data();
 
-    abstract protected function columns();
+    abstract public function columns(): array;
+
+    public function filters(): array
+    {
+        return [];
+    }
 }

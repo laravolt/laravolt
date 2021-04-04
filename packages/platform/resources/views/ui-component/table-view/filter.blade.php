@@ -1,16 +1,17 @@
-<div data-role="suitable-filter">
+<div data-role="suitable-filter" wire:ignore>
     <div class="ui basic button icon" data-role="suitable-filter-icon">
         <i class="icon filter"></i>
         <i class="icon angle down"></i>
     </div>
-    <div class="ui popup p-0">
-        <div class="ui form p-2">
-            {!! form()->checkboxGroup('name', ['Admin', 'Manager', 'Staff'])->label('Roles') !!}
-            {!! form()->radioGroup('status', ['Aktif', 'Pending', 'Blocked'])->label('Status') !!}
-            {!! form()->datepicker('date')->label('Terdaftar')->attributes(['wire:click' => 'resetPage']) !!}
-            {!! form()->dropdownDB('users', 'select * from users limit 10')->label('Pengguna') !!}
-        </div>
-        <x-laravolt::button class="bottom secondary fluid attached b-0" icon="times circle outline">Clear Filter</x-laravolt::button>
+    <div class="ui popup p-0" style="min-width: 200px">
+        <form class="ui form p-2" wire:submit.prevent>
+            @foreach($this->filters() as $filter)
+                {!! $filter->render() !!}
+            @endforeach
+        </form>
+        <x-laravolt::button wire:click="resetFilters" type="reset" class="bottom basic fluid attached b-0" icon="times circle outline">
+            Clear Filter
+        </x-laravolt::button>
     </div>
 </div>
 
@@ -21,9 +22,15 @@
                 .popup({
                     inline: true,
                     on: 'click',
-                    position: 'bottom right'
+                    position: 'bottom right',
+                    lastResort: 'bottom left',
                 })
             ;
+            $('[data-role="suitable-filter"] button[type="reset"]')
+                .on('click', function () {
+                    $('[data-role="suitable-filter"] form').form('clear');
+                    $('[data-role="suitable-filter"] .ui.dropdown').dropdown('set selected', '0');
+                });
         });
     </script>
 @endpush
