@@ -90,7 +90,7 @@ abstract class TableView extends Component
     public function render()
     {
         $this->data = $this->data();
-        $filterClasses = collect($this->filters())->keyBy(fn($item) => $item->key());
+        $filterClasses = collect($this->filters())->keyBy(fn ($item) => $item->key());
         foreach ($this->filters as $key => $value) {
             if ($filterClasses->has($key)) {
                 $this->data = $filterClasses->get($key)->apply($this->data, $value);
