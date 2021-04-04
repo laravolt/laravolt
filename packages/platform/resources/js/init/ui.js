@@ -242,21 +242,25 @@ class Laravolt {
         });
 
         root.find('.ui.input.calendar').each(function (idx, elm) {
-            elm = $(elm);
+            const $elm = $(elm);
 
-            let type = elm.data('calendar-type');
+            let type = $elm.data('calendar-type');
             if (!type) {
                 type = 'date';
             }
 
-            let format = elm.data('calendar-format');
+            let format = $elm.data('calendar-format');
             if (!format) {
                 format = 'YYYY-MM-DD';
             }
 
-            elm.calendar({
+            $elm.calendar({
                 type: type,
                 ampm: false,
+                selectAdjacentDays: true,
+                onSelect: function (date, mode) {
+                    elm.querySelector('input').dispatchEvent(new Event('input'));
+                },
                 formatter: {
                     date: function (date, settings) {
                         if (!date) {

@@ -10,6 +10,7 @@ use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
+use Laravolt\UiComponent\Filters\RegisteredFilter;
 use Laravolt\UiComponent\Filters\RoleFilter;
 use Laravolt\UiComponent\Filters\StatusFilter;
 use Laravolt\UiComponent\Livewire\Base\TableView;
@@ -56,6 +57,7 @@ class UserTable extends TableView
         return [
             new RoleFilter(),
             new StatusFilter(),
+            new RegisteredFilter(),
         ];
     }
 }

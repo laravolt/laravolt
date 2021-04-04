@@ -29,4 +29,15 @@ class DatepickerWrapper extends InputWrapper
         $this->data('calendar-type', $this->withTime ? 'datetime' : 'date')
             ->data('calendar-format', $this->format);
     }
+
+    public function attributes($attributes)
+    {
+        foreach ($this->controls as $control) {
+            if ($control instanceof Text) {
+                $control->attributes($attributes);
+            }
+        }
+
+        return $this;
+    }
 }
