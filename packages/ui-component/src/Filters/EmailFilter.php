@@ -2,8 +2,6 @@
 
 namespace Laravolt\UiComponent\Filters;
 
-use Laravolt\Platform\Models\Role;
-
 class EmailFilter extends TextFilter
 {
     protected string $label = 'Email';
