@@ -37,9 +37,9 @@ class Laravolt {
 
         root.find('.ui.dropdown.tag:not(.simple)').each(function () {
 
-            var selected = false;
+            let selected = false;
             if ($(this).data('value')) {
-                var values = $(this).data('value').toString().split(',');
+                let values = $(this).data('value').toString().split(',');
                 if (values.length == 1 && values[0] == '') {
 
                 } else {
@@ -84,7 +84,7 @@ class Laravolt {
             }
         });
 
-        for (var parentName of Object.keys(dependenciesSelect)) {
+        for (let parentName of Object.keys(dependenciesSelect)) {
             let parent = $('[name=' + parentName + ']');
             let children = dependenciesSelect[parentName];
             parent.destroyDropdown();
@@ -137,7 +137,7 @@ class Laravolt {
             });
         }
 
-        for (var parentName of Object.keys(dependenciesInput)) {
+        for (let parentName of Object.keys(dependenciesInput)) {
             let parent = root.find('[name=' + parentName + ']');
             let children = dependenciesInput[parentName];
 
@@ -186,9 +186,9 @@ class Laravolt {
         }
 
         root.find('.checkbox[data-toggle="checkall"]').each(function () {
-            var $parent = $(this);
-            var $childCheckbox = $(document).find($parent.data('selector'));
-            var $storage = $(document).find($parent.data('storage'));
+            let $parent = $(this);
+            let $childCheckbox = $(document).find($parent.data('selector'));
+            let $storage = $(document).find($parent.data('storage'));
 
             $parent
                 .checkbox({
@@ -244,12 +244,12 @@ class Laravolt {
         root.find('.ui.input.calendar').each(function (idx, elm) {
             elm = $(elm);
 
-            var type = elm.data('calendar-type');
+            let type = elm.data('calendar-type');
             if (!type) {
                 type = 'date';
             }
 
-            var format = elm.data('calendar-format');
+            let format = elm.data('calendar-format');
             if (!format) {
                 format = 'YYYY-MM-DD';
             }
@@ -262,20 +262,20 @@ class Laravolt {
                         if (!date) {
                             return '';
                         }
-                        var h = date.getHours();
-                        var i = date.getMinutes();
-                        var s = date.getSeconds();
-                        var j = date.getDate();
-                        var DD = ("0" + date.getDate()).slice(-2);
-                        var d = DD;
-                        var n = date.getMonth() + 1;
-                        var MM = ("0" + (date.getMonth() + 1)).slice(-2);
-                        var m = MM;
-                        var MMMM = settings.text.months[date.getMonth()];
-                        var M = settings.text.monthsShort[date.getMonth()];
-                        var YY = date.getFullYear().toString().substr(2, 2);
-                        var Y = date.getFullYear();
-                        var YYYY = date.getFullYear();
+                        const h = date.getHours();
+                        const i = date.getMinutes();
+                        const s = date.getSeconds();
+                        const j = date.getDate();
+                        const DD = ("0" + date.getDate()).slice(-2);
+                        const d = DD;
+                        const n = date.getMonth() + 1;
+                        const MM = ("0" + (date.getMonth() + 1)).slice(-2);
+                        const m = MM;
+                        const MMMM = settings.text.months[date.getMonth()];
+                        const M = settings.text.monthsShort[date.getMonth()];
+                        const YY = date.getFullYear().toString().substr(2, 2);
+                        const Y = date.getFullYear();
+                        const YYYY = date.getFullYear();
 
                         return format
                             .replace('h', h)
@@ -299,14 +299,14 @@ class Laravolt {
         });
 
         root.find('input[type=file].uploader').each(function (idx, elm) {
-            var extensions = $(elm).data('extensions');
+            let extensions = $(elm).data('extensions');
             if (extensions) {
                 extensions = extensions.split(',');
             } else {
                 extensions = null;
             }
 
-            var upload = null;
+            let upload = null;
 
             if ($(elm).data('media-url')) {
                 upload = {
@@ -327,7 +327,7 @@ class Laravolt {
                         }, 400);
                     },
                     onError: function (item, listEl, parentEl, newInputEl, inputEl, jqXHR, textStatus, errorThrown) {
-                        var progressBar = item.html.find('.progress-bar2');
+                        let progressBar = item.html.find('.progress-bar2');
 
                         if (progressBar.length > 0) {
                             progressBar.find('span').html(0 + "%");
@@ -340,7 +340,7 @@ class Laravolt {
                         ) : null;
                     },
                     onProgress: function (data, item, listEl, parentEl, newInputEl, inputEl) {
-                        var progressBar = item.html.find('.progress-bar2');
+                        let progressBar = item.html.find('.progress-bar2');
 
                         if (progressBar.length > 0) {
                             progressBar.show();
@@ -399,13 +399,13 @@ class Laravolt {
 
         if (typeof google === 'object' && typeof google.maps === 'object') {
             root.find('[data-form-coordinate]').each(function () {
-                var input = $(this);
-                var long, lat;
+                let input = $(this);
+                let long, lat;
                 [lat, long] = input.val().split(',');
                 lat = lat || -7.451808;
                 long = long || 111.035929;
 
-                var mapContainer = $('<div>')
+                let mapContainer = $('<div>')
                     .css('width', '100%')
                     .css('height', 300)
                     .css('border-radius', 4)
@@ -413,13 +413,13 @@ class Laravolt {
 
                 mapContainer.insertAfter($(this));
 
-                var center = new google.maps.LatLng(lat, long);
-                var options = {
+                let center = new google.maps.LatLng(lat, long);
+                let options = {
                     zoom: 17,
                     center: center,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 }
-                var disabled = $(this).is('[disabled]');
+                let disabled = $(this).is('[disabled]');
 
                 if (disabled) {
                     $.extend(options, {
@@ -427,9 +427,9 @@ class Laravolt {
                         zoomControl: false
                     });
                 }
-                var map = new google.maps.Map(mapContainer[0], options);
+                let map = new google.maps.Map(mapContainer[0], options);
 
-                var marker = new google.maps.Marker({
+                let marker = new google.maps.Marker({
                     position: center,
                     map: map,
                     draggable: !disabled
@@ -449,7 +449,7 @@ class Laravolt {
 const TURBOLINK_ENABLED = $('meta[name="turbolinks-enabled"]').attr('content') === '1';
 
 if (TURBOLINK_ENABLED) {
-    var Turbolinks = require("turbolinks")
+    let Turbolinks = require("turbolinks")
     Turbolinks.start();
 
     $(document).on('turbolinks:load', function () {
