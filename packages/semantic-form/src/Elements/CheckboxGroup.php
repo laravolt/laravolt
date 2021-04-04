@@ -53,7 +53,11 @@ class CheckboxGroup extends Wrapper
     {
         foreach ($this->controls as $control) {
             if ($control instanceof Checkbox) {
-                $control->attributes($attributes);
+                if ($attributes instanceof \Closure) {
+                    $attributes($control);
+                } else {
+                    $control->attributes($attributes);
+                }
             }
         }
 

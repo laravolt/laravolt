@@ -2,16 +2,27 @@
 
 namespace Laravolt\UiComponent\Filters;
 
-class StatusFilter extends TextFilter
+class StatusFilter extends CheckboxFilter
 {
     protected string $label = 'Status';
 
     public function apply($data, $value)
     {
-        if ($value) {
-            $data->where('status', $value);
+        $value = (array) $value;
+        foreach ($value as $status) {
+            if ($status) {
+                $data->where('status', $value);
+            }
         }
 
         return $data;
+    }
+
+    public function options(): array
+    {
+        return [
+            'ACTIVE' => 'ACTIVE',
+            'PENDING' => 'PENDING',
+        ];
     }
 }

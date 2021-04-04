@@ -10,6 +10,7 @@ use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
+use Laravolt\UiComponent\Filters\EmailFilter;
 use Laravolt\UiComponent\Filters\RegisteredFilter;
 use Laravolt\UiComponent\Filters\RoleFilter;
 use Laravolt\UiComponent\Filters\StatusFilter;
@@ -55,6 +56,7 @@ class UserTable extends TableView
     public function filters(): array
     {
         return [
+            new EmailFilter(),
             new RoleFilter(),
             new StatusFilter(),
             new RegisteredFilter(),

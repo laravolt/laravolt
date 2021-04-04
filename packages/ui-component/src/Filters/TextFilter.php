@@ -11,6 +11,6 @@ class TextFilter extends BaseFilter
         return form()
             ->text($key)
             ->label($this->label())
-            ->attributes(['wire:model' => "filters.$key"]);
+            ->attributes(['wire:model.debounce.300ms' => "filters.$key"]);
     }
 }
