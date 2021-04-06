@@ -52,11 +52,6 @@ class AdminCommand extends Command
             $role->syncPermission(['*']);
         }
 
-        $status = config('laravolt.auth.registration.status');
-        if (config('laravolt.auth.activation.enable')) {
-            $status = config('laravolt.auth.activation.status_after');
-        }
-
         $user = app(config('auth.providers.users.model'))->updateOrCreate(
             [
                 'email' => $email,
@@ -64,7 +59,8 @@ class AdminCommand extends Command
             [
                 'name' => $name,
                 'password' => bcrypt($password),
-                'status' => $status,
+                'status' => 'ACTIVE',
+                'email_verified_at' => now(),
             ]
         );
 

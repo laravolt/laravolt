@@ -33,25 +33,10 @@ class InstallCommand extends Command
         Artisan::call(LinkCommand::class);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
-
-        $username = 'admin@example.com';
-        $password = 'asdf1234';
-
-        Artisan::call(
-            AdminCommand::class,
-            [
-                'name' => 'Administrator',
-                'email' => $username,
-                'password' => $password,
-
-            ]
-        );
+        Artisan::call('vendor:publish', ['--tag' => 'setting']);
 
         $this->newLine();
-        $this->info('Application ready...');
-        $this->info(sprintf('URL        : %s', url('/')));
-        $this->info(sprintf('Login      : %s', $username));
-        $this->info(sprintf('Password   : %s', $password));
+        $this->info(sprintf('Application ready: %s', url('/')));
 
         return 1;
     }
