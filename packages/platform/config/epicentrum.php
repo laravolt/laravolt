@@ -35,6 +35,7 @@ return [
     'user_available_status' => [
         'PENDING' => 'PENDING',
         'ACTIVE' => 'ACTIVE',
+        'BLOCKED' => 'BLOCKED',
     ],
     'models' => [
         'role' => \Laravolt\Platform\Models\Role::class,
