@@ -3,6 +3,7 @@
 namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 
 class AdminCommand extends Command
 {
@@ -60,9 +61,11 @@ class AdminCommand extends Command
                 'name' => $name,
                 'password' => bcrypt($password),
                 'status' => 'ACTIVE',
-                'email_verified_at' => now(),
+                'timezone'  => config('app.timezone')
             ]
         );
+
+        $user->markEmailAsVerified();
 
         $user->assignRole($role);
 
