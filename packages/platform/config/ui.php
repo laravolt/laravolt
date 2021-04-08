@@ -40,6 +40,8 @@ return [
      */
     'iconset' => 'fad',
 
+    'default_menu_icon' => 'circle',
+
     'system_menu' => [
         'order' => 99,
     ],

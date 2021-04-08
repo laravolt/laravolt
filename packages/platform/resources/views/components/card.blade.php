@@ -1,7 +1,7 @@
 @isset($url)
-    <a href="{{ $url }}" class="ui card segments panel x-card" style="overflow: hidden">
+    <a href="{{ $url }}" class="ui card segments panel x-card shadow" style="overflow: hidden">
 @else
-    <div class="ui card segments panel x-card">
+    <div class="ui card segments panel x-card shadow-md p-1">
 @endisset
 
     @if($attributes['cover'])

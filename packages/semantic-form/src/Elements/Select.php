@@ -144,7 +144,7 @@ class Select extends FormControl
 
     public function appendOption($value, $label)
     {
-        $this->options = Arr::add($this->options, $value, $label);
+        $this->options[$value] = $label;
 
         return $this;
     }

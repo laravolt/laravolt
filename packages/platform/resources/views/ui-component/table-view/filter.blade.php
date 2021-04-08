@@ -4,7 +4,7 @@
             <i class="icon filter"></i>
             <i class="icon angle down"></i>
         </div>
-        <div class="ui popup p-0" style="min-width: 200px">
+        <div class="ui popup p-0" style="min-width: 300px">
             <form class="ui form p-2" wire:submit.prevent>
                 @foreach($this->filters() as $filter)
                     {!! $filter->render() !!}

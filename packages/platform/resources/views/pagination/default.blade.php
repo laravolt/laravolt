@@ -5,9 +5,9 @@
             <i class="icon left chevron" aria-hidden="true"></i>
         </button>
     @else
-        <button class="item prev ui button icon" wire:click.prevent="previousPage" rel="prev">
+        <div class="item prev ui button icon" wire:click.prevent="previousPage" rel="prev">
             <i class="icon left chevron" aria-hidden="true"></i>
-        </button>
+        </div>
     @endif
 
 <!-- Pagination Elements -->
@@ -21,7 +21,7 @@
         @if (is_array($element))
             @foreach ($element as $page => $url)
                 @if ($page == $paginator->currentPage())
-                    <button class="item active number">{{ $page }}</button>
+                    <div class="item active number">{{ $page }}</div>
                 @else
                     <button class="item number" wire:click.prevent="gotoPage({{ $page }})">{{ $page }}</button>
                 @endif
@@ -35,8 +35,8 @@
             <i class="icon right chevron" aria-hidden="true"></i>
         </button>
     @else
-        <button class="item disabled next ui button icon">
+        <div class="item disabled next ui button icon">
             <i class="icon right chevron" aria-hidden="true"></i>
-        </button>
+        </div>
     @endif
 </div>
