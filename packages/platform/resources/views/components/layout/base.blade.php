@@ -26,7 +26,6 @@
     @stack('head')
     {!! Asset::group('laravolt')->css() !!}
     {!! Asset::css() !!}
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
@@ -36,10 +35,8 @@
     <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Asset::group('laravolt')->js() !!}
 
-    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.1/dist/alpine.min.js" defer></script>
-
     @livewireStyles
+    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }}">
@@ -47,8 +44,8 @@
 {{ $slot }}
 
 {!! Asset::js() !!}
+@livewireScripts
 @stack('script')
 @stack('body')
-@livewireScripts
 </body>
 </html>
