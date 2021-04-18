@@ -16,6 +16,10 @@ abstract class Chart extends Component
 
     protected string $type = 'line';
 
+    protected int $height = 350;
+
+    protected bool $sparkline = false;
+
     protected string $title = '';
 
     protected array $series = [];
@@ -35,9 +39,6 @@ abstract class Chart extends Component
     public function mount(): void
     {
         $this->key = 'chart-'.Str::uuid();
-        if (trim($this->title) === '') {
-            $this->title = (new \ReflectionClass($this))->getShortName();
-        }
         $this->series = $this->series();
     }
 
@@ -47,12 +48,13 @@ abstract class Chart extends Component
             'series' => $this->formatSeries(),
             'labels' => $this->labels(),
             'chart' => [
-                'height' => 350,
+                'height' => $this->height,
                 'type' => $this->type,
                 'zoom' => [
                     'enabled' => false,
                 ],
                 'toolbar' => ['show' => false],
+                'sparkline' => ['enabled' => $this->sparkline],
             ],
             'xaxis' => [
                 'categories' => $this->labels(),
