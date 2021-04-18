@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Livewire\Base;
+namespace Laravolt\UiComponent\Livewire\Base;
 
 use Livewire\Component;
 

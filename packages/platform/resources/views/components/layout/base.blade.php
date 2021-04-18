@@ -26,7 +26,7 @@
     @stack('head')
     {!! Asset::group('laravolt')->css() !!}
     {!! Asset::css() !!}
-
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
