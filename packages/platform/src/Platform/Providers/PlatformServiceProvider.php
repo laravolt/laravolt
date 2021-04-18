@@ -15,6 +15,7 @@ use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
+use Laravolt\Platform\Commands\MakeChartCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Services\Acl;
@@ -26,6 +27,7 @@ class PlatformServiceProvider extends ServiceProvider
         AdminCommand::class,
         InstallCommand::class,
         MakeTableCommnad::class,
+        MakeChartCommnad::class,
         ManageRole::class,
         ManageUser::class,
         LinkCommand::class,

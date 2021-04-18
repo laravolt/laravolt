@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Livewire\Chart;
+
+use Laravolt\UiComponent\Livewire\Base\Chart;
+
+class DummyClass extends Chart
+{
+    protected string $title = 'DummyClass';
+
+    protected string $type = self::LINE;
+
+    public function series(): array
+    {
+        return [
+            'series-1' => [
+                'Label 1' => 10,
+                'Label 2' => 14,
+                'Label 3' => 40
+            ],
+        ];
+    }
+}
