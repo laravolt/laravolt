@@ -27,7 +27,7 @@ abstract class Chart extends Component
         return array_keys(collect($this->series)->last());
     }
 
-    protected function title(): string
+    public function title(): string
     {
         return $this->title;
     }
@@ -44,10 +44,6 @@ abstract class Chart extends Component
     public function options(): array
     {
         return [
-            'title' => [
-                'text' => $this->title(),
-                'align' => 'center',
-            ],
             'series' => $this->formatSeries(),
             'labels' => $this->labels(),
             'chart' => [
