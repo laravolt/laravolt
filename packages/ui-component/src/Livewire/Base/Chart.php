@@ -63,14 +63,14 @@ abstract class Chart extends Component
             ],
             'stroke' => [
                 'curve' => 'smooth',
-            ]
+            ],
         ];
     }
 
     protected function formatSeries(): array
     {
         return collect($this->series)
-            ->transform(fn($data, $name) => ['name' => $name, 'data' => array_values($data)])
+            ->transform(fn ($data, $name) => ['name' => $name, 'data' => array_values($data)])
             ->values()
             ->toArray();
     }
