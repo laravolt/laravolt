@@ -47,7 +47,7 @@ trait HasRoleAndPermission
             return $this;
         }
 
-        if (is_string($role) && ! Str::isUuid($role)) {
+        if (is_string($role) && !Str::isUuid($role)) {
             $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
         }
 
@@ -66,7 +66,7 @@ trait HasRoleAndPermission
             return $this;
         }
 
-        if (is_string($role) && ! Str::isUuid($role)) {
+        if (is_string($role) && !Str::isUuid($role)) {
             $role = app(config('laravolt.epicentrum.models.role'))->where('name', $role)->first();
         }
 
@@ -102,7 +102,7 @@ trait HasRoleAndPermission
             $role = $this->roles->firstWhere('id', $role);
         }
 
-        if (! $role instanceof Model) {
+        if (!$role instanceof Model) {
             return false;
         }
 

@@ -27,6 +27,7 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the service provider.
      *
      * @see    http://laravel.com/docs/master/providers#the-register-method
+     *
      * @return void
      */
     public function register()
@@ -47,7 +48,7 @@ class UiServiceProvider extends BaseServiceProvider
                 fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
             );
 
-        if (! $this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             $this->overrideUi();
             $this->registerAssets();
             $this->registerIcons();
@@ -59,6 +60,7 @@ class UiServiceProvider extends BaseServiceProvider
      * Application is booting.
      *
      * @see    http://laravel.com/docs/master/providers#the-boot-method
+     *
      * @return void
      */
     public function boot()
@@ -93,6 +95,7 @@ class UiServiceProvider extends BaseServiceProvider
      * Register the package views.
      *
      * @see    http://laravel.com/docs/master/packages#views
+     *
      * @return self
      */
     protected function bootViews()
@@ -129,7 +132,7 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function registerAssets()
     {
-        if (! $this->app->bound('laravolt.asset.group.laravolt')) {
+        if (!$this->app->bound('laravolt.asset.group.laravolt')) {
             $this->app->singleton(
                 'laravolt.asset.group.laravolt',
                 function () {

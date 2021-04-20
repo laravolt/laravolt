@@ -169,7 +169,7 @@ abstract class TableView implements Responsable
 
     protected function getSource()
     {
-        if (! $this->source && method_exists($this, 'source')) {
+        if (!$this->source && method_exists($this, 'source')) {
             return $this->source();
         }
 

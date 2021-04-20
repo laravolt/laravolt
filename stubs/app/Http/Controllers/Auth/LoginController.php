@@ -25,7 +25,7 @@ class LoginController extends Controller
     /**
      * Handle an incoming authentication request.
      *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @param \App\Http\Requests\Auth\LoginRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

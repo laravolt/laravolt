@@ -96,7 +96,7 @@ abstract class Element
 
     public function clear($attribute)
     {
-        if (! isset($this->attributes[$attribute])) {
+        if (!isset($this->attributes[$attribute])) {
             return $this;
         }
 
@@ -107,7 +107,7 @@ abstract class Element
 
     public function addClass($class)
     {
-        if (! $class) {
+        if (!$class) {
             return $this;
         }
 
@@ -134,7 +134,7 @@ abstract class Element
 
     public function removeClass($class)
     {
-        if (! isset($this->attributes['class'])) {
+        if (!isset($this->attributes['class'])) {
             return $this;
         }
 

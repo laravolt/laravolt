@@ -24,8 +24,8 @@ class AssetServiceProvider extends BaseServiceProvider
     /**
      * Register an instance of the assets manager library in the IoC container.
      *
-     * @param  string  $name  Name of the group
-     * @param  array  $config  Config of the group
+     * @param string $name   Name of the group
+     * @param array  $config Config of the group
      *
      * @return void
      */

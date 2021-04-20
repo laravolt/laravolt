@@ -20,7 +20,7 @@ class Segments extends Wrapper
 
         $items = [];
         foreach ($controls as $control) {
-            if (! $control instanceof Segment) {
+            if (!$control instanceof Segment) {
                 $control = new Segment($control);
             }
             $items[] = $control;

@@ -11,7 +11,7 @@ class Lookup implements Rule
     /**
      * Create a new rule instance.
      *
-     * @param  string  $collection
+     * @param string $collection
      */
     public function __construct(string $collection)
     {
@@ -21,8 +21,9 @@ class Lookup implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)

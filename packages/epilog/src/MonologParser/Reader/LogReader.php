@@ -43,7 +43,7 @@ class LogReader extends AbstractReader implements \Iterator, \ArrayAccess, \Coun
 
         $this->file = new \SplFileObject($file, 'r');
         $i = 0;
-        while (! $this->file->eof()) {
+        while (!$this->file->eof()) {
             $this->file->current();
             $this->file->next();
             $i++;

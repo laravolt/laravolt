@@ -87,7 +87,7 @@ class FileManager
             }
         });
 
-        $isRoot = ! $path;
+        $isRoot = !$path;
         $parentUrl = url()->current();
         $parentPath = dirname($path);
 
@@ -110,8 +110,10 @@ class FileManager
             $type = 'file';
             $extension = File::extension($filePath);
             $label = File::name($file).'.'.$extension;
-            $permalink = route('file-manager::file.download',
-                [$this->key => $key]);
+            $permalink = route(
+                'file-manager::file.download',
+                [$this->key => $key]
+            );
         } else {
             $key = $this->encode($file);
             $folderInfo = $this->folderInfo($filePath);
@@ -212,7 +214,7 @@ class FileManager
         }
 
         foreach ($files as $item) {
-            if (! in_array(basename($item), $this->exclude)) {
+            if (!in_array(basename($item), $this->exclude)) {
                 $items[] = $this->getInfo($item);
             }
         }

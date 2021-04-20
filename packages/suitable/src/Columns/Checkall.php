@@ -14,7 +14,7 @@ class Checkall extends Column implements ColumnInterface
 
     private function isChecked($data)
     {
-        if (! $this->filldata) {
+        if (!$this->filldata) {
             return false;
         }
 

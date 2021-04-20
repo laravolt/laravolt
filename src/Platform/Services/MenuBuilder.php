@@ -89,7 +89,7 @@ class MenuBuilder
                 continue;
             }
 
-            if (! isset($option['menu'])) {
+            if (!isset($option['menu'])) {
                 $menu = $parent->add($name, $this->generateUrl($option));
                 if (isset($option['active'])) {
                     $menu->active($option['active']);
