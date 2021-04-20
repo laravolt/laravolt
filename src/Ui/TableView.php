@@ -67,7 +67,7 @@ abstract class TableView extends Component
 
     public function summary(): string
     {
-        if (! $this->data instanceof LengthAwarePaginator) {
+        if (!$this->data instanceof LengthAwarePaginator) {
             return '';
         }
 
