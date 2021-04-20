@@ -1,4 +1,5 @@
 preset: recommended
+version: 8
 
 disabled:
   - align_double_arrow
