@@ -25,7 +25,7 @@ class SelectMultiple extends Select
         $selected = (array) $selected;
         $this->selected = $selected ?? [];
 
-        if (! empty($selected)) {
+        if (!empty($selected)) {
             $this->data('value', implode(',', $this->selected));
         }
 

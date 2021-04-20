@@ -53,7 +53,7 @@ class InstallCommand extends Command
             $contents = explode("\n", file_get_contents($file));
             foreach ($lines as $line) {
                 // Only put entry if not exists
-                if (! in_array($line, $contents, true)) {
+                if (!in_array($line, $contents, true)) {
                     file_put_contents($file, $line."\n", FILE_APPEND);
                 }
             }

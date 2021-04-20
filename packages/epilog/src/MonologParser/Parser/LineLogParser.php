@@ -33,13 +33,13 @@ class LineLogParser implements LogParserInterface
      */
     public function parse($log)
     {
-        if (! is_string($log) || strlen($log) === 0) {
+        if (!is_string($log) || strlen($log) === 0) {
             return [];
         }
 
         preg_match($this->pattern, $log, $data);
 
-        if (! isset($data['date'])) {
+        if (!isset($data['date'])) {
             return [];
         }
 

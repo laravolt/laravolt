@@ -27,13 +27,13 @@ class User extends BaseUser implements CanChangePasswordContract, HasRoleAndPerm
     {
         $avatar = null;
 
-        if (! $avatar) {
+        if (!$avatar) {
             if (app()->bound('avatar')) {
                 $avatar = app('avatar')->create($this->name)->toBase64();
             }
         }
 
-        if (! $avatar) {
+        if (!$avatar) {
             $avatar = asset('laravolt/img/default/avatar.png');
         }
 

@@ -81,7 +81,7 @@ trait SortableTrait
      */
     public static function sort($ids, int $startPosition = 1)
     {
-        if (! is_array($ids) && ! $ids instanceof ArrayAccess) {
+        if (!is_array($ids) && !$ids instanceof ArrayAccess) {
             throw new InvalidArgumentException('You must pass an array or ArrayAccess object to setNewOrder');
         }
 

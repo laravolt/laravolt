@@ -17,10 +17,10 @@ class Panel extends Component
     /**
      * PanelComponent constructor.
      *
-     * @param  string  $title
-     * @param  string  $description
-     * @param  string  $icon
-     * @param  string  $iconClass
+     * @param string $title
+     * @param string $description
+     * @param string $icon
+     * @param string $iconClass
      */
     public function __construct(string $title = '', string $description = '', string $icon = '', string $iconClass = '')
     {

@@ -20,8 +20,8 @@ class UserController extends Controller
     /**
      * UserController constructor.
      *
-     * @param  \Laravolt\Epicentrum\Repositories\RepositoryInterface  $repository
-     * @param  \Laravolt\Support\Contracts\TimezoneRepository  $timezone
+     * @param \Laravolt\Epicentrum\Repositories\RepositoryInterface $repository
+     * @param \Laravolt\Support\Contracts\TimezoneRepository        $timezone
      */
     public function __construct(RepositoryInterface $repository, TimezoneRepository $timezone)
     {

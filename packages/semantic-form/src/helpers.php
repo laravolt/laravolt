@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('form')) {
+if (!function_exists('form')) {
     /**
      * @return \Laravolt\SemanticForm\SemanticForm
      */
@@ -10,7 +10,7 @@ if (! function_exists('form')) {
     }
 }
 
-if (! function_exists('form_escape')) {
+if (!function_exists('form_escape')) {
     /**
      * Escape HTML special characters in a string.
      *
@@ -20,7 +20,7 @@ if (! function_exists('form_escape')) {
      */
     function form_escape($value)
     {
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             return $value;
         }
 
@@ -28,7 +28,7 @@ if (! function_exists('form_escape')) {
     }
 }
 
-if (! function_exists('form_html_attributes')) {
+if (!function_exists('form_html_attributes')) {
     /**
      * Convert array of HTML attributes into string.
      *
@@ -56,7 +56,7 @@ if (! function_exists('form_html_attributes')) {
     }
 }
 
-if (! function_exists('form_calendar_text')) {
+if (!function_exists('form_calendar_text')) {
     /**
      * Mendapatkan localization string untuk ditampilkan di calendar (datepicker, datetimepicker).
      *

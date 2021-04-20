@@ -43,7 +43,7 @@ class LogParser
         [$headings, $data] = self::parseRawData($raw);
 
         // @codeCoverageIgnoreStart
-        if (! is_array($headings)) {
+        if (!is_array($headings)) {
             return self::$parsed;
         }
         // @codeCoverageIgnoreEnd

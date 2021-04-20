@@ -60,7 +60,7 @@ abstract class FormControl extends Element
 
     public function enable($enable = true)
     {
-        $this->disable(! $enable);
+        $this->disable(!$enable);
 
         return $this;
     }

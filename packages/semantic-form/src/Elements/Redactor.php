@@ -21,7 +21,7 @@ class Redactor extends TextArea
     {
         $url = $this->mediaUrl;
 
-        if (! $url) {
+        if (!$url) {
             $url = Route::has($this->fallbackMediaUrl) ? route($this->fallbackMediaUrl) : false;
         }
         if ($url) {

@@ -46,7 +46,7 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     public function search($search)
     {
-        if (! is_bool($search) && ! is_string($search)) {
+        if (!is_bool($search) && !is_string($search)) {
             throw new \InvalidArgumentException('Only boolean or string allowed');
         }
         if ($search === true) {

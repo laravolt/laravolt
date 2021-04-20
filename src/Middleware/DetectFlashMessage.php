@@ -77,7 +77,7 @@ class DetectFlashMessage
             }
 
             // Modify the response to add the Flash
-            if (! $request->ajax() && $this->flash->hasMessage()) {
+            if (!$request->ajax() && $this->flash->hasMessage()) {
                 $this->flash->injectScript($response);
             }
         } catch (Exception $e) {

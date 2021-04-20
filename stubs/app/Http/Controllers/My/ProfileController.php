@@ -13,7 +13,7 @@ class ProfileController extends Controller
     /**
      * PasswordController constructor.
      *
-     * @param TimezoneRepository  $timezone
+     * @param TimezoneRepository $timezone
      */
     public function __construct(TimezoneRepository $timezone)
     {
