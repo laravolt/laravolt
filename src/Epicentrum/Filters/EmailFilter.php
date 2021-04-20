@@ -1,6 +1,8 @@
 <?php
 
-namespace Laravolt\UiComponent\Filters;
+namespace Laravolt\Epicentrum\Filters;
+
+use Laravolt\UiComponent\Filters\TextFilter;
 
 class EmailFilter extends TextFilter
 {

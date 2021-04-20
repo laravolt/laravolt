@@ -1,8 +1,9 @@
 <?php
 
-namespace Laravolt\UiComponent\Filters;
+namespace Laravolt\Epicentrum\Filters;
 
 use Laravolt\Platform\Models\Role;
+use Laravolt\UiComponent\Filters\DropdownFilter;
 
 class RoleFilter extends DropdownFilter
 {

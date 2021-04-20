@@ -9,8 +9,10 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Update;
+use Laravolt\Epicentrum\Livewire\UserTable;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Support\Contracts\TimezoneRepository;
+use Livewire\Livewire;
 
 /**
  * Class PackageServiceProvider.
@@ -68,6 +70,8 @@ class EpicentrumServiceProvider extends BaseServiceProvider
         if ($this->app->bound('laravolt.acl')) {
             $this->app['laravolt.acl']->registerPermission(Permission::asArray());
         }
+
+        Livewire::component('laravolt::user-table', UserTable::class);
     }
 
     protected function registerBlade()
