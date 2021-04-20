@@ -75,6 +75,10 @@ abstract class Chart extends Component
 
     public function render()
     {
+        if ($this->sparkline) {
+            return view('laravolt::ui-component.charts.sparkline');
+        }
+
         return view('laravolt::ui-component.charts.chart');
     }
 }

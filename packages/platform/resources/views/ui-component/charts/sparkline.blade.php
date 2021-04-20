@@ -1,4 +1,4 @@
-<x-laravolt::panel :title="$this->title()">
+<x-laravolt::panel contentClass="p-0" :title="$this->title()">
     <div id="{{ $this->key }}"></div>
 </x-laravolt::panel>
 
