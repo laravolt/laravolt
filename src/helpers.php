@@ -22,7 +22,7 @@ if (! function_exists('platform_max_file_upload')) {
      *
      * @return int|string
      */
-    function platform_max_file_upload($shorthand = false)
+    function platform_max_file_upload($shorthand = false): int|string
     {
         $max_upload = shorthand_to_byte(ini_get('upload_max_filesize'));
         $max_post = shorthand_to_byte(ini_get('post_max_size'));
@@ -93,7 +93,7 @@ if (! function_exists('is_sqlite')) {
 }
 
 if (! function_exists('array_to_html_attributes')) {
-    function array_to_html_attributes(array $attributes)
+    function array_to_html_attributes(array $attributes): string
     {
         $tagAttributes = '';
 
@@ -102,5 +102,32 @@ if (! function_exists('array_to_html_attributes')) {
         }
 
         return $tagAttributes;
+    }
+}
+if (! function_exists('readable_number')) {
+    function readable_number(float $value, int $precision = 1): string
+    {
+        $thresholds = [
+            '' => 900,
+            'K' => 900000,
+            'M' => 900000000,
+            'B' => 900000000000,
+            'T' => 90000000000000,
+        ];
+
+        $default = '900T+';
+
+        foreach ($thresholds as $suffix => $threshold) {
+            if ($value < $threshold) {
+                $formattedNumber = number_format($value / ($threshold / $thresholds['']), $precision);
+                $cleanedNumber = (strpos($formattedNumber, '.') === false)
+                    ? $formattedNumber
+                    : rtrim(rtrim($formattedNumber, '0'), '.');
+
+                return $cleanedNumber.$suffix;
+            }
+        }
+
+        return $default;
     }
 }

@@ -1,22 +1,41 @@
-# :zap: Laravolt 
+[![StyleCI](https://github.styleci.io/repos/195338100/shield?branch=master)](https://github.styleci.io/repos/195338100) [![Build Status](https://travis-ci.org/laravolt/platform.svg?branch=master)](https://travis-ci.org/laravolt/platform) [![Coverage Status](https://coveralls.io/repos/github/laravolt/platform/badge.svg?branch=master)](https://coveralls.io/github/laravolt/platform?branch=master)
 
-Membuat aplikasi web 2 minggu jadi.
+# Laravolt Platform
+Platform untuk mengembangkan sistem informasi dalam 2 minggu
 
-Dokumentasi bisa dibaca di http://laravolt.dev/.
+## Instalasi
+Buat sebuah proyek Laravel baru dengan menjalankan:
+
+```bash
+laravel new awesome-application
+```
+
+atau:
+
+```bash
+composer create-project --prefer-dist laravel/laravel awesome-application
+```
 
 
 
-## Yuk Berkontribusi
+Masuk ke folder aplikasi, lalu tambahkan laravolt/platform:
 
-https://laravolt.dev/guidelines/contribution/
+```bash
+composer require laravolt/platform
+```
 
-## Core Contributor
-- Bayu Hendra Winata (PT Javan Cipta Solusi) https://github.com/uyab
-- Nasrul Abdullah Rizal (PT Javan Cipta Solusi) https://github.com/nasrularizal
-- Anandia Muhammad Yudhistira (PT Javan Cipta Solusi) https://github.com/anandiamy
-- Damar Khoirul Huda (PT Javan Cipta Solusi) https://github.com/damarteplok
-- Ginanjar Septian Adhitia (PT Javan Cipta Solusi) https://github.com/ginadhitia
-- Dikih Arif Wibowo (Frontend Dev - PT JAVAN CIPTA SOLUSI) https://github.com/dikiharifwibowo
+Setup skeleton Laravolt dengan menjalankan:
 
-## Credits
-- Code for `laravolt/asset` taken from https://github.com/Stolz/Assets with some modification and simplification
+```bash
+php artisan preset laravolt
+```
+
+Untuk menambahkan admin, jalankan perintah:
+
+```bash
+php artisan laravolt:admin
+```
+
+
+
+Jalankan `php artisan serve` atau web server lain kesukaanmu, buka URL aplikasi di browser, dan Laravolt siap menebar pesona 😉

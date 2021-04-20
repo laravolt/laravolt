@@ -56,52 +56,31 @@
     },
     "autoload": {
         "files": [
-            "packages/platform/src/helpers.php",
-            "packages/semantic-form/src/helpers.php",
-            "packages/support/src/helpers.php"
+            "src/helpers.php",
+            "packages/semantic-form/src/helpers.php"
         ],
         "psr-4": {
             "Laravolt\\Asset\\": "packages/asset/src",
-            "Laravolt\\Contracts\\": "packages/platform/src/Contracts/",
             "Laravolt\\DatabaseMonitor\\": "packages/database-monitor/src",
-            "Laravolt\\Epicentrum\\": "packages/platform/src/Epicentrum/",
             "Laravolt\\Epilog\\": "packages/epilog/src",
             "Laravolt\\FileManager\\": "packages/file-manager/src",
-            "Laravolt\\Livewire\\": "packages/platform/src/Livewire",
             "Laravolt\\Lookup\\": "packages/lookup/src",
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
-            "Laravolt\\Middleware\\": "packages/platform/src/Middleware/",
-            "Laravolt\\Platform\\": "packages/platform/src/Platform/",
-            "Laravolt\\Rules\\": "packages/platform/src/Rules/",
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
             "Laravolt\\Thunderclap\\": "packages/thunderclap/src",
-            "Laravolt\\UiComponent\\": "packages/ui-component/src"
+            "Laravolt\\UiComponent\\": "packages/ui-component/src",
+            "Laravolt\\": "src"
         }
     },
     "autoload-dev": {
         "classmap": [],
         "psr-4": {
             "Laravolt\\SemanticForm\\Test\\": "packages/semantic-form/tests",
-            "Laravolt\\Support\\Test\\": "packages/support/tests",
-            "Laravolt\\Tests\\": "packages/platform/tests/",
-            "Laravolt\\Thunderclap\\Test\\": "packages/thunderclap/tests"
+            "Laravolt\\Tests\\": "tests/"
         }
-    },
-    "replace": {
-        "laravolt/database-monitor": "self.version",
-        "laravolt/epilog": "self.version",
-        "laravolt/file-manager": "self.version",
-        "laravolt/lookup": "self.version",
-        "laravolt/mailkeeper": "self.version",
-        "laravolt/media": "self.version",
-        "laravolt/platform": "self.version",
-        "laravolt/semantic-form": "self.version",
-        "laravolt/suitable": "self.version",
-        "laravolt/support": "self.version",
-        "laravolt/thunderclap": "self.version"
     },
     "extra": {
         "laravel": {

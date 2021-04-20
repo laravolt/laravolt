@@ -1,2 +1,4 @@
-version: 8
-preset: laravel
+preset: recommended
+
+disabled:
+  - align_double_arrow
