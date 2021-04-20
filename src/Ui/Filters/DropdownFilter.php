@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\UiComponent\Filters;
+namespace Laravolt\Ui\Filters;
 
 class DropdownFilter extends BaseFilter
 {

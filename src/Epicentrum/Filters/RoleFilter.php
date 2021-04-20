@@ -3,7 +3,7 @@
 namespace Laravolt\Epicentrum\Filters;
 
 use Laravolt\Platform\Models\Role;
-use Laravolt\UiComponent\Filters\DropdownFilter;
+use Laravolt\Ui\Filters\DropdownFilter;
 
 class RoleFilter extends DropdownFilter
 {

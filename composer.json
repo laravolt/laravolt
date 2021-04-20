@@ -71,7 +71,6 @@
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
             "Laravolt\\Thunderclap\\": "packages/thunderclap/src",
-            "Laravolt\\UiComponent\\": "packages/ui-component/src",
             "Laravolt\\": "src"
         }
     },
@@ -98,8 +97,7 @@
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
                 "Laravolt\\Platform\\Providers\\UiServiceProvider",
                 "Laravolt\\SemanticForm\\ServiceProvider",
-                "Laravolt\\Mailkeeper\\ServiceProvider",
-                "Laravolt\\UiComponent\\UiComponentServiceProvider"
+                "Laravolt\\Mailkeeper\\ServiceProvider"
             ],
             "aliases": {
                 "Asset": "Laravolt\\Asset\\AssetFacade",

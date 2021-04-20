@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\UiComponent\Filters;
+namespace Laravolt\Ui\Filters;
 
 use Laravolt\SemanticForm\Elements\Checkbox;
 

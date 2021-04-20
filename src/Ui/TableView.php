@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\UiComponent\Livewire\Base;
+namespace Laravolt\Ui;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Laravolt\Suitable\Concerns\SourceResolver;

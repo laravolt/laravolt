@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Chart;
 
-use Laravolt\UiComponent\Livewire\Base\Chart;
+use Laravolt\Charts\Chart;
 
 class DummyClass extends Chart
 {

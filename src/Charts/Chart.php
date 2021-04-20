@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\UiComponent\Livewire\Base;
+namespace Laravolt\Charts;
 
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -14,13 +14,13 @@ abstract class Chart extends Component
 
     public string $key;
 
-    protected string $type = 'line';
+    public string $title = '';
 
-    protected int $height = 350;
+    public string $type = 'line';
+
+    public int $height = 350;
 
     protected bool $sparkline = false;
-
-    protected string $title = '';
 
     protected array $series = [];
 
@@ -61,6 +61,8 @@ abstract class Chart extends Component
             ],
             'stroke' => [
                 'curve' => 'smooth',
+                'width' => 2,
+                'lineCap' => 'round',
             ],
         ];
     }

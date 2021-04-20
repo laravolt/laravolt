@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravolt\UiComponent\Livewire\Base;
+namespace Laravolt\Charts;
 
 abstract class Donut extends Chart
 {
-    protected string $type = self::DONUT;
+    public string $type = self::DONUT;
 
     protected function labels(): array
     {

@@ -2,7 +2,7 @@
 
 namespace Laravolt\Epicentrum\Filters;
 
-use Laravolt\UiComponent\Filters\DateFilter;
+use Laravolt\Ui\Filters\DateFilter;
 
 class RegisteredFilter extends DateFilter
 {

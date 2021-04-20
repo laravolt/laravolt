@@ -13,7 +13,7 @@ use Laravolt\Epicentrum\Filters\EmailFilter;
 use Laravolt\Epicentrum\Filters\RegisteredFilter;
 use Laravolt\Epicentrum\Filters\RoleFilter;
 use Laravolt\Epicentrum\Filters\StatusFilter;
-use Laravolt\UiComponent\Livewire\Base\TableView;
+use Laravolt\Ui\TableView;
 
 class UserTable extends TableView
 {

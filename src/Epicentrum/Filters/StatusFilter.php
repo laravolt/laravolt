@@ -2,7 +2,7 @@
 
 namespace Laravolt\Epicentrum\Filters;
 
-use Laravolt\UiComponent\Filters\CheckboxFilter;
+use Laravolt\Ui\Filters\CheckboxFilter;
 
 class StatusFilter extends CheckboxFilter
 {
