@@ -11,7 +11,7 @@ trait AutoSort
 {
     use PowerJoins;
 
-    public function scopeAutoSort(Builder $query, $sortByKey = null, $sortDirectionKey = null, $payload = null)
+    public function scopeAutoSort(Builder $query, $payload = null, $sortByKey = null, $sortDirectionKey = null)
     {
         if ($payload === null) {
             $payload = request();
@@ -19,6 +19,7 @@ trait AutoSort
 
         $sortByKey = $sortByKey ?? config('suitable.query_string.sort_by');
         $sortDirectionKey = $sortDirectionKey ?? config('suitable.query_string.sort_direction');
+
         $direction = Arr::get($payload, $sortDirectionKey, 'asc');
 
         if (Arr::get($payload, $sortByKey)) {

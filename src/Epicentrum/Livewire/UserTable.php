@@ -19,22 +19,13 @@ class UserTable extends TableView
 {
     public function data()
     {
-        $sortPayload = [
-            'sort' => $this->sort,
-            'direction' => $this->direction,
-        ];
-
+        $searchabledColumns = config('laravolt.epicentrum.repository.searchable', []);
         $query = app(config('auth.providers.users.model'))
             ->with('roles')
-            ->autoSort('sort', 'direction', $sortPayload)
+            ->autoSort($this->sortPayload())
             ->autoFilter()
+            ->whereLike($searchabledColumns, trim($this->search))
             ->latest();
-
-        $keyword = trim($this->search);
-        if ($keyword !== '') {
-            $searchabledColumns = config('laravolt.epicentrum.repository.searchable', []);
-            $query->whereLike($searchabledColumns, $keyword);
-        }
 
         return $query;
     }

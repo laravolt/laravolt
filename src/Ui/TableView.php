@@ -13,12 +13,19 @@ abstract class TableView extends Component
     use WithPagination;
 
     private const DEFAULT_PER_PAGE = 15;
+
     protected bool $showSearchbox = true;
+
     protected bool $showPerPage = true;
+
     protected string $searchName = 'search';
+
     protected string $title = '';
+
     protected mixed $data;
+
     protected $paginationView = 'laravolt::pagination.simple';
+
     protected $queryString = [
         'page' => ['except' => 1],
         'search' => ['except' => ''],
@@ -26,10 +33,15 @@ abstract class TableView extends Component
         'direction',
         'perPage' => ['except' => self::DEFAULT_PER_PAGE],
     ];
+
     public string $search = '';
+
     public int $perPage = self::DEFAULT_PER_PAGE;
+
     public ?string $sort = null;
+
     public ?string $direction = null;
+
     public array $filters = [];
 
     public function updatingSearch()
@@ -67,7 +79,7 @@ abstract class TableView extends Component
 
     public function summary(): string
     {
-        if (!$this->data instanceof LengthAwarePaginator) {
+        if (! $this->data instanceof LengthAwarePaginator) {
             return '';
         }
 
@@ -90,7 +102,7 @@ abstract class TableView extends Component
     public function render()
     {
         $this->data = $this->data();
-        $filterClasses = collect($this->filters())->keyBy(fn ($item) => $item->key());
+        $filterClasses = collect($this->filters())->keyBy(fn($item) => $item->key());
         foreach ($this->filters as $key => $value) {
             if ($filterClasses->has($key)) {
                 $this->data = $filterClasses->get($key)->apply($this->data, $value);
@@ -130,5 +142,13 @@ abstract class TableView extends Component
     public function filters(): array
     {
         return [];
+    }
+
+    protected function sortPayload()
+    {
+        return [
+            'sort' => $this->sort,
+            'direction' => $this->direction,
+        ];
     }
 }

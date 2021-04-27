@@ -16,11 +16,11 @@ class SupportServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->registerMacro();
     }
 
     public function boot()
     {
+        $this->registerMacro();
     }
 
     protected function registerMacro()
@@ -29,7 +29,7 @@ class SupportServiceProvider extends ServiceProvider
         Str::mixin(new StrMixin());
 
         EloquentBuilder::macro('whereLike', function ($attributes, ?string $searchTerm) {
-            if ($searchTerm === null) {
+            if ($searchTerm === null || trim($searchTerm) === '') {
                 return $this;
             }
 
