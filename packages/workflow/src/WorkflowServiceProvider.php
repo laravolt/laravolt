@@ -2,7 +2,7 @@
 
 namespace Laravolt\Workflow;
 
-use Laravolt\Epicentrum\Livewire\DefinitionTable;
+use Laravolt\Workflow\Livewire\DefinitionTable;
 use Laravolt\Support\Base\BaseServiceProvider;
 use Livewire\Livewire;
 
