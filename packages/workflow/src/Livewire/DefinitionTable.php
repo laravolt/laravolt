@@ -11,17 +11,10 @@ class DefinitionTable extends TableView
 {
     public function data()
     {
-        $sortPayload = [
-            'sort' => $this->sort,
-            'direction' => $this->direction,
-        ];
-
-        $query = ProcessDefinition::query()->autoSort('sort', 'direction', $sortPayload)->latest();
-
-        $keyword = trim($this->search);
-        if ($keyword !== '') {
-            $query->whereLike(['name', 'key'], $keyword);
-        }
+        $query = ProcessDefinition::query()
+            ->autoSort($this->sortPayload())
+            ->whereLike(['name', 'key'], trim($this->search))
+            ->latest();
 
         return $query;
     }
@@ -30,9 +23,9 @@ class DefinitionTable extends TableView
     {
         return [
             Numbering::make('No'),
-            Text::make('name', 'Name'),
-            Text::make('key', 'Key'),
-            Text::make('version', 'Version'),
+            Text::make('name', 'Name')->sortable(),
+            Text::make('key', 'Key')->sortable(),
+            Text::make('version', 'Version')->sortable(),
         ];
     }
 

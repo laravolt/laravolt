@@ -109,7 +109,7 @@ class PlatformServiceProvider extends ServiceProvider
         $this->loadViewsFrom(
             [
                 platform_path('resources/views'),
-                platform_path('packages/workflow/resources/views')
+                platform_path('packages/workflow/resources/views'),
             ],
             'laravolt'
         );
