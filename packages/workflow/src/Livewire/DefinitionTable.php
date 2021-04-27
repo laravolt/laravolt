@@ -2,6 +2,10 @@
 
 namespace Laravolt\Epicentrum\Livewire;
 
+use Laravolt\Epicentrum\Filters\EmailFilter;
+use Laravolt\Epicentrum\Filters\RegisteredFilter;
+use Laravolt\Epicentrum\Filters\RoleFilter;
+use Laravolt\Epicentrum\Filters\StatusFilter;
 use Laravolt\Suitable\Columns\Avatar;
 use Laravolt\Suitable\Columns\Date;
 use Laravolt\Suitable\Columns\Label;
@@ -9,10 +13,6 @@ use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
-use Laravolt\Epicentrum\Filters\EmailFilter;
-use Laravolt\Epicentrum\Filters\RegisteredFilter;
-use Laravolt\Epicentrum\Filters\RoleFilter;
-use Laravolt\Epicentrum\Filters\StatusFilter;
 use Laravolt\Ui\TableView;
 
 class DefinitionTable extends TableView
