@@ -71,6 +71,7 @@
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
             "Laravolt\\Thunderclap\\": "packages/thunderclap/src",
+            "Laravolt\\Workflow\\": "packages/workflow/src",
             "Laravolt\\": "src"
         }
     },
@@ -97,6 +98,7 @@
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
                 "Laravolt\\Platform\\Providers\\UiServiceProvider",
                 "Laravolt\\SemanticForm\\ServiceProvider",
+                "Laravolt\\Workflow\\WorkflowServiceProvider",
                 "Laravolt\\Mailkeeper\\ServiceProvider"
             ],
             "aliases": {

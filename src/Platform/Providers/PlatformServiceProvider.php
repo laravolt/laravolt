@@ -106,7 +106,13 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootViews(): self
     {
-        $this->loadViewsFrom(platform_path('resources/views'), 'laravolt');
+        $this->loadViewsFrom(
+            [
+                platform_path('resources/views'),
+                platform_path('packages/workflow/resources/views')
+            ],
+            'laravolt'
+        );
 
         $this->publishes(
             [platform_path('resources/views') => base_path('resources/views/vendor/laravolt')],
@@ -183,9 +189,14 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootMenu()
     {
-        $menu = platform_path('config/menu/system.php');
-        $this->mergeConfigFrom($menu, 'laravolt.menu.system');
-        $this->publishes([$menu => config_path('laravolt/menu/system.php')], ['laravolt-config', 'config']);
+        $keys = ['system', 'workflow'];
+        $publishes = [];
+        foreach ($keys as $key) {
+            $menu = platform_path("config/menu/$key.php");
+            $this->mergeConfigFrom($menu, "laravolt.menu.$key");
+            $publishes[$menu] = config_path("laravolt/menu/$key.php");
+        }
+        $this->publishes($publishes, ['laravolt-config', 'config']);
 
         return $this;
     }

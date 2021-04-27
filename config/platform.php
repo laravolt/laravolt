@@ -12,6 +12,7 @@ return [
         'registration' => true,
         'verification' => true,
         'captcha' => false,
+        'workflow' => true,
     ],
     'settings' => [
         [

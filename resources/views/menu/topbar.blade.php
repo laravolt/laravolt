@@ -6,12 +6,6 @@
     <div class="menu p-l-2" id="titlebar">
         <div class="left menu">
             <div class="item">
-                <img
-                        style="height: 25px"
-                        class="ui image m-r-1"
-                        src="{{ config('laravolt.ui.brand_image') }}"
-                        alt=""
-                >
                 {{ config('laravolt.ui.brand_name') }}
                 <x-laravolt::label>@version('compact')</x-laravolt::label>
             </div>

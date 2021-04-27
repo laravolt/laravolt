@@ -10,10 +10,8 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
-use Laravolt\Livewire\Table;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
-use Livewire\Livewire;
 
 /**
  * Class PackageServiceProvider.
@@ -67,7 +65,6 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this
             ->bootViews()
-            ->registerLivewireComponent()
             ->buildMenuFromConfig();
     }
 
@@ -185,12 +182,5 @@ class UiServiceProvider extends BaseServiceProvider
                 }
             }
         );
-    }
-
-    private function registerLivewireComponent(): self
-    {
-        Livewire::component('table', Table::class);
-
-        return $this;
     }
 }
