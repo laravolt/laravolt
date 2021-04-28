@@ -20,7 +20,7 @@ class DefinitionController extends Controller
     {
         $definitions = ProcessDefinitionClient::get(['latestVersion' => true]);
         $importedDefinitions = ProcessDefinition::pluck('id')->toArray();
-        $definitions = collect($definitions)->reject(fn($item) => in_array($item->id, $importedDefinitions));
+        $definitions = collect($definitions)->reject(fn ($item) => in_array($item->id, $importedDefinitions));
 
         return view('laravolt::workflow.definition.create', compact('definitions'));
     }

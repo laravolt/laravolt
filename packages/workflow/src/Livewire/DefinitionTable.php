@@ -2,8 +2,6 @@
 
 namespace Laravolt\Workflow\Livewire;
 
-use Laravolt\Platform\Components\LinkButton;
-use Laravolt\Suitable\Columns\Button;
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
