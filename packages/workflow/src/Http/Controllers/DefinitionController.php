@@ -29,7 +29,7 @@ class DefinitionController extends Controller
     {
         $definition = ProcessDefinitionClient::find(id: $request->id);
 
-        \Laravolt\Workflow\Models\ProcessDefinition::create(
+        ProcessDefinition::create(
             [
                 'id' => $definition->id,
                 'name' => $definition->name,
@@ -39,6 +39,13 @@ class DefinitionController extends Controller
         );
 
         return redirect()->route('workflow::definitions.index')->with('success', 'BPMN added');
+    }
+
+    public function show(string $key): View
+    {
+        $definition = ProcessDefinition::where('key', $key)->firstOrFail();
+
+        return view('laravolt::workflow.definition.show', compact('definition'));
     }
 
     public function destroy(string $id): RedirectResponse

@@ -2,8 +2,10 @@
 
 namespace Laravolt\Workflow\Livewire;
 
+use Laravolt\Platform\Components\LinkButton;
 use Laravolt\Suitable\Columns\Button;
 use Laravolt\Suitable\Columns\Numbering;
+use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Ui\TableView;
@@ -25,8 +27,17 @@ class DefinitionTable extends TableView
     {
         return [
             Numbering::make('No'),
+            Raw::make(
+                function ($item) {
+                    return sprintf(
+                        '<a themed href="%s">%s</a>',
+                        route('workflow::definitions.show', $item->key),
+                        $item->key
+                    );
+                },
+                'Key'
+            ),
             Text::make('name', 'Name')->sortable(),
-            Text::make('key', 'Key')->sortable(),
             Text::make('version', 'Version')->sortable(),
             RestfulButton::make('workflow::definitions', '')->only('delete'),
         ];

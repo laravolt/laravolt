@@ -3,6 +3,7 @@
 namespace Laravolt\Workflow\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravolt\Suitable\AutoSort;
 
 class ProcessDefinition extends Model
@@ -16,4 +17,9 @@ class ProcessDefinition extends Model
     protected $keyType = 'string';
 
     protected $guarded = [];
+
+    public function getPresentTitleAttribute()
+    {
+        return Str::of($this->name ?? $this->key)->title()->replace('_', ' ');
+    }
 }
