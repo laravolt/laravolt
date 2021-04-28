@@ -2,8 +2,8 @@
 
 namespace Laravolt\Workflow;
 
-use Laravolt\Workflow\Livewire\DefinitionTable;
 use Laravolt\Support\Base\BaseServiceProvider;
+use Laravolt\Workflow\Livewire\DefinitionTable;
 use Livewire\Livewire;
 
 class WorkflowServiceProvider extends BaseServiceProvider
