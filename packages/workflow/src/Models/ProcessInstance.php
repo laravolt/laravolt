@@ -23,6 +23,6 @@ class ProcessInstance extends Model
 
     public function getPermalinkAttribute()
     {
-        return route("workflow::instances.show", $this->id);
+        return route('workflow::instances.show', $this->id);
     }
 }

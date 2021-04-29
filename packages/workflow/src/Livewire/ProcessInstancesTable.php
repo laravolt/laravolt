@@ -2,7 +2,6 @@
 
 namespace Laravolt\Workflow\Livewire;
 
-use Laravolt\Platform\Components\LinkButton;
 use Laravolt\Suitable\Columns\Button;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\Text;
@@ -26,7 +25,7 @@ class ProcessInstancesTable extends TableView
     {
         return [
             Text::make('id', 'ID')->sortable(),
-            Raw::make(fn($item) => $item->variables->get('full_name')->value, 'Nama'),
+            Raw::make(fn ($item) => $item->variables->get('full_name')->value, 'Nama'),
             Raw::make(function ($item) {
                 return $item->tasks->pluck('taskDefinitionKey');
             }),

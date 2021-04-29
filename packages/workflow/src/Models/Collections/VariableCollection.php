@@ -5,14 +5,13 @@ namespace Laravolt\Workflow\Models\Collections;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
-use Laravolt\Camunda\Dto\Task;
 use Laravolt\Camunda\Dto\Variable;
 
 class VariableCollection extends Collection implements Castable
 {
     public static function castUsing(array $arguments)
     {
-        return new class implements CastsAttributes {
+        return new class() implements CastsAttributes {
             public function get($model, $key, $value, $attributes)
             {
                 if (isset($attributes[$key])) {
