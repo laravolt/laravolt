@@ -1,6 +1,7 @@
 <?php
 
 use Laravolt\Workflow\Http\Controllers\DefinitionController;
+use Laravolt\Workflow\Http\Controllers\InstancesController;
 
 Route::group(
     [
@@ -10,5 +11,6 @@ Route::group(
     ],
     function () {
         Route::resource('definitions', DefinitionController::class);
+        Route::resource('definitions.instances', InstancesController::class)->shallow();
     }
 );

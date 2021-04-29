@@ -6,6 +6,6 @@
                 :label="__('Back')"/>
     </x-slot>
 
-    @livewire('laravolt::instances-table')
+    //TODO: tampilkan completed tasks dan form user tasks
 
 </x-laravolt::layout.app>
