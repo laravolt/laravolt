@@ -29,7 +29,7 @@ class TaskCollection extends Collection implements Castable
 
             public function set($model, $key, $value, $attributes)
             {
-                return [$key => json_encode($value->toArray())];
+                return [$key => json_encode(optional($value)->toArray() ?? [])];
             }
         };
     }

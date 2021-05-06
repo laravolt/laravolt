@@ -26,7 +26,7 @@ class ProcessInstancesTable extends TableView
     {
         return [
             Text::make('id', 'ID')->sortable(),
-            Raw::make(fn($item) => $item->variables->get('full_name')->value, 'Nama'),
+            Raw::make(fn($item) => $item->variables->getValue('full_name', '-'), 'Nama'),
             Raw::make(function ($item) {
                 return $item->tasks->pluck('taskDefinitionKey');
             }),
