@@ -6,6 +6,6 @@
                 :label="__('Back')"/>
     </x-slot>
 
-    @livewire('laravolt::instances-table')
+    <livewire:tables.applicant-tables />
 
 </x-laravolt::layout.app>

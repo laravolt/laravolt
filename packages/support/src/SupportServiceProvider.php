@@ -55,7 +55,7 @@ class SupportServiceProvider extends ServiceProvider
                         function (EloquentBuilder $query) use ($attribute, $searchTerm) {
                             $table = $query->getModel()->getTable();
                             if (Str::contains($attribute, '->')) {
-                                $query->orWhere($attribute, 'like', "%$searchTerm%");
+                                $query->orWhere($attribute, 'ilike', "%$searchTerm%");
                             } else {
                                 $query->orWhereRaw(sprintf(
                                     "LOWER(%s.%s) LIKE '%%%s%%'",

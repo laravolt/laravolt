@@ -9,14 +9,11 @@ use Laravolt\Workflow\Models\ProcessInstance;
 
 class InstancesController
 {
-    public function show(ProcessInstance $instance): View
+    public function index(string $module): View
     {
-        request()->all()
-        $definition = ProcessDefinition::where('key', $instance->definition_key)->firstOrFail();
-        $completedTasks = ProcessInstanceClient::completedTasks($instance->id);
-        $tasks = ProcessInstanceClient::tasks($instance->id);
-        dd($tasks, $completedTasks);
+        $config = config("laravolt.workflow-modules.$module");
+        $definition = ProcessDefinition::where('key', $config['process_definition_key'])->firstOrFail();
 
-        return view('laravolt::workflow.instances.show', compact('instance', 'definition'));
+        return view('laravolt::workflow.instances.index', compact('definition'));
     }
 }

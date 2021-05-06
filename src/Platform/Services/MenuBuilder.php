@@ -50,6 +50,7 @@ class MenuBuilder
     public function loadArray(array $menu)
     {
         $order = null;
+        $menu = collect($menu)->reject(fn ($item) => !($item['menu'] ?? null));
         foreach ($menu as $title => $option) {
             if ($order === null) {
                 $order = $option['order'] ?? 50;
@@ -89,7 +90,7 @@ class MenuBuilder
                 continue;
             }
 
-            if (!isset($option['menu'])) {
+            if (! isset($option['menu'])) {
                 $menu = $parent->add($name, $this->generateUrl($option));
                 if (isset($option['active'])) {
                     $menu->active($option['active']);

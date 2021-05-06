@@ -11,6 +11,7 @@ Route::group(
     ],
     function () {
         Route::resource('definitions', DefinitionController::class);
-        Route::resource('definitions.instances', InstancesController::class)->shallow();
+        // Route::resource('definitions.instances', InstancesController::class)->shallow();
+        Route::resource('module.instances', InstancesController::class);
     }
 );
