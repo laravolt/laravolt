@@ -17,6 +17,8 @@ class Module extends DataTransferObject
 
     public string $table;
 
+    public array $tasks;
+
     /**
      * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
      */
@@ -36,5 +38,13 @@ class Module extends DataTransferObject
             ->toArray();
 
         return new self(['id' => $id] + $config);
+    }
+
+    public function startForm(): string
+    {
+        $startForm = array_key_first($this->tasks);
+        $schema = config("laravolt.workflow-forms.{$this->id}.$startForm");
+
+        return form()->make($schema)->render();
     }
 }

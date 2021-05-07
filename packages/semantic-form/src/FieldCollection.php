@@ -22,13 +22,15 @@ class FieldCollection extends Collection
 
     public function __construct($fields = [])
     {
-        foreach ($fields as $field) {
+        foreach ($fields as $key => $field) {
             if (is_string($field)) {
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
             }
 
-            $field = $field + ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
-            $this->put($field['name'], $this->createField($field));
+            $fieldName = is_string($key) ? $key: $field['name'];
+
+            $field += ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
+            $this->put($fieldName, $this->createField($field));
         }
     }
 
@@ -71,6 +73,7 @@ class FieldCollection extends Collection
                 }
                 break;
 
+            case 'boolean':
             case 'checkbox':
                 $element = form()
                     ->checkbox($field['name'])
