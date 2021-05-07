@@ -3,7 +3,6 @@
 namespace Laravolt\Workflow\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Laravolt\Workflow\Models\ProcessDefinition;
 use Laravolt\Workflow\Models\ProcessInstance;
 use Laravolt\Workflow\Values\Module;
 
