@@ -29,4 +29,9 @@ class InstancesController
 
         return view('laravolt::workflow.instances.create', compact('module'));
     }
+
+    public function store(string $module)
+    {
+        dd(request()->all());
+    }
 }

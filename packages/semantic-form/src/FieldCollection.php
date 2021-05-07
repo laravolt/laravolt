@@ -27,10 +27,10 @@ class FieldCollection extends Collection
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
             }
 
-            $fieldName = is_string($key) ? $key: $field['name'];
+            $field['name'] = $field['name'] ?? $key;
 
             $field += ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
-            $this->put($fieldName, $this->createField($field));
+            $this->put($field['name'], $this->createField($field));
         }
     }
 
