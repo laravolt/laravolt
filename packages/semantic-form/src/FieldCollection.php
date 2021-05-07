@@ -27,7 +27,7 @@ class FieldCollection extends Collection
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
             }
 
-            $field['name'] = $field['name'] ?? $key;
+            $field['name'] ??= $key;
 
             $field += ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
             $this->put($field['name'], $this->createField($field));
