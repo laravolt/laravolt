@@ -24,7 +24,12 @@ class Button extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        $url = data_get($cell, $this->field);
+        if ($this->field instanceof \Closure) {
+            $url = call_user_func($this->field, $cell);
+        } else {
+            $url = data_get($cell, $this->field);
+        }
+
         if ($url) {
             $url = url($url);
         }

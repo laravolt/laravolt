@@ -1,9 +1,9 @@
-<x-laravolt::layout.app :title="$definition->present_title">
+<x-laravolt::layout.app :title="$module->name">
     <x-slot name="actions">
         <x-laravolt::link-button
-                :url="route('workflow::definitions.index')"
-                icon="left arrow"
-                :label="__('Back')"/>
+                :url="route('workflow::module.instances.create', [$module->id])"
+                icon="plus"
+                :label="__('New')"/>
     </x-slot>
 
     <livewire:tables.applicant-tables />

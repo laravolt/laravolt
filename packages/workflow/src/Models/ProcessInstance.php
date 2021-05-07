@@ -21,8 +21,8 @@ class ProcessInstance extends Model
         'variables' => VariableCollection::class,
     ];
 
-    public function getPermalinkAttribute()
+    public function definition()
     {
-        return route('workflow::instances.show', $this->id);
+        return $this->belongsTo(ProcessDefinition::class, 'definition_id');
     }
 }
