@@ -3,7 +3,6 @@
 namespace Laravolt\Workflow\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Laravolt\Suitable\AutoSort;
 
 class ProcessDefinition extends Model

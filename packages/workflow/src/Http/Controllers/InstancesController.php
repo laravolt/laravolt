@@ -4,8 +4,8 @@ namespace Laravolt\Workflow\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Laravolt\Workflow\Entities\Form;
-use Laravolt\Workflow\Models\ProcessInstance;
 use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Models\ProcessInstance;
 use Laravolt\Workflow\WorkflowService;
 
 class InstancesController

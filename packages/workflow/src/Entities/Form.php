@@ -11,7 +11,7 @@ class Form extends DataTransferObject
 {
     public array $schema;
 
-    public array|null $data;
+    public array | null $data;
 
     public function toCamundaVariables()
     {
