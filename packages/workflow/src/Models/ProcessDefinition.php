@@ -18,8 +18,24 @@ class ProcessDefinition extends Model
 
     protected $guarded = [];
 
-    public function getPresentTitleAttribute()
+    /**
+     * @throws \Throwable
+     */
+    public static function importFromCamunda(array $definitions)
     {
-        return Str::of($this->name ?? $this->key)->title()->replace('_', ' ');
+        \DB::transaction(
+            function () use ($definitions) {
+                foreach ($definitions as $definition) {
+                    self::create(
+                        [
+                            'id' => $definition->id,
+                            'name' => $definition->name,
+                            'key' => $definition->key,
+                            'version' => $definition->version,
+                        ]
+                    );
+                }
+            }
+        );
     }
 }

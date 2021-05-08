@@ -6,6 +6,8 @@
                 :label="__('Back')"/>
     </x-slot>
 
-    //TODO: tampilkan completed tasks dan form user tasks
+    {!! form()->open() !!}
+{{--    {!! form()->make(config('workflow-forms.proc_rekrutmen'))->display() !!}--}}
+    {!! form()->close() !!}
 
 </x-laravolt::layout.app>

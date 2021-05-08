@@ -12,7 +12,7 @@
                 <div class="item">
                     <div class="right floated content">
                         {!! form()->post(route('workflow::definitions.store')) !!}
-                        {!! form()->hidden('id', $definition->id) !!}
+                        {!! form()->hidden('key', $definition->key) !!}
                         <x-laravolt::button class="small secondary">{{ __('Add') }}</x-laravolt::button>
                         {!! form()->close() !!}
                     </div>

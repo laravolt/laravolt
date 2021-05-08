@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\Workflow\Values;
+namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Support\Str;
 use Spatie\DataTransferObject\Attributes\Strict;
@@ -40,11 +40,15 @@ class Module extends DataTransferObject
         return new self(['id' => $id] + $config);
     }
 
-    public function startForm(): string
+    public function startFormSchema(): array
     {
         $startForm = array_key_first($this->tasks);
-        $schema = config("laravolt.workflow-forms.{$this->id}.$startForm");
 
-        return form()->make($schema)->render();
+        return config("laravolt.workflow-forms.{$this->id}.$startForm");
+    }
+
+    public function startForm(): string
+    {
+        return form()->make($this->startFormSchema())->render();
     }
 }

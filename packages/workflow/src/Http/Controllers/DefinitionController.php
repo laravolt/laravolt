@@ -27,16 +27,7 @@ class DefinitionController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $definition = ProcessDefinitionClient::find(id: $request->id);
-
-        ProcessDefinition::create(
-            [
-                'id' => $definition->id,
-                'name' => $definition->name,
-                'key' => $definition->key,
-                'version' => $definition->version,
-            ]
-        );
+        ProcessDefinition::importFromCamunda(ProcessDefinitionClient::get($request->only('key')));
 
         return redirect()->route('workflow::definitions.index')->with('success', 'BPMN added');
     }

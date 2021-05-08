@@ -3,8 +3,10 @@
 namespace Laravolt\Workflow\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
+use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Models\ProcessInstance;
-use Laravolt\Workflow\Values\Module;
+use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\WorkflowService;
 
 class InstancesController
 {
@@ -32,6 +34,8 @@ class InstancesController
 
     public function store(string $module)
     {
-        dd(request()->all());
+        $module = Module::make($module);
+        $form = new Form(schema: $module->startFormSchema(), data: request()->all());
+        app(WorkflowService::class)->start($module, $form);
     }
 }
