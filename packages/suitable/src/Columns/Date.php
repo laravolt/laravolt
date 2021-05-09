@@ -25,7 +25,7 @@ class Date extends Column implements ColumnInterface
                 ->locale(config('app.locale'))
                 ->setTimezone($this->timezone)
                 ->isoFormat($this->format);
-        } catch (\InvalidArgumentException $e) { 
+        } catch (\InvalidArgumentException $e) {
             try {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $field)
                     ->locale(config('app.locale'))
