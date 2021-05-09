@@ -21,10 +21,14 @@ class Date extends Column implements ColumnInterface
         $field = $cell->{$this->field};
 
         try {
-            return Carbon::createFromFormat('Y-m-d', $field)->setTimezone($this->timezone)->isoFormat($this->format);
-        } catch (\InvalidArgumentException $e) {
+            return Carbon::createFromFormat('Y-m-d', $field)
+                ->locale(config('app.locale'))
+                ->setTimezone($this->timezone)
+                ->isoFormat($this->format);
+        } catch (\InvalidArgumentException $e) { 
             try {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $field)
+                    ->locale(config('app.locale'))
                     ->setTimezone($this->timezone)
                     ->isoFormat($this->format);
             } catch (\InvalidArgumentException $e) {

@@ -3,8 +3,10 @@
 namespace Laravolt\Workflow;
 
 use Laravolt\Camunda\Http\ProcessDefinitionClient;
+use Laravolt\Camunda\Http\ProcessInstanceClient;
 use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Models\ProcessInstance;
 
 class WorkflowService
 {
@@ -15,14 +17,14 @@ class WorkflowService
     {
     }
 
-    public function start(Module $module, Form $form)
+    public function start(Module $module, array $data): ProcessInstance
     {
-        $data = $form->toCamundaVariables();
-        $instance = ProcessDefinitionClient::start(key: $module->processDefinitionKey, variables: $data);
-        dd($instance);
-        //TODO 1: format $data agar compatible untuk disimpan di DB dan dikirim ke Camunda REST
-        //TODO 2: start instance via REST
-        //TODO 3: simpan variables ke DB wf_process_instances
-        //TODO 4: trigger events PROCESS_STARTED
+        $form = new Form(schema: $module->startFormSchema(), data: $data);
+        $instance = ProcessDefinitionClient::start(
+            key: $module->processDefinitionKey,
+            variables: $form->toCamundaVariables()
+        );
+
+        return ProcessInstance::sync($instance);
     }
 }

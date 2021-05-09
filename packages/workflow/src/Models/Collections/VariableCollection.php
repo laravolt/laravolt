@@ -14,6 +14,11 @@ class VariableCollection extends Collection implements Castable
         return $this->offsetExists($key) ? $this->get($key)->value : $default;
     }
 
+    public function toArray()
+    {
+        return $this->map(fn (Variable $var) => $var->value)->all();
+    }
+
     public static function castUsing(array $arguments)
     {
         return new class() implements CastsAttributes {
@@ -22,9 +27,9 @@ class VariableCollection extends Collection implements Castable
                 if (isset($attributes[$key])) {
                     $variables = json_decode($attributes[$key], true);
                     $collection = new VariableCollection();
-                    foreach ($variables as $key => $variable) {
+                    foreach ($variables as $name => $variable) {
                         $collection->offsetSet(
-                            $variable['name'] ?? $key,
+                            $variable['name'] ?? $name,
                             new Variable(
                                 name: $variable['name'] ?? null,
                                 type: $variable['type'] ?? null,

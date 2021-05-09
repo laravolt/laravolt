@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
+use Laravolt\SemanticForm\Elements\Checkbox;
 use Laravolt\SemanticForm\Elements\FormControl;
 use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\Segments;
@@ -221,7 +222,11 @@ class FieldCollection extends Collection
     {
         foreach ($values as $key => $value) {
             if (($element = $this->get($key)) !== null) {
-                $element->value($value);
+                if ($element instanceof Checkbox) {
+                    $element->setChecked($value);
+                } else {
+                    $element->value($value);
+                }
             }
         }
 
