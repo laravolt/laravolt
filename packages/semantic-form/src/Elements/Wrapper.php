@@ -32,7 +32,6 @@ class Wrapper extends Element
             if ($control = $element->getPrimaryControl()) {
                 $field->addClass($control->fieldWidth);
             }
-
             return $field->render();
         }
 

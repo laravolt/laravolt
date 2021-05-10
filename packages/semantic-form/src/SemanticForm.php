@@ -430,13 +430,13 @@ class SemanticForm
         return $radioGroup;
     }
 
-    public function boolean(string $name, array $options = [])
+    public function boolean(string $name, array $options = [], $checked = null)
     {
         if (empty($options)) {
             $options = [0 => 'Tidak', 1 => 'Ya'];
         }
 
-        return $this->radioGroup($name, $options)->inline();
+        return $this->radioGroup($name, $options, $checked)->inline();
     }
 
     public function button($value, $name = null)

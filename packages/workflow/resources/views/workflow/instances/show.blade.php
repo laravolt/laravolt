@@ -21,7 +21,7 @@
         {!! form()->put(route('workflow::module.tasks.update', [$module->id, $task->id]))->horizontal() !!}
         {!! form()->hidden('_task_definition_key', $task->taskDefinitionKey) !!}
         {!! form()->make(config("laravolt.workflow-forms.{$module->id}.{$task->taskDefinitionKey}"))->render() !!}
-        {!! form()->submit(__('Submit')) !!}
+        {!! form()->action(form()->submit(__('Submit'))) !!}
         {!! form()->close() !!}
         </x-laravolt::panel>
     @endforeach

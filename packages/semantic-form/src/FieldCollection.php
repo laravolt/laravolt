@@ -119,7 +119,7 @@ class FieldCollection extends Collection
             case 'dropdown':
             case 'dropdownColor':
                 $element = form()
-                    ->{$type}($field['name'], $field['options'] ?? [])
+                    ->{$type}($field['name'], $field['options'] ?? [], $field['value'] ?? null)
                     ->label($field['label'])
                     ->hint($field['hint'])
                     ->inline($field['inline'] ?? false)
