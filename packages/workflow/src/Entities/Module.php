@@ -41,8 +41,9 @@ class Module extends DataTransferObject
     }
 
     /**
-     * @return self[]
      * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     *
+     * @return self[]
      */
     public static function discover(): array
     {
