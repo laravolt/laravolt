@@ -430,6 +430,15 @@ class SemanticForm
         return $radioGroup;
     }
 
+    public function boolean(string $name, array $options = [])
+    {
+        if (empty($options)) {
+            $options = [0 => 'Tidak', 1 => 'Ya'];
+        }
+
+        return $this->radioGroup($name, $options)->inline();
+    }
+
     public function button($value, $name = null)
     {
         return new Button($value, $name);

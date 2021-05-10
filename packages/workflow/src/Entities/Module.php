@@ -40,6 +40,20 @@ class Module extends DataTransferObject
         return new self(['id' => $id] + $config);
     }
 
+    /**
+     * @return self[]
+     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
+     */
+    public static function discover(): array
+    {
+        $modules = [];
+        foreach (config('laravolt.workflow-modules') as $id => $config) {
+            $modules[] = self::make($id);
+        }
+
+        return $modules;
+    }
+
     public function startFormSchema(): array
     {
         $startForm = array_key_first($this->tasks);
@@ -50,5 +64,10 @@ class Module extends DataTransferObject
     public function startForm(): string
     {
         return form()->make($this->startFormSchema())->render();
+    }
+
+    public function formSchema(string $taskDefinitionKey)
+    {
+        return config("laravolt.workflow-forms.{$this->id}.$taskDefinitionKey");
     }
 }

@@ -1,12 +1,10 @@
-<x-laravolt::layout.app :title="$module->name">
+<x-laravolt::layout.app :title="$instance->variables->getValue('full_name')">
     <x-slot name="actions">
         <x-laravolt::link-button
                 :url="route('workflow::module.instances.index', $module->id)"
                 icon="left arrow"
                 :label="__('Back')"/>
     </x-slot>
-
-    {!! form()->open()->horizontal() !!}
 
     <x-laravolt::panel title="Start">
         {!! form()->make($module->startFormSchema())->bindValues($variables)->display() !!}
@@ -17,6 +15,15 @@
             {!! form()->make(config("laravolt.workflow-forms.{$module->id}.{$completedTask->taskDefinitionKey}"))->bindValues($variables)->display() !!}
         </x-laravolt::panel>
     @endforeach
-    {!! form()->close() !!}
+
+    @foreach($openTasks as $task)
+        <x-laravolt::panel :title="$task->name">
+        {!! form()->put(route('workflow::module.tasks.update', [$module->id, $task->id]))->horizontal() !!}
+        {!! form()->hidden('_task_definition_key', $task->taskDefinitionKey) !!}
+        {!! form()->make(config("laravolt.workflow-forms.{$module->id}.{$task->taskDefinitionKey}"))->render() !!}
+        {!! form()->submit(__('Submit')) !!}
+        {!! form()->close() !!}
+        </x-laravolt::panel>
+    @endforeach
 
 </x-laravolt::layout.app>

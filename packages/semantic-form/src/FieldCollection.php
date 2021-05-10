@@ -74,7 +74,6 @@ class FieldCollection extends Collection
                 }
                 break;
 
-            case 'boolean':
             case 'checkbox':
                 $element = form()
                     ->checkbox($field['name'])
@@ -114,6 +113,7 @@ class FieldCollection extends Collection
                 $element->source($field['data'] ?? []);
                 break;
 
+            case 'boolean':
             case 'checkboxGroup':
             case 'radioGroup':
             case 'dropdown':

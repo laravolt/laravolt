@@ -4,7 +4,6 @@ namespace Laravolt\Workflow\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Laravolt\Camunda\Http\ProcessInstanceClient;
-use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\ProcessInstance;
 use Laravolt\Workflow\WorkflowService;
@@ -24,9 +23,10 @@ class InstancesController
         $instance = ProcessInstance::findOrFail($id);
         $definition = $instance->definition;
         $completedTasks = ProcessInstanceClient::completedTasks($id);
+        $openTasks = ProcessInstanceClient::tasks($id);
         $variables = $instance->variables->toArray();
 
-        return view('laravolt::workflow.instances.show', compact('instance', 'definition', 'module', 'completedTasks', 'variables'));
+        return view('laravolt::workflow.instances.show', compact('instance', 'definition', 'module', 'openTasks', 'completedTasks', 'variables'));
     }
 
     public function create(string $module): View

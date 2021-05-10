@@ -8,11 +8,10 @@ use Carbon\Carbon;
 
 class DateFormatter
 {
+    private string $format = 'YYYY-MM-DD\THH:MM:SS.SSSZZ';
+
     public function __invoke($key, $value)
     {
-        // $format = 'YYYY-MM-DD\THH:MM:SS.SSSZZ';
-        $format = 'DD-MM-YYYY';
-
-        return ['value' => Carbon::parse($value)->format('d-m-Y'), 'type' => 'String'];
+        return ['value' => Carbon::parse($value)->isoFormat($this->format), 'type' => 'Date'];
     }
 }
