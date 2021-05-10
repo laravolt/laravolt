@@ -170,10 +170,13 @@ $widths: (
     > .required.field > .checkbox:after, .required.field > label:after {
       position: absolute;
     }
-    .pushed {
-      flex-basis: 100%;
-      margin-left: calc(#{$labelWidth} + #{$labelMargin});
-    }
   }
+
+  // Align action button and single checkbox with others field
+  .pushed, > .field > .ui.checkbox {
+    flex-basis: 100%;
+    margin-left: calc(#{$labelWidth} + #{$labelMargin});
+  }
+
 }
 
