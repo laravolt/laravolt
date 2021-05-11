@@ -2,8 +2,6 @@
 
 namespace Laravolt\Suitable\Columns;
 
-use Illuminate\Contracts\Pagination\Paginator;
-
 class MultipleValues extends Column implements ColumnInterface
 {
     protected $headerAttributes = ['class' => ''];
@@ -16,6 +14,6 @@ class MultipleValues extends Column implements ColumnInterface
 
         return collect(data_get($cell, $this->field, []))
             ->transform(fn ($item) => "<div class='ui label $color'>$item</div>")
-            ->implode(" ");
+            ->implode(' ');
     }
 }

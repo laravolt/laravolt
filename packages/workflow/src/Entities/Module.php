@@ -47,7 +47,6 @@ class Module extends DataTransferObject
         }
 
         return $module;
-
     }
 
     /**
