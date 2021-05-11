@@ -9,7 +9,7 @@ use Laravolt\Workflow\FieldFormatter\Camunda\CamundaFormatterFactory;
 
 class CamundaFormatter
 {
-    public static function format($data, $schema)
+    public static function format($data, $schema): array
     {
         $formattedData = [];
         foreach ($schema as $name => $field) {

@@ -50,6 +50,8 @@ class SemanticForm
 {
     use Macroable;
 
+    public static $displayNullValueAs = 'N/A';
+
     private $oldInput;
 
     private $errorStore;

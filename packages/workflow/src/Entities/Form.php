@@ -13,8 +13,20 @@ class Form extends DataTransferObject
 
     public array | null $data;
 
-    public function toCamundaVariables()
+    protected $callbacks = [];
+
+    public function toCamundaVariables(): array
     {
-        return CamundaFormatter::format($this->data, $this->schema);
+        $variables = CamundaFormatter::format($this->data, $this->schema);
+        foreach ($this->callbacks as $callback) {
+            $variables = call_user_func($callback, $variables);
+        }
+
+        return $variables;
+    }
+
+    public function modifyVariables(\Closure $callback): void
+    {
+        $this->callbacks[] = $callback;
     }
 }

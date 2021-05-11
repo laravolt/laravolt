@@ -17,6 +17,8 @@ class Module extends DataTransferObject
 
     public string $table;
 
+    public array $subscribers;
+
     public array $tasks;
 
     /**
@@ -37,7 +39,15 @@ class Module extends DataTransferObject
             ->mapWithKeys(fn ($item, $key) => [Str::camel($key) => $item])
             ->toArray();
 
-        return new self(['id' => $id] + $config);
+        $module = new self(['id' => $id] + $config);
+
+        // booting event subscribers
+        foreach ($module->subscribers as $subscriber) {
+            \Event::subscribe($subscriber);
+        }
+
+        return $module;
+
     }
 
     /**

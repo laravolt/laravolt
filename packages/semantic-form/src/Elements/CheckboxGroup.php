@@ -3,6 +3,7 @@
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
+use Laravolt\SemanticForm\SemanticForm;
 
 class CheckboxGroup extends Wrapper
 {
@@ -39,14 +40,23 @@ class CheckboxGroup extends Wrapper
 
     public function displayValue()
     {
-        if (is_string($this->value)) {
-            $option = Arr::get($this->options, $this->value);
-            if (is_array($option) && isset($option['label'])) {
-                return $option['label'];
+        $val = $this->value;
+        if (is_bool($val)) {
+            $val = (int) $val;
+            if ($val) {
+                return '<div class="ui tiny label basic green">Ya</div>';
             }
 
-            return Arr::get($this->options, $this->value);
+            return '<div class="ui tiny label basic red">Tidak</div>';
         }
+
+        if (is_string($val)) {
+            $option = Arr::get($this->options, $val);
+
+            return $option['label'] ?? $option;
+        }
+
+        return SemanticForm::$displayNullValueAs;
     }
 
     public function attributes($attributes)
