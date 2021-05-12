@@ -6,6 +6,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Laravolt\Camunda\Dto\Task;
 use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Models\ProcessInstance;
 
 class TaskSubmitting
 {
@@ -27,11 +28,17 @@ class TaskSubmitting
     public Form $form;
 
     /**
+     * @var \Laravolt\Workflow\Models\ProcessInstance
+     */
+    public ProcessInstance $instance;
+
+    /**
      * TaskSubmitting constructor.
      */
-    public function __construct(Module $module, Task $task, Form $form)
+    public function __construct(Module $module, ProcessInstance $instance, Task $task, Form $form)
     {
         $this->module = $module;
+        $this->instance = $instance;
         $this->task = $task;
         $this->form = $form;
     }

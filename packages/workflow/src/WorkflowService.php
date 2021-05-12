@@ -33,17 +33,18 @@ class WorkflowService
 
     public function submitTask(Module $module, Task $task, array $data)
     {
+        $instance = ProcessInstance::findOrFail($task->processInstanceId);
+
         // Submit to Camunda API
         $formSchema = $module->formSchema($task->taskDefinitionKey);
         $form = new Form(schema: $formSchema, data: $data);
 
         // Dispatch events
-        TaskSubmitting::dispatch($module, $task, $form);
+        TaskSubmitting::dispatch($module, $instance, $task, $form);
 
         $variables = TaskClient::submit($task->id, $form->toCamundaVariables());
 
         // Update local data
-        $instance = ProcessInstance::find($task->processInstanceId);
         $tasks = collect(ProcessInstanceClient::tasks($instance->id))->pluck('taskDefinitionKey');
         $instance->variables = $instance->variables->merge($variables);
         $instance->tasks = $tasks;

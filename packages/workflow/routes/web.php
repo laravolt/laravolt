@@ -3,6 +3,7 @@
 use Laravolt\Workflow\Http\Controllers\DefinitionController;
 use Laravolt\Workflow\Http\Controllers\InstancesController;
 use Laravolt\Workflow\Http\Controllers\TaskController;
+use Laravolt\Workflow\Http\Controllers\DefinitionXmlController;
 
 Route::group(
     [
@@ -12,7 +13,7 @@ Route::group(
     ],
     function () {
         Route::resource('definitions', DefinitionController::class);
-        // Route::resource('definitions.instances', InstancesController::class)->shallow();
+        Route::get('definitions/{definition}/xml', DefinitionXmlController::class)->name('definitions.xml');
         Route::resource('module.instances', InstancesController::class);
         Route::resource('module.tasks', TaskController::class);
     }
