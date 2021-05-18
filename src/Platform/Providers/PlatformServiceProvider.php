@@ -209,9 +209,7 @@ class PlatformServiceProvider extends ServiceProvider
     protected function hasPermissionTable()
     {
         try {
-            $table_permissions_name = app(config('laravolt.epicentrum.models.permission'))->getTable();
-
-            return Schema::hasTable($table_permissions_name);
+            return Schema::hasTable(app(config('laravolt.epicentrum.models.permission'))->getTable());
         } catch (\PDOException $e) {
             return false;
         }
