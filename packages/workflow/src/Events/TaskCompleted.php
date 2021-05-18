@@ -8,7 +8,7 @@ use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\ProcessInstance;
 
-class TaskSubmitting
+class TaskCompleted
 {
     use Dispatchable;
 

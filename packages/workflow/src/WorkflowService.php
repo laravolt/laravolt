@@ -8,7 +8,8 @@ use Laravolt\Camunda\Http\ProcessInstanceClient;
 use Laravolt\Camunda\Http\TaskClient;
 use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Entities\Module;
-use Laravolt\Workflow\Events\TaskSubmitting;
+use Laravolt\Workflow\Events\TaskCompleted;
+use Laravolt\Workflow\Events\TaskCompleting;
 use Laravolt\Workflow\Models\ProcessInstance;
 
 class WorkflowService
@@ -33,14 +34,16 @@ class WorkflowService
 
     public function submitTask(Module $module, Task $task, array $data)
     {
+        // Registering events
+        $module->registerTaskEvents($task);
+
         $instance = ProcessInstance::findOrFail($task->processInstanceId);
 
         // Submit to Camunda API
         $formSchema = $module->formSchema($task->taskDefinitionKey);
         $form = new Form(schema: $formSchema, data: $data);
 
-        // Dispatch events
-        TaskSubmitting::dispatch($module, $instance, $task, $form);
+        TaskCompleting::dispatch($module, $instance, $task, $form);
 
         $variables = TaskClient::submit($task->id, $form->toCamundaVariables());
 
@@ -49,5 +52,7 @@ class WorkflowService
         $instance->variables = $instance->variables->merge($variables);
         $instance->tasks = $tasks;
         $instance->save();
+
+        TaskCompleted::dispatch($module, $instance, $task, $form);
     }
 }
