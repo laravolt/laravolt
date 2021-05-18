@@ -1,9 +1,9 @@
 <?php
 
 use Laravolt\Workflow\Http\Controllers\DefinitionController;
+use Laravolt\Workflow\Http\Controllers\DefinitionXmlController;
 use Laravolt\Workflow\Http\Controllers\InstancesController;
 use Laravolt\Workflow\Http\Controllers\TaskController;
-use Laravolt\Workflow\Http\Controllers\DefinitionXmlController;
 
 Route::group(
     [
