@@ -120,13 +120,19 @@ trait HasRoleAndPermission
         $ids = collect($roles)->transform(function ($role) {
             if (is_numeric($role)) {
                 return (int) $role;
-            } elseif (is_string($role)) {
+            }
+
+            if (is_string($role)) {
                 $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
 
                 return $role->getKey();
-            } elseif ($role instanceof Model) {
+            }
+
+            if ($role instanceof Model) {
                 return $role->getKey();
             }
+
+            return $role;
         })->filter(function ($id) {
             return $id > 0;
         });
