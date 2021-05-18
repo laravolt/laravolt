@@ -2,7 +2,9 @@
 
 namespace Laravolt\Workflow\Entities;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Laravolt\Camunda\Dto\Task;
 use Spatie\DataTransferObject\Attributes\Strict;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -16,8 +18,6 @@ class Module extends DataTransferObject
     public string $name;
 
     public string $table;
-
-    public array $subscribers;
 
     public array $tasks;
 
@@ -39,14 +39,7 @@ class Module extends DataTransferObject
             ->mapWithKeys(fn ($item, $key) => [Str::camel($key) => $item])
             ->toArray();
 
-        $module = new self(['id' => $id] + $config);
-
-        // booting event subscribers
-        foreach ($module->subscribers as $subscriber) {
-            \Event::subscribe($subscriber);
-        }
-
-        return $module;
+        return new self(['id' => $id] + $config);
     }
 
     /**
@@ -76,8 +69,18 @@ class Module extends DataTransferObject
         return form()->make($this->startFormSchema())->render();
     }
 
-    public function formSchema(string $taskDefinitionKey)
+    public function formSchema(string $taskDefinitionKey): array
     {
-        return config("laravolt.workflow-forms.{$this->id}.$taskDefinitionKey");
+        return config("laravolt.workflow-forms.{$this->id}.$taskDefinitionKey", []);
+    }
+
+    public function registerTaskEvents(Task $task): void
+    {
+        $listeners = config("laravolt.workflow-modules.{$this->id}.tasks.$task->taskDefinitionKey.listeners", []);
+        foreach ($listeners as $event => $handlers){
+            foreach ($handlers as $handler) {
+                Event::listen($event, $handler);
+            }
+        }
     }
 }
