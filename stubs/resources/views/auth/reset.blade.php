@@ -1,4 +1,4 @@
-<x-laravolt::layout.auth>
+<x-volt-auth>
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.reset_password')</h3>
 
     {!! form()->open(route('auth::reset.store', $token)) !!}
@@ -14,4 +14,4 @@
     @lang('laravolt::auth.already_registered?')
 
     <a href="{{ route('auth::login.show') }}">@lang('laravolt::auth.login_here')</a>
-</x-laravolt::layout.auth>
+</x-volt-auth>

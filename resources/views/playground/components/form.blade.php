@@ -1,4 +1,4 @@
-<x-laravolt::panel title="Form Fields">
+<x-volt-panel title="Form Fields">
     {!! form()->open(route('platform::dump'))->multipart() !!}
     {!! form()->text('text')->label('Text') !!}
     {!! form()->email('email')->label('Email') !!}
@@ -23,17 +23,17 @@
     {!! form()->redactor('redactor')->label('WYSIWYG (Redactor)') !!}
     {!! form()->submit('Submit') !!}
     {!! form()->close() !!}
-</x-laravolt::panel>
-<x-laravolt::panel title="Field Hints">
+</x-volt-panel>
+<x-volt-panel title="Field Hints">
     {!! form()->get()->horizontal() !!}
     {!! form()->text('field1')->label('Username')->hint('Minimal 6 karakter.')->hint('Hanya boleh huruf dan angka.') !!}
     {!! form()->password('password')->label('Password')->hint('Minimal 8 karakter.')->hint('Harus mengandung huruf, angka, dan karakter aneh.') !!}
     {!! form()->close() !!}
-</x-laravolt::panel>
+</x-volt-panel>
 
 <div class="ui grid equal width">
     <div class="column">
-        <x-laravolt::panel title="Horizontal Form">
+        <x-volt-panel title="Horizontal Form">
             {!! form()->get()->horizontal() !!}
             <h3 class="ui horizontal divider section">Basic Info</h3>
             {!! form()->text('nama')->label('Nama') !!}
@@ -43,10 +43,10 @@
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->action(form()->submit('Simpan')) !!}
             {!! form()->close() !!}
-        </x-laravolt::panel>
+        </x-volt-panel>
     </div>
     <div class="column">
-        <x-laravolt::panel title="Vertical Form">
+        <x-volt-panel title="Vertical Form">
             {!! form()->get() !!}
             <h3 class="ui horizontal divider section">Basic Info</h3>
             {!! form()->text('nama')->label('Nama') !!}
@@ -56,6 +56,6 @@
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->submit('Simpan') !!}
             {!! form()->action(form()->close()) !!}
-        </x-laravolt::panel>
+        </x-volt-panel>
     </div>
 </div>

@@ -1,6 +1,6 @@
-<x-laravolt::layout.app :title="':Module Name:'">
+<x-volt-app :title="':Module Name:'">
     <x-slot name="actions">
-        <x-laravolt::link-button
+        <x-volt-link-button
             :url="route('modules:::module-name:.create')"
             icon="plus"
             :label="__('laravolt::action.add')"
@@ -8,4 +8,4 @@
     </x-slot>
 
     {!! $table !!}
-</x-laravolt::layout.app>
+</x-volt-app>

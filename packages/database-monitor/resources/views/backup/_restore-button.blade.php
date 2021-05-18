@@ -1,6 +1,6 @@
-<x-laravolt::button class="secondary" button-restore-guideline>
+<x-volt-button class="secondary" button-restore-guideline>
     <i class="icon history"></i> Restore
-</x-laravolt::button>
+</x-volt-button>
 
 <div class="ui modal" modal-restore-guideline>
     <i class="close icon"></i>

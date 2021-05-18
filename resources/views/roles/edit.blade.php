@@ -1,10 +1,10 @@
-<x-laravolt::layout.app :title="__('laravolt::label.roles')">
+<x-volt-app :title="__('laravolt::label.roles')">
 
     <x-slot name="actions">
-        <x-laravolt::backlink url="{{ route('epicentrum::roles.index') }}"></x-laravolt::backlink>
+        <x-volt-backlink url="{{ route('epicentrum::roles.index') }}"></x-volt-backlink>
     </x-slot>
 
-    <x-laravolt::panel title="{{ __('laravolt::label.edit_role') }}" icon="user-astronaut">
+    <x-volt-panel title="{{ __('laravolt::label.edit_role') }}" icon="user-astronaut">
         {!! Form::open()->put()->action(route('epicentrum::roles.update', $role['id'])) !!}
         <div class="field required">
             {!! Form::text('name', old('name', $role['name']))->label(trans('laravolt::roles.name')) !!}
@@ -45,18 +45,18 @@
         </table>
 
         <div class="actions">
-            <x-laravolt::button>@lang('laravolt::action.save')</x-laravolt::button>
-            <x-laravolt::link-button url="{{ route('epicentrum::roles.index') }}">
+            <x-volt-button>@lang('laravolt::action.save')</x-volt-button>
+            <x-volt-link-button url="{{ route('epicentrum::roles.index') }}">
                 @lang('laravolt::action.cancel')
-            </x-laravolt::link-button>
+            </x-volt-link-button>
         </div>
 
         {!! Form::close() !!}
-    </x-laravolt::panel>
+    </x-volt-panel>
 
     <div class="ui divider hidden"></div>
 
-    <x-laravolt::panel title="{{ __('laravolt::label.delete_role') }}" icon="exclamation-triangle" icon-class="text-red-500">
+    <x-volt-panel title="{{ __('laravolt::label.delete_role') }}" icon="exclamation-triangle" icon-class="text-red-500">
         <p>@lang('laravolt::message.delete_role_intro', ['count' => $role->users->count()])</p>
 
         {!! Form::open()->delete()->action(route('epicentrum::roles.destroy', $role['id'])) !!}
@@ -66,6 +66,6 @@
             </button>
         </div>
         {!! Form::close() !!}
-    </x-laravolt::panel>
+    </x-volt-panel>
 
-</x-laravolt::layout.app>
+</x-volt-app>

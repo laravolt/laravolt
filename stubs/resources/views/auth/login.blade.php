@@ -1,4 +1,4 @@
-<x-laravolt::layout.auth>
+<x-volt-auth>
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.login')</h3>
 
     {!! form()->open(route('auth::login.store')) !!}
@@ -26,7 +26,7 @@
         </div>
 
         <div class="field action">
-            <x-laravolt::button class="fluid">@lang('laravolt::auth.login')</x-laravolt::button>
+            <x-volt-button class="fluid">@lang('laravolt::auth.login')</x-volt-button>
         </div>
 
         @if(config('laravolt.platform.features.registration'))
@@ -43,4 +43,4 @@
             {!! app('captcha')->renderJs() !!}
         @endif
     @endpush
-</x-laravolt::layout.auth>
+</x-volt-auth>

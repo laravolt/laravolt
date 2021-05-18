@@ -18,6 +18,22 @@ use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeChartCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Components\Backlink;
+use Laravolt\Platform\Components\BrandImage;
+use Laravolt\Platform\Components\Button;
+use Laravolt\Platform\Components\Card;
+use Laravolt\Platform\Components\CardFooter;
+use Laravolt\Platform\Components\Cards;
+use Laravolt\Platform\Components\Icon;
+use Laravolt\Platform\Components\Item;
+use Laravolt\Platform\Components\Label;
+use Laravolt\Platform\Components\Link;
+use Laravolt\Platform\Components\LinkButton;
+use Laravolt\Platform\Components\MediaLibrary;
+use Laravolt\Platform\Components\Panel;
+use Laravolt\Platform\Components\Tab;
+use Laravolt\Platform\Components\TabContent;
+use Laravolt\Platform\Components\Titlebar;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\Password;
 
@@ -60,18 +76,24 @@ class PlatformServiceProvider extends ServiceProvider
     protected function registerServices()
     {
         // Acl
-        $this->app->singleton('laravolt.acl', function ($app) {
-            return new Acl();
-        });
+        $this->app->singleton(
+            'laravolt.acl',
+            function ($app) {
+                return new Acl();
+            }
+        );
 
         // Password
-        $this->app->singleton('laravolt.password', function ($app) {
-            $app['config']['auth.password.email'] = $app['config']['laravolt.password.emails.reset'];
-            $config = $this->app['config']['auth.passwords.users'];
-            $token = $this->createTokenRepository($config);
+        $this->app->singleton(
+            'laravolt.password',
+            function ($app) {
+                $app['config']['auth.password.email'] = $app['config']['laravolt.password.emails.reset'];
+                $config = $this->app['config']['auth.passwords.users'];
+                $token = $this->createTokenRepository($config);
 
-            return new Password($token, $app['mailer'], $app['config']['laravolt.password.emails.new']);
-        });
+                return new Password($token, $app['mailer'], $app['config']['laravolt.password.emails.new']);
+            }
+        );
 
         if (config('laravolt.platform.features.captcha')) {
             $this->app->register('Anhskohbo\NoCaptcha\NoCaptchaServiceProvider');
@@ -80,9 +102,10 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function registerConfig(): self
     {
-        $config = ['epicentrum', 'password', 'platform', 'ui'];
+        $configFiles = \File::files(platform_path('config'));
         $publishes = [];
-        foreach ($config as $c) {
+        foreach ($configFiles as $file) {
+            $c = $file->getBasename('.php');
             $this->mergeConfigFrom(platform_path("config/$c.php"), "laravolt.$c");
             $publishes[platform_path("config/$c.php")] = config_path("laravolt/$c.php");
         }
@@ -143,7 +166,7 @@ class PlatformServiceProvider extends ServiceProvider
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param array $config
+     * @param  array  $config
      *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
@@ -169,18 +192,23 @@ class PlatformServiceProvider extends ServiceProvider
     protected function bootAcl($gate)
     {
         // register wildcard permission
-        \Illuminate\Support\Facades\Gate::before(function (HasRoleAndPermission $user, $ability, $models) {
-            if ($user->hasPermission('*') && empty($models)) {
-                return true;
+        \Illuminate\Support\Facades\Gate::before(
+            function (HasRoleAndPermission $user, $ability, $models) {
+                if ($user->hasPermission('*') && empty($models)) {
+                    return true;
+                }
             }
-        });
+        );
 
         if ($this->hasPermissionTable()) {
             $permissions = app(config('laravolt.epicentrum.models.permission'))->all();
             foreach ($permissions as $permission) {
-                $gate->define($permission->name, function (HasRoleAndPermission $user) use ($permission) {
-                    return $user->hasPermission($permission);
-                });
+                $gate->define(
+                    $permission->name,
+                    function (HasRoleAndPermission $user) use ($permission) {
+                        return $user->hasPermission($permission);
+                    }
+                );
             }
         }
 
@@ -203,7 +231,29 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootComponents()
     {
-        \Blade::componentNamespace('Laravolt\\Platform\\Components', 'laravolt');
+        $components = [
+            'app' => 'laravolt::layout.app',
+            'base' => 'laravolt::layout.base',
+            'auth' => 'laravolt::layout.auth',
+            Backlink::class,
+            BrandImage::class,
+            Button::class,
+            Card::class,
+            CardFooter::class,
+            Cards::class,
+            Icon::class,
+            Item::class,
+            Label::class,
+            Link::class,
+            LinkButton::class,
+            MediaLibrary::class,
+            Panel::class,
+            Tab::class,
+            TabContent::class,
+            Titlebar::class,
+        ];
+
+        $this->loadViewComponentsAs('volt', $components);
     }
 
     protected function hasPermissionTable()

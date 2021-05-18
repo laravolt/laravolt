@@ -1,10 +1,10 @@
-<x-laravolt::panel title="Tab">
-    <x-laravolt::tab>
-        <x-laravolt::tab-content title="Another First" active>Another First</x-laravolt::tab-content>
-        <x-laravolt::tab-content title="Another Second">Another Second</x-laravolt::tab-content>
-    </x-laravolt::tab>
-    <x-laravolt::tab>
-        <x-laravolt::tab-content title="First" active>First</x-laravolt::tab-content>
-        <x-laravolt::tab-content title="Second">Second</x-laravolt::tab-content>
-    </x-laravolt::tab>
-</x-laravolt::panel>
+<x-volt-panel title="Tab">
+    <x-volt-tab>
+        <x-volt-tab-content title="Another First" active>Another First</x-volt-tab-content>
+        <x-volt-tab-content title="Another Second">Another Second</x-volt-tab-content>
+    </x-volt-tab>
+    <x-volt-tab>
+        <x-volt-tab-content title="First" active>First</x-volt-tab-content>
+        <x-volt-tab-content title="Second">Second</x-volt-tab-content>
+    </x-volt-tab>
+</x-volt-panel>

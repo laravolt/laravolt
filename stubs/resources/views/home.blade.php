@@ -1,3 +1,3 @@
-<x-laravolt::layout.app title="Home">
+<x-volt-app title="Home">
 
-</x-laravolt::layout.app>
+</x-volt-app>

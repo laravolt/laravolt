@@ -1,6 +1,6 @@
-<x-laravolt::layout.app title="BPMN Definitions">
+<x-volt-app title="BPMN Definitions">
     <x-slot name="actions">
-        <x-laravolt::link-button
+        <x-volt-link-button
                 :url="route('workflow::definitions.create')"
                 icon="plus"
                 :label="__('laravolt::action.add')"/>
@@ -8,4 +8,4 @@
 
     @livewire('laravolt::definition-table')
 
-</x-laravolt::layout.app>
+</x-volt-app>

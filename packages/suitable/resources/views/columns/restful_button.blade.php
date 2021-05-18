@@ -3,15 +3,15 @@
         <div class="x-restful-buttons ui buttons">
     @endif
             @if($actions->has('view'))
-                <x-laravolt::link-button url="{{ $actions->get('view') }}" icon="eye" class="mini icon secondary"></x-laravolt::link-button>
+                <x-volt-link-button url="{{ $actions->get('view') }}" icon="eye" class="mini icon secondary"></x-volt-link-button>
             @endif
 
             @if($actions->has('edit'))
-                <x-laravolt::link-button url="{{ $actions->get('edit') }}" icon="pencil" class="mini icon secondary"></x-laravolt::link-button>
+                <x-volt-link-button url="{{ $actions->get('edit') }}" icon="pencil" class="mini icon secondary"></x-volt-link-button>
             @endif
 
             @if($actions->has('delete'))
-                <x-laravolt::button form="{{ $key }}" icon="times" class="icon mini secondary" type="submit"></x-laravolt::button>
+                <x-volt-button form="{{ $key }}" icon="times" class="icon mini secondary" type="submit"></x-volt-button>
             @endif
     @if($actions->count() > 1)
         </div>

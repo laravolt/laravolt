@@ -1,6 +1,6 @@
 <div class="ui grid equal width">
     <div class="column">
-        <x-laravolt::panel title="Data Definition">
+        <x-volt-panel title="Data Definition">
             <table class="ui table definition">
                 <caption>Profil</caption>
                 <tbody>
@@ -20,6 +20,6 @@
                 <tr><td>Bio</td><td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto ipsum nisi placeat possimus tenetur. Ad dicta dolores ducimus natus nihil officiis repellat ullam! Facere laboriosam necessitatibus pariatur quae qui rem!</td></tr>
                 </tbody>
             </table>
-        </x-laravolt::panel>
+        </x-volt-panel>
     </div>
 </div>

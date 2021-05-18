@@ -10,10 +10,10 @@
                     {!! $filter->render() !!}
                 @endforeach
             </form>
-            <x-laravolt::button wire:click="resetFilters" type="reset" class="bottom basic fluid attached b-0"
+            <x-volt-button wire:click="resetFilters" type="reset" class="bottom basic fluid attached b-0"
                                 icon="times circle outline">
                 Clear Filter
-            </x-laravolt::button>
+            </x-volt-button>
         </div>
     </div>
 

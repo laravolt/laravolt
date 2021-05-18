@@ -1,4 +1,4 @@
-<x-laravolt::layout.app :title="__('Application Log')">
+<x-volt-app :title="__('Application Log')">
     <x-slot name="actions">
         <div class="ui search selection dropdown">
             <div class="text">{{ basename($selectedFile) }}</div>
@@ -54,4 +54,4 @@
             });
         </script>
     @endpush
-</x-laravolt::layout.app>
+</x-volt-app>

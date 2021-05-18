@@ -6,7 +6,7 @@
             <div class="ui menu secondary borderless m-0 p-0" style="min-height: 0">
                 @if($icon)
                     <div class="panel__icon item p-0 p-l-xs m-0">
-                        <x-laravolt::icon :name="$icon" :class="$iconClass"/>
+                        <x-volt-icon :name="$icon" :class="$iconClass"/>
                     </div>
                 @endif
 

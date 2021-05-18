@@ -1,6 +1,6 @@
-<x-laravolt::panel :title="$this->title()">
+<x-volt-panel :title="$this->title()">
     <div id="{{ $this->key }}"></div>
-</x-laravolt::panel>
+</x-volt-panel>
 
 @push('script')
     @once

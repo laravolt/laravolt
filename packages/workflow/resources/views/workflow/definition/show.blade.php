@@ -1,6 +1,6 @@
-<x-laravolt::layout.app :title="$definition->present_title">
+<x-volt-app :title="$definition->present_title">
     <x-slot name="actions">
-        <x-laravolt::link-button
+        <x-volt-link-button
                 :url="route('workflow::definitions.index')"
                 icon="left arrow"
                 :label="__('Back')"/>
@@ -8,4 +8,4 @@
 
     @livewire('laravolt::instances-table')
 
-</x-laravolt::layout.app>
+</x-volt-app>

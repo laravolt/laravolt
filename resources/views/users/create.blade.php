@@ -1,10 +1,10 @@
-<x-laravolt::layout.app :title="__('laravolt::menu.add_user')">
+<x-volt-app :title="__('laravolt::menu.add_user')">
 
     <x-slot name="actions">
-        <x-laravolt::backlink :url="route('epicentrum::users.index')"/>
+        <x-volt-backlink :url="route('epicentrum::users.index')"/>
     </x-slot>
 
-    <x-laravolt::panel title="Form Tambah Pengguna" icon="user-plus">
+    <x-volt-panel title="Form Tambah Pengguna" icon="user-plus">
         {!! form()->open()->post()->action(route('epicentrum::users.store'))->horizontal() !!}
         {!! form()->text('name')->label(trans('laravolt::users.name'))->required() !!}
         {!! form()->text('email')->label(trans('laravolt::users.email'))->required() !!}
@@ -35,7 +35,7 @@
         {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.cancel'), route('epicentrum::users.index'))) !!}
         {!! form()->close() !!}
 
-    </x-laravolt::panel>
+    </x-volt-panel>
 
     @push('body')
         <script>
@@ -47,6 +47,6 @@
         </script>
     @endpush
 
-</x-laravolt::layout.app>>
+</x-volt-app>>
 
 

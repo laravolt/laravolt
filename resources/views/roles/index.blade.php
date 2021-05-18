@@ -1,7 +1,7 @@
-<x-laravolt::layout.app :title="__('laravolt::label.roles')">
+<x-volt-app :title="__('laravolt::label.roles')">
 
     <x-slot name="actions">
-        <x-laravolt::link-button
+        <x-volt-link-button
                 :url="route('epicentrum::roles.create')"
                 icon="plus"
                 :label="__('laravolt::action.add')"/>
@@ -26,4 +26,4 @@
         </div>
     </div>
 
-</x-laravolt::layout.app>
+</x-volt-app>

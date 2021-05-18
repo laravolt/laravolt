@@ -7,7 +7,7 @@
     {!! form()->submit('Dump') !!}
     {!! form()->text('bar') !!}
     {!! form()->close() !!}
-    <x-laravolt::titlebar title="Article Editor"></x-laravolt::titlebar>
+    <x-volt-titlebar title="Article Editor"></x-volt-titlebar>
 
 
 

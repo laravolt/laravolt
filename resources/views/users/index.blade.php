@@ -1,7 +1,7 @@
-<x-laravolt::layout.app :title="__('laravolt::label.users')">
+<x-volt-app :title="__('laravolt::label.users')">
 
     <x-slot name="actions">
-        <x-laravolt::link-button
+        <x-volt-link-button
                 :url="route('epicentrum::users.create')"
                 icon="plus"
                 :label="__('laravolt::action.add')"/>
@@ -9,4 +9,4 @@
 
     @livewire('laravolt::user-table')
 
-</x-laravolt::layout.app>
+</x-volt-app>

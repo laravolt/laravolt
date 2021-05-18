@@ -7,7 +7,7 @@
         <div class="left menu">
             <div class="item">
                 {{ config('laravolt.ui.brand_name') }}
-                <x-laravolt::label>@version('compact')</x-laravolt::label>
+                <x-volt-label>@version('compact')</x-volt-label>
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
         @auth
             <div class="item">
                 <div class="ui compact menu b-0">
-                    <div class="ui simple dropdown basic button top right pointing b-0 p-x-laravolt::0">
+                    <div class="ui simple dropdown basic button top right pointing b-0 p-x-volt-0">
                         <img src="{{ auth()->user()->avatar }}" alt="" class="ui image avatar">
                         <i class="dropdown icon m-l-0 {{ config('laravolt.ui.color') }}"></i>
                         <div class="menu">

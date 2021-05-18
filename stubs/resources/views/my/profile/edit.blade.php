@@ -1,5 +1,5 @@
-<x-laravolt::layout.app :title="__('Edit Profil')">
-    <x-laravolt::panel title="{{ __('Edit Profil') }}" icon="user-edit">
+<x-volt-app :title="__('Edit Profil')">
+    <x-volt-panel title="{{ __('Edit Profil') }}" icon="user-edit">
         {!! form()->bind($user)->put(route('my::profile.update'))->horizontal() !!}
 
         {!! form()->text('name')->label(__('laravolt::users.name')) !!}
@@ -8,5 +8,5 @@
 
         {!! form()->action(form()->submit(__('laravolt::action.save'))) !!}
         {!! form()->close() !!}
-    </x-laravolt::panel>
-</x-laravolt::layout.app>
+    </x-volt-panel>
+</x-volt-app>

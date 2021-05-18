@@ -1,9 +1,9 @@
-<x-laravolt::layout.app :title="$title">
+<x-volt-app :title="$title">
     <x-slot name="actions">
-        <x-laravolt::link-button :label="__('Tambah')" url="{{ route('lookup::lookup.create', $collection) }}" icon="plus">
-        </x-laravolt::link-button>
+        <x-volt-link-button :label="__('Tambah')" url="{{ route('lookup::lookup.create', $collection) }}" icon="plus">
+        </x-volt-link-button>
     </x-slot>
 
     {!! $table !!}
 
-</x-laravolt::layout.app>
+</x-volt-app>

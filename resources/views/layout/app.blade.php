@@ -1,4 +1,4 @@
-<x-laravolt::layout.base :title="$title">
+<x-volt-base :title="$title">
     <div class="layout--app">
 
         @include('laravolt::menu.topbar')
@@ -26,4 +26,4 @@
             </div>
         </main>
     </div>
-</x-laravolt::layout.base>
+</x-volt-base>

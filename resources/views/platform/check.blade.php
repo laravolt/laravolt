@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="ui container">
-        <x-laravolt::panel title="Form Submission Check">
+        <x-volt-panel title="Form Submission Check">
             {!! form()->post(route('platform::dump'))->multipart() !!}
             {!! form()->uploader('file')->ajax(false)->label('Upload File')->hint('Max file upload detected from php.ini: ' . platform_max_file_upload(true)) !!}
             {!! form()->uploader('files')->ajax(false)->limit(9)->label('Multiple Upload File')->hint('Max file upload detected from php.ini: ' . platform_max_file_upload(true)) !!}
@@ -10,6 +10,6 @@
             {!! form()->textarea('long_content')->label('Long Content')->hint('Beberapa web application firewall membatasi jumlah byte yang bisa dikirim ketika submit form.') !!}
             {!! form()->submit('Test Submit Form') !!}
             {!! form()->close() !!}
-        </x-laravolt::panel>
+        </x-volt-panel>
     </div>
 @endsection

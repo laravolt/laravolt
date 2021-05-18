@@ -1,3 +1,3 @@
-<x-laravolt::panel title="Media Library">
-    <x-laravolt::media-library :collection="auth()->user()->getMedia()" :delete="true"/>
-</x-laravolt::panel>
+<x-volt-panel title="Media Library">
+    <x-volt-media-library :collection="auth()->user()->getMedia()" :delete="true"/>
+</x-volt-panel>

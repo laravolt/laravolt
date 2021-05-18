@@ -1,29 +1,29 @@
-<x-laravolt::panel title="Label">
+<x-volt-panel title="Label">
     <div class="ui horizontal list">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
             <div class="item">
-                <x-laravolt::label :color="'solid '.$color">{{ $color }}</x-laravolt::label>
+                <x-volt-label :color="'solid '.$color">{{ $color }}</x-volt-label>
             </div>
         @endforeach
     </div>
     <div class="ui horizontal list">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
             <div class="item">
-                <x-laravolt::label :color="$color">{{ $color }}</x-laravolt::label>
+                <x-volt-label :color="$color">{{ $color }}</x-volt-label>
             </div>
         @endforeach
     </div>
     <div class="ui horizontal list">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
             <div class="item">
-                <x-laravolt::label :color="'basic '.$color">{{ $color }}</x-laravolt::label>
+                <x-volt-label :color="'basic '.$color">{{ $color }}</x-volt-label>
             </div>
         @endforeach
     </div>
     <div class="ui horizontal list">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
             <div class="item">
-                <x-laravolt::label :color="'circular empty '.$color"></x-laravolt::label>
+                <x-volt-label :color="'circular empty '.$color"></x-volt-label>
             </div>
         @endforeach
     </div>
@@ -31,8 +31,8 @@
     <div class="ui horizontal list">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
             <div class="item">
-                <x-laravolt::label :color="'circular empty basic '.$color"></x-laravolt::label>
+                <x-volt-label :color="'circular empty basic '.$color"></x-volt-label>
             </div>
         @endforeach
     </div>
-</x-laravolt::panel>
+</x-volt-panel>

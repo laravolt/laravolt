@@ -1,9 +1,9 @@
-<x-laravolt::layout.app :title="'Detail :Module Name:'">
-    <x-laravolt::backlink url="{{ route('modules:::module-name:.index') }}"/>
+<x-volt-app :title="'Detail :Module Name:'">
+    <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"/>
 
-    <x-laravolt::panel title="Detil :Module Name:">
+    <x-volt-panel title="Detil :Module Name:">
         <table class="ui table definition">
 :DETAIL_FIELDS:
         </table>
-    </x-laravolt::panel>
-</x-laravolt::layout.app>
+    </x-volt-panel>
+</x-volt-app>

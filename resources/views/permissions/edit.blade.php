@@ -1,6 +1,6 @@
-<x-laravolt::layout.app :title="__('laravolt::label.permissions')">
+<x-volt-app :title="__('laravolt::label.permissions')">
 
-    <x-laravolt::panel title="Atur Deskripsi Hak Akses">
+    <x-volt-panel title="Atur Deskripsi Hak Akses">
         <div class="ui icon message compact">
             <i class="lightbulb outline icon"></i>
             <div class="content">
@@ -29,6 +29,6 @@
 
         {!! form()->close() !!}
 
-    </x-laravolt::panel>
+    </x-volt-panel>
 
-</x-laravolt::layout.app>
+</x-volt-app>

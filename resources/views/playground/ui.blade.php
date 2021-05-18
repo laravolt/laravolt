@@ -1,4 +1,4 @@
-<x-laravolt::layout.app title="Kitchen Sink">
+<x-volt-app title="Kitchen Sink">
 
     @include('laravolt::playground.components.panel')
     <div class="ui divider hidden"></div>
@@ -22,4 +22,4 @@
     <div class="ui divider hidden"></div>
     @include('laravolt::playground.components.media')
 
-</x-laravolt::layout.app>
+</x-volt-app>

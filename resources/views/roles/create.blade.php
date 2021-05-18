@@ -1,10 +1,10 @@
-<x-laravolt::layout.app :title="__('laravolt::label.roles')">
+<x-volt-app :title="__('laravolt::label.roles')">
 
     <x-slot name="actions">
-        <x-laravolt::backlink url="{{ route('epicentrum::roles.index') }}"></x-laravolt::backlink>
+        <x-volt-backlink url="{{ route('epicentrum::roles.index') }}"></x-volt-backlink>
     </x-slot>
 
-    <x-laravolt::panel title="{{ __('laravolt::label.add_role') }}" icon="user-astronaut">
+    <x-volt-panel title="{{ __('laravolt::label.add_role') }}" icon="user-astronaut">
         {!! Form::open()->post()->action(route('epicentrum::roles.store')) !!}
         {!! Form::text('name', old('name'))->label(trans('laravolt::roles.name'))->required() !!}
 
@@ -40,13 +40,13 @@
         <div class="ui divider hidden"></div>
 
         <div class="field action">
-            <x-laravolt::button>@lang('laravolt::action.save')</x-laravolt::button>
-            <x-laravolt::link-button
+            <x-volt-button>@lang('laravolt::action.save')</x-volt-button>
+            <x-volt-link-button
                     url="{{ route('epicentrum::roles.index') }}">@lang('laravolt::action.cancel')
-            </x-laravolt::link-button>
+            </x-volt-link-button>
         </div>
 
         {!! Form::close() !!}
-    </x-laravolt::panel>
+    </x-volt-panel>
 
-</x-laravolt::layout.app>
+</x-volt-app>

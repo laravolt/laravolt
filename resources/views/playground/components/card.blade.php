@@ -8,8 +8,8 @@
     </h2>
 </div>
 
-<x-laravolt::cards>
-    <x-laravolt::card
+<x-volt-cards>
+    <x-volt-card
             meta.before="<i class='icon coins yellow'></i> 100 poin"
             title="Increase confidence with TrustPilot reviews"
             content="Many people also have their own barometers for what makes a cute dog."
@@ -18,26 +18,26 @@
         <x-slot name="body">
             <div class="content">
                 <div class="description">
-                    <x-laravolt::label label="foo" color="theme solid"></x-laravolt::label>
-                    <x-laravolt::label label="bar" color="theme secondary"></x-laravolt::label>
+                    <x-volt-label label="foo" color="theme solid"></x-volt-label>
+                    <x-volt-label label="bar" color="theme secondary"></x-volt-label>
                 </div>
             </div>
         </x-slot>
-        <x-laravolt::card-footer left='<i class="icon check"></i> 121 votes' right="right" />
-    </x-laravolt::card>
-    <x-laravolt::card
+        <x-volt-card-footer left='<i class="icon check"></i> 121 votes' right="right" />
+    </x-volt-card>
+    <x-volt-card
             meta.before="<i class='icon coins yellow'></i> 100 poin"
             title="Increase confidence with TrustPilot reviews"
             content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque culpa distinctio facilis minima neque quas. Consequatur delectus distinctio ducimus expedita minus mollitia odio officia pariatur quod, totam. Cumque, provident."
     >
-        <x-laravolt::card-footer left='<i class="icon check"></i> 121 votes' right="right" />
-    </x-laravolt::card>
-    <x-laravolt::card
+        <x-volt-card-footer left='<i class="icon check"></i> 121 votes' right="right" />
+    </x-volt-card>
+    <x-volt-card
             meta.before="<i class='icon coins yellow'></i> 100 poin"
             title="Increase confidence with TrustPilot reviews"
             content="Many people also have their own barometers for what makes a cute dog."
     >
-        <x-laravolt::card-footer left='<i class="icon check"></i> 121 votes' right="right" />
-    </x-laravolt::card>
-</x-laravolt::cards>
+        <x-volt-card-footer left='<i class="icon check"></i> 121 votes' right="right" />
+    </x-volt-card>
+</x-volt-cards>
 
