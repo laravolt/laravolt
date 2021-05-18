@@ -235,6 +235,7 @@ class PlatformServiceProvider extends ServiceProvider
             'app' => 'laravolt::layout.app',
             'base' => 'laravolt::layout.base',
             'auth' => 'laravolt::layout.auth',
+            'inspire' => 'laravolt::components.inspire',
             Backlink::class,
             BrandImage::class,
             Button::class,
