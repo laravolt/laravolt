@@ -166,7 +166,7 @@ class PlatformServiceProvider extends ServiceProvider
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param  array  $config
+     * @param array $config
      *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
