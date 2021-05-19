@@ -77,7 +77,7 @@ class Module extends DataTransferObject
     public function registerTaskEvents(Task $task): void
     {
         $listeners = config("laravolt.workflow-modules.{$this->id}.tasks.$task->taskDefinitionKey.listeners", []);
-        foreach ($listeners as $event => $handlers){
+        foreach ($listeners as $event => $handlers) {
             foreach ($handlers as $handler) {
                 Event::listen($event, $handler);
             }
