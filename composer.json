@@ -43,7 +43,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "codedungeon/phpunit-result-printer": "^0.30.1",
-        "laravel-shift/blueprint": "^1.23",
+        "laravel-shift/blueprint": "^1.24",
         "laravel/browser-kit-testing": "^6.0",
         "mockery/mockery": "^1.2",
         "orchestra/canvas": "^6.1",
@@ -94,6 +94,7 @@
                 "Laravolt\\Support\\SupportServiceProvider",
                 "Laravolt\\Suitable\\ServiceProvider",
                 "Laravolt\\Lookup\\ServiceProvider",
+                "Laravolt\\Platform\\Providers\\BlueprintAddonServiceProvider",
                 "Laravolt\\Platform\\Providers\\EpicentrumServiceProvider",
                 "Laravolt\\Platform\\Providers\\PlatformServiceProvider",
                 "Laravolt\\Platform\\Providers\\UiServiceProvider",
