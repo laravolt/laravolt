@@ -8,7 +8,7 @@ use DeepCopy\DeepCopy;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class Tabular extends Element
+class Multirow extends Element
 {
     protected $schema = [];
 
@@ -28,14 +28,14 @@ class Tabular extends Element
     {
         $this->name = $name;
 
-        $this->schema = collect($schema)->transform(function ($item) {
+        $this->schema = collect($schema)->transform(function ($item, $name) {
 
             // produce something like "person[data][$index][name]", to make it easier to handling by Laravel Request
-            if (Str::contains($item['name'], '[]')) {
-                $name = Str::before($item['name'], '[]');
+            if (Str::contains($name, '[]')) {
+                $name = Str::before($name, '[]');
                 $item['name'] = "{$this->name}[%s][{$name}][]";
             } else {
-                $item['name'] = "{$this->name}[%s][{$item['name']}]";
+                $item['name'] = "{$this->name}[%s][{$name}]";
             }
 
             return $item;
@@ -75,7 +75,7 @@ class Tabular extends Element
         $data = $this->source;
         $headers = collect(Arr::first($data))->keys();
 
-        return view('semantic-form::tabular.table', compact('data', 'headers'));
+        return view('semantic-form::multirow.table', compact('data', 'headers'));
     }
 
     public function render()
@@ -124,6 +124,6 @@ class Tabular extends Element
             'allowRemoval' => $this->allowRemoval,
         ];
 
-        return view('semantic-form::tabular.form', $payload)->render();
+        return view('semantic-form::multirow.form', $payload)->render();
     }
 }

@@ -30,6 +30,15 @@ class Lookup extends Model
         return $this->belongsTo(self::class, 'parent_key', 'lookup_key');
     }
 
+    public static function createMultiple(array $data, string $category)
+    {
+        \DB::transaction(function () use ($data, $category) {
+            foreach ($data as $lookup) {
+                self::create($lookup + ['category' => $category]);
+            }
+        });
+    }
+
     public static function toDropdown($category)
     {
         return static::query()->whereCategory($category)->pluck('lookup_value', 'lookup_key')->toArray();

@@ -1,4 +1,4 @@
-<x-volt-app :title="$title">
+<x-volt-app :title="$collection">
     <x-slot name="actions">
         <x-volt-backlink url="{{ route('lookup::lookup.index', $collection) }}">Kembali ke Index</x-volt-backlink>
     </x-slot>

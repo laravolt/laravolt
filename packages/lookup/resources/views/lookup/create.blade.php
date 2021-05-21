@@ -6,7 +6,15 @@
 
     <x-volt-panel title="Tambah {{ $config['label'] ?? $collection }}">
         {!! form()->post(route('lookup::lookup.store', $collection)) !!}
-        @include('lookup::lookup._form')
+
+        {!! form()->make($schema)->render() !!}
+
+        {!! form()->action([
+            form()->submit(__('Save')),
+            form()->link(__('Cancel'), route('lookup::lookup.index', $collection))
+        ]) !!}
+
+
         {!! form()->close() !!}
     </x-volt-panel>
 

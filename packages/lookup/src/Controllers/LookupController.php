@@ -28,21 +28,36 @@ class LookupController extends Controller
             ->search(request('search'))
             ->paginate();
 
-        return LookupTableView::make($source)->config($lookup)->view('lookup::lookup.index', compact('collection', 'title'));
+        return LookupTableView::make($source)->config($lookup)->view(
+            'lookup::lookup.index',
+            compact('collection', 'title')
+        );
     }
 
     public function create(string $collection)
     {
         $config = $this->validateCollection($collection);
+        $schema = [
+            'lookup' => [
+                'type' => 'multirow',
+                'rows' => 5,
+                'allow_addition' => true,
+                'allow_removal' => true,
+                'items' => [
+                    'lookup_key' => ['type' => 'text', 'label' => 'Key'],
+                    'lookup_value' => ['type' => 'text', 'label' => 'Value'],
+                ],
+            ],
+        ];
 
-        return view('lookup::lookup.create', compact('collection', 'config'));
+        return view('lookup::lookup.create', compact('collection', 'config', 'schema'));
     }
 
     public function store(string $collection, Store $request)
     {
         $this->validateCollection($collection);
 
-        Lookup::create($request->validated() + ['category' => $collection]);
+        Lookup::createMultiple(\Arr::get($request->validated(), 'lookup'), $collection);
 
         return redirect()->route('lookup::lookup.index', $collection)->withSuccess('Lookup berhasil disimpan');
     }
@@ -72,7 +87,7 @@ class LookupController extends Controller
     protected function validateCollection(string $collection)
     {
         $key = "laravolt.lookup.collections.$collection";
-        if (!config()->has($key)) {
+        if (! config()->has($key)) {
             abort(404);
         }
 

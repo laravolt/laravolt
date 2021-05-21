@@ -98,8 +98,8 @@ class FieldCollection extends Collection
                 $element = form()->{$type}($children);
                 break;
 
-            case 'tabular':
-                $element = form()->tabular($field['name'], $field['items'])->label($field['label'] ?? null);
+            case 'multirow':
+                $element = form()->multirow($field['name'], $field['items'])->label($field['label'] ?? null);
                 if (isset($field['allow_addition'])) {
                     $element->allowAddition($field['allow_addition']);
                 }

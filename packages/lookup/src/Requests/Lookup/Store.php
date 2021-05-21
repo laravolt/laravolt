@@ -17,10 +17,9 @@ class Store extends FormRequest
     {
         return [
             'collection' => [],
-            'parent_key' => [],
-            'lookup_key' => ['required'],
-            'lookup_value' => ['required'],
-            'description' => [],
+            'lookup.parent_key' => [],
+            'lookup.*.lookup_key' => ['required'],
+            'lookup.*.lookup_value' => ['required'],
         ];
     }
 }

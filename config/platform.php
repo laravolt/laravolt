@@ -5,7 +5,7 @@ return [
         'epilog' => false,
         'database-monitor' => false,
         'mailkeeper' => false,
-        'lookup' => false,
+        'lookup' => true,
         'kitchen_sink' => false,
         'turbolinks' => false,
         'quick_switcher' => true,

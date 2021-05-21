@@ -38,7 +38,7 @@ use Laravolt\SemanticForm\Elements\Select;
 use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
 use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\Elements\SelectMultiple;
-use Laravolt\SemanticForm\Elements\Tabular;
+use Laravolt\SemanticForm\Elements\Multirow;
 use Laravolt\SemanticForm\Elements\Text;
 use Laravolt\SemanticForm\Elements\TextArea;
 use Laravolt\SemanticForm\Elements\Time;
@@ -572,9 +572,9 @@ class SemanticForm
         return new InputWrapper($text);
     }
 
-    public function tabular($name, $definition)
+    public function multirow($name, $definition)
     {
-        $element = new Tabular($name, $definition);
+        $element = new Multirow($name, $definition);
 
         return $element;
     }
