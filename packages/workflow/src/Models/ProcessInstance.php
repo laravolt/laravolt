@@ -5,6 +5,7 @@ namespace Laravolt\Workflow\Models;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Camunda\Dto\ProcessInstance as ProcessInstanceDto;
 use Laravolt\Camunda\Http\ProcessInstanceClient;
+use Laravolt\Camunda\Http\ProcessInstanceHistoryClient;
 use Laravolt\Camunda\Http\TaskClient;
 use Laravolt\Workflow\Models\Collections\VariableCollection;
 
@@ -31,6 +32,7 @@ class ProcessInstance extends Model
     public static function sync(ProcessInstanceDto $instance, array $variables = []): self
     {
         $tasks = collect(TaskClient::getByProcessInstanceId($instance->id))->pluck('taskDefinitionKey');
+        $processInstanceHistory = ProcessInstanceHistoryClient::find($instance->id);
 
         return ProcessInstance::updateOrCreate(
             [
@@ -42,6 +44,7 @@ class ProcessInstance extends Model
                 'business_key' => $instance->businessKey,
                 'tasks' => $tasks,
                 'variables' => $instance->variables ?? $variables,
+                'created_at' => $processInstanceHistory->startTime,
             ]
         );
     }
