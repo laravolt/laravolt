@@ -31,7 +31,7 @@ class ProcessInstance extends Model
 
     public static function sync(ProcessInstanceDto $instance, array $variables = []): self
     {
-        $tasks = collect(TaskClient::getByProcessInstanceId($instance->id))->pluck('taskDefinitionKey');
+        $tasks = collect(TaskClient::getByProcessInstanceId($instance->id))->pluck('taskDefinitionKey', 'id');
         $processInstanceHistory = ProcessInstanceHistoryClient::find($instance->id);
 
         return ProcessInstance::updateOrCreate(
