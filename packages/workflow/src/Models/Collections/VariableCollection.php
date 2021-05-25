@@ -25,8 +25,12 @@ class VariableCollection extends Collection implements Castable
             public function get($model, $key, $value, $attributes)
             {
                 if (isset($attributes[$key])) {
-                    $variables = json_decode($attributes[$key], true);
                     $collection = new VariableCollection();
+                    $variables = collect(json_decode($attributes[$key], true))
+                        ->reject(function ($value, $key) {
+                            return (!is_string($key)) || !is_array($value);
+                        });
+
                     foreach ($variables as $name => $variable) {
                         $collection->offsetSet(
                             $variable['name'] ?? $name,
