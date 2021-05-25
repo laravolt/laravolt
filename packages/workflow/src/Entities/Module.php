@@ -56,11 +56,14 @@ class Module extends DataTransferObject
         return $modules;
     }
 
+    public function startTaskKey(): string
+    {
+        return array_key_first($this->tasks);
+    }
+
     public function startFormSchema(): array
     {
-        $startForm = array_key_first($this->tasks);
-
-        return config("laravolt.workflow-forms.{$this->id}.$startForm");
+        return config("laravolt.workflow-forms.{$this->id}.{$this->startTaskKey()}");
     }
 
     public function startForm(): string
@@ -73,9 +76,9 @@ class Module extends DataTransferObject
         return config("laravolt.workflow-forms.{$this->id}.$taskDefinitionKey", []);
     }
 
-    public function registerTaskEvents(Task $task): void
+    public function registerTaskEvents(string $taskKey): void
     {
-        $listeners = config("laravolt.workflow-modules.{$this->id}.tasks.$task->taskDefinitionKey.listeners", []);
+        $listeners = config("laravolt.workflow-modules.{$this->id}.tasks.$taskKey.listeners", []);
         foreach ($listeners as $event => $handlers) {
             foreach ($handlers as $handler) {
                 Event::listen($event, $handler);

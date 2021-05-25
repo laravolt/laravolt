@@ -7,6 +7,7 @@ use Laravolt\Camunda\Http\ProcessDefinitionClient;
 use Laravolt\Camunda\Http\TaskClient;
 use Laravolt\Workflow\Entities\Form;
 use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\Events\ProcessInstanceStarting;
 use Laravolt\Workflow\Events\TaskCompleted;
 use Laravolt\Workflow\Events\TaskCompleting;
 use Laravolt\Workflow\Models\ProcessInstance;
@@ -22,7 +23,13 @@ class WorkflowService
 
     public function start(Module $module, array $data): ProcessInstance
     {
+        // Registering events
+        $module->registerTaskEvents($module->startTaskKey());
+
         $form = new Form(schema: $module->startFormSchema(), data: $data);
+
+        ProcessInstanceStarting::dispatch($module, $form);
+
         $instance = ProcessDefinitionClient::start(
             key: $module->processDefinitionKey,
             variables: $form->toCamundaVariables()
@@ -34,7 +41,7 @@ class WorkflowService
     public function submitTask(Module $module, Task $task, array $data)
     {
         // Registering events
-        $module->registerTaskEvents($task);
+        $module->registerTaskEvents($task->taskDefinitionKey);
 
         $instance = ProcessInstance::findOrFail($task->processInstanceId);
 
