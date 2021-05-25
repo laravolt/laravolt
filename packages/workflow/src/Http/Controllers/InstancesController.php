@@ -4,6 +4,8 @@ namespace Laravolt\Workflow\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Laravolt\Camunda\Http\ProcessInstanceClient;
+use Laravolt\Camunda\Http\TaskClient;
+use Laravolt\Camunda\Http\TaskHistoryClient;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\ProcessInstance;
 use Laravolt\Workflow\WorkflowService;
@@ -22,8 +24,8 @@ class InstancesController
         $module = Module::make($module);
         $instance = ProcessInstance::findOrFail($id);
         $definition = $instance->definition;
-        $completedTasks = ProcessInstanceClient::completedTasks($id);
-        $openTasks = ProcessInstanceClient::tasks($id);
+        $completedTasks = TaskHistoryClient::getByProcessInstanceId($id);
+        $openTasks = TaskClient::getByProcessInstanceId($id);
         $variables = $instance->variables->toArray();
 
         return view('laravolt::workflow.instances.show', compact('instance', 'definition', 'module', 'openTasks', 'completedTasks', 'variables'));
