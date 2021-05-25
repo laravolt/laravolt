@@ -1,6 +1,6 @@
 <x-volt-app :title="$instance->variables->getValue('full_name')">
     <x-slot name="actions">
-        @include('workflow._button-map', ['instance' => $instance])
+        <x-volt-workflow-diagram-button :instance="$instance"></x-volt-workflow-diagram-button>
         <x-volt-link-button
                 :url="route('workflow::module.instances.index', $module->id)"
                 icon="left arrow"

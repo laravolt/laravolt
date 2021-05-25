@@ -239,6 +239,7 @@ class PlatformServiceProvider extends ServiceProvider
             'grid' => 'laravolt::components.grid',
             'row' => 'laravolt::components.row',
             'col' => 'laravolt::components.col',
+            'workflow-diagram-button' => 'laravolt::workflow.components.diagram-button',
             Backlink::class,
             BrandImage::class,
             Button::class,
