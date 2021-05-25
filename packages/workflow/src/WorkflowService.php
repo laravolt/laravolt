@@ -51,7 +51,7 @@ class WorkflowService
 
         TaskCompleting::dispatch($module, $instance, $task, $form);
 
-        $variables = TaskClient::submit($task->id, $form->toCamundaVariables());
+        $variables = TaskClient::submitAndReturnVariables($task->id, $form->toCamundaVariables());
 
         // Update local data
         $tasks = collect(TaskClient::getByProcessInstanceId($instance->id))->pluck('taskDefinitionKey');
