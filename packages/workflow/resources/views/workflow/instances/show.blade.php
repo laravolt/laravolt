@@ -13,7 +13,7 @@
 
     @foreach($completedTasks as $completedTask)
         <x-volt-panel :title="$completedTask->name">
-            {!! form()->make(config("laravolt.workflow-forms.{$module->id}.{$completedTask->taskDefinitionKey}"))->bindValues($variables)->display() !!}
+            {!! form()->make($module->formSchema($completedTask->taskDefinitionKey))->bindValues($variables)->display() !!}
         </x-volt-panel>
     @endforeach
 
@@ -21,7 +21,7 @@
         <x-volt-panel :title="$task->name">
         {!! form()->put(route('workflow::module.tasks.update', [$module->id, $task->id]))->horizontal() !!}
         {!! form()->hidden('_task_definition_key', $task->taskDefinitionKey) !!}
-        {!! form()->make(config("laravolt.workflow-forms.{$module->id}.{$task->taskDefinitionKey}"))->render() !!}
+        {!! form()->make($module->formSchema($task->taskDefinitionKey))->render() !!}
         {!! form()->action(form()->submit(__('Submit'))) !!}
         {!! form()->close() !!}
         </x-volt-panel>

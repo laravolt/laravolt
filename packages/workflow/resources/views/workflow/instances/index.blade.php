@@ -6,6 +6,6 @@
                 :label="__('New')"/>
     </x-slot>
 
-    <livewire:tables.applicant-tables />
+    @livewire('laravolt::module-instances-table', ['variables' => $module->tableVariables]);
 
 </x-volt-app>

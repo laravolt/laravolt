@@ -13,7 +13,6 @@ class WorkflowServiceProvider extends BaseServiceProvider
     {
         parent::boot();
         Livewire::component('laravolt::definition-table', DefinitionTable::class);
-        Livewire::component('laravolt::instances-table', ProcessInstancesTable::class);
     }
 
     public function getIdentifier()

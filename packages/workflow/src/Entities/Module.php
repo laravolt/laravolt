@@ -4,6 +4,7 @@ namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Laravolt\Workflow\Livewire\ProcessInstancesTable;
 use Spatie\DataTransferObject\DataTransferObject;
 
 #[Strict]
@@ -16,6 +17,8 @@ class Module extends DataTransferObject
     public string $name;
 
     public string $table;
+
+    public array $tableVariables;
 
     public array $tasks;
 
@@ -31,6 +34,8 @@ class Module extends DataTransferObject
                 "File config config/laravolt/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul."
             );
         }
+
+        $config['table'] ??= ProcessInstancesTable::class;
 
         // convert snake_case key to camelCase
         $config = collect($config)
@@ -62,7 +67,7 @@ class Module extends DataTransferObject
 
     public function startFormSchema(): array
     {
-        return config("laravolt.workflow-forms.{$this->id}.{$this->startTaskKey()}");
+        return $this->formSchema($this->startTaskKey());
     }
 
     public function startForm(): string
@@ -72,7 +77,7 @@ class Module extends DataTransferObject
 
     public function formSchema(string $taskDefinitionKey): array
     {
-        return config("laravolt.workflow-forms.{$this->id}.$taskDefinitionKey", []);
+        return config("laravolt.workflow-modules.{$this->id}.tasks.$taskDefinitionKey.form_schema", []);
     }
 
     public function registerTaskEvents(string $taskKey): void
