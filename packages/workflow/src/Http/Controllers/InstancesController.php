@@ -8,14 +8,12 @@ use Laravolt\Camunda\Http\TaskHistoryClient;
 use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\ProcessInstance;
 use Laravolt\Workflow\WorkflowService;
-use Livewire\Livewire;
 
 class InstancesController
 {
     public function index(string $module): View
     {
         $module = Module::make($module);
-        Livewire::component('laravolt::module-instances-table', $module->table);
 
         return view('laravolt::workflow.instances.index', compact('module'));
     }

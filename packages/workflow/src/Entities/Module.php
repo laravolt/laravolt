@@ -36,6 +36,7 @@ class Module extends DataTransferObject
         }
 
         $config['table'] ??= ProcessInstancesTable::class;
+        $config['table_variables'] ??= [];
 
         // convert snake_case key to camelCase
         $config = collect($config)

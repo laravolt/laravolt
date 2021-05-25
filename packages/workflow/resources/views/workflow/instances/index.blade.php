@@ -6,6 +6,10 @@
                 :label="__('New')"/>
     </x-slot>
 
-    @livewire('laravolt::module-instances-table', ['variables' => $module->tableVariables]);
+    @if($module->table === \Laravolt\Workflow\Livewire\ProcessInstancesTable::class)
+        @livewire('laravolt::instances-table', ['variables' => $module->tableVariables]);
+    @else
+        @livewire($module->table);
+    @endif
 
 </x-volt-app>

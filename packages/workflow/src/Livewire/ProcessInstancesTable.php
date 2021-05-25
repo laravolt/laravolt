@@ -23,12 +23,13 @@ class ProcessInstancesTable extends TableView
             ->latest();
 
         if ($this->search) {
+            $searchableColumns = [];
+            foreach ($this->variables as $var) {
+                $searchableColumns[] = "variables->{$var}->value";
+            }
+
             $query->whereLike(
-                [
-                    'variables->full_name->value',
-                    'variables->email->value',
-                    'variables->job_title->value',
-                ],
+                $searchableColumns,
                 $this->search
             );
         }
