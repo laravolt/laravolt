@@ -4,7 +4,6 @@ namespace Laravolt\Workflow\Entities;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Laravolt\Camunda\Dto\Task;
 use Spatie\DataTransferObject\DataTransferObject;
 
 #[Strict]

@@ -1,4 +1,4 @@
-<x-volt-app :title="$instance->variables->getValue('full_name')">
+<x-volt-app :title="$module->name.': '.$instance->business_key">
     <x-slot name="actions">
         <x-volt-workflow-diagram-button :instance="$instance"></x-volt-workflow-diagram-button>
         <x-volt-link-button
