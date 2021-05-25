@@ -29,7 +29,7 @@ class Module extends DataTransferObject
     {
         $config = config("laravolt.workflow-modules.$id");
 
-        if (!$config) {
+        if (! $config) {
             throw new \DomainException(
                 "File config config/laravolt/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul."
             );
@@ -47,9 +47,8 @@ class Module extends DataTransferObject
     }
 
     /**
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
-     *
      * @return self[]
+     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
      */
     public static function discover(): array
     {
@@ -66,14 +65,17 @@ class Module extends DataTransferObject
         return array_key_first($this->tasks);
     }
 
-    public function startFormSchema(): array
+    public function startForm(string $url = null, array $data = []): string
     {
-        return $this->formSchema($this->startTaskKey());
-    }
+        $schema = $this->formSchema($this->startTaskKey());
+        $url ??= route('workflow::module.instances.store', $this->id);
 
-    public function startForm(): string
-    {
-        return form()->make($this->startFormSchema())->render();
+        $html = form()->post($url)->multipart()->horizontal();
+        $html .= form()->make($schema)->bindValues($data)->render();
+        $html .= form()->action(form()->submit('Simpan'));
+        $html .= form()->close();
+
+        return $html;
     }
 
     public function formSchema(string $taskDefinitionKey): array

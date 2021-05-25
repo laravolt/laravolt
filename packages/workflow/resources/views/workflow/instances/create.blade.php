@@ -6,11 +6,8 @@
                 :label="__('Back')"/>
     </x-slot>
 
-    <x-volt-panel title="Mulai Proses Baru" icon="rocket">
-        {!! form()->post(route('workflow::module.instances.store', $module->id))->multipart()->horizontal() !!}
+    <x-volt-panel :title="__('Mulai Proses Baru')" icon="rocket">
         {!! $module->startForm() !!}
-        {!! form()->action(form()->submit('Simpan')) !!}
-        {!! form()->close() !!}
     </x-volt-panel>
 
 </x-volt-app>

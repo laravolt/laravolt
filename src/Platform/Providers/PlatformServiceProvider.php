@@ -232,9 +232,10 @@ class PlatformServiceProvider extends ServiceProvider
     protected function bootComponents()
     {
         $components = [
-            'app' => 'laravolt::layout.app',
             'base' => 'laravolt::layout.base',
             'auth' => 'laravolt::layout.auth',
+            'app' => 'laravolt::layout.app',
+            'public' => 'laravolt::layout.public',
             'inspire' => 'laravolt::components.inspire',
             'grid' => 'laravolt::components.grid',
             'row' => 'laravolt::components.row',
