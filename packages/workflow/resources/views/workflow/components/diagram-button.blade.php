@@ -69,7 +69,7 @@ $url = route('workflow::definitions.xml', $instance->definition_id);
                         canvas.zoom(zoomLevel);
 
                         // Option 1: Color via Overlay
-                        var shap = "";
+                        var shape = "";
                         var $overlayHtml = "";
                         @foreach ($taskNames as $task)
                             shape = elementRegistry.get('{{$task}}');

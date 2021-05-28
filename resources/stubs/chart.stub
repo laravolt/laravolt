@@ -6,9 +6,9 @@ use Laravolt\Charts\Chart;
 
 class DummyClass extends Chart
 {
-    protected string $title = 'DummyClass';
+    public string $title = 'DummyClass';
 
-    protected string $type = self::LINE;
+    public string $type = self::LINE;
 
     public function series(): array
     {

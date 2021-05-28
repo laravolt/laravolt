@@ -4,7 +4,6 @@ namespace Laravolt\Workflow\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Camunda\Dto\ProcessInstance as ProcessInstanceDto;
-use Laravolt\Camunda\Http\ProcessInstanceClient;
 use Laravolt\Camunda\Http\ProcessInstanceHistoryClient;
 use Laravolt\Camunda\Http\TaskClient;
 use Laravolt\Workflow\Models\Collections\VariableCollection;
@@ -27,6 +26,11 @@ class ProcessInstance extends Model
     public function definition()
     {
         return $this->belongsTo(ProcessDefinition::class, 'definition_id');
+    }
+
+    public function getTrackingCode()
+    {
+        return $this->id;
     }
 
     public static function sync(ProcessInstanceDto $instance, array $variables = []): self

@@ -3,6 +3,7 @@
 namespace Laravolt\Workflow\Http\Controllers;
 
 use Laravolt\Workflow\Entities\Module;
+use Laravolt\Workflow\WorkflowService;
 
 class EmbedFormController
 {
@@ -15,6 +16,10 @@ class EmbedFormController
 
     public function store()
     {
-        dd(request()->all());
+        $module = Module::make('rekrutmen');
+        /** @var \Laravolt\Workflow\Models\ProcessInstance $instance */
+        $instance = app(WorkflowService::class)->start($module, request()->all());
+
+        return redirect()->route('workflow::embed-tracking.show', $instance->getTrackingCode());
     }
 }

@@ -3,6 +3,7 @@
 use Laravolt\Workflow\Http\Controllers\DefinitionController;
 use Laravolt\Workflow\Http\Controllers\DefinitionXmlController;
 use Laravolt\Workflow\Http\Controllers\EmbedFormController;
+use Laravolt\Workflow\Http\Controllers\EmbedTrackingController;
 use Laravolt\Workflow\Http\Controllers\InstancesController;
 use Laravolt\Workflow\Http\Controllers\TaskController;
 
@@ -14,7 +15,6 @@ Route::group(
     ],
     function () {
         Route::resource('definitions', DefinitionController::class);
-        Route::get('definitions/{definition}/xml', DefinitionXmlController::class)->name('definitions.xml');
         Route::resource('module.instances', InstancesController::class);
         Route::resource('module.tasks', TaskController::class)->only('update');
     }
@@ -26,7 +26,8 @@ Route::group(
         'as'         => 'workflow::',
     ],
     function () {
-        Route::resource('embed-form', EmbedFormController::class)
-            ->only(['show', 'store']);
+        Route::get('definitions/{definition}/xml', DefinitionXmlController::class)->name('definitions.xml');
+        Route::resource('embed-form', EmbedFormController::class)->only(['show', 'store']);
+        Route::resource('embed-tracking', EmbedTrackingController::class)->only(['show']);
     }
 );

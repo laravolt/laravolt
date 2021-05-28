@@ -9,7 +9,4 @@ return [
         'middleware' => ['web', 'auth'],
         'prefix' => 'workflow',
     ],
-    'menu' => [
-        'enabled' => true,
-    ],
 ];

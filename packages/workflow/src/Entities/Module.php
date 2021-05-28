@@ -65,13 +65,17 @@ class Module extends DataTransferObject
         return array_key_first($this->tasks);
     }
 
+    public function startFormSchema(): array
+    {
+        return $this->formSchema($this->startTaskKey());
+    }
+
     public function startForm(string $url = null, array $data = []): string
     {
-        $schema = $this->formSchema($this->startTaskKey());
         $url ??= route('workflow::module.instances.store', $this->id);
 
         $html = form()->post($url)->multipart()->horizontal();
-        $html .= form()->make($schema)->bindValues($data)->render();
+        $html .= form()->make($this->startFormSchema())->bindValues($data)->render();
         $html .= form()->action(form()->submit('Simpan'));
         $html .= form()->close();
 
