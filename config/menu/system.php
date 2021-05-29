@@ -28,6 +28,12 @@ return [
                 'icon' => 'sliders-v',
                 'permissions' => [\Laravolt\Platform\Enums\Permission::MANAGE_SETTINGS],
             ],
+            'Workflow' => [
+                'route' => 'workflow::definitions.index',
+                'active' => 'workflow/definitions/*',
+                'icon' => 'code-branch',
+                'permissions' => [\Laravolt\Platform\Enums\Permission::MANAGE_WORKFLOW],
+            ],
         ],
     ],
 ];

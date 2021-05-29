@@ -16,6 +16,7 @@ class DefinitionTable extends TableView
         $query = ProcessDefinition::query()
             ->autoSort($this->sortPayload())
             ->whereLike(['name', 'key'], trim($this->search))
+            ->orderByDesc('version')
             ->latest();
 
         return $query;
