@@ -8,6 +8,7 @@ use Laravolt\Suitable\Columns\Date;
 use Laravolt\Suitable\Columns\MultipleValues;
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
+use Laravolt\Suitable\Columns\Text;
 use Laravolt\Ui\TableView;
 use Laravolt\Workflow\Models\ProcessInstance;
 
@@ -42,6 +43,10 @@ class ProcessInstancesTable extends TableView
         $columns = [
             Numbering::make('No'),
         ];
+
+        if (empty($this->variables)) {
+            $columns[] = Text::make('process_instance_id', 'ID');
+        }
 
         foreach ($this->variables as $var) {
             $columns[] = Raw::make(fn ($item) => $item->variables->getValue($var, '-'), Str::title($var));
