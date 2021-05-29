@@ -25,7 +25,7 @@ class ProcessDefinition extends Model
         \DB::transaction(
             function () use ($definitions) {
                 foreach ($definitions as $definition) {
-                    self::create(
+                    self::firstOrCreate(
                         [
                             'id' => $definition->id,
                             'name' => $definition->name,
