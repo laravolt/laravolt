@@ -217,7 +217,7 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootMenu()
     {
-        $keys = ['system', 'workflow'];
+        $keys = ['system'];
         $publishes = [];
         foreach ($keys as $key) {
             $menu = platform_path("config/menu/$key.php");
