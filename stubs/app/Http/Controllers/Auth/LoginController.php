@@ -8,10 +8,6 @@ use Illuminate\Routing\Controller;
 
 class LoginController extends Controller
 {
-    protected $maxAttempts = 5;
-
-    protected $decayMinutes = 1;
-
     /**
      * Display the login view.
      *

@@ -47,9 +47,14 @@ class RegistrationController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
+                    'status' => 'ACTIVE',
                 ]
             )
         );
+
+        if (config('laravolt.platform.features.verification') === false) {
+            $user->markEmailAsVerified();
+        }
 
         event(new Registered($user));
 
