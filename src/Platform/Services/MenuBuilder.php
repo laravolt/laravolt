@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
+use Illuminate\Support\Facades\Route;
+
 class MenuBuilder
 {
     protected $defaultIcon;
@@ -123,14 +125,16 @@ class MenuBuilder
             return url($option['url'] ?? '#');
         }
 
-        if (is_string($route)) {
+        if (is_string($route) && Route::has($route)) {
             return route($route);
         }
 
         if (is_array($route)) {
             [$routeName, $param] = $route;
 
-            return route($routeName, $param);
+            if (Route::has($route)) {
+                return route($routeName, $param);
+            }
         }
 
         return '#';
