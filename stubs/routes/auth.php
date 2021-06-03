@@ -37,7 +37,9 @@ Route::group(
         'prefix' => 'auth',
         'middleware' => 'auth'
     ],
-    function () {
+    function (Router $router) {
+        $router->any('logout', Logout::class)->name('auth::logout');
+
         if (config('laravolt.platform.features.verification')) {
             Route::get('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'show'])
                 ->name('verification.notice');
