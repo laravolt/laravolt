@@ -40,14 +40,14 @@ Route::group(
         $router->any('logout', Logout::class)->name('auth::logout');
 
         if (config('laravolt.platform.features.verification')) {
-            Route::get('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'show'])
+            $router->get('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'show'])
                 ->name('verification.notice');
 
-            Route::post('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'store'])
+            $router->post('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'store'])
                 ->middleware(['throttle:6,1'])
                 ->name('verification.send');
 
-            Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'update'])
+            $router->get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'update'])
                 ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
         }
