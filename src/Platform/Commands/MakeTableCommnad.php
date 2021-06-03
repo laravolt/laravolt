@@ -24,9 +24,9 @@ class MakeTableCommnad extends GeneratorCommand
         $info = [
             ['Class', '<info>'.$this->qualifyClass($this->getNameInput()).'</info>'],
             new TableSeparator(),
-            ['Blade Component', "<info><livewire:tables.$slug /></info>"],
+            ['Blade Component', "<info><livewire:table.$slug /></info>"],
             new TableSeparator(),
-            ['Blade Directive', "<info>@livewire('tables.$slug')</info>"],
+            ['Blade Directive', "<info>@livewire('table.$slug')</info>"],
         ];
         $this->table([], $info);
 
@@ -45,9 +45,9 @@ class MakeTableCommnad extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         if ($this->option('legacy')) {
-            return $rootNamespace.'\Tables';
+            return $rootNamespace.'\Table';
         }
 
-        return $rootNamespace.'\Http\Livewire\Tables';
+        return $rootNamespace.'\Http\Livewire\Table';
     }
 }
