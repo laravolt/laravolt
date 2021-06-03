@@ -18,11 +18,4 @@ class DummyClass extends TableView
             // TODO: define your columns here
         ];
     }
-
-    public function filters(): array
-    {
-        return [
-            // TODO: define your filters here
-        ];
-    }
 }
