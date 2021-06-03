@@ -1,24 +1,28 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Http\Livewire\Tables;
 
-namespace App\Tables;
-
-use Laravolt\Suitable\TableView;
+use Laravolt\Ui\TableView;
 
 class DummyClass extends TableView
 {
-    protected $title = 'DummyClass';
-
-    protected function source()
+    public function data()
     {
-        // return Model::paginate();
+        // TODO: implement your query here
+        // return $query;
     }
 
-    protected function columns()
+    public function columns(): array
     {
         return [
-            // See https://laravolt.dev/docs/suitable/
+            // TODO: define your columns here
+        ];
+    }
+
+    public function filters(): array
+    {
+        return [
+            // TODO: define your filters here
         ];
     }
 }

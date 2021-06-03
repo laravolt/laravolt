@@ -5,19 +5,38 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
+use Symfony\Component\Console\Helper\TableSeparator;
 
 class MakeTableCommnad extends GeneratorCommand
 {
     protected $type = 'Class';
 
-    protected $signature = 'make:table {name} {--livewire}';
+    protected $signature = 'make:table {name} {--legacy}';
 
     protected $description = 'Create a new Table builder';
 
+    public function handle()
+    {
+        $defaultHandler = parent::handle();
+
+        $slug = Str::kebab($this->getNameInput());
+        $info = [
+            ['Class', '<info>'.$this->qualifyClass($this->getNameInput()).'</info>'],
+            new TableSeparator(),
+            ['Blade Component', "<info><livewire:tables.$slug /></info>"],
+            new TableSeparator(),
+            ['Blade Directive', "<info>@livewire('tables.$slug')</info>"],
+        ];
+        $this->table([], $info);
+
+        return $defaultHandler;
+    }
+
     protected function getStub()
     {
-        if ($this->option('livewire')) {
-            return platform_path('resources/stubs/table-livewire.stub');
+        if ($this->option('legacy')) {
+            return platform_path('resources/stubs/table-legacy.stub');
         }
 
         return platform_path('resources/stubs/table.stub');
@@ -25,10 +44,10 @@ class MakeTableCommnad extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        if ($this->option('livewire')) {
-            return $rootNamespace.'\Http\Livewire\Tables';
+        if ($this->option('legacy')) {
+            return $rootNamespace.'\Tables';
         }
 
-        return $rootNamespace.'\Tables';
+        return $rootNamespace.'\Http\Livewire\Tables';
     }
 }
