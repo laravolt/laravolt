@@ -16,7 +16,6 @@ Route::group(
     function (Router $router) {
         $router->get('login', [LoginController::class, 'show'])->name('auth::login.show');
         $router->post('login', [LoginController::class, 'store'])->name('auth::login.store');
-        $router->any('logout', Logout::class)->name('auth::logout');
 
         // Password Reset Routes...
         $router->get('forgot', [ForgotPasswordController::class, 'show'])->name('auth::forgot.show');
