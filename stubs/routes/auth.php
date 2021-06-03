@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(
     [
         'prefix' => 'auth',
+        'middleware' => 'guest'
     ],
     function (Router $router) {
         $router->get('login', [LoginController::class, 'show'])->name('auth::login.show');
@@ -27,19 +28,28 @@ Route::group(
             $router->get('register', [RegistrationController::class, 'show'])->name('auth::registration.show');
             $router->post('register', [RegistrationController::class, 'store'])->name('auth::registration.store');
         }
+    }
+);
 
+
+Route::group(
+    [
+        'prefix' => 'auth',
+        'middleware' => 'auth'
+    ],
+    function () {
         if (config('laravolt.platform.features.verification')) {
             Route::get('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'show'])
-                ->middleware('auth')
                 ->name('verification.notice');
 
             Route::post('/verify-email', [\App\Http\Controllers\Auth\VerificationController::class, 'store'])
-                ->middleware(['auth', 'throttle:6,1'])
+                ->middleware(['throttle:6,1'])
                 ->name('verification.send');
 
             Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'update'])
-                ->middleware(['auth', 'signed', 'throttle:6,1'])
+                ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
         }
     }
+
 );
