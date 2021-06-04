@@ -132,7 +132,7 @@ class MenuBuilder
         if (is_array($route)) {
             [$routeName, $param] = $route;
 
-            if (Route::has($route)) {
+            if (Route::has($routeName)) {
                 return route($routeName, $param);
             }
         }
