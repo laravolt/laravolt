@@ -6,8 +6,8 @@ use Illuminate\Support\Str;
 use Laravolt\Suitable\Columns\Button;
 use Laravolt\Suitable\Columns\Date;
 use Laravolt\Suitable\Columns\MultipleValues;
-use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\Raw;
+use Laravolt\Suitable\Columns\RowNumber;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Ui\TableView;
 use Laravolt\Workflow\Models\ProcessInstance;
@@ -41,7 +41,7 @@ class ProcessInstancesTable extends TableView
     public function columns(): array
     {
         $columns = [
-            Numbering::make('No'),
+            RowNumber::make('No'),
         ];
 
         if (empty($this->variables)) {
@@ -55,7 +55,7 @@ class ProcessInstancesTable extends TableView
         $columns[] = MultipleValues::make('tasks', 'Tasks');
         $columns[] = Date::make('created_at', 'Created At');
         $columns[] = Button::make(
-            fn ($item) => route('workflow::module.instances.show', ['rekrutmen', $item->id]),
+            fn ($item) => route('workflow::module.instances.show', [request()->route('module'), $item->id]),
             'Action'
         )->icon('eye');
 
