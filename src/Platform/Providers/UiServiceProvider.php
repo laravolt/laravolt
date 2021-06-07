@@ -121,6 +121,8 @@ class UiServiceProvider extends BaseServiceProvider
                 foreach (config('laravolt.menu') as $menu) {
                     $this->app['laravolt.menu.builder']->loadArray($menu);
                 }
+
+                $this->app['laravolt.menu.builder']->loadFromRegisteredConfig();
             }
         );
 

@@ -10,9 +10,23 @@ class MenuBuilder
 {
     protected $defaultIcon;
 
+    protected $registeredConfig = [];
+
     public function __construct()
     {
         $this->defaultIcon = config('laravolt.ui.default_menu_icon');
+    }
+
+    public function register(array $menu): void
+    {
+        $this->registeredConfig[] = $menu;
+    }
+
+    public function loadFromRegisteredConfig(): void
+    {
+        foreach ($this->registeredConfig as $config) {
+            $this->loadArray($config);
+        }
     }
 
     public function make()
