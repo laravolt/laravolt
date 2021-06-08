@@ -14,7 +14,7 @@ trait SourceResolver
 {
     public function resolve($source)
     {
-        if ($source instanceof Builder) {
+        if ($source instanceof Builder || $source instanceof \Illuminate\Database\Query\Builder) {
             return $source->paginate(request('per_page', $this->perPage));
         } elseif (is_subclass_of($source, Model::class)) {
             return (new $source())->all();
