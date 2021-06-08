@@ -21,7 +21,7 @@ class MakeTableCommnad extends GeneratorCommand
         $defaultHandler = parent::handle();
 
         $slug = Str::kebab($this->getNameInput());
-        $classPathConstant = $this->qualifyClass($this->getNameInput()).':class';
+        $classPathConstant = '\\'.$this->qualifyClass($this->getNameInput()).':class';
 
         $info = [
             ['Blade component', "<livewire:table.$slug />"],
