@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -27,6 +28,8 @@ trait SourceResolver
             return $source;
         } elseif (is_array($source)) {
             return collect($source);
+        } elseif ($source instanceof Response) {
+            return $source->collect();
         }
 
         $type = gettype($source);
