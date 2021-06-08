@@ -14,7 +14,7 @@ abstract class TableView extends Component
 
     private const DEFAULT_PER_PAGE = 15;
 
-    protected bool $showSearchbox = true;
+    public bool $showSearchbox = true;
 
     protected bool $showPerPage = true;
 

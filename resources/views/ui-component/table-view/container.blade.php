@@ -5,9 +5,11 @@
 
     <div class="ui borderless unstackable menu attached" data-role="suitable-header">
         <div class="menu">
-            <div class="item">
-                @include('laravolt::ui-component.shared.searchbox', ['name' => $search])
-            </div>
+            @if($this->showSearchbox)
+                <div class="item">
+                    @include('laravolt::ui-component.shared.searchbox', ['name' => $search])
+                </div>
+            @endif
         </div>
         <div class="menu right">
             <div class="item">
@@ -19,27 +21,29 @@
     @include('laravolt::ui-component.table-view.table')
 
     <footer class="ui bottom attached menu">
-        <div class="item">
-            <small>{{ $this->summary() }}</small>
-        </div>
+        @if($data instanceof \Illuminate\Contracts\Pagination\Paginator)
+            <div class="item">
+                <small>{{ $this->summary() }}</small>
+            </div>
 
-        @if($showPerPage)
-            <div class="ui item p-0">
-                <div class="ui dropdown item">
-                    <span class="text">{{ request('per_page', $data->perPage()) }}</span>
-                    <i class="dropdown icon" aria-hidden="true"></i>
-                    <div class="menu">
-                        @foreach($perPageOptions as $n)
-                            <div class="item" wire:click.prevent="changePerPage({{ $n }})">
-                                {{ $n }}
-                            </div>
-                        @endforeach
+            @if($showPerPage)
+                <div class="ui item p-0">
+                    <div class="ui dropdown item">
+                        <span class="text">{{ request('per_page', $data->perPage()) }}</span>
+                        <i class="dropdown icon" aria-hidden="true"></i>
+                        <div class="menu">
+                            @foreach($perPageOptions as $n)
+                                <div class="item" wire:click.prevent="changePerPage({{ $n }})">
+                                    {{ $n }}
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
 
-        {!! $data->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
+            {!! $data->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
+        @endif
     </footer>
 
 </div>
