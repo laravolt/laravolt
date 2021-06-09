@@ -18,7 +18,7 @@ class Date extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        $field = $cell->{$this->field};
+        $field = data_get($cell, $this->field);
 
         try {
             return Carbon::createFromFormat('Y-m-d', $field)
@@ -37,7 +37,7 @@ class Date extends Column implements ColumnInterface
         }
     }
 
-    public function format($format)
+    public function format(string $format)
     {
         $this->format = $format;
 

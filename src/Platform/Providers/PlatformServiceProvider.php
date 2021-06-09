@@ -17,6 +17,7 @@ use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeChartCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
+use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\Backlink;
 use Laravolt\Platform\Components\BrandImage;
@@ -44,6 +45,7 @@ class PlatformServiceProvider extends ServiceProvider
         InstallCommand::class,
         MakeTableCommnad::class,
         MakeChartCommnad::class,
+        MakeViewCommnad::class,
         ManageRole::class,
         ManageUser::class,
         LinkCommand::class,
