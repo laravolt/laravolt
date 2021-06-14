@@ -16,11 +16,13 @@ class CreateTableLookup extends Migration
         Schema::create('platform_lookup', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('category');
-            $table->string('parent_key');
+            $table->string('parent_key')->nullable();
             $table->string('lookup_key');
             $table->string('lookup_value');
             $table->json('meta')->nullable();
             $table->timestamps();
+
+            $table->unique(['category', 'lookup_key']);
         });
     }
 
