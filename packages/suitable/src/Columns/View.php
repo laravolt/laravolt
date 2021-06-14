@@ -16,6 +16,6 @@ class View extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        return render($this->view, ['data' => $cell]);
+        return \Illuminate\Support\Facades\View::make($this->view, ['data' => $cell])->render();
     }
 }

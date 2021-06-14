@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class RestfulButton extends Column implements ColumnInterface
 {
-    protected $buttons = ['view', 'edit', 'delete'];
+    protected $buttons = ['show', 'edit', 'destroy'];
 
     protected $baseRoute;
 
@@ -90,10 +90,10 @@ class RestfulButton extends Column implements ColumnInterface
         return $this;
     }
 
-    protected function getRoute($verb, $param = null)
+    protected function getRoute($action, $param = null)
     {
         if ($this->baseRoute) {
-            return route($this->baseRoute.'.'.$verb, $param);
+            return route($this->baseRoute.'.'.$action, $param);
         }
 
         return false;
@@ -124,19 +124,15 @@ class RestfulButton extends Column implements ColumnInterface
 
     protected function buildActions($data)
     {
-        $actions = [
-            'view' => 'show',
-            'edit' => 'edit',
-            'delete' => 'destroy',
-        ];
+        $actions = ['show', 'edit', 'destroy'];
 
         $actions = collect($actions)
             ->reject(
-                function ($verb, $action) {
+                function ($action) {
                     return !in_array($action, $this->buttons);
                 }
-            )->reject(function ($verb, $action) use ($data) {
-                if (Auth::user()->hasPermission('*')) {
+            )->reject(function ($action) use ($data) {
+                if (Auth::user() && Auth::user()->hasPermission('*')) {
                     return false;
                 }
 
@@ -144,8 +140,9 @@ class RestfulButton extends Column implements ColumnInterface
 
                 return $policyEnabled && Auth::user()->cannot($action, $data);
             })
-            ->transform(function ($verb) use ($data) {
-                return $this->getRoute($verb, $this->routeParameters + [$data->getKey()]);
+            ->mapWithKeys(function ($action) use ($data) {
+
+                return [$action => $this->getRoute($action, $this->routeParameters + [$data->getKey()])];
             });
 
         return $actions;

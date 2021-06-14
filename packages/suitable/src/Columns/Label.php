@@ -14,7 +14,7 @@ class Label extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        $label = $cell->{$this->field};
+        $label = data_get($cell, $this->field);
 
         if ($label !== null) {
             $class = implode(' ', $this->labelClass);
@@ -23,7 +23,7 @@ class Label extends Column implements ColumnInterface
                 $class .= " $additionalClass";
             }
 
-            return sprintf('<div class="ui label %s">%s</div>', $class, $cell->{$this->field});
+            return sprintf('<div class="ui label %s">%s</div>', $class, $label);
         }
 
         return '-';
@@ -39,6 +39,15 @@ class Label extends Column implements ColumnInterface
     public function addClassIf($value, string $class)
     {
         $this->labelClassIf[$value][] = $class;
+
+        return $this;
+    }
+
+    public function map(array $map)
+    {
+        foreach ($map as $value => $class) {
+            $this->addClassIf($value, $class);
+        }
 
         return $this;
     }

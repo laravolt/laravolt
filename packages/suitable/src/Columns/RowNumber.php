@@ -10,7 +10,7 @@ class RowNumber extends Column implements ColumnInterface
 
     protected $cellAttributes = ['class' => 'numbering'];
 
-    public static function make($field, $header = null)
+    public static function make($field = null, $header = null)
     {
         return parent::make($field, $field);
     }
