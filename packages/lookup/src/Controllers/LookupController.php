@@ -40,7 +40,7 @@ class LookupController extends Controller
         $schema = [
             'lookup' => [
                 'type' => 'multirow',
-                'rows' => 2,
+                'rows' => 1,
                 'allow_addition' => true,
                 'allow_removal' => true,
                 'items' => [
