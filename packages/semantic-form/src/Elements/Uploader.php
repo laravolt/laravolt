@@ -5,6 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class Uploader extends Input
 {
@@ -54,7 +55,7 @@ class Uploader extends Input
     {
         $url = $this->mediaUrl;
 
-        if (!$url) {
+        if (! $url) {
             $url = Route::has($this->fallbackMediaUrl) ?
                 URL::route($this->fallbackMediaUrl, ['handler' => 'fileuploader'])
                 : false;
@@ -75,10 +76,12 @@ class Uploader extends Input
             $temp = json_decode($mediaCollection);
             if (json_last_error() == JSON_ERROR_NONE) {
                 $mediaCollection = $temp;
+            } else {
+                $mediaCollection = [$mediaCollection];
             }
         }
 
-        if (!is_iterable($mediaCollection)) {
+        if (! is_iterable($mediaCollection)) {
             return $this;
         }
 
@@ -95,9 +98,12 @@ class Uploader extends Input
                     ],
                 ];
             } else {
+                $imageHeader = get_headers($media, true);
                 $data[] = [
                     'file' => URL::to($media),
                     'name' => $media,
+                    'size' => $imageHeader['Content-Length'] ?? 0,
+                    'type' => $imageHeader['Content-Type'] ?? 'image/jpg',
                 ];
             }
         }
