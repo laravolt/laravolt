@@ -25,7 +25,7 @@ class QueryBuilderMixin
     {
         return function ($attributes, ?string $searchTerm) {
             if ($searchTerm) {
-                $searchTerm = addslashes(strtolower($searchTerm));
+                $searchTerm = trim(DB::getPdo()->quote((strtolower($searchTerm))), "'");
                 $this->where(function (Builder $query) use ($attributes, $searchTerm) {
                     foreach (Arr::wrap($attributes) as $column) {
                         $query->orWhereRaw(sprintf("LOWER(%s) LIKE '%%%s%%'", $column, $searchTerm));

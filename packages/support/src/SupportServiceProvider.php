@@ -7,6 +7,7 @@ namespace Laravolt\Support;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravolt\Support\Mixin\QueryBuilderMixin;
@@ -33,7 +34,7 @@ class SupportServiceProvider extends ServiceProvider
                 return $this;
             }
 
-            $searchTerm = addslashes(strtolower($searchTerm));
+            $searchTerm = trim(DB::getPdo()->quote((strtolower($searchTerm))), "'");
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(
