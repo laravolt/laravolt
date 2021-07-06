@@ -20,8 +20,18 @@ class MakeTableCommnad extends GeneratorCommand
     {
         $defaultHandler = parent::handle();
 
-        $slug = Str::kebab($this->getNameInput());
-        $classPathConstant = '\\'.$this->qualifyClass($this->getNameInput()).':class';
+        $namespace = (string) Str::of($this->getDefaultNamespace($this->rootNamespace()))
+            ->replace('\\\\', '\\')
+            ->append('\\');
+
+        $qualifyClass = $this->qualifyClass($this->getNameInput());
+        $slug = Str::of($qualifyClass)
+            ->after($namespace)
+            ->explode('\\')
+            ->map(fn ($class) => Str::kebab($class))
+            ->implode('.');
+
+        $classPathConstant = '\\'.$qualifyClass.'::class';
 
         $info = [
             ['Blade component', "<livewire:table.$slug />"],
@@ -30,7 +40,8 @@ class MakeTableCommnad extends GeneratorCommand
             new TableSeparator(),
             ['Blade directive using class path <warning>(recommended)</warning>', "@livewire($classPathConstant)"],
         ];
-        $this->warn($this->qualifyClass($this->getNameInput()));
+
+        $this->warn($qualifyClass);
         $this->table(['Usage As', 'Code Snippet'], $info);
 
         return $defaultHandler;
