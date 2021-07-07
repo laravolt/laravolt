@@ -2,11 +2,11 @@
 
 namespace Laravolt\Suitable\Columns;
 
-use Illuminate\Support\Str;
-
 class Dropdown extends Column implements ColumnInterface
 {
     protected $options = [];
+
+    protected $cssClass = [];
 
     public static function make($field = null, $header = null)
     {
@@ -27,6 +27,13 @@ class Dropdown extends Column implements ColumnInterface
         return $this;
     }
 
+    public function addClass(string $class): self
+    {
+        $this->cssClass[] = $class;
+
+        return $this;
+    }
+
     public function cell($cell, $collection, $loop)
     {
         $color = config('laravolt.ui.color');
@@ -42,8 +49,10 @@ class Dropdown extends Column implements ColumnInterface
             }
         })->implode('');
 
+        $cssClass = collect($this->cssClass)->unique()->implode(' ');
+
         return <<<HTML
-        <div class="ui icon top right pointing dropdown secondary $color button small">
+        <div class="ui icon simple dropdown secondary $color button $cssClass">
           <i class="ellipsis horizontal icon"></i>
           <div class="menu inverted">
             $menu
