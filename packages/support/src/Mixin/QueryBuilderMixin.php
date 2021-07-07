@@ -6,6 +6,7 @@ namespace Laravolt\Support\Mixin;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class QueryBuilderMixin
 {
