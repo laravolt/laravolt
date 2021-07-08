@@ -13,7 +13,7 @@ mix.scripts([
     'resources/js/components/fuse.min.js',
 ], 'public/js/vendor.js');
 
-mix.js([
+mix.scripts([
     'resources/js/init/sidebar.js',
     'resources/js/init/ui.js',
     // Somehow, quick-switcher.js must be initialized last, after all other UI elements. Don't know why :(
