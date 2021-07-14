@@ -72,7 +72,8 @@ class PlatformServiceProvider extends ServiceProvider
             ->bootRoutes()
             ->bootAcl($gate)
             ->bootMenu()
-            ->bootComponents();
+            ->bootComponents()
+            ->adjustVendorConfig();
     }
 
     protected function registerServices()
@@ -262,6 +263,15 @@ class PlatformServiceProvider extends ServiceProvider
         ];
 
         $this->loadViewComponentsAs('volt', $components);
+
+        return $this;
+    }
+
+    protected function adjustVendorConfig()
+    {
+        config(['laravel-menu.settings.default.cascade_data' => false]);
+
+        return $this;
     }
 
     protected function hasPermissionTable()

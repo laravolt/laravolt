@@ -29,61 +29,24 @@ class MenuBuilder
         }
     }
 
-    public function make()
-    {
-        $args = func_get_args();
-        $num_args = func_num_args();
-
-        if (is_array($args[0])) {
-            if ($num_args === 2) {
-                return $this->loadSection('', $args[0], $args[1]);
-            } elseif ($num_args === 1) {
-                return $this->loadSection('', $args[0]);
-            }
-        }
-
-        if (is_string($args[0])) {
-            if ($num_args === 3) {
-                return $this->loadSection($args[0], $args[1], $args[2]);
-            }
-            if ($num_args === 2) {
-                return $this->loadSection($args[0], $args[1]);
-            }
-        }
-    }
-
-    public function loadSection($name, $menu, $options = [])
-    {
-        app('laravolt.menu.sidebar')->register(
-            function ($menu) use ($name, $options) {
-                $section = $menu->add($name);
-                $this->setData($section, $options);
-                $this->addMenu($section, $menu);
-            }
-        );
-    }
-
     public function loadArray(array $menu)
     {
         $order = null;
-        $menu = collect($menu)->reject(fn ($item) => !($item['menu'] ?? null));
-        foreach ($menu as $title => $option) {
+        $filteredMenu = collect($menu)->reject(fn ($item) => !($item['menu'] ?? null));
+        foreach ($filteredMenu as $title => $option) {
             if ($order === null) {
                 $order = $option['order'] ?? 50;
             }
 
             app('laravolt.menu.sidebar')->register(
-                function ($menu) use ($title, $option, $order) {
+                function ($sidebar) use ($title, $option, $order) {
                     /** @var \Lavary\Menu\Builder $section */
-                    $section = $menu->get(strtolower(trim($title)));
+                    $section = $sidebar->get(strtolower(trim($title)));
                     if ($section === null) {
                         $url = $this->generateUrl($option);
-                        $section = $menu
-                            ->add($title, $url)
-                            ->data('order', $order);
+                        $section = $sidebar->add($title, $url)->data('order', $order);
                     }
 
-                    $section->data('icon', $option['icon'] ?? $this->defaultIcon);
                     $section->data('permissions', $option['permissions'] ?? null);
 
                     if (isset($option['menu'])) {

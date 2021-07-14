@@ -45,6 +45,7 @@ class Menu extends BaseMenu
 
     public function all()
     {
+        /** @var \Lavary\Menu\Builder $sidebar */
         $sidebar = app('laravolt.menu.sidebar')->make(
             'sidebar',
             function (Builder $menu) {
@@ -58,6 +59,10 @@ class Menu extends BaseMenu
 
         $items = $sidebar->all()->map(function (Item $item) {
             $item->data('is-parent', $item->hasChildren() || (!$item->hasChildren() && !($item->link->path['url'] ?? true)));
+
+            if ($item->data('icon') === null) {
+                return $item->data('icon', config('laravolt.ui.default_menu_icon'));
+            }
 
             return $item;
         });
