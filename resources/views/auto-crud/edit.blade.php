@@ -5,9 +5,9 @@
     </x-slot>
 
     <x-volt-panel title="Edit {{ $config['label'] }}">
-        {!! form()->bind($model)->put(route('auto-crud::resource.update', [$config['key'], $model->getKey()])) !!}
+        {!! form()->put(route('auto-crud::resource.update', [$config['key'], $model->getKey()])) !!}
 
-        {!! form()->make($fields)->render() !!}
+        {!! form()->make($fields)->bindValues($model->getAttributes())->render() !!}
 
         {!! form()->action([
             form()->submit(__('Save')),

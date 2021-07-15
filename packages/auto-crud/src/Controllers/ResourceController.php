@@ -6,6 +6,7 @@ namespace Laravolt\AutoCrud\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 
 class ResourceController extends Controller
 {
@@ -34,8 +35,8 @@ class ResourceController extends Controller
     public function store(string $resource)
     {
         $config = $this->validateResource($resource);
-
-        app($config['model'])->create(request()->all());
+        $data = $this->validateData($config['schema']);
+        app($config['model'])->create($data);
 
         return redirect()
             ->route('auto-crud::resource.index', $resource)
@@ -67,9 +68,10 @@ class ResourceController extends Controller
     public function update(string $resource, $id)
     {
         $config = $this->validateResource($resource);
+        $data = $this->validateData($config['schema']);
         $model = app($config['model'])->findOrFail($id);
 
-        $model->update(request()->all());
+        $model->update($data);
 
         return redirect()
             ->back()
@@ -103,5 +105,20 @@ class ResourceController extends Controller
         $this->authorize(config("laravolt.auto-crud.resources.$resource.permission"));
 
         return config()->get($key) + ['key' => $resource];
+    }
+
+    protected function validateData($schema)
+    {
+        $data = [];
+        foreach ($schema as $field) {
+            $key = $field['name'];
+            if ($field['type'] === 'uploader') {
+                $data[$key] = Arr::first(request()->media($key)->toArray());
+            } else {
+                $data[$key] = request()->input($key);
+            }
+        }
+
+        return $data;
     }
 }
