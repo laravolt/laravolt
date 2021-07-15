@@ -20,6 +20,8 @@ class RestfulButton extends Column implements ColumnInterface
 
     protected $deleteConfirmation;
 
+    protected $cellAttributes = ['class' => 'right aligned'];
+
     /**
      * RestfulButton constructor.
      *
@@ -40,11 +42,6 @@ class RestfulButton extends Column implements ColumnInterface
         return $column;
     }
 
-    public function headerAttributes()
-    {
-        return [];
-    }
-
     public function cell($data, $collection, $loop)
     {
         $actions = $this->buildActions($data);
@@ -53,11 +50,6 @@ class RestfulButton extends Column implements ColumnInterface
 
         return View::make('suitable::columns.restful_button', compact('data', 'actions', 'deleteConfirmation', 'key'))
             ->render();
-    }
-
-    public function cellAttributes($cell)
-    {
-        return null;
     }
 
     public function only($buttons)
