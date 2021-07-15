@@ -8,89 +8,40 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Session\Store;
-use Illuminate\Support\Str;
 
 class Flash
 {
-    protected $session;
+    protected Store $session;
 
-    protected $view;
+    protected Factory $view;
 
-    protected $sessionKey = 'laravolt_flash';
+    protected string $sessionKey = 'laravolt_flash';
 
-    protected $now = false;
+    protected bool $now = false;
 
-    protected $attributes = [
-        'message' => null,
-        'class' => 'basic',
-        'closeIcon' => false,
-        'displayTime' => 'auto',
-        'minDisplayTime' => 10000,
-        'opacity' => 1,
-        'position' => 'top center',
-        'compact' => false,
-        'showIcon' => false,
-        'showProgress' => 'bottom',
-        'progressUp' => false,
-        'pauseOnHover' => true,
-        'newestOnTop' => true,
-        'transition' => [
-            'showMethod' => 'fade',
-            'showDuration' => 2000,
-            'hideMethod' => 'fly down',
-            'hideDuration' => 3000,
-        ],
-    ];
+    protected FlashAttributes $attributes;
 
-    protected $types = [
-        'info' => [
-            'showIcon' => 'blue info',
-            'classProgress' => 'blue',
-        ],
-        'success' => [
-            'showIcon' => 'green checkmark',
-            'classProgress' => 'green',
-        ],
-        'warning' => [
-            'showIcon' => 'orange warning',
-            'classProgress' => 'orange',
-        ],
-        'error' => [
-            'showIcon' => 'red times',
-            'classProgress' => 'red',
-            'displayTime' => 0,
-            'transition' => ['showMethod' => 'tada', 'showDuration' => 1000],
-        ],
-    ];
+    protected array $bags = [];
 
-    protected $bags = [];
-
-    protected $except = [];
+    protected mixed $except = [];
 
     /**
      * Flash constructor.
      *
-     * @param Store $session
-     * @param View  $view
+     * @param  Store  $session
+     * @param  \Illuminate\Contracts\View\Factory  $view
      */
     public function __construct(Store $session, Factory $view)
     {
         $this->session = $session;
         $this->view = $view;
-        $this->attributes = $this->defaultAttributes() + $this->attributes;
+        $this->attributes = new FlashAttributes;
         $this->except = config('laravolt.ui.flash.except');
     }
 
     public function message($message, $type = 'basic')
     {
-        $this->attributes['message'] = $message;
-        $this->attributes['class'] = $this->types[$type]['class'] ?? $this->attributes['class'];
-        $this->attributes['showIcon'] = $this->types[$type]['showIcon'] ?? null;
-        $this->attributes['classProgress'] = $this->types[$type]['classProgress'] ?? null;
-        if (isset($this->types[$type]['transition'])) {
-            $this->attributes['transition'] = $this->types[$type]['transition'] + $this->attributes['transition'];
-        }
-
+        $this->attributes->setMessage($message, $type);
         $this->bags[] = $this->attributes;
 
         $method = $this->now ? 'now' : 'flash';
@@ -176,12 +127,5 @@ class Flash
         }
 
         return false;
-    }
-
-    private function defaultAttributes()
-    {
-        return collect(config('laravolt.ui.flash.attributes'))->mapWithKeys(function ($item, $key) {
-            return [Str::camel($key) => $item];
-        })->toArray();
     }
 }
