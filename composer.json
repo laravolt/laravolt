@@ -28,7 +28,7 @@
         "illuminate/support": "8.*",
         "kalnoy/nestedset": "^5.0",
         "kirschbaum-development/eloquent-power-joins": "^2.3",
-        "laravolt/avatar": "^4.0",
+        "laravolt/avatar": "^4.1",
         "lavary/laravel-menu": "^1.7.7",
         "league/flysystem": "^1.1",
         "livewire/livewire": "^2.4",
@@ -61,6 +61,7 @@
         ],
         "psr-4": {
             "Laravolt\\Asset\\": "packages/asset/src",
+            "Laravolt\\AutoCrud\\": "packages/auto-crud/src",
             "Laravolt\\DatabaseMonitor\\": "packages/database-monitor/src",
             "Laravolt\\Epilog\\": "packages/epilog/src",
             "Laravolt\\FileManager\\": "packages/file-manager/src",
@@ -85,6 +86,7 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Laravolt\\AutoCrud\\AutoCrudServiceProvider",
                 "Laravolt\\Asset\\AssetServiceProvider",
                 "Laravolt\\Media\\ServiceProvider",
                 "Laravolt\\Thunderclap\\ServiceProvider",
