@@ -5,6 +5,7 @@ namespace Laravolt\SemanticForm;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\Asset\AssetFacade;
@@ -174,9 +175,10 @@ class SemanticForm
         return $date;
     }
 
-    public function datepicker($name, $defaultValue = null, $format = 'Y-m-d')
+    public function datepicker($name, $defaultValue = null, $format = 'YYYY-MM-DD')
     {
         $input = new Datepicker($name);
+        $input->setFormat($format);
 
         if (!is_null($value = $this->getValueFor($name))) {
             $input->value($value);
@@ -194,7 +196,7 @@ class SemanticForm
             ->addClass('calendar');
     }
 
-    public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d')
+    public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d H:i:s')
     {
         return $this->datepicker($name, $defaultValue, $format)->withTime(true);
     }
@@ -728,7 +730,7 @@ class SemanticForm
         return new Html($content);
     }
 
-    public function make(array $fields)
+    public function make(array|BaseCollection $fields)
     {
         return new FieldCollection($fields);
     }

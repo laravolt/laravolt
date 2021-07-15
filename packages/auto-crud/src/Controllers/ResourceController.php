@@ -21,8 +21,14 @@ class ResourceController extends Controller
     public function create(string $resource)
     {
         $config = $this->validateResource($resource);
+        $fields = collect($config['schema'])
+            ->filter(
+                function ($item) {
+                    return ($item['visibility']['create'] ?? true);
+                }
+            );
 
-        return view('laravolt::auto-crud.create', compact('config'));
+        return view('laravolt::auto-crud.create', compact('config', 'fields'));
     }
 
     public function store(string $resource)
@@ -34,15 +40,28 @@ class ResourceController extends Controller
         return redirect()
             ->route('auto-crud::resource.index', $resource)
             ->withSuccess(sprintf('%s saved', $config['label']));
+    }
 
+    public function show(string $resource, $id)
+    {
+        $config = $this->validateResource($resource);
+        $model = app($config['model'])->findOrFail($id);
+
+        return view('laravolt::auto-crud.show', compact('config', 'model'));
     }
 
     public function edit(string $resource, $id)
     {
         $config = $this->validateResource($resource);
         $model = app($config['model'])->findOrFail($id);
+        $fields = collect($config['schema'])
+            ->filter(
+                function ($item) {
+                    return ($item['visibility']['edit'] ?? true);
+                }
+            );
 
-        return view('laravolt::auto-crud.edit', compact('config', 'model'));
+        return view('laravolt::auto-crud.edit', compact('config', 'model', 'fields'));
     }
 
     public function update(string $resource, $id)

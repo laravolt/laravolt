@@ -7,7 +7,7 @@
     <x-volt-panel title="Tambah {{ $config['label'] }}">
         {!! form()->post(route('auto-crud::resource.store', $config['key'])) !!}
 
-        {!! form()->make($config['schema'])->render() !!}
+        {!! form()->make($fields)->render() !!}
 
         {!! form()->action([
             form()->submit(__('Save')),

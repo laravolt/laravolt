@@ -25,13 +25,17 @@ class ResourceTable extends TableView
     public function columns(): array
     {
         $columns = [];
-        foreach ($this->resource['schema'] as $field) {
+        $fields = collect($this->resource['schema'])
+            ->filter(function ($item) {
+                return ($item['visibility']['index'] ?? true);
+            });
+
+        foreach ($fields as $field) {
             $columns[] = Raw::make($field['name']);
         }
 
         $columns[] = RestfulButton::make('auto-crud::resource')
-            ->routeParameters(['resource' => $this->resource['key']])
-            ->only('edit', 'destroy');
+            ->routeParameters(['resource' => $this->resource['key']]);
 
         return $columns;
     }

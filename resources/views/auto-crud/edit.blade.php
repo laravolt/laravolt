@@ -7,13 +7,12 @@
     <x-volt-panel title="Edit {{ $config['label'] }}">
         {!! form()->bind($model)->put(route('auto-crud::resource.update', [$config['key'], $model->getKey()])) !!}
 
-        {!! form()->make($config['schema'])->render() !!}
+        {!! form()->make($fields)->render() !!}
 
         {!! form()->action([
             form()->submit(__('Save')),
             form()->link(__('Cancel'), route('auto-crud::resource.index', $config['key']))
         ]) !!}
-
 
         {!! form()->close() !!}
     </x-volt-panel>

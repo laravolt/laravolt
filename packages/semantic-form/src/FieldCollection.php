@@ -64,6 +64,7 @@ class FieldCollection extends Collection
                 break;
 
             case 'datepicker':
+            case 'datetimepicker':
                 $element = form()
                     ->{$type}($field['name'])
                     ->label($field['label'])

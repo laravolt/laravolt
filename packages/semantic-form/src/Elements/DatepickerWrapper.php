@@ -2,6 +2,9 @@
 
 namespace Laravolt\SemanticForm\Elements;
 
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 class DatepickerWrapper extends InputWrapper
 {
     protected $format;
@@ -27,7 +30,7 @@ class DatepickerWrapper extends InputWrapper
         parent::beforeRender();
 
         $this->data('calendar-type', $this->withTime ? 'datetime' : 'date')
-            ->data('calendar-format', $this->format);
+            ->data('calendar-format', $this->withTime ? Str::of($this->format)->before(' ') : $this->format);
     }
 
     public function attributes($attributes)
@@ -39,5 +42,16 @@ class DatepickerWrapper extends InputWrapper
         }
 
         return $this;
+    }
+
+    public function displayValue()
+    {
+        $value = $this->getPrimaryControl()->getValue();
+
+        try {
+            return Carbon::createFromFormat($this->format, $value)->isoFormat($this->withTime ? 'LLL' : 'LL');
+        } catch (\Exception $e) {
+            return $value;
+        }
     }
 }
