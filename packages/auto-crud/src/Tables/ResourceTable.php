@@ -14,23 +14,27 @@ class ResourceTable extends TableView
 {
     public array $resource;
 
+    protected $fields;
+
     public function data()
     {
+        $this->fields = collect($this->resource['schema'])
+            ->filter(
+                function ($item) {
+                    return ($item['visibility']['index'] ?? true);
+                }
+            );
+
         /** @var Model $model */
         $model = app($this->resource['model']);
 
-        return $model->newQuery()->paginate();
+        return $model->newQuery()->whereLike($this->fields->pluck('name')->toArray(), $this->search)->paginate();
     }
 
     public function columns(): array
     {
         $columns = [];
-        $fields = collect($this->resource['schema'])
-            ->filter(function ($item) {
-                return ($item['visibility']['index'] ?? true);
-            });
-
-        foreach ($fields as $field) {
+        foreach ($this->fields as $field) {
             $columns[] = Raw::make($field['name']);
         }
 
