@@ -21,4 +21,6 @@ final class Permission extends Enum
     const MANAGE_WORKFLOW = 'laravolt::manage-workflow';
 
     const MANAGE_SETTINGS = 'laravolt::manage-settings';
+
+    const MANAGE_SYSTEM = 'laravolt::manage-system';
 }
