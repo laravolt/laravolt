@@ -13,7 +13,7 @@ class Laravolt {
                 action: elm.data('action') !== undefined ? elm.data('action') : 'activate',
             };
             if ($(this).hasClass('link')) {
-                options.onChange = function(value, text, $selectedItem) {
+                options.onChange = function (value, text, $selectedItem) {
                     window.location.href = value;
                 };
             }
@@ -470,4 +470,7 @@ if (TURBOLINK_ENABLED) {
     });
 }
 
+window.addEventListener('laravolt.toast', function (e) {
+    $('body').toast(JSON.parse(e.detail));
+});
 
