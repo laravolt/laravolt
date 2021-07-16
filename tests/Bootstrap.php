@@ -10,6 +10,7 @@ use Laravolt\Platform\Providers\EpicentrumServiceProvider;
 use Laravolt\Platform\Providers\PlatformServiceProvider;
 use Laravolt\Platform\Providers\UiServiceProvider;
 use Lavary\Menu\ServiceProvider;
+use Livewire\LivewireServiceProvider;
 
 trait Bootstrap
 {
@@ -19,10 +20,12 @@ trait Bootstrap
     protected function setUp(): void
     {
         parent::setUp();
-
+        // dd(realpath(__DIR__.'/../database/migrations'));
         $this->loadLaravelMigrations();
-        $this->artisan('migrate');
-        // $this->withFactories(realpath(__DIR__.'/../database/factories'));
+        $this->artisan('migrate', [
+            '--path' => realpath(__DIR__.'/../database/migrations'),
+            '--realpath' => true,
+        ]);
     }
 
     /**
@@ -51,6 +54,7 @@ trait Bootstrap
             NoCaptchaServiceProvider::class,
             PlatformServiceProvider::class,
             UiServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 

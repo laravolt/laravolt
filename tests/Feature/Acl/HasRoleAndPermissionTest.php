@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Tests;
+namespace Laravolt\Tests\Feature\Acl;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravolt\Tests\FeatureTest;
 
 class HasRoleAndPermissionTest extends FeatureTest
 {
+    use RefreshDatabase;
+
     public function testUserToRoleRelationship()
     {
         $user = $this->createUser();
@@ -147,8 +151,6 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasPermission('smoking'));
         $this->assertTrue($user->hasPermission(['smoking', 'create']));
         $this->assertFalse($user->hasPermission(['smoking', 'create'], true));
-
-        $this->expectException(\InvalidArgumentException::class);
         $this->assertFalse($user->hasPermission('gambling'));
     }
 

@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Feature\Acl\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravolt\Tests\FeatureTest;
 
 class RoleTest extends FeatureTest
 {
+    use RefreshDatabase;
+
     public function testRoleAndPermissionRelationship()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);

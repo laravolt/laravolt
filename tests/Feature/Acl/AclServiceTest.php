@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Tests;
+namespace Laravolt\Tests\Feature\Acl;
+
+use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravolt\Tests\FeatureTest;
 
 class AclServiceTest extends FeatureTest
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();

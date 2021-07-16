@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Feature\Password;
 
 use Illuminate\Support\Facades\Route;
-use Laravolt\Platform\Http\Middleware\CheckPassword;
+use Laravolt\Middleware\CheckPassword;
 use Laravolt\Tests\FeatureTest;
 
 class CheckPasswordMiddlewareTest extends FeatureTest

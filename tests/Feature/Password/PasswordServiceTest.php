@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Tests\Feature\Password;
+namespace Laravolt\Tests\Feature\Acl\Feature\Password;
 
 use Illuminate\Auth\Passwords\TokenRepositoryInterface;
 use Illuminate\Mail\Mailable;

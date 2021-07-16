@@ -73,11 +73,16 @@ class Role extends Model
     protected function _hasPermission($permission)
     {
         $model = $permission;
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
-        if (!$permission instanceof Model) {
-            $model = app(config('laravolt.epicentrum.models.permission'))->find($permission);
-            if (!$model) {
-                $model = app(config('laravolt.epicentrum.models.permission'))->where('name', $permission)->first();
+        if (!$model instanceof Model) {
+            if (is_int($permission)) {
+                $model = $permissionModel->find($permission);
+            } elseif (is_string($permission)) {
+                $model = match ($permissionModel->getKeyType()) {
+                    'int' => $permissionModel->where('name', $permission)->first(),
+                    'string' => $permissionModel->whereKey($permission)->orWhere('name', $permission)->first(),
+                };
             }
         }
 

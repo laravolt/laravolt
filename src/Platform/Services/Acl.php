@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Services;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class Acl
 {
@@ -39,10 +40,9 @@ class Acl
     {
         return DB::transaction(function () use ($refresh) {
             if ($refresh) {
-                if (!is_sqlite()) {
-                    DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-                }
+                Schema::disableForeignKeyConstraints();
                 app(config('laravolt.epicentrum.models.permission'))->truncate();
+                Schema::enableForeignKeyConstraints();
             }
 
             $items = collect();
