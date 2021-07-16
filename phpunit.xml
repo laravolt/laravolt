@@ -12,9 +12,6 @@
     <testsuite name="Acl">
       <directory suffix="Test.php">./tests/Feature/Acl</directory>
     </testsuite>
-    <testsuite name="Auth">
-      <directory suffix="Test.php">./tests/Feature/Auth</directory>
-    </testsuite>
     <testsuite name="Password">
       <directory suffix="Test.php">./tests/Feature/Password</directory>
     </testsuite>

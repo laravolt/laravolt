@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Tests\Feature\Acl\Feature\Password;
+namespace Laravolt\Tests\Feature\Password;
 
 use Illuminate\Auth\Passwords\TokenRepositoryInterface;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -15,6 +16,8 @@ use Laravolt\Tests\FeatureTest;
 
 class PasswordServiceTest extends FeatureTest
 {
+    use RefreshDatabase;
+
     public function testSendResetLink()
     {
         Mail::fake();

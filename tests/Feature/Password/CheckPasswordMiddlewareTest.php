@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Laravolt\Tests\Feature\Password;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
 use Laravolt\Middleware\CheckPassword;
 use Laravolt\Tests\FeatureTest;
 
 class CheckPasswordMiddlewareTest extends FeatureTest
 {
+    use RefreshDatabase;
+
     public function testDoNothingForGuest()
     {
         Route::middleware(CheckPassword::class)->get('public', function () {

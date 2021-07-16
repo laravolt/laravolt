@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Tests\Feature\Acl;
 
-use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravolt\Tests\FeatureTest;
 
