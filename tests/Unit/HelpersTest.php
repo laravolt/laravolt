@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Unit;
 
 use Laravolt\Tests\UnitTest;
+use function Laravolt\platform_path;
 
 class HelpersTest extends UnitTest
 {

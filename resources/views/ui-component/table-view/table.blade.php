@@ -6,7 +6,7 @@
                 <th scope="col"
                     style="cursor: pointer"
                     wire:click.prevent="sortBy('{{ $column->getSortableColumn() }}')"
-                        {{ array_to_html_attributes($column->headerAttributes()) }}>
+                        {{ $column->headerAttributes(asHtml:true) }}>
 
                     @if($column->getSortableColumn() === $sort)
                         <i class="icon caret {{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -16,7 +16,7 @@
                     {!! $column->getHeader() !!}
                 </th>
             @else
-                <th scope="col" {!! array_to_html_attributes($column->headerAttributes()) !!}>
+                <th scope="col" {!! $column->headerAttributes(asHtml:true) !!}>
                     {!! $column->getHeader() !!}
                 </th>
             @endif

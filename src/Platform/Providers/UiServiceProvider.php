@@ -12,6 +12,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
 use Laravolt\Platform\Services\Menu;
 use Laravolt\Platform\Services\MenuBuilder;
+use function Laravolt\platform_path;
 
 /**
  * Class PackageServiceProvider.

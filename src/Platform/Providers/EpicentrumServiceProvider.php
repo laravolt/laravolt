@@ -13,6 +13,7 @@ use Laravolt\Epicentrum\Livewire\UserTable;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Support\Contracts\TimezoneRepository;
 use Livewire\Livewire;
+use function Laravolt\platform_path;
 
 /**
  * Class PackageServiceProvider.

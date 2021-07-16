@@ -32,11 +32,6 @@ class Checkall extends Column implements ColumnInterface
         return View::make('suitable::columns.checkall.header')->render();
     }
 
-    public function headerAttributes()
-    {
-        return $this->headerAttributes;
-    }
-
     public function cell($data, $collection, $loop)
     {
         $checked = $this->isChecked($data);

@@ -37,6 +37,7 @@ use Laravolt\Platform\Components\TabContent;
 use Laravolt\Platform\Components\Titlebar;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\Password;
+use function Laravolt\platform_path;
 
 class PlatformServiceProvider extends ServiceProvider
 {

@@ -72,8 +72,18 @@ abstract class Column
         return $this->searchableHeader;
     }
 
-    public function headerAttributes()
+    public function headerAttributes($asHtml = false)
     {
+        if ($asHtml) {
+            $tagAttributes = '';
+
+            foreach ($this->headerAttributes as $attribute => $value) {
+                $tagAttributes .= " {$attribute}=\"{$value}\"";
+            }
+
+            return $tagAttributes;
+        }
+
         return $this->headerAttributes;
     }
 

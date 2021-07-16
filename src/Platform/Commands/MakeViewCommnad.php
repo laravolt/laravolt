@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
+use function Laravolt\platform_path;
 
 class MakeViewCommnad extends GeneratorCommand
 {

@@ -1,6 +1,8 @@
 <?php
 
-if (!function_exists('platform_path')) {
+namespace Laravolt;
+
+if (! function_exists('platform_path')) {
     /**
      * Get Laravolt platform absolute directory path.
      *
@@ -14,7 +16,7 @@ if (!function_exists('platform_path')) {
     }
 }
 
-if (!function_exists('platform_max_file_upload')) {
+if (! function_exists('platform_max_file_upload')) {
     /**
      * Determine max file upload size based on php.ini settings.
      *
@@ -22,7 +24,7 @@ if (!function_exists('platform_max_file_upload')) {
      *
      * @return int|string
      */
-    function platform_max_file_upload($shorthand = false): int | string
+    function platform_max_file_upload($shorthand = false): int|string
     {
         $max_upload = shorthand_to_byte(ini_get('upload_max_filesize'));
         $max_post = shorthand_to_byte(ini_get('post_max_size'));
@@ -39,7 +41,7 @@ if (!function_exists('platform_max_file_upload')) {
     }
 }
 
-if (!function_exists('shorthand_to_byte')) {
+if (! function_exists('shorthand_to_byte')) {
     function shorthand_to_byte($shorthand): int
     {
         $shorthand = trim($shorthand);
@@ -62,7 +64,7 @@ if (!function_exists('shorthand_to_byte')) {
     }
 }
 
-if (!function_exists('byte_to_shorthand')) {
+if (! function_exists('byte_to_shorthand')) {
     function byte_to_shorthand($size, $precision = 0): string
     {
         static $units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -77,34 +79,7 @@ if (!function_exists('byte_to_shorthand')) {
     }
 }
 
-if (!function_exists('is_sqlite')) {
-    /**
-     * Determine whether current database connection driver was SQLite or not.
-     *
-     * @return bool
-     */
-    function is_sqlite(): bool
-    {
-        $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver");
-
-        return $driver === 'sqlite';
-    }
-}
-
-if (!function_exists('array_to_html_attributes')) {
-    function array_to_html_attributes(array $attributes): string
-    {
-        $tagAttributes = '';
-
-        foreach ($attributes as $attribute => $value) {
-            $tagAttributes .= " {$attribute}=\"{$value}\"";
-        }
-
-        return $tagAttributes;
-    }
-}
-if (!function_exists('readable_number')) {
+if (! function_exists('readable_number')) {
     function readable_number(float $value, int $precision = 1): string
     {
         $thresholds = [

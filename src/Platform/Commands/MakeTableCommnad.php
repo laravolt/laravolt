@@ -7,6 +7,7 @@ namespace Laravolt\Platform\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Helper\TableSeparator;
+use function Laravolt\platform_path;
 
 class MakeTableCommnad extends GeneratorCommand
 {
