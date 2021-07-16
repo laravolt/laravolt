@@ -6,22 +6,22 @@ namespace Laravolt\AutoCrud\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Arr;
+use Laravolt\AutoCrud\Requests\CrudRequest;
 
 class ResourceController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index(string $resource)
+    public function index(CrudRequest $request, string $resource)
     {
-        $config = $this->validateResource($resource);
+        $config = $request->getConfig();
 
         return view('laravolt::auto-crud.index', compact('config'));
     }
 
-    public function create(string $resource)
+    public function create(CrudRequest $request, string $resource)
     {
-        $config = $this->validateResource($resource);
+        $config = $request->getConfig();
         $fields = collect($config['schema'])
             ->filter(
                 function ($item) {
@@ -32,28 +32,27 @@ class ResourceController extends Controller
         return view('laravolt::auto-crud.create', compact('config', 'fields'));
     }
 
-    public function store(string $resource)
+    public function store(CrudRequest $request, string $resource)
     {
-        $config = $this->validateResource($resource);
-        $data = $this->validateData($config['schema']);
-        app($config['model'])->create($data);
+        $config = $request->getConfig();
+        app($config['model'])->create($request->validated());
 
         return redirect()
             ->route('auto-crud::resource.index', $resource)
             ->withSuccess(sprintf('%s saved', $config['label']));
     }
 
-    public function show(string $resource, $id)
+    public function show(CrudRequest $request, string $resource, $id)
     {
-        $config = $this->validateResource($resource);
+        $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
 
         return view('laravolt::auto-crud.show', compact('config', 'model'));
     }
 
-    public function edit(string $resource, $id)
+    public function edit(CrudRequest $request, string $resource, $id)
     {
-        $config = $this->validateResource($resource);
+        $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
         $fields = collect($config['schema'])
             ->filter(
@@ -65,22 +64,21 @@ class ResourceController extends Controller
         return view('laravolt::auto-crud.edit', compact('config', 'model', 'fields'));
     }
 
-    public function update(string $resource, $id)
+    public function update(CrudRequest $request, string $resource, $id)
     {
-        $config = $this->validateResource($resource);
-        $data = $this->validateData($config['schema']);
+        $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
 
-        $model->update($data);
+        $model->update($request->validated());
 
         return redirect()
             ->back()
             ->withSuccess(sprintf('%s updated', $config['label']));
     }
 
-    public function destroy(string $resource, $id)
+    public function destroy(CrudRequest $request, string $resource, $id)
     {
-        $config = $this->validateResource($resource);
+        $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
 
         $model->delete();
@@ -88,37 +86,5 @@ class ResourceController extends Controller
         return redirect()
             ->back()
             ->withSuccess(sprintf('%s deleted', $config['label']));
-    }
-
-    protected function validateResource(string $resource)
-    {
-        $key = "laravolt.auto-crud.resources.$resource";
-
-        if (! config()->has($key)) {
-            abort(404);
-        }
-
-        // Module level authorization
-        $this->authorize(config('laravolt.auto-crud.permission'));
-
-        // Collection level authorization
-        $this->authorize(config("laravolt.auto-crud.resources.$resource.permission"));
-
-        return config()->get($key) + ['key' => $resource];
-    }
-
-    protected function validateData($schema)
-    {
-        $data = [];
-        foreach ($schema as $field) {
-            $key = $field['name'];
-            if ($field['type'] === 'uploader') {
-                $data[$key] = Arr::first(request()->media($key)->toArray());
-            } else {
-                $data[$key] = request()->input($key);
-            }
-        }
-
-        return $data;
     }
 }
