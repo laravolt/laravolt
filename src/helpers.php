@@ -105,4 +105,13 @@ if (! function_exists('readable_number')) {
 
         return $default;
     }
+
+    if (! function_exists('number_to_rupiah')) {
+        function number_to_rupiah(float $number, int $decimals = 2, bool $prefix = true): string
+        {
+            $symbol = $prefix ? 'Rp' : '';
+
+            return $symbol.number_format($number, $decimals, ',', '.');
+        }
+    }
 }
