@@ -292,10 +292,11 @@ class Laravolt {
                             .replace('MM', MM)
                             .replace('m', m)
                             .replace('M', M)
-                            .replace('Y', Y)
                             .replace('DD', DD)
                             .replace('YYYY', YYYY)
-                            .replace('YY', YY);
+                            .replace('YY', YY)
+                            .replace('Y', Y)
+                            ;
                     }
                 }
             })
