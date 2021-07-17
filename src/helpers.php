@@ -159,7 +159,7 @@ if (! function_exists('readable_number')) {
                 $str .= ' '.$suffix;
             }
 
-            if ($fraction && ($suffix !== false)) {
+            if (((int)(string) $fraction) && ($suffix !== false)) {
                 $str .= ' koma';
                 foreach (str_split($fraction) as $decimal) {
                     $str .= ' '.$base[$decimal];
