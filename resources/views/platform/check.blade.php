@@ -1,6 +1,4 @@
-@extends('laravolt::layouts.plain')
-
-@section('content')
+<x-volt-app title="Platform Check">
     <div class="ui container">
         <x-volt-panel title="Form Submission Check">
             {!! form()->post(route('platform::dump'))->multipart() !!}
@@ -12,4 +10,4 @@
             {!! form()->close() !!}
         </x-volt-panel>
     </div>
-@endsection
+</x-volt-app>
