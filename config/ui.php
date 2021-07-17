@@ -9,20 +9,20 @@ return [
      * Font Size
      * Available options:
      * */
-    'font_size' => 'md',
+    'font_size' => 'sm',
 
     /*
      * Set default theme
      * Available themes: dark, light
      * */
-    'theme' => 'dark',
+    'theme' => 'light',
 
     /*
      * Button color
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'violet',
+    'color' => 'teal',
 
     /*
      * Login page settings

@@ -11,7 +11,6 @@
                     {{ auth()->user()->name }}
                     <div class="sub header">{!!  auth()->user()->roles->map(fn($role) => "{$role->name}")->implode(' &bull; ')  !!}</div>
                 </h4>
-                <div class="ui divider inverted"></div>
             </div>
 
             @if(!$items->isEmpty())

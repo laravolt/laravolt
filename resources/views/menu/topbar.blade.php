@@ -1,7 +1,5 @@
-<header class="ui menu fixed top borderless">
+<header class="ui menu fixed top borderless" id="topbar">
     <div class="item mobile only tablet only" data-role="sidebar-visibility-switcher"><i class="icon sidebar"></i></div>
-
-    @yield('page.back')
 
     <div class="menu p-l-2" id="titlebar">
         <div class="left menu">
