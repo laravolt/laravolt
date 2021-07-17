@@ -114,4 +114,56 @@ if (! function_exists('readable_number')) {
             return $symbol.number_format($number, $decimals, ',', '.');
         }
     }
+
+    /**
+     * @see https://github.com/mul14/terbilang-php
+     */
+    if (! function_exists('number_to_terbilang')) {
+        function number_to_terbilang(int|float $number, $suffix = 'rupiah'): string
+        {
+            $integerPart = floor($number);
+            $fraction = $number - $integerPart;
+            $integerPart = (int) $integerPart;
+
+            $base = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
+            $numeric = ['1000000000000000', '1000000000000', '1000000000000', 1000000000, 1000000, 1000, 100, 10, 1];
+            $unit = ['kuadriliun', 'triliun', 'biliun', 'milyar', 'juta', 'ribu', 'ratus', 'puluh', ''];
+            $str = null;
+
+            $i = 0;
+
+            if ($number === 0) {
+                $str = 'nol';
+            } else {
+                while ($integerPart !== 0) {
+                    $count = (int) ($integerPart / $numeric[$i]);
+
+                    if ($count >= 10) {
+                        $str .= number_to_terbilang($count, false).' '.$unit[$i].' ';
+                    } elseif ($count > 0 && $count < 10) {
+                        $str .= $base[$count].' '.$unit[$i].' ';
+                    }
+
+                    $integerPart -= $numeric[$i] * $count;
+
+                    $i++;
+                }
+
+                $str = preg_replace('/satu puluh (\w+)/i', '\1 belas', $str);
+                $str = preg_replace('/satu (ribu|ratus|puluh|belas)/', 'se\1', $str);
+                $str = preg_replace('/\s{2,}/', ' ', trim($str));
+            }
+
+            if ($suffix) {
+                $str .= ' '.$suffix;
+            }
+
+            if ($fraction) {
+                $str .= ' koma ';
+                // TODO handle angka dibelakang koma
+            }
+
+            return $str;
+        }
+    }
 }

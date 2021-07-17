@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Unit;
 
 use Laravolt\Tests\UnitTest;
+use function Laravolt\number_to_terbilang;
 use function Laravolt\platform_path;
 use function Laravolt\number_to_rupiah;
 
@@ -38,6 +39,14 @@ class HelpersTest extends UnitTest
         $this->assertEquals($outputWithoutDecimals, number_to_rupiah($number, 0, true));
     }
 
+    /**
+     * @dataProvider provideTerbilang
+     */
+    public function test_number_to_terbilang($number, $terbilang)
+    {
+        $this->assertEquals($terbilang, number_to_terbilang($number));
+    }
+
     public function provideRupiah()
     {
         return [
@@ -48,6 +57,26 @@ class HelpersTest extends UnitTest
             [999_999_999.123456, 'Rp999.999.999,12', '999.999.999,12', 'Rp999.999.999'],
             [999_999_999.666, 'Rp999.999.999,67', '999.999.999,67', 'Rp1.000.000.000'],
             [999_999_999.664, 'Rp999.999.999,66', '999.999.999,66', 'Rp1.000.000.000'],
+        ];
+    }
+
+    public function provideTerbilang()
+    {
+        return [
+            [1, 'satu rupiah'],
+            [10, 'sepuluh rupiah'],
+            [100, 'seratus rupiah'],
+            [1000, 'seribu rupiah'],
+            [10_000, 'sepuluh ribu rupiah'],
+            [100_000, 'seratus ribu rupiah'],
+            [1_000_000, 'satu juta rupiah'],
+            [1_000_000_000, 'satu milyar rupiah'],
+            [1_000_000_000_000, 'satu triliun rupiah'],
+            [1_000_000_000_000_000, 'satu kuadriliun rupiah'],
+            [1_000_000_000_000_000_000, 'seribu kuadriliun rupiah'],
+            [1_234, 'seribu dua ratus tiga puluh empat rupiah'],
+            [1_234_567, 'satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh rupiah'],
+            [999.99, 'sembilan ratus sembilan puluh sembilan rupiah koma sembilan sembilan'],
         ];
     }
 }
