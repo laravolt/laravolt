@@ -76,7 +76,8 @@ class HelpersTest extends UnitTest
             [1_000_000_000_000_000_000, 'seribu kuadriliun rupiah'],
             [1_234, 'seribu dua ratus tiga puluh empat rupiah'],
             [1_234_567, 'satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh rupiah'],
-            [999.99, 'sembilan ratus sembilan puluh sembilan rupiah koma sembilan sembilan'],
+            [25_100_671.00, 'dua puluh lima juta seratus ribu enam ratus tujuh puluh satu rupiah'],
+            [25_100_671.123, 'dua puluh lima juta seratus ribu enam ratus tujuh puluh satu rupiah koma satu dua tiga'],
         ];
     }
 }

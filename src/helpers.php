@@ -123,8 +123,9 @@ if (! function_exists('readable_number')) {
     if (! function_exists('number_to_terbilang')) {
         function number_to_terbilang($number, $suffix = 'rupiah'): string
         {
+            $numberString = Str::of((string) $number);
             $integerPart = (int) $number;
-            $fraction = Str::of((string) $number)->afterLast('.');
+            $fraction = $numberString->contains('.') ? $numberString->afterLast('.') : false;
             $base = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
             $numeric = ['1000000000000000', '1000000000000', '1000000000000', 1000000000, 1000000, 1000, 100, 10, 1];
             $unit = ['kuadriliun', 'triliun', 'biliun', 'milyar', 'juta', 'ribu', 'ratus', 'puluh', ''];
@@ -158,7 +159,7 @@ if (! function_exists('readable_number')) {
                 $str .= ' '.$suffix;
             }
 
-            if ($fraction) {
+            if ($fraction && ($suffix !== false)) {
                 $str .= ' koma';
                 foreach (str_split($fraction) as $decimal) {
                     $str .= ' '.$base[$decimal];
