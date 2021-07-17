@@ -2,6 +2,8 @@
 
 namespace Laravolt;
 
+use Illuminate\Support\Str;
+
 if (! function_exists('platform_path')) {
     /**
      * Get Laravolt platform absolute directory path.
@@ -119,12 +121,10 @@ if (! function_exists('readable_number')) {
      * @see https://github.com/mul14/terbilang-php
      */
     if (! function_exists('number_to_terbilang')) {
-        function number_to_terbilang(int|float $number, $suffix = 'rupiah'): string
+        function number_to_terbilang($number, $suffix = 'rupiah'): string
         {
-            $integerPart = floor($number);
-            $fraction = $number - $integerPart;
-            $integerPart = (int) $integerPart;
-
+            $integerPart = (int) $number;
+            $fraction = Str::of((string) $number)->afterLast('.');
             $base = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
             $numeric = ['1000000000000000', '1000000000000', '1000000000000', 1000000000, 1000000, 1000, 100, 10, 1];
             $unit = ['kuadriliun', 'triliun', 'biliun', 'milyar', 'juta', 'ribu', 'ratus', 'puluh', ''];
@@ -159,8 +159,10 @@ if (! function_exists('readable_number')) {
             }
 
             if ($fraction) {
-                $str .= ' koma ';
-                // TODO handle angka dibelakang koma
+                $str .= ' koma';
+                foreach (str_split($fraction) as $decimal) {
+                    $str .= ' '.$base[$decimal];
+                }
             }
 
             return $str;
