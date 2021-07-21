@@ -144,6 +144,9 @@ class FieldCollection extends Collection
                         $element->dependency($field['dependency'], $dependency->getValue());
                     }
                 }
+                if ($field['multiple'] ?? false) {
+                    $element->multiple();
+                }
                 break;
 
             case 'segment':

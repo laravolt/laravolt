@@ -19,7 +19,7 @@ class ProcessInstancesTable extends TableView
     public function data()
     {
         $query = ProcessInstance::query()
-            ->whereHas('definition')
+            // ->whereHas('definition')
             ->autoSort($this->sortPayload())
             ->latest();
 

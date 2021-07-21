@@ -77,6 +77,19 @@ class DropdownDB extends Select
 
     public function displayValue()
     {
+        if ($this->hasAttribute('multiple')) {
+            $values = json_decode($this->value);
+
+            $this->beforeRender();
+
+            $output = [];
+            foreach ($values as $value) {
+                $output[] = Arr::get($this->options, $value);
+            }
+
+            return collect($output)->implode('<br>');
+        }
+
         if (is_string($this->value)) {
             if (trim($this->value) === '') {
                 return null;
