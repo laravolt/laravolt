@@ -8,6 +8,10 @@ class DropdownDBFormatter
 {
     public function __invoke($key, $values)
     {
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return ['value' => array_values($values), 'type' => 'String'];
     }
 }
