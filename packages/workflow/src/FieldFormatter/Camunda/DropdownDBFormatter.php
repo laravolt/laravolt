@@ -12,6 +12,6 @@ class DropdownDBFormatter
             $values = [];
         }
 
-        return ['value' => array_values($values), 'type' => 'String'];
+        return ['value' => array_values($values)];
     }
 }
