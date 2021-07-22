@@ -78,6 +78,7 @@ class DropdownDB extends Select
     public function displayValue()
     {
         if ($this->hasAttribute('multiple')) {
+            return 'TODO ';
             $values = json_decode($this->value);
 
             $this->beforeRender();
