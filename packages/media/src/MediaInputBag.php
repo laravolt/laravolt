@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laravolt\Media;
 
+use Illuminate\Support\Arr;
+
 class MediaInputBag
 {
     protected $key;
@@ -32,6 +34,11 @@ class MediaInputBag
     public function toJson(): string
     {
         return json_encode($this->toArray());
+    }
+
+    public function first(): ?string
+    {
+        return Arr::first($this->toArray());
     }
 
     public function store(string $collection = 'default'): array
