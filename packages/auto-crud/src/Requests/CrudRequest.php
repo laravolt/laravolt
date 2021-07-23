@@ -3,6 +3,7 @@
 namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 
 class CrudRequest extends FormRequest
 {
@@ -48,7 +49,7 @@ class CrudRequest extends FormRequest
     {
         $method = $this->methodMap[$this->method()] ?? false;
 
-        if (!$method) {
+        if (! $method) {
             return [];
         }
 
@@ -59,8 +60,34 @@ class CrudRequest extends FormRequest
                 }
             )->mapWithKeys(
                 function ($item) {
-                    return [$item['name'] => $item['rules'] ?? []];
+                    $key = $item['name'];
+                    if (Arr::get($item, 'type') === 'uploader' && $this->get('_'.$key) !== '[]') {
+                        $key = '_'.$key;
+                    }
+
+                    return [$key => $item['rules'] ?? []];
                 }
             )->toArray();
+    }
+
+    public function validated()
+    {
+        $data = parent::validated();
+
+        //Special case for file uploader
+        collect($this->resourceConfig['schema'])->each(
+            function ($item) use (&$data) {
+                $key = Arr::get($item, 'name');
+                if (Arr::get($item, 'type') === 'uploader') {
+                    if (Arr::get($item, 'limit') === 1 && Arr::get($item, 'as_array') === false) {
+                        $data[$key] = request()->media($key)->first();
+                    } else {
+                        $data[$key] = request()->media($key)->toJson();
+                    }
+                }
+            }
+        );
+
+        return $data;
     }
 }
