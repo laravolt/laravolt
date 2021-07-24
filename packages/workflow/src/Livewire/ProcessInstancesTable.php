@@ -15,11 +15,11 @@ use Laravolt\Workflow\Models\ProcessInstance;
 
 class ProcessInstancesTable extends TableView
 {
-    protected Module $module;
+    public string $moduleId;
 
-    public function mount(Module $module)
+    public function getModuleProperty(): Module
     {
-        $this->module = $module;
+        return Module::make($this->moduleId);
     }
 
     public function data()
@@ -65,7 +65,7 @@ class ProcessInstancesTable extends TableView
         $columns[] = MultipleValues::make('tasks', 'Tasks');
         $columns[] = Date::make('created_at', 'Created At');
         $columns[] = Button::make(
-            fn ($item) => route('workflow::module.instances.show', [request()->route('module'), $item->id]),
+            fn ($item) => route('workflow::module.instances.show', [$this->module->id, $item->id]),
             'Action'
         )->icon('eye');
 
