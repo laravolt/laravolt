@@ -7,7 +7,7 @@
     </x-slot>
 
     @if($module->table === \Laravolt\Workflow\Livewire\ProcessInstancesTable::class)
-        @livewire('laravolt::instances-table', ['variables' => $module->tableVariables])
+        @livewire('laravolt::instances-table', ['module' => $module])
     @else
         @livewire($module->table)
     @endif

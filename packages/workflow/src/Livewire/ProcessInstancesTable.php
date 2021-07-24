@@ -10,22 +10,29 @@ use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RowNumber;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Ui\TableView;
+use Laravolt\Workflow\Entities\Module;
 use Laravolt\Workflow\Models\ProcessInstance;
 
 class ProcessInstancesTable extends TableView
 {
-    public array $variables = [];
+    protected Module $module;
+
+    public function mount(Module $module)
+    {
+        $this->module = $module;
+    }
 
     public function data()
     {
         $query = ProcessInstance::query()
             // ->whereHas('definition')
+            ->where('definition_key', $this->module->processDefinitionKey)
             ->autoSort($this->sortPayload())
             ->latest();
 
         if ($this->search) {
             $searchableColumns = [];
-            foreach ($this->variables as $var) {
+            foreach ($this->module->tableVariables as $var) {
                 $searchableColumns[] = "variables->{$var}->value";
             }
 
@@ -44,11 +51,11 @@ class ProcessInstancesTable extends TableView
             RowNumber::make('No'),
         ];
 
-        if (empty($this->variables)) {
+        if (empty($this->module->tableVariables)) {
             $columns[] = Text::make('process_instance_id', 'ID');
         }
 
-        foreach ($this->variables as $var) {
+        foreach ($this->module->tableVariables as $var) {
             $columns[] = Raw::make(fn ($item) => $item->variables->getValue($var, '-'), Str::title($var));
         }
 
