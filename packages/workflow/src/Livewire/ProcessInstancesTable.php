@@ -56,7 +56,10 @@ class ProcessInstancesTable extends TableView
         }
 
         foreach ($this->module->tableVariables as $var) {
-            $columns[] = Raw::make(fn ($item) => $item->variables->getValue($var, '-'), Str::title($var));
+            $columns[] = Raw::make(
+                fn ($item) => $item->variables->getValue($var, '-'),
+                (string) Str::of($var)->title()->replace('_', ' ')
+            );
         }
 
         $columns[] = MultipleValues::make('tasks', 'Tasks');
