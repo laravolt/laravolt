@@ -1,21 +1,30 @@
 <x-volt-public>
+    <div style="display: flex; align-items: center; justify-content: center">
+        <x-volt-panel title="Tracking" icon="compass" style="min-width:500px;">
 
-    <x-volt-workflow-diagram-button :instance="$instance"></x-volt-workflow-diagram-button>
+            <x-slot name="action">
+                <x-volt-workflow-diagram-button :instance="$instanceModel"></x-volt-workflow-diagram-button>
+            </x-slot>
 
-    <x-volt-panel title="Tracking" icon="compass">
-        <div class="ui relaxed divided list">
-            @foreach($completedTasks as $completedTask)
-                <div class="item">
-                    <div class="image" style="color: green">
-                        <x-volt-icon name="check-circle"/>
+            <div class="ui very relaxed divided list">
+                @foreach($completedTasks as $completedTask)
+                    <div class="item">
+                        <div class="image" style="color: green">
+                            <x-volt-icon name="check-circle"/>
+                        </div>
+                        <div class="content">
+                            <div class="header">{{ $completedTask->name }}</div>
+                            <div class="description">{{ $completedTask->endTime->setTimezone(config('app.timezone'))->isoFormat('LLLL') }}</div>
+                        </div>
                     </div>
-                    <div class="content">
-                        <div class="header">{{ $completedTask->name }}</div>
-                        <div class="description">{{ $completedTask->endTime->isoFormat('dddd, DD MMMM YYYY HH:MM') }}</div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </x-volt-panel>
+                @endforeach
+            </div>
 
+            <div class="ui message">
+                {{ $instanceHistory->state }}
+            </div>
+
+        </x-volt-panel>
+
+    </div>
 </x-volt-public>
