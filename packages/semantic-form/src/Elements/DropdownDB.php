@@ -91,7 +91,7 @@ class DropdownDB extends Select
             return collect($output)->implode('<br>');
         }
 
-        if (is_string($this->value)) {
+        if (is_string($this->value) || is_numeric($this->value)) {
             if (trim($this->value) === '') {
                 return null;
             }

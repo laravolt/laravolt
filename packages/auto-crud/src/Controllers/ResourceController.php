@@ -7,6 +7,7 @@ namespace Laravolt\AutoCrud\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Laravolt\AutoCrud\Requests\CrudRequest;
+use Laravolt\Fields\Field;
 
 class ResourceController extends Controller
 {
@@ -25,6 +26,10 @@ class ResourceController extends Controller
         $fields = collect($config['schema'])
             ->filter(
                 function ($item) {
+                    if ($item instanceof Field) {
+                        return $item->visibleFor('create');
+                    }
+
                     return ($item['visibility']['create'] ?? true);
                 }
             );
@@ -57,6 +62,10 @@ class ResourceController extends Controller
         $fields = collect($config['schema'])
             ->filter(
                 function ($item) {
+                    if ($item instanceof Field) {
+                        return $item->visibleFor('edit');
+                    }
+
                     return ($item['visibility']['edit'] ?? true);
                 }
             );

@@ -4,6 +4,7 @@ namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Laravolt\Fields\Field;
 
 class CrudRequest extends FormRequest
 {
@@ -56,10 +57,16 @@ class CrudRequest extends FormRequest
         return collect($this->resourceConfig['schema'])
             ->filter(
                 function ($item) use ($method) {
+                    if ($item instanceof Field) {
+                        return $item->visibleFor($method);
+                    }
                     return ($item['visibility'][$method] ?? true);
                 }
             )->mapWithKeys(
                 function ($item) {
+                    if ($item instanceof Field) {
+                        $item = $item->toArray();
+                    }
                     $key = $item['name'];
                     if (Arr::get($item, 'type') === 'uploader' && $this->get('_'.$key) !== '[]') {
                         $key = '_'.$key;

@@ -7,6 +7,7 @@ namespace Laravolt\SemanticForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Laravolt\Fields\Field;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\Checkbox;
 use Laravolt\SemanticForm\Elements\FormControl;
@@ -26,6 +27,10 @@ class FieldCollection extends Collection
         foreach ($fields as $key => $field) {
             if (is_string($field)) {
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
+            }
+
+            if ($field instanceof Field) {
+                $field = $field->toArray();
             }
 
             $field['name'] ??= $key;
@@ -128,6 +133,7 @@ class FieldCollection extends Collection
                 break;
 
             case 'dropdownDB':
+            case Field::BELONGS_TO:
                 $element = form()
                     ->dropdownDB(
                         $field['name'],
