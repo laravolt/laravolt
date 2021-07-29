@@ -4,17 +4,6 @@
  * Set specific configuration variables here
  */
 return [
-    'routes' => [
-        'enabled' => true,
-        'middleware' => ['web', 'auth'],
-        'prefix' => 'epicentrum',
-    ],
-    'view' => [
-        'layout' => 'laravolt::layouts.app',
-    ],
-    'menu' => [
-        'enabled' => true,
-    ],
     'role' => [
         'multiple' => true,
         'editable' => true,

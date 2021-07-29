@@ -72,6 +72,10 @@ class EpicentrumServiceProvider extends BaseServiceProvider
             $this->app['laravolt.acl']->registerPermission(Permission::asArray());
         }
 
+        if (! $this->app->routesAreCached() && (config('laravolt.platform.features.epicentrum'))) {
+            include platform_path('routes/epicentrum.php');
+        }
+
         Livewire::component('laravolt::user-table', UserTable::class);
     }
 
@@ -84,10 +88,5 @@ class EpicentrumServiceProvider extends BaseServiceProvider
         Blade::directive('endrole', function () {
             return '<?php endif; ?>';
         });
-    }
-
-    protected function packagePath($path = '')
-    {
-        return sprintf('%s/../%s', __DIR__, $path);
     }
 }

@@ -162,7 +162,9 @@ class PlatformServiceProvider extends ServiceProvider
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
-        include platform_path('routes/web.php');
+        if (! $this->app->routesAreCached()) {
+            include platform_path('routes/web.php');
+        }
 
         return $this;
     }
