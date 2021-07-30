@@ -9,7 +9,7 @@ $router = app('router');
 
 $router->group(
     [
-        'middleware' => ['web', 'auth'],
+        'middleware' => config('laravolt.platform.middleware'),
         'prefix' => 'platform',
         'as' => 'platform::',
     ],
