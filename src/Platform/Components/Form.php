@@ -20,6 +20,7 @@ class Form extends Component
                     ->open($data['attributes']['action'] ?? '')
                     ->setMethod($data['attributes']['method'] ?? 'POST')
                     ->horizontal()
+                .$data['slot']
                 .form()->make($this->schema)->render()
                 .form()->action(form()->submit())
                 .form()->close();
