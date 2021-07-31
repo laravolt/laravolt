@@ -25,6 +25,7 @@ use Laravolt\Platform\Components\Button;
 use Laravolt\Platform\Components\Card;
 use Laravolt\Platform\Components\CardFooter;
 use Laravolt\Platform\Components\Cards;
+use Laravolt\Platform\Components\Form;
 use Laravolt\Platform\Components\Icon;
 use Laravolt\Platform\Components\Item;
 use Laravolt\Platform\Components\Label;
@@ -253,6 +254,7 @@ class PlatformServiceProvider extends ServiceProvider
             Card::class,
             CardFooter::class,
             Cards::class,
+            Form::class,
             Icon::class,
             Item::class,
             Label::class,
