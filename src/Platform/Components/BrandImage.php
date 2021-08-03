@@ -27,6 +27,10 @@ class BrandImage extends Component
         $brandImage = config('laravolt.ui.brand_image');
         $isSvg = Str::of($brandImage)->startsWith('<svg');
 
+        if (!$brandImage) {
+            $brandImage = 'img/app.png';
+        }
+
         return view('laravolt::components.brand-image', compact('brandImage', 'isSvg'));
     }
 }

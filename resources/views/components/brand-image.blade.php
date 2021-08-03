@@ -3,7 +3,7 @@
         {!! $brandImage !!}
     @else
         <img
-                src="{{ $brandImage }}"
+                src="{{ asset($brandImage) }}"
                 alt=""
                 class="ui image tiny centered"
         >
