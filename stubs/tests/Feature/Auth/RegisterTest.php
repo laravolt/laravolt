@@ -1,12 +1,13 @@
 <?php
 
-namespace Laravolt\Tests;
+namespace Tests\Feature\Auth;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravolt\Platform\Mail\AccountActivationMail;
+use Tests\TestCase;
 
-class RegisterTest extends FeatureTest
+class RegisterTest extends TestCase
 {
     public function setUp(): void
     {

@@ -1,11 +1,12 @@
 <?php
 
-namespace Laravolt\Tests;
+namespace Tests\Feature\Auth;
 
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
-class LoginTest extends FeatureTest
+class LoginTest extends TestCase
 {
     public function setUp(): void
     {

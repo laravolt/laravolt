@@ -1,11 +1,12 @@
 <?php
 
-namespace Laravolt\Tests;
+namespace Tests\Feature\Auth;
 
 use Illuminate\Support\Facades\Route;
 use Laravolt\Platform\Models\User;
+use Tests\TestCase;
 
-class LogoutTest extends FeatureTest
+class LogoutTest extends TestCase
 {
     public function setUp(): void
     {

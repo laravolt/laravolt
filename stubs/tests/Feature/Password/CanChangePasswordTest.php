@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Tests\Feature\Password;
+namespace Tests\Feature\Password;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Laravolt\Tests\FeatureTest;
+use Tests\TestCase;
 
-class CanChangePasswordTest extends FeatureTest
+class CanChangePasswordTest extends TestCase
 {
     public function testPasswordChangedAtFilled()
     {

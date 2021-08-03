@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravolt\Tests\Feature\Auth;
+namespace Tests\Feature\Auth;
 
-use Laravolt\Tests\FeatureTest;
+use Tests\TestCase;
 
-class ForgotPasswordTest extends FeatureTest
+class ForgotPasswordTest extends TestCase
 {
     /**
      * @test

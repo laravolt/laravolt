@@ -1,11 +1,12 @@
 <?php
 
-namespace Laravolt\Tests;
+namespace Tests\Feature\Auth;
 
 use Illuminate\Support\Facades\Route;
 use Laravolt\Platform\Models\User;
+use Tests\TestCase;
 
-class ResetPasswordTest extends FeatureTest
+class ResetPasswordTest extends TestCase
 {
     protected $email = 'fulan@example.com';
 
