@@ -24,7 +24,7 @@ abstract class TableView extends Component
 
     protected mixed $data;
 
-    protected $paginationView = 'laravolt::pagination.simple';
+    protected $paginationView = 'laravolt::pagination.livewire.simple';
 
     protected $queryString = [
         'page' => ['except' => 1],
@@ -113,7 +113,7 @@ abstract class TableView extends Component
 
         $perPageOptions = [];
         if ($this->data instanceof LengthAwarePaginator) {
-            $this->paginationView = 'laravolt::pagination.default';
+            $this->paginationView = 'laravolt::pagination.livewire.default';
             if ($this->showPerPage) {
                 $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->data->perPage()]));
                 sort($perPageOptions);

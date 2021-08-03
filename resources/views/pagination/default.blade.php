@@ -1,29 +1,25 @@
-<div class="menu attached right bottom" data-role="pagination">
+<div class="ui pagination menu">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
-        <button class="item disabled prev ui button icon">
-            <i class="icon left chevron" aria-hidden="true"></i>
-        </button>
+        <div class="item disabled"><i class="icon left chevron"></i></div>
     @else
-        <div class="item prev ui button icon" wire:click.prevent="previousPage" rel="prev">
-            <i class="icon left chevron" aria-hidden="true"></i>
-        </div>
+        <a class="item" href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="icon left chevron"></i></a>
     @endif
 
 <!-- Pagination Elements -->
     @foreach ($elements as $element)
     <!-- "Three Dots" Separator -->
         @if (is_string($element))
-            <div class="item disabled dots"><span>{{ $element }}</span></div>
+            <div class="item disabled"><span>{{ $element }}</span></div>
         @endif
 
     <!-- Array Of Links -->
         @if (is_array($element))
             @foreach ($element as $page => $url)
                 @if ($page == $paginator->currentPage())
-                    <div class="item active number">{{ $page }}</div>
+                    <a class="item active">{{ $page }}</a>
                 @else
-                    <button class="item number" wire:click.prevent="gotoPage({{ $page }})">{{ $page }}</button>
+                    <a class="item" href="{{ $url }}">{{ $page }}</a>
                 @endif
             @endforeach
         @endif
@@ -31,12 +27,8 @@
 
 <!-- Next Page Link -->
     @if ($paginator->hasMorePages())
-        <button class="item next ui button icon" wire:click.prevent="nextPage" rel="next">
-            <i class="icon right chevron" aria-hidden="true"></i>
-        </button>
+        <a class="item" href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="icon right chevron"></i></a>
     @else
-        <div class="item disabled next ui button icon">
-            <i class="icon right chevron" aria-hidden="true"></i>
-        </div>
+        <div class="item disabled"><i class="icon right chevron"></i></div>
     @endif
 </div>
