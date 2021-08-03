@@ -3,7 +3,6 @@
 namespace Laravolt\Mailkeeper;
 
 use Illuminate\Mail\MailServiceProvider;
-use Swift_Mailer;
 
 /**
  * Class PackageServiceProvider.
@@ -17,14 +16,27 @@ class ServiceProvider extends MailServiceProvider
      *
      * @return void
      */
-    public function registerSwiftMailer()
+    public function registerIlluminateMailer()
     {
         $this->registerConfig();
 
         if (config('laravolt.mailkeeper.enabled') === true) {
-            $this->registerDbMailer();
+            $this->app->singleton(
+                'mail.manager',
+                function ($app) {
+                    return new DbMailManager($app);
+                }
+            );
+
+            $this->app->bind(
+                'mailer',
+                function ($app) {
+                    return $app->make('mail.manager')->mailer();
+                }
+            );
+
         } else {
-            parent::registerSwiftMailer();
+            parent::registerIlluminateMailer();
         }
     }
 
@@ -40,13 +52,6 @@ class ServiceProvider extends MailServiceProvider
         ], 'migrations');
 
         $this->registerCommands();
-    }
-
-    private function registerDbMailer()
-    {
-        $this->app->singleton('swift.mailer', function () {
-            return new Swift_Mailer(new DbTransport());
-        });
     }
 
     protected function registerCommands()
