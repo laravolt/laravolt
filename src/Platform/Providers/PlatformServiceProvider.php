@@ -71,6 +71,7 @@ class PlatformServiceProvider extends ServiceProvider
             ->bootViews()
             ->bootTranslations()
             ->bootDatabase()
+            ->bootAsset()
             ->bootRoutes()
             ->bootAcl($gate)
             ->bootMenu()
@@ -127,6 +128,16 @@ class PlatformServiceProvider extends ServiceProvider
         $this->publishes(
             [platform_path($migrationFolder) => base_path($migrationFolder)],
             'laravolt-migrations'
+        );
+
+        return $this;
+    }
+
+    protected function bootAsset(): self
+    {
+        $this->publishes(
+            [platform_path('public') => base_path('public/laravolt')],
+            'laravolt-asset'
         );
 
         return $this;
