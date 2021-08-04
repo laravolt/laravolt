@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\MediaHandler;
 
+use Laravolt\Platform\Models\Guest;
+
 class RedactorMediaHandler
 {
     public function __invoke()
     {
+        $user = auth()->user() ?? Guest::first();
+
         try {
             $files = request('file');
             $json = [];
             $i = 1;
 
             foreach ($files as $file) {
-                $media = auth()->user()->addMedia($file)->toMediaCollection();
+                $media = $user->addMedia($file)->toMediaCollection();
                 $json["file-$i"] = [
                     'url' => $media->getUrl(),
                     'id' => $media->getKey(),

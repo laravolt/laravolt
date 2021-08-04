@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\MediaHandler;
 
-use Spatie\MediaLibrary\Models\Media;
+use Laravolt\Platform\Models\Guest;
 
 class FileuploaderMediaHandler
 {
@@ -17,7 +17,8 @@ class FileuploaderMediaHandler
 
     protected function upload()
     {
-        $media = auth()->user()->addMediaFromRequest(request('_key'))->toMediaCollection();
+        $user = auth()->user() ?? Guest::first();
+        $media = $user->addMediaFromRequest(request('_key'))->toMediaCollection();
         $response = [
             'isSuccess' => true,
             'files' => [

@@ -21,6 +21,7 @@
         "barryvdh/laravel-dompdf": "~0.8",
         "bensampo/laravel-enum": "^3.1",
         "blade-ui-kit/blade-icons": "^1.0",
+        "calebporzio/sushi": "^2.2",
         "doctrine/dbal": "^3.0",
         "illuminate/auth": "8.*",
         "illuminate/console": "8.*",

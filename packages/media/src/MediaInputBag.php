@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Media;
 
 use Illuminate\Support\Arr;
+use Laravolt\Platform\Models\Guest;
 
 class MediaInputBag
 {
@@ -23,7 +24,7 @@ class MediaInputBag
     {
         $this->key = $key;
         $this->files = request($this->key);
-        $this->holder = auth()->user();
+        $this->holder = auth()->user() ?? Guest::first();
     }
 
     public function toArray(): array
