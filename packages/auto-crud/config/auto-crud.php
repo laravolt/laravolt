@@ -3,7 +3,7 @@
 return [
     'routes' => [
         'enabled' => true,
-        'middleware' => ['web', 'auth'],
+        'middleware' => config('laravolt.platform.middleware'),
         'prefix' => 'resource',
     ],
     'view' => [

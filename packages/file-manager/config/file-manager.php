@@ -5,7 +5,7 @@
  */
 return [
     'routes' => [
-        'middleware' => ['web', 'auth'],
+        'middleware' => config('laravolt.platform.middleware'),
         'prefix' => 'file-manager',
     ],
     'query_string' => 'key',
