@@ -1,10 +1,15 @@
 <x-volt-public>
-    <div style="display: flex; align-items: center; justify-content: center">
+    <div style="display: flex; align-items: center; justify-content: center; margin-top: 2rem">
+
         <x-volt-panel title="Tracking" icon="compass" style="min-width:500px;">
 
             <x-slot name="action">
                 <x-volt-workflow-diagram-button :instance="$instanceHistory"></x-volt-workflow-diagram-button>
             </x-slot>
+
+            <form class="ui form p-b-2">
+                {!! form()->input('url', url()->current())->prependLabel('URL')->addClass('fluid') !!}
+            </form>
 
             <div class="ui very relaxed divided list">
 
@@ -38,7 +43,7 @@
                         </div>
                         <div class="content">
                             <div class="header">{{ $task->name }}</div>
-                            <div class="description">Sedang diproses...</div>
+                            <div class="description">Menunggu diproses...</div>
                         </div>
                     </div>
                 @endforeach

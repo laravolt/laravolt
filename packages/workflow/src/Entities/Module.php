@@ -87,6 +87,11 @@ class Module extends DataTransferObject
         return config("laravolt.workflow-modules.{$this->id}.tasks.$taskDefinitionKey.form_schema", []);
     }
 
+    public function message(string $taskDefinitionKey, string $type, string $default = ''): string
+    {
+        return config("laravolt.workflow-modules.{$this->id}.tasks.$taskDefinitionKey.messages.$type", $default);
+    }
+
     public function registerTaskEvents(string $taskKey): void
     {
         $listeners = config("laravolt.workflow-modules.{$this->id}.tasks.$taskKey.listeners", []);

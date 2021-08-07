@@ -9,7 +9,11 @@ Route::group(
         'middleware' => config('laravolt.platform.middleware'),
     ],
     function (\Illuminate\Routing\Router $router) {
-        Route::post('media', [\Laravolt\Media\Controllers\MediaController::class, 'store'])->name('store');
-        Route::delete('media/{id}', [\Laravolt\Media\Controllers\MediaController::class, 'destroy'])->name('destroy');
+        Route::post('media', [\Laravolt\Media\Controllers\MediaController::class, 'store'])
+            ->name('store')
+            ->withoutMiddleware('auth');
+
+        Route::delete('media/{id}', [\Laravolt\Media\Controllers\MediaController::class, 'destroy'])->name('destroy')
+            ->withoutMiddleware('auth');
     }
 );

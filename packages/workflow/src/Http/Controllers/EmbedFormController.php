@@ -19,7 +19,10 @@ class EmbedFormController
         $module = Module::make('rekrutmen');
         /** @var \Laravolt\Workflow\Models\ProcessInstance $instance */
         $instance = app(WorkflowService::class)->start($module, request()->all());
+        $successMessage = $module->message($module->startTaskKey(), 'success', 'Form successfully submitted');
 
-        return redirect()->route('workflow::embed-tracking.show', $instance->getTrackingCode());
+        return redirect()
+            ->route('workflow::embed-tracking.show', $instance->getTrackingCode())
+            ->withSuccess($successMessage);
     }
 }
