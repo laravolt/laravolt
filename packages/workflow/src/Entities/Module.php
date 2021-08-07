@@ -76,7 +76,7 @@ class Module extends DataTransferObject
 
         $html = form()->post($url)->multipart()->horizontal();
         $html .= form()->make($this->startFormSchema())->bindValues($data)->render();
-        $html .= form()->action(form()->submit('Simpan'));
+        $html .= form()->action(form()->submit(request('_action', 'Simpan')));
         $html .= form()->close();
 
         return $html;
