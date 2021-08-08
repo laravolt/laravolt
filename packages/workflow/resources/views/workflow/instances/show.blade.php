@@ -1,4 +1,4 @@
-<x-volt-app :title="$module->name.': '.$instance->business_key">
+<x-volt-app :title="$module->name.': '.($instance->business_key ?? $instance->businessKey)">
     <x-slot name="actions">
         <x-volt-workflow-diagram-button :instance="$instance"></x-volt-workflow-diagram-button>
         <x-volt-link-button

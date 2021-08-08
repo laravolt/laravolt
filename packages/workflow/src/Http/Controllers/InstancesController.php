@@ -3,6 +3,8 @@
 namespace Laravolt\Workflow\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
+use Laravolt\Camunda\Http\ProcessInstanceClient;
+use Laravolt\Camunda\Http\ProcessInstanceHistoryClient;
 use Laravolt\Camunda\Http\TaskClient;
 use Laravolt\Camunda\Http\TaskHistoryClient;
 use Laravolt\Workflow\Entities\Module;
@@ -18,16 +20,21 @@ class InstancesController
         return view('laravolt::workflow.instances.index', compact('module'));
     }
 
-    public function show(string $module, string $id): View
+    public function show(string $moduleId, string $id): View
     {
-        $module = Module::make($module);
-        $instance = ProcessInstance::findOrFail($id);
-        $definition = $instance->definition;
+        $module = Module::make($moduleId);
+        $instance = ProcessInstance::find($id) ?? ProcessInstanceHistoryClient::find($id);
         $completedTasks = TaskHistoryClient::getByProcessInstanceId($id);
         $openTasks = TaskClient::getByProcessInstanceId($id);
-        $variables = $instance->variables->toArray();
 
-        return view('laravolt::workflow.instances.show', compact('instance', 'definition', 'module', 'openTasks', 'completedTasks', 'variables'));
+        if ($instance instanceof ProcessInstance) {
+            $variables = $instance->variables->toArray();
+        } else {
+            $variables = collect(ProcessInstanceClient::variables($id))->transform(fn ($item) => $item->value)->toArray();
+        }
+
+
+        return view('laravolt::workflow.instances.show', compact('instance', 'module', 'openTasks', 'completedTasks', 'variables'));
     }
 
     public function create(string $module): View
