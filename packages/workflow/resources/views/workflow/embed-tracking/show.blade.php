@@ -1,21 +1,29 @@
 <x-volt-public>
     <div style="display: flex; align-items: center; justify-content: center; margin-top: 2rem">
 
-        <x-volt-panel title="Tracking" icon="compass" style="min-width:500px;">
+        <x-volt-panel :title="$module->name" icon="compass" style="min-width:500px;">
 
             <x-slot name="action">
                 <x-volt-workflow-diagram-button :instance="$instanceHistory"></x-volt-workflow-diagram-button>
             </x-slot>
 
-            <form class="ui form p-b-2">
-                {!! form()->input('url', url()->current())->prependLabel('URL')->addClass('fluid') !!}
+            <form class="ui form m-b-3">
+                {!! form()->input('url', url()->current())->prependLabel('URL')->addClass('fluid')->hint('This is secret URL. Do not share with others.') !!}
             </form>
+
+            @if(!empty($module->trackerVariables))
+                <div class="ui form m-b-3">
+                    {!! form()->make($schema)->bindValues($variables)->display() !!}
+                </div>
+            @endif
+
+            <h3 class="ui horizontal divider section">Status</h3>
 
             <div class="ui very relaxed divided list">
 
                 <div class="item">
-                    <div class="image" style="color: green">
-                        <x-volt-icon name="check-circle"/>
+                    <div class="image">
+                        <x-volt-icon name="rocket"/>
                     </div>
                     <div class="content">
                         <div class="header">Start</div>
@@ -25,8 +33,8 @@
 
                 @foreach($completedTasks as $completedTask)
                     <div class="item">
-                        <div class="image" style="color: green">
-                            <x-volt-icon name="check-circle"/>
+                        <div class="image">
+                            <x-volt-icon name="badge-check"/>
                         </div>
                         <div class="content">
                             <div class="header">{{ $completedTask->name }}</div>

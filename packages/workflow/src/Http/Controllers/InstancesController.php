@@ -33,7 +33,6 @@ class InstancesController
             $variables = collect(ProcessInstanceClient::variables($id))->transform(fn ($item) => $item->value)->toArray();
         }
 
-
         return view('laravolt::workflow.instances.show', compact('instance', 'module', 'openTasks', 'completedTasks', 'variables'));
     }
 

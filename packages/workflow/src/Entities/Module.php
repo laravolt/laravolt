@@ -20,6 +20,8 @@ class Module extends DataTransferObject
 
     public array $tableVariables;
 
+    public array $trackerVariables;
+
     public array $tasks;
 
     /**
@@ -85,6 +87,17 @@ class Module extends DataTransferObject
     public function formSchema(string $taskDefinitionKey): array
     {
         return config("laravolt.workflow-modules.{$this->id}.tasks.$taskDefinitionKey.form_schema", []);
+    }
+
+    public function trackerFormSchema(): array
+    {
+        return collect(config("laravolt.workflow-modules.{$this->id}.tasks", []))
+            ->pluck('form_schema')
+            ->flatMap(function ($item) {
+                return $item;
+            })
+            ->only($this->trackerVariables)
+            ->toArray();
     }
 
     public function message(string $taskDefinitionKey, string $type, string $default = ''): string
