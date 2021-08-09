@@ -11,6 +11,21 @@ use Laravolt\Workflow\Models\ProcessInstance;
 
 class EmbedTrackingController
 {
+    public function index(string $moduleId)
+    {
+        $module = Module::make($moduleId);
+        $trackingCode = request('code');
+        if ($trackingCode) {
+            try {
+                $instanceHistory = ProcessInstanceHistoryClient::find($trackingCode);
+            } catch (ObjectNotFoundException $e) {
+                $instanceHistory = null;
+            }
+        }
+
+        return view('laravolt::workflow.embed-tracking.index', compact('module', 'trackingCode', 'instanceHistory'));
+    }
+
     public function show(string $moduleId, string $trackingCode)
     {
         $module = Module::make($moduleId);

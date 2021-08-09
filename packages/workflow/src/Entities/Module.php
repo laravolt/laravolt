@@ -33,7 +33,7 @@ class Module extends DataTransferObject
 
         if (! $config) {
             throw new \DomainException(
-                "File config config/laravolt/workflow-modules/$id.php belum dibuat atau jalankan command `php artisan app:sync-module` terlebih dahulu untuk sinkronisasi Modul."
+                "File config config/laravolt/workflow-modules/$id.php belum dibuat."
             );
         }
 

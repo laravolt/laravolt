@@ -23,7 +23,7 @@ Route::group(
             ->withoutMiddleware('auth');
         Route::resource('{module}/form', EmbedFormController::class)->only(['create', 'store'])
             ->withoutMiddleware('auth');
-        Route::resource('{module}/tracker', EmbedTrackingController::class)->only(['show'])
+        Route::resource('{module}/tracker', EmbedTrackingController::class)->only(['index', 'show'])
             ->withoutMiddleware('auth');
     }
 );
