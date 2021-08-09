@@ -15,13 +15,15 @@ class EmbedTrackingController
     {
         $module = Module::make($moduleId);
         $trackingCode = request('code');
+        $instanceHistory = null;
         if ($trackingCode) {
             try {
                 $instanceHistory = ProcessInstanceHistoryClient::find($trackingCode);
             } catch (ObjectNotFoundException $e) {
-                $instanceHistory = null;
+                //do nothing
             }
         }
+
 
         return view('laravolt::workflow.embed-tracking.index', compact('module', 'trackingCode', 'instanceHistory'));
     }
