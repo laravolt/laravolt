@@ -22,6 +22,8 @@ class Module extends DataTransferObject
 
     public array $trackerVariables;
 
+    public array $trackerTasks;
+
     public array $tasks;
 
     /**

@@ -40,6 +40,9 @@ class EmbedTrackingController
 
         $completedTasks = TaskHistoryClient::getByProcessInstanceId($trackingCode);
         $ongoingTasks = TaskClient::getByProcessInstanceId($trackingCode);
+        $availableTasks = collect($ongoingTasks)->filter(function ($item) use ($module) {
+            return in_array($item->taskDefinitionKey, $module->trackerTasks);
+        });
 
         if ($instanceModel instanceof ProcessInstance) {
             $variables = $instanceModel->variables->toArray();
@@ -59,6 +62,7 @@ class EmbedTrackingController
                 'instanceModel',
                 'instanceHistory',
                 'ongoingTasks',
+                'availableTasks',
                 'completedTasks'
             )
         );
