@@ -29,7 +29,16 @@ class EmbedTrackingController
 
         return view(
             'laravolt::workflow.embed-tracking.show',
-            compact('module', 'schema', 'variables', 'instanceModel', 'instanceHistory', 'ongoingTasks', 'completedTasks')
+            compact(
+                'trackingCode',
+                'module',
+                'schema',
+                'variables',
+                'instanceModel',
+                'instanceHistory',
+                'ongoingTasks',
+                'completedTasks'
+            )
         );
     }
 }

@@ -21,7 +21,7 @@ Route::group(
         Route::get('definitions/{definition}/xml', DefinitionXmlController::class)
             ->name('definitions.xml')
             ->withoutMiddleware('auth');
-        Route::resource('{module}/embed-form', EmbedFormController::class)->only(['show', 'store'])
+        Route::resource('{module}/form', EmbedFormController::class)->only(['create', 'store'])
             ->withoutMiddleware('auth');
         Route::resource('{module}/tracker', EmbedTrackingController::class)->only(['show'])
             ->withoutMiddleware('auth');

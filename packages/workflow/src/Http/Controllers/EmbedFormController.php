@@ -7,11 +7,11 @@ use Laravolt\Workflow\WorkflowService;
 
 class EmbedFormController
 {
-    public function show(string $key)
+    public function create(string $moduleId)
     {
-        $module = Module::make('rekrutmen');
+        $module = Module::make($moduleId);
 
-        return view('laravolt::workflow.embed-form.show', compact('module', 'key'));
+        return view('laravolt::workflow.embed-form.create', compact('module'));
     }
 
     public function store()
@@ -22,7 +22,7 @@ class EmbedFormController
         $successMessage = $module->message($module->startTaskKey(), 'success', 'Form successfully submitted');
 
         return redirect()
-            ->route('workflow::embed-tracking.show', $instance->getTrackingCode())
+            ->route('workflow::tracker.show', [$module->id, $instance->getTrackingCode()])
             ->withSuccess($successMessage);
     }
 }

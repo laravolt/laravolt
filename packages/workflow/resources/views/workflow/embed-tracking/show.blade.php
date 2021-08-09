@@ -7,7 +7,12 @@
                 <x-volt-workflow-diagram-button :instance="$instanceHistory"></x-volt-workflow-diagram-button>
             </x-slot>
 
-            <form class="ui form m-b-3">
+            <h3 class="ui header" style="font-family: monospace">
+                <div class="sub header">Tracking Code</div>
+                {{ $trackingCode }}
+            </h3>
+
+            <form class="ui form m-b-4">
                 {!! form()->input('url', url()->current())->prependLabel('URL')->addClass('fluid')->hint('This is secret URL. Do not share with others.') !!}
             </form>
 
