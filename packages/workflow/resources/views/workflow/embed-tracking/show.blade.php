@@ -22,8 +22,6 @@
                 </div>
             @endif
 
-            <h3 class="ui horizontal divider section">Status</h3>
-
             <div class="ui very relaxed divided list">
 
                 <div class="item">

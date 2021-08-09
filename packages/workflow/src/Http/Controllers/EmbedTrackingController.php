@@ -2,6 +2,7 @@
 
 namespace Laravolt\Workflow\Http\Controllers;
 
+use Laravolt\Camunda\Exceptions\ObjectNotFoundException;
 use Laravolt\Camunda\Http\ProcessInstanceHistoryClient;
 use Laravolt\Camunda\Http\TaskClient;
 use Laravolt\Camunda\Http\TaskHistoryClient;
@@ -14,8 +15,14 @@ class EmbedTrackingController
     {
         $module = Module::make($moduleId);
         $schema = $module->trackerFormSchema();
-        $instanceModel = ProcessInstance::find($trackingCode.'x');
-        $instanceHistory = ProcessInstanceHistoryClient::find($trackingCode);
+        $instanceModel = ProcessInstance::find($trackingCode);
+
+        try {
+            $instanceHistory = ProcessInstanceHistoryClient::find($trackingCode);
+        } catch (ObjectNotFoundException $e) {
+            abort(404);
+        }
+
         $completedTasks = TaskHistoryClient::getByProcessInstanceId($trackingCode);
         $ongoingTasks = TaskClient::getByProcessInstanceId($trackingCode);
 
