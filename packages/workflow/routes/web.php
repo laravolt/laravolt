@@ -15,8 +15,8 @@ Route::group(
     ],
     function () {
         Route::resource('definitions', DefinitionController::class);
-        Route::resource('module.instances', InstancesController::class);
-        Route::resource('module.tasks', TaskController::class)->only('update');
+        Route::resource('module.instances', InstancesController::class)->withoutMiddleware('auth');
+        Route::resource('module.tasks', TaskController::class)->only('update')->withoutMiddleware('auth');
 
         Route::get('definitions/{definition}/xml', DefinitionXmlController::class)
             ->name('definitions.xml')
