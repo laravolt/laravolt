@@ -18,7 +18,7 @@ use Laravolt\SemanticForm\Elements\SegmentTitle;
 class FieldCollection extends Collection
 {
     protected $fieldMethod = [
-        'api', 'ajax', 'query', 'fieldLabel', 'fieldAttributes', 'limit', 'extensions', 'placeholder', 'value',
+        'api', 'ajax', 'query', 'fieldLabel', 'fieldAttributes', 'limit', 'extensions', 'fileMaxSize', 'placeholder', 'value',
         'readonly', 'required',
     ];
 
