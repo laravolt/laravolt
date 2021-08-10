@@ -98,10 +98,10 @@ class Uploader extends Input
                     ],
                 ];
             } else {
-                $imageHeader = get_headers($media, true);
+                $imageHeader = @get_headers($media, true);
                 $data[] = [
                     'file' => URL::to($media),
-                    'name' => $media,
+                    'name' => basename($media),
                     'size' => $imageHeader['Content-Length'] ?? 0,
                     'type' => $imageHeader['Content-Type'] ?? 'image/jpg',
                 ];
@@ -121,7 +121,11 @@ class Uploader extends Input
             $output .= '</div>';
 
             foreach ($this->value as $media) {
-                $output .= sprintf("<div class='item'><a href='%s'>%s</a></div>", $media['file'], $media['name']);
+                $output .= sprintf(
+                    "<div class='item'><a href='%s' target='_blank'>%s <i class='icon paperclip'></i></a></div>",
+                    $media['file'],
+                    $media['name']
+                );
             }
 
             return $output;
