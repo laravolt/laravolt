@@ -39,7 +39,7 @@
     <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
 </head>
 
-<body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }}">
+<body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }} @yield('body.class')">
 
 {{ $slot }}
 

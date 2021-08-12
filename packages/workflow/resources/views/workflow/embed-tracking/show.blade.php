@@ -1,4 +1,5 @@
 <x-volt-public>
+    @section('body.class', 'workflow-tracker')
     <div style="margin-top: 2rem" class="ui two column centered grid">
 
         <div class="row">

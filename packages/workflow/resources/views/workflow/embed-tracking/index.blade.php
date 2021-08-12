@@ -1,4 +1,5 @@
 <x-volt-public>
+    @section('body.class', 'workflow-tracker')
     <div style="display: flex; align-items: center; justify-content: center; margin-top: 2rem;">
         <x-volt-panel :title="$module->name" icon="compass" style="min-width: 500px">
             {!! form()->get() !!}
