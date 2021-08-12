@@ -32,7 +32,8 @@ class WorkflowService
 
         $instance = ProcessDefinitionClient::start(
             key: $module->processDefinitionKey,
-            variables: $form->toCamundaVariables()
+            variables: $form->toCamundaVariables(),
+            tenantId: config('services.camunda.tenant_id')
         );
 
         return ProcessInstance::sync($instance);
