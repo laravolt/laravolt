@@ -78,7 +78,7 @@ class Module extends DataTransferObject
     {
         $url ??= route('workflow::module.instances.store', $this->id);
 
-        $html = form()->post($url)->multipart()->horizontal();
+        $html = form()->post($url)->multipart()->horizontal()->data('role', 'start-form');
         $html .= form()->make($this->startFormSchema())->bindValues($data)->render();
         $html .= form()->action(form()->submit(request('_action', 'Simpan')));
         $html .= form()->close();
