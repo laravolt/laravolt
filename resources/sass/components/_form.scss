@@ -176,6 +176,9 @@ $widths: (
   .pushed, > .field > .ui.checkbox {
     flex-basis: 100%;
     margin-left: calc(#{$labelWidth} + #{$labelMargin});
+    @media only screen and (max-width: 767px) {
+      margin-left: 0;
+    }
   }
 
 }
