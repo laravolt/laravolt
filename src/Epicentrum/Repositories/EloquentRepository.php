@@ -106,4 +106,9 @@ class EloquentRepository implements RepositoryInterface
     {
         return config('laravolt.epicentrum.user_available_status');
     }
+
+    public function count():int
+    {
+        return $this->model->count();
+    }
 }

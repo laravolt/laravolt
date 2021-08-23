@@ -22,4 +22,6 @@ interface RepositoryInterface
     public function delete($id);
 
     public function availableStatus();
+
+    public function count():int;
 }

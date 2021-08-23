@@ -3,16 +3,20 @@
 namespace Laravolt\Epicentrum\Http\Controllers\User;
 
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Mail\AccountInformation;
 use Laravolt\Epicentrum\Repositories\RepositoryInterface;
+use Laravolt\Platform\Models\User;
 use Laravolt\Support\Contracts\TimezoneRepository;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
+
     protected RepositoryInterface $repository;
 
     protected TimezoneRepository $timezone;
@@ -46,6 +50,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         $statuses = $this->repository->availableStatus();
         $roles = app('laravolt.epicentrum.role')->all()->pluck('name', 'id');
         $multipleRole = config('laravolt.epicentrum.role.multiple');
@@ -63,6 +68,8 @@ class UserController extends Controller
      */
     public function store(Store $request)
     {
+        $this->authorize('create', User::class);
+
         // save to db
         $roles = $request->get('roles', []);
         $user = $this->repository->createByAdmin($request->all(), $roles);

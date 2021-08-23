@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Update;
 use Laravolt\Epicentrum\Livewire\UserTable;
+use Laravolt\Epicentrum\Policies\UserPolicy;
 use Laravolt\Platform\Enums\Permission;
+use Laravolt\Platform\Models\User;
 use Laravolt\Support\Contracts\TimezoneRepository;
 use Livewire\Livewire;
 use function Laravolt\platform_path;
@@ -57,6 +60,8 @@ class EpicentrumServiceProvider extends BaseServiceProvider
         $this->app->bind(Store::class, config('laravolt.epicentrum.requests.account.store'));
         $this->app->bind(Update::class, config('laravolt.epicentrum.requests.account.update'));
         $this->app->bind(Delete::class, config('laravolt.epicentrum.requests.account.delete'));
+
+        Gate::policy(User::class, UserPolicy::class);
     }
 
     /**

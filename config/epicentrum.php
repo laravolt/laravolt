@@ -21,6 +21,9 @@ return [
             'delete' => \Laravolt\Epicentrum\Http\Requests\Account\Delete::class,
         ],
     ],
+    // Max user allowed
+    // null or 0 mean unlimited
+    'user_limit' => null,
     'user_available_status' => [
         'PENDING' => 'PENDING',
         'ACTIVE' => 'ACTIVE',
