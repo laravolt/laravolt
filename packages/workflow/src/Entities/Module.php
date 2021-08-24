@@ -80,7 +80,7 @@ class Module extends DataTransferObject
 
         $html = form()->post($url)->multipart()->horizontal()->data('role', 'start-form');
         $html .= form()->make($this->startFormSchema())->bindValues($data)->render();
-        $html .= form()->action(form()->submit(request('_action', 'Simpan')));
+        $html .= form()->action(form()->submit(request('_action', 'Simpan'))->addClass(config('laravolt.ui.color')));
         $html .= form()->close();
 
         return $html;
