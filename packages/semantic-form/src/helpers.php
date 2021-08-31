@@ -64,26 +64,24 @@ if (!function_exists('form_calendar_text')) {
      */
     function form_calendar_text(): array
     {
-        $now = \Carbon\Carbon::now();
-        $startOfWeek = $now->startOfWeek(\Carbon\Carbon::SUNDAY);
+        $startOfWeek = now()->startOfWeek(\Carbon\Carbon::SUNDAY);
         $days = $months = $monthsShort = [];
         for ($i = 0; $i < 7; $i++) {
             $days[] = $startOfWeek->isoFormat('dd');
             $startOfWeek->addDay();
         }
         for ($i = 1; $i <= 12; $i++) {
-            $day = \Carbon\Carbon::createFromDate(2020, $i);
+            $day = \Carbon\Carbon::createFromDate(2020, $i, 1);
             $months[] = $day->isoFormat('MMMM');
             $monthsShort[] = $day->isoFormat('MMM');
         }
-        $localization = [
+
+        return [
             'days' => $days,
             'months' => $months,
             'monthsShort' => $monthsShort,
             'today' => __('Hari ini'),
             'now' => __('Sekarang'),
         ];
-
-        return $localization;
     }
 }
