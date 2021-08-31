@@ -72,7 +72,7 @@ if (! function_exists('form_calendar_text')) {
             $startOfWeek->addDay();
         }
         for ($i = 1; $i <= 12; $i++) {
-            $day = \Carbon\Carbon::createFromDate(2020, $i);
+            $day = \Carbon\Carbon::createFromDate(2020, $i, 1);
             $months[] = $day->isoFormat('MMMM');
             $monthsShort[] = $day->isoFormat('MMM');
         }
