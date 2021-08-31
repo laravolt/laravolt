@@ -2,13 +2,11 @@
 
 namespace App\Http\Livewire\Chart;
 
-use Laravolt\Charts\Chart;
+use Laravolt\Charts\Line;
 
-class DummyClass extends Chart
+class DummyClass extends Line
 {
     protected string $title = 'DummyClass';
-
-    protected string $type = self::LINE;
 
     protected int $height = 350;
 

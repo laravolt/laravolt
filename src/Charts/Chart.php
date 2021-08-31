@@ -16,7 +16,7 @@ abstract class Chart extends Component
 
     protected string $title = '';
 
-    protected string $type = 'line';
+    protected string $type = self::LINE;
 
     protected int $height = 350;
 
@@ -31,7 +31,7 @@ abstract class Chart extends Component
 
     abstract protected function series(): array;
 
-    protected function labels(): array
+    public function labels(): array
     {
         return array_keys(collect($this->series)->last());
     }
