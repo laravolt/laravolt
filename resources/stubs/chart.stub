@@ -6,9 +6,18 @@ use Laravolt\Charts\Chart;
 
 class DummyClass extends Chart
 {
-    public string $title = 'DummyClass';
+    protected string $title = 'DummyClass';
 
-    public string $type = self::LINE;
+    protected string $type = self::LINE;
+
+    protected int $height = 350;
+
+    /**
+     * Sembunyikan semua element pendukung chart seperti sumbu x-y dan label.
+     * Cocok untuk menampilkan chart dalam area yang sempit.
+     * @link https://apexcharts.com/docs/options/chart/sparkline/
+     */
+    protected bool $sparkline = false;
 
     public function series(): array
     {

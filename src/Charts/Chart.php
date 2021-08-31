@@ -7,19 +7,24 @@ use Livewire\Component;
 
 abstract class Chart extends Component
 {
-    public const BAR = 'bar';
-    public const LINE = 'line';
     public const AREA = 'area';
+    public const BAR = 'bar';
     public const DONUT = 'donut';
+    public const LINE = 'line';
 
     public string $key;
 
-    public string $title = '';
+    protected string $title = '';
 
-    public string $type = 'line';
+    protected string $type = 'line';
 
-    public int $height = 350;
+    protected int $height = 350;
 
+    /**
+     * Sembunyikan semua element pendukung chart seperti sumbu x-y dan label.
+     * Cocok untuk menampilkan chart dalam area yang sempit.
+     * @link https://apexcharts.com/docs/options/chart/sparkline/
+     */
     protected bool $sparkline = false;
 
     protected array $series = [];
@@ -36,6 +41,11 @@ abstract class Chart extends Component
         return $this->title;
     }
 
+    public function height(): int
+    {
+        return $this->height;
+    }
+
     public function mount(): void
     {
         $this->key = 'chart-'.Str::uuid();
@@ -48,7 +58,7 @@ abstract class Chart extends Component
             'series' => $this->formatSeries(),
             'labels' => $this->labels(),
             'chart' => [
-                'height' => $this->height,
+                'height' => $this->height(),
                 'type' => $this->type,
                 'zoom' => [
                     'enabled' => false,
@@ -56,9 +66,9 @@ abstract class Chart extends Component
                 'toolbar' => ['show' => false],
                 'sparkline' => ['enabled' => $this->sparkline],
             ],
-            'xaxis' => [
-                'categories' => $this->labels(),
-            ],
+            // 'xaxis' => [
+            //     'categories' => $this->labels(),
+            // ],
             'stroke' => [
                 'curve' => 'smooth',
                 'width' => 2,
