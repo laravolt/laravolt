@@ -16,6 +16,7 @@ use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeChartCommnad;
+use Laravolt\Platform\Commands\MakeStatisticCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
@@ -48,6 +49,7 @@ class PlatformServiceProvider extends ServiceProvider
         MakeTableCommnad::class,
         MakeChartCommnad::class,
         MakeViewCommnad::class,
+        MakeStatisticCommnad::class,
         ManageRole::class,
         ManageUser::class,
         LinkCommand::class,

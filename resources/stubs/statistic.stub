@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Livewire\Statistic;
+
+use Laravolt\Ui\Statistic;
+
+class DummyClass extends Statistic
+{
+     public string $label = 'default label';
+
+     /** @link https://fomantic-ui.com/globals/site.html#colors  */
+     public ?string $color = 'pink';
+
+     /** @link https://fontawesome.com/icons?d=gallery&p=2&s=duotone&m=pro */
+     public ?string $icon = 'user';
+
+     public function value(): int|string
+     {
+         // put your logic here
+         return 999;
+     }
+}
