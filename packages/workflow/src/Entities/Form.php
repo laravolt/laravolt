@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Entities;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Laravolt\Fields\Field;
 use Laravolt\Workflow\FieldFormatter\CamundaFormatter;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -34,7 +36,18 @@ class Form extends DataTransferObject
     public function rules(): array
     {
         return collect($this->schema)
-            ->transform(fn ($item) => $item['rules'] ?? [])
+            ->mapWithKeys(
+                function ($item, $key) {
+                    if ($item instanceof Field) {
+                        $item = $item->toArray();
+                    }
+                    if (Arr::get($item, 'type') === 'uploader' && Arr::get($this->data, '_'.$key) !== '[]') {
+                        $key = '_'.$key;
+                    }
+
+                    return [$key => $item['rules'] ?? []];
+                }
+            )
             ->toArray();
     }
 
