@@ -27,6 +27,7 @@ class WorkflowService
         $module->registerTaskEvents($module->startTaskKey());
 
         $form = new Form(schema: $module->startFormSchema(), data: $data);
+        $form->validate();
 
         ProcessInstanceStarting::dispatch($module, $form);
 
@@ -46,9 +47,10 @@ class WorkflowService
 
         $instance = ProcessInstance::findOrFail($task->processInstanceId);
 
-        // Submit to Camunda API
+        // Prepare form and perform validation
         $formSchema = $module->formSchema($task->taskDefinitionKey);
         $form = new Form(schema: $formSchema, data: $data);
+        $form->validate();
 
         TaskCompleting::dispatch($module, $instance, $task, $form);
 
