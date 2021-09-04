@@ -250,7 +250,7 @@ class FieldCollection extends Collection
 
     private function applyRequiredValidation($field)
     {
-        $validations = $field->get('validations') ?? [];
+        $validations = $field->get('rules') ?? $field->get('validations') ?? [];
 
         if (is_string($validations)) {
             $validations = explode('|', $validations);
