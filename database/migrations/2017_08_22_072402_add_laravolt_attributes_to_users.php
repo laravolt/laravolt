@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLaravoltAttributesToUsers extends Migration
+return new class extends Migration
 {
     protected $table;
 
@@ -47,4 +47,4 @@ class AddLaravoltAttributesToUsers extends Migration
             $table->dropColumn(['status', 'timezone', 'password_changed_at']);
         });
     }
-}
+};
