@@ -5,6 +5,7 @@
 
         <div class="sidebar__menu">
 
+            @auth
             <div class="sidebar__profile m-b-0 p-0 p-t-2 ui basic segment text-center">
                 <img src="{{ auth()->user()->avatar }}" alt="" class="ui image tiny centered avatar">
                 <h4 class="ui header m-b-3">
@@ -12,6 +13,7 @@
                     <div class="sub header">{!!  auth()->user()->roles->map(fn($role) => "{$role->name}")->implode(' &bull; ')  !!}</div>
                 </h4>
             </div>
+            @endauth
 
             @if(!$items->isEmpty())
                 @if(config('laravolt.platform.features.quick_switcher'))
