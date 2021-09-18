@@ -12,14 +12,14 @@ table.ui.table {
     padding-bottom: 1.5em;
   }
 
-  thead th.numbering {
-
-  }
-
   tbody td.numbering {
     text-align: center;
     background: $coolGrey;
     font-weight: 700;
+  }
+
+  tbody td {
+    overflow-wrap: anywhere;
   }
 
   &.scrolling {
@@ -36,6 +36,9 @@ table.ui.table {
       font-size: 1.25rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
+    }
+    tr > td:last-child {
+      overflow-wrap: anywhere;
     }
   }
 
