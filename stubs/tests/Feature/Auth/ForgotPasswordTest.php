@@ -2,26 +2,24 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Middleware\VerifyCsrfToken;
+use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ForgotPasswordTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_can_display_forgot_password_page()
-    {
-        $this->visitRoute('auth::forgot.store');
-        $this->assertResponseOk();
-    }
+    use RefreshDatabase;
 
     /**
      * @test
      */
-    public function it_has_forgot_password_form()
+    public function it_can_get_forgot_password_page()
     {
-        $this->visitRoute('auth::forgot.show')
-             ->seeElement('input[name=email]');
+        $this->get(route('auth::forgot.store'))
+            ->assertSee('email')
+            ->assertStatus(200);
     }
 
     /**
@@ -29,10 +27,15 @@ class ForgotPasswordTest extends TestCase
      */
     public function it_can_handle_correct_email()
     {
-        $this->visitRoute('auth::forgot.show')
-            ->type('jon@dodo.com', 'email')
-            ->press(trans('laravolt::auth.send_reset_password_link'))
-            ->seeRouteIs('auth::forgot.action');
+        User::factory()->create(['email' => 'admin@laravolt.dev']);
+
+        $payload = [
+            'email' => 'admin@laravolt.dev'
+        ];
+
+        $this->post(route('auth::forgot.store'), $payload)
+            ->assertRedirect(route('auth::forgot.show'))
+            ->assertSessionHas('success');
     }
 
     /**
@@ -40,21 +43,16 @@ class ForgotPasswordTest extends TestCase
      */
     public function it_can_handle_wrong_email()
     {
-        $this->visitRoute('auth::forgot.show')
-             ->type('jon@dodo.com', 'email')
-             ->press(trans('laravolt::auth.send_reset_password_link'))
-             ->seeRouteIs('auth::forgot.action');
-    }
+        $payload = [
+            'email' => 'zombie@laravolt.dev'
+        ];
 
-    /**
-     * @test
-     */
-    public function it_redirect_back_if_failed()
-    {
-        $this->visitRoute('auth::forgot.show')
-             ->type('invalid-email-format', 'email')
-             ->press(trans('laravolt::auth.send_reset_password_link'))
-             ->seeRouteIs('auth::forgot.action');
+        // We must visit form at first, to mimic browser history a.k.a redirect back
+        $this->get(route('auth::forgot.show'));
+
+        $this->post(route('auth::forgot.store'), $payload)
+            ->assertRedirect(route('auth::forgot.show'))
+            ->assertSessionHasErrors('email');
     }
 
     /**
@@ -70,7 +68,7 @@ class ForgotPasswordTest extends TestCase
      */
     public function it_has_register_link()
     {
-        $this->get(route('auth::forgot.show'))->seeText(trans('laravolt::auth.register_here'));
+        $this->get(route('auth::forgot.show'))->assertSeeText(trans('laravolt::auth.register_here'));
     }
 
     /**
@@ -78,7 +76,7 @@ class ForgotPasswordTest extends TestCase
      */
     public function it_does_not_have_register_link_if_registration_disabled()
     {
-        $this->app['config']->set('laravolt.auth.registration.enable', false);
-        $this->get(route('auth::forgot.show'))->dontSeeText(trans('laravolt::auth.register_here'));
+        $this->app['config']->set('laravolt.platform.features.registration', false);
+        $this->get(route('auth::forgot.show'))->assertDontSeeText(trans('laravolt::auth.register_here'));
     }
 }

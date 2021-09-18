@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use BladeUI\Icons\Factory;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -47,7 +48,7 @@ class UiServiceProvider extends BaseServiceProvider
                 fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
             );
 
-        if (!$this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole() || $this->app->runningUnitTests()) {
             $this->overrideUi();
             $this->registerAssets();
             $this->registerIcons();
@@ -177,11 +178,15 @@ class UiServiceProvider extends BaseServiceProvider
                         }
                     )
                     ->toArray();
-                foreach ($uiSettings as $key) {
-                    $userConfig = setting($key);
-                    if ($userConfig) {
-                        config([$key => $userConfig]);
+                try {
+                    foreach ($uiSettings as $key) {
+                        $userConfig = setting($key);
+                        if ($userConfig) {
+                            config([$key => $userConfig]);
+                        }
                     }
+                } catch (QueryException $e) {
+
                 }
             }
         );

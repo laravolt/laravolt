@@ -41,9 +41,13 @@ class ForgotPasswordController extends Controller
         if ($response === Password::RESET_LINK_SENT) {
             $email = $user->getEmailForPasswordReset();
 
-            return back()->withSuccess(trans($response, ['email' => $email, 'emailMasked' => Str::maskEmail($email)]));
+            return redirect()
+                ->route('auth::forgot.show')
+                ->with('success', trans($response, ['email' => $email, 'emailMasked' => Str::maskEmail($email)]));
         }
 
-        return back()->withErrors(['email' => trans($response)]);
+        return redirect()
+            ->route('auth::forgot.show')
+            ->with('error', ['email' => trans($response)]);
     }
 }

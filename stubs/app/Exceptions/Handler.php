@@ -17,7 +17,7 @@ class Handler extends ExceptionHandler
             ? response()->json(['message' => $exception->getMessage()], 401)
             : redirect()
                 ->guest($exception->redirectTo() ?? route('auth::login.show'))
-                ->withWarning(__('Silakan login terlebih dahulu'));
+                ->with('warning', __('Silakan login terlebih dahulu') ?? '');
     }
 
     /**
@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
             return redirect()
                 ->back(302, [], route('home'))
                 ->withInput()
-                ->withError($e->getMessage());
+                ->with('error', $e->getMessage());
         }
 
         return parent::render($request, $e);
