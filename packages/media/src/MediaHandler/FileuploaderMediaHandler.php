@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Media\MediaHandler;
 
 use Laravolt\Platform\Models\Guest;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FileuploaderMediaHandler
 {
@@ -43,10 +44,7 @@ class FileuploaderMediaHandler
 
     protected function delete()
     {
-        $media = Media::find(request('id'));
-        if ($media) {
-            $media->delete();
-        }
+        Media::findOrfail(request('id'))->delete();
 
         return response()->json(true);
     }

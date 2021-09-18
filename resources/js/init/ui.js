@@ -322,9 +322,8 @@ class Laravolt {
                     start: true,
                     synchron: true,
                     chunk: false,
-                    onSuccess: function (data, item, listEl, parentEl, newInputEl, inputEl, textStatus, jqXHR) {
-
-                        item.local = data.files[0].file;
+                    onSuccess: function (response, item, listEl, parentEl, newInputEl, inputEl, textStatus, jqXHR) {
+                        item.data = response.files[0].data;
                         item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
 
                         setTimeout(function () {
@@ -340,9 +339,11 @@ class Laravolt {
                             item.html.find('.progress-bar2').fadeOut(400);
                         }
 
-                        item.upload.status != 'cancelled' && item.html.find('.fileuploader-action-retry').length == 0 ? item.html.find('.column-actions').prepend(
+                        item.upload.status !== 'cancelled' && item.html.find('.fileuploader-action-retry').length === 0 ? item.html.find('.column-actions').prepend(
                             '<a class="fileuploader-action fileuploader-action-retry" title="Retry"><i></i></a>'
                         ) : null;
+
+                        alert(errorThrown + '. Try again later.');
                     },
                     onProgress: function (data, item, listEl, parentEl, newInputEl, inputEl) {
                         let progressBar = item.html.find('.progress-bar2');
@@ -367,11 +368,15 @@ class Laravolt {
                 addMore: true,
                 upload: upload,
                 onRemove: function (item) {
+                    // Doesn't have ID, it means file not yet uploaded, no need to delete on server side
+                    if (item.data.id === undefined) {
+                        return true;
+                    }
+
                     if ($(elm).data('media-url')) {
                         $.post($(elm).data('media-url'), {
                             _token: $(elm).data('token'),
                             _action: 'delete',
-                            file: item.file,
                             id: item.data.id
                         });
                     }

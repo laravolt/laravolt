@@ -295,7 +295,7 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
 .fileuploader-items {
     .fileuploader-items-list {
         display: block;
-        margin: 0 $fileuploader-distance*-1;
+        margin: 0;
         padding: 0;
         list-style: none;
     }
@@ -310,7 +310,6 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
 
         &:last-child {
             border-bottom: 0;
-            margin-bottom: $fileuploader-distance*-1;
         }
 
         &.upload-failed {
@@ -548,7 +547,7 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
 
                 &:hover {
                     &:before {
-                        content: "\f00c";
+                        content: "\f00d";
                     }
 
                     background: $fileuploader-color-error;
@@ -1304,12 +1303,12 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
     padding: 0;
     margin: 0;
     .fileuploader-input {
-        border: 1px dashed #d5dee8;
+        border: 2px dashed #d5dee8;
         padding: 1rem;
-        border-radius: 4px;
+        border-radius: 8px;
     }
     .fileuploader-items {
-        padding: 0 1rem
+        padding: 0;
     }
     .fileuploader-input-inner {
         span {
