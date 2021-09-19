@@ -2,10 +2,10 @@
     <h3 class="ui header horizontal divider section">@lang('laravolt::auth.register')</h3>
 
     {!! form()->open(route('auth::registration.store')) !!}
-        {!! form()->text('name')->label(__('laravolt::auth.name')) !!}
-        {!! form()->email('email')->label(__('laravolt::auth.identifier')) !!}
-        {!! form()->password('password')->label(__('laravolt::auth.password')) !!}
-        {!! form()->password('password_confirmation')->label(__('laravolt::auth.password_confirmation')) !!}
+        {!! form()->text('name')->label(__('Name')) !!}
+        {!! form()->email('email')->label(__('Email')) !!}
+        {!! form()->password('password')->label(__('Password')) !!}
+        {!! form()->password('password_confirmation')->label(__('Confirm Your Password')) !!}
 
         <div class="field action">
             <x-volt-button class="fluid">@lang('laravolt::auth.register')</x-volt-button>

@@ -4,21 +4,25 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Password;
 
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class CanChangePasswordTest extends TestCase
 {
+    use DatabaseMigrations;
+
     public function testPasswordChangedAtFilled()
     {
-        $user = $this->createUser();
+        $user = User::factory()->create();
         $this->assertNotNull($user->password_changed_at);
     }
 
     public function testCanChangePassword()
     {
-        $user = $this->createUser();
+        $user = User::factory()->create();
 
         $user->setPassword('secret2', true);
         $this->assertNull($user->password_changed_at);
@@ -31,7 +35,7 @@ class CanChangePasswordTest extends TestCase
 
     public function testPasswordMustBeChanged()
     {
-        $user = $this->createUser();
+        $user = User::factory()->create();
 
         $user->setPassword('secret2', true);
         $this->assertTrue($user->passwordMustBeChanged(1));
@@ -48,7 +52,7 @@ class CanChangePasswordTest extends TestCase
 
     public function testPasswordMustBeChangedDuration()
     {
-        $user = $this->createUser();
+        $user = User::factory()->create();
 
         // Lets assume user changed their password 2 days ago,
         $user->password_changed_at = Carbon::now()->subDays(2);

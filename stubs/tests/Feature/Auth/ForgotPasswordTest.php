@@ -27,11 +27,11 @@ class ForgotPasswordTest extends TestCase
      */
     public function it_can_handle_correct_email()
     {
-        User::factory()->create(['email' => 'admin@laravolt.dev']);
-
         $payload = [
             'email' => 'admin@laravolt.dev'
         ];
+
+        User::factory()->create($payload);
 
         $this->post(route('auth::forgot.store'), $payload)
             ->assertRedirect(route('auth::forgot.show'))

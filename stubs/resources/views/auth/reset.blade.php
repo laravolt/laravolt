@@ -3,10 +3,10 @@
 
     {!! form()->open(route('auth::reset.store', $token)) !!}
     {!! form()->hidden('token', $token) !!}
-    {!! form()->email('email', request('email'))->label(__('laravolt::auth.email'))->required() !!}
-    {!! form()->password('password')->label(__('laravolt::auth.password_new'))->required() !!}
-    {!! form()->password('password_confirmation')->label(__('laravolt::auth.password_confirm'))->required() !!}
-    {!! form()->action(form()->submit(__('laravolt::auth.reset_password'))) !!}
+    {!! form()->email('email', request('email'))->label(__('Email'))->required() !!}
+    {!! form()->password('password')->label(__('New Password'))->required() !!}
+    {!! form()->password('password_confirmation')->label(__('Confirm New Password'))->required() !!}
+    {!! form()->action(form()->submit(__('Reset Password'))) !!}
     {!! form()->close() !!}
 
     <div class="ui divider section"></div>

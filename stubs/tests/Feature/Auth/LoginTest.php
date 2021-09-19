@@ -13,6 +13,15 @@ class LoginTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Route::get('login-success', function () {
+            return 'login success';
+        });
+    }
+
     /**
      * @test
      */
