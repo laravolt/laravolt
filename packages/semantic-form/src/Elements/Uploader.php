@@ -104,6 +104,10 @@ class Uploader extends Input
                     'name' => basename($media),
                     'size' => $imageHeader['Content-Length'] ?? 0,
                     'type' => $imageHeader['Content-Type'] ?? 'image/jpg',
+                    'data' => [
+                        //TODO resolve ID from media URL
+                        'id' => null,
+                    ],
                 ];
             }
         }

@@ -323,7 +323,8 @@ class Laravolt {
                     synchron: true,
                     chunk: false,
                     onSuccess: function (response, item, listEl, parentEl, newInputEl, inputEl, textStatus, jqXHR) {
-                        item.data = response.files[0].data;
+                        item.data.id = response.files[0].data.id ?? null;
+                        item.local = response.files[0].file;
                         item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
 
                         setTimeout(function () {
