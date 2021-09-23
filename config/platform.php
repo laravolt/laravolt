@@ -18,6 +18,10 @@ return [
     ],
     'settings' => [
         [
+            'type' => 'html',
+            'content' => '<h3 class="ui horizontal divider section m-t-3">Informasi Umum</h3>',
+        ],
+        [
             'type' => 'text',
             'name' => 'brand_name',
             'label' => 'Name',
@@ -28,8 +32,14 @@ return [
             'label' => 'Description',
         ],
         [
+            'type' => 'uploader',
+            'name' => 'brand_image',
+            'label' => 'Logo',
+            // 'rules' => ['required'],
+        ],
+        [
             'type' => 'html',
-            'content' => '<div class="ui divider section"></div>',
+            'content' => '<h3 class="ui horizontal divider hidden m-t-3">Tampilan Sidebar</h3>',
         ],
         [
             'type' => 'dropdown',
@@ -37,12 +47,13 @@ return [
             'label' => 'Ukuran Font',
             'options' => ['xs' => 'Paling Kecil', 'sm' => 'Kecil', 'md' => 'Sedang', 'lg' => 'Besar', 'xl' => 'Paling Besar'],
             'inline' => true,
+            'rules' => ['required'],
         ],
         [
             'type' => 'dropdown',
             'name' => 'theme',
             'options' => ['dark' => 'Gelap', 'light' => 'Terang'],
-            'label' => 'Tema Sidebar',
+            'label' => 'Tema',
             'inline' => true,
         ],
         [
@@ -53,13 +64,13 @@ return [
         ],
         [
             'type' => 'html',
-            'content' => '<div class="ui divider section"></div>',
+            'content' => '<h3 class="ui horizontal divider section m-t-3">Halaman Login</h3>',
         ],
         [
             'type' => 'dropdown',
             'options' => ['fullscreen' => 'Fullscreen', 'modern' => 'Modern', 'classic' => 'Classic'],
             'name' => 'login_layout',
-            'label' => 'Layout Halaman Login',
+            'label' => 'Layout',
             'inline' => true,
         ],
     ],
