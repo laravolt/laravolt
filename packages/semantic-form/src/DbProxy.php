@@ -18,7 +18,8 @@ class DbProxy
             if ($term) {
                 $payload = decrypt(request('payload'));
                 $query = sprintf($payload['query'], trim($term));
-                $results = collect(DB::select($query))->transform(function ($item) use ($payload) {
+                $connection = $payload['connection'] ?? config('database.default');
+                $results = collect(DB::connection($connection)->select($query))->transform(function ($item) use ($payload) {
                     $item = (array) $item;
 
                     return [

@@ -143,6 +143,7 @@ class DropdownDB extends Select
                 'query_key_column' => $this->keyColumn,
                 'query_display_column' => $this->displayColumn,
                 'query' => $this->query,
+                'connection' => $this->getConnection(),
             ];
             $payload = encrypt($payload);
 
