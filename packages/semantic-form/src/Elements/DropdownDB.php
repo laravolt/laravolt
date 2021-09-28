@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 class DropdownDB extends Select
 {
+    protected $connection;
+
     protected $query;
 
     protected $keyColumn = 'id';
@@ -36,6 +38,15 @@ class DropdownDB extends Select
         if ($dependency) {
             $this->dependency = $dependency;
             $this->dependencyValue = $value;
+        }
+
+        return $this;
+    }
+
+    public function connection(?string $connection)
+    {
+        if ($connection) {
+            $this->connection = $connection;
         }
 
         return $this;
@@ -112,7 +123,8 @@ class DropdownDB extends Select
         $options = [];
 
         if ($this->query) {
-            $options = collect(DB::select(DB::raw($this->query)))->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
+            $data = DB::connection($this->getConnection())->select(DB::raw($this->query));
+            $options = collect($data)->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
                 $item = (array) $item;
 
                 return [$item[$keyColumn] => $item[$valueColumn]];
@@ -152,5 +164,10 @@ class DropdownDB extends Select
                 $this->query($query);
             }
         }
+    }
+
+    private function getConnection()
+    {
+        return $this->connection ?? config('database.default');
     }
 }

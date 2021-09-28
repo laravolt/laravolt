@@ -143,6 +143,7 @@ class FieldCollection extends Collection
                     )
                     ->label($field['label'])
                     ->hint($field['hint'])
+                    ->connection($field['connection'] ?? null)
                     ->attributes($field['attributes']);
                 if ($field['dependency'] ?? false) {
                     $dependency = $this->get($field['dependency']);
