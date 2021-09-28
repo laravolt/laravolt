@@ -98,7 +98,7 @@ class Generator extends Command
             ':Namespace:' => $namespace,
             ':table:' => $table,
             ':ModuleName:' => $moduleName,
-            ':Module Name:' => Str::singular(str_replace('_', ' ', Str::title($table))),
+            ':Module Name:' => str_replace('_', ' ', Str::title($table)),
             ':module-name:' => $templates['module-name'],
             ':moduleName:' => lcfirst($moduleName),
             ':SEARCHABLE_COLUMNS:' => $this->transformer->toSearchableColumns(),
