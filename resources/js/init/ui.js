@@ -405,7 +405,7 @@ class Laravolt {
             });
         });
 
-        if (typeof AutoNumeric === 'function') {
+        if (typeof AutoNumeric === 'function' && $('input[data-role="rupiah"]').length > 0) {
             AutoNumeric.multiple('input[data-role="rupiah"]', {
                 currencySymbol: '',
                 decimalCharacter: ',',
