@@ -323,13 +323,20 @@ class Laravolt {
                     synchron: true,
                     chunk: false,
                     onSuccess: function (response, item, listEl, parentEl, newInputEl, inputEl, textStatus, jqXHR) {
-                        item.data.id = response.files[0].data.id ?? null;
-                        item.local = response.files[0].file;
-                        item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
+                        if (response.success && response.files[0]) {
+                            item.data.id = response.files[0].data.id ?? null;
+                            item.local = response.files[0].file;
+                            item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
 
-                        setTimeout(function () {
-                            item.html.find('.progress-bar2').fadeOut(400);
-                        }, 400);
+                            setTimeout(function () {
+                                item.html.find('.progress-bar2').fadeOut(400);
+                            }, 400);
+
+                            return true
+                        }
+
+                        return this.onError(item, listEl, parentEl, newInputEl, inputEl, jqXHR, textStatus, response.message);
+
                     },
                     onError: function (item, listEl, parentEl, newInputEl, inputEl, jqXHR, textStatus, errorThrown) {
                         let progressBar = item.html.find('.progress-bar2');

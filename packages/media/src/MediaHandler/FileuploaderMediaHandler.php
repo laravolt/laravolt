@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Media\MediaHandler;
 
 use Laravolt\Platform\Models\Guest;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FileuploaderMediaHandler
@@ -18,28 +19,38 @@ class FileuploaderMediaHandler
 
     protected function upload()
     {
+        /** @var \Spatie\MediaLibrary\InteractsWithMedia $user */
         $user = auth()->user() ?? Guest::first();
-        $media = $user->addMediaFromRequest(request('_key'))->toMediaCollection();
-        $response = [
-            'isSuccess' => true,
-            'files' => [
-                [
-                    'file' => $media->getUrl(),
-                    'name' => $media->file_name,
-                    'size' => $media->size,
-                    'type' => $media->mime_type,
-                    'uploaded' => true,
-                    'data' => [
-                        'id' => $media->getKey(),
-                        'url' => $media->getUrl(),
-                        'thumbnail' => $media->getUrl(),
-                        'readerForce' => true,
+
+        try {
+            $media = $user->addMediaFromRequest(request('_key'))->toMediaCollection();
+
+            $response = [
+                'success' => true,
+                'files' => [
+                    [
+                        'file' => $media->getUrl(),
+                        'name' => $media->file_name,
+                        'size' => $media->size,
+                        'type' => $media->mime_type,
+                        'data' => [
+                            'id' => $media->getKey(),
+                            'url' => $media->getUrl(),
+                            'thumbnail' => $media->getUrl(),
+                        ],
                     ],
                 ],
-            ],
-        ];
+            ];
+        } catch (FileCannotBeAdded $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
 
-        return response()->json($response);
+            report($e);
+        } finally {
+            return response()->json($response);
+        }
     }
 
     protected function delete()
