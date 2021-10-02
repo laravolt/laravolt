@@ -4,9 +4,9 @@
         <input
             type="text"
             class="prompt"
-            name="{{ $name }}"
-            value="{{ request($name) }}"
-            wire:model.debounce.300ms="search"
+            name="{{ $searchName }}"
+            value="{{ request($searchName) }}"
+            wire:model.debounce.{{ $searchDebounce }}ms="search"
         >
     </div>
 </form>

@@ -81,7 +81,7 @@ class EpicentrumServiceProvider extends BaseServiceProvider
             include platform_path('routes/epicentrum.php');
         }
 
-        Livewire::component('laravolt::user-table', UserTable::class);
+        Livewire::component('volt-user-table', UserTable::class);
     }
 
     protected function registerBlade()

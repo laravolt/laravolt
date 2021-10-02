@@ -7,7 +7,7 @@
         <div class="menu">
             @if($this->showSearchbox)
                 <div class="item">
-                    @include('laravolt::ui-component.shared.searchbox', ['name' => $search])
+                    @include('laravolt::ui-component.shared.searchbox')
                 </div>
             @endif
         </div>

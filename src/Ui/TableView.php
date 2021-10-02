@@ -16,9 +16,13 @@ abstract class TableView extends Component
 
     public bool $showSearchbox = true;
 
-    protected bool $showPerPage = true;
+    public string $searchName = 'search';
 
-    protected string $searchName = 'search';
+    public int $searchDebounce = 300;
+
+    public string $search = '';
+
+    protected bool $showPerPage = true;
 
     protected string $title = '';
 
@@ -33,8 +37,6 @@ abstract class TableView extends Component
         'direction',
         'perPage' => ['except' => self::DEFAULT_PER_PAGE],
     ];
-
-    public string $search = '';
 
     public int $perPage = self::DEFAULT_PER_PAGE;
 
