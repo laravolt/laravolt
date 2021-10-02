@@ -17,7 +17,7 @@ class StrMixin
 
     public function mask(): \Closure
     {
-        return static function ($str, $first, $last, $mask = '*') {
+        return static function ($str, $first = 3, $last = 3, $mask = '*') {
             $len = strlen($str);
             $toShow = $first + $last;
 
