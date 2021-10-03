@@ -30,6 +30,10 @@ abstract class TableView extends Component
 
     protected $paginationView = 'laravolt::pagination.livewire.simple';
 
+    protected array $perPageOptions = [5, 15, 30, 50, 100, 250];
+
+    public int $perPage = self::DEFAULT_PER_PAGE;
+
     protected $queryString = [
         'page' => ['except' => 1],
         'search' => ['except' => ''],
@@ -37,8 +41,6 @@ abstract class TableView extends Component
         'direction',
         'perPage' => ['except' => self::DEFAULT_PER_PAGE],
     ];
-
-    public int $perPage = self::DEFAULT_PER_PAGE;
 
     public ?string $sort = null;
 
@@ -117,7 +119,7 @@ abstract class TableView extends Component
         if ($this->data instanceof LengthAwarePaginator) {
             $this->paginationView = 'laravolt::pagination.livewire.default';
             if ($this->showPerPage) {
-                $perPageOptions = array_unique(array_merge([5, 15, 30, 50, 100, 250], [$this->data->perPage()]));
+                $perPageOptions = array_unique(array_merge($this->perPageOptions, [$this->data->perPage()]));
                 sort($perPageOptions);
             }
         }
