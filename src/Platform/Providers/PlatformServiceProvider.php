@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Providers;
 
+use App\Enums\Permission;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Support\Facades\Schema;
@@ -230,6 +231,11 @@ class PlatformServiceProvider extends ServiceProvider
                     }
                 );
             }
+        }
+
+        // Auto register Permission in App\Enums\Permission class
+        if (class_exists(Permission::class)) {
+            app('laravolt.acl')->registerPermission(Permission::asArray());
         }
 
         return $this;

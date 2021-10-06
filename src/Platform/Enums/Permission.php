@@ -6,6 +6,8 @@ use BenSampo\Enum\Enum;
 
 final class Permission extends Enum
 {
+    const ANY = '*';
+
     const MANAGE_USER = 'laravolt::manage-user';
 
     const MANAGE_ROLE = 'laravolt::manage-role';
