@@ -7,6 +7,6 @@
     <div x-show="loading" class="ui elastic loader {{ config('laravolt.ui.color') }}"></div>
 
     @foreach($modals as $id => $modal)
-        @livewire($modals[$activeModal]['name'], ['key' => $id], key($id))
+        @livewire($modals[$activeModal]['name'], ['key' => $id] + $modals[$activeModal]['param'], key($id))
     @endforeach
 </div>

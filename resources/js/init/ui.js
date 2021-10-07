@@ -461,6 +461,7 @@ class Laravolt {
                 );
             });
         }
+        root.data('initialized', true);
     }
 }
 
@@ -490,6 +491,11 @@ window.addEventListener('laravolt.toast', function (e) {
 
 if (typeof Livewire !== "undefined") {
     Livewire.hook('message.processed', (el, component) => {
-        Laravolt.init($('[wire\\:id="' + component.id + '"]'));
+        const root = $('[wire\\:id="' + component.id + '"]');
+
+        // Make sure Laravolt only initialized once
+        if (root.data('initialized') === undefined) {
+            Laravolt.init(root);
+        }
     })
 }

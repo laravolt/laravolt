@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\AutoCrud;
 
+use Laravolt\AutoCrud\LivewireComponents\CreateForm;
 use Laravolt\AutoCrud\Tables\ResourceTable;
 use Laravolt\Support\Base\BaseServiceProvider;
 use Livewire\Livewire;
@@ -19,7 +20,11 @@ class AutoCrudServiceProvider extends BaseServiceProvider
     {
         parent::boot();
 
+        /** @deprecated  */
         Livewire::component('laravolt::auto-crud.resource.table', ResourceTable::class);
+
+        Livewire::component('auto-crud.table', ResourceTable::class);
+        Livewire::component('auto-crud.form.create', CreateForm::class);
     }
 
     protected function menu()

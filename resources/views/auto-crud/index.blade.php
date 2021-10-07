@@ -1,12 +1,15 @@
 <x-volt-app :title="$config['label']">
     <x-slot name="actions">
-        <x-volt-link-button
+        <x-volt-button
                 :label="__('Tambah')"
                 url="{{ route('auto-crud::resource.create', $config['key']) }}"
-                icon="plus">
-        </x-volt-link-button>
+                icon="plus"
+                onclick="Livewire.emit('openModal', 'auto-crud.form.create', {{ json_encode(['resource' => $config['key']]) }})"
+        >
+        </x-volt-button>
     </x-slot>
 
-    @livewire('laravolt::auto-crud.resource.table', ['resource' => $config])
+    @livewire('volt-modal-bag')
 
+    @livewire('auto-crud.table', ['resource' => $config])
 </x-volt-app>

@@ -6,8 +6,6 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <meta name="turbolinks-cache-control" content="no-cache">
-    <meta name="turbolinks-enabled" content="{{ config('laravolt.platform.features.turbolinks') }}">
 
     @stack('meta')
 
@@ -17,26 +15,27 @@
             --app-login-background: url('{{ url(config('laravolt.ui.login_background')) }}');
         }
     </style>
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload"
+    <link rel="stylesheet" type="text/css"
           href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}"/>
 
     @stack('style')
     @stack('head')
     {!! Asset::group('laravolt')->css() !!}
     {!! Asset::css() !!}
-    <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+    <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
         $.fn.calendar.settings.text = @json(form_calendar_text());
     </script>
 
-    <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
+    <script defer src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Asset::group('laravolt')->js() !!}
 
     @livewireStyles
-    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
+    <script defer src="{{ mix('js/app.js') }}"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }} @yield('body.class')">
@@ -47,5 +46,6 @@
 @livewireScripts
 @stack('script')
 @stack('body')
+
 </body>
 </html>

@@ -12,17 +12,16 @@ class ModalBag extends Component
 
     protected $listeners = ['openModal'];
 
-    public function openModal($modal): void
+    public function openModal($modal, ?array $param = null): void
     {
-        $id = $modal.'-'.md5($modal);
+        $this->activeModal = $modal.'-'.md5($modal);
 
-        $this->modals[$id] = [
+        $this->modals[$this->activeModal] = [
             'name' => $modal,
+            'param' => $param,
         ];
 
-        $this->activeModal = $id;
-
-        $this->emit('activeModalChanged', $id);
+        $this->emit('activeModalChanged', $this->activeModal);
     }
 
     public function render()
