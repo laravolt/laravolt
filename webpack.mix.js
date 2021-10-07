@@ -11,6 +11,7 @@ mix.scripts([
     'resources/js/components/keymaster.js',
     'resources/js/components/fileuploader.js',
     'resources/js/components/fuse.min.js',
+    'resources/js/components/modal.js',
 ], 'public/js/vendor.js');
 
 mix.scripts([

@@ -41,6 +41,8 @@ use Laravolt\Platform\Components\TabContent;
 use Laravolt\Platform\Components\Titlebar;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\Password;
+use Laravolt\Ui\ModalBag;
+use Livewire\Livewire;
 use function Laravolt\platform_path;
 
 class PlatformServiceProvider extends ServiceProvider
@@ -267,6 +269,7 @@ class PlatformServiceProvider extends ServiceProvider
             'grid' => 'laravolt::components.grid',
             'row' => 'laravolt::components.row',
             'col' => 'laravolt::components.col',
+            'modal' => 'laravolt::components.modal',
             'workflow-diagram-button' => 'laravolt::workflow.components.diagram-button',
             Backlink::class,
             BrandImage::class,
@@ -289,6 +292,8 @@ class PlatformServiceProvider extends ServiceProvider
         ];
 
         $this->loadViewComponentsAs('volt', $components);
+
+        Livewire::component('volt-modal-bag', ModalBag::class);
 
         return $this;
     }
