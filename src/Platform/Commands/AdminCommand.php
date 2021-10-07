@@ -48,7 +48,7 @@ class AdminCommand extends Command
         })->first();
 
         if (!$role) {
-            $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'admin']);
+            $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => 'admin']);
             $role->syncPermission(['*']);
         }
 
