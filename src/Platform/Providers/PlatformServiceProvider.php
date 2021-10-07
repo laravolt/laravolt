@@ -23,6 +23,7 @@ use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\Backlink;
 use Laravolt\Platform\Components\BrandImage;
+use Laravolt\Platform\Components\Breadcrumb;
 use Laravolt\Platform\Components\Button;
 use Laravolt\Platform\Components\Card;
 use Laravolt\Platform\Components\CardFooter;
@@ -269,6 +270,7 @@ class PlatformServiceProvider extends ServiceProvider
             'workflow-diagram-button' => 'laravolt::workflow.components.diagram-button',
             Backlink::class,
             BrandImage::class,
+            Breadcrumb::class,
             Button::class,
             Card::class,
             CardFooter::class,
