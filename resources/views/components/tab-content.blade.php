@@ -3,7 +3,7 @@
 @endpush
 
 @push('tab.contents.'.\Laravolt\Platform\Components\Tab::getActiveTab())
-    <div {{ $attributes->merge(['class' => "ui bottom attached tab basic segment $activeClass"]) }} data-tab="{{ $key }}">
+    <div {{ $attributes->merge(['class' => "ui bottom attached tab segment $activeClass"]) }} data-tab="{{ $key }}">
         {!! $slot !!}
     </div>
 @endpush

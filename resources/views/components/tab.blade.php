@@ -9,7 +9,7 @@
 @once
     @push('script')
         <script>
-            $('.menu .item').tab();
+            $('.x-tab .menu .item').tab();
         </script>
     @endpush
 @endonce
