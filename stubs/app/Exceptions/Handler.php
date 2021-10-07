@@ -58,6 +58,14 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof AuthorizationException) {
+            if ($request->wantsJson()) {
+                return response()->json(['message' => $e->getMessage()], 403);
+            }
+
+            if ($request->is('livewire/*')) {
+                return abort(403);
+            }
+
             return redirect()
                 ->back(302, [], route('home'))
                 ->withInput()
