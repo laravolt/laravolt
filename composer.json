@@ -27,7 +27,7 @@
         "illuminate/console": "8.*",
         "illuminate/database": "8.*",
         "illuminate/support": "8.*",
-        "kalnoy/nestedset": "^5.0",
+        "kalnoy/nestedset": "^6.0",
         "kirschbaum-development/eloquent-power-joins": "^2.3",
         "laravolt/avatar": "^4.1",
         "lavary/laravel-menu": "^1.7.7",
