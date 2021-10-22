@@ -461,6 +461,24 @@ class Laravolt {
                 );
             });
         }
+
+        root.find('form[data-ajax]').on('submit', function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $.post(form.attr('action'), form.serialize())
+                .done(function () {
+                    //TODO on success
+                })
+                .fail(function (response) {
+                    $('body').toast(response.responseJSON.flash);
+                    response.responseJSON.fields.forEach((field) => {
+                        form.find('[name="'+field+'"]').closest('.field').addClass('error');
+                    });
+                })
+                .always(function () {
+                    //TODO enable form
+                });
+        });
         root.data('initialized', true);
     }
 }

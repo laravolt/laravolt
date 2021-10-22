@@ -2,6 +2,7 @@
 
 namespace Laravolt\AutoCrud\LivewireComponents;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +13,8 @@ use Laravolt\Ui\Modal;
 class CreateForm extends Modal
 {
     public string $resource;
+
+    // public array $model = [];
 
     protected array $methodMap = [
         Request::METHOD_POST => 'create',
@@ -46,6 +49,7 @@ class CreateForm extends Modal
                     if (Arr::get($item, 'type') === 'uploader' && request()->get('_'.$key) !== '[]') {
                         $key = '_'.$key;
                     }
+                    $key = 'model.'.$key;
 
                     return [$key => $item['rules'] ?? []];
                 }
@@ -71,11 +75,7 @@ class CreateForm extends Modal
 
     public function submit()
     {
-        dump($this->rules());
-        try {
-            Validator::make(request()->all(), $this->rules())->validate();
-        } catch (ValidationException $e) {
-            dump(request()->all(), $e->validator->errors());
-        }
+        // $this->validate();
+        // $this->emit('laravolt.toast', json_encode($this->errorBag));
     }
 }

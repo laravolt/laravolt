@@ -1,7 +1,12 @@
 <x-volt-modal>
 
     <x-volt-panel title="Tambah {{ $config['label'] }}">
-        {!! form()->post(route('auto-crud::resource.store', $resource))->attributes(['wire:submit.prevent' => 'submit']) !!}
+
+        {!!
+            form()
+                ->post(route('auto-crud::resource.store', $resource))
+                ->data('ajax', 'true')
+        !!}
 
         {!! form()->make($fields)->render() !!}
 
@@ -13,5 +18,6 @@
 
         {!! form()->close() !!}
     </x-volt-panel>
+
 
 </x-volt-modal>

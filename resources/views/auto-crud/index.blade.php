@@ -12,4 +12,25 @@
     @livewire('volt-modal-bag')
 
     @livewire('auto-crud.table', ['resource' => $config])
+
+    @push('script')
+        <script>
+            function submit() {
+
+                console.log('submit');
+                // fetch('/contact', {
+                //     method: 'POST',
+                //     headers: {'Content-Type': 'application/json'},
+                //     body: JSON.stringify(this.formData)
+                // })
+                //     .then(() => {
+                //         this.message = 'Form sucessfully submitted!'
+                //     })
+                //     .catch(() => {
+                //         this.message = 'Ooops! Something went wrong!'
+                //     })
+                return false;
+            }
+        </script>
+    @endpush
 </x-volt-app>
