@@ -15,6 +15,7 @@ class InstallCommand extends Command
      * @var string
      */
     protected $signature = 'laravolt:install';
+
     /**
      * The console command description.
      *
@@ -34,6 +35,10 @@ class InstallCommand extends Command
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
         Artisan::call('vendor:publish', ['--tag' => 'setting']);
+        Artisan::call(
+            'vendor:publish',
+            ['--tag' => 'migrations', '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider']
+        );
 
         $this->newLine();
         $this->info(sprintf('Application ready: %s', url('/')));
@@ -53,7 +58,7 @@ class InstallCommand extends Command
             $contents = explode("\n", file_get_contents($file));
             foreach ($lines as $line) {
                 // Only put entry if not exists
-                if (!in_array($line, $contents, true)) {
+                if (! in_array($line, $contents, true)) {
                     file_put_contents($file, $line."\n", FILE_APPEND);
                 }
             }
