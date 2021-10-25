@@ -470,10 +470,18 @@ class Laravolt {
                     //TODO on success
                 })
                 .fail(function (response) {
-                    $('body').toast(response.responseJSON.flash);
-                    response.responseJSON.fields.forEach((field) => {
-                        form.find('[name="'+field+'"]').closest('.field').addClass('error');
-                    });
+                    let body = $('body');
+                    switch (response.status) {
+                        case 422:
+                            body.toast(response.responseJSON.flash);
+                            response.responseJSON.fields.forEach((field) => {
+                                form.find('[name="' + field + '"]').closest('.field').addClass('error');
+                            });
+
+                            break;
+                        default:
+                            body.toast({message: response.responseJSON.message, class: 'error'});
+                    }
                 })
                 .always(function () {
                     //TODO enable form
