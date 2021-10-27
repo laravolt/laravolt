@@ -4,6 +4,7 @@ namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
 
 class CrudRequest extends FormRequest
@@ -54,7 +55,8 @@ class CrudRequest extends FormRequest
             return [];
         }
 
-        return collect($this->resourceConfig['schema'])
+        $transformer = new SchemaTransformer($this->resourceConfig);
+        return collect($transformer->transform())
             ->filter(
                 function ($item) use ($method) {
                     if ($item instanceof Field) {

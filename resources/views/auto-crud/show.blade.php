@@ -5,7 +5,7 @@
     </x-slot>
 
     <x-volt-panel title="Detail {{ $config['label'] }} #{{ $model->getKey() }}">
-        {!! form()->make($config['schema'])->bindValues($model->getAttributes())->display() !!}
+        {!! form()->make($fields)->bindValues($model->getAttributes())->display() !!}
     </x-volt-panel>
 
 

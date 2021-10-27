@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Laravolt\AutoCrud\Tables;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
+use Laravolt\Suitable\Columns\BelongsTo;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Ui\TableView;
@@ -18,23 +20,15 @@ class ResourceTable extends TableView
 
     public function data()
     {
-        $this->fields = collect($this->resource['schema'])
-            ->transform(function ($item) {
-                if ($item instanceof Field) {
-                    $item = $item->toArray();
-                }
-                return $item;
-            })
-            ->filter(
-                function ($item) {
-                    return ($item['visibility']['index'] ?? true);
-                }
-            );
+        $transformer = new SchemaTransformer($this->resource);
+
+        $this->fields = $transformer->getFieldsForIndex();
 
         /** @var Model $model */
         $model = app($this->resource['model']);
+        $searchableFields = $this->fields->reject(fn($item) => $item['type'] === Field::BELONGS_TO)->pluck('name')->toArray();
 
-        return $model->newQuery()->whereLike($this->fields->pluck('name')->toArray(), $this->search)->paginate();
+        return $model->newQuery()->whereLike($searchableFields, $this->search)->paginate();
     }
 
     public function columns(): array
@@ -42,13 +36,11 @@ class ResourceTable extends TableView
         $columns = [];
         foreach ($this->fields as $field) {
             if ($field['type'] === Field::BELONGS_TO) {
-                $column = function ($item) use ($field) {
-                    return call_user_func($field['display'], $item);
-                };
+                $columns[] = BelongsTo::make($field['name'], $field['label'] ?? '-');
             } else {
-                $column = $field['name'];
+                $columns[] = Raw::make($field['name'], $field['label'] ?? '-');
             }
-            $columns[] = Raw::make($column, $field['label'] ?? '-');
+
         }
 
         $columns[] = RestfulButton::make('auto-crud::resource')

@@ -7,6 +7,7 @@ namespace Laravolt\AutoCrud\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Laravolt\AutoCrud\Requests\CrudRequest;
+use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
 
 class ResourceController extends Controller
@@ -23,16 +24,7 @@ class ResourceController extends Controller
     public function create(CrudRequest $request, string $resource)
     {
         $config = $request->getConfig();
-        $fields = collect($config['schema'])
-            ->filter(
-                function ($item) {
-                    if ($item instanceof Field) {
-                        return $item->visibleFor('create');
-                    }
-
-                    return ($item['visibility']['create'] ?? true);
-                }
-            );
+        $fields = (new SchemaTransformer($config))->getFieldsForCreate();
 
         return view('laravolt::auto-crud.create', compact('config', 'fields'));
     }
@@ -51,24 +43,16 @@ class ResourceController extends Controller
     {
         $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
+        $fields = (new SchemaTransformer($config))->getFieldsForDetail();
 
-        return view('laravolt::auto-crud.show', compact('config', 'model'));
+        return view('laravolt::auto-crud.show', compact('config', 'fields', 'model'));
     }
 
     public function edit(CrudRequest $request, string $resource, $id)
     {
         $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
-        $fields = collect($config['schema'])
-            ->filter(
-                function ($item) {
-                    if ($item instanceof Field) {
-                        return $item->visibleFor('edit');
-                    }
-
-                    return ($item['visibility']['edit'] ?? true);
-                }
-            );
+        $fields = (new SchemaTransformer($config))->getFieldsForEdit();
 
         return view('laravolt::auto-crud.edit', compact('config', 'model', 'fields'));
     }
