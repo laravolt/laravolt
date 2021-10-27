@@ -26,7 +26,17 @@ class ResourceTable extends TableView
 
         /** @var Model $model */
         $model = app($this->resource['model']);
-        $searchableFields = $this->fields->reject(fn($item) => $item['type'] === Field::BELONGS_TO)->pluck('name')->toArray();
+        $searchableFields = $this->fields
+            ->reject(fn($item) => $item['type'] === Field::BELONGS_TO && !isset($item['search_by']))
+            ->transform(function ($item) {
+                if ($item['type'] === Field::BELONGS_TO) {
+                    $item['name'] .= '.'.$item['search_by'];
+                }
+
+                return $item;
+            })
+            ->pluck('name')
+            ->toArray();
 
         return $model->newQuery()->whereLike($searchableFields, $this->search)->autoSort($this->sortPayload())->paginate();
     }
