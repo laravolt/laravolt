@@ -31,7 +31,7 @@ class AutoCrudServiceProvider extends BaseServiceProvider
                 ->data('order', 10)
                 ->data('permission', config('laravolt.auto-crud.permission'));
 
-            foreach (config('laravolt.auto-crud.resources', []) as $key => $resource) {
+            foreach (config('laravolt.auto-crud-resources', []) as $key => $resource) {
                 $menu = $group->add($resource['label'], url("resource/{$key}"))
                     ->active('resource/'.$key.'/*');
                 foreach ($resource['data'] ?? [] as $dataKey => $dataValue) {

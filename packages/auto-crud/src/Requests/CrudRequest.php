@@ -26,7 +26,7 @@ class CrudRequest extends FormRequest
     public function authorize()
     {
         $resource = $this->resource;
-        $key = "laravolt.auto-crud.resources.$resource";
+        $key = "laravolt.auto-crud-resources.$resource";
 
         if (! config()->has($key)) {
             abort(404);
@@ -38,7 +38,7 @@ class CrudRequest extends FormRequest
         }
 
         // Collection level authorization
-        if ($this->user()->cannot(config("laravolt.auto-crud.resources.$resource.permission"))) {
+        if ($this->user()->cannot(config("laravolt.auto-crud-resources.$resource.permission"))) {
             return false;
         }
 

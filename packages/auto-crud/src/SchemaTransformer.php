@@ -47,36 +47,21 @@ class SchemaTransformer
 
     public function getFieldsForCreate(): Collection
     {
-        return collect($this->transform())
-            ->filter(
-                function ($item) {
-                    return ($item['visibility']['create'] ?? true);
-                }
-            );
+        return collect($this->transform())->filter(fn ($item) => $item['show_on_create'] ?? true);
     }
 
     public function getFieldsForEdit(): Collection
     {
-        return collect($this->transform())
-            ->filter(
-                function ($item) {
-                    return ($item['visibility']['edit'] ?? true);
-                }
-            );
+        return collect($this->transform())->filter(fn ($item) => $item['show_on_edit'] ?? true);
     }
 
     public function getFieldsForDetail(): Collection
     {
-        return collect($this->transform())
-            ->filter(
-                function ($item) {
-                    return ($item['visibility']['detail'] ?? true);
-                }
-            );
+        return collect($this->transform())->filter(fn ($item) => $item['show_on_detail'] ?? true);
     }
 
     public function getFieldsForIndex(): Collection
     {
-        return collect($this->config['schema']);
+        return collect($this->config['schema'])->filter(fn ($item) => $item['show_on_index'] ?? true);
     }
 }

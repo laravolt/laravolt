@@ -22,6 +22,7 @@ interface Field
     const HTML = 'html';
     const NUMBER = 'number';
     const MULTIROW = 'multirow';
+    const PASSWORD = 'password';
     const RADIO_GROUP = 'radioGroup';
     const REDACTOR = 'redactor';
     const RUPIAH = 'rupiah';

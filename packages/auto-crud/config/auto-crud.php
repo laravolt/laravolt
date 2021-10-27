@@ -6,9 +6,6 @@ return [
         'middleware' => config('laravolt.platform.middleware'),
         'prefix' => 'resource',
     ],
-    'view' => [
-        'layout' => 'laravolt::layouts.app',
-    ],
     'menu' => [
         'enabled' => true,
         'label' => 'Resources',
