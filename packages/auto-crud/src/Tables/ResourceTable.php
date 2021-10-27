@@ -28,7 +28,7 @@ class ResourceTable extends TableView
         $model = app($this->resource['model']);
         $searchableFields = $this->fields->reject(fn($item) => $item['type'] === Field::BELONGS_TO)->pluck('name')->toArray();
 
-        return $model->newQuery()->whereLike($searchableFields, $this->search)->paginate();
+        return $model->newQuery()->whereLike($searchableFields, $this->search)->autoSort($this->sortPayload())->paginate();
     }
 
     public function columns(): array
@@ -36,9 +36,13 @@ class ResourceTable extends TableView
         $columns = [];
         foreach ($this->fields as $field) {
             if ($field['type'] === Field::BELONGS_TO) {
-                $columns[] = BelongsTo::make($field['name'], $field['label'] ?? '-');
+                $column = BelongsTo::make($field['name'], $field['label'] ?? '-');
+                if (isset($field['sort_by'])) {
+                    $column->sortable($field['name'].'.'.$field['sort_by']);
+                }
+                $columns[] = $column;
             } else {
-                $columns[] = Raw::make($field['name'], $field['label'] ?? '-');
+                $columns[] = Raw::make($field['name'], $field['label'] ?? '-')->sortable($field['name']);
             }
 
         }
