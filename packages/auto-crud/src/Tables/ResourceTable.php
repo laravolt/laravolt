@@ -27,10 +27,13 @@ class ResourceTable extends TableView
         /** @var Model $model */
         $model = app($this->resource['model']);
         $searchableFields = $this->fields
-            ->reject(fn($item) => $item['type'] === Field::BELONGS_TO && !isset($item['search_by']))
+            ->reject(fn($item) => $item['type'] === Field::BELONGS_TO && !isset($item['searchable']))
+            ->reject(function ($item) {
+                return ($item['searchable'] ?? true) === false;
+            })
             ->transform(function ($item) {
                 if ($item['type'] === Field::BELONGS_TO) {
-                    $item['name'] .= '.'.$item['search_by'];
+                    $item['name'] .= '.'.$item['searchable'];
                 }
 
                 return $item;
@@ -47,14 +50,16 @@ class ResourceTable extends TableView
         foreach ($this->fields as $field) {
             if ($field['type'] === Field::BELONGS_TO) {
                 $column = BelongsTo::make($field['name'], $field['label'] ?? '-');
-                if (isset($field['sort_by'])) {
-                    $column->sortable($field['name'].'.'.$field['sort_by']);
+                if (isset($field['sortable'])) {
+                    $column->sortable($field['name'].'.'.$field['sortable']);
                 }
-                $columns[] = $column;
             } else {
-                $columns[] = Raw::make($field['name'], $field['label'] ?? '-')->sortable($field['name']);
+                $column = Raw::make($field['name'], $field['label'] ?? '-');
+                if ($field['sortable'] ?? true) {
+                    $column->sortable($field['name']);
+                }
             }
-
+            $columns[] = $column;
         }
 
         $columns[] = RestfulButton::make('auto-crud::resource')

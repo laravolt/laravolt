@@ -52,6 +52,7 @@ class FieldCollection extends Collection
             case 'email':
             case 'hidden':
             case 'number':
+            case 'password':
             case 'redactor':
             case 'rupiah':
             case 'text':
