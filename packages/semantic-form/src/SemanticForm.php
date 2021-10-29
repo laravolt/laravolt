@@ -622,7 +622,7 @@ class SemanticForm
     {
         $months = [];
         foreach (range(1, 12) as $month) {
-            $months[$month] = Carbon::createFromFormat('m', $month)->translatedFormat('F');
+            $months[$month] = Carbon::createFromDate(2020, $month, 1)->translatedFormat('F');
         }
 
         return $this->dropdown($name, $months);
