@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravolt\SeoEditor\Http\Controllers;
+namespace Laravolt\SeoEditor\Controllers;
 
 use Illuminate\Routing\Controller;
 

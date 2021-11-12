@@ -8,7 +8,6 @@ class SeoEditorServiceProvider extends BaseServiceProvider
 {
     public function getIdentifier()
     {
-        dd('ding');
         return 'seo-editor';
     }
 
