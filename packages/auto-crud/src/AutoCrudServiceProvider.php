@@ -26,7 +26,7 @@ class AutoCrudServiceProvider extends BaseServiceProvider
     {
         app('laravolt.menu.sidebar')->register(function ($menu) {
             $menu = $menu->system;
-            $group = $menu->add(__('Resources'))
+            $group = $menu->add(config('laravolt.auto-crud.menu.label'))
                 ->data('icon', 'cube')
                 ->data('order', 10)
                 ->data('permission', config('laravolt.auto-crud.permission'));
