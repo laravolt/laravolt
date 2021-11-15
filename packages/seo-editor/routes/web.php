@@ -7,8 +7,8 @@ Route::group(
         'middleware' => config('laravolt.seo-editor.routes.middleware'),
     ],
     function () {
-        Route::resource('meta', \Laravolt\SeoEditor\Http\Controllers\MetaController::class)
-            ->only(['edit', 'update'])
+        Route::resource('meta', \Laravolt\SeoEditor\Controllers\MetaController::class)
+            ->only(['index', 'update'])
             ->names('meta');
     }
 );

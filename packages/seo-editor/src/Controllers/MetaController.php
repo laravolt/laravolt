@@ -6,7 +6,7 @@ use Illuminate\Routing\Controller;
 
 class MetaController extends Controller
 {
-    public function edit()
+    public function index()
     {
     }
     public function update()

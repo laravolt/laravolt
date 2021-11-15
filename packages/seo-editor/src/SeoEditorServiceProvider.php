@@ -15,7 +15,7 @@ class SeoEditorServiceProvider extends BaseServiceProvider
     {
         app('laravolt.menu.sidebar')->register(function ($menu) {
             $menu->system
-                ->add(__('SEO Editor'), route('seo-editor::meta.edit'))
+                ->add(__('SEO Editor'), route('seo-editor::meta.index'))
                 ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_SEO)
                 ->active('seo-editor/*')
                 ->data('icon', 'bullseye-arrow');
