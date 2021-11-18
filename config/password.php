@@ -9,7 +9,7 @@ return [
     'duration' => null,
 
     // where to redirect user to change their current password, if CheckPassword middleware applied
-    'redirect' => 'epicentrum/my/password',
+    'redirect' => 'my/password',
 
     // don't apply CheckPassword middleware to following url pattern
     'except' => [
