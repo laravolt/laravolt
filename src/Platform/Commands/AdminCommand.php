@@ -11,7 +11,7 @@ class AdminCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laravolt:admin {name?} {email?} {password?}';
+    protected $signature = 'laravolt:admin {name?} {email?} {password?} {--no-verify}';
 
     /**
      * The console command description.
@@ -64,7 +64,9 @@ class AdminCommand extends Command
             ]
         );
 
-        $user->markEmailAsVerified();
+        if (!$this->option('no-verify')) {
+            $user->markEmailAsVerified();
+        }
 
         $user->assignRole($role);
 
