@@ -66,6 +66,8 @@ class AdminCommand extends Command
 
         if (!$this->option('no-verify')) {
             $user->markEmailAsVerified();
+        } else {
+            $user->sendEmailVerificationNotification();
         }
 
         $user->assignRole($role);
