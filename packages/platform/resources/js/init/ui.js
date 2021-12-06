@@ -337,6 +337,8 @@ class Laravolt {
                         item.upload.status != 'cancelled' && item.html.find('.fileuploader-action-retry').length == 0 ? item.html.find('.column-actions').prepend(
                             '<a class="fileuploader-action fileuploader-action-retry" title="Retry"><i></i></a>'
                         ) : null;
+
+                        alert(errorThrown + '. Try again later.');
                     },
                     onProgress: function (data, item, listEl, parentEl, newInputEl, inputEl) {
                         var progressBar = item.html.find('.progress-bar2');
@@ -361,6 +363,12 @@ class Laravolt {
                 addMore: true,
                 upload: upload,
                 onRemove: function (item) {
+
+                    // Doesn't have ID, it means file not yet uploaded, no need to delete on server side
+                    if (item.data.id === undefined) {
+                        return true;
+                    }
+
                     if ($(elm).data('media-url')) {
                         $.post($(elm).data('media-url'), {
                             _token: $(elm).data('token'),
