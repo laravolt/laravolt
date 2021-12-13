@@ -44,7 +44,17 @@ class AddLaravoltAttributesToUsers extends Migration
     public function down()
     {
         Schema::table($this->table, function (Blueprint $table) {
-            $table->dropColumn(['status', 'timezone', 'password_changed_at']);
+            if (Schema::hasColumn($this->table, 'status')) {
+                $table->dropColumn(['status']);
+            }
+
+            if (Schema::hasColumn($this->table, 'timezone')) {
+                $table->dropColumn(['timezone']);
+            }
+
+            if (Schema::hasColumn($this->table, 'password_changed_at')) {
+                $table->dropColumn(['password_changed_at']);
+            }
         });
     }
 }
