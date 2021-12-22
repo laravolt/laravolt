@@ -283,14 +283,14 @@ class Laravolt {
                             .replace('j', j)
                             .replace('d', d)
                             .replace('n', n)
+                            .replace('m', m)
                             .replace('MMMM', MMMM)
                             .replace('MM', MM)
-                            .replace('m', m)
                             .replace('M', M)
-                            .replace('Y', Y)
                             .replace('DD', DD)
                             .replace('YYYY', YYYY)
-                            .replace('YY', YY);
+                            .replace('YY', YY)
+                            .replace('Y', Y);
                     }
                 }
             })
