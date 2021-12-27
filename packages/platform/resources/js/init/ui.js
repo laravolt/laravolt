@@ -276,7 +276,7 @@ class Laravolt {
                         var Y = date.getFullYear();
                         var YYYY = date.getFullYear();
 
-                        return format
+                        var output = format
                             .replace('h', h)
                             .replace('i', i)
                             .replace('s', s)
@@ -284,13 +284,21 @@ class Laravolt {
                             .replace('d', d)
                             .replace('n', n)
                             .replace('m', m)
-                            .replace('MMMM', MMMM)
-                            .replace('MM', MM)
-                            .replace('M', M)
                             .replace('DD', DD)
                             .replace('YYYY', YYYY)
                             .replace('YY', YY)
                             .replace('Y', Y);
+
+                        const replacer = {'MMMM': MMMM, 'MMM': M, 'MM': MM, 'M': M};
+                        let temp = format;
+                        for (const key in replacer) {
+                            if (temp.includes(key)) {
+                                output = output.replace(key, replacer[key]);
+                                temp = temp.replace(key, '');
+                            }
+                        }
+
+                        return output;
                     }
                 }
             })
