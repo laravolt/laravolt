@@ -15,7 +15,6 @@ use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\InstallCommand;
-use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeChartCommnad;
 use Laravolt\Platform\Commands\MakeStatisticCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
@@ -56,7 +55,6 @@ class PlatformServiceProvider extends ServiceProvider
         MakeStatisticCommnad::class,
         ManageRole::class,
         ManageUser::class,
-        LinkCommand::class,
         SyncPermission::class,
     ];
 
@@ -69,6 +67,8 @@ class PlatformServiceProvider extends ServiceProvider
         $this->registerServices();
 
         $this->publishSkeleton();
+
+        $this->publishAssets();
     }
 
     public function boot(Gate $gate): void
@@ -319,6 +319,14 @@ class PlatformServiceProvider extends ServiceProvider
         $this->publishes(
             [platform_path('stubs') => base_path()],
             ['laravolt-skeleton']
+        );
+    }
+
+    private function publishAssets()
+    {
+        $this->publishes(
+            [platform_path('public') => public_path('laravolt')],
+            ['laravolt-assets']
         );
     }
 }
