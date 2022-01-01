@@ -118,51 +118,119 @@ if (! function_exists('readable_number')) {
     }
 
     /**
-     * @see https://github.com/mul14/terbilang-php
+     * @see https://notes.rioastamal.net/2012/03/membuat-fungsi-terbilang-pada-php.html
      */
     if (! function_exists('number_to_terbilang')) {
-        function number_to_terbilang($number, $suffix = 'rupiah'): string
+        function number_to_terbilang($number, string $suffix = 'rupiah'): string
         {
             $numberString = Str::of((string) $number);
-            $integerPart = (int) $number;
-            $fraction = $numberString->contains('.') ? $numberString->afterLast('.') : false;
-            $base = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
-            $numeric = ['1000000000000000', '1000000000000', '1000000000000', 1000000000, 1000000, 1000, 100, 10, 1];
-            $unit = ['kuadriliun', 'triliun', 'biliun', 'milyar', 'juta', 'ribu', 'ratus', 'puluh', ''];
-            $str = null;
+            $fraction = $numberString->contains('.') ? $numberString->afterLast('.') : '';
+            $angka = (int) $number;
 
-            $i = 0;
+            $bilangan = [
+                'no',
+                'satu',
+                'dua',
+                'tiga',
+                'empat',
+                'lima',
+                'enam',
+                'tujuh',
+                'delapan',
+                'sembilan',
+                'sepuluh',
+                'sebelas',
+            ];
 
-            if ($number === 0) {
-                $str = 'nol';
+            if ($angka === 0) {
+                $str = '';
+            } elseif ($angka < 12) {
+                // mapping angka ke index array $bilangan
+                $str = $bilangan[$angka];
+            } elseif ($angka < 20) {
+                // bilangan 'belasan'
+                // misal 18 maka 18 - 10 = 8
+                $str = $bilangan[$angka - 10].' belas';
+            } elseif ($angka < 100) {
+                // bilangan 'puluhan'
+                // misal 27 maka 27 / 10 = 2.7 (integer => 2) 'dua'
+                // untuk mendapatkan sisa bagi gunakan modulus
+                // 27 mod 10 = 7 'tujuh'
+                $str = sprintf('%s puluh %s', $bilangan[(int) ($angka / 10)], $bilangan[$angka % 10]);
+            } elseif ($angka < 200) {
+                // bilangan 'seratusan' (itulah indonesia knp tidak satu ratus saja? :))
+                // misal 151 maka 151 = 100 = 51 (hasil berupa 'puluhan')
+                // daripada menulis ulang rutin kode puluhan maka gunakan
+                // saja fungsi rekursif dengan memanggil fungsi number_to_terbilang(51)
+                $str = sprintf(
+                    'seratus %s',
+                    number_to_terbilang($angka - 100, '')
+                );
+            } elseif ($angka < 1000) {
+                // bilangan 'ratusan'
+                // misal 467 maka 467 / 100 = 4,67 (integer => 4) 'empat'
+                // sisanya 467 mod 100 = 67 (berupa puluhan jadi gunakan rekursif number_to_terbilang(67))
+                $str = sprintf(
+                    '%s ratus %s',
+                    $bilangan[(int) ($angka / 100)],
+                    number_to_terbilang($angka % 100, '')
+                );
+            } elseif ($angka < 2000) {
+                // bilangan 'seribuan'
+                // misal 1250 maka 1250 - 1000 = 250 (ratusan)
+                // gunakan rekursif number_to_terbilang(250)
+                $str = sprintf('seribu %s', number_to_terbilang($angka - 1000, ''));
+            } elseif ($angka < 1000000) {
+                // bilangan 'ribuan' (sampai ratusan ribu)
+                $str = sprintf(
+                    '%s ribu %s',
+                    number_to_terbilang((int) ($angka / 1000), ''),
+                    number_to_terbilang($angka % 1000, '')
+                );
+            } elseif ($angka < 1000000000) {
+                // bilangan 'jutaan' (sampai ratusan juta)
+                // 'satu puluh' => SALAH, biasa disebut sepuluh
+                // 'satu ratus' => SALAH, biasa disebut seratus
+                // 'satu juta' => BENAR, kenapa tidak disebut sejuta? ^_^
+
+                // hasil bagi bisa satuan, belasan, ratusan jadi langsung kita gunakan rekursif
+                $str = sprintf(
+                    '%s juta %s',
+                    number_to_terbilang((int) ($angka / 1000000), ''),
+                    number_to_terbilang($angka % 1000000, '')
+                );
+            } elseif ($angka < 1000000000000) {
+                // bilangan 'milyaran'
+                // karena batas maksimum integer untuk 32bit sistem adalah 2147483647
+                // maka kita gunakan fmod agar dapat menghandle angka yang lebih besar
+                $str = sprintf(
+                    '%s milyar %s',
+                    number_to_terbilang((int) ($angka / 1000000000), ''),
+                    number_to_terbilang(fmod($angka, 1000000000), '')
+                );
+            } elseif ($angka < 1000000000000000000) {
+                // bilangan 'triliun'
+                $hasil_bagi = $angka / 1000000000000;
+                $hasil_mod = fmod($angka, 1000000000000);
+
+                $str = sprintf(
+                    '%s triliun %s',
+                    number_to_terbilang($hasil_bagi, ''),
+                    number_to_terbilang($hasil_mod, '')
+                );
             } else {
-                while ($integerPart !== 0) {
-                    $count = (int) ($integerPart / $numeric[$i]);
-
-                    if ($count >= 10) {
-                        $str .= number_to_terbilang($count, false).' '.$unit[$i].' ';
-                    } elseif ($count > 0 && $count < 10) {
-                        $str .= $base[$count].' '.$unit[$i].' ';
-                    }
-
-                    $integerPart -= $numeric[$i] * $count;
-
-                    $i++;
-                }
-
-                $str = preg_replace('/satu puluh (\w+)/i', '\1 belas', $str);
-                $str = preg_replace('/satu (ribu|ratus|puluh|belas)/', 'se\1', $str);
-                $str = preg_replace('/\s{2,}/', ' ', trim($str));
+                throw new \InvalidArgumentException('Bilangan terlalu besar');
             }
 
+            $str = trim($str);
             if ($suffix) {
                 $str .= ' '.$suffix;
             }
 
-            if (((int)(string) $fraction) && ($suffix !== false)) {
+            if ((int) (string) $fraction) {
                 $str .= ' koma';
                 foreach (str_split($fraction) as $decimal) {
-                    $str .= ' '.$base[$decimal];
+                    $str .= ' '.$bilangan[$decimal];
                 }
             }
 
