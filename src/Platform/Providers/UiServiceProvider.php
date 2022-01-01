@@ -48,7 +48,7 @@ class UiServiceProvider extends BaseServiceProvider
                 fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
             );
 
-        if (!$this->app->runningInConsole() || $this->app->runningUnitTests()) {
+        if (!($this->app->runningInConsole() || $this->app->runningUnitTests())) {
             $this->overrideUi();
             $this->registerAssets();
             $this->registerIcons();

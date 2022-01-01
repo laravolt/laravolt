@@ -8,5 +8,5 @@ use Orchestra\Testbench\TestCase;
 
 abstract class UnitTest extends TestCase
 {
-    use Bootstrap;
+    // use Bootstrap;
 }

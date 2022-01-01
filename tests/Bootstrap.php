@@ -20,7 +20,6 @@ trait Bootstrap
     protected function setUp(): void
     {
         parent::setUp();
-        // dd(realpath(__DIR__.'/../database/migrations'));
         $this->loadLaravelMigrations();
         $this->artisan('migrate', [
             '--path' => realpath(__DIR__.'/../database/migrations'),

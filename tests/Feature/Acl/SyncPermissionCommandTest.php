@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laravolt\Tests;
+namespace Laravolt\Tests\Feature\Acl;
 
 use Illuminate\Support\Facades\Artisan;
+use Laravolt\Tests\FeatureTest;
 
 class SyncPermissionCommandTest extends FeatureTest
 {
