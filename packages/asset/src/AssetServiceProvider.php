@@ -2,20 +2,13 @@
 
 namespace Laravolt\Asset;
 
-use Laravolt\Support\Base\BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class AssetServiceProvider extends BaseServiceProvider
+class AssetServiceProvider extends ServiceProvider
 {
-    public function getIdentifier()
-    {
-        return 'asset';
-    }
-
     public function register()
     {
-        parent::register();
-
-        $config = $this->config;
+        $config = collect(config("laravolt.asset"));
         foreach ($config as $groupName => $groupConfig) {
             $this->registerAssetsManagerInstance($groupName, (array) $groupConfig);
         }
