@@ -2,15 +2,25 @@
 
 namespace Laravolt\Asset;
 
-use Illuminate\Support\ServiceProvider;
+use Laravolt\Support\Base\BaseServiceProvider;
 
-class AssetServiceProvider extends ServiceProvider
+class AssetServiceProvider extends BaseServiceProvider
 {
-    public function register()
+    public function getIdentifier()
+    {
+        return 'asset';
+    }
+
+    protected function enabled()
+    {
+        return true;
+    }
+
+    public function boot()
     {
         $config = collect(config("laravolt.asset"));
         foreach ($config as $groupName => $groupConfig) {
-            $this->registerAssetsManagerInstance($groupName, (array) $groupConfig);
+            $this->bootAssetsManagerInstance($groupName, (array) $groupConfig);
         }
     }
 
@@ -22,7 +32,7 @@ class AssetServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerAssetsManagerInstance($name, array $config)
+    protected function bootAssetsManagerInstance($name, array $config): void
     {
         $this->app->singleton("laravolt.asset.group.$name", function () use ($config) {
             $config['public_dir'] ??= public_path();
