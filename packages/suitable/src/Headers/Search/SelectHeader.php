@@ -48,4 +48,14 @@ class SelectHeader implements \Laravolt\Suitable\Contracts\Header
                 ->attribute('onchange', 'this.form.submit()')
         );
     }
+
+    public function getAttributesString(): string
+    {
+        return $this->tagAttributes($this->attributes);
+    }
+
+    public function getContent(): string
+    {
+        return "";
+    }
 }
