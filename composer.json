@@ -17,7 +17,7 @@
         "appstract/laravel-blade-directives": "^1.7",
         "bensampo/laravel-enum": "^1.26",
         "doctrine/dbal": "^2.10",
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^6.5|^7.2",
         "illuminate/auth": "^6.0|^7.0",
         "illuminate/console": "^6.0|^7.0",
         "illuminate/database": "^6.0|^7.0",
