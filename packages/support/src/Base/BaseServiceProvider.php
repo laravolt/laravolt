@@ -17,7 +17,7 @@ abstract class BaseServiceProvider extends ServiceProvider
 
     protected function enabled()
     {
-        return config('laravolt.platform.features.'.$this->getIdentifier()) ?? false;
+        return config('laravolt.platform.features.'.$this->getIdentifier()) ?? true;
     }
 
     public function register()
