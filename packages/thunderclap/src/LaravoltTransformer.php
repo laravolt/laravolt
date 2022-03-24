@@ -180,22 +180,22 @@ TEMPLATE;
         }
     }
 
-    private function text()
+    protected function text()
     {
         return "{!! form()->text('%s')->label('%s') !!}";
     }
 
-    private function textarea()
+    protected function textarea()
     {
         return "{!! form()->textarea('%s')->label('%s') !!}";
     }
 
-    private function date()
+    protected function date()
     {
         return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
 
-    private function datetime()
+    protected function datetime()
     {
         return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
