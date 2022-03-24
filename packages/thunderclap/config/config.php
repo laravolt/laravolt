@@ -16,6 +16,7 @@ return [
     ],
     'namespace'  => 'Modules',
     'target_dir' => base_path('modules'),
+    'transformer' => \Laravolt\Thunderclap\LaravoltTransformer::class,
 
     // Template skeleton (stubs)
     'default'    => 'laravolt',

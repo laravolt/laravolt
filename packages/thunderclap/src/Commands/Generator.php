@@ -40,13 +40,13 @@ class Generator extends Command
      *
      * @return void
      */
-    public function __construct(DBHelper $DBHelper, FileTransformer $packerHelper, ColumnsTransformer $transformer)
+    public function __construct(DBHelper $DBHelper, FileTransformer $packerHelper)
     {
         parent::__construct();
 
         $this->DBHelper = $DBHelper;
         $this->packerHelper = $packerHelper;
-        $this->transformer = $transformer;
+        $this->transformer = app(config('laravolt.thunderclap.transformer'));
     }
 
     public function handle()

@@ -3,17 +3,14 @@
 namespace Laravolt\Thunderclap;
 
 use Illuminate\Support\Str;
+use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\DateType;
+use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\TextType;
 
-class ColumnsTransformer
+class LaravoltTransformer
 {
     protected $columns;
-
-    protected $fieldTypeTransformer;
-
-    public function __construct(FieldTypeTransformer $fieldTypeTransformer)
-    {
-        $this->fieldTypeTransformer = $fieldTypeTransformer;
-    }
 
     public function setColumns($columns)
     {
@@ -73,7 +70,7 @@ TEMPLATE;
 
         return $columns
             ->map(function ($item) {
-                $template = $this->fieldTypeTransformer->generate($item);
+                $template = $this->toField($item);
 
                 return sprintf("\t".$template, $item['name'], Str::humanize($item['name']));
             })
@@ -164,5 +161,42 @@ TEMPLATE;
 
             return true;
         });
+    }
+
+    public function toField(array $column)
+    {
+        $class = get_class($column['type']);
+        switch ($class) {
+            case StringType::class:
+                return $this->text();
+            case TextType::class:
+                return $this->textarea();
+            case DateType::class:
+                return $this->date();
+            case DateTimeType::class:
+                return $this->datetime();
+            default:
+                return $this->text();
+        }
+    }
+
+    private function text()
+    {
+        return "{!! form()->text('%s')->label('%s') !!}";
+    }
+
+    private function textarea()
+    {
+        return "{!! form()->textarea('%s')->label('%s') !!}";
+    }
+
+    private function date()
+    {
+        return "{!! form()->datepicker('%s')->label('%s') !!}";
+    }
+
+    private function datetime()
+    {
+        return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
 }
