@@ -116,6 +116,8 @@ class Generator extends Command
             ':route-url-prefix:' => $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
         ];
 
+        $classToBePrefixed = config('laravolt.thunderclap.prefixed');
+
         foreach (File::allFiles($modulePath, true) as $file) {
             if (is_file($file)) {
                 $newFile = $deleteOriginal = false;
@@ -129,16 +131,11 @@ class Generator extends Command
                     $newFile = Str::replaceLast('Model', $moduleName, $newFile);
                 }
 
-                if (Str::endsWith($newFile, 'ServiceProvider.php')) {
-                    $newFile = Str::replaceLast('ServiceProvider', $moduleName.'ServiceProvider', $newFile);
-                }
-
-                if (Str::endsWith($newFile, 'Controller.php')) {
-                    $newFile = Str::replaceLast('Controller', $moduleName.'Controller', $newFile);
-                }
-
-                if (Str::endsWith($newFile, 'TableView.php')) {
-                    $newFile = Str::replaceLast('TableView', $moduleName.'TableView', $newFile);
+                foreach ($classToBePrefixed as $filename) {
+                    $class = Str::substr($filename, 0, -4);
+                    if (Str::endsWith($newFile, $filename)) {
+                        $newFile = Str::replaceLast($class, $moduleName.$class, $newFile);
+                    }
                 }
 
                 if (Str::endsWith($newFile, 'config.php')) {

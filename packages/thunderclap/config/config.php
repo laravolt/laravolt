@@ -17,6 +17,12 @@ return [
     'namespace'  => 'Modules',
     'target_dir' => base_path('modules'),
     'transformer' => \Laravolt\Thunderclap\LaravoltTransformer::class,
+    'prefixed' => [
+        'ServiceProvider.php',
+        'Controller.php',
+        'TableView.php',
+        'Resource.php',
+    ],
 
     // Template skeleton (stubs)
     'default'    => 'laravolt',
