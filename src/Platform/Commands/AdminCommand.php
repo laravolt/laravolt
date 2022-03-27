@@ -52,7 +52,7 @@ class AdminCommand extends Command
             $role->syncPermission(['*']);
         }
 
-        $user = app(config('auth.providers.users.model'))->updateOrCreate(
+        $user = app(config('laravolt.epicentrum.models.user'))->updateOrCreate(
             [
                 'email' => $email,
             ],

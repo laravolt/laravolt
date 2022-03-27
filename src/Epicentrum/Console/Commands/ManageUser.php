@@ -58,10 +58,10 @@ class ManageUser extends Command
             $identifier = $this->ask('ID or email');
         }
 
-        $user = app(config('auth.providers.users.model'))->find($identifier);
+        $user = app(config('laravolt.epicentrum.models.user'))->find($identifier);
 
         if (!$user) {
-            $user = app(config('auth.providers.users.model'))->whereEmail($identifier)->first();
+            $user = app(config('laravolt.epicentrum.models.user'))->whereEmail($identifier)->first();
         }
 
         if (!$user) {

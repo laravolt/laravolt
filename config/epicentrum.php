@@ -30,6 +30,7 @@ return [
         'BLOCKED' => 'BLOCKED',
     ],
     'models' => [
+        'user' => \App\Models\User::class,
         'role' => \Laravolt\Platform\Models\Role::class,
         'permission' => \Laravolt\Platform\Models\Permission::class,
     ],
