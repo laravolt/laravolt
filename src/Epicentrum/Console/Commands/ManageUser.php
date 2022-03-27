@@ -103,7 +103,12 @@ class ManageUser extends Command
         return $user->syncRoles($selected);
     }
 
-    protected function actionChangePassword()
+    protected function actionChangePassword($user)
     {
+        $password = $this->secret('Type new password');
+        $user->password = $password;
+        $user->save();
+
+        $this->info('Password updated');
     }
 }
