@@ -7,6 +7,7 @@ mix.scripts([
     './public/semantic/semantic.min.js',
     './node_modules/simplebar/dist/simplebar.js',
     './node_modules/autonumeric/dist/autoNumeric.js',
+    './node_modules/unpoly/unpoly.js',
     'resources/js/components/basictable.js',
     'resources/js/components/keymaster.js',
     'resources/js/components/fileuploader.js',
@@ -17,6 +18,7 @@ mix.scripts([
 mix.scripts([
     'resources/js/init/sidebar.js',
     'resources/js/init/ui.js',
+    'resources/js/init/events.js',
     // Somehow, quick-switcher.js must be initialized last, after all other UI elements. Don't know why :(
     'resources/js/init/quick-switcher.js'
 ], 'public/js/platform.js');
