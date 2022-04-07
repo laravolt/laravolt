@@ -20,7 +20,7 @@ class UserTable extends TableView
     public function data()
     {
         $searchabledColumns = config('laravolt.epicentrum.repository.searchable', []);
-        $query = app(config('auth.providers.users.model'))
+        $query = app(config('laravolt.epicentrum.models.user'))
             ->with('roles')
             ->autoSort($this->sortPayload())
             ->autoFilter()
