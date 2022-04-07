@@ -74,7 +74,7 @@ class Flash
     public function injectScript(Response $response)
     {
         $content = $response->getContent();
-        $pos = strripos($content, '</body>');
+        $pos = strripos($content, '</main>');
 
         $bags = $this->session->get($this->getSessionKey());
 

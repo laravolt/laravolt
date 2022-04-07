@@ -8,6 +8,7 @@ class PermissionController extends Controller
 {
     public function edit()
     {
+        return redirect()->back()->with('info', 'foo bar');
         $permissions = config('laravolt.epicentrum.models.permission')::all()->sortBy(function ($item) {
             return strtolower($item->name);
         });

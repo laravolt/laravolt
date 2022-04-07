@@ -4,7 +4,7 @@
         @include('laravolt::menu.topbar')
         @include('laravolt::menu.sidebar')
 
-        <main class="content">
+        <main class="content" up-main>
 
             <div class="content__inner">
 
@@ -15,6 +15,9 @@
                 </div>
 
             </div>
+
+            @stack('main')
+
         </main>
     </div>
 </x-volt-base>

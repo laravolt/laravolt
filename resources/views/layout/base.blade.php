@@ -6,8 +6,8 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <meta name="turbolinks-cache-control" content="no-cache">
-    <meta name="turbolinks-enabled" content="{{ config('laravolt.platform.features.turbolinks') }}">
+    <meta content="no-cache">
+    <meta name="spa-enabled" content="{{ config('laravolt.platform.features.spa') }}">
 
     @stack('meta')
 
@@ -17,35 +17,52 @@
             --app-login-background: url('{{ url(config('laravolt.ui.login_background')) }}');
         }
     </style>
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload"
-          href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/all.css', 'laravolt') }}"/>
-    <link rel="stylesheet" type="text/css" data-turbolinks-track="reload" href="{{ mix('css/app.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}"/>
 
     @stack('style')
     @stack('head')
     {!! Asset::group('laravolt')->css() !!}
     {!! Asset::css() !!}
-    <script data-turbolinks-track="reload" src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+
+    <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
         $.fn.calendar.settings.text = @json(form_calendar_text());
     </script>
 
-    <script defer data-turbolinks-track="reload" src="{{ mix('js/platform.js', 'laravolt') }}"></script>
+    <script defer src="{{ mix('js/platform.js', 'laravolt') }}"></script>
     {!! Asset::group('laravolt')->js() !!}
 
     @livewireStyles
-    <script defer data-turbolinks-track="reload" src="{{ mix('js/app.js') }}"></script>
+    <script defer src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }} @yield('body.class')">
 
-{{ $slot }}
+    {{ $slot }}
 
-{!! Asset::js() !!}
-@livewireScripts
-@stack('script')
-@stack('body')
+    {!! Asset::js() !!}
+    @livewireScripts
+    @stack('script')
+    @stack('body')
+
+    <script>
+        up.fragment.config.runScripts = true;
+        // up.fragment.config.navigateOptions.cache = false;
+        let firstTimeVisit = true;
+        up.compiler('main.content', function (element) {
+            console.log(element);
+            // Laravolt.init($(element));
+            firstTimeVisit = !firstTimeVisit;
+            if (!firstTimeVisit && window.Livewire) {
+                // window.Livewire.restart();
+            }
+        })
+        up.link.config.followSelectors.push('a[href]');
+        // up.form.config.submitSelectors.push(['form']);
+
+    </script>
 </body>
 </html>

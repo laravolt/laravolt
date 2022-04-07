@@ -470,33 +470,3 @@ class Laravolt {
         }
     }
 }
-
-const TURBOLINK_ENABLED = $('meta[name="turbolinks-enabled"]').attr('content') === '1';
-
-if (TURBOLINK_ENABLED) {
-    let Turbolinks = require("turbolinks")
-    Turbolinks.start();
-
-    $(document).on('turbolinks:load', function () {
-        Laravolt.init($('body'));
-    });
-
-// Keep menu scroll position
-    $(document).on('turbolinks:render', function (event) {
-        $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
-    });
-} else {
-    $(document).on('DOMContentLoaded', function () {
-        Laravolt.init($('body'));
-    });
-}
-
-window.addEventListener('laravolt.toast', function (e) {
-    $('body').toast(JSON.parse(e.detail));
-});
-
-if (typeof Livewire !== "undefined") {
-    Livewire.hook('message.processed', (el, component) => {
-        Laravolt.init($('[wire\\:id="' + component.id + '"]'));
-    })
-}
