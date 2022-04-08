@@ -31,7 +31,6 @@
         "kirschbaum-development/eloquent-power-joins": "^2.6",
         "laravolt/avatar": "^4.1.6",
         "lavary/laravel-menu": "^1.7.7",
-        "league/flysystem": "^3.0",
         "livewire/livewire": "^2.10",
         "myclabs/deep-copy": "^1.10",
         "nesbot/carbon": "^2.0",
