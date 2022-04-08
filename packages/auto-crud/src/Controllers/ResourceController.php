@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Laravolt\AutoCrud\Requests\CrudRequest;
 use Laravolt\AutoCrud\SchemaTransformer;
-use Laravolt\Fields\Field;
+use Livewire\Livewire;
 
 class ResourceController extends Controller
 {
@@ -17,6 +17,10 @@ class ResourceController extends Controller
     public function index(CrudRequest $request, string $resource)
     {
         $config = $request->getConfig();
+
+        if ($config['table'] ?? false) {
+            Livewire::component('laravolt::auto-crud.resource.table', $config['table']);
+        }
 
         return view('laravolt::auto-crud.index', compact('config'));
     }
