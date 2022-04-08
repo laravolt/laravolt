@@ -50,6 +50,11 @@ class ResourceTable extends TableView
 
     public function columns(): array
     {
+        return array_merge($this->prepareColumns(), [$this->restfulButton()]);
+    }
+
+    protected function prepareColumns(): array
+    {
         $columns = [];
         foreach ($this->fields as $field) {
             switch ($field['type']) {
@@ -73,8 +78,6 @@ class ResourceTable extends TableView
             }
             $columns[] = $column;
         }
-
-        $columns[] = $this->restfulButton();
 
         return $columns;
     }
