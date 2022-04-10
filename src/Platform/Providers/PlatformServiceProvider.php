@@ -7,10 +7,13 @@ namespace Laravolt\Platform\Providers;
 use App\Enums\Permission;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\HasRoleAndPermission;
+use Laravolt\Epicentrum\Auth\CacheEloquentUserProvider;
+use Laravolt\Epicentrum\Auth\UserObserver;
 use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
@@ -84,6 +87,7 @@ class PlatformServiceProvider extends ServiceProvider
             ->bootAcl($gate)
             ->bootMenu()
             ->bootComponents()
+            ->bootCustomAuthProvider()
             ->adjustVendorConfig();
     }
 
@@ -330,5 +334,18 @@ class PlatformServiceProvider extends ServiceProvider
             [platform_path('public') => public_path('laravolt')],
             ['laravolt-assets']
         );
+    }
+
+    protected function bootCustomAuthProvider()
+    {
+        Auth::provider('eloquent-cached', function () {
+            return new CacheEloquentUserProvider($this->app['hash'], $this->app['config']['auth.providers.users.model']);
+        });
+
+        if ($this->app['config']['auth.providers.users.driver'] === 'eloquent-cached') {
+            call_user_func(config('laravolt.epicentrum.models.user').'::observe', UserObserver::class);
+        }
+
+        return $this;
     }
 }
