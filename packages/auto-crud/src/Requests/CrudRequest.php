@@ -33,13 +33,17 @@ class CrudRequest extends FormRequest
         }
 
         // Module level authorization
-        if ($this->user()->cannot(config('laravolt.auto-crud.permission'))) {
-            return false;
+        if ($permission = config('laravolt.auto-crud.permission')) {
+            if (! $this->user()->canAny($permission)) {
+                return false;
+            }
         }
 
         // Collection level authorization
-        if ($this->user()->cannot(config("laravolt.auto-crud-resources.$resource.permission"))) {
-            return false;
+        if ($permission = config("laravolt.auto-crud-resources.$resource.permission")) {
+            if (! $this->user()->canAny($permission)) {
+                return false;
+            }
         }
 
         $this->resourceConfig = config()->get($key) + ['key' => $resource];
