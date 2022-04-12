@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function __construct()
     {
-        $this->table = app(config('auth.providers.users.model'))->getTable();
+        $this->table = app(config('laravolt.epicentrum.models.user'))->getTable();
     }
 
     /**
