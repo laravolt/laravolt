@@ -84,9 +84,11 @@ class CrudRequest extends FormRequest
                         $key = '_'.$key;
                     }
 
+                    $rules = collect($item['rules'] ?? []);
+
                     // ignore current ID for unique rules when updating
                     if ($this->method() === 'PUT') {
-                        collect($item['rules'])->transform(function ($rule) {
+                        collect($rules)->transform(function ($rule) {
                             if ($rule instanceof Unique) {
                                 $rule = $rule->ignore($this->route('id'));
                             }
@@ -95,7 +97,7 @@ class CrudRequest extends FormRequest
                         });
                     }
 
-                    return [$key => $item['rules'] ?? []];
+                    return [$key => $rules->toArray()];
                 }
             )->toArray();
     }
