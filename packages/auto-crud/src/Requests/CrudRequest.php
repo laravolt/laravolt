@@ -4,6 +4,7 @@ namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rules\Unique;
 use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
 
@@ -66,6 +67,11 @@ class CrudRequest extends FormRequest
                     if ($item instanceof Field) {
                         return $item->visibleFor($method);
                     }
+
+                    if (in_array($item['type'], [Field::BUTTON, Field::ACTION, Field::HTML], true)) {
+                        return false;
+                    }
+
                     return ($item['visibility'][$method] ?? true);
                 }
             )->mapWithKeys(
@@ -76,6 +82,17 @@ class CrudRequest extends FormRequest
                     $key = $item['name'];
                     if (Arr::get($item, 'type') === 'uploader' && $this->get('_'.$key) !== '[]') {
                         $key = '_'.$key;
+                    }
+
+                    // ignore current ID for unique rules when updating
+                    if ($this->method() === 'PUT') {
+                        collect($item['rules'])->transform(function ($rule) {
+                            if ($rule instanceof Unique) {
+                                $rule = $rule->ignore($this->route('id'));
+                            }
+
+                            return $rule;
+                        });
                     }
 
                     return [$key => $item['rules'] ?? []];
