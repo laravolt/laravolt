@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Laravolt\Fields\Field;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\Checkbox;
+use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\FormControl;
 use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\Segments;
@@ -234,7 +235,7 @@ class FieldCollection extends Collection
     {
         foreach ($values as $key => $value) {
             if (($element = $this->get($key)) !== null) {
-                if ($element instanceof Checkbox) {
+                if ($element instanceof Checkbox || $element instanceof CheckboxGroup) {
                     $element->setChecked($value);
                 } else {
                     $element->value($value);

@@ -9,6 +9,7 @@ use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
 use Laravolt\Suitable\Columns\BelongsTo;
 use Laravolt\Suitable\Columns\Button;
+use Laravolt\Suitable\Columns\MultipleValues;
 use Laravolt\Suitable\Columns\Raw;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Ui\TableView;
@@ -64,6 +65,9 @@ class ResourceTable extends TableView
                         $column->sortable($field['name'].'.'.$field['sortable']);
                     }
 
+                    break;
+                case Field::CHECKBOX_GROUP:
+                    $column = MultipleValues::make($field['name'], $field['label'] ?? '-');
                     break;
                 case Field::BUTTON:
                     $column = Button::make('', $field['label'] ?? '-')
