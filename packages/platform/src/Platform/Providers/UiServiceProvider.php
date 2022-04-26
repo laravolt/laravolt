@@ -34,6 +34,10 @@ class UiServiceProvider extends BaseServiceProvider
             return new Menu();
         });
 
+        $this->app->terminating(function () {
+            app('laravolt.menu.sidebar')->reset();
+        });
+
         $this->bootConfig();
 
         // We add default menu in register() method,

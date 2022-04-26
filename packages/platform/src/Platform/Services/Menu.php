@@ -12,6 +12,8 @@ class Menu extends BaseMenu
 {
     protected $callbacks = [];
 
+    protected $sidebar;
+
     public function register(\Closure $callback)
     {
         $this->callbacks[] = $callback;
@@ -45,7 +47,7 @@ class Menu extends BaseMenu
 
     public function all()
     {
-        $sidebar = app('laravolt.menu.sidebar')->make(
+        $this->sidebar = app('laravolt.menu.sidebar')->make(
             'sidebar',
             function (Builder $menu) {
                 return $menu;
@@ -53,16 +55,16 @@ class Menu extends BaseMenu
         );
 
         foreach ($this->callbacks as $callback) {
-            call_user_func($callback, $sidebar);
+            call_user_func($callback, $this->sidebar);
         }
 
-        $items = $sidebar->all()->map(function (Item $item) {
+        $items = $this->sidebar->all()->map(function (Item $item) {
             $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! $item->link->path['url']));
 
             return $item;
         });
-        $sidebar->takeCollection($items);
-        $sidebar
+        $this->sidebar->takeCollection($items);
+        $this->sidebar
             ->filter(function (Item $item) {
                 return $this->filterByVisibility($item);
             })
@@ -81,6 +83,11 @@ class Menu extends BaseMenu
             ->sortBy(function (Item $item) {
                 return $item->data('order');
             });
+    }
+
+    public function reset()
+    {
+        $this->callbacks = [];
     }
 
     protected function filterByVisibility(Item $item)
