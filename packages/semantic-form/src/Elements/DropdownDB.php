@@ -3,19 +3,13 @@
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Laravolt\SemanticForm\Traits\CanGenerateOptionsFromDb;
 
 class DropdownDB extends Select
 {
-    protected $connection;
-
-    protected $query;
-
-    protected $keyColumn = 'id';
-
-    protected $displayColumn = 'name';
+    use CanGenerateOptionsFromDb;
 
     protected $dependency;
 
@@ -29,7 +23,7 @@ class DropdownDB extends Select
         $this->data('class', $this->getAttribute('class'));
 
         if (!$this->ajax && !Str::contains($this->query, ['%s', '%1$s'])) {
-            $this->populateOptions();
+            $this->options = $this->getOptionsFromDb();
         }
     }
 
@@ -38,42 +32,6 @@ class DropdownDB extends Select
         if ($dependency) {
             $this->dependency = $dependency;
             $this->dependencyValue = $value;
-        }
-
-        return $this;
-    }
-
-    public function connection(?string $connection)
-    {
-        if ($connection) {
-            $this->connection = $connection;
-        }
-
-        return $this;
-    }
-
-    public function query(?string $query)
-    {
-        if ($query) {
-            $this->query = $query;
-        }
-
-        return $this;
-    }
-
-    public function keyColumn(?string $keyColumn)
-    {
-        if ($keyColumn) {
-            $this->keyColumn = $keyColumn;
-        }
-
-        return $this;
-    }
-
-    public function displayColumn(?string $displayColumn)
-    {
-        if ($displayColumn) {
-            $this->displayColumn = $displayColumn;
         }
 
         return $this;
@@ -115,27 +73,6 @@ class DropdownDB extends Select
         return $this->value;
     }
 
-    private function populateOptions()
-    {
-        $keyColumn = $this->keyColumn;
-        $valueColumn = $this->displayColumn;
-
-        $options = [];
-
-        if ($this->query) {
-            $data = DB::connection($this->getConnection())->select(DB::raw($this->query));
-            $options = collect($data)->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
-                $item = (array) $item;
-
-                return [$item[$keyColumn] => $item[$valueColumn]];
-            });
-        }
-
-        foreach ($options as $value => $label) {
-            $this->appendOption($value, $label);
-        }
-    }
-
     private function setupDependency()
     {
         if ($this->ajax || !empty($this->dependency)) {
@@ -165,10 +102,5 @@ class DropdownDB extends Select
                 $this->query($query);
             }
         }
-    }
-
-    private function getConnection()
-    {
-        return $this->connection ?? config('database.default');
     }
 }
