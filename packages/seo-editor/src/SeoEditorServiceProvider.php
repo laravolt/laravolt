@@ -13,7 +13,7 @@ class SeoEditorServiceProvider extends BaseServiceProvider
 
     protected function menu()
     {
-        app('laravolt.menu.sidebar')->register(function ($menu) {
+        app('laravolt.menu.sidebar')->registerCore(function ($menu) {
             $menu->system
                 ->add(__('SEO Editor'), route('seo-editor::meta.index'))
                 ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_SEO)

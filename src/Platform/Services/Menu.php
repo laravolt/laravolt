@@ -10,7 +10,14 @@ use Lavary\Menu\Menu as BaseMenu;
 
 class Menu extends BaseMenu
 {
+    protected $callbacksCore = [];
+
     protected $callbacks = [];
+
+    public function registerCore(\Closure $callback)
+    {
+        $this->callbacksCore[] = $callback;
+    }
 
     public function register(\Closure $callback)
     {
@@ -52,6 +59,10 @@ class Menu extends BaseMenu
                 return $menu;
             }
         );
+
+        foreach ($this->callbacksCore as $callback) {
+            call_user_func($callback, $sidebar);
+        }
 
         foreach ($this->callbacks as $callback) {
             call_user_func($callback, $sidebar);

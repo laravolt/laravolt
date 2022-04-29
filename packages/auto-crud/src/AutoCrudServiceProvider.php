@@ -24,7 +24,7 @@ class AutoCrudServiceProvider extends BaseServiceProvider
 
     protected function menu()
     {
-        app('laravolt.menu.sidebar')->register(function ($menu) {
+        app('laravolt.menu.sidebar')->registerCore(function ($menu) {
             $menu = $menu->system;
             $group = $menu->add(config('laravolt.auto-crud.menu.label'))
                 ->data('icon', 'cube')

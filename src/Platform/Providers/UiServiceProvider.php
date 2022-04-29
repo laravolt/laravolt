@@ -39,12 +39,12 @@ class UiServiceProvider extends BaseServiceProvider
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
         app('laravolt.menu.sidebar')
-            ->register(
+            ->registerCore(
                 fn ($menu) => $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'))
             );
 
         app('laravolt.menu.sidebar')
-            ->register(
+            ->registerCore(
                 fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
             );
 

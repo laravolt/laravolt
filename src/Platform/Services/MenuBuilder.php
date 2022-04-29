@@ -38,7 +38,7 @@ class MenuBuilder
                 $order = $option['order'] ?? 50;
             }
 
-            app('laravolt.menu.sidebar')->register(
+            app('laravolt.menu.sidebar')->registerCore(
                 function ($sidebar) use ($title, $option, $order) {
                     /** @var \Lavary\Menu\Builder $section */
                     $section = $sidebar->get(strtolower(trim($title)));
