@@ -102,7 +102,9 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function bootDatabase(): self
     {
-        $this->loadMigrationsFrom(platform_path('database/migrations'));
+        if (config('laravolt.platform.features.migrations', true)) {
+            $this->loadMigrationsFrom(platform_path('database/migrations'));
+        }
 
         return $this;
     }
