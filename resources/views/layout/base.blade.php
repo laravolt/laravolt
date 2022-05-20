@@ -50,18 +50,17 @@
 
     <script>
         up.fragment.config.runScripts = true;
-        // up.fragment.config.navigateOptions.cache = false;
+        up.fragment.config.navigateOptions.cache = false;
         let firstTimeVisit = true;
         up.compiler('main.content', function (element) {
-            console.log(element);
-            // Laravolt.init($(element));
+            Laravolt.init($(element));
             firstTimeVisit = !firstTimeVisit;
             if (!firstTimeVisit && window.Livewire) {
-                // window.Livewire.restart();
+                window.Livewire.restart();
             }
         })
         up.link.config.followSelectors.push('a[href]');
-        // up.form.config.submitSelectors.push(['form']);
+        up.form.config.submitSelectors.push(['form']);
 
     </script>
 </body>
