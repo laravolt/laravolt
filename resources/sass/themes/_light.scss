@@ -73,7 +73,7 @@ $menu-item-color: $black;
       .title {
         color: $menu-item-color;
 
-        &.selected {
+        &.up-current {
           &.empty {
             background: darken($body-bg, 5%);
           }
@@ -94,7 +94,7 @@ $menu-item-color: $black;
               background: darken($body-bg, 5%);
             }
 
-            &.selected {
+            &.up-current {
               background: darken($body-bg, 5%);
               font-weight: normal;
             }

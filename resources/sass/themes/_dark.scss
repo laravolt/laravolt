@@ -67,7 +67,7 @@ $menu-item-active-indicator: #a6a8b1;
       .title {
         color: $menu-item-color;
 
-        &.selected {
+        &.up-current {
           &.empty {
             background: darken($sidebar-bg, 5%);
           }
@@ -88,7 +88,7 @@ $menu-item-active-indicator: #a6a8b1;
               background: darken($sidebar-bg, 7.5%);
             }
 
-            &.selected {
+            &.up-current {
               background: darken($sidebar-bg, 7.5%);
               font-weight: normal;
             }

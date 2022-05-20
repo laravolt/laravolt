@@ -51,13 +51,15 @@
     <script>
         up.fragment.config.runScripts = true;
         up.fragment.config.navigateOptions.cache = false;
+
         let firstTimeVisit = true;
         up.compiler('main.content', function (element) {
             Laravolt.init($(element));
-            firstTimeVisit = !firstTimeVisit;
+
             if (!firstTimeVisit && window.Livewire) {
                 window.Livewire.restart();
             }
+            firstTimeVisit = false;
         })
         up.link.config.followSelectors.push('a[href]');
         up.form.config.submitSelectors.push(['form']);
