@@ -7,6 +7,9 @@
         </x-volt-link-button>
     </x-slot>
 
-    @livewire('laravolt::auto-crud.resource.table', ['resource' => $config])
+    @livewire(
+        $config['table'] ?? 'laravolt::auto-crud.resource.table',
+        ['resource' => $config]
+    )
 
 </x-volt-app>
