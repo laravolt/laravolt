@@ -4,7 +4,6 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
@@ -52,6 +51,27 @@ class ResetPasswordTest extends TestCase
         ];
         $this->post(route('auth::reset.store', $this->token), $payload)
             ->assertRedirect(route('auth::login.show'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_handle_failed_passwor_reset()
+    {
+        $payload = [
+            'token' => $this->token,
+            'email' => $this->email,
+            'password' => 'asdf1234',
+            'password_confirmation' => 'asdf1234',
+        ];
+
+        \Password::shouldReceive('reset')->andReturn(\Password::RESET_THROTTLED);
+
+        $this->get(route('auth::reset.show', $this->token));
+        $this->post(route('auth::reset.store', $this->token), $payload)
+            ->assertRedirect(route('auth::reset.show', $this->token))
+            ->assertSessionHasErrors('email')
+            ->assertSessionHasInput('email');
     }
 
     /**

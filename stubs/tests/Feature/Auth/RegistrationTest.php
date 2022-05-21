@@ -73,6 +73,32 @@ class RegistrationTest extends TestCase
     /**
      * @test
      */
+    public function it_can_auto_verify_email()
+    {
+        config(['laravolt.platform.features.verification' => false]);
+        Notification::fake();
+        $email = 'jon@laravolt.dev';
+
+        $payload = [
+            'name' => 'Jon Dodo',
+            'email' => $email,
+            'password' => 'asdf1234',
+            'password_confirmation' => 'asdf1234',
+        ];
+
+        $this->post(route('auth::registration.store'), $payload);
+
+        $this->assertDatabaseMissing(
+            'users',
+            collect($payload)->only(['name', 'email'])->toArray() + ['email_verified_at' => null]
+        );
+
+        Notification::assertNotSentTo(User::first(), VerifyEmail::class);
+    }
+
+    /**
+     * @test
+     */
     public function it_has_errors_if_failed()
     {
         $this->post(route('auth::registration.store'))
