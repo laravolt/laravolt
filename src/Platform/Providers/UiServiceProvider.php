@@ -11,7 +11,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
-use Laravolt\Platform\Services\Menu;
+use Laravolt\Platform\Services\SidebarMenu;
 use Laravolt\Platform\Services\MenuBuilder;
 use function Laravolt\platform_path;
 
@@ -34,7 +34,13 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this->bootConfig();
 
-        $this->app->singleton('laravolt.menu.sidebar', fn () => new Menu());
+        $this->app->singleton('laravolt.menu.sidebar', fn () => new SidebarMenu());
+        $this->app->singleton(
+            'laravolt.menu.builder',
+            function (Application $app) {
+                return $app->make(MenuBuilder::class);
+            }
+        );
 
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
@@ -51,7 +57,6 @@ class UiServiceProvider extends BaseServiceProvider
         if ((!$this->app->runningInConsole()) || $this->app->runningUnitTests()) {
             $this->overrideUi();
             $this->registerIcons();
-            $this->registerMenuBuilder();
             $this->registerAssets();
         }
     }
@@ -105,16 +110,6 @@ class UiServiceProvider extends BaseServiceProvider
         return $this;
     }
 
-    protected function registerMenuBuilder()
-    {
-        $this->app->singleton(
-            'laravolt.menu.builder',
-            function (Application $app) {
-                return $app->make(MenuBuilder::class);
-            }
-        );
-    }
-
     protected function buildMenuFromConfig()
     {
         View::composer(
@@ -124,7 +119,7 @@ class UiServiceProvider extends BaseServiceProvider
                     $this->app['laravolt.menu.builder']->loadArray($menu);
                 }
 
-                $this->app['laravolt.menu.builder']->loadFromRegisteredConfig();
+                $this->app['laravolt.menu.builder']->runCallbacks();
             }
         );
 

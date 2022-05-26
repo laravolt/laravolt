@@ -16,7 +16,7 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function menu()
     {
-        app('laravolt.menu.sidebar')->registerCore(function ($menu) {
+        app('laravolt.menu.builder')->register(function ($menu) {
             $group = $menu->system->add(__('Database'))
                 ->data('permission', \Laravolt\Platform\Enums\Permission::MANAGE_DB)
                 ->data('icon', 'database');

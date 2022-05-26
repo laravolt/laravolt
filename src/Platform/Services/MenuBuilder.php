@@ -10,22 +10,22 @@ class MenuBuilder
 {
     protected $defaultIcon;
 
-    protected $registeredConfig = [];
+    protected $registeredCallbacks = [];
 
     public function __construct()
     {
         $this->defaultIcon = config('laravolt.ui.default_menu_icon');
     }
 
-    public function register(array $menu): void
+    public function register(\Closure $callback)
     {
-        $this->registeredConfig[] = $menu;
+        $this->registeredCallbacks[] = $callback;
     }
 
-    public function loadFromRegisteredConfig(): void
+    public function runCallbacks()
     {
-        foreach ($this->registeredConfig as $config) {
-            $this->loadArray($config);
+        foreach ($this->registeredCallbacks as $callback) {
+            app('laravolt.menu.sidebar')->registerCore($callback);
         }
     }
 
