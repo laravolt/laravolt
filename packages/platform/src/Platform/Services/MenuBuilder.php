@@ -6,6 +6,20 @@ namespace Laravolt\Platform\Services;
 
 class MenuBuilder
 {
+    protected $registeredCallbacks = [];
+
+    public function register(\Closure $callback)
+    {
+        $this->registeredCallbacks[] = $callback;
+    }
+
+    public function runCallbacks()
+    {
+        foreach ($this->registeredCallbacks as $callback) {
+            app('laravolt.menu.sidebar')->register($callback);
+        }
+    }
+
     public function make()
     {
         $args = func_get_args();

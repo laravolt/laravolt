@@ -190,8 +190,11 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bootMenu()
     {
         if (config('laravolt.epicentrum.menu.enabled')) {
-            app('laravolt.menu.sidebar')->register(function ($menu) {
-                $menu = $menu->system;
+            app('laravolt.menu.builder')->register(function ($baseMenu) {
+                $menu = $baseMenu->system;
+                if (is_null($menu)) {
+                    $menu = $baseMenu->add('System');
+                }
                 $menu->add(trans('laravolt::label.users'), route('epicentrum::users.index'))
                     ->data('icon', 'users')
                     ->data('permission', Permission::MANAGE_USER)
@@ -212,6 +215,9 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         if (config('laravolt.platform.features.kitchen_sink')) {
             app('laravolt.menu.sidebar')->register(function ($sidebar) {
                 $group = $sidebar->system;
+                if (is_null($group)) {
+                    $group = $sidebar->add('System');
+                }
                 $menu = $group->add(__('Kitchen Sink'))->data('icon', 'utensils');
                 $menu->add(__('UI Component'), route('platform::playground.ui'))
                     ->data('permission', Permission::MANAGE_PERMISSION)

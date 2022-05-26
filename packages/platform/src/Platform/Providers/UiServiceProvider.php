@@ -34,9 +34,7 @@ class UiServiceProvider extends BaseServiceProvider
             return new Menu();
         });
 
-        $this->app->terminating(function () {
-            app('laravolt.menu.sidebar')->reset();
-        });
+        $this->registerMenuBuilder();
 
         $this->bootConfig();
 
@@ -50,8 +48,6 @@ class UiServiceProvider extends BaseServiceProvider
         });
 
         $this->registerAssets();
-
-        $this->registerMenuBuilder();
 
         $this->registerFlash();
     }
@@ -136,15 +132,16 @@ class UiServiceProvider extends BaseServiceProvider
          */
         $this->app['laravolt.menu.builder']->loadArray(config('laravolt.menu'));
 
-        $menuDir = base_path('menu');
-        if (is_dir($menuDir)) {
-            View::composer('laravolt::menu.sidebar', function () use ($menuDir) {
+        View::composer('laravolt::menu.sidebar', function () {
+            $menuDir = base_path('menu');
+            if (is_dir($menuDir)) {
                 foreach (new \FilesystemIterator($menuDir) as $file) {
                     $menu = include $file->getPathname();
                     $this->app['laravolt.menu.builder']->loadArray($menu);
                 }
-            });
-        }
+            }
+            $this->app['laravolt.menu.builder']->runCallbacks();
+        });
 
         return $this;
     }
