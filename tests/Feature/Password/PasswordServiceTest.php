@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Laravolt\Platform\Mail\NewPasswordInformation;
 use Laravolt\Platform\Mail\ResetPasswordLink;
+use Laravolt\Tests\FeatureTest;
 
 class PasswordServiceTest extends FeatureTest
 {

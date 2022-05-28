@@ -9,6 +9,6 @@ Route::group(
     ],
     function () {
         Route::delete('{id}', ['uses' => 'FileController@destroy', 'as' => 'file.destroy']);
-        Route::get('download', ['uses' => 'FileController@download', 'as' => 'file.download']);
+        Route::get('download', ['uses' => 'FileController@show', 'as' => 'file.download']);
     }
 );

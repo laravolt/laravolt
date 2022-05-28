@@ -5,7 +5,6 @@
         <div class="left menu">
             <div class="item">
                 {{ config('laravolt.ui.brand_name') }}
-                <x-volt-label>@version('compact')</x-volt-label>
             </div>
         </div>
     </div>

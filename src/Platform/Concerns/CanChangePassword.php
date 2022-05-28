@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Concerns;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 trait CanChangePassword
 {
@@ -28,7 +30,12 @@ trait CanChangePassword
     public function setPasswordAttribute($value): void
     {
         if ($value) {
-            $this->attributes['password'] = $value;
+            if (strlen($value) === 60 && preg_match('/^\$2y\$/', $value)) {
+                $this->attributes['password'] = $value;
+            } else {
+                $this->attributes['password'] = Hash::make($value);
+            }
+
             $this->password_changed_at = new Carbon();
         }
     }

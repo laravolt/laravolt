@@ -4,6 +4,8 @@ namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rules\Unique;
+use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
 
 class CrudRequest extends FormRequest
@@ -25,20 +27,24 @@ class CrudRequest extends FormRequest
     public function authorize()
     {
         $resource = $this->resource;
-        $key = "laravolt.auto-crud.resources.$resource";
+        $key = "laravolt.auto-crud-resources.$resource";
 
         if (! config()->has($key)) {
             abort(404);
         }
 
         // Module level authorization
-        if ($this->user()->cannot(config('laravolt.auto-crud.permission'))) {
-            return false;
+        if ($permission = config('laravolt.auto-crud.permission')) {
+            if (! $this->user()->canAny($permission)) {
+                return false;
+            }
         }
 
         // Collection level authorization
-        if ($this->user()->cannot(config("laravolt.auto-crud.resources.$resource.permission"))) {
-            return false;
+        if ($permission = config("laravolt.auto-crud-resources.$resource.permission")) {
+            if (! $this->user()->canAny($permission)) {
+                return false;
+            }
         }
 
         $this->resourceConfig = config()->get($key) + ['key' => $resource];
@@ -54,12 +60,18 @@ class CrudRequest extends FormRequest
             return [];
         }
 
-        return collect($this->resourceConfig['schema'])
+        $transformer = new SchemaTransformer($this->resourceConfig);
+        return collect($transformer->transform())
             ->filter(
                 function ($item) use ($method) {
                     if ($item instanceof Field) {
                         return $item->visibleFor($method);
                     }
+
+                    if (in_array($item['type'], [Field::BUTTON, Field::ACTION, Field::HTML], true)) {
+                        return false;
+                    }
+
                     return ($item['visibility'][$method] ?? true);
                 }
             )->mapWithKeys(
@@ -72,12 +84,25 @@ class CrudRequest extends FormRequest
                         $key = '_'.$key;
                     }
 
-                    return [$key => $item['rules'] ?? []];
+                    $rules = collect($item['rules'] ?? []);
+
+                    // ignore current ID for unique rules when updating
+                    if ($this->method() === 'PUT') {
+                        collect($rules)->transform(function ($rule) {
+                            if ($rule instanceof Unique) {
+                                $rule = $rule->ignore($this->route('id'));
+                            }
+
+                            return $rule;
+                        });
+                    }
+
+                    return [$key => $rules->toArray()];
                 }
             )->toArray();
     }
 
-    public function validated()
+    public function data()
     {
         $data = parent::validated();
 

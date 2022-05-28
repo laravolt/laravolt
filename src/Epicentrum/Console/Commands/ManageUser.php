@@ -58,10 +58,10 @@ class ManageUser extends Command
             $identifier = $this->ask('ID or email');
         }
 
-        $user = app(config('auth.providers.users.model'))->find($identifier);
+        $user = app(config('laravolt.epicentrum.models.user'))->find($identifier);
 
         if (!$user) {
-            $user = app(config('auth.providers.users.model'))->whereEmail($identifier)->first();
+            $user = app(config('laravolt.epicentrum.models.user'))->whereEmail($identifier)->first();
         }
 
         if (!$user) {
@@ -103,7 +103,12 @@ class ManageUser extends Command
         return $user->syncRoles($selected);
     }
 
-    protected function actionChangePassword()
+    protected function actionChangePassword($user)
     {
+        $password = $this->secret('Type new password');
+        $user->password = $password;
+        $user->save();
+
+        $this->info('Password updated');
     }
 }

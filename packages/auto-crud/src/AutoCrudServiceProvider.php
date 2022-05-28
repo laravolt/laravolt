@@ -29,14 +29,14 @@ class AutoCrudServiceProvider extends BaseServiceProvider
 
     protected function menu()
     {
-        app('laravolt.menu.sidebar')->register(function ($menu) {
+        app('laravolt.menu.sidebar')->registerCore(function ($menu) {
             $menu = $menu->system;
-            $group = $menu->add(__('Resources'))
+            $group = $menu->add(config('laravolt.auto-crud.menu.label'))
                 ->data('icon', 'cube')
                 ->data('order', 10)
-                ->data('permission', config('laravolt.auto-crud.permission'));
+                ->data('permission', config('laravolt.auto-crud.permission') ?? []);
 
-            foreach (config('laravolt.auto-crud.resources', []) as $key => $resource) {
+            foreach (config('laravolt.auto-crud-resources', []) as $key => $resource) {
                 $menu = $group->add($resource['label'], url("resource/{$key}"))
                     ->active('resource/'.$key.'/*');
                 foreach ($resource['data'] ?? [] as $dataKey => $dataValue) {

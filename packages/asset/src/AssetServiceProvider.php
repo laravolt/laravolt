@@ -11,13 +11,16 @@ class AssetServiceProvider extends BaseServiceProvider
         return 'asset';
     }
 
-    public function register()
+    protected function enabled()
     {
-        parent::register();
+        return true;
+    }
 
-        $config = $this->config;
+    public function boot()
+    {
+        $config = collect(config("laravolt.asset"));
         foreach ($config as $groupName => $groupConfig) {
-            $this->registerAssetsManagerInstance($groupName, (array) $groupConfig);
+            $this->bootAssetsManagerInstance($groupName, (array) $groupConfig);
         }
     }
 
@@ -29,7 +32,7 @@ class AssetServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    protected function registerAssetsManagerInstance($name, array $config)
+    protected function bootAssetsManagerInstance($name, array $config): void
     {
         $this->app->singleton("laravolt.asset.group.$name", function () use ($config) {
             $config['public_dir'] ??= public_path();

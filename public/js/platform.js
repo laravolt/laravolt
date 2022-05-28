@@ -53,10 +53,10 @@ $(function () {
         }
     });
 
-    $('#sidebar').on('click', 'a.item, a.title.empty', function (e) {
-        $(e.delegateTarget).find('.selected').removeClass('selected');
-        $(this).addClass('selected');
-    })
+    // $('#sidebar').on('click', 'a.item, a.title.empty', function (e) {
+    //     $(e.delegateTarget).find('.selected').removeClass('selected');
+    //     $(this).addClass('selected');
+    // })
 });
 
 class Laravolt {
@@ -342,22 +342,29 @@ class Laravolt {
                         const Y = date.getFullYear();
                         const YYYY = date.getFullYear();
 
-                        return format
+                        let output = format
                             .replace('h', h)
                             .replace('i', i)
                             .replace('s', s)
                             .replace('j', j)
                             .replace('d', d)
                             .replace('n', n)
-                            .replace('MMMM', MMMM)
-                            .replace('MM', MM)
                             .replace('m', m)
-                            .replace('M', M)
                             .replace('DD', DD)
                             .replace('YYYY', YYYY)
                             .replace('YY', YY)
-                            .replace('Y', Y)
-                            ;
+                            .replace('Y', Y);
+
+                        const replacer = {'MMMM': MMMM, 'MMM': M, 'MM': MM, 'M': M};
+                        let temp = format;
+                        for (const key in replacer) {
+                            if (temp.includes(key)) {
+                                output = output.replace(key, replacer[key]);
+                                temp = temp.replace(key, '');
+                            }
+                        }
+
+                        return output;
                     }
                 }
             })
@@ -522,54 +529,7 @@ class Laravolt {
                 );
             });
         }
-
-        root.find('form[data-ajax]').on('submit', function (e) {
-            e.preventDefault();
-            let form = $(this);
-            $.post(form.attr('action'), form.serialize())
-                .done(function () {
-                    //TODO on success
-                })
-                .fail(function (response) {
-                    let body = $('body');
-                    switch (response.status) {
-                        case 422:
-                            body.toast(response.responseJSON.flash);
-                            response.responseJSON.fields.forEach((field) => {
-                                form.find('[name="' + field + '"]').closest('.field').addClass('error');
-                            });
-
-                            break;
-                        default:
-                            body.toast({message: response.responseJSON.message, class: 'error'});
-                    }
-                })
-                .always(function () {
-                    //TODO enable form
-                });
-        });
-        root.data('initialized', true);
     }
-}
-
-const TURBOLINK_ENABLED = $('meta[name="turbolinks-enabled"]').attr('content') === '1';
-
-if (TURBOLINK_ENABLED) {
-    let Turbolinks = require("turbolinks")
-    Turbolinks.start();
-
-    $(document).on('turbolinks:load', function () {
-        Laravolt.init($('body'));
-    });
-
-// Keep menu scroll position
-    $(document).on('turbolinks:render', function (event) {
-        $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
-    });
-} else {
-    $(document).on('DOMContentLoaded', function () {
-        Laravolt.init($('body'));
-    });
 }
 
 window.addEventListener('laravolt.toast', function (e) {
@@ -578,12 +538,7 @@ window.addEventListener('laravolt.toast', function (e) {
 
 if (typeof Livewire !== "undefined") {
     Livewire.hook('message.processed', (el, component) => {
-        const root = $('[wire\\:id="' + component.id + '"]');
-
-        // Make sure Laravolt only initialized once
-        if (root.data('initialized') === undefined) {
-            Laravolt.init(root);
-        }
+        Laravolt.init($('[wire\\:id="' + component.id + '"]'));
     })
 }
 

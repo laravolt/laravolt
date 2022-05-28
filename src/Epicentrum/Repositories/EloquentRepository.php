@@ -26,7 +26,7 @@ class EloquentRepository implements RepositoryInterface
      */
     public function __construct()
     {
-        $this->model = app(config('auth.providers.users.model'));
+        $this->model = app(config('laravolt.epicentrum.models.user'));
         $this->fieldSearchable = config('laravolt.epicentrum.repository.searchable', []);
     }
 

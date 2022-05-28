@@ -5,7 +5,6 @@ namespace Laravolt\SemanticForm\Elements;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 
 class Uploader extends Input
 {

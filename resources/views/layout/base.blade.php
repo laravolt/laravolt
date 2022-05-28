@@ -6,6 +6,8 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta content="no-cache">
+    <meta name="spa-enabled" content="{{ config('laravolt.platform.features.spa') }}">
 
     @stack('meta')
 
@@ -15,8 +17,7 @@
             --app-login-background: url('{{ url(config('laravolt.ui.login_background')) }}');
         }
     </style>
-    <link rel="stylesheet" type="text/css"
-          href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}"/>
 
@@ -24,6 +25,7 @@
     @stack('head')
     {!! Asset::group('laravolt')->css() !!}
     {!! Asset::css() !!}
+
     <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 
     <script>
@@ -40,12 +42,30 @@
 
 <body data-theme="{{ config('laravolt.ui.theme') }}" class="{{ $bodyClass ?? '' }} @yield('body.class')">
 
-{{ $slot }}
+    {{ $slot }}
 
-{!! Asset::js() !!}
-@livewireScripts
-@stack('script')
-@stack('body')
+    {!! Asset::js() !!}
+    @livewireScripts
+    @stack('script')
+    @stack('body')
+
+    <script>
+        up.fragment.config.runScripts = true;
+        up.fragment.config.navigateOptions.cache = false;
+
+        let firstTimeVisit = true;
+        up.compiler('main.content', function (element) {
+            Laravolt.init($(element));
+
+            if (!firstTimeVisit && window.Livewire) {
+                window.Livewire.restart();
+            }
+            firstTimeVisit = false;
+        })
+        up.link.config.followSelectors.push('a[href]');
+        up.form.config.submitSelectors.push(['form']);
+
+    </script>
 
 </body>
 </html>

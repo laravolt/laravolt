@@ -25,4 +25,6 @@ final class Permission extends Enum
     const MANAGE_SETTINGS = 'laravolt::manage-settings';
 
     const MANAGE_SYSTEM = 'laravolt::manage-system';
+
+    const MANAGE_SEO = 'laravolt::manage-seo';
 }

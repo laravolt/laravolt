@@ -19,7 +19,7 @@ class Role extends Model
 
     public function users()
     {
-        return $this->belongsToMany(config('auth.providers.users.model'), 'acl_role_user');
+        return $this->belongsToMany(config('laravolt.epicentrum.models.user'), 'acl_role_user');
     }
 
     public function addPermission($permission): self

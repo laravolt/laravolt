@@ -180,7 +180,7 @@ class Select extends FormControl
 
     public function displayValue()
     {
-        if (is_string($this->value)) {
+        if (is_string($this->value) || is_int($this->value)) {
             return Arr::get($this->options, $this->value);
         }
 

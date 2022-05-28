@@ -44,4 +44,14 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
             Arr::get(request('filter'), $this->name)
         );
     }
+
+    public function getAttributesString(): string
+    {
+        return $this->tagAttributes($this->attributes);
+    }
+
+    public function getContent(): string
+    {
+        return "";
+    }
 }

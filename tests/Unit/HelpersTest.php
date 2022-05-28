@@ -40,11 +40,19 @@ class HelpersTest extends UnitTest
     }
 
     /**
-     * @dataProvider provideTerbilang
+     * @dataProvider provideTerbilangWithSuffix
      */
     public function test_number_to_terbilang($number, $terbilang)
     {
         $this->assertEquals($terbilang, number_to_terbilang($number));
+    }
+
+    /**
+     * @dataProvider provideTerbilangWithoutSuffix
+     */
+    public function test_number_to_terbilang_without_suffix($number, $terbilang)
+    {
+        $this->assertEquals($terbilang, number_to_terbilang($number, ''));
     }
 
     public function provideRupiah()
@@ -60,7 +68,7 @@ class HelpersTest extends UnitTest
         ];
     }
 
-    public function provideTerbilang()
+    public function provideTerbilangWithSuffix()
     {
         return [
             [1, 'satu rupiah'],
@@ -72,12 +80,41 @@ class HelpersTest extends UnitTest
             [1_000_000, 'satu juta rupiah'],
             [1_000_000_000, 'satu milyar rupiah'],
             [1_000_000_000_000, 'satu triliun rupiah'],
-            [1_000_000_000_000_000, 'satu kuadriliun rupiah'],
-            [1_000_000_000_000_000_000, 'seribu kuadriliun rupiah'],
+            [1_000_000_000_000_000, 'seribu triliun rupiah'],
             [1_234, 'seribu dua ratus tiga puluh empat rupiah'],
             [1_234_567, 'satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh rupiah'],
             [25_100_671.00, 'dua puluh lima juta seratus ribu enam ratus tujuh puluh satu rupiah'],
             [25_100_671.123, 'dua puluh lima juta seratus ribu enam ratus tujuh puluh satu rupiah koma satu dua tiga'],
+            [99_841_500, 'sembilan puluh sembilan juta delapan ratus empat puluh satu ribu lima ratus rupiah'],
+            [101_000, 'seratus satu ribu rupiah'],
+            [1_001_000, 'satu juta seribu rupiah'],
+            [1_010_000, 'satu juta sepuluh ribu rupiah'],
+            [1_010_010, 'satu juta sepuluh ribu sepuluh rupiah'],
+        ];
+    }
+
+    public function provideTerbilangWithoutSuffix()
+    {
+        return [
+            [1, 'satu'],
+            [10, 'sepuluh'],
+            [100, 'seratus'],
+            [1000, 'seribu'],
+            [10_000, 'sepuluh ribu'],
+            [100_000, 'seratus ribu'],
+            [1_000_000, 'satu juta'],
+            [1_000_000_000, 'satu milyar'],
+            [1_000_000_000_000, 'satu triliun'],
+            [1_000_000_000_000_000, 'seribu triliun'],
+            [1_234, 'seribu dua ratus tiga puluh empat'],
+            [1_234_567, 'satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh'],
+            [25_100_671.00, 'dua puluh lima juta seratus ribu enam ratus tujuh puluh satu'],
+            [25_100_671.123, 'dua puluh lima juta seratus ribu enam ratus tujuh puluh satu koma satu dua tiga'],
+            [99_841_500, 'sembilan puluh sembilan juta delapan ratus empat puluh satu ribu lima ratus'],
+            [101_000, 'seratus satu ribu'],
+            [1_001_000, 'satu juta seribu'],
+            [1_010_000, 'satu juta sepuluh ribu'],
+            [1_010_010, 'satu juta sepuluh ribu sepuluh'],
         ];
     }
 }

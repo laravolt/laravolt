@@ -2,7 +2,9 @@
     @foreach($items->sortBy(fn($item) => $item->data('order')) as $item)
         @if($item->hasChildren())
             <div class="title {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}">
-                <x-volt-icon :name="$item->data('icon')" class="left" />
+                {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'left x-icon'])
+                ->width('16px')
+                ->toHtml() !!}
                 <span>{{ $item->title }}</span>
                 <i class="angle down icon"></i>
             </div>
@@ -20,7 +22,9 @@
             <a class="title empty {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}"
                href="{{ $item->url() }}"
                data-parent="{{ $item->parent()->title }}">
-                <x-volt-icon :name="$item->data('icon')" class="left" />
+                {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'left x-icon'])
+                ->width('16px')
+                ->toHtml() !!}
                 <span>{{ $item->title }}</span>
             </a>
             <div class="content"></div>

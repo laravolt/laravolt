@@ -15,7 +15,7 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function menu()
     {
-        app('laravolt.menu.sidebar')->register(function ($menu) {
+        app('laravolt.menu.sidebar')->registerCore(function ($menu) {
             $menu = $menu->system;
             $group = $menu->add(__('Lookup'))
                 ->data('icon', 'list')

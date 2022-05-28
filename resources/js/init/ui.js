@@ -281,22 +281,29 @@ class Laravolt {
                         const Y = date.getFullYear();
                         const YYYY = date.getFullYear();
 
-                        return format
+                        let output = format
                             .replace('h', h)
                             .replace('i', i)
                             .replace('s', s)
                             .replace('j', j)
                             .replace('d', d)
                             .replace('n', n)
-                            .replace('MMMM', MMMM)
-                            .replace('MM', MM)
                             .replace('m', m)
-                            .replace('M', M)
                             .replace('DD', DD)
                             .replace('YYYY', YYYY)
                             .replace('YY', YY)
-                            .replace('Y', Y)
-                            ;
+                            .replace('Y', Y);
+
+                        const replacer = {'MMMM': MMMM, 'MMM': M, 'MM': MM, 'M': M};
+                        let temp = format;
+                        for (const key in replacer) {
+                            if (temp.includes(key)) {
+                                output = output.replace(key, replacer[key]);
+                                temp = temp.replace(key, '');
+                            }
+                        }
+
+                        return output;
                     }
                 }
             })
@@ -489,26 +496,6 @@ class Laravolt {
         });
         root.data('initialized', true);
     }
-}
-
-const TURBOLINK_ENABLED = $('meta[name="turbolinks-enabled"]').attr('content') === '1';
-
-if (TURBOLINK_ENABLED) {
-    let Turbolinks = require("turbolinks")
-    Turbolinks.start();
-
-    $(document).on('turbolinks:load', function () {
-        Laravolt.init($('body'));
-    });
-
-// Keep menu scroll position
-    $(document).on('turbolinks:render', function (event) {
-        $('#sidebar .simplebar-scroll-content').scrollTop($('#sidebar').data('scroll'));
-    });
-} else {
-    $(document).on('DOMContentLoaded', function () {
-        Laravolt.init($('body'));
-    });
 }
 
 window.addEventListener('laravolt.toast', function (e) {

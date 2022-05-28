@@ -17,7 +17,8 @@ trait HasRoleAndPermission
 
     public function permissions(): Collection
     {
-        return Cache::driver('array')->rememberForever("users.{$this->getKey()}.permissions", function () {
+        // save users permissions result for 1 hour (3600 seconds)
+        return Cache::remember("users.{$this->getKey()}.permissions", 3600, function () {
             /** @var Permission $permissionModel */
             $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 

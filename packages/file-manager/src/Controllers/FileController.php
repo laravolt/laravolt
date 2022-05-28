@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 class FileController extends Controller
 {
-    public function download(Request $request)
+    public function show(Request $request)
     {
         $hash = $request->get(config('laravolt.file-manager.query_string'));
         $file = app('laravolt.file-manager')->openFile($hash)->getFilePath();

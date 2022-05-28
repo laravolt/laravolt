@@ -35,8 +35,8 @@ return [
 
     /*
      * Iconset
-     * Available options: fad (two tone), fal (light), far (regular)
-     * Browse icons at https://fontawesome.com/icons?d=gallery&p=2&s=duotone&m=pro
+     * Available options: fad (two tone), fal (light), far (regular), fas (solid)
+     * Browse icons at https://fontawesome.com/v5/search
      */
     'iconset' => 'fad',
 

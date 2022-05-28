@@ -20,7 +20,6 @@ trait Bootstrap
     protected function setUp(): void
     {
         parent::setUp();
-        // dd(realpath(__DIR__.'/../database/migrations'));
         $this->loadLaravelMigrations();
         $this->artisan('migrate', [
             '--path' => realpath(__DIR__.'/../database/migrations'),
@@ -34,6 +33,7 @@ trait Bootstrap
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('auth.providers.users.model', User::class);
+        $app['config']->set('laravolt.epicentrum.models.user', User::class);
 
         $app['view']->addNamespace('dummy', __DIR__.'/Dummy');
         $app['config']->set('laravolt.auth.layout', 'dummy::layout');

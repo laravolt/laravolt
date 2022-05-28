@@ -10,8 +10,10 @@
     </x-slot>
 
     @livewire('volt-modal-bag')
-
-    @livewire('auto-crud.table', ['resource' => $config])
+    @livewire(
+        $config['table'] ?? 'laravolt::auto-crud.resource.table',
+        ['resource' => $config]
+    )
 
     @push('script')
         <script>

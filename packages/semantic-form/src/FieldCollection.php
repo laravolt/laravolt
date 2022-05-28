@@ -8,8 +8,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravolt\Fields\Field;
+use Laravolt\SemanticForm\Contracts\HasFormOptions;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
 use Laravolt\SemanticForm\Elements\Checkbox;
+use Laravolt\SemanticForm\Elements\CheckboxGroup;
 use Laravolt\SemanticForm\Elements\FormControl;
 use Laravolt\SemanticForm\Elements\Html;
 use Laravolt\SemanticForm\Elements\Segments;
@@ -52,6 +54,7 @@ class FieldCollection extends Collection
             case 'email':
             case 'hidden':
             case 'number':
+            case 'password':
             case 'redactor':
             case 'rupiah':
             case 'text':
@@ -124,8 +127,13 @@ class FieldCollection extends Collection
             case 'radioGroup':
             case 'dropdown':
             case 'dropdownColor':
+                $options = $field['options'] ?? [];
+                if (is_string($options) && ($model = app($options)) instanceof HasFormOptions) {
+                    $options = $model->toFormOptions();
+                }
+
                 $element = form()
-                    ->{$type}($field['name'], $field['options'] ?? [], $field['value'] ?? null)
+                    ->{$type}($field['name'], $options, $field['value'] ?? null)
                     ->label($field['label'])
                     ->hint($field['hint'])
                     ->inline($field['inline'] ?? false)
@@ -233,7 +241,7 @@ class FieldCollection extends Collection
     {
         foreach ($values as $key => $value) {
             if (($element = $this->get($key)) !== null) {
-                if ($element instanceof Checkbox) {
+                if ($element instanceof Checkbox || $element instanceof CheckboxGroup) {
                     $element->setChecked($value);
                 } else {
                     $element->value($value);
