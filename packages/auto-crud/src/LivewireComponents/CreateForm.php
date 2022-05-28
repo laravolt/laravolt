@@ -29,7 +29,7 @@ class CreateForm extends Modal
             return [];
         }
 
-        $config = config()->get("laravolt.auto-crud.resources.{$this->resource}");
+        $config = config()->get("laravolt.auto-crud-resources.{$this->resource}");
 
         return collect($config['schema'])
             ->filter(
@@ -58,7 +58,7 @@ class CreateForm extends Modal
 
     public function render()
     {
-        $config = config()->get("laravolt.auto-crud.resources.{$this->resource}");
+        $config = config()->get("laravolt.auto-crud-resources.{$this->resource}");
         $fields = collect($config['schema'])
             ->filter(
                 function ($item) {
