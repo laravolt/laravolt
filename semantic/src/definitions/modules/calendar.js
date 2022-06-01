@@ -377,7 +377,6 @@ $.fn.calendar = function(parameters) {
                   cell.data(metadata.date, cellDate);
                   var adjacent = isDay && cellDate.getMonth() !== ((month + 12) % 12);
                   var disabled = (!settings.selectAdjacentDays && adjacent) || !module.helper.isDateInRange(cellDate, mode) || settings.isDisabled(cellDate, mode) || module.helper.isDisabled(cellDate, mode) || !module.helper.isEnabled(cellDate, mode);
-                  var eventDate;
                   if (disabled) {
                     var disabledDate = module.helper.findDayAsObject(cellDate, mode, settings.disabledDates);
                     if (disabledDate !== null && disabledDate[metadata.message]) {
@@ -391,7 +390,7 @@ $.fn.calendar = function(parameters) {
                       }
                     }
                   } else {
-                    eventDate = module.helper.findDayAsObject(cellDate, mode, settings.eventDates);
+                    var eventDate = module.helper.findDayAsObject(cellDate, mode, settings.eventDates);
                     if (eventDate !== null) {
                       cell.addClass(eventDate[metadata.class] || settings.eventClass);
                       if (eventDate[metadata.message]) {
@@ -408,9 +407,9 @@ $.fn.calendar = function(parameters) {
                   }
                   var active = module.helper.dateEqual(cellDate, date, mode);
                   var isToday = module.helper.dateEqual(cellDate, today, mode);
-                  cell.toggleClass(className.adjacentCell, adjacent && !eventDate);
+                  cell.toggleClass(className.adjacentCell, adjacent);
                   cell.toggleClass(className.disabledCell, disabled);
-                  cell.toggleClass(className.activeCell, active && !(adjacent && disabled));
+                  cell.toggleClass(className.activeCell, active && !adjacent);
                   if (!isHour && !isMinute) {
                     cell.toggleClass(className.todayCell, !adjacent && isToday);
                   }
@@ -972,7 +971,7 @@ $.fn.calendar = function(parameters) {
 
         helper: {
           isDisabled: function(date, mode) {
-            return (mode === 'day' || mode === 'month' || mode === 'year') && ((mode === 'day' && settings.disabledDaysOfWeek.indexOf(date.getDay()) !== -1) || settings.disabledDates.some(function(d){
+            return (mode === 'day' || mode === 'month' || mode === 'year') && ((settings.disabledDaysOfWeek.indexOf(date.getDay()) !== -1) || settings.disabledDates.some(function(d){
               if(typeof d === 'string') {
                 d = module.helper.sanitiseDate(d);
               }
@@ -1074,11 +1073,14 @@ $.fn.calendar = function(parameters) {
             return null;
           },
           sanitiseDate: function (date) {
+            if (!date) {
+              return undefined;
+            }
             if (!(date instanceof Date)) {
               date = parser.date('' + date, settings);
             }
-            if (!date || isNaN(date.getTime())) {
-              return null;
+            if (!date || date === null || isNaN(date.getTime())) {
+              return undefined;
             }
             return date;
           },
@@ -1465,11 +1467,11 @@ $.fn.calendar.settings = {
       if (text.length === 0) {
         return null;
       }
-      if(text.match(/^[0-9]{4}[\/\-\.][0-9]{1,2}[\/\-\.][0-9]{1,2}$/)){
+      if(text.match(/^[0-9]{4}[\/\-\.][0-9]{2}[\/\-\.][0-9]{2}$/)){
         text = text.replace(/[\/\-\.]/g,'/') + ' 00:00:00';
       }
       // Reverse date and month in some cases
-      text = settings.monthFirst || !text.match(/^[0-9]{1,2}[\/\-\.]/) ? text : text.replace(/[\/\-\.]/g,'/').replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
+      text = settings.monthFirst || !text.match(/^[0-9]{2}[\/\-\.]/) ? text : text.replace(/[\/\-\.]/g,'/').replace(/([0-9]+)\/([0-9]+)/,'$2/$1');
       var textDate = new Date(text);
       var numberOnly = text.match(/^[0-9]+$/) !== null;
       if(!numberOnly && !isNaN(textDate.getDate())) {

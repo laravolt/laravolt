@@ -40,9 +40,9 @@
   will-change: top, left, margin, transform, opacity;
 }
 
-.ui.modal > :first-child:not(.close):not(.dimmer),
+.ui.modal > :first-child:not(.icon):not(.dimmer),
 .ui.modal > i.icon:first-child + *,
-.ui.modal > .dimmer:first-child + *:not(.close),
+.ui.modal > .dimmer:first-child + *:not(.icon),
 .ui.modal > .dimmer:first-child + i.icon + * {
   border-top-left-radius: @borderRadius;
   border-top-right-radius: @borderRadius;
@@ -182,15 +182,6 @@
   border-top:none;
 }
 
-.ui.modal > .centered,
-.ui.modal > .center.aligned {
-  text-align: center;
-  &.actions > .button:not(.fluid) {
-    margin-left: @buttonCenteredDistance;
-    margin-right: @buttonCenteredDistance;
-  }
-}
-
 /*-------------------
        Responsive
 --------------------*/
@@ -229,7 +220,7 @@
 
 /* Tablet and Mobile */
 @media only screen and (max-width : @largestTabletScreen) {
-  .ui.modal > .close + .header {
+  .ui.modal > .header {
     padding-right: @closeHitbox;
   }
   .ui.modal > .close {
@@ -243,10 +234,8 @@
 @media only screen and (max-width : @largestMobileScreen) {
 
   .ui.modal > .header {
-    padding: @mobileHeaderPadding;
-  }
-  .ui.modal > .close + .header {
-    padding-right: @closeHitbox;
+    padding: @mobileHeaderPadding !important;
+    padding-right: @closeHitbox !important;
   }
   .ui.overlay.fullscreen.modal > .content.content.content {
     min-height: @overlayFullscreenScrollingContentMaxHeightMobile;
@@ -477,8 +466,8 @@
       border-radius:0;
     }
   }
-  .ui.modal > .close.inside + .header:not(.centered):not(.center):not(.icon),
-  .ui.fullscreen.modal > .close + .header:not(.centered):not(.center):not(.icon) {
+  .ui.modal > .close.inside + .header,
+  .ui.fullscreen.modal > .header {
     padding-right: @closeHitbox;
   }
   .ui.modal > .close.inside,

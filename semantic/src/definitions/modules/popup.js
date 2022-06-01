@@ -434,11 +434,11 @@ $.fn.popup = function(parameters) {
               module.set.visible();
               $popup
                 .transition({
-                  animation  : (settings.transition.showMethod || settings.transition) + ' in',
+                  animation  : settings.transition + ' in',
                   queue      : false,
                   debug      : settings.debug,
                   verbose    : settings.verbose,
-                  duration   : settings.transition.showDuration || settings.duration,
+                  duration   : settings.duration,
                   onComplete : function() {
                     module.bind.close();
                     callback.call($popup, element);
@@ -457,9 +457,9 @@ $.fn.popup = function(parameters) {
             if(settings.transition && $.fn.transition !== undefined && $module.transition('is supported')) {
               $popup
                 .transition({
-                  animation  : (settings.transition.hideMethod || settings.transition) + ' out',
+                  animation  : settings.transition + ' out',
                   queue      : false,
-                  duration   : settings.transition.hideDuration || settings.duration,
+                  duration   : settings.duration,
                   debug      : settings.debug,
                   verbose    : settings.verbose,
                   onComplete : function() {
