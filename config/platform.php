@@ -44,7 +44,7 @@ return [
             'type' => 'dropdown',
             'name' => 'font_size',
             'label' => 'Ukuran Font',
-            'options' => ['xs' => 'Paling Kecil', 'sm' => 'Kecil', 'md' => 'Sedang', 'lg' => 'Besar', 'xl' => 'Paling Besar'],
+            'options' => ['sm' => 'Kecil', 'md' => 'Sedang', 'lg' => 'Besar'],
             'inline' => true,
             'rules' => ['required'],
         ],
