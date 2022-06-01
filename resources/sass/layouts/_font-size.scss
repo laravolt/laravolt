@@ -1,15 +1,6 @@
-$font-size-xs: 11px;
 $font-size-sm: 12px;
 $font-size-md: 13px;
 $font-size-lg: 14px;
-$font-size-xl: 16px;
-
-html[data-font-size="xs"] {
-  font-size: $font-size-xs;
-  body {
-    font-size: $font-size-xs;
-  }
-}
 
 html[data-font-size="sm"] {
   font-size: $font-size-sm;
@@ -29,12 +20,5 @@ html[data-font-size="lg"] {
   font-size: $font-size-lg;
   body {
     font-size: $font-size-lg;
-  }
-}
-
-html[data-font-size="xl"] {
-  font-size: $font-size-xl;
-  body {
-    font-size: $font-size-xl;
   }
 }
