@@ -32,7 +32,6 @@ if (typeof up !== "undefined" && window.document.documentElement.dataset.spa) {
     //refresh page on error 500
     up.on('up:fragment:loaded', (event) => {
         let isErrorPage = event.response.status === 500;
-        console.log(event);
 
         if (isErrorPage) {
             // Prevent the fragment update and don't update browser history
