@@ -4,7 +4,12 @@
         @include('laravolt::menu.topbar')
         @include('laravolt::menu.sidebar')
 
-        <main class="content" up-main>
+        <main class="content"
+              up-main
+              data-font-size="{{ config('laravolt.ui.font_size') }}"
+              data-theme="{{ config('laravolt.ui.theme') }}"
+              data-accent-color="{{ config('laravolt.ui.color') }}"
+        >
 
             <div class="content__inner">
 
