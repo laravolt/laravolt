@@ -17,7 +17,7 @@ if (typeof up !== "undefined" && window.document.documentElement.dataset.spa) {
     up.compiler('main.content', function (element) {
         Laravolt.init($(element));
 
-        document.body.dataset.theme = element.dataset.theme;
+        document.documentElement.dataset.theme = element.dataset.theme;
         document.documentElement.dataset.fontSize = element.dataset.fontSize;
         document.documentElement.style.setProperty('--app-accent-color', 'var(--' + element.dataset.accentColor + ')');
 
