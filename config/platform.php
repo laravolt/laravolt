@@ -34,7 +34,6 @@ return [
             'type' => 'uploader',
             'name' => 'brand_image',
             'label' => 'Logo',
-            // 'rules' => ['required'],
         ],
         [
             'type' => 'html',
@@ -46,17 +45,16 @@ return [
             'label' => 'Ukuran Font',
             'options' => ['sm' => 'Kecil', 'md' => 'Sedang', 'lg' => 'Besar'],
             'inline' => true,
-            'rules' => ['required'],
         ],
         [
-            'type' => 'dropdown',
+            'type' => \Laravolt\Fields\Field::RADIO_GROUP,
             'name' => 'theme',
             'options' => ['dark' => 'Gelap', 'light' => 'Terang'],
             'label' => 'Tema',
             'inline' => true,
         ],
         [
-            'type' => 'dropdownColor',
+            'type' => \Laravolt\Fields\Field::DROPDOWN_COLOR,
             'name' => 'color',
             'label' => 'Warna Aksen',
             'inline' => true,

@@ -4,7 +4,7 @@ $header-color: var(--app-accent-color);
 $menu-item-color: #cfd8e3;
 $menu-item-active-indicator: #a6a8b1;
 
-[data-theme="dark"] {
+[data-theme="dark"] body {
   background: $body-bg;
 
   [data-role="brand"] .ui.header {
