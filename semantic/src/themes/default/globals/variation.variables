@@ -26,7 +26,6 @@
 @variationButtonFluid: true;
 @variationButtonCircular: true;
 @variationButtonGroups: true;
-@variationButtonStackable: true;
 @variationButtonSizes: @variationAllSizes;
 
 /* Container */
@@ -71,7 +70,6 @@
 @variationIconLink: true;
 @variationIconCircular: true;
 @variationIconBordered: true;
-@variationIconColored: true;
 @variationIconRotated: true;
 @variationIconFlipped: true;
 @variationIconCorner: true;
@@ -275,8 +273,6 @@
 @variationMessageIcon: true;
 @variationMessageFloating: true;
 @variationMessageConsequences: true;
-@variationMessageCentered: true;
-@variationMessageRightAligned: true;
 @variationMessageSizes: @variationAllSizes;
 
 /* Table */
@@ -325,8 +321,6 @@
 
 /* Card */
 @variationCardInverted: true;
-@variationCardDisabled: true;
-@variationCardLoading: true;
 @variationCardHorizontal: true;
 @variationCardRaised: true;
 @variationCardCentered: true;
@@ -379,14 +373,12 @@
 /* Checkbox */
 @variationCheckboxBox: false;   //.box (instead of label) is an ancient fragment of sui v1 and not even documented in v2.x anymore
 @variationCheckboxDisabled: true;
-@variationCheckboxReadonly: true;
 @variationCheckboxInverted: true;
 @variationCheckboxRadio: true;
 @variationCheckboxSlider: true;
 @variationCheckboxToggle: true;
 @variationCheckboxIndeterminate: true;
 @variationCheckboxFitted: true;
-@variationCheckboxRightAligned: true;
 @variationCheckboxSizes: @variationAllSizes;
 
 /* Dimmer */
@@ -403,7 +395,6 @@
 /* Dropdown */
 @variationDropdownInverted: true;
 @variationDropdownDisabled: true;
-@variationDropdownReadonly: true;
 @variationDropdownLabel: true;
 @variationDropdownButton: true;
 @variationDropdownSelection: true;
@@ -440,14 +431,6 @@
 @variationModalCloseInside: true;
 @variationModalSizes: @variationAllSizes;
 
-/* Nag */
-@variationNagInverted: true;
-@variationNagBottom: true;
-@variationNagOverlay: true;
-@variationNagFixed: true;
-@variationNagGroups: true;
-@variationNagSizes: @variationAllSizes;
-
 /* Popup */
 @variationPopupInverted: true;
 @variationPopupTooltip: true;
@@ -480,7 +463,6 @@
 @variationProgressActive: true;
 @variationProgressAttached: true;
 @variationProgressSpeeds: true;
-@variationProgressRightAligned: true;
 @variationProgressSizes: @variationAllSizes;
 
 /* Rating */
@@ -542,7 +524,6 @@
 @variationToastWarning: true;
 @variationToastSuccess: true;
 @variationToastError: true;
-@variationToastHorizontal: true;
 @variationToastFloating: true;
 @variationToastProgress: true;
 @variationToastIcon: true;
@@ -553,8 +534,6 @@
 @variationToastActions: true;
 @variationToastVertical: true;
 @variationToastAttached: true;
-@variationToastCompact: true;
-@variationToastCentered: true;
 
 /* Transition */
 @variationTransitionDisabled: true;

@@ -44,8 +44,6 @@
 @progressTextShadow: none;
 @progressFontWeight: @bold;
 @progressTextAlign: left;
-@progressRightAlignedRight: @progressLeft;
-@progressRightAlignedLeft: @progressRight;
 
 /* Label */
 @labelWidth: 100%;

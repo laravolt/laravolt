@@ -155,7 +155,7 @@ $.fn.dimmer = function(parameters) {
 
         event: {
           click: function(event) {
-            module.verbose('Determining if event occurred on dimmer', event);
+            module.verbose('Determining if event occured on dimmer', event);
             if( $dimmer.find(event.target).length === 0 || $(event.target).is(selector.content) ) {
               module.hide();
               event.stopImmediatePropagation();
@@ -255,7 +255,7 @@ $.fn.dimmer = function(parameters) {
                   displayType : settings.useFlex
                     ? 'flex'
                     : 'block',
-                  animation   : (settings.transition.showMethod || settings.transition) + ' in',
+                  animation   : settings.transition + ' in',
                   queue       : false,
                   duration    : module.get.duration(),
                   useFailSafe : true,
@@ -302,7 +302,7 @@ $.fn.dimmer = function(parameters) {
                   displayType : settings.useFlex
                     ? 'flex'
                     : 'block',
-                  animation   : (settings.transition.hideMethod || settings.transition) + ' out',
+                  animation   : settings.transition + ' out',
                   queue       : false,
                   duration    : module.get.duration(),
                   useFailSafe : true,
@@ -335,12 +335,15 @@ $.fn.dimmer = function(parameters) {
             return $dimmer;
           },
           duration: function() {
-            if( module.is.active() ) {
-              return settings.transition.hideDuration || settings.duration.hide || settings.duration;
+            if(typeof settings.duration == 'object') {
+              if( module.is.active() ) {
+                return settings.duration.hide;
+              }
+              else {
+                return settings.duration.show;
+              }
             }
-            else {
-              return settings.transition.showDuration || settings.duration.show || settings.duration;
-            }
+            return settings.duration;
           }
         },
 
