@@ -3,7 +3,7 @@ $sidebar-bg: $white;
 $header-color: var(--app-accent-color);
 $menu-item-color: $black;
 
-[data-theme="light"] {
+[data-theme="light"] body{
   background: $body-bg;
 
   [data-role="brand"] .ui.header {
