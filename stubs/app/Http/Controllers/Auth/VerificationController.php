@@ -14,7 +14,10 @@ class VerificationController extends Controller
 {
     public function show(): View|RedirectResponse
     {
-        if (auth()->user()?->hasVerifiedEmail()) {
+        /** @var MustVerifyEmail $user */
+        $user = auth()->user();
+
+        if ($user->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME);
         }
 
@@ -33,12 +36,15 @@ class VerificationController extends Controller
 
     public function update(EmailVerificationRequest $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        /** @var MustVerifyEmail $user */
+        $user = auth()->user();
+
+        if ($user->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
         }
 
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');

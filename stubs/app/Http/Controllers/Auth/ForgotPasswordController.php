@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Laravolt\Contracts\CanResetPassword;
 
 class ForgotPasswordController extends Controller
 {
@@ -33,8 +34,10 @@ class ForgotPasswordController extends Controller
 
         $response = Password::INVALID_USER;
 
+        /** @var \Laravolt\Contracts\CanResetPassword $user */
         $user = User::whereEmail($request->email)->first();
-        if ($user) {
+
+        if ($user instanceof CanResetPassword) {
             $response = app('laravolt.password')->sendResetLink($user);
         }
 

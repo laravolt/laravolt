@@ -32,13 +32,14 @@ if (typeof up !== "undefined" && window.document.documentElement.dataset.spa) {
     //refresh page on error 500
     up.on('up:fragment:loaded', (event) => {
         let isErrorPage = event.response.status === 500;
+        console.log(isErrorPage);
 
-        if (isErrorPage) {
-            // Prevent the fragment update and don't update browser history
-            event.preventDefault()
-
-            // Make a full page load for the same request.
-            event.request.loadPage()
-        }
+        // if (isErrorPage) {
+        //     // Prevent the fragment update and don't update browser history
+        //     event.preventDefault()
+        //
+        //     // Make a full page load for the same request.
+        //     event.request.loadPage()
+        // }
     })
 }

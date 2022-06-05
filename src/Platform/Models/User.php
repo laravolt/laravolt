@@ -7,6 +7,7 @@ namespace Laravolt\Platform\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as BaseUser;
 use Laravolt\Contracts\CanChangePassword as CanChangePasswordContract;
+use Laravolt\Contracts\CanResetPassword as CanResetPasswordContact;
 use Laravolt\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 use Laravolt\Platform\Concerns\CanChangePassword;
 use Laravolt\Platform\Concerns\CanResetPassword;
@@ -14,7 +15,7 @@ use Laravolt\Platform\Concerns\HasRoleAndPermission;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends BaseUser implements CanChangePasswordContract, HasRoleAndPermissionContract, HasMedia, MustVerifyEmail
+class User extends BaseUser implements CanChangePasswordContract, CanResetPasswordContact, HasRoleAndPermissionContract, HasMedia, MustVerifyEmail
 {
     use CanChangePassword;
     use CanResetPassword;

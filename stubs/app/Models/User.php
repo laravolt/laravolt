@@ -17,7 +17,7 @@ class User extends \Laravolt\Platform\Models\User
     use Notifiable;
 
     /**
-     * @var string[]
+     * @var array<int, string>
      */
     protected $hidden = ['password', 'remember_token'];
 

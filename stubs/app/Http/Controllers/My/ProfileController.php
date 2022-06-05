@@ -20,7 +20,9 @@ class ProfileController extends Controller
 
     public function update(Update $request): RedirectResponse
     {
-        auth()->user()?->update($request->validated());
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        $user->update($request->validated());
 
         return redirect()->back()->withSuccess(__('Profil berhasil diperbarui') ?? '');
     }
