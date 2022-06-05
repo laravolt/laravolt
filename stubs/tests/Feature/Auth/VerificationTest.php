@@ -113,7 +113,7 @@ class VerificationTest extends TestCase
         config(['app.debug' => true]);
         Auth::shouldReceive('user')->andReturn(new \stdClass());
         $this->withoutMiddleware()->post(route('verification.send'))
-            ->assertSeeText(sprintf('User must implement %s', MustVerifyEmail::class))
+            ->assertSeeText(MustVerifyEmail::class)
             ->assertStatus(500);
     }
 }
