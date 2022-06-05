@@ -34,6 +34,7 @@
         "livewire/livewire": "^2.10",
         "myclabs/deep-copy": "^1.10",
         "nesbot/carbon": "^2.0",
+        "nunomaduro/larastan": "*",
         "spatie/eloquent-sortable": "^3.11|^4.0",
         "spatie/laravel-backup": "^7.0|^8.0",
         "spatie/laravel-medialibrary": "^9.0|^10.0",
