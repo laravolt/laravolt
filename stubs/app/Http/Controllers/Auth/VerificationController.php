@@ -28,7 +28,7 @@ class VerificationController extends Controller
     {
         $user = auth()->user();
         if (! $user instanceof MustVerifyEmail) {
-            throw new \Exception(sprintf('User must implement MustVerifyEmail'));
+            throw new \Exception(sprintf('User must implement %s', MustVerifyEmail::class));
         }
 
         return $this->handle($user);

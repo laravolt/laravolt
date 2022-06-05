@@ -23,7 +23,7 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
 
     protected function menu()
     {
-        app('laravolt.menu.sidebar')->register(function ($menu) {
+        app('laravolt.menu.builder')->register(function ($menu) {
             $menu->modules
                 ->add(':Module Name:', route('modules:::module-name:.index'))
                 ->data('icon', 'circle')

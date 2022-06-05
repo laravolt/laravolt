@@ -8,7 +8,7 @@ use Lavary\Menu\Builder;
 use Lavary\Menu\Item;
 use Lavary\Menu\Menu as BaseMenu;
 
-class Menu extends BaseMenu
+class SidebarMenu extends BaseMenu
 {
     protected $callbacksCore = [];
 

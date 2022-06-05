@@ -6,17 +6,16 @@
         <div class="sidebar__menu">
 
             @auth
-            <div class="sidebar__profile m-b-0 p-0 p-t-2 ui basic segment text-center">
-                <img src="{{ auth()->user()->avatar }}" alt="" class="ui image tiny centered avatar">
-                <h4 class="ui header m-b-3">
-                    {{ auth()->user()->name }}
-                </h4>
-            </div>
+                <div class="sidebar__profile m-b-0 p-0 p-t-2 ui basic segment text-center">
+                    <img src="{{ auth()->user()->avatar }}" alt="" class="ui image tiny centered avatar">
+                    <h4 class="ui header m-b-3">
+                        {{ auth()->user()->name }}
+                    </h4>
+                </div>
             @endauth
 
             @if(!$items->isEmpty())
                 @if(config('laravolt.platform.features.quick_switcher'))
-{{--                    @include('laravolt::quick-switcher.sidebar')--}}
                     @include('laravolt::quick-switcher.modal')
                 @endif
 
@@ -30,7 +29,7 @@
                             @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
                         @else
                             <div class="ui accordion sidebar__accordion">
-                                <a class="title empty {{ \Laravolt\Platform\Services\Menu::setActiveParent($item->children(), $item->isActive) }}"
+                                <a class="title empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
                                    href="{{ $item->url() }}">
                                     <i class="left icon {{ $item->data('icon') }}"></i>
                                     <span>{{ $item->title }}</span>
