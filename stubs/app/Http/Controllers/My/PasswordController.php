@@ -22,7 +22,7 @@ class PasswordController extends Controller
         $user = auth()->user();
         if (
             app('hash')->check(
-                (string) $request->input('current_password'),
+                (string) $request->input('password_current'),
                 $user->password
             )
         ) {
