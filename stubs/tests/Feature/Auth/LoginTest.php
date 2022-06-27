@@ -48,6 +48,8 @@ class LoginTest extends TestCase
         $response = $this->post(route('auth::login.store'), $payload + ['password' => 'asdf1234']);
 
         $response->assertRedirect(RouteServiceProvider::HOME);
+
+        $this->get(RouteServiceProvider::HOME)->assertSee('Home');
     }
 
     /**
