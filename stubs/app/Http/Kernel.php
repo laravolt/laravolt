@@ -18,7 +18,12 @@ class Kernel extends HttpKernel
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
+
+        // If you are using Laravel 8, uncomment this line
+        // \Fruitcake\Cors\HandleCors::class,
+        // Only available for Laravel 9 and above. If your are using Laravel 8, remove this line
         \Illuminate\Http\Middleware\HandleCors::class,
+
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
