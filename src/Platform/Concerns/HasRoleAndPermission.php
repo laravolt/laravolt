@@ -160,9 +160,9 @@ trait HasRoleAndPermission
 
             if ($checkAll) {
                 return $match == count($permission);
-            } else {
-                return $match > 0;
             }
+
+            return $match > 0;
         }
 
         if (Str::isUuid($permission)) {
