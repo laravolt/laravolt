@@ -10,6 +10,10 @@ use Laravolt\Fields\Field;
 
 class CrudRequest extends FormRequest
 {
+    protected array $defaultConfig = [
+        'restful_button' => true,
+    ];
+
     protected array $resourceConfig;
 
     protected string $visibility;
@@ -21,7 +25,7 @@ class CrudRequest extends FormRequest
 
     public function getConfig()
     {
-        return $this->resourceConfig;
+        return $this->resourceConfig + $this->defaultConfig;
     }
 
     public function authorize()
@@ -61,6 +65,7 @@ class CrudRequest extends FormRequest
         }
 
         $transformer = new SchemaTransformer($this->resourceConfig);
+
         return collect($transformer->transform())
             ->filter(
                 function ($item) use ($method) {
