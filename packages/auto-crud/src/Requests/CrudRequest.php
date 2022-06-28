@@ -66,8 +66,13 @@ class CrudRequest extends FormRequest
 
         $transformer = new SchemaTransformer($this->resourceConfig);
 
-        return collect($transformer->transform())
-            ->filter(
+        match($method) {
+            'create' => $items = $transformer->getFieldsForCreate(),
+            'edit' => $items = $transformer->getFieldsForEdit(),
+            default => $items = collect($transformer->transform())
+        };
+
+        return $items->filter(
                 function ($item) use ($method) {
                     if ($item instanceof Field) {
                         return $item->visibleFor($method);
