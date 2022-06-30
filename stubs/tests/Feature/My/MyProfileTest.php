@@ -33,7 +33,7 @@ class MyProfileTest extends TestCase
         $this->actingAs(\App\Models\User::factory()->create());
         $payload = [
             'name' => 'fulan',
-            'timezone' => 'UTC'
+            'timezone' => 'UTC',
         ];
 
         $this->get(route('my::profile.edit'));

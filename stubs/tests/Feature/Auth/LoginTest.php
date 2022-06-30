@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
