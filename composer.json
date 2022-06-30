@@ -67,6 +67,7 @@
             "Laravolt\\Lookup\\": "packages/lookup/src",
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
+            "Laravolt\\Pint\\": "packages/pint",
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",
