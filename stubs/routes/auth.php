@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(
     [
         'prefix' => 'auth',
-        'middleware' => 'guest'
+        'middleware' => 'guest',
     ],
     function (Router $router) {
         $router->get('login', [LoginController::class, 'show'])->name('auth::login.show');
@@ -30,11 +30,10 @@ Route::group(
     }
 );
 
-
 Route::group(
     [
         'prefix' => 'auth',
-        'middleware' => 'auth'
+        'middleware' => 'auth',
     ],
     function (Router $router) {
         $router->any('logout', Logout::class)->name('auth::logout');
