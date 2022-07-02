@@ -10,7 +10,7 @@ use Laravolt\Platform\Models\Permission;
 
 trait HasRoleAndPermission
 {
-    public function roles()
+    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(config('laravolt.epicentrum.models.role'), 'acl_role_user', 'user_id', 'role_id');
     }
@@ -33,7 +33,7 @@ trait HasRoleAndPermission
         });
     }
 
-    public function getPermissionsAttribute()
+    public function getPermissionsAttribute(): Collection
     {
         return $this->permissions();
     }
@@ -86,9 +86,9 @@ trait HasRoleAndPermission
 
             if ($checkAll) {
                 return $match == count($role);
-            } else {
-                return $match > 0;
             }
+
+            return $match > 0;
         }
 
         if (Str::isUuid($role)) {
