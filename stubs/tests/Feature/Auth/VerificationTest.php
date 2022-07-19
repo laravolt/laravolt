@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-use Mockery\Mock;
 use Tests\TestCase;
 
 class VerificationTest extends TestCase
@@ -85,7 +84,7 @@ class VerificationTest extends TestCase
 
         $this->withoutMiddleware()
             ->get(route('verification.verify', ['id', 'hash']))
-            ->assertRedirect(RouteServiceProvider::HOME."?verified=1");
+            ->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
     }
 
     /**
@@ -102,7 +101,7 @@ class VerificationTest extends TestCase
 
         $this->withoutMiddleware()
             ->get(route('verification.verify', ['id', 'hash']))
-            ->assertRedirect(RouteServiceProvider::HOME."?verified=1");
+            ->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
     }
 
     /**

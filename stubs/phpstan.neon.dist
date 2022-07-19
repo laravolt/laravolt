@@ -1,0 +1,18 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/spaze/phpstan-disallowed-calls/extension.neon
+
+parameters:
+    paths:
+        - app
+        - config
+
+    # The level 9 is the highest level
+    level: 8
+
+    disallowedFunctionCalls:
+        -
+            function: 'env()'
+            message: 'use config() instead'
+            allowIn:
+                - config/*.php

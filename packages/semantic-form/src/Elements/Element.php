@@ -273,7 +273,7 @@ abstract class Element
 
     public function displayValue()
     {
-        return $this->value ?? $this->getAttribute('value');
+        return nl2br($this->value ?? $this->getAttribute('value'));
     }
 
     public function bindAttribute()

@@ -11,7 +11,11 @@ class LaravoltBladeDirectives
         return <<<EOF
 {!! Asset::js() !!}
 {!! Asset::group('laravolt')->js() !!}
+<?php if(config('laravolt.platform.features.spa')): ?>
+<script src="{{ mix('js/vendor-spa.js', 'laravolt') }}"></script>
+<?php else: ?>
 <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
+<?php endif; ?>
 <script>
     $.fn.calendar.settings.text = $calendarLang;
 </script>
@@ -22,6 +26,9 @@ EOF;
     public static function styles($expression)
     {
         return <<<EOF
+{!! Asset::group('laravolt')->css() !!}
+{!! Asset::css() !!}
+
 <style>
     :root {
         --app-accent-color: var(--{{ config('laravolt.ui.color') }});

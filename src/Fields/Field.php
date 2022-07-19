@@ -25,6 +25,7 @@ interface Field
     const PASSWORD = 'password';
     const RADIO_GROUP = 'radioGroup';
     const REDACTOR = 'redactor';
+    const RESTFUL_BUTTON = 'restfulButton';
     const RUPIAH = 'rupiah';
     const SEGMENT = 'segment';
     const SUBMIT = 'submit';

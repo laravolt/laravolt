@@ -19,8 +19,6 @@
 
     @stack('style')
     @stack('head')
-    {!! Asset::group('laravolt')->css() !!}
-    {!! Asset::css() !!}
     @livewireStyles
     @laravoltScripts
     <script defer src="{{ mix('js/app.js') }}"></script>

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -48,6 +47,8 @@ class LoginTest extends TestCase
         $response = $this->post(route('auth::login.store'), $payload + ['password' => 'asdf1234']);
 
         $response->assertRedirect(RouteServiceProvider::HOME);
+
+        $this->get(RouteServiceProvider::HOME)->assertSee('Home');
     }
 
     /**

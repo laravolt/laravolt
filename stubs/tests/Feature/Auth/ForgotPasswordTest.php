@@ -28,7 +28,7 @@ class ForgotPasswordTest extends TestCase
     public function it_can_handle_correct_email()
     {
         $payload = [
-            'email' => 'admin@laravolt.dev'
+            'email' => 'admin@laravolt.dev',
         ];
 
         User::factory()->create($payload);
@@ -44,7 +44,7 @@ class ForgotPasswordTest extends TestCase
     public function it_can_handle_wrong_email()
     {
         $payload = [
-            'email' => 'zombie@laravolt.dev'
+            'email' => 'zombie@laravolt.dev',
         ];
 
         // We must visit form at first, to mimic browser history a.k.a redirect back
@@ -69,7 +69,7 @@ class ForgotPasswordTest extends TestCase
     public function it_can_handle_send_email_failure()
     {
         $payload = [
-            'email' => 'admin@laravolt.dev'
+            'email' => 'admin@laravolt.dev',
         ];
 
         $this->instance('laravolt.password', \Mockery::mock(Password::class, function (MockInterface $mock) {

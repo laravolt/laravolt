@@ -3,6 +3,7 @@
         <x-volt-link-button
                 :label="__('Tambah')"
                 url="{{ route('auto-crud::resource.create', $config['key']) }}"
+                up-mode="modal"
                 icon="plus">
         </x-volt-link-button>
     </x-slot>

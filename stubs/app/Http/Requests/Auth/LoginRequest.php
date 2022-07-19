@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     protected int $maxAttempts = 5;
+
     protected int $decaySeconds = 60;
 
     /**
@@ -30,15 +31,15 @@ class LoginRequest extends FormRequest
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
-     *
      * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('email', 'password') + ['status' => 'ACTIVE'], $this->filled('remember'))) {
+        if (! Auth::attempt($this->only('email', 'password') + ['status' => 'ACTIVE'], $this->filled('remember'))) {
             RateLimiter::hit($this->throttleKey(), $this->decaySeconds);
 
             throw ValidationException::withMessages(
@@ -54,13 +55,13 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
-     *
      * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function ensureIsNotRateLimited()
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey(), $this->maxAttempts)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), $this->maxAttempts)) {
             return;
         }
 

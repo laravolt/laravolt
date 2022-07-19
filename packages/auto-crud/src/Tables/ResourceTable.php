@@ -51,7 +51,12 @@ class ResourceTable extends TableView
 
     public function columns(): array
     {
-        return array_merge($this->prepareColumns(), [$this->restfulButton()]);
+        $columns = $this->prepareColumns();
+        if ($this->resource['restful_button']) {
+            $columns = array_merge($columns, [$this->restfulButton()]);
+        }
+
+        return $columns;
     }
 
     protected function prepareColumns(): array
@@ -70,9 +75,15 @@ class ResourceTable extends TableView
                     $column = MultipleValues::make($field['name'], $field['label'] ?? '-');
                     break;
                 case Field::BUTTON:
-                    $column = Button::make('', $field['label'] ?? '-')
+                    $column = Button::make($field['name'] ?? '', $field['label'] ?? '-')
                         ->label($field['label'] ?? 'Button')
                         ->icon($field['icon'] ?? '');
+                    break;
+                case Field::RESTFUL_BUTTON:
+                    $column = $this->restfulButton();
+                    if (isset($field['only'])) {
+                        $column->only($field['only']);
+                    }
                     break;
                 default:
                     $column = Raw::make($field['name'], $field['label'] ?? '-');

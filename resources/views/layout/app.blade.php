@@ -4,25 +4,25 @@
         @include('laravolt::menu.topbar')
         @include('laravolt::menu.sidebar')
 
-        <main class="content"
-              up-main
-              data-font-size="{{ config('laravolt.ui.font_size') }}"
-              data-theme="{{ config('laravolt.ui.theme') }}"
-              data-accent-color="{{ config('laravolt.ui.color') }}"
+        <div class="content"
+              up-main="root"
         >
 
             <div class="content__inner">
 
                 @include('laravolt::menu.actionbar')
 
-                <div class="ui container-fluid content__body p-3">
+                <main class="ui container-fluid content__body p-3"
+                      up-main="modal"
+                      data-font-size="{{ config('laravolt.ui.font_size') }}"
+                      data-theme="{{ config('laravolt.ui.theme') }}"
+                      data-accent-color="{{ config('laravolt.ui.color') }}"
+                >
                     {{ $slot }}
-                </div>
+                    @stack('main')
+                </main>
 
             </div>
-
-            @stack('main')
-
-        </main>
+        </div>
     </div>
 </x-volt-base>
