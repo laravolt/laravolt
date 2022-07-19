@@ -7,13 +7,25 @@ mix.scripts([
     './public/semantic/semantic.min.js',
     './node_modules/simplebar/dist/simplebar.js',
     './node_modules/autonumeric/dist/autoNumeric.js',
-    './node_modules/unpoly/unpoly.js',
     'resources/js/components/basictable.js',
     'resources/js/components/keymaster.js',
     'resources/js/components/fileuploader.js',
     'resources/js/components/fuse.min.js',
     'resources/js/components/modal.js',
 ], 'public/js/vendor.js');
+
+mix.scripts([
+    './node_modules/jquery/dist/jquery.min.js',
+    './public/semantic/semantic.min.js',
+    './node_modules/simplebar/dist/simplebar.js',
+    './node_modules/autonumeric/dist/autoNumeric.js',
+    './node_modules/unpoly/unpoly.js',
+    'resources/js/components/basictable.js',
+    'resources/js/components/keymaster.js',
+    'resources/js/components/fileuploader.js',
+    'resources/js/components/fuse.min.js',
+    'resources/js/components/modal.js',
+], 'public/js/vendor-spa.js');
 
 mix.scripts([
     'resources/js/init/sidebar.js',

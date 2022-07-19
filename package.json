@@ -21,6 +21,6 @@
     },
     "name": "laravolt",
     "dependencies": {
-        "unpoly": "^2.5.2"
+        "unpoly": "^2.6"
     }
 }

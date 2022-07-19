@@ -8,7 +8,7 @@ return [
         'mailkeeper' => false,
         'lookup' => true,
         'kitchen_sink' => false,
-        'spa' => true,
+        'spa' => false,
         'quick_switcher' => true,
         'registration' => true,
         'verification' => true,

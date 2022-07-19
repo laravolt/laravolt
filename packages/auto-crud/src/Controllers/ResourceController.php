@@ -64,7 +64,7 @@ class ResourceController extends Controller
         $model->update($request->data());
 
         return redirect()
-            ->back()
+            ->route('auto-crud::resource.index', $resource)
             ->withSuccess(sprintf('%s updated', $config['label']));
     }
 
@@ -76,7 +76,7 @@ class ResourceController extends Controller
         $model->delete();
 
         return redirect()
-            ->back()
+            ->route('auto-crud::resource.index', $resource)
             ->withSuccess(sprintf('%s deleted', $config['label']));
     }
 }
