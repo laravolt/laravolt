@@ -30,7 +30,7 @@
     @endif
 
     @if($actions->has('destroy'))
-        <form id="{{ $key }}" role="form" action="{{ $actions->get('destroy') }}" method="POST" onsubmit="return confirm('{{ $deleteConfirmation }}')">
+        <form id="{{ $key }}" role="form" action="{{ $actions->get('destroy') }}" method="POST" onsubmit="return confirm(`{{ $deleteConfirmation }}`)">
             <input type="hidden" name="_method" value="DELETE">
             {{ csrf_field() }}
         </form>
