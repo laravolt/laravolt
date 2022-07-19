@@ -5,13 +5,13 @@
     </x-slot>
 
     <x-volt-panel title="Edit {{ $config['label'] }}">
-        {!! form()->put(route('auto-crud::resource.update', [$config['key'], $model->getKey()])) !!}
+        {!! form()->put(route('auto-crud::resource.update', [$config['key'], $model->getKey()]))->attribute('up-layer', 'root') !!}
 
         {!! form()->make($fields)->bindValues(request()->query() + $model->toArray())->render() !!}
 
         {!! form()->action([
             form()->submit(__('Save')),
-            form()->link(__('Cancel'), route('auto-crud::resource.index', $config['key']))
+            form()->link(__('Cancel'), route('auto-crud::resource.index', $config['key']))->attribute('up-dismiss', true)
         ]) !!}
 
         {!! form()->close() !!}

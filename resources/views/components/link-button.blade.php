@@ -1,4 +1,4 @@
-<a href="{{ $url }}" class="ui button {{ $class ?? '' }}" themed>
+<a {{ $attributes->merge(['href' => $url, 'themed' => true])->class(['ui button', $class]) }}>
     @if($icon)
         <i class="icon {{ $icon }}"></i>
     @endif
