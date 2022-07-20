@@ -1,6 +1,6 @@
 $body-bg: $trueGrey;
 $sidebar-bg: $white;
-$header-color: var(--app-accent-color);
+$accent-color: var(--app-accent-color);
 $menu-item-color: $black;
 
 [data-theme="light"] body{
@@ -11,7 +11,7 @@ $menu-item-color: $black;
   }
 
   #topbar.ui.menu {
-    background: $body-bg;
+    background: $white;
     box-shadow: none;
     border-bottom: 1px solid darken($body-bg, 5%);
   }
@@ -27,6 +27,16 @@ $menu-item-color: $black;
       border-right-color: darken($body-bg, 5%);
 
       .sidebar__profile {
+        padding: 1.5em;
+        border: 1px solid darken($body-bg, 5%);
+        border-left: none;
+        border-right: none;
+        a {
+          color: var(--app-accent-color);
+        }
+      }
+
+      .sidebar__logo {
         .ui.header {
           color: var(--app-accent-color);
           .sub.header {
@@ -48,7 +58,7 @@ $menu-item-color: $black;
           color: $menu-item-color;
 
           > .header {
-            color: $header-color;
+            color: $accent-color;
           }
 
           &:before {
