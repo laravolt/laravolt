@@ -77,7 +77,8 @@ class LoginTest extends TestCase
      */
     public function ensure_password_required()
     {
-        $this->post(route('auth::login.store'), ['email' => 'user@laravolt.dev'])->assertSessionHasErrors('password');
+        $this->post(route('auth::login.store'), ['email' => 'user@laravolt.dev'])
+            ->assertSessionHasErrors('password');
     }
 
     /**
