@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
@@ -43,6 +44,9 @@ class LoginTest extends TestCase
         ];
 
         User::factory()->create($payload + ['password' => bcrypt('asdf1234')]);
+        RateLimiter::shouldReceive('tooManyAttempts')->andReturnFalse();
+        RateLimiter::shouldReceive('availableIn')->andReturn(3);
+        RateLimiter::shouldReceive('clear');
 
         $response = $this->post(route('auth::login.store'), $payload + ['password' => 'asdf1234']);
 
@@ -66,6 +70,14 @@ class LoginTest extends TestCase
         $response = $this->post(route('auth::login.store'), $payload + ['password' => 'wrong-password']);
 
         $response->assertRedirect(route('auth::login.show'));
+    }
+
+    /**
+     * @test
+     */
+    public function ensure_password_required()
+    {
+        $this->post(route('auth::login.store'), ['email' => 'user@laravolt.dev'])->assertSessionHasErrors('password');
     }
 
     /**
@@ -105,5 +117,24 @@ class LoginTest extends TestCase
     {
         $this->get(route('auth::login.show'))
             ->assertSeeText(trans('laravolt::auth.forgot_password'));
+    }
+
+    /**
+     * @test
+     */
+    public function ensure_rate_limiter()
+    {
+        $limit = 5;
+        $payload = [
+            'email' => 'admin@laravolt.dev',
+            'password' => 'etalazen',
+        ];
+
+        for ($i = 0; $i < $limit; $i++) {
+            $this->post(route('auth::login.store'), $payload);
+        }
+
+        $lastRequest = $this->post(route('auth::login.store'), $payload);
+        $lastRequest->assertSessionHasErrors('email');
     }
 }
