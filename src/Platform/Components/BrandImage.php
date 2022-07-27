@@ -28,7 +28,7 @@ class BrandImage extends Component
         $isSvg = Str::of($brandImage)->startsWith('<svg');
 
         if (!$brandImage) {
-            $brandImage = 'laravolt/img/default/laravolt-logo.png';
+            $brandImage = 'laravolt/img/default/logo.png';
         }
 
         return view('laravolt::components.brand-image', compact('brandImage', 'isSvg'));
