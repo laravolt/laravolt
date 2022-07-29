@@ -39,7 +39,7 @@ class Flash
         $this->except = config('laravolt.ui.flash.except');
     }
 
-    public function message($message, $type = 'basic')
+    public function message($message, $type = 'basic'): static
     {
         $this->attributes->setMessage($message, $type);
         $this->bags[] = $this->attributes;
@@ -51,35 +51,35 @@ class Flash
         return $this;
     }
 
-    public function info($message)
+    public function info($message): static
     {
         return $this->message($message, 'info');
     }
 
-    public function success($message)
+    public function success($message): static
     {
         return $this->message($message, 'success');
     }
 
-    public function warning($message)
+    public function warning($message): static
     {
         return $this->message($message, 'warning');
     }
 
-    public function error($message)
+    public function error($message): static
     {
         return $this->message($message, 'error');
     }
 
-    public function injectScript(Response $response)
+    public function injectScript(Response $response): void
     {
         $content = $response->getContent();
         $pos = strripos($content, '</main>');
 
         $bags = $this->session->get($this->getSessionKey());
 
-        usort($bags, function ($item, $next) {
-            if ($item['class'] == 'error') {
+        usort($bags, static function ($item, $next) {
+            if ($item['class'] === 'error') {
                 return 1;
             }
 
@@ -91,30 +91,30 @@ class Flash
         if (false !== $pos) {
             $content = substr($content, 0, $pos).$script.substr($content, $pos);
         } else {
-            $content = $content.$script;
+            $content .= $script;
         }
 
         $response->setContent($content);
     }
 
-    public function getSessionKey()
+    public function getSessionKey(): string
     {
         return $this->sessionKey;
     }
 
-    public function now()
+    public function now(): static
     {
         $this->now = true;
 
         return $this;
     }
 
-    public function hasMessage()
+    public function hasMessage(): bool
     {
         return !empty($this->bags);
     }
 
-    public function inExceptArray(Request $request)
+    public function inExceptArray(Request $request): bool
     {
         foreach ($this->except as $except) {
             if ($except !== '/') {
