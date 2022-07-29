@@ -26,7 +26,7 @@
 
                             <div class="divider"></div>
 
-                            <a href="{{ route('auth::logout') }}" class="item">Logout</a>
+                            <a href="{{ route('auth::logout') }}" class="item" up-target="body">Logout</a>
                         </div>
                     </div>
                 </div>
