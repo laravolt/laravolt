@@ -30,6 +30,7 @@ class BrandImage extends Component
         if (!$brandImage) {
             $brandImage = 'laravolt/img/default/logo.png';
         }
+
         return view('laravolt::components.brand-image', compact('brandImage', 'isSvg'));
     }
 }

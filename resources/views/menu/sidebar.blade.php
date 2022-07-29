@@ -5,24 +5,16 @@
 
         <div class="sidebar__menu">
 
-            <div class="sidebar__logo p-2" style="min-height: 124px">
+            <div class="sidebar__logo p-2">
                 <x-volt-brand-image></x-volt-brand-image>
             </div>
 
             @auth
                 <div class="sidebar__profile">
-                    <div class="ui items">
-                        <div class="item">
-                            <div class="ui mini image">
-                                <img src="{{ auth()->user()->avatar }}">
-                            </div>
-                            <div class="content">
-                                <h3 class="header">{{ auth()->user()->name }}</h3>
-                                <div class="extra">
-                                    <a href="{{ route('auth::logout') }}" class="item">Logout</a>
-                                </div>
-                            </div>
-                        </div>
+                    <img src="{{ auth()->user()->avatar }}" class="ui image tiny">
+                    <h3 class="header">{{ auth()->user()->name }}</h3>
+                    <div class="extra">
+                        <a href="{{ route('auth::logout') }}" class="item">Logout</a>
                     </div>
                 </div>
             @endauth

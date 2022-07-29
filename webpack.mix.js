@@ -46,8 +46,6 @@ mix.styles([
     './public/css/app.css',
 ], 'public/css/all.css');
 
-mix.copyDirectory('resources/img', 'public/img');
-
 mix.version([
     './public/semantic/semantic.min.css',
     './public/css/all.css',
