@@ -47,7 +47,7 @@ $(function () {
 
     }
 
-    $('[data-role="sidebar-accordion"]').accordion({
+    $('[data-role="sidenav"]').accordion({
         selector: {
             trigger: '.title:not(.empty)'
         }

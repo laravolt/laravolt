@@ -50,8 +50,7 @@ nav.sidebar {
       color: var(--app-accent-color);
     }
 
-    i.angle.x-icon {
-      margin: 0 -0.5rem 0 0;
+    i.angle {
       float: right;
       opacity: .5;
       line-height: 1.5 !important;
@@ -80,8 +79,19 @@ nav.sidebar {
       margin-bottom: 1px;
     }
 
+    .ui.list .ui.list {
+      padding: 0;
+    }
+
     .title {
       display: flex;
+
+      &__2 {
+        padding-left: 4em !important;
+      }
+      &__3 {
+        padding-left: 5em !important;;
+      }
 
       span {
         flex-grow: 1;
@@ -103,11 +113,11 @@ nav.sidebar {
     .content {
       padding-top: 0 !important;
       padding-bottom: 0 !important;
-      .ui.list .item {
-        padding-left: 4em;
+
+      &__2 {
+      }
+      &__3 {
       }
     }
-
   }
-
 }

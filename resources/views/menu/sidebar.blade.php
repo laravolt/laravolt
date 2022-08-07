@@ -26,10 +26,12 @@
                             <div class="item">
                                 <div class="header">{{ $item->title }}</div>
                             </div>
-                            @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
+                            <div class="ui accordion sidebar__accordion m-b-1" data-role="sidenav">
+                                @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
+                            </div>
                         @else
                             <div class="ui accordion sidebar__accordion">
-                                <a class="title empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
+                                <a class="title title__1 empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
                                    href="{{ $item->url() }}">
                                     <i class="left icon {{ $item->data('icon') }}"></i>
                                     <span>{{ $item->title }}</span>
