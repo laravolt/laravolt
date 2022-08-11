@@ -123,6 +123,10 @@ trait HasRoleAndPermission
                 return (int) $role;
             }
 
+            if (Str::isUuid($role)) {
+                return $role;
+            }
+
             if (is_string($role)) {
                 $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
 
