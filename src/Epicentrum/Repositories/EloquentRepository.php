@@ -5,6 +5,7 @@ namespace Laravolt\Epicentrum\Repositories;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserRepositoryEloquent.
@@ -65,7 +66,7 @@ class EloquentRepository implements RepositoryInterface
         }
 
         $user->save();
-        $user->syncRoles($roles);
+        $user->roles()->sync($roles);
 
         return $user;
     }
