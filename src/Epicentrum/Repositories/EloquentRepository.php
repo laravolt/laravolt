@@ -100,7 +100,7 @@ class EloquentRepository implements RepositoryInterface
             $model->save();
         }
 
-        return $model->delete();
+        return $model->deletePreservingMedia();
     }
 
     public function availableStatus()
