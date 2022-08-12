@@ -23,7 +23,7 @@ Route::group(
         Route::middleware('can:'.Permission::MANAGE_USER)
             ->group(
                 function () {
-                    Route::resource('users', UserController::class);
+                    Route::resource('users', UserController::class)->except('show');
                     Route::resource('account', AccountController::class)->only('edit', 'update');
                     Route::resource('password', PasswordController::class)->only('edit');
                     Route::post('password/{id}/reset', Reset::class)->name('password.reset');
