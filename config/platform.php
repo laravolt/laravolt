@@ -50,6 +50,13 @@ return [
         ],
         [
             'type' => 'dropdown',
+            'name' => 'sidebar_density',
+            'label' => 'Density',
+            'options' => ['compact' => 'Compact', 'default' => 'Default'],
+            'rules' => ['required'],
+        ],
+        [
+            'type' => 'dropdown',
             'name' => 'theme',
             'options' => ['dark' => 'Gelap', 'light' => 'Terang'],
             'label' => 'Tema',

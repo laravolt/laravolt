@@ -23,7 +23,6 @@ nav.sidebar {
       padding-bottom: $header-height;
     }
   }
-
 }
 
 .sidebar__scroller {
@@ -88,6 +87,8 @@ nav.sidebar {
 
       &__2 {
         padding-left: 4em !important;
+        padding-top: 0;
+        padding-bottom: 0;
       }
       &__3 {
         padding-left: 5em !important;;

@@ -12,6 +12,12 @@ return [
     'font_size' => 'sm',
 
     /*
+     * Sidebar menu density
+     * Available options: "compact", "default", or "cozy"
+     * */
+    'sidebar_density' => 'default',
+
+    /*
      * Set default theme
      * Available themes: dark, light
      * */

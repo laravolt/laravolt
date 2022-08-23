@@ -1,0 +1,20 @@
+nav.sidebar[data-sidebar-density="compact"] {
+  .ui.attached.menu .item > .header {
+    padding-left: 1em;
+  }
+  .sidebar__accordion.ui.accordion .ui.list .item,
+  .sidebar__accordion.ui.accordion .title {
+    padding: 0.5em 0.5em;
+    line-height: 1.25rem;
+
+    &__2 {
+      padding-left: 3em !important;
+    }
+
+    &__3 {
+      padding-left: 4em !important;;
+    }
+
+  }
+
+}

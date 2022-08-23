@@ -1,6 +1,6 @@
 @php($items = app('laravolt.menu.sidebar')->all())
 
-<nav class="sidebar" data-role="sidebar" id="sidebar" data-turbolinks-permanent>
+<nav class="sidebar" data-role="sidebar" id="sidebar" data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}">
     <div class="sidebar__scroller">
 
         <div class="sidebar__menu">
