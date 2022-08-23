@@ -12,7 +12,6 @@ $menu-item-color: $black;
 
   #topbar.ui.menu {
     background: $white;
-    box-shadow: none;
     border-bottom: 1px solid darken($body-bg, 5%);
   }
 
@@ -25,22 +24,6 @@ $menu-item-color: $black;
     .sidebar__scroller {
       background-color: $sidebar-bg;
       border-right-color: darken($body-bg, 5%);
-
-      .sidebar__profile {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        margin-top: 1em;
-        margin-bottom: 2em;
-        .header {
-          margin-bottom: 0;
-          margin-top: .5em;
-        }
-        a {
-          color: var(--app-accent-color);
-        }
-      }
 
       .sidebar__logo {
         .ui.header {

@@ -12,7 +12,7 @@
             @auth
                 <div class="sidebar__profile">
                     <img src="{{ auth()->user()->avatar }}" class="ui image tiny">
-                    <h3 class="header">{{ auth()->user()->name }}</h3>
+                    <h4 class="ui header">{{ auth()->user()->name }}</h4>
                     <div class="extra">
                         <a href="{{ route('auth::logout') }}" class="item">Logout</a>
                     </div>

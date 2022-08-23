@@ -22,7 +22,7 @@ $menu-item-active-indicator: #a6a8b1;
 
       .sidebar__profile {
         .ui.header {
-          color: var(--app-accent-color);
+          color: $menu-item-color;
           .sub.header {
             color: $menu-item-color;
           }
