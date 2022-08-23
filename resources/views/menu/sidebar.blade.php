@@ -1,6 +1,15 @@
 @php($items = app('laravolt.menu.sidebar')->all())
 
 <nav class="sidebar" data-role="sidebar" id="sidebar" data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}">
+    <script>
+        if (document.body.clientWidth < 991 || localStorage.getItem('layout-mode') === 'full') {
+            document.getElementById('sidebar').classList.add('hide');
+            document.getElementById('topbar').classList.add('full');
+        } else {
+            document.getElementById('sidebar').classList.add('show');
+        }
+
+    </script>
     <div class="sidebar__scroller">
 
         <div class="sidebar__menu">

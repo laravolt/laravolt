@@ -11,6 +11,11 @@
       width: $header-width;
       max-width: $header-width;
 
+      &.full {
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+      }
       /* Tablet and below */
       @media only screen and (max-width: 991px) {
         left: 0;

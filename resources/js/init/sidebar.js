@@ -19,15 +19,56 @@ function debounce(func, wait, immediate) {
 
 $(function () {
 
-    var sidebar = $('[data-role="sidebar"] .sidebar__scroller');
+    const sidebar = $('[data-role="sidebar"] .sidebar__scroller');
     if (sidebar.length > 0) {
         new SimpleBar(sidebar[0]);
 
-        var sidebarVisibilitySwitcher = $('[data-role="sidebar-visibility-switcher"]');
+        $(window).resize(function () {
+            if (document.body.clientWidth < 991) {
+                $('#topbar').addClass('full');
+                localStorage.setItem("layout-mode", "box");
+                sidebar.parent().addClass('hide').removeClass('show');
+            }
+        });
+
+        const sidebarVisibilitySwitcher = $('[data-role="sidebar-visibility-switcher"]');
+
         if (sidebarVisibilitySwitcher.length > 0) {
             sidebarVisibilitySwitcher.on('click', function () {
-                sidebar.parent().toggleClass('show');
+                if (document.body.clientWidth >= 991) {
+                    sidebar.parent().toggleClass('show').toggleClass('hide');
+                    if (sidebar.parent().hasClass('show')) {
+                        $('#topbar').removeClass('full');
+                        localStorage.setItem("layout-mode", "box");
+                    } else {
+                        $('#topbar').addClass('full');
+                        localStorage.setItem("layout-mode", "full");
+                    }
+                }
             });
+
+            sidebarVisibilitySwitcher.on('mouseover', function (e) {
+                if (sidebar.parent().hasClass('hide')) {
+                    sidebar.parent().addClass('floated');
+                }
+            });
+            sidebarVisibilitySwitcher.on('mouseleave', function (e) {
+                if (sidebar.parent().hasClass('hide')) {
+                    sidebar.parent().removeClass('floated');
+                }
+            });
+
+            sidebar.parent().on('mouseover', function (e) {
+                if (sidebar.parent().hasClass('hide')) {
+                    sidebar.parent().addClass('floated');
+                }
+            });
+            sidebar.parent().on('mouseleave', function (e) {
+                if (sidebar.parent().hasClass('hide')) {
+                    sidebar.parent().removeClass('floated');
+                }
+            });
+
         }
 
         // Hide sidebar ketika user click element di luar sidebar ketika sidebar ditampilkan di perangkat mobile

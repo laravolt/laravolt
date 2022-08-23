@@ -1,5 +1,5 @@
 <header class="ui menu fixed top borderless" id="topbar">
-    <div class="item mobile only tablet only" data-role="sidebar-visibility-switcher"><i class="icon sidebar"></i></div>
+    <div class="item" data-role="sidebar-visibility-switcher" style="cursor: pointer"><i class="icon sidebar"></i></div>
 
     <div class="menu p-l-2" id="titlebar">
         <div class="left menu">
