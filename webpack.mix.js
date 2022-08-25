@@ -7,7 +7,6 @@ mix.scripts([
     './public/semantic/semantic.min.js',
     './node_modules/simplebar/dist/simplebar.js',
     './node_modules/autonumeric/dist/autoNumeric.js',
-    './node_modules/unpoly/unpoly.js',
     'resources/js/components/basictable.js',
     'resources/js/components/keymaster.js',
     'resources/js/components/fileuploader.js',
@@ -50,5 +49,6 @@ mix.version([
     './public/semantic/semantic.min.css',
     './public/css/all.css',
     './public/js/vendor.js',
+    './public/js/vendor-spa.js',
     './public/js/platform.js'
 ]);

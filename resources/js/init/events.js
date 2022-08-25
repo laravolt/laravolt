@@ -41,4 +41,8 @@ if (typeof up !== "undefined" && window.document.documentElement.dataset.spa) {
             event.request.loadPage()
         }
     })
+} else {
+    $(function(){
+        Laravolt.init($('body'));
+    });
 }

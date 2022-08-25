@@ -89,6 +89,7 @@ $(function () {
     }
 
     $('[data-role="sidenav"]').accordion({
+        animateChildren: false,
         selector: {
             trigger: '.title:not(.empty)'
         }

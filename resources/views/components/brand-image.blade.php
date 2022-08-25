@@ -5,7 +5,7 @@
         <img
                 src="{{ asset($brandImage) }}"
                 alt=""
-                class="ui image tiny centered"
+                class="ui image centered"
         >
     @endif
 </div>
