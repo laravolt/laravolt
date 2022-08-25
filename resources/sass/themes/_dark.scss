@@ -42,6 +42,7 @@ $menu-item-active-indicator: #a6a8b1;
       border-right-color: transparent;
 
       .sidebar__profile {
+        border-color: lighten($sidebar-bg, 15%);
         .ui.header {
           color: $menu-item-color;
           .sub.header {

@@ -31,19 +31,22 @@ nav.sidebar {
     top: $header-height;
 
     .sidebar__scroller {
-      padding-bottom: $header-height;
+      padding-bottom: $header-height + 120px;
     }
   }
 }
 
 .sidebar__profile {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  margin-top: 1em;
-  margin-bottom: 2em;
-  padding: 0 1em;
+  margin-top: 4em;
+  margin-bottom: 3em;
+  padding: 1em;
+  border-top: 1px solid #eaecf0;
+  border-bottom: 1px solid #eaecf0;
 
   .ui.image {
     width: 50px;
