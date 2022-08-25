@@ -2,6 +2,7 @@
   nav.sidebar {
     .ui.attached.menu .item > .header {
       padding-left: 1em;
+      margin-top: 1em;
     }
 
     .sidebar__accordion.ui.accordion .ui.list .item,
@@ -18,19 +19,8 @@
       }
     }
   }
-
   .sidebar__profile {
-    display: flex;
-    flex-direction: row;
-
-
-    .ui.image {
-      width: 50px;
-    }
-
-    .meta {
-      text-align: left;
-      margin-left: 1em;
-    }
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 }

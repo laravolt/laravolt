@@ -42,7 +42,7 @@
                             <div class="item">
                                 <div class="header">{{ $item->title }}</div>
                             </div>
-                            <div class="ui accordion sidebar__accordion m-b-1" data-role="sidenav">
+                            <div class="ui accordion sidebar__accordion" data-role="sidenav">
                                 @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
                             </div>
                         @else

@@ -26,8 +26,12 @@ $(function () {
         $(window).resize(function () {
             if (document.body.clientWidth < 991) {
                 $('#topbar').addClass('full');
-                localStorage.setItem("layout-mode", "box");
                 sidebar.parent().addClass('hide').removeClass('show');
+            } else {
+                if (localStorage.getItem("layout-mode") !== 'full') {
+                    $('#topbar').removeClass('full');
+                    sidebar.parent().addClass('show').removeClass('hide');
+                }
             }
         });
 
