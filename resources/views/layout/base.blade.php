@@ -2,6 +2,7 @@
 <html lang="{{ config('app.locale') }}"
       data-font-size="{{ config('laravolt.ui.font_size') }}"
       data-theme="{{ config('laravolt.ui.theme') }}"
+      data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}"
       data-spa="{{ config('laravolt.platform.features.spa') }}"
 >
 <head>

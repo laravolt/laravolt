@@ -17,6 +17,7 @@
                       data-font-size="{{ config('laravolt.ui.font_size') }}"
                       data-theme="{{ config('laravolt.ui.theme') }}"
                       data-accent-color="{{ config('laravolt.ui.color') }}"
+                      data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}"
                 >
                     {{ $slot }}
                     @stack('main')

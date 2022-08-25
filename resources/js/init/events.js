@@ -18,6 +18,7 @@ if (typeof up !== "undefined" && window.document.documentElement.dataset.spa) {
         Laravolt.init($(element));
         document.documentElement.dataset.theme = element.dataset.theme;
         document.documentElement.dataset.fontSize = element.dataset.fontSize;
+        document.documentElement.dataset.sidebarDensity = element.dataset.sidebarDensity;
         document.documentElement.style.setProperty('--app-accent-color', 'var(--' + element.dataset.accentColor + ')');
 
         if (!firstTimeVisit && window.Livewire) {
