@@ -11,16 +11,26 @@
       line-height: 1.25rem;
 
       &__2 {
-        padding-left: 3em !important;
+        margin-left: 2.5em !important;
       }
 
       &__3 {
         padding-left: 4em !important;;
       }
     }
-  }
-  .sidebar__profile {
-    margin-top: 1em;
-    margin-bottom: 1em;
+
+    .sidebar__accordion.ui.accordion {
+      .content {
+
+        &.active:before, &.animating:before {
+          left: 1rem;
+        }
+      }
+    }
+
+    .sidebar__profile {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
   }
 }
