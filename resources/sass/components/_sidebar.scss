@@ -137,7 +137,7 @@ nav.sidebar {
       span {
         flex-grow: 1;
       }
-      .x-icon.angle {
+      .icon.angle {
         transition: .5s all;
         width: auto;
         height: auto;
@@ -145,7 +145,7 @@ nav.sidebar {
         flex-grow: 0;
       }
       &.active {
-        .x-icon.angle.down {
+        .angle.down {
           transform: rotate(180deg);
         }
       }
