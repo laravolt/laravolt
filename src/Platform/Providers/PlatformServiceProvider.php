@@ -8,6 +8,7 @@ use App\Enums\Permission;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -43,6 +44,7 @@ use Laravolt\Platform\Components\Tab;
 use Laravolt\Platform\Components\TabContent;
 use Laravolt\Platform\Components\Titlebar;
 use Laravolt\Platform\Services\Acl;
+use Laravolt\Platform\Services\LaravoltBladeDirectives;
 use Laravolt\Platform\Services\Password;
 use Laravolt\Ui\ModalBag;
 use Livewire\Livewire;
@@ -88,6 +90,7 @@ class PlatformServiceProvider extends ServiceProvider
             ->bootMenu()
             ->bootComponents()
             ->bootCustomAuthProvider()
+            ->bootBladeDirectives()
             ->adjustVendorConfig();
     }
 
@@ -345,6 +348,14 @@ class PlatformServiceProvider extends ServiceProvider
         if ($this->app['config']['auth.providers.users.driver'] === 'eloquent-cached') {
             call_user_func(config('laravolt.epicentrum.models.user').'::observe', UserObserver::class);
         }
+
+        return $this;
+    }
+
+    protected function bootBladeDirectives()
+    {
+        Blade::directive('laravoltScripts', [LaravoltBladeDirectives::class, 'scripts']);
+        Blade::directive('laravoltStyles', [LaravoltBladeDirectives::class, 'styles']);
 
         return $this;
     }

@@ -4,7 +4,7 @@ $header-color: var(--app-accent-color);
 $menu-item-color: #cfd8e3;
 $menu-item-active-indicator: #a6a8b1;
 
-[data-theme="dark"] {
+[data-theme="dark"] body {
   background: $body-bg;
 
   [data-role="brand"] .ui.header {
@@ -22,7 +22,7 @@ $menu-item-active-indicator: #a6a8b1;
 
       .sidebar__profile {
         .ui.header {
-          color: var(--app-accent-color);
+          color: $menu-item-color;
           .sub.header {
             color: $menu-item-color;
           }
@@ -67,7 +67,7 @@ $menu-item-active-indicator: #a6a8b1;
       .title {
         color: $menu-item-color;
 
-        &.selected {
+        &.up-current {
           &.empty {
             background: darken($sidebar-bg, 5%);
           }
@@ -88,7 +88,7 @@ $menu-item-active-indicator: #a6a8b1;
               background: darken($sidebar-bg, 7.5%);
             }
 
-            &.selected {
+            &.up-current {
               background: darken($sidebar-bg, 7.5%);
               font-weight: normal;
             }

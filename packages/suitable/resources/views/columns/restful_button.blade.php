@@ -3,11 +3,23 @@
         <div class="x-restful-buttons ui buttons">
     @endif
             @if($actions->has('show'))
-                <x-volt-link-button url="{{ $actions->get('show') }}" icon="eye" class="icon secondary"></x-volt-link-button>
+                <x-volt-link-button
+                        url="{{ $actions->get('show') }}"
+                        up-layer="new"
+                        up-mode="modal"
+                        icon="eye"
+                        class="icon secondary">
+                </x-volt-link-button>
             @endif
 
             @if($actions->has('edit'))
-                <x-volt-link-button url="{{ $actions->get('edit') }}" icon="pencil" class="icon secondary"></x-volt-link-button>
+                <x-volt-link-button
+                        url="{{ $actions->get('edit') }}"
+                        up-layer="new"
+                        up-mode="modal"
+                        icon="pencil"
+                        class="icon secondary">
+                </x-volt-link-button>
             @endif
 
             @if($actions->has('destroy'))

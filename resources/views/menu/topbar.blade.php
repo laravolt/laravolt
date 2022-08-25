@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="menu right p-r-1" id="userbar" data-turbolinks-permanent>
+    <div class="menu right p-r-1" id="userbar">
         @auth
             <div class="item">
                 <div class="ui compact menu b-0">
@@ -26,7 +26,7 @@
 
                             <div class="divider"></div>
 
-                            <a href="{{ route('auth::logout') }}" class="item">Logout</a>
+                            <a href="{{ route('auth::logout') }}" class="item" up-target="body">Logout</a>
                         </div>
                     </div>
                 </div>

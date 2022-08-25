@@ -510,10 +510,10 @@ class SemanticForm
     public function dropdownColor($name, $defaultValue)
     {
         $options = collect(config('laravolt.ui.colors'))->mapWithKeys(function ($item, $key) {
-            return [$key => $key];
+            return [$key => "<span class='ui label circular solid $key'>$key</span>"];
         });
 
-        return $this->dropdown($name, $options, $defaultValue);
+        return $this->radioGroup($name, $options, $defaultValue);
     }
 
     /**

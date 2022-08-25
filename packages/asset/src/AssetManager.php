@@ -76,7 +76,7 @@ class AssetManager
     {
         // Set regex options
         foreach (['asset_regex'] as $option) {
-            if (isset($config[$option]) && (@preg_match($config[$option], null) !== false)) {
+            if (isset($config[$option]) && (@preg_match($config[$option], '') !== false)) {
                 $this->$option = $config[$option];
             }
         }

@@ -23,7 +23,6 @@ class FlashAttributes extends Collection
         'error' => [
             'showIcon' => 'red times',
             'classProgress' => 'red',
-            'displayTime' => 0,
             'transition' => ['showMethod' => 'tada', 'showDuration' => 1000],
         ],
     ];
@@ -53,7 +52,7 @@ class FlashAttributes extends Collection
             'class' => 'basic',
             'closeIcon' => false,
             'displayTime' => 'auto',
-            'minDisplayTime' => 10000,
+            'minDisplayTime' => 3000,
             'opacity' => 1,
             'position' => 'top center',
             'compact' => false,
@@ -65,8 +64,8 @@ class FlashAttributes extends Collection
             'transition' => [
                 'showMethod' => 'fade',
                 'showDuration' => 2000,
-                'hideMethod' => 'fly down',
-                'hideDuration' => 3000,
+                'hideMethod' => 'fade',
+                'hideDuration' => 1000,
             ],
         ];
     }

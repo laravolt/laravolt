@@ -13,12 +13,15 @@
 
 
             <div class="x-auth">
-                <div class="x-auth__content">
-
-                    <x-volt-brand-image class="ui image centered"/>
+                <main class="x-auth__content" up-main="root">
+                    <div class="p-2">
+                        <x-volt-brand-image/>
+                    </div>
 
                     {{ $slot }}
-                </div>
+                    @stack('main')
+
+                </main>
             </div>
         </div>
     </div>

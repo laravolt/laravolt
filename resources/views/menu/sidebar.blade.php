@@ -14,12 +14,17 @@
 
         <div class="sidebar__menu">
 
+            <div class="sidebar__logo p-2">
+                <x-volt-brand-image></x-volt-brand-image>
+            </div>
+
             @auth
-                <div class="sidebar__profile m-b-0 p-0 p-t-2 ui basic segment text-center">
-                    <img src="{{ auth()->user()->avatar }}" alt="" class="ui image tiny centered avatar">
-                    <h4 class="ui header m-b-3">
-                        {{ auth()->user()->name }}
-                    </h4>
+                <div class="sidebar__profile">
+                    <img src="{{ auth()->user()->avatar }}" class="ui image tiny">
+                    <h4 class="ui header">{{ auth()->user()->name }}</h4>
+                    <div class="extra">
+                        <a href="{{ route('auth::logout') }}" class="item">Logout</a>
+                    </div>
                 </div>
             @endauth
 

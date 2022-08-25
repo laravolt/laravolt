@@ -31,6 +31,8 @@ class PasswordController extends Controller
             return redirect()->route('my::password.edit')->withSuccess(__('laravolt::message.password_updated') ?? '');
         }
 
-        return redirect()->route('my::password.edit')->withError(__('laravolt::message.current_password_mismatch') ?? '');
+        return redirect()->route('my::password.edit')->withError(
+            __('laravolt::message.current_password_mismatch') ?? ''
+        );
     }
 }

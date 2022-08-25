@@ -19,5 +19,8 @@
         "turbolinks": "^5.2.0",
         "webpack": "^5.9.0"
     },
-    "name": "laravolt"
+    "name": "laravolt",
+    "dependencies": {
+        "unpoly": "^2.6"
+    }
 }

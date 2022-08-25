@@ -1,9 +1,9 @@
 $body-bg: $trueGrey;
 $sidebar-bg: $white;
-$header-color: var(--app-accent-color);
+$accent-color: var(--app-accent-color);
 $menu-item-color: $black;
 
-[data-theme="light"] {
+[data-theme="light"] body{
   background: $body-bg;
 
   [data-role="brand"] .ui.header {
@@ -11,8 +11,7 @@ $menu-item-color: $black;
   }
 
   #topbar.ui.menu {
-    background: $body-bg;
-    box-shadow: none;
+    background: $white;
     border-bottom: 1px solid darken($body-bg, 5%);
   }
 
@@ -26,7 +25,7 @@ $menu-item-color: $black;
       background-color: $sidebar-bg;
       border-right-color: darken($body-bg, 5%);
 
-      .sidebar__profile {
+      .sidebar__logo {
         .ui.header {
           color: var(--app-accent-color);
           .sub.header {
@@ -48,7 +47,7 @@ $menu-item-color: $black;
           color: $menu-item-color;
 
           > .header {
-            color: $header-color;
+            color: $accent-color;
           }
 
           &:before {
@@ -73,7 +72,7 @@ $menu-item-color: $black;
       .title {
         color: $menu-item-color;
 
-        &.selected {
+        &.up-current {
           &.empty {
             background: darken($body-bg, 5%);
           }
@@ -94,7 +93,7 @@ $menu-item-color: $black;
               background: darken($body-bg, 5%);
             }
 
-            &.selected {
+            &.up-current {
               background: darken($body-bg, 5%);
               font-weight: normal;
             }

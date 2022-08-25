@@ -94,8 +94,8 @@ $(function () {
         }
     });
 
-    $('#sidebar').on('click', 'a.item, a.title.empty', function (e) {
-        $(e.delegateTarget).find('.selected').removeClass('selected');
-        $(this).addClass('selected');
-    })
+    // $('#sidebar').on('click', 'a.item, a.title.empty', function (e) {
+    //     $(e.delegateTarget).find('.selected').removeClass('selected');
+    //     $(this).addClass('selected');
+    // })
 });

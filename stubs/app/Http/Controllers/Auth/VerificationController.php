@@ -9,12 +9,16 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
+use function PHPUnit\Framework\assertInstanceOf;
 
 class VerificationController extends Controller
 {
     public function show(): View|RedirectResponse
     {
-        if (auth()->user()?->hasVerifiedEmail()) {
+        /** @var MustVerifyEmail $user */
+        $user = auth()->user();
+
+        if ($user->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME);
         }
 
@@ -23,22 +27,24 @@ class VerificationController extends Controller
 
     public function store(): RedirectResponse
     {
+        /** @var MustVerifyEmail $user */
         $user = auth()->user();
-        if (! $user instanceof MustVerifyEmail) {
-            throw new \Exception(sprintf('User must implement %s', MustVerifyEmail::class));
-        }
+        assertInstanceOf(MustVerifyEmail::class, $user);
 
         return $this->handle($user);
     }
 
     public function update(EmailVerificationRequest $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        /** @var MustVerifyEmail $user */
+        $user = auth()->user();
+
+        if ($user->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
         }
 
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');

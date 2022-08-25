@@ -684,7 +684,7 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
         height: 100%;
         min-width: 20px;
         min-height: 20px;
-        padding: $fileuploader-popup-headerHeight + $fileuploader-popup-padding $fileuploader-popup-move-width $fileuploader-popup-footerHeight + $fileuploader-popup-padding/2;
+        padding: calc($fileuploader-popup-headerHeight + $fileuploader-popup-padding) $fileuploader-popup-move-width calc($fileuploader-popup-footerHeight + $fileuploader-popup-padding/2);
         overflow: hidden;
         @extend %fileuploader-animation;
 
@@ -1109,8 +1109,8 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
 
                 &:after {
                     content: '';
-                    width: $fileuploader-cropper-pointWidth/2;
-                    height: $fileuploader-cropper-pointWidth/2;
+                    width: calc($fileuploader-cropper-pointWidth/2);
+                    height: calc($fileuploader-cropper-pointWidth/2);
                     position: absolute;
                     background: #fff;
                     box-shadow: 0 0 6px rgba(0,0,0,0.4);
@@ -1119,47 +1119,47 @@ $icon-file: "PHN2ZyB3aWR0aD0iNDkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9
                 }
 
                 &.point-a {
-                    top: $fileuploader-cropper-pointWidth/2 * -1;
-                    left: $fileuploader-cropper-pointWidth/2 * -1;
+                    top: calc($fileuploader-cropper-pointWidth/2 * -1);
+                    left: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: nw-resize;
                 }
                 &.point-b {
-                    top: $fileuploader-cropper-pointWidth/2 * -1;
+                    top: calc($fileuploader-cropper-pointWidth/2 * -1);
                     left: 50%;
-                    margin-left: $fileuploader-cropper-pointWidth/2 * -1;
+                    margin-left: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: n-resize;
                 }
                 &.point-c {
-                    top: $fileuploader-cropper-pointWidth/2 * -1;
-                    right: $fileuploader-cropper-pointWidth/2 * -1;
+                    top: calc($fileuploader-cropper-pointWidth/2 * -1);
+                    right: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: ne-resize;
                 }
                 &.point-d {
                     top: 50%;
-                    right: $fileuploader-cropper-pointWidth/2 * -1;
-                    margin-top: $fileuploader-cropper-pointWidth/2 * -1;
+                    right: calc($fileuploader-cropper-pointWidth/2 * -1);
+                    margin-top: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: w-resize;
                 }
                 &.point-e {
-                    bottom: $fileuploader-cropper-pointWidth/2 * -1;
-                    right: $fileuploader-cropper-pointWidth/2 * -1;
+                    bottom: calc($fileuploader-cropper-pointWidth/2 * -1);
+                    right: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: nw-resize;
                 }
                 &.point-f {
-                    bottom: $fileuploader-cropper-pointWidth/2 * -1;
+                    bottom: calc($fileuploader-cropper-pointWidth/2 * -1);
                     left: 50%;
-                    margin-left: $fileuploader-cropper-pointWidth/2 * -1;
+                    margin-left: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: s-resize;
                 }
                 &.point-g {
-                    bottom: $fileuploader-cropper-pointWidth/2 * -1;
-                    left: $fileuploader-cropper-pointWidth/2 * -1;
+                    bottom: calc($fileuploader-cropper-pointWidth/2 * -1);
+                    left: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: sw-resize;
                 }
                 &.point-h {
-                    left: $fileuploader-cropper-pointWidth/2 * -1;
+                    left: calc($fileuploader-cropper-pointWidth/2 * -1);
                     top: 50%;
-                    margin-top: $fileuploader-cropper-pointWidth/2 * -1;
+                    margin-top: calc($fileuploader-cropper-pointWidth/2 * -1);
                     cursor: w-resize;
                 }
             }

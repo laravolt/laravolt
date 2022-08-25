@@ -1,6 +1,6 @@
 <x-volt-app :title="__('Settings')">
     <x-volt-panel title="Global Application Settings">
-        {!! form()->put()->horizontal() !!}
+        {!! form()->put(route('platform::settings.update'))->horizontal() !!}
         {!! form()->make(config('laravolt.platform.settings'))->bindValues(config('laravolt.ui'))->render() !!}
         {!! form()->action(form()->submit(__('Simpan'))) !!}
         {!! form()->close() !!}
