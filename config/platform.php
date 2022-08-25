@@ -56,7 +56,7 @@ return [
         [
             'type' => \Laravolt\Fields\Field::RADIO_GROUP,
             'name' => 'theme',
-            'options' => ['dark' => 'Gelap', 'light' => 'Terang'],
+            'options' => ['dark' => 'Dark', 'light' => 'Light', 'cool' => 'Cool'],
             'label' => 'Tema',
             'inline' => true,
         ],
