@@ -13,8 +13,8 @@
     <div class="sidebar__scroller">
 
         @include('laravolt::menu.sidebar_logo')
-        @include('laravolt::menu.sidebar_menu')
         @include('laravolt::menu.sidebar_profile')
+        @include('laravolt::menu.sidebar_menu')
 
     </div>
 </nav>

@@ -1,3 +1,3 @@
-<div class="sidebar__logo p-2">
+<div class="sidebar__logo">
     <x-volt-brand-image></x-volt-brand-image>
 </div>

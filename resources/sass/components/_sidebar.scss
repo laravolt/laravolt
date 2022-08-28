@@ -42,8 +42,7 @@ nav.sidebar {
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  margin-top: 4em;
-  margin-bottom: 3em;
+  margin-bottom: 1em;
   padding: 1em;
   border-top: 1px solid #eaecf0;
   border-bottom: 1px solid #eaecf0;
@@ -164,4 +163,7 @@ nav.sidebar {
       }
     }
   }
+}
+.sidebar__logo {
+  padding: 2em;
 }

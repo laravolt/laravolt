@@ -20,8 +20,18 @@
     }
   }
   .sidebar__profile {
-    margin-top: 3em;
-    margin-bottom: 3em;
+    margin-bottom: .5em;
     padding: .5em;
+
+    .ui.image {
+      width: 30px;
+    }
   }
+  .sidebar__logo {
+    padding: 1em;
+    .ui.image.small {
+      width: 100px;
+    }
+  }
+
 }
