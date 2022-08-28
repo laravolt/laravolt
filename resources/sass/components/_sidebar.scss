@@ -22,6 +22,7 @@ nav.sidebar {
 
   &.floated {
     left: 0 !important;
+    z-index: 10;
   }
 
   /* Tablet and below */
