@@ -3,6 +3,7 @@
         @yield('breadcrumb')
         <h3 class="ui header m-t-xs">
             {{ $title }}
+            <div class="sub header">{{ $subtitle ?? '' }}</div>
         </h3>
     </div>
     <div class="column right aligned middle aligned">
