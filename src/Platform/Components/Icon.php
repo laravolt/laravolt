@@ -8,14 +8,17 @@ class Icon extends Component
 {
     public string $name;
 
+    public int $size;
+
     /**
      * PanelComponent constructor.
      *
      * @param string $name
      */
-    public function __construct(string $name)
+    public function __construct(string $name, int $size = 16)
     {
         $this->name = $name;
+        $this->size = $size;
     }
 
     /**
@@ -29,7 +32,7 @@ class Icon extends Component
             $iconset = config('laravolt.ui.iconset');
 
             return svg("$iconset-{$this->name}", null, $data['attributes']->merge(['class' => 'x-icon'])->getAttributes())
-                ->width('16px')
+                ->width($this->size.'px')
                 ->toHtml();
         };
     }
