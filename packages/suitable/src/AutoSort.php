@@ -22,6 +22,11 @@ trait AutoSort
 
         $direction = Arr::get($payload, $sortDirectionKey, 'asc');
 
+        // support for AlurKerja sort format
+        if ($payload->has('asc')) {
+            $direction = $payload->boolean('asc') ? 'asc' : 'desc';
+        }
+
         if (Arr::get($payload, $sortByKey)) {
             $columnQueryString = $column = Arr::get($payload, $sortByKey);
             if (Str::contains($columnQueryString, '.')) {
