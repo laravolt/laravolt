@@ -14,8 +14,10 @@ trait AutoSort
     public function scopeAutoSort(Builder $query, $payload = null, $sortByKey = null, $sortDirectionKey = null)
     {
         if ($payload === null) {
-            $payload = request();
+            $payload = request()->all();
         }
+
+        $payload = collect($payload);
 
         $sortByKey = $sortByKey ?? config('suitable.query_string.sort_by');
         $sortDirectionKey = $sortDirectionKey ?? config('suitable.query_string.sort_direction');
