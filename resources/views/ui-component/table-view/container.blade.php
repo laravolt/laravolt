@@ -3,20 +3,22 @@
         <div class="bar"></div>
     </div>
 
-    <div class="ui borderless unstackable menu attached" data-role="suitable-header">
-        <div class="menu">
-            @if($this->showSearchbox)
+    @if($this->filters() || $this->showSearchbox)
+        <div class="ui borderless unstackable menu attached" data-role="suitable-header">
+            <div class="menu">
+                @if($this->showSearchbox)
+                    <div class="item">
+                        @include('laravolt::ui-component.shared.searchbox')
+                    </div>
+                @endif
+            </div>
+            <div class="menu right">
                 <div class="item">
-                    @include('laravolt::ui-component.shared.searchbox')
+                    @include('laravolt::ui-component.table-view.filter')
                 </div>
-            @endif
-        </div>
-        <div class="menu right">
-            <div class="item">
-                @include('laravolt::ui-component.table-view.filter')
             </div>
         </div>
-    </div>
+    @endif
 
     @include('laravolt::ui-component.table-view.table')
 
