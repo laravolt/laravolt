@@ -3,6 +3,7 @@
 namespace Laravolt\Epicentrum\Filters;
 
 use Laravolt\Ui\Filters\DateFilter;
+use Carbon\Carbon;
 
 class RegisteredFilter extends DateFilter
 {
@@ -11,7 +12,7 @@ class RegisteredFilter extends DateFilter
     public function apply($data, $value)
     {
         if ($value) {
-            $data->where('created_at', $value);
+            $data->whereDate('created_at',  Carbon::parse($value)->toDateString());
         }
 
         return $data;
