@@ -3,6 +3,7 @@
 namespace Laravolt\Suitable;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 /** @mixin Builder */
 trait AutoFilter
@@ -13,8 +14,10 @@ trait AutoFilter
         $filterPayload = collect(request($filter, []))->only($this->filterableColumns ?? []);
 
         foreach ($filterPayload as $column => $value) {
-            if ($value) {
+            if (is_string($value)) {
                 $query->whereLike($column, $value);
+            } elseif (is_array($value)) {
+                $query->whereIn($column, Arr::flatten($value));
             }
         }
     }
