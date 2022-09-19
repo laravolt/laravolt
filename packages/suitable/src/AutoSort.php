@@ -26,7 +26,7 @@ trait AutoSort
 
         // support for AlurKerja sort format
         if ($payload->has('asc')) {
-            $direction = $payload->boolean('asc') ? 'asc' : 'desc';
+            $direction = filter_var($payload->get('asc'), FILTER_VALIDATE_BOOLEAN) ? 'asc' : 'desc';
         }
 
         if (Arr::get($payload, $sortByKey)) {
