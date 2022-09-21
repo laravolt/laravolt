@@ -226,8 +226,8 @@ class PlatformServiceProvider extends ServiceProvider
     {
         // register wildcard permission
         \Illuminate\Support\Facades\Gate::before(
-            function (HasRoleAndPermission $user, $ability, $models) {
-                if ($user->hasPermission('*') && empty($models)) {
+            function ($user, $ability, $models) {
+                if (empty($models) && $user instanceof HasRoleAndPermission && $user->hasPermission('*')) {
                     return true;
                 }
             }
