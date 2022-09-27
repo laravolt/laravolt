@@ -148,4 +148,9 @@ abstract class Column
     {
         return $this->sortableColumn;
     }
+
+    public function getSearchableColumn()
+    {
+        return $this->searchableColumn;
+    }
 }
