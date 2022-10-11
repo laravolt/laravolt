@@ -9,12 +9,32 @@ use Illuminate\Support\Str;
 /** @mixin Builder */
 trait AutoFilter
 {
+    private function isCast($castField, $column)
+    {
+        $jsonFieldName = $column;
+        if (Str::contains($column, '.')) {
+            $jsonFieldName = Str::beforeLast($column, '.');
+        }
+        // Filter item, with key == column  and value is array
+        return  collect($castField)->filter(function ($value ,   $key) use($jsonFieldName) {
+            return $key == $jsonFieldName &&  $value == "array";
+        });
+    }
+
     public function scopeAutoFilter(Builder $query, $filter = 'filter')
     {
         // Only apply filter defined in $filterableColumns
         $filterPayload = collect(request($filter, []))->only($this->filterableColumns ?? []);
 
+        $castField = $this->casts ?: [];  // default kosong takut undefined
         foreach ($filterPayload as $column => $value) {
+            if ($this->isCast($castField, $column)) {
+
+                $column = str_replace(".",  "->" , (string) $column);
+                $query->whereJsonContains($column,  $value);
+                continue;
+            }
+
             if (Str::contains($column, '.')) {
                 $relationName = Str::beforeLast($column, '.');
                 $column = Str::afterLast($column, '.');
@@ -27,7 +47,6 @@ trait AutoFilter
                 $relatedTable = $this->$lastRelationName()->getModel()->getTable();
                 $column = "$relatedTable.$column";
             }
-
             if (is_string($value)) {
                 $query->where($column, $value);
             } elseif (is_array($value)) {
