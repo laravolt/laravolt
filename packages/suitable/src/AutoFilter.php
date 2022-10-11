@@ -15,9 +15,10 @@ trait AutoFilter
         if (Str::contains($column, '.')) {
             $jsonFieldName = Str::beforeLast($column, '.');
         }
+
         // Filter item, with key == column  and value is array
-        return  collect($castField)->filter(function ($value ,   $key) use($jsonFieldName) {
-            return $key == $jsonFieldName &&  $value == "array";
+        return collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
+            return $key == $jsonFieldName && $value == "array";
         });
     }
 
@@ -29,9 +30,8 @@ trait AutoFilter
         $castField = $this->casts ?: [];  // default kosong takut undefined
         foreach ($filterPayload as $column => $value) {
             if ($this->isCast($castField, $column)) {
-
-                $column = str_replace(".",  "->" , (string) $column);
-                $query->whereJsonContains($column,  $value);
+                $column = str_replace(".", "->", (string)$column);
+                $query->whereJsonContains($column, $value);
                 continue;
             }
 
