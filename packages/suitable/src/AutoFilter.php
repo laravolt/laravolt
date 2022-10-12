@@ -17,9 +17,11 @@ trait AutoFilter
         }
 
         // Filter item, with key == column  and value is array
-        return collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
+        $found = collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
             return $key === $jsonFieldName && $value === "array";
         });
+
+        return sizeof($found) > 0;
     }
 
     public function scopeAutoFilter(Builder $query, $filter = 'filter')
