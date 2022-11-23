@@ -32,7 +32,7 @@ trait AutoFilter
         $castField = $this->casts ?: [];  // default kosong takut undefined
         foreach ($filterPayload as $column => $value) {
             if ($this->isJsonColumn($castField, $column)) {
-                $column = str_replace(".", "->", (string)$column);
+                $column = str_replace(".", "->", (string) $column);
                 $query->whereJsonContains($column, $value);
                 continue;
             }
