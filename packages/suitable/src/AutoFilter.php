@@ -49,8 +49,13 @@ trait AutoFilter
                 $relatedTable = $this->$lastRelationName()->getModel()->getTable();
                 $column = "$relatedTable.$column";
             }
-            if (is_string($value)) {
-                $query->where($column, $value);
+
+            if (is_string($value) || is_null($value)) {
+                if ($value === ($this->filterNotNull ?? '(filled)')) {
+                    $query->whereNotNull($column);
+                } else {
+                    $query->where($column, $value);
+                }
             } elseif (is_array($value)) {
                 $query->whereIn($column, Arr::flatten($value));
             }
