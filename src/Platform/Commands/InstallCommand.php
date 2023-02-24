@@ -44,7 +44,7 @@ class InstallCommand extends Command
         $this->newLine();
         $this->info(sprintf('Application ready: %s', url('/')));
 
-        return 1;
+        return self::SUCCESS;
     }
 
     private function addEntries()
