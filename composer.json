@@ -1,6 +1,6 @@
 {
-    "name": "ramaid/laravolt",
-    "description": "The unofficial Laravolt Platform.",
+    "name": "laravolt/laravolt",
+    "description": "The Laravolt Platform.",
     "license": "MIT",
     "config": {
         "sort-packages": true
