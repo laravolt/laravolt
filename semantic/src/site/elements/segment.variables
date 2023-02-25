@@ -1,6 +1,0 @@
-/*******************************
-    User Variable Overrides
-*******************************/
-@borderColor: #dbe0e6;
-@solidBorderColor: #dbe0e6;
-@solidSelectedBorderColor: #cfd7e3;

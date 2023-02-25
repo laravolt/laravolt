@@ -18,14 +18,11 @@ class PasswordController extends Controller
 
     public function update(Update $request): RedirectResponse
     {
+        /** @var string $password */
+        $password = $request->input('password_current');
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        if (
-            app('hash')->check(
-                (string) $request->input('password_current'),
-                $user->password
-            )
-        ) {
+        if (app('hash')->check($password, $user->password)) {
             $user->setPassword($request->password);
 
             return redirect()->route('my::password.edit')->withSuccess(__('laravolt::message.password_updated') ?? '');

@@ -84,11 +84,12 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the rate limiting throttle key for the request.
-     *
-     * @return string
      */
-    public function throttleKey()
+    public function throttleKey(): string
     {
-        return Str::lower((string) $this->input('email')).'|'.$this->ip();
+        /** @var string $email */
+        $email = $this->input('email');
+
+        return Str::lower($email).'|'.$this->ip();
     }
 }

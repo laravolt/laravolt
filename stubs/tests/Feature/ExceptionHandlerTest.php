@@ -36,8 +36,8 @@ class ExceptionHandlerTest extends TestCase
      */
     public function it_can_handle_authorization_exception()
     {
-        Route::get('admin/page', static fn() => "hello")->middleware('can:access-admin');
-        Route::get('livewire/foo', static fn() => "hello")->middleware('can:access-admin');
+        Route::get('admin/page', static fn () => 'hello')->middleware('can:access-admin');
+        Route::get('livewire/foo', static fn () => 'hello')->middleware('can:access-admin');
 
         // web visit
         $this->get('admin/page')->assertStatus(302)->assertRedirect(RouteServiceProvider::HOME);
