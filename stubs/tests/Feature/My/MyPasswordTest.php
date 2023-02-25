@@ -4,14 +4,14 @@ namespace Tests\Feature\My;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class MyPasswordTest extends TestCase
 {
     use DatabaseMigrations;
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /**
      * @test

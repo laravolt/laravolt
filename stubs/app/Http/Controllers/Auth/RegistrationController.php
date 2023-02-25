@@ -25,7 +25,6 @@ class RegistrationController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -40,15 +39,16 @@ class RegistrationController extends Controller
             ]
         );
 
+        /** @var string $password */
+        $password = $request->password;
+
         Auth::login(
-            $user = User::create(
-                [
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'status' => 'ACTIVE',
-                ]
-            )
+            $user = User::query()->create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($password),
+                'status' => 'ACTIVE',
+            ])
         );
 
         if (config('laravolt.platform.features.verification') === false) {

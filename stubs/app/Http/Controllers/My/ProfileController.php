@@ -22,7 +22,9 @@ class ProfileController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        $user->update($request->validated());
+        /** @var array<string, mixed> $validated */
+        $validated = $request->validated();
+        $user->update($validated);
 
         return redirect()->back()->withSuccess(__('Profil berhasil diperbarui') ?? '');
     }
