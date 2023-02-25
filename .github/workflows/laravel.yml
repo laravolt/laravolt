@@ -1,4 +1,4 @@
-name: Laravel
+name: Laravolt Platform
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  laravel-tests:
+  laravolt-platform-tests:
 
     runs-on: ubuntu-latest
 
@@ -52,7 +52,9 @@ jobs:
       run: |
         cd laravel
         php artisan migrate
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+    - name: Pint test
+      run: cd laravel && ./vendor/bin/pint --test
+    - name: Laravel test
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: ':memory:'

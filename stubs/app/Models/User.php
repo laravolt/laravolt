@@ -16,7 +16,6 @@ class User extends BaseUser
     use HasApiTokens, HasFactory, Notifiable;
     use AutoFilter, AutoSearch, AutoSort;
 
-
     /**
      * The attributes that are mass assignable.
      *

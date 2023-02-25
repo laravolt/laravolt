@@ -1,6 +1,6 @@
 {
-    "name": "laravolt/laravolt",
-    "description": "The Laravolt platform.",
+    "name": "ramaid/laravolt",
+    "description": "The unofficial Laravolt Platform.",
     "license": "MIT",
     "config": {
         "sort-packages": true
@@ -31,6 +31,7 @@
         "illuminate/support": "^8.0|^9.0|^10.0",
         "kalnoy/nestedset": "^6.0.1",
         "kirschbaum-development/eloquent-power-joins": "^2.6",
+        "laravolt/avatar": "^5.0.0",
         "lavary/laravel-menu": "^1.7.7",
         "livewire/livewire": "^2.10",
         "myclabs/deep-copy": "^1.10",

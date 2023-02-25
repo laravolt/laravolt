@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'auth/login');
 
-Route::middleware(['auth', 'verified'])->group(fn() => Route::get('/home', Home::class)->name('home'));
+Route::middleware(['auth', 'verified'])->group(fn () => Route::get('/home', Home::class)->name('home'));
 
 include __DIR__.'/auth.php';
 include __DIR__.'/my.php';
