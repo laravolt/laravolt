@@ -10,7 +10,7 @@
     "devDependencies": {
         "autonumeric": "^4.6.0",
         "commander": "^2.20.3",
-        "fomantic-ui": "^2.8.7",
+        "fomantic-ui": "^2.9.2",
         "jquery": "^3.4.1",
         "laravel-mix": "^6.0.16",
         "sass": "^1.32.11",
