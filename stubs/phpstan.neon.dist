@@ -7,7 +7,17 @@ parameters:
         - app
 
     # The level 9 is the highest level
-    level: 8
+    level: 9
+
+#    ignoreErrors:
+#        - '#PHPDoc tag @var#'
+#
+#    excludePaths:
+#        - ./*/*/FileToBeExcluded.php
+#
+#    checkMissingIterableValueType: false
+
+    checkGenericClassInNonGenericObjectType: false # still have no idea how do handle this in enum class
 
     disallowedFunctionCalls:
         -

@@ -2,14 +2,12 @@
 
 namespace Tests\Feature\My;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class MyProfileTest extends TestCase
 {
-    use DatabaseMigrations;
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /**
      * @test

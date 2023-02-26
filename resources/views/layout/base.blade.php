@@ -16,13 +16,13 @@
     @stack('meta')
 
     @laravoltStyles
-    <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}"/>
+    @livewireStyles
 
     @stack('style')
     @stack('head')
-    @livewireStyles
+
     @laravoltScripts
-    <script defer src="{{ mix('js/app.js') }}"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="{{ $bodyClass ?? '' }} @yield('body.class')">
