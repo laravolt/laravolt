@@ -5,6 +5,7 @@ return [
     'activation_subject' => 'Aktivasi Akun',
     'already_registered?' => 'Sudah punya akun?',
     'click_to_activate' => 'Silakan klik <a href=":link">link aktivasi ini</a> untuk mengaktifkan akun Anda.',
+    'username' => 'Username',
     'email' => 'Alamat Email',
     'failed' => 'Login gagal',
     'forgot_password' => 'Lupa password',
