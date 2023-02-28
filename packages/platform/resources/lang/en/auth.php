@@ -5,6 +5,7 @@ return [
     'activation_subject'       => 'Account Activation',
     'already_registered?'      => 'Have an account?',
     'click_to_activate'        => 'Please click <a href=":link">this activation link</a> to activate your account.',
+    'username'                 => 'Username',
     'email'                    => 'Email',
     'failed'                   => 'Invalid credentials',
     'forgot_password'          => 'Forgot password',
