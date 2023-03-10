@@ -11,7 +11,13 @@ class SettingsController extends Controller
 {
     public function edit()
     {
-        return view('laravolt::settings.edit');
+        $config = config('laravolt.ui');
+
+        if (str_contains($config['brand_image'], '<svg height="50"')) {
+            $config['brand_image'] = null;
+        }
+
+        return view('laravolt::settings.edit', compact('config'));
     }
 
     public function update()

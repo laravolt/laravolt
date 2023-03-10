@@ -11,6 +11,7 @@ abstract class Chart extends Component
     public const BAR = 'bar';
     public const DONUT = 'donut';
     public const LINE = 'line';
+    public const PIE = 'pie';
 
     public string $key;
 
