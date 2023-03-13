@@ -2,26 +2,48 @@
 
 namespace Laravolt\Mailkeeper;
 
-use Illuminate\Mail\Transport\Transport;
-use Swift_Mime_SimpleMessage;
+use Symfony\Component\Mailer\SentMessage;
+use Symfony\Component\Mailer\Transport\AbstractTransport;
+use Symfony\Component\Mime\Address;
 
-class DbTransport extends Transport
+class DbTransport extends AbstractTransport
 {
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    protected function doSend(SentMessage $message): void
     {
+        /** @var \Symfony\Component\Mime\Email $originalMessage */
+        $originalMessage = $message->getOriginalMessage();
+        $contentType = 'text/plain';
+        $body = $originalMessage->getTextBody();
+        if ($originalMessage->getHtmlBody() !== null) {
+            $contentType = 'text/html';
+            $body = $originalMessage->getHtmlBody();
+        }
+
         $data = [
-            'from'         => $message->getFrom(),
-            'sender'       => $message->getSender(),
-            'to'           => $message->getTo(),
-            'cc'           => $message->getCc(),
-            'bcc'          => $message->getBcc(),
-            'reply_to'     => $message->getReplyTo(),
-            'priority'     => $message->getPriority(),
-            'content_type' => $message->getBodyContentType(),
-            'body'         => html_entity_decode($message->getBody()),
-            'subject'      => $message->getSubject() ?? 'No Subject',
+            'from' => $this->normalizeAddresses($originalMessage->getFrom()),
+            'sender' => $originalMessage->getSender(),
+            'to' => $this->normalizeAddresses($originalMessage->getTo()),
+            'cc' => $this->normalizeAddresses($originalMessage->getCc()),
+            'bcc' => $this->normalizeAddresses($originalMessage->getBcc()),
+            'reply_to' => $this->normalizeAddresses($originalMessage->getReplyTo()),
+            'priority' => $originalMessage->getPriority(),
+            'content_type' => $contentType,
+            'body' => $body,
+            'subject' => $originalMessage->getSubject(),
         ];
 
         Mail::create($data);
+    }
+
+    public function __toString(): string
+    {
+        return 'db';
+    }
+
+    protected function normalizeAddresses(array $addresses): array
+    {
+        return collect($addresses)
+            ->transform(callback: fn (Address $address) => $address->getAddress())
+            ->toArray();
     }
 }

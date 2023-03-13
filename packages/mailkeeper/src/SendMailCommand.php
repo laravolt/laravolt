@@ -47,8 +47,13 @@ class SendMailCommand extends Command
                     $message->subject($mail->subject)
                         ->from($mail->from)
                         ->to($mail->to)
-                        ->priority($mail->priority)
-                        ->setBody($mail->body, $mail->content_type);
+                        ->priority($mail->priority);
+
+                    if ($mail->content_type === 'text/html') {
+                        $message->html($mail->body);
+                    } else {
+                        $message->text($mail->body);
+                    }
 
                     if ($mail->sender) {
                         $message->sender($mail->sender);
