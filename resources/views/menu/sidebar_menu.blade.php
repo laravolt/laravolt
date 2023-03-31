@@ -16,7 +16,7 @@
                     </div>
                 @else
                     <div class="ui accordion sidebar__accordion">
-                        <a class="title title__1 empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
+                        <a class="title title__1 item empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
                            href="{{ $item->url() }}">
                             <i class="left icon {{ $item->data('icon') }}"></i>
                             <span>{{ $item->title }}</span>

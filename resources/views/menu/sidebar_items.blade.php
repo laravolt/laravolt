@@ -1,6 +1,6 @@
 @foreach($items->sortBy(fn($item) => $item->data('order')) as $item)
     @if($item->hasChildren())
-        <div class="title title__1 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}">
+        <div class="title title__1 item {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}">
             {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'left x-icon'])
             ->width('16px')
             ->toHtml() !!}
@@ -34,7 +34,7 @@
             </div>
         </div>
     @else
-        <a class="title title__1 empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
+        <a class="title title__1 item empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
            href="{{ $item->url() }}"
            data-parent="{{ $item->parent()->title }}">
             {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'left x-icon'])
