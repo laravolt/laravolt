@@ -1,10 +1,10 @@
 @if($this->filters())
-    <div data-role="suitable-filter" wire:ignore>
+    <div data-role="suitable-filter">
         <div class="ui basic button icon" data-role="suitable-filter-icon">
             <i class="icon filter"></i>
             <i class="icon angle down"></i>
         </div>
-        <div class="ui popup p-0" style="min-width: 300px">
+        <div class="ui popup p-0" style="min-width: 300px" wire:ignore.self>
             <form class="ui form p-2" wire:submit.prevent>
                 @foreach($this->filters() as $filter)
                     {!! $filter->render() !!}
