@@ -28,7 +28,7 @@ class QueryBuilderMixin
                 $searchTerm = addslashes(strtolower($searchTerm));
                 $this->where(function (Builder $query) use ($attributes, $searchTerm) {
                     foreach (Arr::wrap($attributes) as $column) {
-                        $query->orWhereRaw(sprintf("LOWER(%s) LIKE '%%%s%%'", $column, $searchTerm));
+                        $query->orWhereRaw('LOWER(?) LIKE ?', [$column, '%' . $searchTerm . '%']);
                     }
                 });
             }
