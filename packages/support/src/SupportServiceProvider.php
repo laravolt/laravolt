@@ -44,11 +44,7 @@ class SupportServiceProvider extends ServiceProvider
                             $query->orWhereHas(
                                 $relationName,
                                 function (EloquentBuilder $query) use ($relationAttribute, $searchTerm) {
-                                    $query->whereRaw(sprintf(
-                                        "LOWER(%s) LIKE '%%%s%%'",
-                                        $relationAttribute,
-                                        $searchTerm
-                                    ));
+                                    $query->whereRaw('LOWER(?) LIKE ?', [$relationAttribute, '%' . $searchTerm . '%']);
                                 }
                             );
                         },
@@ -57,12 +53,7 @@ class SupportServiceProvider extends ServiceProvider
                             if (Str::contains($attribute, '->')) {
                                 $query->orWhere($attribute, 'like', "%$searchTerm%");
                             } else {
-                                $query->orWhereRaw(sprintf(
-                                    "LOWER(%s.%s) LIKE '%%%s%%'",
-                                    $table,
-                                    $attribute,
-                                    $searchTerm
-                                ));
+                                $query->orWhereRaw('LOWER(?.?) LIKE ?', [$table, $attribute, '%' . $searchTerm . '%']);
                             }
                         }
                     );
