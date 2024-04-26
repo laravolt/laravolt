@@ -6,7 +6,9 @@
                 {!! $segment->render() !!}
                 <div class="menu right">
                     <div class="item">
-                        {!! $collection->appends(request()->input())->onEachSide(1)->links('laravolt::pagination.simple') !!}
+                        @if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
+                            {!! $collection->appends(request()->input())->onEachSide(1)->links('laravolt::pagination.simple') !!}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -35,7 +37,10 @@
             </div>
             @endif
 
-            {!! $collection->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
+            @if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
+                {!! $collection->appends(request()->input())->onEachSide(1)->links($paginationView) !!}
+            @endif
+
         </footer>
     @endif
 </div>
