@@ -2,6 +2,4 @@
 
 namespace Laravolt\Platform;
 
-class PlatformManager
-{
-}
+class PlatformManager {}

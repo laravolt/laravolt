@@ -10,10 +10,10 @@ class CamundaFormatterFactory
     {
         $type = ucfirst($type);
         $formatter = "\\Laravolt\\Workflow\\FieldFormatter\\Camunda\\{$type}Formatter";
-        if (!class_exists($formatter)) {
+        if (! class_exists($formatter)) {
             $formatter = StringFormatter::class;
         }
-        $formatter = new $formatter();
+        $formatter = new $formatter;
 
         return $formatter($key, $value);
     }

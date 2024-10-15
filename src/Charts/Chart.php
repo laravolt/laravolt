@@ -8,9 +8,13 @@ use Livewire\Component;
 abstract class Chart extends Component
 {
     public const AREA = 'area';
+
     public const BAR = 'bar';
+
     public const DONUT = 'donut';
+
     public const LINE = 'line';
+
     public const PIE = 'pie';
 
     public string $key;
@@ -24,6 +28,7 @@ abstract class Chart extends Component
     /**
      * Sembunyikan semua element pendukung chart seperti sumbu x-y dan label.
      * Cocok untuk menampilkan chart dalam area yang sempit.
+     *
      * @link https://apexcharts.com/docs/options/chart/sparkline/
      */
     protected bool $sparkline = false;

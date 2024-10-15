@@ -12,11 +12,8 @@ class Backlink extends Component
 
     /**
      * PanelComponent constructor.
-     *
-     * @param string $label
-     * @param string $url
      */
-    public function __construct(string $url, string $label = null)
+    public function __construct(string $url, ?string $label = null)
     {
         $this->label = $label;
         $this->url = $url;

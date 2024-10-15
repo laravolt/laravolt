@@ -52,10 +52,10 @@ class UserTable extends TableView
     public function filters(): array
     {
         return [
-            new EmailFilter(),
-            new RoleFilter(),
-            new StatusFilter(),
-            new RegisteredFilter(),
+            new EmailFilter,
+            new RoleFilter,
+            new StatusFilter,
+            new RegisteredFilter,
         ];
     }
 }

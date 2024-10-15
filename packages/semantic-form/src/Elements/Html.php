@@ -16,9 +16,7 @@ class Html extends Element
         $this->content = $content;
     }
 
-    public function name()
-    {
-    }
+    public function name() {}
 
     public function render()
     {

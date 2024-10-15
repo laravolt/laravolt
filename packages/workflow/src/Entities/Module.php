@@ -52,6 +52,7 @@ class Module extends DataTransferObject
 
     /**
      * @return self[]
+     *
      * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
      */
     public static function discover(): array
@@ -74,7 +75,7 @@ class Module extends DataTransferObject
         return $this->formSchema($this->startTaskKey());
     }
 
-    public function startForm(string $url = null, array $data = []): string
+    public function startForm(?string $url = null, array $data = []): string
     {
         $url ??= route('workflow::module.instances.store', $this->id);
 

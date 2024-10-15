@@ -8,7 +8,7 @@ class DropdownDBFormatter
 {
     public function __invoke($key, $values)
     {
-        if (!is_array($values)) {
+        if (! is_array($values)) {
             $values = [];
         }
 

@@ -41,17 +41,17 @@ class ManageRole extends Command
 
     protected function validateRole($identifier)
     {
-        if (!$identifier) {
+        if (! $identifier) {
             $identifier = $this->ask('ID or role name');
         }
 
         $role = app('laravolt.epicentrum.role')->find($identifier);
 
-        if (!$role) {
+        if (! $role) {
             $role = app('laravolt.epicentrum.role')->whereName($identifier)->first();
         }
 
-        if (!$role) {
+        if (! $role) {
             $createNew = $this->confirm('Role not found, do you want to create a new role named '.$identifier);
 
             if ($createNew) {
@@ -88,7 +88,5 @@ class ManageRole extends Command
         return $role->syncPermission($selected);
     }
 
-    protected function actionChangePassword()
-    {
-    }
+    protected function actionChangePassword() {}
 }

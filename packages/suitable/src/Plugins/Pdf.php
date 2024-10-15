@@ -19,8 +19,6 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
 
     /**
      * Pdf constructor.
-     *
-     * @param string $filename
      */
     public function __construct(string $filename, array $config = [])
     {
@@ -54,6 +52,7 @@ class Pdf extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
         foreach ($columns as $key => $column) {
             if ($column->id() === 'action' or $column instanceof RestfulButton) {
                 $columns->forget($key);
+
                 continue;
             }
 

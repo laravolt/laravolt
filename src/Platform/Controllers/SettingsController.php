@@ -22,7 +22,7 @@ class SettingsController extends Controller
 
     public function update()
     {
-        $form = collect(config('laravolt.platform.settings'))->filter(fn($item) => isset($item['name']));
+        $form = collect(config('laravolt.platform.settings'))->filter(fn ($item) => isset($item['name']));
         foreach ($form as $field) {
             $key = $field['name'];
             if ($field['type'] === Field::UPLOADER) {

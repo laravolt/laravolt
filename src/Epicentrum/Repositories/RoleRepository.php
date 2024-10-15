@@ -41,12 +41,10 @@ class RoleRepository implements RoleRepositoryInterface
     /**
      * Save a new entity in repository.
      *
-     * @param array $attributes
-     * @param null  $roles
+     * @param  null  $roles
+     * @return mixed
      *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function create(array $attributes)
     {

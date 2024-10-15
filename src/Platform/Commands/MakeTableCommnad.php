@@ -7,6 +7,7 @@ namespace Laravolt\Platform\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Helper\TableSeparator;
+
 use function Laravolt\platform_path;
 
 class MakeTableCommnad extends GeneratorCommand
@@ -36,9 +37,9 @@ class MakeTableCommnad extends GeneratorCommand
 
         $info = [
             ['Blade component', "<livewire:table.$slug />"],
-            new TableSeparator(),
+            new TableSeparator,
             ['Blade directive using alias', "@livewire('table.$slug')"],
-            new TableSeparator(),
+            new TableSeparator,
             ['Blade directive using class path <warning>(recommended)</warning>', "@livewire($classPathConstant)"],
         ];
 

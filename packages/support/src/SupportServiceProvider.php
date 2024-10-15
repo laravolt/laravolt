@@ -15,9 +15,7 @@ use Laravolt\Support\Mixin\StrMixin;
 
 class SupportServiceProvider extends ServiceProvider
 {
-    public function register()
-    {
-    }
+    public function register() {}
 
     public function boot()
     {
@@ -26,8 +24,8 @@ class SupportServiceProvider extends ServiceProvider
 
     protected function registerMacro()
     {
-        Builder::mixin(new QueryBuilderMixin());
-        Str::mixin(new StrMixin());
+        Builder::mixin(new QueryBuilderMixin);
+        Str::mixin(new StrMixin);
 
         EloquentBuilder::macro('whereLike', function ($attributes, ?string $searchTerm) {
             if ($searchTerm === null || trim($searchTerm) === '') {

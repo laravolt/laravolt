@@ -12,24 +12,12 @@ class TaskCompleted
 {
     use Dispatchable;
 
-    /**
-     * @var \Laravolt\Workflow\Entities\Module
-     */
     public Module $module;
 
-    /**
-     * @var \Laravolt\Camunda\Dto\Task
-     */
     public Task $task;
 
-    /**
-     * @var \Laravolt\Workflow\Entities\Form
-     */
     public Form $form;
 
-    /**
-     * @var \Laravolt\Workflow\Models\ProcessInstance
-     */
     public ProcessInstance $instance;
 
     /**

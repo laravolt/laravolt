@@ -7,6 +7,7 @@ use Illuminate\Support\Stringable;
 trait Themeable
 {
     public array $themeAvailableColors = [];
+
     public string $themeSelectedColor = '';
 
     protected function applyTheme()

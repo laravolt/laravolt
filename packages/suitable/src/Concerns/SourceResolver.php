@@ -17,7 +17,7 @@ trait SourceResolver
         if ($source instanceof Builder || $source instanceof \Illuminate\Database\Query\Builder) {
             return $source->paginate(request('per_page', $this->perPage));
         } elseif (is_subclass_of($source, Model::class)) {
-            return (new $source())->all();
+            return (new $source)->all();
         } elseif (is_string($source) && Schema::hasTable($source)) {
             return DB::table($source)->get();
         } elseif ($source instanceof Paginator) {

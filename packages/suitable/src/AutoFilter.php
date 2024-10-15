@@ -18,10 +18,10 @@ trait AutoFilter
 
         // Filter item, with key == column  and value is array
         $found = collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
-            return $key === $jsonFieldName && $value === "array";
+            return $key === $jsonFieldName && $value === 'array';
         });
 
-        return sizeof($found) > 0;
+        return count($found) > 0;
     }
 
     public function scopeAutoFilter(Builder $query, $filter = 'filter')
@@ -32,8 +32,9 @@ trait AutoFilter
         $castField = $this->casts ?: [];  // default kosong takut undefined
         foreach ($filterPayload as $column => $value) {
             if ($this->isJsonColumn($castField, $column)) {
-                $column = str_replace(".", "->", (string) $column);
+                $column = str_replace('.', '->', (string) $column);
                 $query->whereJsonContains($column, $value);
+
                 continue;
             }
 

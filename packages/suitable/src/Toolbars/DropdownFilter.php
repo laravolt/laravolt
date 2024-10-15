@@ -14,9 +14,6 @@ class DropdownFilter extends Toolbar implements \Laravolt\Suitable\Contracts\Too
 
     /**
      * Title constructor.
-     *
-     * @param string $name
-     * @param array  $options
      */
     public function __construct(string $name, array $options)
     {

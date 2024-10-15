@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'name'        => 'Nama',
+    'name' => 'Nama',
     'permissions' => 'Hak Akses',
 ];

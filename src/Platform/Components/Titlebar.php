@@ -10,8 +10,6 @@ class Titlebar extends Component
 
     /**
      * PanelComponent constructor.
-     *
-     * @param string $title
      */
     public function __construct(string $title)
     {

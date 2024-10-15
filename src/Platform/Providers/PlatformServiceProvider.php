@@ -48,6 +48,7 @@ use Laravolt\Platform\Services\LaravoltBladeDirectives;
 use Laravolt\Platform\Services\Password;
 use Laravolt\Ui\ModalBag;
 use Livewire\Livewire;
+
 use function Laravolt\platform_path;
 
 class PlatformServiceProvider extends ServiceProvider
@@ -100,7 +101,7 @@ class PlatformServiceProvider extends ServiceProvider
         $this->app->singleton(
             'laravolt.acl',
             function ($app) {
-                return new Acl();
+                return new Acl;
             }
         );
 
@@ -199,7 +200,6 @@ class PlatformServiceProvider extends ServiceProvider
     /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param array $config
      *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */

@@ -17,9 +17,7 @@ class WorkflowService
     /**
      * WorkflowService constructor.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function start(Module $module, array $data): ProcessInstance
     {

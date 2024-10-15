@@ -46,8 +46,8 @@ trait Activation
     {
         $token = md5(uniqid(rand(), true));
         DB::table('users_activation')->insert([
-            'user_id'    => $user->getKey(),
-            'token'      => $token,
+            'user_id' => $user->getKey(),
+            'token' => $token,
             'created_at' => Carbon::now(),
         ]);
 

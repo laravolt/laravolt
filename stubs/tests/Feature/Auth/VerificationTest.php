@@ -110,7 +110,7 @@ class VerificationTest extends TestCase
     public function validate_user_model_concerns()
     {
         config(['app.debug' => true]);
-        Auth::shouldReceive('user')->andReturn(new \stdClass());
+        Auth::shouldReceive('user')->andReturn(new \stdClass);
         $this->withoutMiddleware()->post(route('verification.send'))
             ->assertSeeText(MustVerifyEmail::class)
             ->assertStatus(500);

@@ -13,7 +13,7 @@ class Dropdown extends Column implements ColumnInterface
         return parent::make($field, '');
     }
 
-    public function item(string $label, string $url, string $icon = null): self
+    public function item(string $label, string $url, ?string $icon = null): self
     {
         $this->options[] = compact('label', 'url', 'icon');
 

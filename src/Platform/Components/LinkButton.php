@@ -17,13 +17,8 @@ class LinkButton extends Component
 
     /**
      * PanelComponent constructor.
-     *
-     * @param string $label
-     * @param string $icon
-     * @param string $url
-     * @param string $class
      */
-    public function __construct(string $url, string $label = null, string $icon = null, string $class = 'secondary')
+    public function __construct(string $url, ?string $label = null, ?string $icon = null, string $class = 'secondary')
     {
         $this->url = $url;
         $this->label = $label;

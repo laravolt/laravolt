@@ -11,9 +11,7 @@ abstract class Plugin
 
     protected $only = [];
 
-    public function init()
-    {
-    }
+    public function init() {}
 
     public function decorate(Builder $table): Builder
     {

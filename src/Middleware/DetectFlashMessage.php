@@ -19,8 +19,6 @@ class DetectFlashMessage
 
     /**
      * FlashMiddleware constructor.
-     *
-     * @param Flash $flash
      */
     public function __construct(Flash $flash)
     {
@@ -30,9 +28,7 @@ class DetectFlashMessage
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Closure                  $next
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -77,7 +73,7 @@ class DetectFlashMessage
             }
 
             // Modify the response to add the Flash
-            if (!$request->ajax() && $this->flash->hasMessage()) {
+            if (! $request->ajax() && $this->flash->hasMessage()) {
                 $this->flash->injectScript($response);
             }
         } catch (Exception $e) {

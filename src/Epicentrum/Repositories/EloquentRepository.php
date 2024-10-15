@@ -5,7 +5,6 @@ namespace Laravolt\Epicentrum\Repositories;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserRepositoryEloquent.
@@ -49,12 +48,10 @@ class EloquentRepository implements RepositoryInterface
     /**
      * Save a new entity in repository.
      *
-     * @param array $attributes
-     * @param null  $roles
+     * @param  null  $roles
+     * @return mixed
      *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function createByAdmin(array $attributes, $roles = null)
     {
@@ -108,7 +105,7 @@ class EloquentRepository implements RepositoryInterface
         return config('laravolt.epicentrum.user_available_status');
     }
 
-    public function count():int
+    public function count(): int
     {
         return $this->model->count();
     }

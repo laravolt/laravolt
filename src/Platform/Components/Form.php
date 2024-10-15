@@ -17,9 +17,9 @@ class Form extends Component
     {
         return function ($data) {
             return form()
-                    ->open($data['attributes']['action'] ?? '')
-                    ->setMethod($data['attributes']['method'] ?? 'POST')
-                    ->horizontal()
+                ->open($data['attributes']['action'] ?? '')
+                ->setMethod($data['attributes']['method'] ?? 'POST')
+                ->horizontal()
                 .$data['slot']
                 .form()->make($this->schema)->render()
                 .form()->action(form()->submit())

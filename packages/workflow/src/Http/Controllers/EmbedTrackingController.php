@@ -24,7 +24,6 @@ class EmbedTrackingController
             }
         }
 
-
         return view('laravolt::workflow.embed-tracking.index', compact('module', 'trackingCode', 'instanceHistory'));
     }
 

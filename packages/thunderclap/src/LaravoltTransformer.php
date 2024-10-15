@@ -2,11 +2,11 @@
 
 namespace Laravolt\Thunderclap;
 
-use Illuminate\Support\Str;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\TextType;
+use Illuminate\Support\Str;
 
 class LaravoltTransformer
 {

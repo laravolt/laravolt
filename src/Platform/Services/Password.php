@@ -23,9 +23,6 @@ class Password
 
     /**
      * Password constructor.
-     *
-     * @param TokenRepositoryInterface $token
-     * @param Mailer                   $mailer
      */
     public function __construct(TokenRepositoryInterface $token, Mailer $mailer)
     {
@@ -41,9 +38,7 @@ class Password
     }
 
     /**
-     * @param CanChangePassword $user
-     * @param bool|false        $mustBeChanged
-     *
+     * @param  bool|false  $mustBeChanged
      * @return bool
      */
     public function sendNewPassword(CanChangePassword $user, $mustBeChanged = false)
@@ -58,15 +53,15 @@ class Password
 
     public function changePasswordByToken($user, $password, $token)
     {
-        if (!$user instanceof CanResetPassword) {
+        if (! $user instanceof CanResetPassword) {
             throw new UnexpectedValueException('User must implement CanResetPassword interface.');
         }
 
-        if (!$user instanceof CanChangePassword) {
+        if (! $user instanceof CanChangePassword) {
             throw new UnexpectedValueException('User must implement CanChangePasswordContract interface.');
         }
 
-        if (!$this->token->exists($user, $token)) {
+        if (! $this->token->exists($user, $token)) {
             return \Illuminate\Support\Facades\Password::INVALID_TOKEN;
         }
 

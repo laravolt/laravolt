@@ -27,7 +27,7 @@ class Update extends FormRequest
         $id = $this->route()->parameter('role');
 
         return [
-            'name'        => "required|unique:$table,name,$id",
+            'name' => "required|unique:$table,name,$id",
         ];
     }
 }

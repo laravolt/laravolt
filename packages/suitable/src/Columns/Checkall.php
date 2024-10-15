@@ -16,11 +16,13 @@ class Checkall extends Column implements ColumnInterface
     {
         $column = parent::make($field, $header);
         $column->header = View::make('suitable::columns.checkall.header')->render();
+
         return $column;
     }
+
     private function isChecked($data)
     {
-        if (!$this->filldata) {
+        if (! $this->filldata) {
             return false;
         }
 

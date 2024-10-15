@@ -10,15 +10,13 @@ class AccountInformation extends Mailable
 {
     use Queueable;
     use SerializesModels;
+
     public $user;
 
     public $plainPassword;
 
     /**
      * Create a new message instance.
-     *
-     * @param $user
-     * @param $plainPassword
      */
     public function __construct($user, $plainPassword)
     {

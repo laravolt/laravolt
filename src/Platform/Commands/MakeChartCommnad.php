@@ -7,6 +7,7 @@ namespace Laravolt\Platform\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Helper\TableSeparator;
+
 use function Laravolt\platform_path;
 
 class MakeChartCommnad extends GeneratorCommand
@@ -24,9 +25,9 @@ class MakeChartCommnad extends GeneratorCommand
         $slug = Str::kebab($this->getNameInput());
         $info = [
             ['Class', '<info>'.$this->qualifyClass($this->getNameInput()).'</info>'],
-            new TableSeparator(),
+            new TableSeparator,
             ['Blade Component', "<info><livewire:chart.$slug /></info>"],
-            new TableSeparator(),
+            new TableSeparator,
             ['Blade Directive', "<info>@livewire('chart.$slug')</info>"],
         ];
         $this->table([], $info);

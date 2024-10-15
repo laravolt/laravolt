@@ -7,7 +7,7 @@ class SelectMultiple extends Select
     protected $selected;
 
     protected $attributes = [
-        'class'    => 'ui dropdown search multiple tag',
+        'class' => 'ui dropdown search multiple tag',
         'multiple' => 'multiple',
     ];
 
@@ -25,7 +25,7 @@ class SelectMultiple extends Select
         $selected = (array) $selected;
         $this->selected = $selected ?? [];
 
-        if (!empty($selected)) {
+        if (! empty($selected)) {
             $this->data('value', implode(',', $this->selected));
         }
 

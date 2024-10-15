@@ -22,8 +22,6 @@ class BelongsTo implements Field
 
     /**
      * BelongsTo constructor.
-     *
-     * @param string $belongsToClass
      */
     public function __construct(string $belongsToClass)
     {

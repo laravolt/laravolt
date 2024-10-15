@@ -12,8 +12,6 @@ class Icon extends Component
 
     /**
      * PanelComponent constructor.
-     *
-     * @param string $name
      */
     public function __construct(string $name, int $size = 16)
     {

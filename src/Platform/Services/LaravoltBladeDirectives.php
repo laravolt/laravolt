@@ -25,7 +25,7 @@ EOF;
 
     public static function styles($expression)
     {
-        return <<<EOF
+        return <<<'EOF'
 {!! Asset::group('laravolt')->css() !!}
 {!! Asset::css() !!}
 
