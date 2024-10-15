@@ -11,8 +11,9 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
-use Laravolt\Platform\Services\SidebarMenu;
 use Laravolt\Platform\Services\MenuBuilder;
+use Laravolt\Platform\Services\SidebarMenu;
+
 use function Laravolt\platform_path;
 
 /**
@@ -34,7 +35,7 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this->bootConfig();
 
-        $this->app->singleton('laravolt.menu.sidebar', fn () => new SidebarMenu());
+        $this->app->singleton('laravolt.menu.sidebar', fn () => new SidebarMenu);
         $this->app->singleton(
             'laravolt.menu.builder',
             function (Application $app) {
@@ -54,7 +55,7 @@ class UiServiceProvider extends BaseServiceProvider
                 fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
             );
 
-        if ((!$this->app->runningInConsole()) || $this->app->runningUnitTests()) {
+        if ((! $this->app->runningInConsole()) || $this->app->runningUnitTests()) {
             $this->overrideUi();
             $this->registerIcons();
             $this->registerAssets();
@@ -128,7 +129,7 @@ class UiServiceProvider extends BaseServiceProvider
 
     protected function registerAssets()
     {
-        if (!$this->app->bound('laravolt.asset.group.laravolt')) {
+        if (! $this->app->bound('laravolt.asset.group.laravolt')) {
             $this->app->singleton(
                 'laravolt.asset.group.laravolt',
                 function () {

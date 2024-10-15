@@ -26,7 +26,7 @@ class Store extends FormRequest
         $table = app(config('laravolt.epicentrum.models.role'))->getTable();
 
         return [
-            'name'        => "required|unique:$table",
+            'name' => "required|unique:$table",
         ];
     }
 }

@@ -52,6 +52,6 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
 
     public function getContent(): string
     {
-        return "";
+        return '';
     }
 }

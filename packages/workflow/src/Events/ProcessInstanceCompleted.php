@@ -2,6 +2,4 @@
 
 namespace Laravolt\Workflow\Events;
 
-class ProcessInstanceCompleted
-{
-}
+class ProcessInstanceCompleted {}

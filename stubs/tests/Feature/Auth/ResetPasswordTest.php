@@ -20,7 +20,7 @@ class ResetPasswordTest extends TestCase
     {
         parent::setUp();
 
-        $this->table = (new User())->getTable();
+        $this->table = (new User)->getTable();
 
         $user = User::factory()->create(['email' => $this->email]);
         $this->token = app('auth.password.broker')->createToken($user);

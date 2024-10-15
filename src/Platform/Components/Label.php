@@ -12,11 +12,8 @@ class Label extends Component
 
     /**
      * PanelComponent constructor.
-     *
-     * @param string $label
-     * @param string $color
      */
-    public function __construct(string $label = null, string $color = null)
+    public function __construct(?string $label = null, ?string $color = null)
     {
         $this->label = $label;
         $this->color = $color;

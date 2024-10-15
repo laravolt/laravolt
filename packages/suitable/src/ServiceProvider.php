@@ -22,7 +22,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->bind('laravolt.suitable', function ($app) {
-            return new Builder();
+            return new Builder;
         });
     }
 
@@ -80,8 +80,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Loads a path relative to the package base directory.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     protected function packagePath($path = '')

@@ -8,8 +8,6 @@ class Search extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 
     /**
      * Title constructor.
-     *
-     * @param string $name
      */
     public function __construct(string $name)
     {

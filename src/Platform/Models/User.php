@@ -15,7 +15,7 @@ use Laravolt\Platform\Concerns\HasRoleAndPermission;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends BaseUser implements CanChangePasswordContract, CanResetPasswordContact, HasRoleAndPermissionContract, HasMedia, MustVerifyEmail
+class User extends BaseUser implements CanChangePasswordContract, CanResetPasswordContact, HasMedia, HasRoleAndPermissionContract, MustVerifyEmail
 {
     use CanChangePassword;
     use CanResetPassword;
@@ -28,13 +28,13 @@ class User extends BaseUser implements CanChangePasswordContract, CanResetPasswo
     {
         $avatar = null;
 
-        if (!$avatar) {
+        if (! $avatar) {
             if (app()->bound('avatar')) {
                 $avatar = app('avatar')->create($this->name)->toBase64();
             }
         }
 
-        if (!$avatar) {
+        if (! $avatar) {
             $avatar = asset('laravolt/img/default/avatar.png');
         }
 

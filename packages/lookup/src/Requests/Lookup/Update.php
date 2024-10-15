@@ -12,7 +12,8 @@ class Update extends FormRequest
 {
     public function rules()
     {
-        $table = (new Lookup())->getTable();
+        $table = (new Lookup)->getTable();
+
         return [
             'collection' => [],
             'parent_key' => [],

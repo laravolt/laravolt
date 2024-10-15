@@ -32,7 +32,7 @@ class MenuBuilder
     public function loadArray(array $menu)
     {
         $order = null;
-        $filteredMenu = collect($menu)->reject(fn ($item) => !($item['menu'] ?? null));
+        $filteredMenu = collect($menu)->reject(fn ($item) => ! ($item['menu'] ?? null));
         foreach ($filteredMenu as $title => $option) {
             if ($order === null) {
                 $order = $option['order'] ?? 50;
@@ -66,10 +66,11 @@ class MenuBuilder
         foreach ($menus as $name => $option) {
             if (is_string($option)) {
                 $parent->add($name, $option);
+
                 continue;
             }
 
-            if (!isset($option['menu'])) {
+            if (! isset($option['menu'])) {
                 $menu = $parent->add($name, $this->generateUrl($option));
                 if (isset($option['active'])) {
                     $menu->active($option['active']);

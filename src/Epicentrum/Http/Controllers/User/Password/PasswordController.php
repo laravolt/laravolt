@@ -15,7 +15,7 @@ class PasswordController extends Controller
     /**
      * PasswordController constructor.
      *
-     * @param UserRepositoryEloquent $repository
+     * @param  UserRepositoryEloquent  $repository
      */
     public function __construct(RepositoryInterface $repository)
     {
@@ -25,8 +25,7 @@ class PasswordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)

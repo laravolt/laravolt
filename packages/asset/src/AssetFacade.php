@@ -15,7 +15,7 @@ class AssetFacade extends Facade
     {
         $binding = "laravolt.asset.group.$group";
 
-        if (!static::$app->bound($binding)) {
+        if (! static::$app->bound($binding)) {
             throw new \RuntimeException("Assets group '$group' not found in the config file (config/laravolt/asset.php)");
         }
 

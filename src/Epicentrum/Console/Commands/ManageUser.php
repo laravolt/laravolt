@@ -54,17 +54,17 @@ class ManageUser extends Command
 
     protected function validateUser($identifier)
     {
-        if (!$identifier) {
+        if (! $identifier) {
             $identifier = $this->ask('ID or email');
         }
 
         $user = app(config('laravolt.epicentrum.models.user'))->find($identifier);
 
-        if (!$user) {
+        if (! $user) {
             $user = app(config('laravolt.epicentrum.models.user'))->whereEmail($identifier)->first();
         }
 
-        if (!$user) {
+        if (! $user) {
             $this->warn('User not found');
 
             if ($this->confirm('Do you want to creaate new user?')) {

@@ -22,7 +22,7 @@ class DropdownDB extends Select
         $this->setupDependency();
         $this->data('class', $this->getAttribute('class'));
 
-        if (!$this->ajax && !Str::contains($this->query, ['%s', '%1$s'])) {
+        if (! $this->ajax && ! Str::contains($this->query, ['%s', '%1$s'])) {
             $this->options = $this->getOptionsFromDb();
         }
     }
@@ -75,7 +75,7 @@ class DropdownDB extends Select
 
     private function setupDependency()
     {
-        if ($this->ajax || !empty($this->dependency)) {
+        if ($this->ajax || ! empty($this->dependency)) {
             $payload = [
                 'query_key_column' => $this->keyColumn,
                 'query_display_column' => $this->displayColumn,

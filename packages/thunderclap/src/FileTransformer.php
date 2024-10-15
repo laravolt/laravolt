@@ -24,7 +24,7 @@ class FileTransformer
     /**
      * Create a new instance.
      *
-     * @param Illuminate\Filesystem\Filesystem $files
+     * @param  Illuminate\Filesystem\Filesystem  $files
      */
     public function __construct(Filesystem $files)
     {
@@ -34,8 +34,7 @@ class FileTransformer
     /**
      * Setting custom formatting for the progress bar.
      *
-     * @param object $bar Symfony ProgressBar instance
-     *
+     * @param  object  $bar  Symfony ProgressBar instance
      * @return object $bar Symfony ProgressBar instance
      */
     public function barSetup(ProgressBar $bar)
@@ -58,12 +57,11 @@ class FileTransformer
     /**
      * Open haystack, find and replace needles, save haystack.
      *
-     * @param string $oldFile       The haystack
-     * @param mixed  $search        String or array to look for (the needles)
-     * @param mixed  $replace       What to replace the needles for?
-     * @param string $newFile       Where to save, defaults to $oldFile
-     * @param bool   $deleteOldFile Whether to delete $oldFile or not
-     *
+     * @param  string  $oldFile  The haystack
+     * @param  mixed  $search  String or array to look for (the needles)
+     * @param  mixed  $replace  What to replace the needles for?
+     * @param  string  $newFile  Where to save, defaults to $oldFile
+     * @param  bool  $deleteOldFile  Whether to delete $oldFile or not
      * @return void
      */
     public function replaceAndSave($oldFile, $search, $replace, $newFile = null, $deleteOldFile = false)
@@ -81,10 +79,9 @@ class FileTransformer
     /**
      * Check if the package already exists.
      *
-     * @param string $path   Path to the package directory
-     * @param string $vendor The vendor
-     * @param string $name   Name of the package
-     *
+     * @param  string  $path  Path to the package directory
+     * @param  string  $vendor  The vendor
+     * @param  string  $name  Name of the package
      * @return void Throws error if package exists, aborts process
      */
     public function checkExistingPackage($path, $vendor, $name)
@@ -97,13 +94,12 @@ class FileTransformer
     /**
      * Create a directory if it doesn't exist.
      *
-     * @param string $path Path of the directory to make
-     *
+     * @param  string  $path  Path of the directory to make
      * @return void
      */
     public function makeDir($path)
     {
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             return mkdir($path);
         }
     }

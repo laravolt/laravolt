@@ -13,11 +13,11 @@ class MediaController extends Controller
     {
         switch (request('handler')) {
             case 'fileuploader':
-                $handler = new FileuploaderMediaHandler();
+                $handler = new FileuploaderMediaHandler;
                 break;
             case 'redactor':
             default:
-                $handler = new RedactorMediaHandler();
+                $handler = new RedactorMediaHandler;
                 break;
         }
 

@@ -27,9 +27,6 @@ class Flash
 
     /**
      * Flash constructor.
-     *
-     * @param  Store  $session
-     * @param  \Illuminate\Contracts\View\Factory  $view
      */
     public function __construct(Store $session, Factory $view)
     {
@@ -88,7 +85,7 @@ class Flash
 
         $script = $this->view->make('laravolt::components.flash', compact('bags'))->render();
 
-        if (false !== $pos) {
+        if ($pos !== false) {
             $content = substr($content, 0, $pos).$script.substr($content, $pos);
         } else {
             $content .= $script;
@@ -111,7 +108,7 @@ class Flash
 
     public function hasMessage(): bool
     {
-        return !empty($this->bags);
+        return ! empty($this->bags);
     }
 
     public function inExceptArray(Request $request): bool

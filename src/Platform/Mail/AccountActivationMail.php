@@ -10,6 +10,7 @@ class AccountActivationMail extends Mailable
 {
     use Queueable;
     use SerializesModels;
+
     public $token;
 
     /**

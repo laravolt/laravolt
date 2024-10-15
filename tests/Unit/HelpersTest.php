@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Unit;
 
 use Laravolt\Tests\UnitTest;
+
+use function Laravolt\number_to_rupiah;
 use function Laravolt\number_to_terbilang;
 use function Laravolt\platform_path;
-use function Laravolt\number_to_rupiah;
 
 class HelpersTest extends UnitTest
 {

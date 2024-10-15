@@ -18,11 +18,8 @@ class CardFooter extends Component
 
     /**
      * CardComponent constructor.
-     *
-     * @param string $left
-     * @param string $right
      */
-    public function __construct(string $left = null, string $right = null)
+    public function __construct(?string $left = null, ?string $right = null)
     {
         $this->left = $left;
         $this->right = $right;

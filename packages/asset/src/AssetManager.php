@@ -12,18 +12,21 @@ class AssetManager
      * @var string
      */
     protected $assetRegex = '/.\.(css|js)$/i';
+
     /**
      * Regex to match against a filename/url to determine if it is a CSS asset.
      *
      * @var string
      */
     protected $cssRegex = '/.\.css$/i';
+
     /**
      * Regex to match against a filename/url to determine if it is a JavaScript asset.
      *
      * @var string
      */
     protected $jsRegex = '/.\.js$/i';
+
     /**
      * Available collections.
      * Each collection is an array of assets.
@@ -32,6 +35,7 @@ class AssetManager
      * @var array
      */
     protected $collections = [];
+
     /**
      * CSS files already added.
      * Not accepted as an option of config() method.
@@ -39,6 +43,7 @@ class AssetManager
      * @var array
      */
     protected $css = [];
+
     /**
      * JavaScript files already added.
      * Not accepted as an option of config() method.
@@ -50,8 +55,7 @@ class AssetManager
     /**
      * Class constructor.
      *
-     * @param array $options See config() method for details.
-     *
+     * @param  array  $options  See config() method for details.
      * @return void
      */
     public function __construct(array $options = [])
@@ -68,8 +72,7 @@ class AssetManager
      * Also, an extra option 'autoload' may be passed containing an array of
      * assets and/or collections that will be automatically added on startup.
      *
-     * @param array $config Configurable options.
-     *
+     * @param  array  $config  Configurable options.
      * @return self
      */
     public function config(array $config)
@@ -101,11 +104,10 @@ class AssetManager
      * It automatically detects the asset type (JavaScript, CSS or collection).
      * You may add more than one asset passing an array as argument.
      *
-     * @param mixed $asset
-     *
+     * @param  mixed  $asset
      * @return self
      */
-    public function add(string | array $asset)
+    public function add(string|array $asset)
     {
         // More than one asset
         if (is_array($asset)) {
@@ -133,8 +135,7 @@ class AssetManager
      * It checks for duplicates.
      * You may add more than one asset passing an array as argument.
      *
-     * @param mixed $asset
-     *
+     * @param  mixed  $asset
      * @return self
      */
     public function addCss($asset)
@@ -147,11 +148,11 @@ class AssetManager
             return $this;
         }
 
-        if (!$this->isRemoteLink($asset)) {
+        if (! $this->isRemoteLink($asset)) {
             $asset = $this->buildLocalLink($asset);
         }
 
-        if (!in_array($asset, $this->css)) {
+        if (! in_array($asset, $this->css)) {
             $this->css[] = $asset;
         }
 
@@ -163,8 +164,7 @@ class AssetManager
      * It checks for duplicates.
      * You may add more than one asset passing an array as argument.
      *
-     * @param mixed $asset
-     *
+     * @param  mixed  $asset
      * @return self
      */
     public function addJs($asset)
@@ -177,11 +177,11 @@ class AssetManager
             return $this;
         }
 
-        if (!$this->isRemoteLink($asset)) {
+        if (! $this->isRemoteLink($asset)) {
             $asset = $this->buildLocalLink($asset);
         }
 
-        if (!in_array($asset, $this->js)) {
+        if (! in_array($asset, $this->js)) {
             $this->js[] = $asset;
         }
 
@@ -194,13 +194,12 @@ class AssetManager
      * You can take control of the tag rendering by
      * providing a closure that will receive an array of assets.
      *
-     * @param array|Closure $attributes
-     *
+     * @param  array|Closure  $attributes
      * @return string
      */
     public function css($attributes = null)
     {
-        if (!$this->css) {
+        if (! $this->css) {
             return '';
         }
 
@@ -208,11 +207,11 @@ class AssetManager
         $attributes = (array) $attributes;
         unset($attributes['href']);
 
-        if (!array_key_exists('type', $attributes)) {
+        if (! array_key_exists('type', $attributes)) {
             $attributes['type'] = 'text/css';
         }
 
-        if (!array_key_exists('rel', $attributes)) {
+        if (! array_key_exists('rel', $attributes)) {
             $attributes['rel'] = 'stylesheet';
         }
 
@@ -233,13 +232,12 @@ class AssetManager
      * You can take control of the tag rendering by
      * providing a closure that will receive an array of assets.
      *
-     * @param array|Closure $attributes
-     *
+     * @param  array|Closure  $attributes
      * @return string
      */
     public function js($attributes = null)
     {
-        if (!$this->js) {
+        if (! $this->js) {
             return '';
         }
 
@@ -247,7 +245,7 @@ class AssetManager
         $attributes = (array) $attributes;
         unset($attributes['src']);
 
-        if (!array_key_exists('type', $attributes)) {
+        if (! array_key_exists('type', $attributes)) {
             $attributes['type'] = 'text/javascript';
         }
 
@@ -266,9 +264,7 @@ class AssetManager
     /**
      * Add/replace collection.
      *
-     * @param string $collectionName
-     * @param array  $assets
-     *
+     * @param  string  $collectionName
      * @return self
      */
     public function registerCollection($collectionName, array $assets)
@@ -282,8 +278,7 @@ class AssetManager
      * Build link to local asset.
      * Detects packages links.
      *
-     * @param string $asset
-     *
+     * @param  string  $asset
      * @return string the link
      */
     protected function buildLocalLink($asset)
@@ -293,10 +288,6 @@ class AssetManager
 
     /**
      * Build an HTML attribute string from an array.
-     *
-     * @param array $attributes
-     *
-     * @return string
      */
     public function buildTagAttributes(array $attributes): string
     {
@@ -314,20 +305,18 @@ class AssetManager
             $html[] = $key.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8', false).'"';
         }
 
-        return !empty($html) ? ' '.implode(' ', $html) : '';
+        return ! empty($html) ? ' '.implode(' ', $html) : '';
     }
 
     /**
      * Determine whether a link is local or remote.
      * Undestands both "http://" and "https://" as well as protocol agnostic links "//".
      *
-     * @param string $link
-     *
+     * @param  string  $link
      * @return bool
      */
     protected function isRemoteLink($link)
     {
-        return
-            str_starts_with($link, 'http://') || str_starts_with($link, 'https://') || str_starts_with($link, '//');
+        return str_starts_with($link, 'http://') || str_starts_with($link, 'https://') || str_starts_with($link, '//');
     }
 }

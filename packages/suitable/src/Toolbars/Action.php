@@ -12,10 +12,6 @@ class Action extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 
     /**
      * Title constructor.
-     *
-     * @param string $icon
-     * @param string $label
-     * @param string $href
      */
     public function __construct(?string $icon, ?string $label, string $href)
     {

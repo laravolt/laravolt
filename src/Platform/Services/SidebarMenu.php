@@ -69,7 +69,7 @@ class SidebarMenu extends BaseMenu
         }
 
         $items = $sidebar->all()->map(function (Item $item) {
-            $item->data('is-parent', $item->hasChildren() || (!$item->hasChildren() && !($item->link->path['url'] ?? true)));
+            $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! ($item->link->path['url'] ?? true)));
 
             if ($item->data('icon') === null) {
                 return $item->data('icon', config('laravolt.ui.default_menu_icon'));
@@ -83,7 +83,7 @@ class SidebarMenu extends BaseMenu
                 return $this->filterByVisibility($item);
             })
             ->filter(function (Item $item) {
-                if ($item->data('is-parent') && !$item->hasChildren()) {
+                if ($item->data('is-parent') && ! $item->hasChildren()) {
                     return false;
                 }
 

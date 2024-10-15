@@ -12,8 +12,6 @@ class Segment
 
     /**
      * Segment constructor.
-     *
-     * @param $key
      */
     public function __construct($key)
     {
@@ -38,8 +36,6 @@ class Segment
     }
 
     /**
-     * @param $toolbar
-     *
      * @return $this
      *
      * @deprecated
@@ -71,8 +67,6 @@ class Segment
     }
 
     /**
-     * @param $toolbar
-     *
      * @return $this
      *
      * @deprecated
@@ -103,7 +97,7 @@ class Segment
 
     public function isNotEmpty()
     {
-        return !$this->isEmpty();
+        return ! $this->isEmpty();
     }
 
     public function render()

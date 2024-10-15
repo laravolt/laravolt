@@ -31,15 +31,15 @@ class AdminCommand extends Command
         $email = $this->argument('email');
         $password = $this->argument('password');
 
-        if (!$name) {
+        if (! $name) {
             $name = $this->ask('Masukkan nama (display name):');
         }
 
-        if (!$email) {
+        if (! $email) {
             $email = $this->ask('Masukkan email untuk login:');
         }
 
-        if (!$password) {
+        if (! $password) {
             $password = $this->ask('Masukkan password:');
         }
 
@@ -47,7 +47,7 @@ class AdminCommand extends Command
             $permissions->whereName('*');
         })->first();
 
-        if (!$role) {
+        if (! $role) {
             $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => 'admin']);
             $role->syncPermission(['*']);
         }
@@ -60,11 +60,11 @@ class AdminCommand extends Command
                 'name' => $name,
                 'password' => bcrypt($password),
                 'status' => 'ACTIVE',
-                'timezone'  => config('app.timezone'),
+                'timezone' => config('app.timezone'),
             ]
         );
 
-        if (!$this->option('no-verify')) {
+        if (! $this->option('no-verify')) {
             $user->markEmailAsVerified();
         } else {
             $user->sendEmailVerificationNotification();

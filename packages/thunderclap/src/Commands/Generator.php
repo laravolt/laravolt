@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Laravolt\Thunderclap\ColumnsTransformer;
 use Laravolt\Thunderclap\DBHelper;
 use Laravolt\Thunderclap\FileTransformer;
 
@@ -89,7 +88,7 @@ class Generator extends Command
         File::copyDirectory($stubs, $modulePath);
 
         $templates = [
-            'module-name'  => str_replace('_', '-', Str::singular($table)),
+            'module-name' => str_replace('_', '-', Str::singular($table)),
             'route-prefix' => config('laravolt.thunderclap.routes.prefix'),
         ];
 
@@ -153,7 +152,7 @@ class Generator extends Command
                     $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
                 }
 
-                if (!$newFile) {
+                if (! $newFile) {
                     continue;
                 }
 

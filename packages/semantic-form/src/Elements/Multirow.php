@@ -91,7 +91,7 @@ class Multirow extends Element
     public function render()
     {
         if ($this->label) {
-            $copier = new DeepCopy();
+            $copier = new DeepCopy;
             $element = $copier->copy($this);
             $element->label = false;
 
@@ -116,7 +116,7 @@ class Multirow extends Element
         $rows = [];
         for ($i = 0; $i < $rowCount; $i++) {
             $rows[] = $fields->map(function ($field) use ($data, $i) {
-                $copier = new DeepCopy();
+                $copier = new DeepCopy;
                 $newField = $copier->copy($field);
                 $newField->bindAttribute('name', $i);
                 $newField->populateValue($data);

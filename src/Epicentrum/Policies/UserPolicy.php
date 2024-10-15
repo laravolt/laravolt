@@ -9,9 +9,6 @@ use Laravolt\Epicentrum\Repositories\RepositoryInterface;
 
 class UserPolicy
 {
-    /**
-     * @var \Laravolt\Epicentrum\Repositories\RepositoryInterface
-     */
     private RepositoryInterface $repository;
 
     /**

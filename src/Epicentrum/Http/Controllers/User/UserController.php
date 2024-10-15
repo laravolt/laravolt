@@ -23,9 +23,6 @@ class UserController extends Controller
 
     /**
      * UserController constructor.
-     *
-     * @param \Laravolt\Epicentrum\Repositories\RepositoryInterface $repository
-     * @param \Laravolt\Support\Contracts\TimezoneRepository        $timezone
      */
     public function __construct(RepositoryInterface $repository, TimezoneRepository $timezone)
     {
@@ -62,7 +59,6 @@ class UserController extends Controller
     /**
      * Store the specified resource.
      *
-     * @param Store $request
      *
      * @return Response
      */
@@ -86,8 +82,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function edit($id)

@@ -61,8 +61,6 @@ trait SortableTrait
     /**
      * Let's be nice and provide an ordered scope.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string                                $direction
      *
      * @return \Illuminate\Database\Query\Builder
      */
@@ -76,12 +74,11 @@ trait SortableTrait
      * will get order 1, the record with the second it will get order 2, ...
      * A starting order number can be optionally supplied (defaults to 1).
      *
-     * @param array|\ArrayAccess $ids
-     * @param int                $startPosition
+     * @param  array|\ArrayAccess  $ids
      */
     public static function sort($ids, int $startPosition = 1)
     {
-        if (!is_array($ids) && !$ids instanceof ArrayAccess) {
+        if (! is_array($ids) && ! $ids instanceof ArrayAccess) {
             throw new InvalidArgumentException('You must pass an array or ArrayAccess object to setNewOrder');
         }
 
@@ -218,8 +215,6 @@ trait SortableTrait
 
     /**
      * Mutator for position, make sure it always valid.
-     *
-     * @param int|null $position
      */
     protected function setOrderAttribute(?int $position)
     {

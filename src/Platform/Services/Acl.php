@@ -50,7 +50,7 @@ class Acl
                 $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
                 $status = 'No Change';
 
-                if (!$permission->exists) {
+                if (! $permission->exists) {
                     $permission->save();
                     $status = 'New';
                 }

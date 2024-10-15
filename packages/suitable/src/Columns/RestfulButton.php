@@ -24,8 +24,6 @@ class RestfulButton extends Column implements ColumnInterface
 
     /**
      * RestfulButton constructor.
-     *
-     * @param $baseRoute
      */
     public function __construct($baseRoute, $header = null)
     {
@@ -121,7 +119,7 @@ class RestfulButton extends Column implements ColumnInterface
         $actions = collect($actions)
             ->reject(
                 function ($action) {
-                    return !in_array($action, $this->buttons);
+                    return ! in_array($action, $this->buttons);
                 }
             )->reject(function ($action) use ($data) {
                 if (Auth::user() && Auth::user()->hasPermission('*')) {

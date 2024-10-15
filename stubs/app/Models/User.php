@@ -13,8 +13,8 @@ use Laravolt\Suitable\AutoSort;
 
 class User extends BaseUser
 {
-    use HasApiTokens, HasFactory, Notifiable;
     use AutoFilter, AutoSearch, AutoSort;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.

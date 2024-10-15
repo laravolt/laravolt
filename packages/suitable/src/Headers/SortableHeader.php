@@ -10,13 +10,13 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
     use HtmlHelper;
 
     protected static $classMapping = [
-        'asc'  => [
+        'asc' => [
             'header' => 'ascending sorted',
-            'icon'   => 'caret up',
+            'icon' => 'caret up',
         ],
         'desc' => [
             'header' => 'descending sorted',
-            'icon'   => 'caret down',
+            'icon' => 'caret down',
         ],
     ];
 
@@ -55,7 +55,7 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
         $icon = sprintf('<i class="icon %s"></i>', $iconClass);
 
         $sortableQueryString = [
-            $sortByKey        => $this->column,
+            $sortByKey => $this->column,
             $sortDirectionKey => request($sortDirectionKey) === 'asc' ? 'desc' : 'asc',
         ];
 

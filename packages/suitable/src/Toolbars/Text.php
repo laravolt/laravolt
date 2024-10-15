@@ -10,8 +10,6 @@ class Text extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar
 
     /**
      * Title constructor.
-     *
-     * @param string $label
      */
     public function __construct(string $label)
     {

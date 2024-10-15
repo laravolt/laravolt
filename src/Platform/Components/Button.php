@@ -17,13 +17,8 @@ class Button extends Component
 
     /**
      * PanelComponent constructor.
-     *
-     * @param string $label
-     * @param string $icon
-     * @param string $class
-     * @param string $url
      */
-    public function __construct(string $label = null, string $class = null, string $url = null, string $icon = null)
+    public function __construct(?string $label = null, ?string $class = null, ?string $url = null, ?string $icon = null)
     {
         $this->label = $label;
         $this->icon = $icon;

@@ -10,12 +10,12 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Delete;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Store;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Update;
-use Laravolt\Epicentrum\Livewire\UserTable;
 use Laravolt\Epicentrum\Policies\UserPolicy;
 use Laravolt\Platform\Enums\Permission;
 use Laravolt\Platform\Models\User;
 use Laravolt\Support\Contracts\TimezoneRepository;
 use Livewire\Livewire;
+
 use function Laravolt\platform_path;
 
 /**
@@ -26,9 +26,9 @@ class EpicentrumServiceProvider extends BaseServiceProvider
     /**
      * Register the service provider.
      *
-     * @throws \Exception
-     *
      * @return void
+     *
+     * @throws \Exception
      */
     public function register()
     {

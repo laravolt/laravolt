@@ -84,6 +84,7 @@ class Select extends FormControl
         foreach ($this->options as $value => $label) {
             if (is_array($label)) {
                 $result .= $this->renderOptGroup($value, $label);
+
                 continue;
             }
             $result .= $this->renderOption($value, $label);

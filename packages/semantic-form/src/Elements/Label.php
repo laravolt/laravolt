@@ -5,7 +5,9 @@ namespace Laravolt\SemanticForm\Elements;
 class Label extends Element
 {
     private $element;
+
     private $labelBefore;
+
     private $text;
 
     public function __construct($text)
@@ -25,7 +27,7 @@ class Label extends Element
 
         $result .= $this->renderElement();
 
-        if (!$this->labelBefore) {
+        if (! $this->labelBefore) {
             $result .= $this->text;
         }
 
@@ -59,7 +61,7 @@ class Label extends Element
 
     protected function renderElement()
     {
-        if (!$this->element) {
+        if (! $this->element) {
             return '';
         }
 

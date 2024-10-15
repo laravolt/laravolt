@@ -17,8 +17,6 @@ class MediaInputBag
 
     /**
      * MediaInputBag constructor.
-     *
-     * @param $key
      */
     public function __construct($key)
     {

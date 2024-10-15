@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
+
 use function Laravolt\platform_path;
 
 class MakeViewCommnad extends GeneratorCommand
@@ -20,6 +21,7 @@ class MakeViewCommnad extends GeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()

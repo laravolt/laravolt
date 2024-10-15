@@ -87,7 +87,7 @@ class FileManager
             }
         });
 
-        $isRoot = !$path;
+        $isRoot = ! $path;
         $parentUrl = url()->current();
         $parentPath = dirname($path);
 
@@ -203,7 +203,7 @@ class FileManager
         return hex2bin(Crypt::decryptString($hash));
     }
 
-    public function allFiles(string $path = null)
+    public function allFiles(?string $path = null)
     {
         $files = $this->filesystem->files($path);
         $directories = $this->filesystem->directories($path);
@@ -214,7 +214,7 @@ class FileManager
         }
 
         foreach ($files as $item) {
-            if (!in_array(basename($item), $this->exclude)) {
+            if (! in_array(basename($item), $this->exclude)) {
                 $items[] = $this->getInfo($item);
             }
         }

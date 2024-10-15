@@ -66,50 +66,50 @@ class CrudRequest extends FormRequest
 
         $transformer = new SchemaTransformer($this->resourceConfig);
 
-        match($method) {
+        match ($method) {
             'create' => $items = $transformer->getFieldsForCreate(),
             'edit' => $items = $transformer->getFieldsForEdit(),
             default => $items = collect($transformer->transform())
         };
 
         return $items->filter(
-                function ($item) use ($method) {
-                    if ($item instanceof Field) {
-                        return $item->visibleFor($method);
-                    }
-
-                    if (in_array($item['type'], [Field::BUTTON, Field::ACTION, Field::HTML], true)) {
-                        return false;
-                    }
-
-                    return ($item['visibility'][$method] ?? true);
+            function ($item) use ($method) {
+                if ($item instanceof Field) {
+                    return $item->visibleFor($method);
                 }
-            )->mapWithKeys(
-                function ($item) {
-                    if ($item instanceof Field) {
-                        $item = $item->toArray();
-                    }
-                    $key = $item['name'];
-                    if (Arr::get($item, 'type') === 'uploader' && $this->get('_'.$key) !== '[]') {
-                        $key = '_'.$key;
-                    }
 
-                    $rules = collect($item['rules'] ?? []);
-
-                    // ignore current ID for unique rules when updating
-                    if ($this->method() === 'PUT') {
-                        collect($rules)->transform(function ($rule) {
-                            if ($rule instanceof Unique) {
-                                $rule = $rule->ignore($this->route('id'));
-                            }
-
-                            return $rule;
-                        });
-                    }
-
-                    return [$key => $rules->toArray()];
+                if (in_array($item['type'], [Field::BUTTON, Field::ACTION, Field::HTML], true)) {
+                    return false;
                 }
-            )->toArray();
+
+                return $item['visibility'][$method] ?? true;
+            }
+        )->mapWithKeys(
+            function ($item) {
+                if ($item instanceof Field) {
+                    $item = $item->toArray();
+                }
+                $key = $item['name'];
+                if (Arr::get($item, 'type') === 'uploader' && $this->get('_'.$key) !== '[]') {
+                    $key = '_'.$key;
+                }
+
+                $rules = collect($item['rules'] ?? []);
+
+                // ignore current ID for unique rules when updating
+                if ($this->method() === 'PUT') {
+                    collect($rules)->transform(function ($rule) {
+                        if ($rule instanceof Unique) {
+                            $rule = $rule->ignore($this->route('id'));
+                        }
+
+                        return $rule;
+                    });
+                }
+
+                return [$key => $rules->toArray()];
+            }
+        )->toArray();
     }
 
     public function data()

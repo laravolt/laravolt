@@ -21,14 +21,15 @@ class VariableCollection extends Collection implements Castable
 
     public static function castUsing(array $arguments)
     {
-        return new class() implements CastsAttributes {
+        return new class implements CastsAttributes
+        {
             public function get($model, $key, $value, $attributes)
             {
                 if (isset($attributes[$key])) {
-                    $collection = new VariableCollection();
+                    $collection = new VariableCollection;
                     $variables = collect(json_decode($attributes[$key], true))
                         ->reject(function ($value, $key) {
-                            return (!is_string($key)) || !is_array($value);
+                            return (! is_string($key)) || ! is_array($value);
                         });
 
                     foreach ($variables as $name => $variable) {

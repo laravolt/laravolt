@@ -24,7 +24,7 @@ class Card extends Component
     /**
      * CardComponent constructor.
      */
-    public function __construct(string $title = null, string $content = null, string $url = null)
+    public function __construct(?string $title = null, ?string $content = null, ?string $url = null)
     {
         $this->title = $title;
         $this->content = $content;

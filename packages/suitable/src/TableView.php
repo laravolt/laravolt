@@ -27,7 +27,7 @@ abstract class TableView implements Responsable
     public function __construct($source = null)
     {
         $this->source = $source;
-        $this->html = new Html();
+        $this->html = new Html;
 
         $this->init();
     }
@@ -169,20 +169,16 @@ abstract class TableView implements Responsable
 
     protected function getSource()
     {
-        if (!$this->source && method_exists($this, 'source')) {
+        if (! $this->source && method_exists($this, 'source')) {
             return $this->source();
         }
 
         return $this->source;
     }
 
-    protected function init()
-    {
-    }
+    protected function init() {}
 
-    protected function segments()
-    {
-    }
+    protected function segments() {}
 
     abstract protected function columns();
 }

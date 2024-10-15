@@ -7,10 +7,6 @@ use Illuminate\Support\Str;
 if (! function_exists('platform_path')) {
     /**
      * Get Laravolt platform absolute directory path.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     function platform_path(string $path): string
     {
@@ -22,9 +18,7 @@ if (! function_exists('platform_max_file_upload')) {
     /**
      * Determine max file upload size based on php.ini settings.
      *
-     * @param bool $shorthand
-     *
-     * @return int|string
+     * @param  bool  $shorthand
      */
     function platform_max_file_upload($shorthand = false): int|string
     {

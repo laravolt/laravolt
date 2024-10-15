@@ -18,7 +18,7 @@ class AssetServiceProvider extends BaseServiceProvider
 
     public function boot()
     {
-        $config = collect(config("laravolt.asset"));
+        $config = collect(config('laravolt.asset'));
         foreach ($config as $groupName => $groupConfig) {
             $this->bootAssetsManagerInstance($groupName, (array) $groupConfig);
         }
@@ -27,10 +27,8 @@ class AssetServiceProvider extends BaseServiceProvider
     /**
      * Register an instance of the assets manager library in the IoC container.
      *
-     * @param string $name   Name of the group
-     * @param array  $config Config of the group
-     *
-     * @return void
+     * @param  string  $name  Name of the group
+     * @param  array  $config  Config of the group
      */
     protected function bootAssetsManagerInstance($name, array $config): void
     {

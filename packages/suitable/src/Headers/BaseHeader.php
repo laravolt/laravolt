@@ -2,6 +2,4 @@
 
 namespace Laravolt\Suitable\Headers;
 
-class BaseHeader
-{
-}
+class BaseHeader {}

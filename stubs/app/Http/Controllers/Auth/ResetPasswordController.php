@@ -16,7 +16,7 @@ class ResetPasswordController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function show(Request $request, string $token = null)
+    public function show(Request $request, ?string $token = null)
     {
         return view('auth.reset', ['token' => $token]);
     }

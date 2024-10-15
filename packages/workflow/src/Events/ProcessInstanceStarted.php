@@ -2,6 +2,4 @@
 
 namespace Laravolt\Workflow\Events;
 
-class ProcessInstanceStarted
-{
-}
+class ProcessInstanceStarted {}

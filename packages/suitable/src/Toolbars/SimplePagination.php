@@ -6,7 +6,7 @@ class SimplePagination extends Toolbar implements \Laravolt\Suitable\Contracts\T
 {
     public static function make()
     {
-        return new static();
+        return new static;
     }
 
     public function render()

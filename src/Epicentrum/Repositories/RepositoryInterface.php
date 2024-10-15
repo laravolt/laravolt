@@ -23,5 +23,5 @@ interface RepositoryInterface
 
     public function availableStatus();
 
-    public function count():int;
+    public function count(): int;
 }

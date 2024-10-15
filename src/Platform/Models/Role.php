@@ -75,7 +75,7 @@ class Role extends Model
         $model = $permission;
         $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
-        if (!$model instanceof Model) {
+        if (! $model instanceof Model) {
             if (is_int($permission)) {
                 $model = $permissionModel->find($permission);
             } elseif (is_string($permission)) {
@@ -86,7 +86,7 @@ class Role extends Model
             }
         }
 
-        if (!$model instanceof Model) {
+        if (! $model instanceof Model) {
             return false;
         }
 

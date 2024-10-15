@@ -6,14 +6,11 @@ namespace Laravolt\Platform\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 trait CanChangePassword
 {
     /**
-     * @param      $password
-     * @param bool $mustBeChanged
-     *
+     * @param  bool  $mustBeChanged
      * @return $this
      */
     public function setPassword($password, $mustBeChanged = false): bool
@@ -36,14 +33,12 @@ trait CanChangePassword
                 $this->attributes['password'] = Hash::make($value);
             }
 
-            $this->password_changed_at = new Carbon();
+            $this->password_changed_at = new Carbon;
         }
     }
 
     /**
-     * @param null $durationInDays
-     *
-     * @return bool
+     * @param  null  $durationInDays
      */
     public function passwordMustBeChanged($durationInDays = null): bool
     {
