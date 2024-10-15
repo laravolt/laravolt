@@ -5,12 +5,9 @@ namespace Laravolt\Suitable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Kirschbaum\PowerJoins\PowerJoins;
 
 trait AutoSort
 {
-    use PowerJoins;
-
     public function scopeAutoSort(Builder $query, $payload = null, $sortByKey = null, $sortDirectionKey = null)
     {
         if ($payload === null) {
