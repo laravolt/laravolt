@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Session\Store;
+use Illuminate\Support\ViewErrorBag;
 
 class Flash
 {
@@ -42,6 +43,7 @@ class Flash
         $this->bags[] = $this->attributes;
 
         $method = $this->now ? 'now' : 'flash';
+
         $this->session->$method($this->sessionKey, $this->bags);
         $this->now = false;
 
@@ -124,5 +126,42 @@ class Flash
         }
 
         return false;
+    }
+
+    public function getBags()
+    {
+        $session = session();
+
+        if ($session->has('errors')) {
+            $message = $session->get('errors');
+
+            if ($message instanceof ViewErrorBag) {
+                $message = collect($message->unique())->implode('<br />');
+            }
+
+            $this->error($message);
+        }
+
+        if ($message = $session->get('success')) {
+            $this->success($message);
+        }
+
+        if ($message = $session->get('warning')) {
+            $this->warning($message);
+        }
+
+        if ($message = $session->get('info')) {
+            $this->info($message);
+        }
+
+        if ($message = $session->get('message')) {
+            $this->message($message);
+        }
+
+        if ($message = $session->get('error')) {
+            $this->error($message);
+        }
+
+        return $this->bags;
     }
 }
