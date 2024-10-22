@@ -72,12 +72,17 @@ class EpicentrumServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->registerBlade();
+        /** @var \Illuminate\Foundation\Application */
+        $app = $this->app;
 
-        if ($this->app->bound('laravolt.acl')) {
-            $this->app['laravolt.acl']->registerPermission(Permission::asArray());
+        if ($app->bound('laravolt.acl')) {
+            /** @var \Laravolt\Platform\Services\Acl */
+            $acl = $this->app['laravolt.acl'];
+
+            $acl->registerPermission(Permission::asArray());
         }
 
-        if (! $this->app->routesAreCached() && (config('laravolt.platform.features.epicentrum', true))) {
+        if (! $app->routesAreCached() && (config('laravolt.platform.features.epicentrum', true))) {
             include platform_path('routes/epicentrum.php');
         }
 
