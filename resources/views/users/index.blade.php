@@ -7,6 +7,5 @@
                 :label="__('laravolt::action.add')"/>
     </x-slot>
 
-    @livewire('volt-user-table')
-
+    @livewire('volt-user-table', ['headerTitle' => 'Pengguna Terdaftar'])
 </x-volt-app>
