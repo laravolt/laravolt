@@ -9,6 +9,8 @@ use Livewire\WithPagination;
 
 abstract class TableView extends Component
 {
+    public string $headerTitle = '';
+
     use SourceResolver;
     use WithPagination;
 
