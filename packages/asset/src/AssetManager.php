@@ -77,12 +77,13 @@ class AssetManager
      */
     public function config(array $config)
     {
+        // LOG.warning: Creation of dynamic property
         // Set regex options
-        foreach (['asset_regex'] as $option) {
-            if (isset($config[$option]) && (@preg_match($config[$option], '') !== false)) {
-                $this->$option = $config[$option];
-            }
-        }
+        // foreach (['asset_regex'] as $option) {
+        //     if (isset($config[$option]) && (@preg_match($config[$option], '') !== false)) {
+        //         $this->$option = $config[$option];
+        //     }
+        // }
 
         // Set collections
         if (isset($config['collections']) && is_array($config['collections'])) {
