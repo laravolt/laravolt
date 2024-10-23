@@ -72,6 +72,7 @@ class EpicentrumServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->registerBlade();
+
         /** @var \Illuminate\Foundation\Application */
         $app = $this->app;
 
