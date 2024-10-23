@@ -68,7 +68,9 @@ class SidebarMenu extends BaseMenu
             call_user_func($callback, $sidebar);
         }
 
-        $items = $sidebar->all()->map(function (Item $item) {
+        /** @var \Lavary\Menu\Collection */
+        $sidebarAll = $sidebar->all();
+        $items = $sidebarAll->map(function (Item $item) {
             $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! ($item->link->path['url'] ?? true)));
 
             if ($item->data('icon') === null) {
@@ -90,13 +92,17 @@ class SidebarMenu extends BaseMenu
                 return true;
             });
 
-        return $this
-            ->get('sidebar')
-            ->topMenu()
-            ->all()
-            ->sortBy(function (Item $item) {
-                return $item->data('order');
-            });
+        /** @var \Lavary\Menu\Collection */
+        $result = $this->get('sidebar')->topMenu()->all();
+        $result = $result->sortBy(function (Item $item) {
+            if ($item->title === 'System') {
+                $item->data('order', 99);
+            }
+
+            return $item->data('order');
+        });
+
+        return $result;
     }
 
     protected function filterByVisibility(Item $item)
