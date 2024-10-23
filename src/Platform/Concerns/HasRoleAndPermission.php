@@ -149,9 +149,11 @@ trait HasRoleAndPermission
 
     public function hasPermission($permission, $checkAll = false): bool
     {
-        return once(function () use ($permission, $checkAll) {
+        $result = once(function () use ($permission, $checkAll) {
             return $this->_hasPermission($permission, $checkAll);
         });
+
+        return $result;
     }
 
     protected function _hasPermission($permission, $checkAll = false): bool
@@ -170,19 +172,19 @@ trait HasRoleAndPermission
         }
 
         if (Str::isUuid($permission)) {
-            return (bool) $this->permissions()->firstWhere('id', $permission);
+            return (bool) $this->permissions()->where('id', $permission)->first();
         }
 
         if (is_string($permission)) {
-            return (bool) $this->permissions()->firstWhere('name', $permission);
+            return (bool) $this->permissions()->where('name', $permission)->first();
         }
 
         if (is_int($permission)) {
-            return (bool) $this->permissions()->firstWhere('id', $permission);
+            return (bool) $this->permissions()->where('id', $permission)->first();
         }
 
         if ($permission instanceof Model) {
-            return (bool) $this->permissions()->firstWhere('id', $permission->getKey());
+            return (bool) $this->permissions()->where('id', $permission->id)->first()?->getKey();
         }
 
         return false;
