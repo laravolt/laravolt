@@ -5,7 +5,6 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Laravolt\Platform\Models\User as BaseUser;
 use Laravolt\Suitable\AutoFilter;
 use Laravolt\Suitable\AutoSearch;
@@ -14,7 +13,8 @@ use Laravolt\Suitable\AutoSort;
 class User extends BaseUser
 {
     use AutoFilter, AutoSearch, AutoSort;
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
+    // use \Laravel\Sanctum\HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
