@@ -6,7 +6,7 @@ return [
         'database-monitor' => false,
         'epicentrum' => true,
         'mailkeeper' => false,
-        'lookup' => true,
+        'lookup' => false,
         'kitchen_sink' => false,
         'spa' => false,
         'quick_switcher' => true,
