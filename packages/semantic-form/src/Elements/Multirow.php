@@ -73,6 +73,7 @@ class Multirow extends Element
     public function value($values)
     {
         $this->source = $values;
+
         if ($values) {
             $this->rows(count($values));
         }
