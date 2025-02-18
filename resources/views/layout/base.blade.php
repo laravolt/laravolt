@@ -22,7 +22,6 @@
     @stack('head')
 
     @laravoltScripts
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="{{ $bodyClass ?? '' }} @yield('body.class')">
