@@ -63,7 +63,7 @@ trait CanGenerateOptionsFromDb
         $options = [];
 
         if ($this->query) {
-            $data = DB::connection($this->getConnection())->select(DB::raw($this->query));
+            $data = DB::connection($this->getConnection())->select($this->query);
             $options = collect($data)->mapWithKeys(function ($item) use ($keyColumn, $valueColumn) {
                 $item = (array) $item;
 
