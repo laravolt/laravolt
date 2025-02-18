@@ -74,9 +74,7 @@ class Multirow extends Element
     {
         $this->source = $values;
 
-        if ($values) {
-            $this->rows(count($values));
-        }
+        $this->rows(count($values));
     }
 
     public function displayValue()
@@ -109,7 +107,8 @@ class Multirow extends Element
             });
 
         // reset old values row index
-        $data = [$this->name => array_values(old($this->name, $this->source))];
+        $values = old($this->name, $this->source) ?? [];
+        $data = [$this->name => array_values($values)];
 
         $rows = [];
         for ($i = 0; $i < $rowCount; $i++) {
