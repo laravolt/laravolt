@@ -109,7 +109,8 @@ class Multirow extends Element
             });
 
         // reset old values row index
-        $data = [$this->name => array_values(old($this->name, $this->source))];
+        $values = old($this->name, $this->source) ?? [];
+        $data = [$this->name => array_values($values)];
 
         $rows = [];
         for ($i = 0; $i < $rowCount; $i++) {
