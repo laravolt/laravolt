@@ -70,6 +70,12 @@ class Multirow extends Element
         return $this;
     }
 
+    public function value($values)
+    {
+        $this->source = $values;
+        $this->rows(count($values));
+    }
+
     public function displayValue()
     {
         $data = $this->source;
