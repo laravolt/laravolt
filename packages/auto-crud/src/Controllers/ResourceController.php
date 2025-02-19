@@ -31,7 +31,7 @@ class ResourceController extends Controller
     public function store(CrudRequest $request, string $resource)
     {
         $config = $request->getConfig();
-        app($config['model'])->create($request->data());
+        app($config['model'])->forceCreate($request->data());
 
         return redirect()
             ->route('auto-crud::resource.index', $resource)
@@ -61,7 +61,9 @@ class ResourceController extends Controller
         $config = $request->getConfig();
         $model = app($config['model'])->findOrFail($id);
 
+        $model->unguard();
         $model->update($request->data());
+        $model->reguard();
 
         return redirect()
             ->route('auto-crud::resource.index', $resource)
