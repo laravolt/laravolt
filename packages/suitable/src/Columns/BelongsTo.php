@@ -14,6 +14,6 @@ class BelongsTo extends Column implements ColumnInterface
 
         $hasDisplayMethod = method_exists($relatedModel, 'display');
 
-        return $hasDisplayMethod ? $cell->{$this->field}->display() : (string) $cell->{$this->field};
+        return $hasDisplayMethod ? $cell->{$this->field}?->display() : (string) $cell->{$this->field};
     }
 }
