@@ -9,8 +9,8 @@
     <tbody>
         @forelse ($data ?? [] as $row)
             <tr>
-                @foreach($row as $cell)
-                    <td>{{ $cell }}</td>
+                @foreach($schema as $key => $field)
+                    <td>{{ $row[$key] ?? '' }}</td>
                 @endforeach
             </tr>
         @empty

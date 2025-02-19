@@ -82,9 +82,10 @@ class Multirow extends Element
     public function displayValue()
     {
         $data = $this->source;
-        $headers = collect(Arr::first($data))->keys();
+        $headers = collect($this->schema)->keys();
+        $schema = $this->schema;
 
-        return view('semantic-form::multirow.table', compact('data', 'headers'));
+        return view('semantic-form::multirow.table', compact('data', 'headers', 'schema'));
     }
 
     public function render()
