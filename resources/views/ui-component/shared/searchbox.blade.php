@@ -1,4 +1,4 @@
-<form method="GET" action="" class="ui form" wire:submit.prevent="render">
+<form method="GET" action="" class="ui form" >
     <div class="ui left icon input">
         <i class="search icon" aria-hidden="true"></i>
         <input
