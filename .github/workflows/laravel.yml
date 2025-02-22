@@ -44,7 +44,18 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
     - name: Install package
-      run: cd laravel && composer config repositories.laravolt path ./.. && composer require laravolt/laravolt:dev-master && composer require brianium/paratest --dev && php artisan laravolt:install
+      run: |
+        cd laravel
+        composer config repositories.laravolt path ./..
+        BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+        if [ "$BRANCH_NAME" == "master" ]; then
+          PACKAGE_VERSION="dev-master"
+        else
+          PACKAGE_VERSION="dev-$BRANCH_NAME"
+        fi
+        composer require laravolt/laravolt:$PACKAGE_VERSION
+        composer require brianium/paratest --dev
+        php artisan laravolt:install
     # - name: Install package js
     #   run: |
     #     cd laravel
