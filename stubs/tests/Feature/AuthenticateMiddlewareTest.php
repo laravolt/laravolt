@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 

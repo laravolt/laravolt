@@ -12,8 +12,8 @@ use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    use LazilyRefreshDatabase;
     use InteractsWithDatabase;
+    use LazilyRefreshDatabase;
 
     /**
      * @test

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\VerifyCsrfToken;
-use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Route;

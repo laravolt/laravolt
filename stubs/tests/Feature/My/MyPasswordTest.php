@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\My;
 
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 class MyPasswordTest extends TestCase
 {
