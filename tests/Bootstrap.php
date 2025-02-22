@@ -54,6 +54,7 @@ trait Bootstrap
             PlatformServiceProvider::class,
             UiServiceProvider::class,
             LivewireServiceProvider::class,
+            \Akaunting\Setting\Provider::class,
         ];
     }
 
