@@ -21,7 +21,7 @@ jobs:
     - name: Install Laravel
       run: composer create-project laravel/laravel -q --no-ansi --no-interaction --no-scripts --prefer-dist
     - name: Laravel Version
-      run: php artisan --version
+      run: php laravel/artisan --version
     - name: Copy .env
       run: |
         cd laravel
