@@ -4,17 +4,18 @@ namespace Tests\Feature\Password;
 
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class CanChangePasswordTest extends TestCase
 {
-    use DatabaseMigrations;
+    use LazilyRefreshDatabase;
 
     public function test_password_changed_at_filled()
     {
         $user = User::factory()->create();
+
         $this->assertNotNull($user->password_changed_at);
     }
 
