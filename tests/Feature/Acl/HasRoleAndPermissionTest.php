@@ -12,7 +12,7 @@ class HasRoleAndPermissionTest extends FeatureTest
 {
     use RefreshDatabase;
 
-    public function testUserToRoleRelationship()
+    public function test_user_to_role_relationship()
     {
         $user = $this->createUser();
 
@@ -20,7 +20,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertEmpty($user->roles);
     }
 
-    public function testAssignNonExistentRole()
+    public function test_assign_non_existent_role()
     {
         $user = $this->createUser();
         $user->assignRole('Admin');
@@ -28,7 +28,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasRole('Admin'));
     }
 
-    public function testAssignExistingRole()
+    public function test_assign_existing_role()
     {
         app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
@@ -37,7 +37,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasRole('Admin'));
     }
 
-    public function testAssignExistingRoleById()
+    public function test_assign_existing_role_by_id()
     {
         app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
@@ -46,7 +46,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasRole('Admin'));
     }
 
-    public function testAssignExistingRoleByModel()
+    public function test_assign_existing_role_by_model()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
@@ -55,7 +55,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasRole('Admin'));
     }
 
-    public function testAssignRoleByArray()
+    public function test_assign_role_by_array()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
@@ -64,7 +64,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasRole(['Admin', 'Operator', 'Staff'], true));
     }
 
-    public function testRevokeRole()
+    public function test_revoke_role()
     {
         $user = $this->createUser();
         $user->assignRole('Admin')->assignRole('Operator');
@@ -73,7 +73,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasRole('Operator'));
     }
 
-    public function testRevokeRoleByArray()
+    public function test_revoke_role_by_array()
     {
         $user = $this->createUser();
         $user->assignRole('Admin')->assignRole('Operator');
@@ -83,7 +83,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasRole('Admin'));
     }
 
-    public function testRevokeRoleByObject()
+    public function test_revoke_role_by_object()
     {
         $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $user = $this->createUser();
@@ -93,7 +93,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasRole('Admin'));
     }
 
-    public function testRevokeRoleById()
+    public function test_revoke_role_by_id()
     {
         $user = $this->createUser();
         $user->assignRole('Admin')->assignRole('Operator');
@@ -103,7 +103,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasRole('Operator'));
     }
 
-    public function testHasRole()
+    public function test_has_role()
     {
         $user = $this->createUser();
         $user->assignRole(['Admin']);
@@ -114,7 +114,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasRole([1, 2], true));
     }
 
-    public function testHasAllRole()
+    public function test_has_all_role()
     {
         $user = $this->createUser();
         $user->assignRole(['Admin']);
@@ -125,7 +125,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertTrue($user->hasRole([1, 2], true));
     }
 
-    public function testSyncRoles()
+    public function test_sync_roles()
     {
         $user = $this->createUser();
         $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
@@ -135,7 +135,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertSame(3, $user->roles->count());
     }
 
-    public function testHasPermission()
+    public function test_has_permission()
     {
         $user = $this->createUser();
         $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
@@ -154,7 +154,7 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasPermission('gambling'));
     }
 
-    public function testChaining()
+    public function test_chaining()
     {
         $user = $this->createUser();
         $user->assignRole('Admin')->assignRole('Operator');

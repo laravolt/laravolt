@@ -83,7 +83,7 @@ class BelongsTo implements Field
 
     public function visibleFor(string $method): bool
     {
-        //TODO
+        // TODO
         return true;
     }
 }

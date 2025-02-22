@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Datepicker;
 
 class DatepickerTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicDatepicker()
+    public function test_can_render_basic_datepicker()
     {
         $text = new Datepicker('birthdate');
 
@@ -13,7 +13,7 @@ class DatepickerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetDatepickerAsReadonly()
+    public function test_can_set_datepicker_as_readonly()
     {
         $text = (new Datepicker('birthdate'))->readonly();
 

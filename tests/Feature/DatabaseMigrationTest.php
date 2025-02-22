@@ -9,7 +9,7 @@ use Laravolt\Tests\Feature\Acl\FeatureTest;
 
 class DatabaseMigrationTest extends FeatureTest
 {
-    public function testPlatformTablesPresent()
+    public function test_platform_tables_present()
     {
         $tables = [
             'users',

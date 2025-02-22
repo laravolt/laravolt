@@ -12,7 +12,7 @@ use function Laravolt\platform_path;
 
 class HelpersTest extends UnitTest
 {
-    public function testPlatformPath()
+    public function test_platform_path()
     {
         $actual = platform_path('resources/files/file.txt');
         $expected = realpath(__DIR__.'/../../resources/files/file.txt');
@@ -21,7 +21,7 @@ class HelpersTest extends UnitTest
         $this->assertFileExists($actual);
     }
 
-    public function testPlatformPathWithTrailingSlash()
+    public function test_platform_path_with_trailing_slash()
     {
         $actual = platform_path('/resources/files/file.txt');
         $expected = realpath(__DIR__.'/../../resources/files/file.txt');

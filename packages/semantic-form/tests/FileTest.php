@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\File;
 
 class FileTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRenderFileInput()
+    public function test_render_file_input()
     {
         $file = new File('article');
         $expected = '<input type="file" name="article">';

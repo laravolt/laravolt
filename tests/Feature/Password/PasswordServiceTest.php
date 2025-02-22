@@ -18,7 +18,7 @@ class PasswordServiceTest extends FeatureTest
 {
     use RefreshDatabase;
 
-    public function testSendResetLink()
+    public function test_send_reset_link()
     {
         Mail::fake();
         $service = app('laravolt.password');
@@ -31,7 +31,7 @@ class PasswordServiceTest extends FeatureTest
         });
     }
 
-    public function testSendNewPassword()
+    public function test_send_new_password()
     {
         Mail::fake();
         $service = app('laravolt.password');
@@ -44,7 +44,7 @@ class PasswordServiceTest extends FeatureTest
         });
     }
 
-    public function testChangePasswordByInvalidToken()
+    public function test_change_password_by_invalid_token()
     {
         $service = app('laravolt.password');
         $user = $this->createUser();
@@ -54,7 +54,7 @@ class PasswordServiceTest extends FeatureTest
         $this->assertSame(Password::INVALID_TOKEN, $response);
     }
 
-    public function testChangePasswordByValidToken()
+    public function test_change_password_by_valid_token()
     {
         $token = 'asdf1234';
         $user = $this->createUser();

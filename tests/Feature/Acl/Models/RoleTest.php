@@ -12,7 +12,7 @@ class RoleTest extends FeatureTest
 {
     use RefreshDatabase;
 
-    public function testRoleAndPermissionRelationship()
+    public function test_role_and_permission_relationship()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
 
@@ -20,7 +20,7 @@ class RoleTest extends FeatureTest
         $this->assertEmpty($role->permissions);
     }
 
-    public function testRoleAndUserRelationship()
+    public function test_role_and_user_relationship()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
 
@@ -28,7 +28,7 @@ class RoleTest extends FeatureTest
         $this->assertEmpty($role->users);
     }
 
-    public function testAddPermissionByKey()
+    public function test_add_permission_by_key()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -38,7 +38,7 @@ class RoleTest extends FeatureTest
         $this->assertTrue($role->hasPermission('create'));
     }
 
-    public function testAddPermissionByName()
+    public function test_add_permission_by_name()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -47,7 +47,7 @@ class RoleTest extends FeatureTest
         $this->assertTrue($role->hasPermission('create'));
     }
 
-    public function testAddPermissionByObject()
+    public function test_add_permission_by_object()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -56,7 +56,7 @@ class RoleTest extends FeatureTest
         $this->assertTrue($role->hasPermission('create'));
     }
 
-    public function testRemovePermissionByKey()
+    public function test_remove_permission_by_key()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -67,7 +67,7 @@ class RoleTest extends FeatureTest
         $this->assertEmpty($role->permissions);
     }
 
-    public function testRemovePermissionByName()
+    public function test_remove_permission_by_name()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -78,7 +78,7 @@ class RoleTest extends FeatureTest
         $this->assertEmpty($role->permissions);
     }
 
-    public function testRemovePermissionByObject()
+    public function test_remove_permission_by_object()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -89,7 +89,7 @@ class RoleTest extends FeatureTest
         $this->assertEmpty($role->permissions);
     }
 
-    public function testHasPermission()
+    public function test_has_permission()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -101,7 +101,7 @@ class RoleTest extends FeatureTest
         $this->assertTrue($role->hasPermission($permission));
     }
 
-    public function testHasNotPermission()
+    public function test_has_not_permission()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $create = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
@@ -115,7 +115,7 @@ class RoleTest extends FeatureTest
         $this->assertFalse($role->hasPermission('play'));
     }
 
-    public function testSyncPermission()
+    public function test_sync_permission()
     {
         $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
         $create = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);

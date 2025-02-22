@@ -9,7 +9,7 @@ use Laravolt\Tests\FeatureTest;
 
 class SyncPermissionCommandTest extends FeatureTest
 {
-    public function testSyncPermissionCommand()
+    public function test_sync_permission_command()
     {
         $service = app('laravolt.acl');
         $service->registerPermission('create-user');
@@ -21,7 +21,7 @@ class SyncPermissionCommandTest extends FeatureTest
         $this->assertStringContainsString('New', $output);
     }
 
-    public function testSyncPermissionCommandWithRefresh()
+    public function test_sync_permission_command_with_refresh()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['create-user', 'edit-user', 'delete-user']);
@@ -37,7 +37,7 @@ class SyncPermissionCommandTest extends FeatureTest
         $this->assertStringNotContainsString('Deleted', $output);
     }
 
-    public function testSyncPermissionCommandWithDeletedRecords()
+    public function test_sync_permission_command_with_deleted_records()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['create-user', 'edit-user', 'delete-user']);

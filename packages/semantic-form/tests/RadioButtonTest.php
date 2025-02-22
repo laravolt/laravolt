@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\RadioButton;
 
 class RadioButtonTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRenderBasicRadioButton()
+    public function test_render_basic_radio_button()
     {
         $radio = new RadioButton('terms');
         $expected = '<input type="radio" name="terms" value="terms">';
@@ -19,7 +19,7 @@ class RadioButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderRadioButtonWithValue()
+    public function test_render_radio_button_with_value()
     {
         $radio = new RadioButton('color', 'green');
         $expected = '<input type="radio" name="color" value="green">';
@@ -34,7 +34,7 @@ class RadioButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultToChecked()
+    public function test_default_to_checked()
     {
         $checkbox = new RadioButton('above_18');
         $expected = '<input type="radio" name="above_18" value="above_18" checked="checked">';
@@ -55,7 +55,7 @@ class RadioButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultToUnchecked()
+    public function test_default_to_unchecked()
     {
         $checkbox = new RadioButton('above_18');
         $expected = '<input type="radio" name="above_18" value="above_18">';

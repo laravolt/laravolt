@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Button;
 
 class ButtonTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRenderBasicButton()
+    public function test_render_basic_button()
     {
         $button = new Button('Click Me', 'click-me');
         $expected = '<button type="button" class="ui button" themed name="click-me">Click Me</button>';
@@ -13,7 +13,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanChangeText()
+    public function test_can_change_text()
     {
         $button = new Button('Button', null);
         $button->text('Click Me');
@@ -23,7 +23,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanChangeValue()
+    public function test_can_change_value()
     {
         $button = new Button('Button', null);
         $button->value('save');
@@ -33,7 +33,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanHaveLabel()
+    public function test_can_have_label()
     {
         $button = new Button('Button', null);
         $button->label('Label');

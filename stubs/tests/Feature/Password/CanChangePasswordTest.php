@@ -12,13 +12,13 @@ class CanChangePasswordTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testPasswordChangedAtFilled()
+    public function test_password_changed_at_filled()
     {
         $user = User::factory()->create();
         $this->assertNotNull($user->password_changed_at);
     }
 
-    public function testCanChangePassword()
+    public function test_can_change_password()
     {
         $user = User::factory()->create();
 
@@ -31,7 +31,7 @@ class CanChangePasswordTest extends TestCase
         $this->assertTrue(Hash::check('secret2', $user->password));
     }
 
-    public function testPasswordMustBeChanged()
+    public function test_password_must_be_changed()
     {
         $user = User::factory()->create();
 
@@ -48,7 +48,7 @@ class CanChangePasswordTest extends TestCase
         $this->assertTrue($user->passwordMustBeChanged(null));
     }
 
-    public function testPasswordMustBeChangedDuration()
+    public function test_password_must_be_changed_duration()
     {
         $user = User::factory()->create();
 

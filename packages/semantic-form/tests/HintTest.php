@@ -5,7 +5,7 @@ use Laravolt\SemanticForm\Elements\Text;
 
 class HintTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTextCanHaveHint()
+    public function test_text_can_have_hint()
     {
         $text = (new Text('email'))->hint('Hint');
 
@@ -14,7 +14,7 @@ class HintTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testTextCanHaveHintWithCustomClass()
+    public function test_text_can_have_hint_with_custom_class()
     {
         $text = (new Text('email'))->hint('Hint', 'custom-hint-class');
 
@@ -23,7 +23,7 @@ class HintTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testTextCanHaveLabelAndHint()
+    public function test_text_can_have_label_and_hint()
     {
         $text = (new Text('email'))->hint('Hint')->label('Email');
 
@@ -32,7 +32,7 @@ class HintTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanOverrideClass()
+    public function test_can_override_class()
     {
         Hint::$defaultClass = 'custom-hint-class';
         $text = (new Text('email'))->hint('Hint')->label('Email');

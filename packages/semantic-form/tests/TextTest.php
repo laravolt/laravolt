@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Text;
 
 class TextTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicText()
+    public function test_can_render_basic_text()
     {
         $text = new Text('email');
 
@@ -19,7 +19,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithId()
+    public function test_can_render_with_id()
     {
         $text = new Text('email');
         $text = $text->id('email_field');
@@ -36,7 +36,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithValue()
+    public function test_can_render_with_value()
     {
         $text = new Text('email');
         $text = $text->value('example@example.com');
@@ -60,7 +60,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithClass()
+    public function test_can_render_with_class()
     {
         $text = new Text('email');
         $text = $text->addClass('error');
@@ -77,7 +77,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithPlaceholder()
+    public function test_can_render_with_placeholder()
     {
         $text = new Text('email');
         $text = $text->placeholder('error');
@@ -94,7 +94,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanBeCastToString()
+    public function test_can_be_cast_to_string()
     {
         $text = new Text('email');
 
@@ -103,7 +103,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRequired()
+    public function test_required()
     {
         $text = new Text('email');
 
@@ -112,7 +112,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testAutofocus()
+    public function test_autofocus()
     {
         $text = new Text('');
 
@@ -121,7 +121,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertStringContainsString('autofocus="autofocus"', $result, $message);
     }
 
-    public function testUnfocus()
+    public function test_unfocus()
     {
         $pattern = 'autofocus="autofocus"';
         $text = new Text('');
@@ -137,7 +137,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertStringNotContainsString($pattern, $result, $message);
     }
 
-    public function testReadonly()
+    public function test_readonly()
     {
         $text = new Text('email');
 
@@ -146,7 +146,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testOptional()
+    public function test_optional()
     {
         $text = new Text('email');
 
@@ -161,7 +161,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDisable()
+    public function test_disable()
     {
         $text = new Text('email');
 
@@ -170,7 +170,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDisableWithParameter()
+    public function test_disable_with_parameter()
     {
         $text = new Text('email');
 
@@ -183,7 +183,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testEnable()
+    public function test_enable()
     {
         $text = new Text('email');
 
@@ -198,7 +198,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testEnableWithParameter()
+    public function test_enable_with_parameter()
     {
         $text = new Text('email');
 
@@ -207,7 +207,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultValue()
+    public function test_default_value()
     {
         $text = new Text('email');
 
@@ -228,7 +228,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCustomAttribute()
+    public function test_custom_attribute()
     {
         $text = new Text('email');
 
@@ -241,7 +241,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDataAttribute()
+    public function test_data_attribute()
     {
         $text = new Text('email');
 
@@ -256,7 +256,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRemoveClass()
+    public function test_can_remove_class()
     {
         $text = new Text('email');
         $text = $text->addClass('error');
@@ -278,7 +278,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddAttributesThroughMagicMethods()
+    public function test_can_add_attributes_through_magic_methods()
     {
         $text = new Text('email');
         $text = $text->maxlength('5');
@@ -288,7 +288,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddAttributesThroughMagicMethodsWithOptionalParameter()
+    public function test_can_add_attributes_through_magic_methods_with_optional_parameter()
     {
         $text = new Text('cow');
         $text = $text->moo();
@@ -298,7 +298,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanHaveLabel()
+    public function test_can_have_label()
     {
         $text = (new Text('email'))->label('Email');
 

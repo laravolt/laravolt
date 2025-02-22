@@ -116,7 +116,7 @@ class CrudRequest extends FormRequest
     {
         $data = parent::validated();
 
-        //Special case for file uploader
+        // Special case for file uploader
         collect($this->resourceConfig['schema'])->each(
             function ($item) use (&$data) {
                 $key = Arr::get($item, 'name');

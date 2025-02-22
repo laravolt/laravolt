@@ -77,7 +77,7 @@ class DetectFlashMessage
                 $this->flash->injectScript($response);
             }
         } catch (Exception $e) {
-            //@todo: handle error
+            // @todo: handle error
         } finally {
             return $response;
         }

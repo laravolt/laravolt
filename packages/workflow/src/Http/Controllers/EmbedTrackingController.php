@@ -20,7 +20,7 @@ class EmbedTrackingController
             try {
                 $instanceHistory = ProcessInstanceHistoryClient::find($trackingCode);
             } catch (ObjectNotFoundException $e) {
-                //do nothing
+                // do nothing
             }
         }
 

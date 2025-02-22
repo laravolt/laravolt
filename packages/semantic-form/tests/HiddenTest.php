@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Hidden;
 
 class HiddenTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicHidden()
+    public function test_can_render_basic_hidden()
     {
         $hidden = new Hidden('_token');
 
@@ -19,7 +19,7 @@ class HiddenTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithValue()
+    public function test_can_render_with_value()
     {
         $hidden = new Hidden('_token');
 

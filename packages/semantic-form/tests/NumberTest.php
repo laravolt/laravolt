@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Number;
 
 class NumberTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicText()
+    public function test_can_render_basic_text()
     {
         $text = new Number('total');
 
@@ -19,7 +19,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithId()
+    public function test_can_render_with_id()
     {
         $text = new Number('total');
         $text = $text->id('total_field');
@@ -36,7 +36,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithValue()
+    public function test_can_render_with_value()
     {
         $text = new Number('total');
         $text = $text->value(10);
@@ -53,7 +53,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithClass()
+    public function test_can_render_with_class()
     {
         $text = new Number('total');
         $text = $text->addClass('error');
@@ -70,7 +70,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithPlaceholder()
+    public function test_can_render_with_placeholder()
     {
         $text = new Number('total');
         $text = $text->placeholder('Insert total');
@@ -87,7 +87,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanBeCastToString()
+    public function test_can_be_cast_to_string()
     {
         $text = new Number('total');
 
@@ -96,7 +96,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRequired()
+    public function test_required()
     {
         $text = new Number('total');
 
@@ -105,7 +105,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testAutofocus()
+    public function test_autofocus()
     {
         $text = new Number('');
 
@@ -114,7 +114,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertStringContainsString('autofocus="autofocus"', $result, $message);
     }
 
-    public function testUnfocus()
+    public function test_unfocus()
     {
         $pattern = 'autofocus="autofocus"';
         $text = new Number('');
@@ -130,7 +130,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertStringNotContainsString($pattern, $result, $message);
     }
 
-    public function testOptional()
+    public function test_optional()
     {
         $text = new Number('total');
 
@@ -142,7 +142,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDisable()
+    public function test_disable()
     {
         $text = new Number('total');
 
@@ -151,7 +151,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testEnable()
+    public function test_enable()
     {
         $text = new Number('total');
 
@@ -163,7 +163,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultValue()
+    public function test_default_value()
     {
         $text = new Number('total');
 
@@ -184,7 +184,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCustomAttribute()
+    public function test_custom_attribute()
     {
         $text = new Number('total');
 
@@ -197,7 +197,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDataAttribute()
+    public function test_data_attribute()
     {
         $text = new Number('total');
 
@@ -212,7 +212,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRemoveClass()
+    public function test_can_remove_class()
     {
         $text = new Number('total');
         $text = $text->addClass('error');
@@ -234,7 +234,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddAttributesThroughMagicMethods()
+    public function test_can_add_attributes_through_magic_methods()
     {
         $text = new Number('total');
         $text = $text->maxlength('5');
@@ -244,7 +244,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddAttributesThroughMagicMethodsWithOptionalParameter()
+    public function test_can_add_attributes_through_magic_methods_with_optional_parameter()
     {
         $text = new Number('cow');
         $text = $text->moo();
@@ -254,7 +254,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanHaveLabel()
+    public function test_can_have_label()
     {
         $text = (new Number('total'))->label('Total');
 
@@ -263,7 +263,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetStep()
+    public function test_can_set_step()
     {
         $text = (new Number('total'))->step('0.01');
 
@@ -272,7 +272,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetMin()
+    public function test_can_set_min()
     {
         $text = (new Number('total'))->min('0');
 
@@ -281,7 +281,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetMax()
+    public function test_can_set_max()
     {
         $text = (new Number('total'))->max('10');
 

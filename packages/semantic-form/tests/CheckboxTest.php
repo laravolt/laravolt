@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Checkbox;
 
 class CheckboxTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRenderBasicCheckbox()
+    public function test_render_basic_checkbox()
     {
         $checkbox = new Checkbox('terms');
         $expected = '<input type="checkbox" name="terms" value="1">';
@@ -19,7 +19,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderBasicCheckboxWithValue()
+    public function test_render_basic_checkbox_with_value()
     {
         $checkbox = new Checkbox('terms');
         $expected = '<input type="checkbox" name="terms" value="agree">';
@@ -34,7 +34,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanCheckCheckbox()
+    public function test_can_check_checkbox()
     {
         $checkbox = new Checkbox('terms');
         $expected = '<input type="checkbox" name="terms" value="1" checked="checked">';
@@ -43,7 +43,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanUncheckCheckbox()
+    public function test_can_uncheck_checkbox()
     {
         $checkbox = new Checkbox('above_18');
         $expected = '<input type="checkbox" name="above_18" value="1">';
@@ -52,7 +52,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultToChecked()
+    public function test_default_to_checked()
     {
         $checkbox = new Checkbox('above_18');
         $expected = '<input type="checkbox" name="above_18" value="1" checked="checked">';
@@ -73,7 +73,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultToUnchecked()
+    public function test_default_to_unchecked()
     {
         $checkbox = new Checkbox('above_18');
         $expected = '<input type="checkbox" name="above_18" value="1">';
@@ -94,7 +94,7 @@ class CheckboxTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultCheckedState()
+    public function test_default_checked_state()
     {
         $checkbox = new Checkbox('above_18');
         $expected = '<input type="checkbox" name="above_18" value="1" checked="checked">';

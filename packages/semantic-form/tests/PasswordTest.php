@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Password;
 
 class PasswordTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicText()
+    public function test_can_render_basic_text()
     {
         $text = new Password('password');
 

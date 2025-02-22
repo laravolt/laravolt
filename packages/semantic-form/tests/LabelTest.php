@@ -4,12 +4,12 @@ use Laravolt\SemanticForm\Elements\Label;
 
 class LabelTest extends \PHPUnit\Framework\TestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function testRenderBasicLabel()
+    public function test_render_basic_label()
     {
         $label = new Label('Email');
         $expected = '<label>Email</label>';
@@ -24,7 +24,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderForId()
+    public function test_can_render_for_id()
     {
         $label = new Label('Email');
 
@@ -41,7 +41,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanWrapBeforeElement()
+    public function test_can_wrap_before_element()
     {
         $element = Mockery::mock('Laravolt\SemanticForm\Elements\Element');
         $element->shouldReceive('render')->once()->andReturn('<input>');
@@ -52,7 +52,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanWrapAfterElement()
+    public function test_can_wrap_after_element()
     {
         $element = Mockery::mock('Laravolt\SemanticForm\Elements\Element');
         $element->shouldReceive('render')->once()->andReturn('<input>');
@@ -63,7 +63,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRetrieveElement()
+    public function test_can_retrieve_element()
     {
         $element = Mockery::mock('Laravolt\SemanticForm\Elements\Element');
         $label = new Label('Email');

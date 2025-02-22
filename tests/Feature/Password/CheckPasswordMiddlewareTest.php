@@ -13,7 +13,7 @@ class CheckPasswordMiddlewareTest extends FeatureTest
 {
     use RefreshDatabase;
 
-    public function testDoNothingForGuest()
+    public function test_do_nothing_for_guest()
     {
         Route::middleware(CheckPassword::class)->get('public', function () {
             return 'public page';
@@ -22,7 +22,7 @@ class CheckPasswordMiddlewareTest extends FeatureTest
         $this->visit('public')->seeText('public page');
     }
 
-    public function testDoNothingForWhitelistRoutes()
+    public function test_do_nothing_for_whitelist_routes()
     {
         Route::middleware(CheckPassword::class)->get('public', function () {
             return 'public page';
@@ -41,7 +41,7 @@ class CheckPasswordMiddlewareTest extends FeatureTest
         $this->visit('public')->seeText('public');
     }
 
-    public function testDoNothingForNormalUser()
+    public function test_do_nothing_for_normal_user()
     {
         Route::middleware(CheckPassword::class)->get('public', function () {
             return 'public page';
@@ -58,7 +58,7 @@ class CheckPasswordMiddlewareTest extends FeatureTest
         $this->visit('public')->seeText('public page');
     }
 
-    public function testRedirectToEditPasswordPage()
+    public function test_redirect_to_edit_password_page()
     {
         Route::middleware(CheckPassword::class)->get('public', function () {
             return 'public page';

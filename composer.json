@@ -43,6 +43,7 @@
         "spaze/phpstan-disallowed-calls": "^2.16.1"
     },
     "require-dev": {
+        "laravel/pint": "^1.21",
         "mockery/mockery": "^1.6.12",
         "orchestra/testbench-browser-kit": ">=8.6",
         "php-coveralls/php-coveralls": "^2.7",

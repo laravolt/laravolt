@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\Select;
 
 class SelectTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicSelect()
+    public function test_can_render_basic_select()
     {
         $select = new Select('birth_year');
         $expected = '<select class="ui dropdown search clearable selection" name="birth_year"></select>';
@@ -17,7 +17,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSelectCanBeCreatedWithOptions()
+    public function test_select_can_be_created_with_options()
     {
         $select = new Select('birth_year', [1990, 1991, 1992]);
         $expected = '<select class="ui dropdown search clearable selection" name="birth_year"><option value="0">1990</option><option value="1">1991</option><option value="2">1992</option></select>';
@@ -32,7 +32,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSelectCanBeCreatedWithKeyValueOptions()
+    public function test_select_can_be_created_with_key_value_options()
     {
         $select = new Select('color', ['red' => 'Red', 'blue' => 'Blue']);
         $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="red">Red</option><option value="blue">Blue</option></select>';
@@ -47,7 +47,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithHint()
+    public function test_can_render_with_hint()
     {
         $select = new Select('birth_year');
         $select->hint('Hint');
@@ -57,7 +57,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddOption()
+    public function test_can_add_option()
     {
         $select = new Select('color', ['red' => 'Red']);
         $select->addOption('blue', 'Blue');
@@ -74,7 +74,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetOptions()
+    public function test_can_set_options()
     {
         $select = new Select('color');
         $select->options(['red' => 'Red', 'blue' => 'Blue']);
@@ -91,7 +91,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetSelectedOption()
+    public function test_can_set_selected_option()
     {
         $select = new Select('color');
         $select->options(['red' => 'Red', 'blue' => 'Blue']);
@@ -108,7 +108,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSelectNumericKeys()
+    public function test_can_select_numeric_keys()
     {
         $select = new Select('fruit');
         $select->options(['1' => 'Granny Smith', '2' => 'Blueberry']);
@@ -125,7 +125,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetDefaultOption()
+    public function test_can_set_default_option()
     {
         $select = new Select('color', ['red' => 'Red', 'blue' => 'Blue']);
         $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="red">Red</option><option value="blue" selected>Blue</option></select>';
@@ -152,7 +152,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetDefaultOptionMultiselect()
+    public function test_can_set_default_option_multiselect()
     {
         $select = new Select('color', ['red' => 'Red', 'blue' => 'Blue']);
         $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="red" selected>Red</option><option value="blue" selected>Blue</option></select>';
@@ -179,7 +179,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanUseNestedOptions()
+    public function test_can_use_nested_options()
     {
         $options = [
             'Ontario' => [
@@ -198,7 +198,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanUseNestedOptionsWithoutKeys()
+    public function test_can_use_nested_options_without_keys()
     {
         $options = [
             'Ontario' => [
@@ -217,7 +217,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanMixNestedAndUnnestedOptions()
+    public function test_can_mix_nested_and_unnested_options()
     {
         $options = [
             'toronto' => 'Toronto',
@@ -234,7 +234,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSelectCanBeCreatedWithIntegerKeyValueOptions()
+    public function test_select_can_be_created_with_integer_key_value_options()
     {
         $select = new Select('color', ['0' => 'Red', '1' => 'Blue']);
         $expected = '<select class="ui dropdown search clearable selection" name="color"><option value="0">Red</option><option value="1">Blue</option></select>';
@@ -247,7 +247,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSelectCanBeMultiple()
+    public function test_select_can_be_multiple()
     {
         $select = new Select('people');
         $expected = '<select class="ui dropdown search clearable selection" name="people[]" multiple="multiple"></select>';
@@ -262,7 +262,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testReadonly()
+    public function test_readonly()
     {
         $select = new Select('people');
         $expected = '<select class="ui dropdown search clearable selection" name="people[]" multiple="multiple" readonly="readonly"></select>';

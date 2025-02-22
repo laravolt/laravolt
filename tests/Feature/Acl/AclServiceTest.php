@@ -19,27 +19,27 @@ class AclServiceTest extends FeatureTest
         app('laravolt.acl')->clearPermissions();
     }
 
-    public function testInitialPermissions()
+    public function test_initial_permissions()
     {
         $service = app('laravolt.acl');
         $this->assertEmpty($service->permissions());
     }
 
-    public function testRegisterPermissionSingle()
+    public function test_register_permission_single()
     {
         $service = app('laravolt.acl');
         $service->registerPermission('create-user');
         $this->assertSame(['create-user'], $service->permissions());
     }
 
-    public function testRegisterPermissionArray()
+    public function test_register_permission_array()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['create-user', 'edit-user']);
         $this->assertSame(['create-user', 'edit-user'], $service->permissions());
     }
 
-    public function testSyncPermissionWithoutRefresh()
+    public function test_sync_permission_without_refresh()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['create-user']);
@@ -48,7 +48,7 @@ class AclServiceTest extends FeatureTest
         $this->seeInDatabase('acl_permissions', ['name' => 'create-user']);
     }
 
-    public function testSyncPermissionAndGotOrderedCollection()
+    public function test_sync_permission_and_got_ordered_collection()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['delete', 'approve', 'edit']);
@@ -58,7 +58,7 @@ class AclServiceTest extends FeatureTest
         $this->assertSame('edit', $permissions->last()['name']);
     }
 
-    public function testSyncPermissionAndDeleteMissingRecords()
+    public function test_sync_permission_and_delete_missing_records()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['delete', 'approve', 'edit']);
@@ -72,7 +72,7 @@ class AclServiceTest extends FeatureTest
         $this->assertSame('Deleted', $permissions->first()['status']);
     }
 
-    public function testSyncPermissionWithRefresh()
+    public function test_sync_permission_with_refresh()
     {
         $service = app('laravolt.acl');
         $service->registerPermission(['delete', 'approve', 'edit']);

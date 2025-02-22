@@ -4,7 +4,7 @@ use Laravolt\SemanticForm\Elements\InputWrapper;
 
 class InputWrapperTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCanRenderBasicInput()
+    public function test_can_render_basic_input()
     {
         $input = new InputWrapper;
 
@@ -13,7 +13,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithValue()
+    public function test_can_render_with_value()
     {
         $input = new InputWrapper;
         $input->value('foo');
@@ -23,7 +23,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderInputWithIcon()
+    public function test_can_render_input_with_icon()
     {
         $input = new InputWrapper;
         $input->prependIcon('users');
@@ -55,7 +55,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderLabeledInput()
+    public function test_can_render_labeled_input()
     {
         $input = new InputWrapper;
         $input->prependLabel('http://');
@@ -93,7 +93,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderInputWithFieldLabel()
+    public function test_can_render_input_with_field_label()
     {
         $input = new InputWrapper;
         $input->prependLabel('http://')->label('Website');
@@ -110,7 +110,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderInputWithHint()
+    public function test_can_render_input_with_hint()
     {
         $input = new InputWrapper;
         $input->hint('Hint');
@@ -120,7 +120,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanOverrideType()
+    public function test_can_override_type()
     {
         $input = new InputWrapper;
         $input->type('password');
@@ -130,7 +130,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetPlaceholder()
+    public function test_can_set_placeholder()
     {
         $input = new InputWrapper;
         $input->placeholder('Fullname...');
@@ -140,7 +140,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testFocus()
+    public function test_focus()
     {
         $input = new InputWrapper;
         $input->autofocus();
@@ -150,7 +150,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testUnfocus()
+    public function test_unfocus()
     {
         $input = new InputWrapper;
         $input->autofocus()->unfocus();
@@ -160,7 +160,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDisable()
+    public function test_disable()
     {
         $input = new InputWrapper;
         $input->disable();
@@ -170,7 +170,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDisableWithParameter()
+    public function test_disable_with_parameter()
     {
         $input = new InputWrapper;
         $input->disable(false);
@@ -186,7 +186,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testEnable()
+    public function test_enable()
     {
         $input = new InputWrapper;
         $input->disable()->enable();
@@ -196,7 +196,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testEnableWithParameter()
+    public function test_enable_with_parameter()
     {
         $input = new InputWrapper;
         $input->disable()->enable(false);
@@ -212,7 +212,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRequired()
+    public function test_required()
     {
         $input = new InputWrapper;
         $input->required()->label('Username');
@@ -222,7 +222,7 @@ class InputWrapperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testHasError()
+    public function test_has_error()
     {
         $input = new InputWrapper;
         $input->required()->label('Username');
