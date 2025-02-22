@@ -40,10 +40,10 @@ jobs:
         touch database/database.sqlite
     - name: Install package
       run: cd laravel && composer config repositories.laravolt path ./.. && composer require laravolt/laravolt:dev-master && composer require brianium/paratest --dev && php artisan laravolt:install
-    - name: Install package js
-      run: |
-        cd laravel
-        npm install tailwindcss && npm run build
+    # - name: Install package js
+    #   run: |
+    #     cd laravel
+    #     npm install tailwindcss && npm run build
     - name: Migrate database
       env:
         DB_CONNECTION: sqlite
