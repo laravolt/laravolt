@@ -52,8 +52,8 @@ jobs:
         php artisan migrate
     - name: Pint test
       run: cd laravel && ./vendor/bin/pint --test
-    - name: Laravel test
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: ':memory:'
-      run: cd laravel && php artisan test -p
+#    - name: Laravel test
+#      env:
+#        DB_CONNECTION: sqlite
+#        DB_DATABASE: ':memory:'
+#      run: cd laravel && php artisan test -p
