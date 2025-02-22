@@ -3,8 +3,6 @@ name: Laravolt Platform
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
@@ -47,22 +45,9 @@ jobs:
       run: |
         cd laravel
         composer config repositories.laravolt path ./..
-        BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-        if [[ "$GITHUB_REF" == refs/pull/* ]]; then
-          BRANCH_NAME=$(echo "${GITHUB_HEAD_REF}")
-        fi
-        if [ "$BRANCH_NAME" == "master" ]; then
-          PACKAGE_VERSION="dev-master"
-        else
-          PACKAGE_VERSION="dev-$BRANCH_NAME"
-        fi
-        composer require laravolt/laravolt:$PACKAGE_VERSION
+        composer require laravolt/laravolt:dev-master
         composer require brianium/paratest --dev
         php artisan laravolt:install
-    # - name: Install package js
-    #   run: |
-    #     cd laravel
-    #     npm install tailwindcss && npm run build
     - name: Migrate database
       env:
         DB_CONNECTION: sqlite
@@ -71,9 +56,13 @@ jobs:
         cd laravel
         php artisan migrate
     - name: Pint test
-      run: cd laravel && ./vendor/bin/pint --test
+      run: |
+        cd laravel
+        ./vendor/bin/pint --test
     - name: Laravel test
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: ':memory:'
-      run: cd laravel && XDEBUG_MODE=coverage php artisan test -p --coverage
+      run: |
+        cd laravel
+        XDEBUG_MODE=coverage php artisan test -p --coverage
