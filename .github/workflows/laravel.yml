@@ -3,6 +3,7 @@ name: Laravolt Platform
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   laravolt-platform-tests:
