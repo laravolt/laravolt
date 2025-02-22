@@ -56,7 +56,7 @@ class HelpersTest extends UnitTest
         $this->assertEquals($terbilang, number_to_terbilang($number, ''));
     }
 
-    public function provideRupiah()
+    public static function provideRupiah()
     {
         return [
             [100, 'Rp100,00', '100,00', 'Rp100'],
@@ -69,7 +69,7 @@ class HelpersTest extends UnitTest
         ];
     }
 
-    public function provideTerbilangWithSuffix()
+    public static function provideTerbilangWithSuffix()
     {
         return [
             [1, 'satu rupiah'],
@@ -94,7 +94,7 @@ class HelpersTest extends UnitTest
         ];
     }
 
-    public function provideTerbilangWithoutSuffix()
+    public static function provideTerbilangWithoutSuffix()
     {
         return [
             [1, 'satu'],
