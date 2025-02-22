@@ -3,12 +3,12 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
 {
-    use DatabaseMigrations;
+    use LazilyRefreshDatabase;
 
     protected $email = 'fulan@example.com';
 

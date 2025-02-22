@@ -3,6 +3,7 @@ name: Laravolt Platform
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   laravolt-platform-tests:
@@ -13,9 +14,12 @@ jobs:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.3'
+        extensions: xdebug
     - uses: actions/checkout@v3
     - name: Install Laravel
       run: composer create-project laravel/laravel -q --no-ansi --no-interaction --no-scripts --prefer-dist
+    - name: Laravel Version
+      run: php laravel/artisan --version
     - name: Copy .env
       run: |
         cd laravel
@@ -38,11 +42,12 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
     - name: Install package
-      run: cd laravel && composer config repositories.laravolt path ./.. && composer require laravolt/laravolt:dev-master && composer require brianium/paratest --dev && php artisan laravolt:install
-    - name: Install package js
       run: |
         cd laravel
-        npm install tailwindcss && npm run build
+        composer config repositories.laravolt path ./..
+        composer require laravolt/laravolt:dev-master
+        composer require brianium/paratest --dev
+        php artisan laravolt:install
     - name: Migrate database
       env:
         DB_CONNECTION: sqlite
@@ -51,9 +56,13 @@ jobs:
         cd laravel
         php artisan migrate
     - name: Pint test
-      run: cd laravel && ./vendor/bin/pint --test
-#    - name: Laravel test
-#      env:
-#        DB_CONNECTION: sqlite
-#        DB_DATABASE: ':memory:'
-#      run: cd laravel && php artisan test -p
+      run: |
+        cd laravel
+        ./vendor/bin/pint --test
+    - name: Laravel test
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: ':memory:'
+      run: |
+        cd laravel
+        XDEBUG_MODE=coverage php artisan test -p --coverage

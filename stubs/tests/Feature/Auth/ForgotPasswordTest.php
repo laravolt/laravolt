@@ -3,14 +3,14 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravolt\Platform\Services\Password;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
 class ForgotPasswordTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /**
      * @test

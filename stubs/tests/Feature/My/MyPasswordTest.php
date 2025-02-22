@@ -2,15 +2,14 @@
 
 namespace Tests\Feature\My;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 class MyPasswordTest extends TestCase
 {
-    use DatabaseMigrations;
     use LazilyRefreshDatabase;
 
     /**
@@ -18,7 +17,9 @@ class MyPasswordTest extends TestCase
      */
     public function it_can_visit_my_password_page()
     {
-        $this->actingAs(\App\Models\User::factory()->create());
+        /** @var User|Authenticatable */
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
         $this->get(route('my::password.edit'))
             ->assertSee('password_current')
@@ -32,7 +33,10 @@ class MyPasswordTest extends TestCase
      */
     public function it_can_update_my_password()
     {
-        $this->actingAs(\App\Models\User::factory()->create());
+        /** @var User|Authenticatable */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
         $payload = [
             'password_current' => 'password',
             'password' => 'new password',
@@ -52,7 +56,10 @@ class MyPasswordTest extends TestCase
      */
     public function it_can_handle_wrong_current_password()
     {
-        $this->actingAs(\App\Models\User::factory()->create());
+        /** @var User|Authenticatable */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
         $payload = [
             'password_current' => 'foobar',
             'password' => 'new password',
