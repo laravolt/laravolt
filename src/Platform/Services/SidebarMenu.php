@@ -37,6 +37,8 @@ class SidebarMenu extends BaseMenu
 
     public static function setActiveParent($children, $isActive, $active = 'active selected')
     {
+        // TODO: return '' if frankenphp worker mode, but still dunno how to detect it
+
         if ($isActive) {
             return $active;
         } else {
