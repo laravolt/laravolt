@@ -40,7 +40,7 @@ class AdminCommand extends Command
         }
 
         if (! $password) {
-            $password = $this->ask('Masukkan password');
+            $password = $this->secret('Masukkan password');
         }
 
         $role = app(config('laravolt.epicentrum.models.role'))->whereHas('permissions', function ($permissions) {
@@ -79,7 +79,7 @@ class AdminCommand extends Command
             ['ID', $user->getKey()],
             ['Nama', $user->name],
             ['Email', $user->email],
-            ['Password', $password],
+            ['Password', str_repeat('*', strlen($password))],
             ['Role', $role->name],
             ['Status', $user->status],
         ]);
