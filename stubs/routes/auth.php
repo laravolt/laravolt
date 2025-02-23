@@ -14,6 +14,7 @@ Route::group(
         'middleware' => 'guest',
     ],
     function (Router $router) {
+        $router->get('login', [LoginController::class, 'show'])->name('login');
         $router->get('login', [LoginController::class, 'show'])->name('auth::login.show');
         $router->post('login', [LoginController::class, 'store'])->name('auth::login.store');
 
