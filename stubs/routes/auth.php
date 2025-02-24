@@ -17,6 +17,8 @@ Route::group(
         $router->get('login', [LoginController::class, 'show'])->name('auth::login.show');
         $router->post('login', [LoginController::class, 'store'])->name('auth::login.store');
 
+        $router->get('login-base', fn () => to_route('auth::login.show'))->name('login');
+
         // Password Reset Routes...
         $router->get('forgot', [ForgotPasswordController::class, 'show'])->name('auth::forgot.show');
         $router->post('forgot', [ForgotPasswordController::class, 'store'])->name('auth::forgot.store');
