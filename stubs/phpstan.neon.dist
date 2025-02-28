@@ -1,5 +1,5 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
     - ./vendor/spaze/phpstan-disallowed-calls/extension.neon
 
 parameters:
@@ -9,13 +9,13 @@ parameters:
     # The level 9 is the highest level
     level: 9
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
-#
-#    checkMissingIterableValueType: false
+    # ignoreErrors:
+    #     - '#PHPDoc tag @var#'
+
+    # excludePaths:
+    #     - ./*/*/FileToBeExcluded.php
+
+    # checkMissingIterableValueType: false
 
     checkGenericClassInNonGenericObjectType: false # still have no idea how do handle this in enum class
 
