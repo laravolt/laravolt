@@ -17,10 +17,10 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "akaunting/laravel-setting": "^1.2.9",
-        "anhskohbo/no-captcha": "dev-l12-compatibility",
+        "anhskohbo/no-captcha": "^3.7",
         "barryvdh/laravel-debugbar": "^3.15",
         "barryvdh/laravel-dompdf": "^3.1",
-        "bensampo/laravel-enum": "dev-l12-compatibility",
+        "bensampo/laravel-enum": "^6.12",
         "blade-ui-kit/blade-icons": "^1.8",
         "calebporzio/sushi": "^2.5.3",
         "doctrine/dbal": "^4.0",
@@ -28,7 +28,7 @@
         "illuminate/console": "^11.0|^12.0",
         "illuminate/database": "^11.0|^12.0",
         "illuminate/support": "^11.0|^12.0",
-        "kalnoy/nestedset": "dev-patch-3",
+        "kalnoy/nestedset": "^6.0",
         "kirschbaum-development/eloquent-power-joins": "^4.1",
         "larastan/larastan": ">=2.9.14",
         "laravolt/avatar": "dev-master",
@@ -105,27 +105,6 @@
         }
     },
     "repositories": [
-        {
-            "type": "path",
-            "url": "/Users/rama/Developer/no-captcha",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "/Users/rama/Developer/laravel-enum",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "/Users/rama/Developer/laravel-nestedset",
-            "options": {
-                "symlink": true
-            }
-        },
         {
             "type": "path",
             "url": "/Users/rama/Developer/laravel-avatar",
