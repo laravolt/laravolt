@@ -17,7 +17,7 @@ parameters:
 
     # checkMissingIterableValueType: false
 
-    checkGenericClassInNonGenericObjectType # still have no idea how do handle this in enum class
+    checkGenericClassInNonGenericObjectType: false # still have no idea how do handle this in enum class
 
     disallowedFunctionCalls:
         -
