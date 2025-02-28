@@ -28,39 +28,3 @@ https://laravolt.dev/
        App\Providers\RouteServiceProvider::class, // new providers
    ];
    ```
-
-## TODO for L12 Compatibility
-
-### 1. **no-captcha**
-
-Current development using this repository: git@github.com:laravel-shift/no-captcha.git
-
-- [ ] Ensure compatibility with Laravel 12.x.
-- [ ] Update dependencies in [composer.json](https://github.com/anhskohbo/no-captcha).
-- [ ] Run tests and fix any issues.
-- [ ] Update documentation if necessary.
-
-### 2. **laravel-enum**
-
-Current development using this repository: git@github.com:laravel-shift/laravel-enum.git
-
-- [ ] Ensure compatibility with Laravel 12.x.
-- [ ] Update dependencies in [composer.json](https://github.com/bensampo/laravel-enum).
-- [ ] Run tests and fix any issues.
-- [ ] Update documentation if necessary.
-
-### 3. **laravel-nestedset**
-
-Current development using this repository: git@github.com:jonnott/laravel-nestedset.git
-
-- [ ] Ensure compatibility with Laravel 12.x.
-- [ ] Update dependencies in [composer.json](https://github.com/kalnoy/nestedset).
-- [ ] Run tests and fix any issues.
-- [ ] Update documentation if necessary.
-
-### 4. **laravel-avatar**
-
-- [ ] Ensure compatibility with Laravel 12.x.
-- [ ] Update dependencies in [composer.json](https://github.com/laravolt/avatar).
-- [ ] Run tests and fix any issues.
-- [ ] Update documentation if necessary.
