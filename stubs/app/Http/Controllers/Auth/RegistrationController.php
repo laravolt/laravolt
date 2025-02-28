@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -55,6 +54,7 @@ class RegistrationController extends Controller
 
         event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME)->with('success', __('Your account successfully created'));
+        return redirect(\App\Providers\AppServiceProvider::HOME)
+            ->with('success', __('Your account successfully created'));
     }
 }

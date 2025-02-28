@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -23,6 +22,6 @@ class RedirectToHomeTest extends TestCase
 
         $response = $this->get(route('auth::login.show'));
 
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(\App\Providers\AppServiceProvider::HOME);
     }
 }

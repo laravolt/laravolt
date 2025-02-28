@@ -3,7 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -50,9 +50,9 @@ class LoginTest extends TestCase
 
         $response = $this->post(route('auth::login.store'), $payload + ['password' => 'asdf1234']);
 
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(AppServiceProvider::HOME);
 
-        $this->get(RouteServiceProvider::HOME)->assertSee('Home');
+        $this->get(AppServiceProvider::HOME)->assertSee('Home');
     }
 
     /**

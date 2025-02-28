@@ -2,9 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class AuthenticateMiddlewareTest extends TestCase
@@ -29,7 +27,7 @@ class AuthenticateMiddlewareTest extends TestCase
      */
     public function test_return_nothing()
     {
-        $response = $this->getJson(RouteServiceProvider::HOME);
+        $response = $this->getJson(\App\Providers\AppServiceProvider::HOME);
         $response->assertStatus(401);
     }
 }

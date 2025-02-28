@@ -3,7 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -42,7 +42,7 @@ class VerificationTest extends TestCase
         $this->actingAs(User::factory()->create(['email_verified_at' => now()]));
 
         $this->get(route('verification.notice'))
-            ->assertRedirect(RouteServiceProvider::HOME);
+            ->assertRedirect(AppServiceProvider::HOME);
     }
 
     /**
@@ -67,7 +67,7 @@ class VerificationTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $this->post(route('verification.send'))
-            ->assertRedirect(RouteServiceProvider::HOME);
+            ->assertRedirect(AppServiceProvider::HOME);
     }
 
     /**
@@ -84,7 +84,7 @@ class VerificationTest extends TestCase
 
         $this->withoutMiddleware()
             ->get(route('verification.verify', ['id', 'hash']))
-            ->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
+            ->assertRedirect(AppServiceProvider::HOME.'?verified=1');
     }
 
     /**
@@ -101,7 +101,7 @@ class VerificationTest extends TestCase
 
         $this->withoutMiddleware()
             ->get(route('verification.verify', ['id', 'hash']))
-            ->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
+            ->assertRedirect(AppServiceProvider::HOME.'?verified=1');
     }
 
     /**

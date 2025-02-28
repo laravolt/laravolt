@@ -3,7 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -41,7 +41,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->post(route('auth::registration.store'), $payload);
         $response->assertSessionHas('success')
-            ->assertRedirect(RouteServiceProvider::HOME);
+            ->assertRedirect(AppServiceProvider::HOME);
 
         $this->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->toArray());
     }
@@ -63,7 +63,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->post(route('auth::registration.store'), $payload);
         $response->assertSessionHas('success')
-            ->assertRedirect(RouteServiceProvider::HOME);
+            ->assertRedirect(AppServiceProvider::HOME);
 
         $this->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->toArray());
 
