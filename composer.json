@@ -31,7 +31,7 @@
         "kalnoy/nestedset": "^6.0",
         "kirschbaum-development/eloquent-power-joins": "^4.1",
         "larastan/larastan": ">=2.9.14",
-        "laravolt/avatar": "dev-master",
+        "laravolt/avatar": "^6.1",
         "lavary/laravel-menu": "^1.8.4",
         "livewire/livewire": "^3.5.20",
         "myclabs/deep-copy": "^1.13",
@@ -103,14 +103,5 @@
                 "Form": "Laravolt\\SemanticForm\\Facade"
             }
         }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/Users/rama/Developer/laravel-avatar",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
+    }
 }
