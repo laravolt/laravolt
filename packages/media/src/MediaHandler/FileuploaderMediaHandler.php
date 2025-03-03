@@ -48,13 +48,6 @@ class FileuploaderMediaHandler
             ];
 
             report($e);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => false,
-                'message' => $e->getMessage(),
-            ];
-
-            report($e);
         } finally {
             return response()->json($response);
         }
