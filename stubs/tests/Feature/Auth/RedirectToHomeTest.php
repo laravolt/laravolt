@@ -10,9 +10,7 @@ class RedirectToHomeTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_redirected_to_home()
     {
         /** @var \Illuminate\Contracts\Auth\Authenticatable $user */

@@ -7,6 +7,7 @@ use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -22,9 +23,7 @@ class LoginTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_display_login_page()
     {
         $this->get(route('auth::login.show'))
@@ -33,9 +32,7 @@ class LoginTest extends TestCase
             ->assertSeeText('Password');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_handle_correct_login()
     {
         $payload = [
@@ -55,9 +52,7 @@ class LoginTest extends TestCase
         $this->get(AppServiceProvider::HOME)->assertSee('Home');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_handle_wrong_login()
     {
         $payload = [
@@ -72,26 +67,20 @@ class LoginTest extends TestCase
         $response->assertRedirect(route('auth::login.show'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ensure_password_required()
     {
         $this->post(route('auth::login.store'), ['email' => 'user@laravolt.dev'])
             ->assertSessionHasErrors('password');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_has_errors_if_failed()
     {
         $this->post(route('auth::login.store'))->assertSessionHasErrors();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_has_register_link()
     {
         $this->app['config']->set('laravolt.platform.features.registration', true);
@@ -100,9 +89,7 @@ class LoginTest extends TestCase
             ->assertSeeText(trans('laravolt::auth.register_here'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_does_not_have_register_link()
     {
         $this->app['config']->set('laravolt.platform.features.registration', false);
@@ -111,18 +98,14 @@ class LoginTest extends TestCase
             ->assertDontSeeText(trans('laravolt::auth.register_here'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_has_forgot_password_link()
     {
         $this->get(route('auth::login.show'))
             ->assertSeeText(trans('laravolt::auth.forgot_password'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ensure_rate_limiter()
     {
         $limit = 5;

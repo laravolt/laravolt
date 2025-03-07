@@ -9,9 +9,7 @@ class MyProfileTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_visit_my_profile_page()
     {
         $this->actingAs(\App\Models\User::factory()->create());
@@ -23,9 +21,7 @@ class MyProfileTest extends TestCase
             ->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_update_my_profile()
     {
         $this->actingAs(\App\Models\User::factory()->create());
@@ -42,9 +38,7 @@ class MyProfileTest extends TestCase
         $this->assertDatabaseHas('users', $payload);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_handle_wrong_current_password()
     {
         $this->actingAs(\App\Models\User::factory()->create());

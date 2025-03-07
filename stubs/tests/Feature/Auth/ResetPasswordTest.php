@@ -26,9 +26,7 @@ class ResetPasswordTest extends TestCase
         $this->token = app('auth.password.broker')->createToken($user);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_display_page()
     {
         $this->get(route('auth::reset.show', $this->token))
@@ -38,9 +36,7 @@ class ResetPasswordTest extends TestCase
             ->assertSeeText(__('Confirm New Password'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_reset_password()
     {
         $payload = [
@@ -53,9 +49,7 @@ class ResetPasswordTest extends TestCase
             ->assertRedirect(route('auth::login.show'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_handle_failed_passwor_reset()
     {
         $payload = [
@@ -74,9 +68,7 @@ class ResetPasswordTest extends TestCase
             ->assertSessionHasInput('email');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_errors_if_failed()
     {
         $this->post(route('auth::reset.store', 'asdf1234'))->assertSessionHasErrors();

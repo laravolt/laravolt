@@ -15,9 +15,7 @@ class RegistrationTest extends TestCase
     use InteractsWithDatabase;
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_display_registration_page()
     {
         $this->get(route('auth::registration.show'))
@@ -27,9 +25,7 @@ class RegistrationTest extends TestCase
             ->assertSeeText(__('Password'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_handle_correct_registration()
     {
         $payload = [
@@ -46,9 +42,7 @@ class RegistrationTest extends TestCase
         $this->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->toArray());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_handle_correct_registration_with_activation()
     {
         Notification::fake();
@@ -70,9 +64,7 @@ class RegistrationTest extends TestCase
         Notification::assertSentTo(User::first(), VerifyEmail::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_auto_verify_email()
     {
         config(['laravolt.platform.features.verification' => false]);
@@ -96,9 +88,7 @@ class RegistrationTest extends TestCase
         Notification::assertNotSentTo(User::first(), VerifyEmail::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_errors_if_failed()
     {
         $this->post(route('auth::registration.store'))
