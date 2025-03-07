@@ -9,9 +9,7 @@ class LogoutTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_logout()
     {
         $this->actingAs(\App\Models\User::factory()->create());

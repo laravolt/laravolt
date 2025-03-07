@@ -2,41 +2,15 @@
 
 namespace Tests\Feature;
 
-use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Route;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class ExceptionHandlerTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     * TODO: This test is not working, need to be fixed
-     */
-    // public function it_can_handle_token_mismatch_exception()
-    // {
-    //     $verifyCsrfMiddleware = \Mockery::mock(
-    //         VerifyCsrfToken::class,
-    //         static function (MockInterface $mock) {
-    //             $mock->shouldReceive('handle')->andThrow(TokenMismatchException::class);
-    //         }
-    //     );
-
-    //     $this->instance(VerifyCsrfToken::class, $verifyCsrfMiddleware);
-
-    //     $this->get(route('auth::login.show'));
-    //     $this->post(route('auth::login.store'), ['email' => 'admin@laravolt.dev', 'password' => 'secret'])
-    //         ->assertRedirect(route('auth::login.show'))
-    //         ->assertSessionHas('error');
-    // }
-
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_handle_authorization_exception()
     {
         Route::get('admin/page', static fn () => 'hello')->middleware('can:access-admin');

@@ -12,9 +12,7 @@ class MyPasswordTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_visit_my_password_page()
     {
         /** @var User|Authenticatable */
@@ -28,9 +26,7 @@ class MyPasswordTest extends TestCase
             ->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_update_my_password()
     {
         /** @var User|Authenticatable */
@@ -51,9 +47,7 @@ class MyPasswordTest extends TestCase
         $this->assertTrue(Hash::check('new password', $user->password));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_handle_wrong_current_password()
     {
         /** @var User|Authenticatable */

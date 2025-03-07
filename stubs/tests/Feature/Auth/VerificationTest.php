@@ -22,9 +22,7 @@ class VerificationTest extends TestCase
         config(['laravolt.platform.features.verification' => true]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_visit_verification_page()
     {
         $this->actingAs(User::factory()->create(['email_verified_at' => null]));
@@ -34,9 +32,7 @@ class VerificationTest extends TestCase
             ->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_cannot_visit_verification_page_if_already_verified()
     {
         $this->actingAs(User::factory()->create(['email_verified_at' => now()]));
@@ -45,9 +41,7 @@ class VerificationTest extends TestCase
             ->assertRedirect(AppServiceProvider::HOME);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_resend_verification_email()
     {
         $this->actingAs($user = User::factory()->create(['email_verified_at' => null]));
@@ -59,9 +53,7 @@ class VerificationTest extends TestCase
         Notification::assertSentTo($user, VerifyEmail::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_cannot_resend_verification_email_if_already_verified()
     {
         $this->actingAs(User::factory()->create());
@@ -70,9 +62,7 @@ class VerificationTest extends TestCase
             ->assertRedirect(AppServiceProvider::HOME);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_verify_email()
     {
         $this->actingAs($user = User::factory()->create(['email_verified_at' => null]));
@@ -87,9 +77,7 @@ class VerificationTest extends TestCase
             ->assertRedirect(AppServiceProvider::HOME.'?verified=1');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_cannot_verify_email_if_already_verified()
     {
         $this->actingAs($user = User::factory()->create());
@@ -104,9 +92,7 @@ class VerificationTest extends TestCase
             ->assertRedirect(AppServiceProvider::HOME.'?verified=1');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function validate_user_model_concerns()
     {
         config(['app.debug' => true]);

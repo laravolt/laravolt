@@ -2,14 +2,11 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class ApiRateLimiterTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_api_rate_limiter()
     {
         $this->assertTrue(true);

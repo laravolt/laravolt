@@ -6,15 +6,14 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravolt\Platform\Services\Password;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ForgotPasswordTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_get_forgot_password_page()
     {
         $this->get(route('auth::forgot.store'))
@@ -22,9 +21,7 @@ class ForgotPasswordTest extends TestCase
             ->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_handle_correct_email()
     {
         $payload = [
@@ -38,9 +35,7 @@ class ForgotPasswordTest extends TestCase
             ->assertSessionHas('success');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_handle_wrong_email()
     {
         $payload = [
@@ -55,17 +50,13 @@ class ForgotPasswordTest extends TestCase
             ->assertSessionHasErrors('email');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_has_errors_if_failed()
     {
         $this->post(route('auth::forgot.store'))->assertSessionHasErrors();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_handle_send_email_failure()
     {
         $payload = [
@@ -83,17 +74,13 @@ class ForgotPasswordTest extends TestCase
             ->assertSessionHas('error');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_has_register_link()
     {
         $this->get(route('auth::forgot.show'))->assertSeeText(trans('laravolt::auth.register_here'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_does_not_have_register_link_if_registration_disabled()
     {
         $this->app['config']->set('laravolt.platform.features.registration', false);
