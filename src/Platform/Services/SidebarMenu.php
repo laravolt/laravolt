@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
+use Illuminate\Support\Facades\Cache;
 use Lavary\Menu\Builder;
 use Lavary\Menu\Item;
 use Lavary\Menu\Menu as BaseMenu;
@@ -105,6 +106,16 @@ class SidebarMenu extends BaseMenu
         });
 
         return $result;
+    }
+
+    public function allMenu()
+    {
+        $isProduction = config('app.env') === 'production';
+        $items = $isProduction
+            ? Cache::rememberForever('sidebar-items', fn () => $this->all())
+            : $this->all();
+
+        return $items;
     }
 
     protected function filterByVisibility(Item $item)

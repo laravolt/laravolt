@@ -1,9 +1,6 @@
 @php
-$items = \Illuminate\Support\Facades\Cache::rememberForever('sidebar-items', function () {
-    /** @var \Laravolt\Platform\Services\SidebarMenu $sidebar */
-    $sidebar = app('laravolt.menu.sidebar');
-    return $sidebar->all();
-});
+/** @var \Laravolt\Platform\Services\SidebarMenu */
+$items = app('laravolt.menu.sidebar')->allMenu();
 @endphp
 
 <nav class="sidebar" data-role="sidebar" id="sidebar">
