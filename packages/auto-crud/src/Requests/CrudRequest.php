@@ -112,7 +112,7 @@ class CrudRequest extends FormRequest
         )->toArray();
     }
 
-    public function data()
+    protected function data($key = null, $default = null)
     {
         $data = parent::validated();
 
