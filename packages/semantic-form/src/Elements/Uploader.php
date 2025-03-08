@@ -97,15 +97,13 @@ class Uploader extends Input
                     ],
                 ];
             } else {
-                $imageHeader = @get_headers($media, true);
                 $data[] = [
                     'file' => URL::to($media),
                     'name' => basename($media),
-                    'size' => $imageHeader['Content-Length'] ?? 0,
-                    'type' => $imageHeader['Content-Type'] ?? 'image/jpg',
+                    'size' => $this->getFileSizeFromPath($media),
+                    'type' => $this->getFileTypeFromPath($media),
                     'data' => [
-                        // TODO resolve ID from media URL
-                        'id' => null,
+                        'id' => $this->extractIdFromMediaUrl($media),
                     ],
                 ];
             }
@@ -132,6 +130,43 @@ class Uploader extends Input
             }
 
             return $output;
+        }
+
+        return null;
+    }
+
+    protected function getFileSizeFromPath($path)
+    {
+        // First try local file if available
+        $localPath = public_path(str_replace(url('/'), '', $path));
+
+        if (file_exists($localPath)) {
+            return filesize($localPath);
+        }
+
+        return 0; // Default if can't determine size
+    }
+
+    protected function getFileTypeFromPath($path)
+    {
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $mimeTypes = [
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'pdf' => 'application/pdf',
+            // Add more types as needed
+        ];
+
+        return $mimeTypes[strtolower($extension)] ?? 'application/octet-stream';
+    }
+
+    protected function extractIdFromMediaUrl($url)
+    {
+        // Example implementation - adjust regex pattern based on your URL structure
+        if (preg_match('#/storage/(\d+)/#', $url, $matches)) {
+            return $matches[1];
         }
 
         return null;
