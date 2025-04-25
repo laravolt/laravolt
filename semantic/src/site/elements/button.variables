@@ -1,7 +1,0 @@
-/*******************************
-    User Variable Overrides
-*******************************/
-@fontWeight: @bold;
-@verticalPadding: @relative15px;
-@horizontalPadding: 2em;
-@borderRadius: @6px;

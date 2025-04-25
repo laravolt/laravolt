@@ -28,20 +28,20 @@
     <env name="APP_DEBUG" value="true"/>
     <env name="APP_URL" value="http://127.0.0.1:8000"/>
     <env name="CACHE_DRIVER" value="file"/>
-    <!--    <env name="DB_CONNECTION" value="mysql"/>-->
-    <!--    <env name="DB_DATABASE" value="laravolt_testing"/>-->
-    <!--    <env name="DB_HOST" value="127.0.0.1"/>-->
-    <!--    <env name="DB_PORT" value="3308"/>-->
-    <!--    <env name="DB_USERNAME" value="root"/>-->
-    <!--    <env name="DB_PASSWORD" value=""/>-->
+    <!-- <env name="DB_CONNECTION" value="mysql"/>
+    <env name="DB_DATABASE" value="laravolt_testing"/>
+    <env name="DB_HOST" value="127.0.0.1"/>
+    <env name="DB_PORT" value="3308"/>
+    <env name="DB_USERNAME" value="root"/>
+    <env name="DB_PASSWORD" value=""/> -->
     <env name="DB_CONNECTION" value="pgsql"/>
     <env name="DB_DATABASE" value="laravolt_testing"/>
     <env name="DB_HOST" value="127.0.0.1"/>
     <env name="DB_PORT" value="5414"/>
     <env name="DB_USERNAME" value="postgres"/>
     <env name="DB_PASSWORD" value=""/>
-    <!--    <env name="DB_CONNECTION" value="sqlite"/>-->
-    <!--    <env name="DB_DATABASE" value=":memory:"/>    -->
+    <!-- <env name="DB_CONNECTION" value="sqlite"/>
+    <env name="DB_DATABASE" value=":memory:"/> -->
     <env name="SESSION_DRIVER" value="file"/>
     <env name="SESSION_LIFETIME" value="120"/>
     <env name="SCOUT_DRIVER" value="null"/>
