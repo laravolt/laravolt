@@ -18,15 +18,11 @@ class User extends BaseUser
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = ['name', 'email', 'username', 'password', 'status', 'timezone'];
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
      */
     protected $hidden = ['password', 'remember_token'];
 
