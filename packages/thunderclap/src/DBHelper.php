@@ -9,18 +9,7 @@ class DBHelper
 {
     public function listTables()
     {
-        $laravelConfig = DB::connection()->getConfig();
-
-        $connectionParams = [
-            'dbname' => $laravelConfig['database'],
-            'user' => $laravelConfig['username'],
-            'password' => $laravelConfig['password'],
-            'host' => $laravelConfig['host'],
-            'driver' => $laravelConfig['driver'],
-            'port' => $laravelConfig['port'] ?? 5432,
-            'charset' => $laravelConfig['charset'] ?? 'utf8',
-        ];
-
+        $connectionParams = $this->getConnectionParams();
         $doctrineConnection = DriverManager::getConnection($connectionParams);
 
         // Gunakan SchemaManager dari Doctrine DBAL 3.x
@@ -39,17 +28,7 @@ class DBHelper
 
     public function listColumns($table)
     {
-        $laravelConfig = DB::connection()->getConfig();
-
-        $connectionParams = [
-            'dbname' => $laravelConfig['database'],
-            'user' => $laravelConfig['username'],
-            'password' => $laravelConfig['password'],
-            'host' => $laravelConfig['host'],
-            'driver' => $laravelConfig['driver'],
-            'port' => $laravelConfig['port'] ?? 5432,
-            'charset' => $laravelConfig['charset'] ?? 'utf8',
-        ];
+        $connectionParams = $this->getConnectionParams();
 
         // Koneksi Doctrine
         $doctrineConnection = DriverManager::getConnection($connectionParams);
@@ -70,5 +49,32 @@ class DBHelper
         }
 
         return $data;
+    }
+
+    protected function getConnectionParams(): array
+    {
+        $laravelConfig = DB::connection()->getConfig();
+        $driver = $laravelConfig['driver'];
+        $isSQLite = $driver === 'sqlite' || $driver === 'sqlite3';
+
+        if ($isSQLite) {
+            $driver = 'sqlite3';
+        }
+
+        $connectionParams = [
+            'dbname' => $laravelConfig['database'],
+            'user' => $laravelConfig['username'] ?? null,
+            'password' => $laravelConfig['password'] ?? null,
+            'host' => $laravelConfig['host'] ?? null,
+            'driver' => $driver,
+            'port' => $laravelConfig['port'] ?? 5432,
+            'charset' => $laravelConfig['charset'] ?? 'utf8',
+        ];
+
+        if ($isSQLite) {
+            $connectionParams['path'] = $laravelConfig['database'];
+        }
+
+        return $connectionParams;
     }
 }
