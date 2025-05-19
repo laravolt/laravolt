@@ -65,6 +65,12 @@ return [
             //     '//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css',
             //     '//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
             // ),
+
+            // Redactor
+            'redactor' => [
+                '/laravolt/css/redactor.min.css',
+                '/laravolt/js/redactor.min.js',
+            ],
         ],
 
         /**
