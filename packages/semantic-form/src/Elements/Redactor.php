@@ -17,6 +17,13 @@ class Redactor extends TextArea
         return $this;
     }
 
+    public function render()
+    {
+        $result = parent::render();
+
+        return $result . $this->renderScript();
+    }
+
     protected function beforeRender()
     {
         $url = $this->mediaUrl;
@@ -27,5 +34,16 @@ class Redactor extends TextArea
         if ($url) {
             $this->data('upload-url', $url);
         }
+    }
+
+    protected function renderScript()
+    {
+        return <<<HTML
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Redactor('[data-token="{$this->getAttribute('data-token')}"]');
+    });
+</script>
+HTML;
     }
 }
