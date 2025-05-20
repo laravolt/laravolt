@@ -25,9 +25,9 @@ class TimezoneRepository implements \Laravolt\Support\Contracts\TimezoneReposito
             $offset_prefix = $offset < 0 ? '-' : '+';
             $offset_formatted = gmdate('H:i', abs($offset));
 
-            $pretty_offset = "UTC${offset_prefix}${offset_formatted}";
+            $pretty_offset = 'UTC'.$offset_prefix.$offset_formatted;
 
-            $lists[$timezone] = "(${pretty_offset}) $timezone";
+            $lists[$timezone] = "($pretty_offset) $timezone";
         }
 
         return $lists;
