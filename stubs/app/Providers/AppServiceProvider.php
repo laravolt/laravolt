@@ -28,18 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->configureRateLimiting();
-    }
-
-    /**
-     * Configure the rate limiters for the application.
-     */
-    protected function configureRateLimiting(): void
-    {
-        \Illuminate\Support\Facades\RateLimiter::for('api', function (\Illuminate\Http\Request $request) {
-            $key = (string) ($request->user()?->id ?: $request->ip());
-
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by($key);
-        });
+        //
     }
 }
