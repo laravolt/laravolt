@@ -81,8 +81,14 @@ abstract class Chart extends Component
             return $this->cacheKey;
         }
 
-        // Generate a cache key based on class name and any parameters
-        return 'laravolt_chart_' . class_basename($this) . '_' . md5(serialize($this));
+        // Generate a cache key based on class name and relevant properties
+        return 'laravolt_chart_' . class_basename($this) . '_' . md5(json_encode([
+            'title' => $this->title,
+            'type' => $this->type,
+            'height' => $this->height,
+            'sparkline' => $this->sparkline,
+            'series' => $this->series,
+        ]));
     }
 
     public function labels(): array
