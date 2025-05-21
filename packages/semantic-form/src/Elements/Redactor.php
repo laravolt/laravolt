@@ -21,7 +21,7 @@ class Redactor extends TextArea
     {
         $result = parent::render();
 
-        return $result . $this->renderScript();
+        return $result.$this->renderScript();
     }
 
     protected function beforeRender()
@@ -41,7 +41,17 @@ class Redactor extends TextArea
         return <<<HTML
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        Redactor('[data-token="{$this->getAttribute('data-token')}"]');
+        let uploadUrl = document.querySelector('[data-token="{$this->getAttribute('data-token')}"]').dataset.uploadUrl;
+
+        Redactor('[data-token="{$this->getAttribute('data-token')}"]', {
+            minHeight: '100px',
+            toolbar: {
+                stickyTopOffset: 60
+            },
+            image: {
+                upload: uploadUrl
+            }
+        });
     });
 </script>
 HTML;

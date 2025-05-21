@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Foundation\Auth\User as BaseUser;
 use Laravolt\Contracts\CanChangePassword as CanChangePasswordContract;
 use Laravolt\Contracts\CanResetPassword as CanResetPasswordContact;
@@ -17,10 +18,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends BaseUser implements CanChangePasswordContract, CanResetPasswordContact, HasMedia, HasRoleAndPermissionContract, MustVerifyEmail
 {
-    use \Illuminate\Database\Eloquent\Concerns\HasUlids;
     use CanChangePassword;
     use CanResetPassword;
     use HasRoleAndPermission;
+    use HasUlids;
     use InteractsWithMedia;
 
     protected $guarded = [];
