@@ -139,6 +139,26 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootDatabase(): self
     {
+        // Define migrations to exclude
+        $excludedMigrations = [
+            '0001_01_01_000000_create_users_table.php',
+            '0001_01_01_000001_create_cache_table.php',
+            '0001_01_01_000002_create_jobs_table.php',
+        ];
+        // Get all migration files from the platform path
+        $allMigrations = glob(database_path('migrations') . '/*.php');
+        // Filter out the excluded migrations
+        // and remove them from the database/migrations folder
+        // This is to prevent migration conflicts
+        // when using laravolt/laravolt package
+        foreach ($allMigrations as $migration) {
+            $filename = basename($migration);
+            if (in_array($filename, $excludedMigrations)) {
+                // remove existing migration files
+                unlink($migration);
+            }
+        }
+
         $migrationFolder = 'database/migrations';
 
         $this->publishes(
@@ -346,7 +366,7 @@ class PlatformServiceProvider extends ServiceProvider
         });
 
         if ($this->app['config']['auth.providers.users.driver'] === 'eloquent-cached') {
-            call_user_func(config('laravolt.epicentrum.models.user').'::observe', UserObserver::class);
+            call_user_func(config('laravolt.epicentrum.models.user') . '::observe', UserObserver::class);
         }
 
         return $this;
