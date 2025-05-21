@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use \Illuminate\Database\Eloquent\Concerns\HasUlids;
+    use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
     protected $table = 'acl_roles';
 
