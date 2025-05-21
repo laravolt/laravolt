@@ -4,6 +4,7 @@ namespace Laravolt\Charts;
 
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Illuminate\Support\Facades\Cache;
 
 abstract class Chart extends Component
 {
@@ -35,7 +36,54 @@ abstract class Chart extends Component
 
     protected array $series = [];
 
-    abstract protected function series(): array;
+    /**
+     * Cache duration in seconds.
+     * Default: 1 hour
+     */
+    protected int $cacheDuration = 3600;
+
+    /**
+     * Custom cache key. If null, a key will be auto-generated.
+     */
+    protected ?string $cacheKey = null;
+
+    /**
+     * Get chart series data. This is the method that should be implemented by child classes
+     * to provide the chart data.
+     *
+     * @return array
+     */
+    abstract public function series(): array;
+
+    /**
+     * Load series data with caching applied.
+     * All select queries are cached by default.
+     *
+     * @return array
+     */
+    protected function loadSeriesData(): array
+    {
+        $key = $this->getCacheKey();
+
+        return Cache::remember(
+            $key,
+            $this->cacheDuration,
+            fn () => $this->series()
+        );
+    }
+
+    /**
+     * Generate or get a cache key for this chart
+     */
+    protected function getCacheKey(): string
+    {
+        if ($this->cacheKey) {
+            return $this->cacheKey;
+        }
+
+        // Generate a cache key based on class name and any parameters
+        return 'laravolt_chart_' . class_basename($this) . '_' . md5(serialize($this));
+    }
 
     public function labels(): array
     {
@@ -55,7 +103,7 @@ abstract class Chart extends Component
     public function mount(): void
     {
         $this->key = 'chart-'.Str::uuid();
-        $this->series = $this->series();
+        $this->series = $this->loadSeriesData();
     }
 
     public function options(): array
