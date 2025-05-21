@@ -155,7 +155,12 @@ class PlatformServiceProvider extends ServiceProvider
             $filename = basename($migration);
             if (in_array($filename, $excludedMigrations)) {
                 // remove existing migration files
-                unlink($migration);
+                try {
+                    \Illuminate\Support\Facades\File::delete($migration);
+                } catch (\Exception $e) {
+                    // Log the error or handle it as needed
+                    \Log::error("Failed to delete migration file: {$migration}. Error: {$e->getMessage()}");
+                }
             }
         }
 
