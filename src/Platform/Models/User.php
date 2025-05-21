@@ -17,6 +17,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends BaseUser implements CanChangePasswordContract, CanResetPasswordContact, HasMedia, HasRoleAndPermissionContract, MustVerifyEmail
 {
+    use \Illuminate\Database\Eloquent\Concerns\HasUlids;
     use CanChangePassword;
     use CanResetPassword;
     use HasRoleAndPermission;
