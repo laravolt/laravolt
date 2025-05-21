@@ -83,8 +83,15 @@ class Statistic extends Component
             return $this->cacheKey;
         }
 
-        // Generate a cache key based on class name and any parameters
-        return 'laravolt_statistic_' . class_basename($this) . '_' . md5(serialize($this));
+        // Generate a cache key based on class name and relevant public properties
+        $properties = [
+            'value' => $this->value,
+            'title' => $this->title,
+            'label' => $this->label,
+            'icon' => $this->icon,
+            'color' => $this->color,
+        ];
+        return 'laravolt_statistic_' . class_basename($this) . '_' . md5(serialize($properties));
     }
 
     public function render()
