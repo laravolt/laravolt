@@ -2,8 +2,8 @@
 
 namespace Laravolt\Thunderclap;
 
-use Illuminate\Support\Facades\DB;
 use Doctrine\DBAL\DriverManager;
+use Illuminate\Support\Facades\DB;
 
 class DBHelper
 {

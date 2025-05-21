@@ -39,6 +39,7 @@ class LinkCommand extends Command
             } else {
                 // If it's a directory and not a symlink, we should handle it appropriately
                 $this->error('A non-symlink file/directory exists at [public/laravolt]. Please remove it manually.');
+
                 return;
             }
         }

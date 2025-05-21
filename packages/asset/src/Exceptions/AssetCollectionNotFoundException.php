@@ -2,6 +2,4 @@
 
 namespace Laravolt\Asset\Exceptions;
 
-class AssetCollectionNotFoundException extends \Exception
-{
-}
+class AssetCollectionNotFoundException extends \Exception {}
