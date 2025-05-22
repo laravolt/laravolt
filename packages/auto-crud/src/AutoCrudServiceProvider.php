@@ -20,6 +20,14 @@ class AutoCrudServiceProvider extends BaseServiceProvider
         parent::boot();
 
         Livewire::component('laravolt::auto-crud.resource.table', ResourceTable::class);
+
+        // Register event handler for config caching
+        $this->app->booting(function () {
+            // Pre-process any Rule objects in configuration to make them serializable
+            if ($this->app->configurationIsCached() === false) {
+                $this->processAutoSchemaConfigs();
+            }
+        });
     }
 
     protected function menu()
@@ -39,5 +47,33 @@ class AutoCrudServiceProvider extends BaseServiceProvider
                 }
             }
         });
+    }
+
+    /**
+     * Process auto-crud schema configurations to make validation rules serializable.
+     * This is needed to prevent errors when running php artisan config:cache
+     */
+    protected function processAutoSchemaConfigs(): void
+    {
+        $resources = config('laravolt.auto-crud-resources');
+        if ($resources === null) {
+            return;
+        }
+
+        $processedResources = [];
+
+        // For each resource in config, process it to handle non-serializable rules
+        foreach ($resources as $key => $resource) {
+            if (isset($resource['schema'])) {
+                // Process the resource configuration to make rules serializable
+                // The SchemaTransformer constructor modifies the config array
+                $processedResources[$key] = (new SchemaTransformer($resource))->getProcessedConfig();
+            } else {
+                $processedResources[$key] = $resource;
+            }
+        }
+
+        // Update the config repository with the processed resources
+        config(['laravolt.auto-crud-resources' => $processedResources]);
     }
 }
