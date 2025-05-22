@@ -4,6 +4,8 @@ namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
 use Laravolt\AutoCrud\SchemaTransformer;
 use Laravolt\Fields\Field;
@@ -56,6 +58,56 @@ class CrudRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Resolve string rules back to Rule objects if needed.
+     *
+     * @param  mixed  $rule
+     * @return mixed
+     */
+    protected function resolveRule($rule)
+    {
+        if (! is_string($rule)) {
+            return $rule;
+        }
+
+        // Match rule format: unique:table,column
+        if (Str::startsWith($rule, 'unique:')) {
+            $parts = explode(':', $rule, 2);
+            if (isset($parts[1])) {
+                $params = explode(',', $parts[1]);
+                $table = $params[0] ?? null;
+                $column = $params[1] ?? null;
+
+                if ($table) {
+                    $uniqueRule = Rule::unique($table, $column);
+
+                    // If we're in update mode, ignore the current ID
+                    if ($this->method() === 'PUT' && $this->route('id')) {
+                        $uniqueRule->ignore($this->route('id'));
+                    }
+
+                    return $uniqueRule;
+                }
+            }
+        }
+
+        return $rule;
+    }
+
+    /**
+     * Process rules to resolve any serialized rules back to actual Rule objects.
+     */
+    protected function processRules(array $rules): array
+    {
+        return array_map(function ($rule) {
+            if (is_array($rule)) {
+                return $this->processRules($rule);
+            }
+
+            return $this->resolveRule($rule);
+        }, $rules);
+    }
+
     public function rules()
     {
         $method = $this->methodMap[$this->method()] ?? false;
@@ -96,9 +148,14 @@ class CrudRequest extends FormRequest
 
                 $rules = collect($item['rules'] ?? []);
 
+                // Process any serialized rules back to Rule objects
+                $rules = $rules->map(function ($rule) {
+                    return $this->processSerializedRule($rule);
+                });
+
                 // ignore current ID for unique rules when updating
                 if ($this->method() === 'PUT') {
-                    collect($rules)->transform(function ($rule) {
+                    $rules = $rules->map(function ($rule) {
                         if ($rule instanceof Unique) {
                             $rule = $rule->ignore($this->route('id'));
                         }
@@ -110,6 +167,33 @@ class CrudRequest extends FormRequest
                 return [$key => $rules->toArray()];
             }
         )->toArray();
+    }
+
+    /**
+     * Process potentially serialized validation rules.
+     *
+     * @param  mixed  $rule
+     * @return mixed
+     */
+    protected function processSerializedRule($rule)
+    {
+        if (! is_string($rule)) {
+            return $rule;
+        }
+
+        // Check for unique:table,column pattern
+        if (preg_match('/^unique:([^,]+),?([^,]*)$/', $rule, $matches)) {
+            $table = $matches[1];
+            $column = ! empty($matches[2]) ? $matches[2] : null;
+
+            if ($column === 'NULL') {
+                $column = null;
+            }
+
+            return \Illuminate\Validation\Rule::unique($table, $column);
+        }
+
+        return $rule;
     }
 
     public function data($key = null, $default = null)
