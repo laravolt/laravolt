@@ -3,11 +3,12 @@
 namespace Laravolt\Platform\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-    use Illuminate\Database\Eloquent\Concerns\HasUlids;
+    use HasUlids;
 
     protected $table = 'acl_permissions';
 
