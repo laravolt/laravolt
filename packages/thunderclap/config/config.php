@@ -11,7 +11,7 @@ return [
         'extends' => 'layout',
     ],
     'routes' => [
-        'prefix' => '',
+        'prefix' => 'modules::',
         'middleware' => [],
     ],
     'namespace' => 'Modules',

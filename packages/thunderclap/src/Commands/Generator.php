@@ -19,7 +19,8 @@ class Generator extends Command
     protected $signature = 'laravolt:clap {--table= : Code will be generated based on this table schema}
                     {--template= : Code will be generated based on this stubs structure}
                     {--force : Overwrite files if exists}
-                    {--module= : Custom module name you want}';
+                    {--module= : Custom module name you want}
+                    {--with-tests : Generate test files with 100% code coverage}';
 
     /**
      * The console command description.
@@ -91,6 +92,7 @@ class Generator extends Command
             'module-name' => str_replace('_', '-', Str::singular($table)),
             'route-prefix' => config('laravolt.thunderclap.routes.prefix'),
         ];
+        // dd($templates);
 
         // 4. rename file and replace common string
         $replacer = [
@@ -113,12 +115,20 @@ class Generator extends Command
             ':route-prefix:' => $templates['route-prefix'],
             ':route-middleware:' => $this->toArrayElement(config('laravolt.thunderclap.routes.middleware')),
             ':route-url-prefix:' => $this->getRouteUrlPrefix($templates['route-prefix'], $templates['module-name']),
+            ':TEST_FACTORY_ATTRIBUTES:' => $this->transformer->toTestFactoryAttributes(),
+            ':TEST_UPDATE_ATTRIBUTES:' => $this->transformer->toTestUpdateAttributes(),
         ];
 
         $classToBePrefixed = config('laravolt.thunderclap.prefixed');
 
         foreach (File::allFiles($modulePath, true) as $file) {
             if (is_file($file)) {
+                // Skip test files if --with-tests option is not provided
+                if (!$this->option('with-tests') && (Str::contains($file, '/tests/') || Str::contains($file, '/database/factories/'))) {
+                    File::delete($file);
+                    continue;
+                }
+
                 $newFile = $deleteOriginal = false;
 
                 if (Str::endsWith($file, '.stub')) {
@@ -128,6 +138,14 @@ class Generator extends Command
 
                 if (Str::endsWith($newFile, 'Model.php')) {
                     $newFile = Str::replaceLast('Model', $moduleName, $newFile);
+                }
+
+                if (Str::endsWith($newFile, 'Test.php')) {
+                    $newFile = Str::replaceLast('Test', $moduleName.'Test', $newFile);
+                }
+
+                if (Str::endsWith($newFile, 'Factory.php')) {
+                    $newFile = Str::replaceLast('Factory', $moduleName.'Factory', $newFile);
                 }
 
                 foreach ($classToBePrefixed as $filename) {
@@ -180,7 +198,7 @@ class Generator extends Command
     protected function getRouteUrlPrefix($routePrefix, $module)
     {
         if ($routePrefix) {
-            return $routePrefix.'.'.$module;
+            return $routePrefix.$module;
         }
 
         return $module;

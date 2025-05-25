@@ -2,6 +2,4 @@
 
 namespace :Namespace:\:ModuleName:\Requests;
 
-class Update extends Store
-{
-}
+class Update extends Store {}
