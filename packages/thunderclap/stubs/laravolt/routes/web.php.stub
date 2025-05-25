@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use :Namespace:\:ModuleName:\Controllers\:ModuleName:Controller;
 
 Route::group(

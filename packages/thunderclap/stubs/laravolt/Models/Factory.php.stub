@@ -2,7 +2,6 @@
 
 namespace :Namespace:\:ModuleName:\Models;
 
-use :Namespace:\:ModuleName:\Models\:ModuleName:;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class :ModuleName:Factory extends Factory

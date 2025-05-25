@@ -10,7 +10,7 @@ use Laravolt\Suitable\AutoSort;
 
 class :ModuleName: extends Model
 {
-    use HasFactory, AutoSearch, AutoSort, AutoFilter;
+    use AutoFilter, AutoSearch, AutoSort, HasFactory;
 
     protected $table = ':table:';
 

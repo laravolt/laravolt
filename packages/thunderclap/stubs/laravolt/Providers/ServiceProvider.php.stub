@@ -2,7 +2,6 @@
 
 namespace :Namespace:\:ModuleName:\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Laravolt\Support\Base\BaseServiceProvider;
 
 class :ModuleName:ServiceProvider extends BaseServiceProvider

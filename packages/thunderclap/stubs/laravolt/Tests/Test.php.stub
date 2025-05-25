@@ -2,10 +2,10 @@
 
 namespace :Namespace:\:ModuleName:\Tests;
 
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
+use Tests\TestCase;
 
 class :ModuleName:Test extends TestCase
 {
