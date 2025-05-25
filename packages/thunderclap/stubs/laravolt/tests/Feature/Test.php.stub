@@ -1,0 +1,78 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use :Namespace:\:ModuleName:\Models\:ModuleName:;
+
+class :ModuleName:Test extends TestCase
+{
+    use LazilyRefreshDatabase;
+
+    /** @var User */
+    protected $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_open_index_page()
+    {
+        $this->get(route(':route-url-prefix:.index'))->assertStatus(200);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_open_create_page()
+    {
+        $this->get(route(':route-url-prefix:.create'))->assertStatus(200);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_store_data()
+    {
+        $attributes = :ModuleName:::factory()->raw();
+
+        $this->post(route(':route-url-prefix:.store'), $attributes)->assertStatus(302);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_open_show_page()
+    {
+        $:moduleName: = :ModuleName:::factory()->create();
+
+        $this->get(route(':route-url-prefix:.show', $:moduleName:))->assertStatus(200);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_open_edit_page()
+    {
+        $:moduleName: = :ModuleName:::factory()->create();
+
+        $this->get(route(':route-url-prefix:.edit', $:moduleName:))->assertStatus(200);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_update_data()
+    {
+        $:moduleName: = :ModuleName:::factory()->create();
+        $attributes = $:moduleName:->toArray();
+        :TEST_UPDATE_ATTRIBUTES:
+
+        $this->put(route(':route-url-prefix:.update', $:moduleName:), $attributes)->assertStatus(302);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_delete_data()
+    {
+        $:moduleName: = :ModuleName:::factory()->create();
+
+        $this->delete(route(':route-url-prefix:.destroy', $:moduleName:))->assertStatus(302);
+    }
+}

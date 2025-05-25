@@ -1,0 +1,18 @@
+<?php
+
+namespace :Namespace:\:ModuleName:\Database\Factories;
+
+use :Namespace:\:ModuleName:\Models\:ModuleName:;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class :ModuleName:Factory extends Factory
+{
+    protected $model = :ModuleName:::class;
+
+    public function definition(): array
+    {
+        return [
+:TEST_FACTORY_ATTRIBUTES:
+        ];
+    }
+}

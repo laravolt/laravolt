@@ -199,4 +199,107 @@ TEMPLATE;
     {
         return "{!! form()->datepicker('%s')->label('%s') !!}";
     }
+
+    public function toTestFactoryAttributes()
+    {
+        $columns = $this->columns;
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
+
+        return $columns
+            ->map(function ($item) {
+                return $this->generateFactoryAttribute($item);
+            })
+            ->filter() // Remove null values
+            ->implode(",\n");
+    }
+
+    public function toTestUpdateAttributes()
+    {
+        $columns = $this->removeForeignKeys($this->columns);
+        $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
+
+        // Get first few fillable columns for update test
+        $selectedColumns = $columns->take(2);
+
+        return $selectedColumns
+            ->map(function ($item, $name) {
+                return $this->generateUpdateAttribute($name, $item);
+            })
+            ->implode("\n        ");
+    }
+
+    protected function generateFactoryAttribute($column)
+    {
+        $name = $column['name'];
+        $type = get_class($column['type']);
+
+        switch ($type) {
+            case \Doctrine\DBAL\Types\StringType::class:
+                if (Str::contains($name, 'email')) {
+                    return "            '{$name}' => \$this->faker->unique()->safeEmail(),";
+                } elseif (Str::contains($name, 'name')) {
+                    return "            '{$name}' => \$this->faker->name(),";
+                } elseif (Str::contains($name, 'title')) {
+                    return "            '{$name}' => \$this->faker->sentence(3),";
+                } elseif (Str::contains($name, 'slug')) {
+                    return "            '{$name}' => \$this->faker->slug(),";
+                } elseif (Str::contains($name, 'phone')) {
+                    return "            '{$name}' => \$this->faker->phoneNumber(),";
+                } elseif (Str::contains($name, 'address')) {
+                    return "            '{$name}' => \$this->faker->address(),";
+                } elseif (Str::contains($name, 'url')) {
+                    return "            '{$name}' => \$this->faker->url(),";
+                } else {
+                    return "            '{$name}' => \$this->faker->words(3, true),";
+                }
+            case \Doctrine\DBAL\Types\TextType::class:
+                if (Str::contains($name, 'description')) {
+                    return "            '{$name}' => \$this->faker->paragraph(),";
+                } else {
+                    return "            '{$name}' => \$this->faker->text(),";
+                }
+            case \Doctrine\DBAL\Types\DateType::class:
+                return "            '{$name}' => \$this->faker->date(),";
+            case \Doctrine\DBAL\Types\DateTimeType::class:
+                return "            '{$name}' => \$this->faker->dateTime(),";
+            default:
+                if (Str::contains($name, '_id')) {
+                    return null; // Skip foreign keys
+                } elseif (Str::contains($name, 'price') || Str::contains($name, 'amount')) {
+                    return "            '{$name}' => \$this->faker->randomFloat(2, 10, 1000),";
+                } elseif (Str::contains($name, 'quantity') || Str::contains($name, 'count')) {
+                    return "            '{$name}' => \$this->faker->numberBetween(1, 100),";
+                } else {
+                    return "            '{$name}' => \$this->faker->word(),";
+                }
+        }
+    }
+
+    protected function generateUpdateAttribute($name, $column)
+    {
+        $type = get_class($column['type']);
+
+        switch ($type) {
+            case \Doctrine\DBAL\Types\StringType::class:
+                if (Str::contains($name, 'title')) {
+                    return "\$attributes['{$name}'] = 'Updated Title';";
+                } elseif (Str::contains($name, 'name')) {
+                    return "\$attributes['{$name}'] = 'Updated Name';";
+                } else {
+                    return "\$attributes['{$name}'] = 'Updated " . Str::title(str_replace('_', ' ', $name)) . "';";
+                }
+            case \Doctrine\DBAL\Types\TextType::class:
+                if (Str::contains($name, 'description')) {
+                    return "\$attributes['{$name}'] = 'Updated Description';";
+                } else {
+                    return "\$attributes['{$name}'] = 'Updated Content';";
+                }
+            case \Doctrine\DBAL\Types\DateType::class:
+                return "\$attributes['{$name}'] = now()->format('Y-m-d');";
+            case \Doctrine\DBAL\Types\DateTimeType::class:
+                return "\$attributes['{$name}'] = now();";
+            default:
+                return "\$attributes['{$name}'] = 'Updated Value';";
+        }
+    }
 }
