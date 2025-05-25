@@ -210,7 +210,7 @@ TEMPLATE;
                 return $this->generateFactoryAttribute($item);
             })
             ->filter() // Remove null values
-            ->implode(",\n");
+            ->implode("\n");
     }
 
     public function toTestUpdateAttributes()

@@ -92,6 +92,7 @@ class Generator extends Command
             'module-name' => str_replace('_', '-', Str::singular($table)),
             'route-prefix' => config('laravolt.thunderclap.routes.prefix'),
         ];
+        // dd($templates);
 
         // 4. rename file and replace common string
         $replacer = [
@@ -197,7 +198,7 @@ class Generator extends Command
     protected function getRouteUrlPrefix($routePrefix, $module)
     {
         if ($routePrefix) {
-            return $routePrefix.'.'.$module;
+            return $routePrefix.$module;
         }
 
         return $module;

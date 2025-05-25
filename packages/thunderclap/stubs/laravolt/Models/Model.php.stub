@@ -20,6 +20,6 @@ class :ModuleName: extends Model
 
     protected static function newFactory()
     {
-        return \:Namespace:\:ModuleName:\Database\Factories\:ModuleName:Factory::new();
+        return :ModuleName:Factory::new();
     }
 }

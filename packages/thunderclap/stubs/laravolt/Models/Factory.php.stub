@@ -1,6 +1,6 @@
 <?php
 
-namespace :Namespace:\:ModuleName:\Database\Factories;
+namespace :Namespace:\:ModuleName:\Models;
 
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
 use Illuminate\Database\Eloquent\Factories\Factory;
