@@ -131,8 +131,7 @@ class RestfulButton extends Column implements ColumnInterface
                 return $policyEnabled && Auth::user()->cannot($action, $data);
             })
             ->mapWithKeys(function ($action) use ($data) {
-
-                return [$action => $this->getRoute($action, $this->routeParameters + [$data->getKey()])];
+                return [$action => $this->getRoute($action, $this->routeParameters + [$data->getRouteKey()])];
             });
 
         return $actions;
