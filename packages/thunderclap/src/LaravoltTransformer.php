@@ -72,7 +72,7 @@ TEMPLATE;
             ->map(function ($item) {
                 $template = $this->toField($item);
 
-                return sprintf("\t".$template, $item['name'], Str::humanize($item['name']));
+                return sprintf($template, $item['name'], Str::humanize($item['name']));
             })
             ->implode("\n");
     }
@@ -167,37 +167,41 @@ TEMPLATE;
     {
         $class = get_class($column['type']);
         switch ($class) {
-            case StringType::class:
-                return $this->text();
             case TextType::class:
-                return $this->textarea();
+                $field = $this->textarea();
             case DateType::class:
-                return $this->date();
+                $field = $this->date();
             case DateTimeType::class:
-                return $this->datetime();
+                $field = $this->datetime();
             default:
-                return $this->text();
+                $field = $this->text();
         }
+
+        if ($column['required']) {
+            $field .= '->required()';
+        }
+
+        return "{!! $field !!}";
     }
 
     protected function text()
     {
-        return "{!! form()->text('%s')->label('%s') !!}";
+        return "form()->text('%s')->label('%s')";
     }
 
     protected function textarea()
     {
-        return "{!! form()->textarea('%s')->label('%s') !!}";
+        return "form()->textarea('%s')->label('%s')";
     }
 
     protected function date()
     {
-        return "{!! form()->datepicker('%s')->label('%s') !!}";
+        return "form()->date('%s')->label('%s')";
     }
 
     protected function datetime()
     {
-        return "{!! form()->datepicker('%s')->label('%s') !!}";
+        return "form()->datepicker('%s')->label('%s')";
     }
 
     public function toTestFactoryAttributes()
