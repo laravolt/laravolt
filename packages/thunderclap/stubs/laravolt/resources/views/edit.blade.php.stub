@@ -2,7 +2,7 @@
     <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"></x-backlink>
 
     <x-volt-panel title="Tambah :Module Name:">
-        {!! form()->bind($:moduleName:)->put(route('modules:::module-name:.update', $:moduleName:->getKey()))->horizontal()->multipart() !!}
+        {!! form()->bind($:moduleName:)->put(route('modules:::module-name:.update', $:moduleName:->getRouteKey()))->horizontal()->multipart() !!}
             @include(':module-name:::_form')
         {!! form()->close() !!}
     </x-volt-panel>
