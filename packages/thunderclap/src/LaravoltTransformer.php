@@ -169,10 +169,13 @@ TEMPLATE;
         switch ($class) {
             case TextType::class:
                 $field = $this->textarea();
+                break;
             case DateType::class:
                 $field = $this->date();
+                break;
             case DateTimeType::class:
                 $field = $this->datetime();
+                break;
             default:
                 $field = $this->text();
         }
