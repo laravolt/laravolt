@@ -57,7 +57,9 @@ class Role extends Model
     public function syncPermission(array $permissions)
     {
         $ids = collect($permissions)->transform(function ($permission) {
-            if (is_numeric($permission)) {
+            if (str($permission)->isUlid()) {
+                return (string) $permission;
+            } elseif (is_numeric($permission)) {
                 return (int) $permission;
             } elseif (is_string($permission)) {
                 $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
