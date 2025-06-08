@@ -35,7 +35,7 @@ class RestfulButton extends Column implements ColumnInterface
     public static function make($baseRoute, $header = null)
     {
         $column = new static($baseRoute, $header);
-        $column->id = Str::snake($header);
+        $column->id = Str::snake($header ?? 'actions');
 
         return $column;
     }
