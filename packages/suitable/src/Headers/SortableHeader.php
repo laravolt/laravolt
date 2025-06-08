@@ -22,10 +22,10 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 
     protected $attributes;
 
-    public function __construct($title, $column)
-    {
-        $this->title = $title;
-        $this->column = $column;
+    public function __construct(
+        protected string $title,
+        protected string $column,
+    ) {
     }
 
     public static function make($title, $column)
