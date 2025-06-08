@@ -39,7 +39,9 @@ class :ModuleName:Test extends TestCase
     {
         $attributes = :ModuleName:::factory()->raw();
 
-        $this->post(route(':route-url-prefix:.store'), $attributes)->assertStatus(302);
+        $this->post(route(':route-url-prefix:.store'), $attributes)
+            ->assertStatus(302)
+            ->assertSessionDoesntHaveErrors();
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
@@ -65,7 +67,9 @@ class :ModuleName:Test extends TestCase
         $attributes = $:moduleName:->toArray();
         :TEST_UPDATE_ATTRIBUTES:
 
-        $this->put(route(':route-url-prefix:.update', $:moduleName:), $attributes)->assertStatus(302);
+        $this->put(route(':route-url-prefix:.update', $:moduleName:), $attributes)
+            ->assertStatus(302)
+            ->assertSessionDoesntHaveErrors();
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
