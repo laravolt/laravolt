@@ -56,9 +56,14 @@ class DBHelper
         $laravelConfig = DB::connection()->getConfig();
         $driver = $laravelConfig['driver'];
         $isSQLite = $driver === 'sqlite' || $driver === 'sqlite3';
+        $isMysql = $driver === 'mysql' || $driver === 'mysqli';
 
         if ($isSQLite) {
             $driver = 'sqlite3';
+        }
+
+        if ($isMysql) {
+            $driver = 'mysqli';
         }
 
         $connectionParams = [
@@ -67,7 +72,7 @@ class DBHelper
             'password' => $laravelConfig['password'] ?? null,
             'host' => $laravelConfig['host'] ?? null,
             'driver' => $driver,
-            'port' => $laravelConfig['port'] ?? 5432,
+            'port' => (int) $laravelConfig['port'] ?? '5432',
             'charset' => $laravelConfig['charset'] ?? 'utf8',
         ];
 
