@@ -78,4 +78,7 @@ return [
             'inline' => true,
         ],
     ],
+    'custom' => [
+        'multirow-form' => 'semantic-form::multirow.form',
+    ],
 ];

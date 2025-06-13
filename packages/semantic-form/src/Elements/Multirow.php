@@ -134,6 +134,8 @@ class Multirow extends Element
             'allowRemoval' => $this->allowRemoval,
         ];
 
-        return view('semantic-form::multirow.form', $payload)->render();
+        $viewForm = config('laravolt.semantic-form.custom.multirow-form', 'semantic-form::multirow.form');
+
+        return view($viewForm, $payload)->render();
     }
 }
