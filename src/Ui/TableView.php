@@ -4,6 +4,7 @@ namespace Laravolt\Ui;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Laravolt\Suitable\Concerns\SourceResolver;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,7 +23,11 @@ abstract class TableView extends Component
 
     public int $searchDebounce = 300;
 
+    #[Url]
     public string $search = '';
+
+    #[Url]
+    public array $filters = [];
 
     protected bool $showPerPage = true;
 
@@ -48,8 +53,6 @@ abstract class TableView extends Component
 
     public ?string $direction = null;
 
-    public array $filters = [];
-
     public function updatingSearch()
     {
         $this->resetPage();
@@ -58,6 +61,17 @@ abstract class TableView extends Component
     public function updatingFilters()
     {
         $this->resetPage();
+    }
+
+    public function updatedFilters()
+    {
+        $this->dispatch('updated-filters', $this->filters);
+    }
+
+    public function applyFilters()
+    {
+        $this->resetPage();
+        $this->dispatch('filtersApplied', $this->filters);
     }
 
     public function resetFilters()
