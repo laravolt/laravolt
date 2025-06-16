@@ -71,6 +71,6 @@ trait CanGenerateOptionsFromDb
             });
         }
 
-        return $options;
+        return $this->options + $options->toArray();
     }
 }
