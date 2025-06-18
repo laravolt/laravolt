@@ -23,11 +23,13 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
     protected function menu()
     {
         app('laravolt.menu.builder')->register(function ($menu) {
-            $menu->modules
-                ->add(':Module Name:', route('modules:::module-name:.index'))
-                ->data('icon', 'circle')
-                ->data('permission', $this->config['permission'] ?? [])
-                ->active('modules/:module-name:/*');
+            if ($menu->modules) {
+                $menu->modules
+                    ->add(':Module Name:', route('modules:::module-name:.index'))
+                    ->data('icon', 'circle')
+                    ->data('permission', $this->config['permission'] ?? [])
+                    ->active('modules/:module-name:/*');
+            }
         });
     }
 }
