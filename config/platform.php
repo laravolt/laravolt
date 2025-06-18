@@ -9,11 +9,12 @@ return [
         'lookup' => false,
         'kitchen_sink' => false,
         'spa' => false,
-        'quick_switcher' => true,
+        'quick_switcher' => false,
         'registration' => true,
         'verification' => true,
         'captcha' => false,
         'workflow' => false,
+        'enable_default_menu' => true,
     ],
     'settings' => [
         [
@@ -77,8 +78,5 @@ return [
             'label' => 'Layout',
             'inline' => true,
         ],
-    ],
-    'custom' => [
-        'multirow-form' => 'semantic-form::multirow.form',
     ],
 ];
