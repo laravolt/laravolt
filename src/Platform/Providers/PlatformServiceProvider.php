@@ -280,14 +280,18 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootMenu()
     {
-        $keys = ['system'];
-        $publishes = [];
-        foreach ($keys as $key) {
-            $menu = platform_path("config/menu/$key.php");
-            $this->mergeConfigFrom($menu, "laravolt.menu.$key");
-            $publishes[$menu] = config_path("laravolt/menu/$key.php");
+        $isEnabled = config('laravolt.platform.features.enable_default_menu', true);
+
+        if ($isEnabled) {
+            $keys = ['system'];
+            $publishes = [];
+            foreach ($keys as $key) {
+                $menu = platform_path("config/menu/$key.php");
+                $this->mergeConfigFrom($menu, "laravolt.menu.$key");
+                $publishes[$menu] = config_path("laravolt/menu/$key.php");
+            }
+            $this->publishes($publishes, ['laravolt-config', 'config']);
         }
-        $this->publishes($publishes, ['laravolt-config', 'config']);
 
         return $this;
     }

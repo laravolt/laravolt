@@ -13,6 +13,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
 use Laravolt\Platform\Services\MenuBuilder;
 use Laravolt\Platform\Services\SidebarMenu;
+use Lavary\Menu\Builder;
 
 use function Laravolt\platform_path;
 
@@ -45,15 +46,19 @@ class UiServiceProvider extends BaseServiceProvider
 
         // We add default menu in register() method,
         // to make sure it is always accessible by other providers.
-        app('laravolt.menu.sidebar')
-            ->registerCore(
-                fn ($menu) => $menu->add('Modules')->data('order', config('laravolt.ui.system_menu.order'))
-            );
+        $isEnabled = config('laravolt.platform.features.enable_default_menu', true);
 
-        app('laravolt.menu.sidebar')
-            ->registerCore(
-                fn ($menu) => $menu->add('System')->data('order', config('laravolt.ui.system_menu.order') + 1)
+        if ($isEnabled) {
+            /** @var \Laravolt\Platform\Services\SidebarMenu */
+            $sidebarMenu = app('laravolt.menu.sidebar');
+            $order = (int) config('laravolt.ui.system_menu.order');
+            $sidebarMenu->registerCore(
+                fn (Builder $menu) => $menu->add('Modules')->data('order', $order)
             );
+            $sidebarMenu->registerCore(
+                fn (Builder $menu) => $menu->add('System')->data('order', $order + 1)
+            );
+        }
 
         if ((! $this->app->runningInConsole()) || $this->app->runningUnitTests()) {
             $this->overrideUi();
