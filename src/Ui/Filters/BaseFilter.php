@@ -8,15 +8,12 @@ abstract class BaseFilter
 {
     protected string $label = '';
 
+    protected ?string $placeholder = null;
+
     abstract public function render(): string;
 
     public function key(): string
     {
         return Str::kebab((new \ReflectionClass($this))->getShortName());
-    }
-
-    protected function label(): string
-    {
-        return $this->label;
     }
 }

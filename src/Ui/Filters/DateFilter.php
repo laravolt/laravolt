@@ -7,10 +7,14 @@ class DateFilter extends BaseFilter
     public function render(): string
     {
         $key = $this->key();
+        $field = form()->datepicker($key);
 
-        return form()
-            ->datepicker($key)
-            ->label($this->label())
+        if ($this->placeholder) {
+            $field->placeholder($this->placeholder);
+        }
+
+        return $field
+            ->label($this->label)
             ->attributes(['wire:model' => "filters.$key"]);
     }
 }
