@@ -10,9 +10,14 @@ class CheckboxFilter extends BaseFilter
     {
         $key = $this->key();
 
-        return form()
-            ->checkboxGroup($key, $this->options())
-            ->label($this->label())
+        $field = form()->checkboxGroup($key, $this->options());
+
+        if ($this->placeholder) {
+            $field->placeholder($this->placeholder);
+        }
+
+        return $field
+            ->label($this->label)
             ->removeClass('clearable')
             ->attributes(function (Checkbox $control) use ($key) {
                 $value = $control->getValue();

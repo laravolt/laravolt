@@ -7,10 +7,14 @@ class DropdownFilter extends BaseFilter
     public function render(): string
     {
         $key = $this->key();
+        $field = form()->dropdown($key, $this->options());
 
-        return form()
-            ->dropdown($key, $this->options())
-            ->label($this->label())
+        if ($this->placeholder) {
+            $field->placeholder($this->placeholder);
+        }
+
+        return $field
+            ->label($this->label)
             ->removeClass('clearable')
             ->attributes(['wire:model' => "filters.$key"]);
     }
