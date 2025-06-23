@@ -21,6 +21,8 @@ abstract class TableView extends Component
 
     public string $searchName = 'search';
 
+    public ?string $searchPlaceholder = null;
+
     public int $searchDebounce = 300;
 
     #[Url]
