@@ -6,6 +6,7 @@
             class="prompt"
             name="{{ $searchName }}"
             value="{{ request($searchName) }}"
+            placeholder="{{ $this->searchPlaceholder ?? __('laravolt::action.search') }}"
             wire:model.debounce.{{ $searchDebounce }}ms="search"
         >
     </div>
