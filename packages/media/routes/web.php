@@ -15,5 +15,9 @@ Route::group(
 
         Route::delete('media/{id}', [\Laravolt\Media\Controllers\MediaController::class, 'destroy'])->name('destroy')
             ->withoutMiddleware('auth');
+
+        Route::get('stream/{media}', \Laravolt\Media\Controllers\VideoStreamController::class)
+            ->withoutMiddleware('auth')
+            ->name('stream');
     }
 );
