@@ -1,8 +1,8 @@
 {
-    "/css/app.css": "/css/app.css?id=0ebb59ef67a2d675f3a97880570074a1",
-    "/semantic/semantic.min.css": "/semantic/semantic.min.css?id=ff1022500c152ac64c42128f531cf906",
-    "/css/all.css": "/css/all.css?id=c680db20acb928f8c2cd2a12629a0729",
-    "/js/vendor.js": "/js/vendor.js?id=13e9ad9cd11f5c2486336f129c04bd0e",
-    "/js/vendor-spa.js": "/js/vendor-spa.js?id=9119d6db0dbf4a8e3b9ac48b6dc36c4e",
-    "/js/platform.js": "/js/platform.js?id=7ac3985b80b1924ddf0176b7535438d3"
+    "/css/app.css": "/css/app.css?id=dfd11e801f3afd0b1cc59cc46118807f",
+    "/semantic/semantic.min.css": "/semantic/semantic.min.css?id=5e0229d404f8b582620f46c539ac768d",
+    "/css/all.css": "/css/all.css?id=de33f507944e23a8145d369f1d9495a3",
+    "/js/vendor.js": "/js/vendor.js?id=e0919f48297881020c16e6cfed54487d",
+    "/js/vendor-spa.js": "/js/vendor-spa.js?id=cd29bb8d2081bfd976bb3302a0ffbba8",
+    "/js/platform.js": "/js/platform.js?id=8e14f04a2bfffaac42178bc74aaa3146"
 }
