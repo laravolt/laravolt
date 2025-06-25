@@ -382,7 +382,9 @@ class Laravolt {
                 extensions: extensions,
                 addMore: true,
                 upload: upload,
-                onRemove: function (item) {
+                onRemove: function (item, listEl, parentEl, newInputEl, inputEl) {
+                    $(inputEl).trigger('change');
+
                     // Doesn't have ID, it means file not yet uploaded, no need to delete on server side
                     if (item.data.id === undefined) {
                         return true;

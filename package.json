@@ -10,7 +10,6 @@
     "devDependencies": {
         "autonumeric": "^4.6.0",
         "commander": "^2.20.3",
-        "fomantic-ui": "^2.8.7",
         "jquery": "^3.4.1",
         "laravel-mix": "^6.0.16",
         "sass": "^1.32.11",
@@ -21,6 +20,7 @@
     },
     "name": "laravolt",
     "dependencies": {
+        "fomantic-ui": "^2.9.4",
         "unpoly": "^2.6"
     }
 }
