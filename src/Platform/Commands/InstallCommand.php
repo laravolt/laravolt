@@ -32,6 +32,7 @@ class InstallCommand extends Command
     {
         $this->addEntries();
         Artisan::call(LinkCommand::class);
+        Artisan::call(ExtractAssetsCommand::class);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-assets']);

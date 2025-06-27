@@ -18,6 +18,7 @@ use Laravolt\Epicentrum\Auth\UserObserver;
 use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
+use Laravolt\Platform\Commands\ExtractAssetsCommand;
 use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
 use Laravolt\Platform\Commands\MakeChartCommnad;
@@ -55,6 +56,7 @@ class PlatformServiceProvider extends ServiceProvider
 {
     protected $commands = [
         AdminCommand::class,
+        ExtractAssetsCommand::class,
         InstallCommand::class,
         LinkCommand::class,
         MakeTableCommnad::class,
