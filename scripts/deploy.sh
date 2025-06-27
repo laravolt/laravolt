@@ -21,9 +21,7 @@ php artisan laravolt:link
 
 # 4. Cache configuration (production optimization)
 echo "Optimizing application..."
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+php artisan optimize
 
 # 5. Run migrations
 echo "Running migrations..."
