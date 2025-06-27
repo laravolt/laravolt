@@ -38,6 +38,7 @@ EOF;
 
 <link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
 <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
+<style>.sidebar__menu > .ui.attached.menu:not(.tabular):not(.text) {border: unset}.panel.x-suitable .ui.bottom.attached.menu .item {border-width: 1px;border-color: #8090a0}</style>
 EOF;
     }
 }
