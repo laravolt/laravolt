@@ -3,4 +3,3 @@ composer.lock
 .phpunit.result.cache
 .phpunit.cache
 node_modules
-phpunit.xml
