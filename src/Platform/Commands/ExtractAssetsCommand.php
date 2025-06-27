@@ -35,14 +35,14 @@ class ExtractAssetsCommand extends Command
         // Extract icons.zip to resources/icons
         $this->extractFile(
             \Laravolt\platform_path('resources/icons.zip'),
-            base_path('resources/icons'),
+            \Laravolt\platform_path('resources'),
             'icons'
         );
 
         // Extract assets.zip to public/laravolt
         $this->extractFile(
             \Laravolt\platform_path('resources/assets.zip'),
-            public_path('laravolt'),
+            \Laravolt\platform_path(''),
             'public assets'
         );
 
@@ -64,17 +64,6 @@ class ExtractAssetsCommand extends Command
         if (!file_exists($zipPath)) {
             $this->warn("ZIP file not found: {$zipPath}");
             return false;
-        }
-
-        // Check if destination already has files
-        if (file_exists($destination) && $this->hasFiles($destination)) {
-            $this->info("Skipped extraction of {$description}.");
-            return false;
-        }
-
-        // Create destination directory if it doesn't exist
-        if (!file_exists($destination)) {
-            mkdir($destination, 0755, true);
         }
 
         $zip = new ZipArchive();
