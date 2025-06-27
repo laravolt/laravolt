@@ -219,13 +219,15 @@ class UiServiceProvider extends BaseServiceProvider
             // Extract icons.zip to resources/icons
             $this->extractFile(
                 \Laravolt\platform_path('resources/icons.zip'),
-                base_path('resources/icons')
+                \Laravolt\platform_path('resources'),
+                'icons'
             );
 
             // Extract assets.zip to public/laravolt
             $this->extractFile(
                 \Laravolt\platform_path('resources/assets.zip'),
-                public_path('laravolt')
+                \Laravolt\platform_path(''),
+                'public assets'
             );
         } catch (\Exception $e) {
             // Log error but don't fail the application
@@ -235,15 +237,16 @@ class UiServiceProvider extends BaseServiceProvider
         }
     }
 
-    private function extractFile(string $zipPath, string $destination): bool
+    private function extractFile(string $zipPath, string $destination, string $description): bool
     {
         if (!file_exists($zipPath) || !class_exists('\ZipArchive')) {
             return false;
         }
 
-        // Create destination directory if it doesn't exist
-        if (!file_exists($destination)) {
-            mkdir($destination, 0755, true);
+        $isIcons = $description === 'icons';
+        $path = $isIcons ? 'icons' : 'public';
+        if (is_dir($destination.DIRECTORY_SEPARATOR.$path)) {
+            return false;
         }
 
         $zip = new \ZipArchive();
