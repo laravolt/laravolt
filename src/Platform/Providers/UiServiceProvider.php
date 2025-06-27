@@ -78,7 +78,8 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this
             ->bootViews()
-            ->buildMenuFromConfig();
+            ->buildMenuFromConfig()
+            ->ensureAssetsExtracted();
     }
 
     protected function bootConfig()
@@ -191,5 +192,83 @@ class UiServiceProvider extends BaseServiceProvider
                 }
             }
         );
+    }
+
+    private function ensureAssetsExtracted()
+    {
+        // Only run in production or when assets are missing
+        if (!app()->environment('local') || $this->shouldExtractAssets()) {
+            $this->extractAssets();
+        }
+
+        return $this;
+    }
+
+    private function shouldExtractAssets(): bool
+    {
+        // Check if icons directory exists and has files
+        $iconsPath = base_path('resources/icons');
+        $publicPath = public_path('laravolt');
+
+        return !$this->hasFiles($iconsPath) || !$this->hasFiles($publicPath);
+    }
+
+    private function extractAssets(): void
+    {
+        try {
+            // Extract icons.zip to resources/icons
+            $this->extractFile(
+                \Laravolt\platform_path('resources/icons.zip'),
+                \Laravolt\platform_path('resources'),
+                'icons'
+            );
+
+            // Extract assets.zip to public/laravolt
+            $this->extractFile(
+                \Laravolt\platform_path('resources/assets.zip'),
+                \Laravolt\platform_path(''),
+                'public assets'
+            );
+        } catch (\Exception $e) {
+            // Log error but don't fail the application
+            if (function_exists('logger')) {
+                logger()->warning("Failed to extract Laravolt assets: " . $e->getMessage());
+            }
+        }
+    }
+
+    private function extractFile(string $zipPath, string $destination, string $description): bool
+    {
+        if (!file_exists($zipPath) || !class_exists('\ZipArchive')) {
+            return false;
+        }
+
+        $isIcons = $description === 'icons';
+        $path = $isIcons ? 'icons' : 'public';
+        if (is_dir($destination.DIRECTORY_SEPARATOR.$path)) {
+            return false;
+        }
+
+        $zip = new \ZipArchive();
+        $result = $zip->open($zipPath);
+
+        if ($result !== TRUE) {
+            return false;
+        }
+
+        $extracted = $zip->extractTo($destination);
+        $zip->close();
+
+        return $extracted;
+    }
+
+    private function hasFiles(string $directory): bool
+    {
+        if (!is_dir($directory)) {
+            return false;
+        }
+
+        $files = array_diff(scandir($directory), ['.', '..']);
+        return count($files) > 0;
     }
 }

@@ -104,5 +104,10 @@
                 "Form": "Laravolt\\SemanticForm\\Facade"
             }
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Laravolt\\Platform\\Scripts\\ComposerScripts::postAutoloadDump"
+        ]
     }
 }
