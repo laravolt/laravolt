@@ -41,13 +41,15 @@ class ComposerScripts
         // Extract icons.zip to resources/icons
         self::extractFile(
             $laravoltDir . '/resources/icons.zip',
-            getcwd() . '/resources/icons'
+            \Laravolt\platform_path('resources'),
+            'icons'
         );
 
         // Extract assets.zip to public/laravolt
         self::extractFile(
             $laravoltDir . '/resources/assets.zip',
-            getcwd() . '/public/laravolt'
+            \Laravolt\platform_path(''),
+            'public assets'
         );
     }
 
@@ -58,14 +60,16 @@ class ComposerScripts
      * @param string $destination
      * @return bool
      */
-    private static function extractFile(string $zipPath, string $destination): bool
+    private static function extractFile(string $zipPath, string $destination, string $description): bool
     {
+        $isIcons = $description === 'icons';
+
         if (!file_exists($zipPath) || !class_exists('\ZipArchive')) {
             return false;
         }
 
-        // Don't overwrite if destination already has files
-        if (self::hasFiles($destination)) {
+        $path = $isIcons ? 'icons' : 'public';
+        if (is_dir($destination.DIRECTORY_SEPARATOR.$path)) {
             return false;
         }
 

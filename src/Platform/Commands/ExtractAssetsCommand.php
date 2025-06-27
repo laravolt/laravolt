@@ -61,8 +61,15 @@ class ExtractAssetsCommand extends Command
      */
     protected function extractFile(string $zipPath, string $destination, string $description): bool
     {
+        $isIcons = $description === 'icons';
+
         if (!file_exists($zipPath)) {
             $this->warn("ZIP file not found: {$zipPath}");
+            return false;
+        }
+
+        $path = $isIcons ? 'icons' : 'public';
+        if (is_dir($destination.DIRECTORY_SEPARATOR.$path)) {
             return false;
         }
 
