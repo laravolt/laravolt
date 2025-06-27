@@ -68,10 +68,8 @@ class ExtractAssetsCommand extends Command
 
         // Check if destination already has files
         if (file_exists($destination) && $this->hasFiles($destination)) {
-            if (!$this->confirm("Directory {$destination} already contains files. Overwrite?")) {
-                $this->info("Skipped extraction of {$description}.");
-                return false;
-            }
+            $this->info("Skipped extraction of {$description}.");
+            return false;
         }
 
         // Create destination directory if it doesn't exist
