@@ -382,6 +382,9 @@ class Laravolt {
                 extensions: extensions,
                 addMore: true,
                 upload: upload,
+                onSelect: function(item, listEl, parentEl, newInputEl, inputEl) {
+                    $(inputEl).trigger('change');
+                },
                 onRemove: function (item, listEl, parentEl, newInputEl, inputEl) {
                     $(inputEl).trigger('change');
 

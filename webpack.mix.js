@@ -48,7 +48,9 @@ mix.styles([
 mix.version([
     './public/semantic/semantic.min.css',
     './public/css/all.css',
+    './public/css/redactor.min.css',
     './public/js/vendor.js',
     './public/js/vendor-spa.js',
-    './public/js/platform.js'
+    './public/js/platform.js',
+    './public/js/redactor.min.js'
 ]);
