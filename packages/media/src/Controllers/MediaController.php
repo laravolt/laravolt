@@ -26,7 +26,11 @@ class MediaController extends Controller
 
     public function destroy($id)
     {
-        Media::findOrfail($id)->delete();
+        /** @var \Illuminate\Database\Eloquent\Model */
+        $model = config('media-library.media_model');
+        /** @var Media */
+        $media = $model::query()->findOrfail(request('id'));
+        $media->delete();
 
         return redirect()->back()->withSuccess(__('Media deleted'));
     }
