@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravolt\Platform\Models\User as BaseUser;
@@ -10,9 +11,13 @@ use Laravolt\Suitable\AutoFilter;
 use Laravolt\Suitable\AutoSearch;
 use Laravolt\Suitable\AutoSort;
 
+/**
+ * @use HasFactory<UserFactory>
+ */
 class User extends BaseUser
 {
     use AutoFilter, AutoSearch, AutoSort;
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
     // use \Laravel\Sanctum\HasApiTokens;
 

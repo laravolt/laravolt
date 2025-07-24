@@ -32,14 +32,13 @@ class ForgotPasswordController extends Controller
 
         $response = Password::INVALID_USER;
 
-        /** @var \Laravolt\Contracts\CanResetPassword $user */
         $user = User::whereEmail($request->email)->first();
 
-        if ($user instanceof CanResetPassword) {
+        if ($user) {
             $response = app('laravolt.password')->sendResetLink($user);
         }
 
-        if ($response === Password::RESET_LINK_SENT) {
+        if ($response === Password::RESET_LINK_SENT && $user) {
             $email = $user->getEmailForPasswordReset();
 
             return redirect()
