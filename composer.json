@@ -39,7 +39,8 @@
         "spatie/laravel-backup": "^9.2.7",
         "spatie/laravel-medialibrary": "^11.12.6",
         "spatie/laravel-web-tinker": "^1.10.1",
-        "spatie/once": "^3.1.1"
+        "spatie/once": "^3.1.1",
+        "spaze/phpstan-disallowed-calls": "^4.6"
     },
     "require-dev": {
         "laravel/pint": "^1.21",
@@ -47,7 +48,6 @@
         "orchestra/testbench-browser-kit": ">=8.6",
         "php-coveralls/php-coveralls": "^2.7",
         "phpunit/phpunit": "^10.0",
-        "spaze/phpstan-disallowed-calls": "^4.4",
         "squizlabs/php_codesniffer": "^3.11.3"
     },
     "autoload": {

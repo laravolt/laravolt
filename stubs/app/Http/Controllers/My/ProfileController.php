@@ -26,6 +26,6 @@ class ProfileController extends Controller
         $validated = $request->validated();
         $user->update($validated);
 
-        return redirect()->back()->withSuccess(__('Profil berhasil diperbarui') ?? '');
+        return redirect()->back()->withSuccess(__('Profil berhasil diperbarui'));
     }
 }

@@ -65,7 +65,7 @@ class VerificationController extends Controller
                 [
                     'email' => $user->getEmailForVerification(),
                 ]
-            ) ?? ''
+            )
         );
     }
 }

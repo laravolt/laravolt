@@ -25,11 +25,11 @@ class PasswordController extends Controller
         if (app('hash')->check($password, $user->password)) {
             $user->setPassword($request->password);
 
-            return redirect()->route('my::password.edit')->withSuccess(__('laravolt::message.password_updated') ?? '');
+            return redirect()->route('my::password.edit')->withSuccess(__('laravolt::message.password_updated'));
         }
 
         return redirect()->route('my::password.edit')->withError(
-            __('laravolt::message.current_password_mismatch') ?? ''
+            __('laravolt::message.current_password_mismatch')
         );
     }
 }
