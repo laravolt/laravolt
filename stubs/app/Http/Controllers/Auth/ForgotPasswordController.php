@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Laravolt\Contracts\CanResetPassword;
 
 class ForgotPasswordController extends Controller
 {

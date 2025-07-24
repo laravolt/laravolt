@@ -17,6 +17,7 @@ use Laravolt\Suitable\AutoSort;
 class User extends BaseUser
 {
     use AutoFilter, AutoSearch, AutoSort;
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
     // use \Laravel\Sanctum\HasApiTokens;
