@@ -6,7 +6,7 @@ use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
-use :Namespace:\:ModuleName:\Models\:ModuleName:;
+:MODEL_IMPORT:
 
 class :ModuleName:TableView extends TableView
 {

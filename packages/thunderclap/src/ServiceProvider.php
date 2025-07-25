@@ -25,10 +25,11 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * The console commands.
      *
-     * @var bool
+     * @var array<string>
      */
     protected $commands = [
         'Laravolt\Thunderclap\Commands\Generator',
+        'Laravolt\Thunderclap\Commands\ListModelsCommand',
     ];
 
     /**
