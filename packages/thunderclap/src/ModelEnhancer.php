@@ -148,6 +148,17 @@ class ModelEnhancer
     }
 
     /**
+     * Remove backup of model file
+     */
+    public function removeBackup(string $backupPath): bool
+    {
+        if (File::exists($backupPath)) {
+            return File::delete($backupPath);
+        }
+        return false;
+    }
+
+    /**
      * Restore model from backup
      */
     public function restoreFromBackup(string $modelPath, string $backupPath): bool

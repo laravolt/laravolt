@@ -2,10 +2,15 @@
 
 namespace :Namespace:\:ModuleName:\Models;
 
+:MODEL_IMPORT:
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<:ModuleName:>
+ */
 class :ModuleName:Factory extends Factory
 {
+    /** @var class-string<:ModuleName:> */
     protected $model = :ModuleName:::class;
 
     public function definition(): array

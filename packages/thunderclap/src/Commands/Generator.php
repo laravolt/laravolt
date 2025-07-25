@@ -162,8 +162,10 @@ class Generator extends Command
             ':TEST_UPDATE_ATTRIBUTES:' => $this->transformer->toTestUpdateAttributes(),
         ];
 
+        $isUsingExistingModel = $existingModel && $modelAction === 'enhance';
+
         // Add model reference for existing models
-        if ($existingModel && $modelAction === 'enhance') {
+        if ($isUsingExistingModel) {
             $replacer[':Namespace:\:ModuleName:\Models\:ModuleName:'] = $existingModel['class'];
             $replacer[':MODEL_IMPORT:'] = "use {$existingModel['class']};";
         } else {
@@ -228,7 +230,7 @@ class Generator extends Command
                 $this->info($newFile);
 
                 try {
-                    $content = $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
+                    $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
 
                     // Post-process controller files for existing models
                     if ($existingModel && $modelAction === 'enhance' && Str::endsWith($newFile, 'Controller.php')) {
@@ -237,6 +239,25 @@ class Generator extends Command
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
+            }
+        }
+
+        if (File::exists(base_path('./vendor/bin/pint'))) {
+            // 5. Run code style fix
+            $this->info('🔁 Running code style fix...');
+
+            $pintCommand = base_path('vendor/bin/pint') . ' --parallel ' . escapeshellarg($modulePath);
+            exec($pintCommand, $output, $returnCode);
+
+            if ($isUsingExistingModel) {
+                $pintCommand = base_path('vendor/bin/pint') . ' --parallel ' . escapeshellarg($existingModel['path']);
+                exec($pintCommand, $output, $returnCode);
+            }
+
+            if ($returnCode === 0) {
+                $this->info('✅ Code style fixed');
+            } else {
+                $this->warn('⚠️ Code style fix completed with warnings');
             }
         }
 
@@ -327,10 +348,12 @@ class Generator extends Command
                 if (!$enhancement['has_searchable_columns'] && !empty($searchableColumns)) {
                     $this->info('  - Added searchableColumns property');
                 }
+
+                $this->modelEnhancer->removeBackup($backup);
+                $this->info("✓ Backup removed: $backup");
             } else {
                 $this->error('✗ Failed to enhance model');
             }
-
         } catch (\Exception $e) {
             $this->error("✗ Error enhancing model: {$e->getMessage()}");
             $this->info("Restoring from backup...");
