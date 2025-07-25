@@ -6,21 +6,24 @@ use Laravolt\Support\Base\BaseServiceProvider;
 
 class :ModuleName:ServiceProvider extends BaseServiceProvider
 {
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return ':module-name:';
     }
 
-    public function register()
+    public function register(): void
     {
         $file = $this->packagePath("config/{$this->getIdentifier()}.php");
         $this->mergeConfigFrom($file, "modules.{$this->getIdentifier()}");
         $this->publishes([$file => config_path("modules/{$this->getIdentifier()}.php")], 'config');
 
-        $this->config = collect(config("modules.{$this->getIdentifier()}"));
+        $configArray = config("modules.{$this->getIdentifier()}");
+        if (is_array($configArray)) {
+            $this->config = collect($configArray);
+        }
     }
 
-    protected function menu()
+    protected function menu(): void
     {
         app('laravolt.menu.builder')->register(function ($menu) {
             if ($menu->modules) {
