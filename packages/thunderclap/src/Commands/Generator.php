@@ -22,7 +22,6 @@ class Generator extends Command
                     {--template= : Code will be generated based on this stubs structure}
                     {--force : Overwrite files if exists}
                     {--module= : Custom module name you want}
-                    {--with-tests : Generate test files with 100% code coverage}
                     {--use-existing-models : Auto-detect and enhance existing models}';
 
     /**
@@ -175,12 +174,6 @@ class Generator extends Command
 
         foreach (File::allFiles($modulePath, true) as $file) {
             if (is_file($file)) {
-                // Skip test files if --with-tests option is not provided
-                if (!$this->option('with-tests') && (Str::contains($file, '/tests/') || Str::contains($file, '/database/factories/'))) {
-                    File::delete($file);
-                    continue;
-                }
-
                 // Skip model generation if using existing model
                 if ($skipModelGeneration && Str::contains($file, '/Models/') && Str::endsWith($file, 'Model.php.stub')) {
                     File::delete($file);
