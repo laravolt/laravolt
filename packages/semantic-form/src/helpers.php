@@ -60,24 +60,16 @@ if (! function_exists('form_calendar_text')) {
      */
     function form_calendar_text(): array
     {
-        $startOfWeek = now()->startOfWeek(\Carbon\Carbon::SUNDAY);
-        $days = $months = $monthsShort = [];
-        for ($i = 0; $i < 7; $i++) {
-            $days[] = $startOfWeek->isoFormat('dd');
-            $startOfWeek->addDay();
-        }
-        for ($i = 1; $i <= 12; $i++) {
-            $day = \Carbon\Carbon::createFromDate(2020, $i, 1);
-            $months[] = $day->isoFormat('MMMM');
-            $monthsShort[] = $day->isoFormat('MMM');
-        }
-
         return [
-            'days' => $days,
-            'months' => $months,
-            'monthsShort' => $monthsShort,
+            'days' => ['M', 'S', 'S', 'R', 'K', 'J', 'S'],
+            'dayNamesShort' => ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+            'dayNames' => ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+            'months' => ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+            'monthsShort' => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
             'today' => __('Hari ini'),
             'now' => __('Sekarang'),
+            'am' => __('AM'),
+            'pm' => __('PM'),
         ];
     }
 }

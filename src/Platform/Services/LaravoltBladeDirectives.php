@@ -6,7 +6,15 @@ class LaravoltBladeDirectives
 {
     public static function scripts($expression)
     {
-        $calendarLang = json_encode(form_calendar_text());
+        $calendarLocalization = '';
+        if (config('app.locale') === 'id') {
+            $calendarLang = json_encode(form_calendar_text());
+            $calendarLang = <<<HTML
+            <script>
+                $.fn.calendar.settings.text = $calendarLang;
+            </script>
+            HTML;
+        }
 
         return <<<EOF
 {!! Asset::js() !!}
@@ -16,9 +24,7 @@ class LaravoltBladeDirectives
 <?php else: ?>
 <script src="{{ mix('js/vendor.js', 'laravolt') }}"></script>
 <?php endif; ?>
-<script>
-    $.fn.calendar.settings.text = $calendarLang;
-</script>
+$calendarLocalization
 <script src="{{ mix('js/platform.js', 'laravolt') }}"></script>
 EOF;
     }
