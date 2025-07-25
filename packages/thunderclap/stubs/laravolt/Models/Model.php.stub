@@ -16,6 +16,7 @@ class :ModuleName: extends Model
 
     protected $guarded = [];
 
+    /** @var array<string> */
     protected $searchableColumns = [:SEARCHABLE_COLUMNS:];
 
     protected static function newFactory()

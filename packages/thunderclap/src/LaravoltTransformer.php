@@ -22,11 +22,13 @@ class LaravoltTransformer
         $columns = $this->removeForeignKeys($this->columns);
         $columns = $columns->except(config('laravolt.thunderclap.columns.except'));
 
-        return $columns
+        $result = $columns
             ->keys()->map(function ($item) {
                 return '"'.$item.'"';
             })
-            ->implode(', ').',';
+            ->implode(', ');
+
+        return $result ? $result : '';
     }
 
     public function toValidationRules()
@@ -39,12 +41,14 @@ class LaravoltTransformer
             '%s' => ['%s']
 TEMPLATE;
 
-        return $columns
+        $result = $columns
             ->values()
             ->map(function ($item) use ($template) {
                 return sprintf($template, $item['name'], $item['required'] ? 'required' : '');
             })
-            ->implode(",\n").',';
+            ->implode(",\n");
+
+        return $result ? $result : '';
     }
 
     public function toLangFields()

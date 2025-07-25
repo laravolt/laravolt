@@ -41,7 +41,7 @@ class :ModuleName:Controller extends Controller
     {
         $:moduleName:->update($request->validated());
 
-        return to_route(':route-url-prefix:.index')->withSuccess(':Module Name: saved');
+        return to_route(':route-url-prefix:.index')->withSuccess(':Module Name: updated');
     }
 
     public function destroy(:ModuleName: $:moduleName:)
