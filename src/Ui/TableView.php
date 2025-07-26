@@ -173,4 +173,11 @@ abstract class TableView extends Component
             'direction' => $this->direction,
         ];
     }
+
+    public function updatingPage()
+    {
+        if (empty(request()->input($this->searchName)) && ! empty($this->search)) {
+            request()->merge([$this->searchName => $this->search]);
+        }
+    }
 }
