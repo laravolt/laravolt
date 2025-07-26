@@ -12,7 +12,7 @@ use Laravolt\Suitable\TableView;
 class :ModuleName:TableView extends TableView
 {
     /**
-     * @return LengthAwarePaginator<int, Topic>
+     * @return LengthAwarePaginator<int, :ModuleName:>
      */
     public function source(): LengthAwarePaginator
     {
