@@ -12,12 +12,12 @@
     {!! form()->uploader('avatar')->label('Single File Upload') !!}
     {!! form()->uploader('attachments')->limit(10)->label('Multiple File Upload') !!}
     {!! form()->uploader('attachments_non_ajax')->ajax(false)->limit(10)->label('Multiple File Upload Wihout Ajax') !!}
-    <h3 class="ui divider horizontal section">Chained Dropdown</h3>
-    <p class="ui message">Silakan pilih salah satu user, makan dropdown kedua akan otomatis ter-update dengan
+    <h3 class="mt-4 text-sm font-semibold text-gray-800">Chained Dropdown</h3>
+    <p class="text-sm text-gray-600">Silakan pilih salah satu user, makan dropdown kedua akan otomatis ter-update dengan
         menampilkan daftar user yang berhubungan</p>
     {!! form()->dropdownDB('user1', 'select id, email as name from users')->label('User') !!}
     {!! form()->dropdownDB('user2', 'select id, email as name from users where id = %s')->label('Similar User')->dependency('user1') !!}
-    <h3 class="ui divider horizontal section">Dropdown With Remove Content</h3>
+    <h3 class="mt-4 text-sm font-semibold text-gray-800">Dropdown With Remove Content</h3>
     {!! form()->dropdownDB('user3', 'select id, email as name from users where email like "%%%s%%" limit 10')->prependOption(2, 'Foo')->ajax()->label('Search User') !!}
     {!! form()->coordinate('koordinat')->label('Koordinat') !!}
     {!! form()->redactor('redactor')->label('WYSIWYG (Redactor)') !!}
@@ -31,27 +31,27 @@
     {!! form()->close() !!}
 </x-volt-panel>
 
-<div class="ui grid equal width">
-    <div class="column">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
         <x-volt-panel title="Horizontal Form">
             {!! form()->get()->horizontal() !!}
-            <h3 class="ui horizontal divider section">Basic Info</h3>
+            <h3 class="mt-2 text-sm font-semibold text-gray-800">Basic Info</h3>
             {!! form()->text('nama')->label('Nama') !!}
             {!! form()->dropdown('lokasi', ['Indonesia', 'Malaysia'])->label('Lokasi') !!}
-            <h3 class="ui horizontal divider section">Localization</h3>
+            <h3 class="mt-2 text-sm font-semibold text-gray-800">Localization</h3>
             {!! form()->dropdown('language', ['Indonesia', 'Malaysia'])->label('Language') !!}
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->action(form()->submit('Simpan')) !!}
             {!! form()->close() !!}
         </x-volt-panel>
     </div>
-    <div class="column">
+    <div>
         <x-volt-panel title="Vertical Form">
             {!! form()->get() !!}
-            <h3 class="ui horizontal divider section">Basic Info</h3>
+            <h3 class="mt-2 text-sm font-semibold text-gray-800">Basic Info</h3>
             {!! form()->text('nama')->label('Nama') !!}
             {!! form()->dropdown('lokasi', ['Indonesia', 'Malaysia'])->label('Lokasi') !!}
-            <h3 class="ui horizontal divider section">Localization</h3>
+            <h3 class="mt-2 text-sm font-semibold text-gray-800">Localization</h3>
             {!! form()->dropdown('language', ['Indonesia', 'Malaysia'])->label('Language') !!}
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->submit('Simpan') !!}

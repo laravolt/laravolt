@@ -12,7 +12,7 @@
 
                 @include('laravolt::menu.actionbar')
 
-                <main class="ui container-fluid content__body p-3"
+                <main class="content__body p-4"
                       up-main="modal"
                       data-font-size="{{ config('laravolt.ui.font_size') }}"
                       data-theme="{{ config('laravolt.ui.theme') }}"

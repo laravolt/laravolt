@@ -1,12 +1,10 @@
 <x-volt-app :title="__('laravolt::label.permissions')">
 
     <x-volt-panel title="Atur Deskripsi Hak Akses">
-        <div class="ui icon message compact">
-            <i class="lightbulb outline icon"></i>
-            <div class="content">
-                <div class="header">
-                    Tips
-                </div>
+        <div class="flex items-start gap-x-3 rounded-md border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">
+            <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 9v2m0 6h.01M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
+            <div>
+                <div class="font-semibold">Tips</div>
                 <p>
                     Memberikan deskripsi yang jelas akan membantu admin aplikasi ketika melakukan pengaturan hak akses.
                     <br>

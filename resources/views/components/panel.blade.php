@@ -1,44 +1,41 @@
 @php($icon = $icon ?? false)
 
-<div {{ $attributes->merge(['class' => 'ui segments panel']) }}>
+<div {{ $attributes->merge(['class' => 'bg-white border border-gray-200 rounded-xl shadow-sm']) }}>
     @if($title or $icon)
-        <div class="ui segment panel__header {{ $attributes['headerClass'] ?? '' }}">
-            <div class="ui menu secondary borderless m-0 p-0" style="min-height: 0">
-                @if($icon)
-                    <div class="panel__icon item p-0 p-l-xs m-0">
-                        <x-volt-icon :name="$icon" :class="$iconClass"/>
-                    </div>
-                @endif
-
-                @if($title)
-                    <div class="item p-0 m-0">
-                        <h4 class="panel__title ui header p-x-sm p-y-0">
-                            {!! $title !!}
+        <div class="px-4 py-3 border-b border-gray-200 {{ $attributes['headerClass'] ?? '' }}">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-x-2">
+                    @if($icon)
+                        <div class="text-teal-600">
+                            <x-volt-icon :name="$icon" :class="$iconClass"/>
+                        </div>
+                    @endif
+                    @if($title)
+                        <div>
+                            <h4 class="text-base font-semibold text-gray-800">
+                                {!! $title !!}
+                            </h4>
                             @if($description)
-                            <div class="sub header">{!! $description !!}</div>
+                                <p class="mt-0.5 text-sm text-gray-500">{!! $description !!}</p>
                             @endif
-                        </h4>
-                    </div>
-                @endif
-
+                        </div>
+                    @endif
+                </div>
                 @if(isset($action))
-                <div class="menu right">
-                    <div class="item p-0">
+                    <div>
                         {!! $action !!}
                     </div>
-                </div>
                 @endif
-
             </div>
         </div>
     @endif
 
-    <div class="ui segment {{ $attributes['contentClass'] ?? 'p-3' }}">
+    <div class="px-4 py-4 {{ $attributes['contentClass'] ?? '' }}">
         {!! $slot !!}
     </div>
 
     @if(isset($footer))
-        <div class="ui segment">
+        <div class="px-4 py-3 border-t border-gray-200">
             {!! $footer !!}
         </div>
     @endif

@@ -1,19 +1,17 @@
 <x-volt-panel :title="$this->title()">
-    <div class="ui unstackable grid middle aligned">
+    <div class="flex items-center gap-x-4">
         @if($this->icon())
-            <div class="two wide column center aligned">
-                <div class="ui label {{ $this->color() }} massive">
-                    <x-volt-icon :name="$this->icon()"></x-volt-icon>
-                </div>
+            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-teal-50 text-teal-600">
+                <x-volt-icon :name="$this->icon()"></x-volt-icon>
             </div>
         @endif
-        <div class="{{ $this->icon() ? 'fourteen' : '' }} wide column">
-            <div class="ui statistic small" style="width: 100%">
-                <div class="value">
+        <div class="flex-1">
+            <div class="w-full">
+                <div class="text-2xl font-semibold text-gray-800">
                     {{ $this->value() }}
                 </div>
-                <div class="label">
-                    <span class="ui {{ $this->color() }} text" style="font-size: .9em">
+                <div class="text-sm">
+                    <span class="text-teal-600">
                         {{ $this->label() }}
                     </span>
                 </div>

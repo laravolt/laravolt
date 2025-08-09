@@ -17,9 +17,9 @@
 
 
     @unless($roleEditable)
-        <div class="field">
+        <div class="mb-3">
             <label for="">&nbsp;</label>
-            <div class="ui message m-t-0">Editing role are disabled by system configuration.</div>
+            <div class="rounded-md border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">Editing role are disabled by system configuration.</div>
         </div>
     @endif
 
@@ -28,19 +28,19 @@
     {!! form()->close() !!}
 
 
-    <div class="ui divider section"></div>
+    <div class="my-4 border-t border-gray-200"></div>
 
-    <div class="ui red segment p-2">
-        <h4 class="ui header">@lang('laravolt::users.delete_account')</h4>
+    <div class="rounded-xl border border-red-200 bg-red-50 p-3">
+        <h4 class="text-sm font-semibold text-red-700">@lang('laravolt::users.delete_account')</h4>
 
         @if($user['id'] == auth()->id())
-            <div class="ui message warning">@lang('laravolt::message.cannot_delete_yourself')</div>
+            <div class="mt-2 rounded-md border border-yellow-200 bg-yellow-50 p-2 text-yellow-800">@lang('laravolt::message.cannot_delete_yourself')</div>
         @else
             {!! form()->open()->delete()->action(route('epicentrum::users.destroy', $user['id'])) !!}
             <p>Menghapus pengguna dan semua data yang berhubungan dengan pengguna ini.
                 <br>
                 Aksi ini tidak bisa dibatalkan.</p>
-            <x-volt-button class="red" value="1">
+            <x-volt-button class="bg-red-600 hover:bg-red-700" value="1">
                 @lang('laravolt::action.delete') {{ $user->name }}
             </x-volt-button>
             {!! form()->close() !!}

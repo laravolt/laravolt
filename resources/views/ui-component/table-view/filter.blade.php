@@ -1,41 +1,21 @@
 @if($this->filters())
-    <div data-role="suitable-filter">
-        <div class="ui basic button icon" data-role="suitable-filter-icon">
-            <i class="icon filter"></i>
-            <i class="icon angle down"></i>
-        </div>
-        <div class="ui popup p-0" style="min-width: 300px" wire:ignore.self>
-            <form class="ui form p-2" wire:submit.prevent>
+    <div class="hs-dropdown [--trigger:click] relative inline-flex">
+        <button type="button" class="hs-dropdown-toggle inline-flex items-center gap-x-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M4 8h16M6 12h12M7 16h10M9 20h6"/></svg>
+            <span>Filter</span>
+            <svg class="h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="hs-dropdown-menu transition-[opacity,margin] hs-dropdown-open:opacity-100 opacity-0 hidden z-10 mt-2 w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-md" aria-labelledby="hs-table-filter">
+            <form class="space-y-3" wire:submit.prevent>
                 @foreach($this->filters() as $filter)
                     {!! $filter->render() !!}
                 @endforeach
             </form>
-            <x-volt-button wire:click="resetFilters" type="reset" class="bottom basic fluid attached b-0"
-                           icon="times circle outline">
-                Clear Filter
-            </x-volt-button>
+            <div class="mt-3">
+                <x-volt-button wire:click="resetFilters" type="reset" class="w-full bg-gray-100 text-gray-700 hover:bg-gray-200" icon="close">
+                    Clear Filter
+                </x-volt-button>
+            </div>
         </div>
     </div>
-
-    @once
-        @push('main')
-            <script>
-                $(function () {
-                    $('[data-role="suitable-filter-icon"]')
-                        .popup({
-                            inline: true,
-                            on: 'click',
-                            position: 'bottom right',
-                            lastResort: 'bottom left',
-                        })
-                    ;
-                    $('[data-role="suitable-filter"] button[type="reset"]')
-                        .on('click', function () {
-                            $('[data-role="suitable-filter"] form').form('clear');
-                            $('[data-role="suitable-filter"] .ui.dropdown').dropdown('set selected', '0');
-                        });
-                });
-            </script>
-        @endpush
-    @endonce
 @endif
