@@ -232,3 +232,16 @@ if (! function_exists('readable_number')) {
         }
     }
 }
+
+if (! function_exists('csp_nonce')) {
+    function csp_nonce(): string
+    {
+        try {
+            /** @var \Illuminate\Http\Request|null $request */
+            $request = app('request');
+            return (string) ($request?->attributes->get('csp_nonce') ?? '');
+        } catch (\Throwable $e) {
+            return '';
+        }
+    }
+}

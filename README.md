@@ -4,7 +4,8 @@ Platform untuk mengembangkan sistem informasi dalam 2 minggu
 
 ## Dokumentasi
 
-https://laravolt.dev/
+- Dokumentasi umum: https://laravolt.dev/
+- Keamanan: Content Security Policy: docs/security/content-security-policy.md
 
 ## Version Compatibility
 
