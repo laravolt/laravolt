@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['web', 'auth', \Laravolt\\Middleware\\ContentSecurityPolicy::class],
     'features' => [
         'database-monitor' => false,
         'epicentrum' => true,
