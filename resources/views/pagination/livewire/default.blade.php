@@ -1,42 +1,37 @@
-<div class="menu attached right bottom" data-role="pagination">
-    <!-- Previous Page Link -->
+<div class="flex items-center gap-x-1" data-role="pagination">
     @if ($paginator->onFirstPage())
-        <button class="item disabled prev ui button icon">
-            <i class="icon left chevron" aria-hidden="true"></i>
+        <button class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-400" disabled>
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
     @else
-        <div class="item prev ui button icon" wire:click.prevent="previousPage" rel="prev">
-            <i class="icon left chevron" aria-hidden="true"></i>
-        </div>
+        <button class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-700 hover:bg-gray-50" wire:click.prevent="previousPage" rel="prev">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
     @endif
 
-<!-- Pagination Elements -->
     @foreach ($elements as $element)
-    <!-- "Three Dots" Separator -->
         @if (is_string($element))
-            <div class="item disabled dots"><span>{{ $element }}</span></div>
+            <span class="px-2 text-sm text-gray-500">{{ $element }}</span>
         @endif
 
-    <!-- Array Of Links -->
         @if (is_array($element))
             @foreach ($element as $page => $url)
                 @if ($page == $paginator->currentPage())
-                    <div class="item active number">{{ $page }}</div>
+                    <span class="inline-flex items-center rounded-md bg-teal-600 px-2.5 py-1.5 text-sm font-medium text-white">{{ $page }}</span>
                 @else
-                    <button class="item number" wire:click.prevent="gotoPage({{ $page }})">{{ $page }}</button>
+                    <button class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50" wire:click.prevent="gotoPage({{ $page }})">{{ $page }}</button>
                 @endif
             @endforeach
         @endif
     @endforeach
 
-<!-- Next Page Link -->
     @if ($paginator->hasMorePages())
-        <button class="item next ui button icon" wire:click.prevent="nextPage" rel="next">
-            <i class="icon right chevron" aria-hidden="true"></i>
+        <button class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-700 hover:bg-gray-50" wire:click.prevent="nextPage" rel="next">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
     @else
-        <div class="item disabled next ui button icon">
-            <i class="icon right chevron" aria-hidden="true"></i>
-        </div>
+        <button class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-400" disabled>
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
     @endif
 </div>

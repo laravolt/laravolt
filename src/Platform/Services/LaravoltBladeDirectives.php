@@ -11,9 +11,10 @@ class LaravoltBladeDirectives
             $calendarLang = json_encode(form_calendar_text());
             $calendarLang = <<<HTML
             <script>
-                $.fn.calendar.settings.text = $calendarLang;
+                window.__calendarText = $calendarLang;
             </script>
             HTML;
+            $calendarLocalization = $calendarLang;
         }
 
         return <<<EOF
@@ -26,6 +27,7 @@ class LaravoltBladeDirectives
 <?php endif; ?>
 $calendarLocalization
 <script src="{{ mix('js/platform.js', 'laravolt') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/preline@2.5.1/dist/preline.min.js"></script>
 EOF;
     }
 
@@ -44,6 +46,23 @@ EOF;
 
 <link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
 <link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.tailwind = window.tailwind || {};
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: {} },
+    safelist: [
+      'bg-teal-600','hover:bg-teal-700','focus:ring-teal-500','text-teal-600','border-teal-600',
+      'bg-blue-600','hover:bg-blue-700','focus:ring-blue-500','text-blue-600','border-blue-600',
+      'bg-red-600','hover:bg-red-700','focus:ring-red-500','text-red-600','border-red-600',
+      'bg-gray-100','bg-white','text-gray-700','text-gray-800','border-gray-200','shadow-sm',
+      'hidden'
+    ]
+  };
+</script>
+
 <style>.sidebar__menu > .ui.attached.menu:not(.tabular):not(.text) {border: unset}.panel.x-suitable .ui.bottom.attached.menu .item {border-width: 1px;border-color: #8090a0}</style>
 EOF;
     }

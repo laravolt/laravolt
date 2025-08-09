@@ -1,16 +1,8 @@
 <div themed class="x-tab">
-    <div class="ui top attached secondary pointing tabular menu">
+    <nav class="flex border-b border-gray-200" aria-label="Tabs">
         @stack("tab.titles.$key")
-    </div>
+    </nav>
 
     @stack("tab.contents.$key")
 </div>
-
-@once
-    @push('script')
-        <script>
-            $('.x-tab .menu .item').tab();
-        </script>
-    @endpush
-@endonce
 
