@@ -1,16 +1,23 @@
-<div class="ui buttons basic icon mini" themed>
-    <!-- Previous Page Link -->
+<div class="flex items-center gap-x-1" themed>
     @if ($paginator->onFirstPage())
-        <div class="ui button disabled "><i class="icon left chevron"></i></div>
+        <span class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-400">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </span>
     @else
-        <a class="ui button " href="{{ $paginator->previousPageUrl() }}" rel="prev"><i
-                    class="icon left chevron"></i></a>
+        <a class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-700 hover:bg-gray-50" href="{{ $paginator->previousPageUrl() }}" rel="prev">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </a>
     @endif
-    <div class="ui button ">{{ $paginator->currentPage() }}/{{ $paginator->lastPage() }}</div>
-    <!-- Next Page Link -->
+
+    <span class="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-1.5 text-sm font-medium text-gray-700">{{ $paginator->currentPage() }}/{{ $paginator->lastPage() }}</span>
+
     @if ($paginator->hasMorePages())
-        <a class="ui button " href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="icon right chevron"></i></a>
+        <a class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-700 hover:bg-gray-50" href="{{ $paginator->nextPageUrl() }}" rel="next">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
     @else
-        <div class="ui button disabled "><i class="icon right chevron"></i></div>
+        <span class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-gray-400">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </span>
     @endif
 </div>

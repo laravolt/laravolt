@@ -44,9 +44,6 @@ EOF;
     }
 </style>
 
-<link rel="stylesheet" type="text/css" href="{{ mix('semantic/semantic.min.css', 'laravolt') }}"/>
-<link rel="stylesheet" type="text/css" href="{{ mix('css/all.css', 'laravolt') }}"/>
-
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   window.tailwind = window.tailwind || {};
