@@ -17,6 +17,10 @@ class ContentSecurityPolicy
 
     public function handle(Request $request, Closure $next): Response
     {
+        if ($this->shouldSkip($request)) {
+            return $next($request);
+        }
+
         $nonce = bin2hex(random_bytes(16));
 
         // Store nonce on the request and share to views
@@ -63,5 +67,17 @@ class ContentSecurityPolicy
         $response->headers->set($headerName, $policy);
 
         return $response;
+    }
+
+    private function shouldSkip(Request $request): bool
+    {
+        $except = (array) config('laravolt.csp.except', []);
+        foreach ($except as $pattern) {
+            if ($pattern && $request->is($pattern)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

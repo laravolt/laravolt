@@ -6,6 +6,8 @@ return [
     'report_only' => env('CSP_REPORT_ONLY', true),
 
     // You can use the {nonce} placeholder which will be replaced per-request
+    'except' => explode(',', (string) env('CSP_EXCEPT', '')),
+
     'directives' => [
         // Examples of sane defaults. Adjust as needed for your app/assets/CDNs.
         'default-src' => ["'self'"],
