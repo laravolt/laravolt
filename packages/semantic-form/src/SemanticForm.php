@@ -3,49 +3,49 @@
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection as BaseCollection;
+use Laravolt\Asset\AssetFacade;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
-use Laravolt\Asset\AssetFacade;
-use Laravolt\SemanticForm\Elements\ActionWrapper;
-use Laravolt\SemanticForm\Elements\Button;
-use Laravolt\SemanticForm\Elements\Checkbox;
-use Laravolt\SemanticForm\Elements\CheckboxGroup;
-use Laravolt\SemanticForm\Elements\Color;
-use Laravolt\SemanticForm\Elements\Coordinate;
 use Laravolt\SemanticForm\Elements\Date;
-use Laravolt\SemanticForm\Elements\Datepicker;
-use Laravolt\SemanticForm\Elements\DatepickerWrapper;
-use Laravolt\SemanticForm\Elements\DropdownDB;
+use Laravolt\SemanticForm\Elements\File;
+use Laravolt\SemanticForm\Elements\Html;
+use Laravolt\SemanticForm\Elements\Link;
+use Laravolt\SemanticForm\Elements\Text;
+use Laravolt\SemanticForm\Elements\Time;
+use Laravolt\SemanticForm\Elements\Color;
 use Laravolt\SemanticForm\Elements\Email;
 use Laravolt\SemanticForm\Elements\Field;
-use Laravolt\SemanticForm\Elements\FieldsOpen;
-use Laravolt\SemanticForm\Elements\File;
-use Laravolt\SemanticForm\Elements\FormOpen;
-use Laravolt\SemanticForm\Elements\Hidden;
-use Laravolt\SemanticForm\Elements\Html;
-use Laravolt\SemanticForm\Elements\InputWrapper;
 use Laravolt\SemanticForm\Elements\Label;
-use Laravolt\SemanticForm\Elements\Link;
-use Laravolt\SemanticForm\Elements\Multirow;
+use Laravolt\SemanticForm\Elements\Button;
+use Laravolt\SemanticForm\Elements\Hidden;
 use Laravolt\SemanticForm\Elements\Number;
-use Laravolt\SemanticForm\Elements\Password;
-use Laravolt\SemanticForm\Elements\RadioButton;
-use Laravolt\SemanticForm\Elements\RadioGroup;
-use Laravolt\SemanticForm\Elements\Redactor;
 use Laravolt\SemanticForm\Elements\Rupiah;
 use Laravolt\SemanticForm\Elements\Select;
-use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
-use Laravolt\SemanticForm\Elements\SelectDateWrapper;
-use Laravolt\SemanticForm\Elements\SelectMultiple;
-use Laravolt\SemanticForm\Elements\Text;
+use Illuminate\Database\Eloquent\Collection;
+use Laravolt\SemanticForm\Elements\Checkbox;
+use Laravolt\SemanticForm\Elements\FormOpen;
+use Laravolt\SemanticForm\Elements\Multirow;
+use Laravolt\SemanticForm\Elements\Password;
+use Laravolt\SemanticForm\Elements\Redactor;
 use Laravolt\SemanticForm\Elements\TextArea;
-use Laravolt\SemanticForm\Elements\Time;
 use Laravolt\SemanticForm\Elements\Uploader;
-use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
+use Laravolt\SemanticForm\Elements\Coordinate;
+use Laravolt\SemanticForm\Elements\Datepicker;
+use Laravolt\SemanticForm\Elements\DropdownDB;
+use Laravolt\SemanticForm\Elements\FieldsOpen;
+use Laravolt\SemanticForm\Elements\RadioGroup;
+use Laravolt\SemanticForm\Elements\RadioButton;
+use Laravolt\SemanticForm\Elements\InputWrapper;
+use Laravolt\SemanticForm\Elements\ActionWrapper;
+use Laravolt\SemanticForm\Elements\CheckboxGroup;
+use Laravolt\SemanticForm\Elements\SelectMultiple;
+use Illuminate\Support\Collection as BaseCollection;
+use Laravolt\SemanticForm\Elements\DatepickerWrapper;
+use Laravolt\SemanticForm\Elements\SelectDateWrapper;
 use Laravolt\SemanticForm\OldInput\OldInputInterface;
+use Laravolt\SemanticForm\Elements\SelectDateTimeWrapper;
+use Laravolt\SemanticForm\ErrorStore\ErrorStoreInterface;
 
 class SemanticForm
 {
@@ -190,8 +190,7 @@ class SemanticForm
 
         return (new DatepickerWrapper($input))
             ->format($format)
-            ->prependIcon('calendar outline')
-            ->addClass('calendar');
+            ->prependIcon('calendar');
     }
 
     public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d H:i:s')
@@ -232,8 +231,7 @@ class SemanticForm
 
         return (new InputWrapper($input))
             ->data('calendar-type', 'time')
-            ->prependIcon('clock outline outline')
-            ->addClass('calendar');
+            ->prependIcon('clock');
     }
 
     public function email($name, $defaultValue = null)
@@ -449,7 +447,7 @@ class SemanticForm
     public function submit($label = 'Submit', $name = null)
     {
         $submit = new Button($label, $name);
-        $submit->attribute('type', 'submit')->addClass('primary');
+        $submit->attribute('type', 'submit');
 
         return $submit;
     }
@@ -508,7 +506,11 @@ class SemanticForm
     public function dropdownColor($name, $defaultValue)
     {
         $options = collect(config('laravolt.ui.colors'))->mapWithKeys(function ($item, $key) {
-            return [$key => "<span class='ui label circular solid $key'>$key</span>"];
+            $badge = sprintf(
+                "<span class=\"inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-500/10\">%s</span>",
+                $key
+            );
+            return [$key => $badge];
         });
 
         return $this->radioGroup($name, $options, $defaultValue);
@@ -683,9 +685,9 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)->addClass('compact')));
-        $month = (new Field($this->selectMonth('_'.$name.'[month]')->addClass('compact')));
-        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)->addClass('compact')));
+        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)));
+        $month = (new Field($this->selectMonth('_'.$name.'[month]')));
+        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)));
 
         return new SelectDateWrapper($date, $month, $year);
     }
@@ -696,13 +698,13 @@ class SemanticForm
             $endYear = date('Y') + 10;
         }
 
-        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)->addClass('compact')));
-        $month = (new Field($this->selectMonth('_'.$name.'[month]')->addClass('compact')));
-        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)->addClass('compact')));
+        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)));
+        $month = (new Field($this->selectMonth('_'.$name.'[month]')));
+        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)));
 
         $timeOptions = $this->getTimeOptions($interval);
 
-        $time = (new Field($this->dropdown('_'.$name.'[time]', $timeOptions)->addClass('compact')));
+        $time = (new Field($this->dropdown('_'.$name.'[time]', $timeOptions)));
 
         $control = new SelectDateTimeWrapper($date, $month, $year, $time);
 
