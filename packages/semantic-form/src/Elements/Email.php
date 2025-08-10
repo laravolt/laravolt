@@ -4,7 +4,9 @@ namespace Laravolt\SemanticForm\Elements;
 
 class Email extends Text
 {
-    protected $attributes = [
-        'type' => 'email',
-    ];
+    public function __construct($name)
+    {
+        parent::__construct($name);
+        $this->attribute('type', 'email');
+    }
 }
