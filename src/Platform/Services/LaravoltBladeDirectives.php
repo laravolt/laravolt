@@ -20,6 +20,7 @@ class LaravoltBladeDirectives
      */
     public static function styles($expression)
     {
+        $accent = config('laravolt.ui.colors.'.config('laravolt.ui.color'), '#3b82f6');
         return <<<HTML
           <!-- Font -->
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,6 +42,18 @@ class LaravoltBladeDirectives
 
           <link rel="stylesheet" href="/laravolt/assets/vendor/apexcharts/dist/apexcharts.css">
           <style type="text/css">
+            :root { --accent: {$accent}; --accent-foreground: #ffffff; }
+            .btn-accent { background-color: var(--accent) !important; color: var(--accent-foreground) !important; }
+            .btn-accent:hover, .btn-accent:focus { filter: brightness(0.95); }
+            .btn-accent-soft { color: var(--accent) !important; background-color: color-mix(in srgb, var(--accent) 12%, transparent) !important; }
+            .btn-accent-soft:hover, .btn-accent-soft:focus { background-color: color-mix(in srgb, var(--accent) 18%, transparent) !important; }
+            .link-accent { color: var(--accent) !important; }
+            .link-accent:hover, .link-accent:focus { text-decoration: underline; }
+            input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+            input:focus, select:focus, textarea:focus {
+              border-color: var(--accent) !important;
+              box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent) !important;
+            }
             .apexcharts-tooltip.apexcharts-theme-light
             {
               background-color: transparent !important;

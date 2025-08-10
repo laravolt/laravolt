@@ -4,11 +4,12 @@
     $size = $attributes->get('size', 'md');
 
     $variantClasses = [
-        'primary' => 'bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600',
+        'primary' => 'btn-accent',
         'secondary' => 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 focus:bg-gray-100 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700',
-        'soft' => 'bg-blue-50 text-blue-700 hover:bg-blue-100 focus:bg-blue-100 border border-transparent dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30',
+        'soft' => 'btn-accent-soft',
         'danger' => 'bg-red-600 text-white hover:bg-red-700 focus:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600',
         'ghost' => 'bg-transparent text-gray-700 hover:bg-gray-100 focus:bg-gray-100 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700',
+        'link' => 'link-accent'
     ][$variant] ?? '';
 
     $sizeClasses = [
