@@ -1,5 +1,5 @@
 <x-volt-auth>
-    <h3 class="ui header horizontal divider section">@lang('laravolt::auth.reset_password')</h3>
+    <h3 class="text-xl font-semibold text-center text-gray-800 dark:text-neutral-200 mb-4">@lang('laravolt::auth.reset_password')</h3>
 
     {!! form()->open(route('auth::reset.store', $token)) !!}
     {!! form()->hidden('token', $token) !!}
@@ -9,7 +9,7 @@
     {!! form()->action(form()->submit(__('Reset Password'))) !!}
     {!! form()->close() !!}
 
-    <div class="ui divider section"></div>
+    <div class="my-4 h-px bg-gray-200 dark:bg-neutral-700"></div>
 
     @lang('laravolt::auth.already_registered?')
 
