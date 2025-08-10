@@ -122,6 +122,9 @@ class UiServiceProvider extends BaseServiceProvider
         View::composer(
             'laravolt::menu.sidebar',
             function () {
+                // Ensure dynamic registrations do not accumulate across requests/renders
+                $this->app['laravolt.menu.sidebar']->resetDynamic();
+
                 foreach (config('laravolt.menu') as $menu) {
                     $this->app['laravolt.menu.builder']->loadArray($menu);
                 }

@@ -25,7 +25,7 @@ class MenuBuilder
     public function runCallbacks()
     {
         foreach ($this->registeredCallbacks as $callback) {
-            app('laravolt.menu.sidebar')->registerCore($callback);
+            app('laravolt.menu.sidebar')->register($callback);
         }
     }
 
@@ -38,7 +38,7 @@ class MenuBuilder
                 $order = $option['order'] ?? 50;
             }
 
-            app('laravolt.menu.sidebar')->registerCore(
+            app('laravolt.menu.sidebar')->register(
                 function ($sidebar) use ($title, $option, $order) {
                     /** @var \Lavary\Menu\Builder $section */
                     $section = $sidebar->get(strtolower(trim($title)));
