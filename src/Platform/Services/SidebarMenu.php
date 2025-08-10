@@ -25,6 +25,11 @@ class SidebarMenu extends BaseMenu
         $this->callbacks[] = $callback;
     }
 
+    public function resetDynamic(): void
+    {
+        $this->callbacks = [];
+    }
+
     public static function setVisible($children, $visible = 'visible')
     {
         foreach ($children as $child) {
