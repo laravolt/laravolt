@@ -28,7 +28,7 @@ return [
      * Choose one of the following colors that match closely with the theme
      * Available colors: red, orange, yellow, olive, green, teal, blue, violet, purple, brow, grey, black
      * */
-    'color' => 'red',
+    'color' => 'blue',
 
     /*
      * Login page settings
@@ -70,18 +70,9 @@ return [
         ],
     ],
     'colors' => [
-        'red' => '#DB2828',
-        'orange' => '#F2711C',
-        'yellow' => '#FBBD08',
-        'olive' => '#B5CC18',
-        'green' => '#21BA45',
-        'teal' => '#00B5AD',
-        'blue' => '#0052CC',
-        'violet' => '#6435C9',
-        'purple' => '#A333C8',
-        'pink' => '#E03997',
-        'brown' => '#A5673F',
-        'grey' => '#767676',
-        'black' => '#1B1C1D',
+        'blue' => '#2563EB',
+        'indigo' => '#4F46E5',
+        'cyan' => '#0891B2',
+        'teal' => '#0D9488',
     ],
 ];

@@ -20,7 +20,7 @@ class RadioGroup extends CheckboxGroup
 
     public function render()
     {
-        // Base container classes
+        // Base container classes; inline() from parent can override with wrap + gaps
         $this->addClass('flex gap-x-6');
 
         // Guess group name from first radio control if present
@@ -63,6 +63,12 @@ class RadioGroup extends CheckboxGroup
         }
 
         $html .= '</div>';
+
+        // If group has a label set via ->label(), wrap using Field to render label + hint
+        if ($this->label) {
+            $field = new Field($this->label, new Html($html));
+            return $this->decorateField($field)->render();
+        }
 
         return $html;
     }

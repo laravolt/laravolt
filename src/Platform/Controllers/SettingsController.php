@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Artisan;
 use Laravolt\Fields\Field;
 
 class SettingsController extends Controller
@@ -33,6 +34,8 @@ class SettingsController extends Controller
         }
 
         setting()->save();
+
+        Artisan::call('view:clear');
 
         return redirect()->back()->withSuccess(__('Application settings updated'));
     }
