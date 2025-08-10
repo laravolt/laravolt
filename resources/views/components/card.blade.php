@@ -1,32 +1,30 @@
 @isset($url)
-    <a href="{{ $url }}" class="ui card segments panel x-card shadow" style="overflow: hidden">
+    <a href="{{ $url }}" class="block rounded-xl border border-gray-200 shadow-sm hover:shadow md:transition overflow-hidden dark:border-neutral-700">
 @else
-    <div class="ui card segments panel x-card shadow-md p-1">
+    <div class="rounded-xl border border-gray-200 shadow-sm dark:border-neutral-700 overflow-hidden">
 @endisset
 
     @if($attributes['cover'])
-        <div class="image">
-            <img src="{{ $attributes['cover'] }}" alt="">
-        </div>
+        <img src="{{ $attributes['cover'] }}" alt="" class="w-full h-40 object-cover">
     @endif
 
     @if($title or $content or $attributes['meta.before'] or $attributes['meta.after'])
-    <div class="content x-card__header">
+    <div class="p-4">
 
         @if($attributes['meta.before'])
-        <div class="meta x-card__meta--before">{!! $attributes['meta.before'] !!}</div>
+        <div class="text-xs text-gray-500 dark:text-neutral-400">{!! $attributes['meta.before'] !!}</div>
         @endif
 
         @if($title)
-        <div class="header">{{ $title }}</div>
+        <div class="text-lg font-semibold text-gray-800 dark:text-neutral-200">{{ $title }}</div>
         @endif
 
         @if($attributes['meta.after'])
-        <div class="meta x-card__meta--after">{!! $attributes['meta.after'] !!}</div>
+        <div class="mt-1 text-xs text-gray-500 dark:text-neutral-400">{!! $attributes['meta.after'] !!}</div>
         @endif
 
         @if($content)
-        <div class="description">
+        <div class="mt-3 text-sm text-gray-600 dark:text-neutral-300">
             {{ $content }}
         </div>
         @endif
