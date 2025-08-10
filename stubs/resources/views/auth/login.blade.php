@@ -13,14 +13,9 @@
             </div>
         @endif
 
-        <div class="space-y-3">
-            <div class="flex items-center justify-between">
-                <label class="inline-flex items-center gap-x-2 text-sm text-gray-700 dark:text-neutral-300">
-                    <input type="checkbox" name="remember" class="shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500" {{ request()->old('remember')?'checked':'' }}>
-                    <span>@lang('laravolt::auth.remember')</span>
-                </label>
-                <a themed href="{{ route('auth::forgot.show') }}" class="text-sm text-blue-600 hover:underline">@lang('laravolt::auth.forgot_password')</a>
-            </div>
+        {!! form()->checkbox('remember')->fieldLabel(__('laravolt::auth.remember'))->defaultCheckedState(request()->old('remember')) !!}
+        <div class="text-right">
+            <a themed href="{{ route('auth::forgot.show') }}" class="text-sm text-blue-600 hover:underline">@lang('laravolt::auth.forgot_password')</a>
         </div>
 
         <div>
@@ -36,5 +31,4 @@
             </div>
         @endif
     {!! form()->close() !!}
-
 </x-volt-auth>
