@@ -124,12 +124,12 @@ class Uploader extends Input
     public function displayValue()
     {
         if (is_array($this->value)) {
-            $output = "<div class='ui list'>";
+            $output = "<div class='space-y-1'>";
             $output .= '</div>';
 
             foreach ($this->value as $media) {
                 $output .= sprintf(
-                    "<div class='item'><a href='%s' target='_blank'>%s <i class='icon paperclip'></i></a></div>",
+                    "<div><a class='inline-flex items-center gap-x-1 text-blue-600 hover:underline' href='%s' target='_blank'>%s</a></div>",
                     $media['file'],
                     $media['name']
                 );

@@ -9,7 +9,7 @@ class Link extends Element
     use Themeable;
 
     protected $attributes = [
-        'class' => 'ui basic button',
+        'class' => 'inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-gray-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700',
         'themed',
     ];
 
