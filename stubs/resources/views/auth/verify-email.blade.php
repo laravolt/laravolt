@@ -11,7 +11,9 @@
         </div>
 
         {!! form()->post(route('verification.send')) !!}
-            <button type="submit" class="mt-4 w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">@lang('Kirim Ulang Email Verifikasi')</button>
+            <div class="grid gap-y-4 mt-4">
+                <x-volt-button type="submit">@lang('Kirim Ulang Email Verifikasi')</x-volt-button>
+            </div>
         {!! form()->close() !!}
 
         <div class="mt-4">

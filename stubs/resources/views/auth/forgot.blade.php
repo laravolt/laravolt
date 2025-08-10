@@ -13,9 +13,11 @@
 
     <div class="mt-5">
         {!! form()->open(route('auth::forgot.store')) !!}
-            {!! form()->email('email')->label(__('laravolt::auth.email')) !!}
+            <div class="grid gap-y-4">
+                {!! form()->email('email')->label(__('laravolt::auth.email')) !!}
 
-            <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">@lang('laravolt::auth.send_reset_password_link')</button>
+                <x-volt-button type="submit">@lang('laravolt::auth.send_reset_password_link')</x-volt-button>
+            </div>
         {!! form()->close() !!}
     </div>
 </x-volt-auth>

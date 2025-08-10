@@ -11,12 +11,14 @@
 
     <div class="mt-5">
         {!! form()->open(route('auth::registration.store')) !!}
-            {!! form()->text('name')->label(__('Name')) !!}
-            {!! form()->email('email')->label(__('Email')) !!}
-            {!! form()->password('password')->label(__('Password')) !!}
-            {!! form()->password('password_confirmation')->label(__('Confirm Your Password')) !!}
+            <div class="grid gap-y-4">
+                {!! form()->text('name')->label(__('Name')) !!}
+                {!! form()->email('email')->label(__('Email')) !!}
+                {!! form()->password('password')->label(__('Password')) !!}
+                {!! form()->password('password_confirmation')->label(__('Confirm Your Password')) !!}
 
-            <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">@lang('laravolt::auth.register')</button>
+                <x-volt-button type="submit">@lang('laravolt::auth.register')</x-volt-button>
+            </div>
         {!! form()->close() !!}
     </div>
 </x-volt-auth>
