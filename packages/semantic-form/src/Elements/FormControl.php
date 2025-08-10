@@ -8,9 +8,13 @@ abstract class FormControl extends Element
 
     protected $value;
 
+    protected $idAttribute;
+
     public function __construct($name)
     {
         $this->setName($name);
+
+        $this->idAttribute = bin2hex(random_bytes(4)).'-'.$name;
     }
 
     protected function setName($name)

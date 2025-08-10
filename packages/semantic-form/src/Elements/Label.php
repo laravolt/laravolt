@@ -10,9 +10,12 @@ class Label extends Element
 
     private $text;
 
-    public function __construct($text)
+    private $idAttribute;
+
+    public function __construct($text, $idAttribute = null)
     {
         $this->text = $text;
+        $this->idAttribute = $idAttribute ?: bin2hex(random_bytes(4)).'-'.$text;
     }
 
     public function render()
@@ -20,7 +23,9 @@ class Label extends Element
         // Apply Preline/Tailwind default label classes if not provided
         $defaultClasses = 'block text-sm mb-2 dark:text-white';
         $existing = $this->getAttribute('class');
+
         $this->addClass(trim(($existing ? $existing.' ' : '').$defaultClasses));
+        $this->attribute('for', $this->getAttribute('for') ?: $this->idAttribute);
 
         $result = '<label';
         $result .= $this->renderAttributes();

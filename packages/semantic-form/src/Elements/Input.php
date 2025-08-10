@@ -2,6 +2,8 @@
 
 namespace Laravolt\SemanticForm\Elements;
 
+use Laravolt\SemanticForm\Elements\Label;
+
 abstract class Input extends FormControl
 {
     public function render()
@@ -10,7 +12,15 @@ abstract class Input extends FormControl
             $element = clone $this;
             $element->label = false;
 
-            return $this->decorateField(new Field($this->label, $element))->addClass($this->fieldWidth)->render();
+            /** @var Label */
+            $label = $this->label;
+            $label->setAttribute('for', $this->idAttribute);
+
+            $field = new Field($label, $element);
+
+            return $this->decorateField($field)
+                ->addClass($this->fieldWidth)
+                ->render();
         }
 
         $this->beforeRender();
@@ -24,10 +34,13 @@ abstract class Input extends FormControl
             $this->addClass('border-red-500 focus:ring-red-500 focus:border-red-500');
         }
 
+        $this->attribute('id', $this->idAttribute);
+
         $result = '<input';
         $result .= $this->renderAttributes();
         $result .= ' />';
         $result .= $this->renderHint();
+        $result .= $this->renderError();
 
         return $result;
     }
