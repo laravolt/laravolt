@@ -10,7 +10,7 @@ class Button extends FormControl
 
     protected $attributes = [
         'type' => 'button',
-        'class' => 'ui button',
+        'class' => 'inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-gray-800 text-white px-3 py-2 text-sm hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600',
         'themed',
     ];
 

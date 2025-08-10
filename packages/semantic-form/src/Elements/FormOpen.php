@@ -10,7 +10,7 @@ class FormOpen extends Element
     protected $attributes = [
         'method' => 'POST',
         'action' => '',
-        'class' => 'ui form initial',
+        'class' => 'space-y-4',
     ];
 
     protected $withToken = true;

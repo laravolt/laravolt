@@ -12,7 +12,7 @@ class CheckboxGroup extends Wrapper
     protected $options;
 
     protected $attributes = [
-        'class' => 'grouped fields',
+        'class' => 'space-y-2',
     ];
 
     protected $controls = [];
@@ -20,7 +20,7 @@ class CheckboxGroup extends Wrapper
     public function inline($inline = true)
     {
         if ($inline) {
-            $this->setAttribute('class', 'inline fields');
+            $this->setAttribute('class', 'flex flex-wrap gap-4');
         }
 
         return $this;
@@ -61,10 +61,10 @@ class CheckboxGroup extends Wrapper
         if (is_bool($val)) {
             $val = (int) $val;
             if ($val) {
-                return '<div class="ui label basic green">Ya</div>';
+                return '<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Ya</span>';
             }
 
-            return '<div class="ui label basic red">Tidak</div>';
+            return '<span class="inline-flex items-center rounded-md bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">Tidak</span>';
         }
 
         if (is_string($val)) {
@@ -76,7 +76,7 @@ class CheckboxGroup extends Wrapper
         if (is_array($val)) {
             $output = '';
             foreach ($val as $v) {
-                $output .= "<div class='ui label $color'>$v</div>";
+                $output .= "<span class='inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-500/10'>$v</span>";
             }
 
             return $output;

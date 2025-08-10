@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 class Icon extends Element
 {
     protected $attributes = [
-        'class' => 'icon',
+        'class' => 'inline-flex items-center text-gray-400',
     ];
 
     /**
@@ -20,11 +20,11 @@ class Icon extends Element
 
     public function render()
     {
-        $html = '<i';
+        $html = '<span';
         $html .= $this->renderAttributes();
         $html .= '>';
 
-        $html .= '</i>';
+        $html .= '</span>';
 
         return $html;
     }

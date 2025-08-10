@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 class InputWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui input',
+        'class' => 'relative',
     ];
 
     protected $controlsLeft = [];
@@ -27,18 +27,16 @@ class InputWrapper extends Wrapper
     {
         $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
 
-        if ($this->getPrimaryControl()->hasError()) {
-            $this->addClass('error');
-        }
+        // Error state can be reflected via Field wrapper; keep container neutral
     }
 
     public function prependIcon($icon, $class = null)
     {
         $this->clearRightIcon();
 
-        $icon = (new Icon($icon))->addClass($class);
+        $icon = (new Icon($icon))
+            ->addClass(trim('absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none text-gray-400 '.$class));
 
-        $this->addClass('left icon');
         $this->controlsLeft = Arr::prepend($this->controlsLeft, $icon);
 
         return $this;
@@ -48,9 +46,9 @@ class InputWrapper extends Wrapper
     {
         $this->clearLeftIcon();
 
-        $icon = (new Icon($icon))->addClass($class);
+        $icon = (new Icon($icon))
+            ->addClass(trim('absolute inset-y-0 end-0 pe-3 flex items-center pointer-events-none text-gray-400 '.$class));
 
-        $this->addClass('icon');
         $this->controlsRight = Arr::prepend($this->controlsRight, $icon);
 
         return $this;
@@ -58,24 +56,21 @@ class InputWrapper extends Wrapper
 
     public function prependLabel($text, $class = null)
     {
-        $this->addClass('labeled');
-        $this->controlsLeft = Arr::prepend($this->controlsLeft, (new UiLabel($text))->addClass($class));
+        $this->controlsLeft = Arr::prepend($this->controlsLeft, (new UiLabel($text))->addClass(trim('inline-flex items-center rounded-s-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 '.$class)));
 
         return $this;
     }
 
     public function appendLabel($text, $class = null)
     {
-        $this->removeClass('labeled')->addClass('right labeled');
-        $this->controlsRight = Arr::prepend($this->controlsRight, (new UiLabel($text))->addClass($class));
+        $this->controlsRight = Arr::prepend($this->controlsRight, (new UiLabel($text))->addClass(trim('inline-flex items-center rounded-e-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 '.$class)));
 
         return $this;
     }
 
     public function appendButton($text, $class = null)
     {
-        $this->removeClass('labeled')->addClass('action');
-        $this->controlsRight = Arr::prepend($this->controlsRight, (new Button($text, null))->addClass($class));
+        $this->controlsRight = Arr::prepend($this->controlsRight, (new Button($text, null))->addClass(trim('inline-flex items-center rounded-e-lg border border-transparent bg-gray-800 text-white px-3 py-2 text-sm hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-600 '.$class)));
 
         return $this;
     }
@@ -148,7 +143,7 @@ class InputWrapper extends Wrapper
 
     protected function clearLeftIcon()
     {
-        $this->removeClass('left icon');
+        // no-op, Preline uses absolute positioned icons
 
         foreach ($this->controlsLeft as $key => $control) {
             if ($control instanceof Icon) {
@@ -159,7 +154,7 @@ class InputWrapper extends Wrapper
 
     protected function clearRightIcon()
     {
-        $this->removeClass('icon');
+        // no-op, Preline uses absolute positioned icons
 
         foreach ($this->controlsRight as $key => $control) {
             if ($control instanceof Icon) {

@@ -7,7 +7,7 @@ namespace Laravolt\SemanticForm\Elements;
 class Segments extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui segments',
+        'class' => 'space-y-3',
     ];
 
     public function __construct()

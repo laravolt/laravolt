@@ -5,6 +5,6 @@ namespace Laravolt\SemanticForm\Elements;
 class RadioButtonWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui radio checkbox',
+        'class' => 'flex items-start gap-x-2',
     ];
 }

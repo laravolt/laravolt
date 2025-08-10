@@ -6,7 +6,7 @@ namespace Laravolt\SemanticForm\Elements;
 
 class SegmentTitle extends Wrapper
 {
-    protected static $template = "<h3 class='ui blue ribbon label'>%s</h3>";
+    protected static $template = "<h3 class='inline-flex items-center rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 ring-1 ring-inset ring-blue-600/20'>%s</h3>";
 
     public static function setTemplate(string $template)
     {

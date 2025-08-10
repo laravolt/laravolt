@@ -7,7 +7,7 @@ namespace Laravolt\SemanticForm\Elements;
 class Segment extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui segment',
+        'class' => 'rounded-2xl border border-gray-200 bg-white p-4 dark:bg-neutral-800 dark:border-neutral-700',
     ];
 
     public function display()

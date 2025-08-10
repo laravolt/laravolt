@@ -95,10 +95,10 @@ class Checkbox extends Input
     public function displayValue()
     {
         if ($this->checked) {
-            return '<div class="ui tiny label basic green">Ya</div>';
+            return '<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Ya</span>';
         }
 
-        return '<div class="ui tiny label basic red">Tidak</div>';
+        return '<span class="inline-flex items-center rounded-md bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">Tidak</span>';
     }
 
     public function setChecked($checked = true)
