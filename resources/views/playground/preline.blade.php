@@ -1,6 +1,17 @@
 <x-volt-app title="Preline UI – Kitchen Sink">
     <div class="space-y-10">
         <section>
+            <h2 class="text-base font-semibold text-gray-800 dark:text-neutral-200">Typography</h2>
+            <div class="mt-3 space-y-2 text-gray-700 dark:text-neutral-300">
+                <h1 class="text-3xl font-bold">Heading 1</h1>
+                <h2 class="text-2xl font-semibold">Heading 2</h2>
+                <h3 class="text-xl font-semibold">Heading 3</h3>
+                <p class="text-sm">Body small</p>
+                <p>Body default</p>
+                <p class="text-lg">Body large</p>
+              </div>
+        </section>
+        <section>
             <h2 class="text-base font-semibold text-gray-800 dark:text-neutral-200">Buttons</h2>
             <div class="mt-3 flex flex-wrap gap-2">
                 <button class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-gray-800 text-white px-3 py-2 text-sm hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-600 dark:bg-neutral-700 dark:hover:bg-neutral-600">Primary</button>
@@ -23,6 +34,10 @@
                 <label class="flex items-center gap-x-2 text-sm text-gray-700 dark:text-neutral-300">
                     <input type="checkbox" class="shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
                     Checkbox
+                </label>
+                <label class="flex items-center gap-x-2 text-sm text-gray-700 dark:text-neutral-300">
+                    <input type="radio" name="radio-demo" class="shrink-0 border-gray-300 text-blue-600 focus:ring-blue-500" />
+                    Radio
                 </label>
             </div>
         </section>
@@ -90,6 +105,54 @@
                         <a href="#" class="block rounded-md px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-neutral-800">Item 3</a>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-base font-semibold text-gray-800 dark:text-neutral-200">Tabs</h2>
+            <div class="mt-3">
+                <nav class="flex gap-x-2 border-b border-gray-200 dark:border-neutral-700" aria-label="Tabs">
+                    <button type="button" data-hs-tab="#tab-1" class="hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-2 px-3 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-600 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400">Tab 1</button>
+                    <button type="button" data-hs-tab="#tab-2" class="hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-2 px-3 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-600 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400">Tab 2</button>
+                </nav>
+                <div class="mt-3">
+                    <div id="tab-1" role="tabpanel">Content 1</div>
+                    <div id="tab-2" role="tabpanel" class="hidden">Content 2</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-base font-semibold text-gray-800 dark:text-neutral-200">Alerts</h2>
+            <div class="mt-3 space-y-2">
+                <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">Success alert</div>
+                <div class="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800">Info alert</div>
+                <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">Warning alert</div>
+                <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">Error alert</div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-base font-semibold text-gray-800 dark:text-neutral-200">Breadcrumbs</h2>
+            <nav class="mt-3 flex items-center text-sm text-gray-600 dark:text-neutral-400" aria-label="Breadcrumb">
+                <a href="#" class="hover:text-gray-900 dark:hover:text-neutral-200">Home</a>
+                <span class="mx-2">/</span>
+                <a href="#" class="hover:text-gray-900 dark:hover:text-neutral-200">Library</a>
+                <span class="mx-2">/</span>
+                <span class="text-gray-500 dark:text-neutral-500">Data</span>
+            </nav>
+        </section>
+
+        <section>
+            <h2 class="text-base font-semibold text-gray-800 dark:text-neutral-200">Pagination</h2>
+            <div class="mt-3">
+                <nav class="flex items-center gap-x-1" aria-label="Pagination">
+                    <a href="#" class="inline-flex items-center justify-center size-9 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700">«</a>
+                    <a href="#" class="inline-flex items-center justify-center size-9 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700">1</a>
+                    <a href="#" class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">2</a>
+                    <a href="#" class="inline-flex items-center justify-center size-9 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700">3</a>
+                    <a href="#" class="inline-flex items-center justify-center size-9 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700">»</a>
+                </nav>
             </div>
         </section>
 
