@@ -38,11 +38,16 @@ class RadioButton extends Checkbox
             return $this->decorateField(new Field($items))->render();
         }
 
+        // Tailwind/Preline radio classes
+        $defaultClasses = 'shrink-0 mt-0.5 border-gray-200 text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800';
+        $existing = $this->getAttribute('class');
+        $this->addClass(trim(($existing ? $existing.' ' : '').$defaultClasses));
+
         $result = '<input';
 
         $result .= $this->renderAttributes();
 
-        $result .= '>';
+        $result .= ' />';
 
         return $result;
     }

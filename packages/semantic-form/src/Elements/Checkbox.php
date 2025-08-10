@@ -27,7 +27,7 @@ class Checkbox extends Input
             $items = [];
 
             if (is_string($this->fieldLabel)) {
-                $items[] = new Label($this->fieldLabel);
+                $items[] = (new Label($this->fieldLabel))->addClass('ms-3');
             }
 
             if ($this->label) {
@@ -37,11 +37,16 @@ class Checkbox extends Input
             return $this->decorateField(new Field($items))->render();
         }
 
+        // Tailwind/Preline checkbox classes
+        $defaultClasses = 'shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800';
+        $existing = $this->getAttribute('class');
+        $this->addClass(trim(($existing ? $existing.' ' : '').$defaultClasses));
+
         $result = '<input';
 
         $result .= $this->renderAttributes();
 
-        $result .= '>';
+        $result .= ' />';
 
         return $result;
     }
@@ -95,10 +100,10 @@ class Checkbox extends Input
     public function displayValue()
     {
         if ($this->checked) {
-            return '<div class="ui tiny label basic green">Ya</div>';
+            return '<div class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded dark:bg-green-900/30 dark:text-green-400">Ya</div>';
         }
 
-        return '<div class="ui tiny label basic red">Tidak</div>';
+        return '<div class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-red-100 text-red-800 rounded dark:bg-red-900/30 dark:text-red-400">Tidak</div>';
     }
 
     public function setChecked($checked = true)

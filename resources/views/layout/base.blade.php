@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}"
+      class="relative min-h-full"
       data-font-size="{{ config('laravolt.ui.font_size') }}"
       data-theme="{{ config('laravolt.ui.theme') }}"
       data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}"
@@ -24,8 +25,7 @@
     @laravoltScripts
 </head>
 
-<body class="{{ $bodyClass ?? '' }} @yield('body.class')">
-
+<body class="bg-gray-50 dark:bg-neutral-900 text-gray-800 dark:text-neutral-200 {{ $bodyClass ?? '' }} @yield('body.class')">
     {{ $slot }}
 
     @livewireScripts

@@ -1,11 +1,11 @@
-<div data-role="x-brand-image" {{ $attributes }}>
+<div data-role="x-brand-image" {{ $attributes->class('flex items-center justify-center') }}>
     @if($isSvg)
         {!! $brandImage !!}
     @else
         <img
-                src="{{ asset($brandImage) }}"
-                alt=""
-                class="ui image small centered"
-        >
+            src="{{ asset($brandImage) }}"
+            alt=""
+            class="h-10 w-auto"
+        />
     @endif
 </div>

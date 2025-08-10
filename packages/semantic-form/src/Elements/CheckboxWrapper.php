@@ -5,6 +5,6 @@ namespace Laravolt\SemanticForm\Elements;
 class CheckboxWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui checkbox',
+        'class' => 'flex items-center',
     ];
 }

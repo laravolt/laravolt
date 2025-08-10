@@ -5,3 +5,4 @@ composer.lock
 node_modules
 public/*
 resources/icons/*
+preline-ui/**/*

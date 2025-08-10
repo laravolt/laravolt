@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 class Field extends Wrapper
 {
     protected $attributes = [
-        'class' => 'field',
+        'class' => 'space-y-1',
     ];
 
     public function render()
@@ -56,7 +56,7 @@ class Field extends Wrapper
             $this->addClass('required');
         }
         if ($hasError) {
-            $this->addClass('error');
+            $this->addClass('has-error');
         }
 
         $html = '<div';

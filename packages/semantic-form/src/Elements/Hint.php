@@ -4,7 +4,7 @@ namespace Laravolt\SemanticForm\Elements;
 
 class Hint extends Element
 {
-    public static $defaultClass = 'hint';
+    public static $defaultClass = 'mt-1 text-xs text-gray-500 dark:text-neutral-400';
 
     protected $text;
 

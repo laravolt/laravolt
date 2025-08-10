@@ -12,7 +12,7 @@ class CheckboxGroup extends Wrapper
     protected $options;
 
     protected $attributes = [
-        'class' => 'grouped fields',
+        'class' => 'space-y-2',
     ];
 
     protected $controls = [];
@@ -20,7 +20,7 @@ class CheckboxGroup extends Wrapper
     public function inline($inline = true)
     {
         if ($inline) {
-            $this->setAttribute('class', 'inline fields');
+            $this->setAttribute('class', 'flex flex-wrap gap-4 items-center');
         }
 
         return $this;

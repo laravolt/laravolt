@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 class InputWrapper extends Wrapper
 {
     protected $attributes = [
-        'class' => 'ui input',
+        'class' => 'relative',
     ];
 
     protected $controlsLeft = [];
@@ -28,7 +28,7 @@ class InputWrapper extends Wrapper
         $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
 
         if ($this->getPrimaryControl()->hasError()) {
-            $this->addClass('error');
+            $this->addClass('has-error');
         }
     }
 
@@ -38,7 +38,7 @@ class InputWrapper extends Wrapper
 
         $icon = (new Icon($icon))->addClass($class);
 
-        $this->addClass('left icon');
+        // Using absolute icon container is handled at the template level; keep simple for Tailwind usage
         $this->controlsLeft = Arr::prepend($this->controlsLeft, $icon);
 
         return $this;
@@ -50,7 +50,7 @@ class InputWrapper extends Wrapper
 
         $icon = (new Icon($icon))->addClass($class);
 
-        $this->addClass('icon');
+        // Using absolute icon container is handled at the template level; keep simple for Tailwind usage
         $this->controlsRight = Arr::prepend($this->controlsRight, $icon);
 
         return $this;

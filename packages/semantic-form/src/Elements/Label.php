@@ -17,6 +17,11 @@ class Label extends Element
 
     public function render()
     {
+        // Apply Preline/Tailwind default label classes if not provided
+        $defaultClasses = 'block text-sm mb-2 dark:text-white';
+        $existing = $this->getAttribute('class');
+        $this->addClass(trim(($existing ? $existing.' ' : '').$defaultClasses));
+
         $result = '<label';
         $result .= $this->renderAttributes();
         $result .= '>';

@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 class UiLabel extends Element
 {
     protected $attributes = [
-        'class' => 'ui label',
+        'class' => 'inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded dark:bg-neutral-700 dark:text-neutral-300',
     ];
 
     protected $text;
