@@ -6,8 +6,8 @@
             @endforeach
             @if($allowRemoval)
                 <td>
-                    <button class="ui button icon mini" type="button" data-role="tabular-remove-row" tabindex="-1">
-                        <i class="icon remove"></i>
+                    <button class="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-gray-200 size-7" type="button" data-role="tabular-remove-row" tabindex="-1">
+                        ✕
                     </button>
                 </td>
             @endif
@@ -15,7 +15,7 @@
     </template>
 @endpush
 
-<table class="ui table" data-role="tabular" data-counter="{{ $limit }}">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700" data-role="tabular" data-counter="{{ $limit }}">
     <thead>
     <tr>
         @foreach($labels as $label)
@@ -34,9 +34,8 @@
             @endforeach
             @if($allowRemoval)
                 <td>
-                    <button class="ui button icon mini loading disabled" type="button" data-role="tabular-remove-row"
-                            tabindex="-1">
-                        <i class="icon remove"></i>
+                    <button class="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-gray-200 size-7 loading disabled" type="button" data-role="tabular-remove-row" tabindex="-1">
+                        ✕
                     </button>
                 </td>
             @endif
@@ -47,9 +46,8 @@
     @if($allowAddition)
         <tr>
             <th colspan="{{ count($labels) + ($allowRemoval) }}">
-                <button class="ui button fluid loading disabled" data-template="{{ $name }}" data-role="tabular-add-row"
-                        tabindex="-1">
-                    <i aria-label="Add Row" class="icon plus"></i>
+                <button class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-blue-600 text-white px-3 py-2 text-sm hover:bg-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-600 loading disabled" data-template="{{ $name }}" data-role="tabular-add-row" tabindex="-1">
+                    + Add Row
                 </button>
             </th>
         </tr>

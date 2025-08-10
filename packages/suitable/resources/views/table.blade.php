@@ -10,7 +10,7 @@ $tableClass = '';
     }
 ?>
 
-<table class="ui {{ $tableClass }} table unstackable responsive">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
     <thead>
     <tr>
         @foreach($columns as $column)
@@ -22,7 +22,7 @@ $tableClass = '';
         @endforeach
     </tr>
     @if($hasSearchableColumns)
-    <tr class="ui form" data-role="suitable-header-searchable">
+    <tr data-role="suitable-header-searchable">
         @foreach($columns as $column)
             @if($column->isSearchable())
                 {!! $column->searchableHeader()->render() !!}
