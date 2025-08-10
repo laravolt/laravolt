@@ -43,7 +43,8 @@ class CheckboxGroup extends Wrapper
         $this->value($values);
 
         $values = (array) ($values);
-        /** @var $control \Laravolt\SemanticForm\Elements\Checkbox */
+
+        /** @var \Laravolt\SemanticForm\Elements\Checkbox $control */
         foreach ($this->controls as $control) {
             if (in_array($control->getValue(), $values)) {
                 $control->check();
