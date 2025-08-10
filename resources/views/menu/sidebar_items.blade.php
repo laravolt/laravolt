@@ -1,47 +1,36 @@
 @foreach($items->sortBy(fn($item) => $item->data('order')) as $item)
     @if($item->hasChildren())
-        <div class="title title__1 item {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}">
-            {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'left x-icon'])
-            ->width('16px')
-            ->toHtml() !!}
-            <span>{{ $item->title }}</span>
-            <i class="angle down icon"></i>
-        </div>
-        <div class="content content__2 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }} ">
-            <div class="ui list">
+        <div class="text-[13px] mt-2 text-gray-500 dark:text-neutral-400">
+            <div class="flex items-center justify-between px-3 py-2 cursor-pointer">
+                <div class="flex items-center gap-x-2">
+                    {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'size-4'])
+                    ->toHtml() !!}
+                    <span>{{ $item->title }}</span>
+                </div>
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="ms-3 space-y-1">
                 @foreach($item->children()->sortBy(fn($item) => $item->data('order')) as $child)
                     @if($child->hasChildren())
-                        <div class="title title__2 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($child->children(), $child->isActive) }}">
-                            <span>{{ $child->title }}</span>
-                            <i class="angle down icon"></i>
-                        </div>
-                        <div class="content content__3 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($child->children(), $child ->isActive) }}">
-                            <div class="ui list list__3">
-                                @foreach($child->children() as $grandchild)
-                                    <a class="title title__3 empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($grandchild->children(), $grandchild->isActive) }}"
-                                       href="{{ $grandchild->url() }}"
-                                       data-parent="{{ $grandchild->parent()->title }}">
-                                        <span>{{ $grandchild->title }}</span>
-                                    </a>
-                                @endforeach
-                            </div>
+                        <div class="px-3 py-1 text-gray-500">{{ $child->title }}</div>
+                        <div class="ms-3 space-y-1">
+                            @foreach($child->children() as $grandchild)
+                                <a class="block px-3 py-1 rounded hover:bg-gray-100 dark:hover:bg-neutral-700 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($grandchild->children(), $grandchild->isActive) }}" href="{{ $grandchild->url() }}" data-parent="{{ $grandchild->parent()->title }}">
+                                    <span>{{ $grandchild->title }}</span>
+                                </a>
+                            @endforeach
                         </div>
                     @else
-                        <a href="{{ $child->url() }}" data-parent="{{ $child->parent()->title }}"
-                           class="item title__2 {{ ($child->isActive)?'selected':'' }} ">{{ $child->title }}</a>
+                        <a href="{{ $child->url() }}" data-parent="{{ $child->parent()->title }}" class="block px-3 py-1 rounded hover:bg-gray-100 dark:hover:bg-neutral-700 {{ ($child->isActive)?'bg-gray-100 dark:bg-neutral-700':'' }}">{{ $child->title }}</a>
                     @endif
                 @endforeach
             </div>
         </div>
     @else
-        <a class="title title__1 item empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
-           href="{{ $item->url() }}"
-           data-parent="{{ $item->parent()->title }}">
-            {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'left x-icon'])
-            ->width('16px')
+        <a class="flex items-center gap-x-2 px-3 py-2 rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-neutral-700 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}" href="{{ $item->url() }}" data-parent="{{ $item->parent()->title }}">
+            {!! svg(config('laravolt.ui.iconset').'-'.$item->data('icon'), null, ['class' => 'size-4'])
             ->toHtml() !!}
             <span>{{ $item->title }}</span>
         </a>
-        <div class="content"></div>
     @endif
 @endforeach
