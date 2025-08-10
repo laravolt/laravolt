@@ -238,15 +238,16 @@ class SemanticForm
 
     public function email($name = null, $defaultValue = null)
     {
-        $email = new Email($name ?? 'email');
+        $fieldName = $name ?? 'email';
+        $email = new Email($fieldName);
 
-        if (! is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value = $this->getValueFor($fieldName))) {
             $email->value($value);
         }
 
         $email->defaultValue($defaultValue);
 
-        if ($this->hasError($name)) {
+        if ($this->hasError($fieldName)) {
             $email->setError();
         }
 
@@ -310,9 +311,10 @@ class SemanticForm
 
     public function password($name = null)
     {
-        $password = new Password($name ?? 'password');
+        $fieldName = $name ?? 'password';
+        $password = new Password($fieldName);
 
-        if ($this->hasError($name)) {
+        if ($this->hasError($fieldName)) {
             $password->setError();
         }
 
