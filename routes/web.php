@@ -18,6 +18,7 @@ $router->group(
             $router->view('ui', 'laravolt::playground.ui')->name('playground.ui');
             $router->view('form', 'laravolt::playground.form')->name('playground.form');
             $router->view('article', 'laravolt::playground.article')->name('playground.article');
+            $router->view('preline', 'laravolt::playground.preline')->name('playground.preline');
         });
         $router->get('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings.edit');
         $router->put('settings', [\Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings.update');
