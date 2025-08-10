@@ -236,9 +236,9 @@ class SemanticForm
             ->addClass('calendar');
     }
 
-    public function email($name, $defaultValue = null)
+    public function email($name = null, $defaultValue = null)
     {
-        $email = new Email($name);
+        $email = new Email($name ?? 'email');
 
         if (! is_null($value = $this->getValueFor($name))) {
             $email->value($value);
@@ -308,9 +308,9 @@ class SemanticForm
         return (new Coordinate($name))->defaultValue($defaultValue)->data('form-coordinate', 'true')->readonly();
     }
 
-    public function password($name)
+    public function password($name = null)
     {
-        $password = new Password($name);
+        $password = new Password($name ?? 'password');
 
         if ($this->hasError($name)) {
             $password->setError();
