@@ -65,6 +65,9 @@ class UiServiceProvider extends BaseServiceProvider
             $this->registerIcons();
             $this->registerAssets();
         }
+
+        // Register Octane request termination listener to reset static UI state
+        $this->registerOctaneResets();
     }
 
     /**
@@ -265,13 +268,22 @@ class UiServiceProvider extends BaseServiceProvider
         return $extracted;
     }
 
-    private function hasFiles(string $directory): bool
+    private function hasFiles(string $path): bool
     {
-        if (!is_dir($directory)) {
-            return false;
-        }
+        return is_dir($path) && count(glob($path . '/*')) > 0;
+    }
 
-        $files = array_diff(scandir($directory), ['.', '..']);
-        return count($files) > 0;
+    private function registerOctaneResets(): void
+    {
+        if (class_exists('Laravel\\Octane\\Events\\RequestTerminated')) {
+            $this->app['events']->listen(
+                \Laravel\Octane\Events\RequestTerminated::class,
+                function () {
+                    // Reset UI static state to avoid cross-request leakage
+                    \Laravolt\Platform\Components\ComponentManager::reset();
+                    \Laravolt\Platform\Components\Tab::resetActiveTab();
+                }
+            );
+        }
     }
 }

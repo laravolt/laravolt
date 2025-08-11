@@ -15,6 +15,11 @@ class Tab extends Component
         return static::$activeTab;
     }
 
+    public static function resetActiveTab(): void
+    {
+        static::$activeTab = null;
+    }
+
     public function __construct()
     {
         $this->key = 'tab-'.bin2hex(random_bytes(5));
