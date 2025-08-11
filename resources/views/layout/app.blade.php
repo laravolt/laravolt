@@ -3,7 +3,9 @@
     @include('laravolt::menu.sidebar')
 
     <div class="w-full pt-14 lg:ps-64" up-main="root">
-        @include('laravolt::menu.actionbar')
+        @if (! empty($title))
+            @include('laravolt::menu.actionbar')
+        @endif
 
         <main class="p-4 sm:p-6 lg:p-8" up-main="modal"
               data-font-size="{{ config('laravolt.ui.font_size') }}"

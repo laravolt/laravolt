@@ -1,30 +1,28 @@
 @extends('laravolt::users.edit', ['tab' => 'account'])
 
 @section('content-user-edit')
-
     {!! form()->bind($user)->open()->put()->action(route('epicentrum::account.update', $user['id']))->horizontal() !!}
+        {!! form()->text('name')->label(__('laravolt::users.name')) !!}
+        {!! form()->text('email')->label(__('laravolt::users.email')) !!}
+        {!! form()->dropdown('status', $statuses)->label(__('laravolt::users.status')) !!}
+        {!! form()->dropdown('timezone', $timezones)->label(__('laravolt::users.timezone')) !!}
 
-    {!! form()->text('name')->label(__('laravolt::users.name')) !!}
-    {!! form()->text('email')->label(__('laravolt::users.email')) !!}
-    {!! form()->dropdown('status', $statuses)->label(__('laravolt::users.status')) !!}
-    {!! form()->dropdown('timezone', $timezones)->label(__('laravolt::users.timezone')) !!}
-
-    @if($multipleRole)
-        {!! form()->checkboxGroup('roles', $roles)->label(trans('laravolt::users.roles'))->addClassIf(!$roleEditable, 'disabled') !!}
-    @else
-        {!! form()->radioGroup('roles', $roles)->label(trans('laravolt::users.roles'))->addClassIf(!$roleEditable, 'disabled') !!}
-    @endif
-
-
-    @unless($roleEditable)
-        <div class="field">
-            <label for="">&nbsp;</label>
-            <div class="ui message m-t-0">Editing role are disabled by system configuration.</div>
-        </div>
-    @endif
+        @if($multipleRole)
+            {!! form()->checkboxGroup('roles', $roles)->label(trans('laravolt::users.roles'))->addClassIf(!$roleEditable, 'disabled') !!}
+        @else
+            {!! form()->radioGroup('roles', $roles)->label(trans('laravolt::users.roles'))->addClassIf(!$roleEditable, 'disabled') !!}
+        @endif
 
 
-    {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.back'), route('epicentrum::users.index'))) !!}
+        @unless($roleEditable)
+            <div class="field">
+                <label for="">&nbsp;</label>
+                <div class="ui message m-t-0">Editing role are disabled by system configuration.</div>
+            </div>
+        @endif
+
+
+        {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.back'), route('epicentrum::users.index'))) !!}
     {!! form()->close() !!}
 
 
@@ -46,5 +44,4 @@
             {!! form()->close() !!}
         @endif
     </div>
-
 @endsection

@@ -1,4 +1,4 @@
-<x-volt-app :title="__('laravolt::label.edit_user')">
+<x-volt-app title="">
 
     <x-slot name="actions">
         <x-volt-backlink :url="route('epicentrum::users.index')" />
