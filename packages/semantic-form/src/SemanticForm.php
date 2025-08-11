@@ -511,7 +511,7 @@ class SemanticForm
     {
         $options = collect(config('laravolt.ui.colors'))
             ->mapWithKeys(function ($item, $key) {
-                return [$key => $key];
+                return [$key => ucfirst($key)];
             });
 
         return $this->radioGroup($name, $options, $defaultValue);
