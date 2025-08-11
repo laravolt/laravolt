@@ -48,7 +48,15 @@
 
         <div class="p-2 sm:p-5 sm:py-0 md:pt-5 space-y-5">
             <div class="max-w-3xl mx-auto">
-                <div class="space-y-4">
+                <div class="relative z-10 flex justify-between items-center">
+                    <div>
+                        <h2 class="inline-block text-lg font-semibold text-gray-800 dark:text-neutral-200">
+                            Laravolt
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="space-y-4 my-4">
                     <div
                         class="p-5 bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
                         <div class="grid sm:grid-cols-12 gap-4">
