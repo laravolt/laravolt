@@ -1,60 +1,37 @@
 <script>
-    $(function () {
-        $('.checkbox[data-toggle="checkall"]').each(function () {
-            var $parent = $(this);
-            var $childCheckbox = $(document).find($parent.data('selector'));
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-toggle="checkall"]').forEach(parent => {
+      const selector = parent.getAttribute('data-selector');
+      const parentInput = parent.querySelector('input[type="checkbox"]');
+      const childContainers = Array.from(document.querySelectorAll(selector));
 
-            $parent
-                .checkbox({
-                    // check all children
-                    onChecked: function () {
-                        $childCheckbox.checkbox('check');
-                    },
-                    // uncheck all children
-                    onUnchecked: function () {
-                        $childCheckbox.checkbox('uncheck');
-                    }
-                })
-            ;
+      const childInputs = childContainers
+        .map(container => container.querySelector('input[type="checkbox"]'))
+        .filter(Boolean);
 
-            $childCheckbox
-                .checkbox({
-                    // Fire on load to set parent value
-                    fireOnInit: true,
-                    // Change parent state on each child checkbox change
-                    onChange: function () {
-                        var
-                            $parentCheckbox = $parent,
-                            $checkbox = $childCheckbox,
-                            allChecked = true,
-                            allUnchecked = true,
-                            ids = []
-                            ;
-                        // check to see if all other siblings are checked or unchecked
-                        $checkbox.each(function () {
-                            if ($(this).checkbox('is checked')) {
-                                allUnchecked = false;
-                                ids.push($(this).children().first().val());
-                            }
-                            else {
-                                allChecked = false;
-                            }
-                        });
+      const recomputeParent = () => {
+        const total = childInputs.length;
+        const checked = childInputs.filter(i => i.checked).length;
+        parentInput.indeterminate = checked > 0 && checked < total;
+        parentInput.checked = checked === total && total > 0;
+        const ids = childInputs.filter(i => i.checked).map(i => i.value);
+        document.getElementById('{{ $id }}')?.dispatchEvent(new CustomEvent('suitable.checkall.change', { detail: ids }));
+      };
 
-                        // set parent checkbox state, but dont trigger its onChange callback
-                        if (allChecked) {
-                            $parentCheckbox.checkbox('set checked');
-                        }
-                        else if (allUnchecked) {
-                            $parentCheckbox.checkbox('set unchecked');
-                        }
-                        else {
-                            $parentCheckbox.checkbox('set indeterminate');
-                        }
-                        $('#{{ $id }}').trigger('suitable.checkall.change', [ids]);
-                    }
-                })
-            ;
-        });
+      // Initialize
+      recomputeParent();
+
+      // Parent toggles children
+      parentInput.addEventListener('change', () => {
+        const targetState = parentInput.checked;
+        childInputs.forEach(i => { i.checked = targetState; });
+        recomputeParent();
+      });
+
+      // Children update parent
+      childInputs.forEach(input => {
+        input.addEventListener('change', recomputeParent);
+      });
     });
+  });
 </script>
