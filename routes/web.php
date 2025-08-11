@@ -24,5 +24,7 @@ $router->group(
 
         $router->view('check', 'laravolt::platform.check')->name('check');
         $router->any('dump', DumpRequestController::class)->name('dump');
+
+        $router->view('preline', 'laravolt::platform.preline')->name('preline');
     }
 );

@@ -64,9 +64,13 @@ class RadioGroup extends CheckboxGroup
 
         $html .= '</div>';
 
+        /** @var \Laravolt\SemanticForm\Elements\Label */
+        $label = $this->label;
+
         // If group has a label set via ->label(), wrap using Field to render label + hint
-        if ($this->label) {
-            $field = new Field($this->label, new Html($html));
+        if ($label) {
+            $label->removeAttribute('for');
+            $field = new Field($label, new Html($html));
             return $this->decorateField($field)->render();
         }
 

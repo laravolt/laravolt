@@ -25,7 +25,7 @@ class Label extends Element
         $existing = $this->getAttribute('class');
 
         $this->addClass(trim(($existing ? $existing.' ' : '').$defaultClasses));
-        $this->attribute('for', $this->getAttribute('for') ?: $this->idAttribute);
+        $this->attribute('for', $this->getAttribute('for'));
 
         $result = '<label';
         $result .= $this->renderAttributes();

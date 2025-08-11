@@ -2,7 +2,7 @@
     <div>
         @yield('breadcrumb')
         <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
-            {{ $title }}
+            {{ $title ?? '' }}
         </h3>
         @if(!empty($subtitle))
             <div class="text-sm text-gray-500 dark:text-neutral-400">{{ $subtitle }}</div>
