@@ -5,7 +5,7 @@
     class="flex justify-between xl:grid xl:grid-cols-3 basis-full items-center w-full py-2.5 px-2 sm:px-5"
   >
     <div class="xl:col-span-1 flex items-center md:gap-x-3">
-      <div class="lg:hidden">
+      <div class="lg:hidden space-x-4">
         <!-- Sidebar Toggle -->
         <button
           type="button"
@@ -32,12 +32,16 @@
           </svg>
         </button>
         <!-- End Sidebar Toggle -->
+
+        @include('laravolt::menu.partials.breadcrumb')
       </div>
 
       <div class="hidden lg:block min-w-80 xl:w-full">
         <!-- Search Input -->
 
         <!-- TODO: End Search Input -->
+
+        @include('laravolt::menu.partials.breadcrumb')
       </div>
     </div>
 
