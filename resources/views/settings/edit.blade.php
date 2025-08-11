@@ -1,4 +1,4 @@
-<x-volt-app :title="__('Settings')">
+<x-volt-app title="">
     <x-volt-panel title="Global Application Settings">
         {!! form()->put(route('platform::settings.update'))->horizontal() !!}
             {!! form()->make(config('laravolt.platform.settings'))->bindValues($config)->render() !!}
