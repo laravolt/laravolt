@@ -85,7 +85,8 @@
                     '">';
                 if ($icon = $item->data('icon')) {
                     echo svg(config('laravolt.ui.iconset') . '-' . $icon, null, [
-                        'class' => 'shrink-0 mt-0.5 size-4',
+                        'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+                        ' fill' => 'currentColor',
                     ])->toHtml();
                 }
                 echo '<span>' . e($item->title) . '</span>';
