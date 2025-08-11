@@ -56,7 +56,7 @@ class RadioGroup extends CheckboxGroup
             $html .= sprintf(
                 '<label for="%s" class="text-sm text-gray-500 ms-2 dark:text-neutral-400">%s</label>',
                 e($id),
-                form_escape(is_array($label) ? ($label['label'] ?? '') : $label)
+                e(is_array($label) ? ($label['label'] ?? '') : $label)
             );
             $html .= '</div>';
             $index++;

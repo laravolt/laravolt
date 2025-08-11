@@ -31,10 +31,6 @@ class FieldCollection extends Collection
                 $field = ['type' => 'text', 'name' => $field, 'label' => Str::title($field)];
             }
 
-            // if ($field instanceof Field) {
-            //     $field = $field->toArray();
-            // }
-
             $field['name'] ??= $key;
 
             $field += ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
