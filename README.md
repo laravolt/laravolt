@@ -1,356 +1,408 @@
-# Laravolt Form Builders
+# Laravolt: Configurable UI & Form Builder System
 
-Configurable form builder system for Laravel that supports both **Semantic UI** and **Preline UI (Tailwind CSS)** frameworks.
+A comprehensive Laravel platform with configurable UI frameworks and form builders that supports both **Semantic UI** and **Preline UI (Tailwind CSS)** with seamless switching capabilities.
 
-## Features
+## 🎨 UI Framework Features
 
-- 🎨 **Multiple UI Frameworks**: Switch between Semantic UI and Preline UI/Tailwind CSS
-- 🔄 **Runtime Switching**: Change form builders within the same request
-- 🤖 **Auto-Detection**: Automatically detect the best form builder based on your CSS framework
-- 🎯 **Unified API**: Same API regardless of the underlying UI framework
-- ⚙️ **Easy Configuration**: Simple configuration file to manage form builders
-- 🚀 **Artisan Commands**: CLI tools for managing form builders
+- **🔄 Multi-Framework Support**: Switch between Semantic UI and Preline UI
+- **🎯 Unified API**: Same codebase works with different UI frameworks
+- **🤖 Auto-Detection**: Automatically detect the best UI framework
+- **⚙️ Easy Configuration**: Simple configuration files and environment variables
+- **🚀 Performance Optimized**: Memory-efficient with caching and lazy loading
+- **🛠️ Developer Tools**: Artisan commands for framework management
 
-## Installation
+## 🏗️ Architecture
 
-The form builder system is included as part of the Laravolt platform. Both SemanticForm and PrelineForm packages are available.
+### UI Framework System
+- **UI Manager**: Handles switching between UI frameworks
+- **Form Manager**: Manages form builders for different UI frameworks
+- **Component Mapping**: Maps components between frameworks for consistency
+- **Auto-Detection**: Automatically selects the best framework based on your setup
 
-## Configuration
+### Supported UI Frameworks
 
-### Publishing Configuration
+#### 1. Semantic UI (Default)
+- **CSS Framework**: Semantic UI
+- **JavaScript**: jQuery-based components
+- **Form Builder**: SemanticForm
+- **Best for**: Traditional web applications, jQuery-based interactions
 
-```bash
-php artisan vendor:publish --tag=form-config
-```
+#### 2. Preline UI (Ready for Integration)
+- **CSS Framework**: Tailwind CSS
+- **JavaScript**: Vanilla JS/Alpine.js compatible
+- **Form Builder**: PrelineForm  
+- **Best for**: Modern applications, utility-first CSS, component-based design
 
-This will publish `config/form.php` where you can configure your form builders.
+## 📦 Installation & Configuration
 
 ### Environment Configuration
 
-Add to your `.env` file:
-
 ```env
-# Default form builder (semantic or preline)
-FORM_BUILDER=semantic
+# UI Framework Selection
+UI_FRAMEWORK=semantic              # or 'preline'
+UI_AUTO_DETECT=false              # Enable automatic detection
+UI_FONT_SIZE=sm                   # Font size for current framework
+UI_THEME=light                    # Theme: light or dark
 
-# Enable auto-detection of best form builder
-FORM_AUTO_DETECT=false
+# Form Builder Configuration  
+FORM_BUILDER=semantic             # Matches UI framework
+FORM_AUTO_DETECT=false           # Auto-detect form builder
+FORM_RUNTIME_SWITCHING=true     # Allow runtime switching
 
-# Enable runtime switching between form builders
-FORM_RUNTIME_SWITCHING=true
+# Framework-Specific Settings
+SEMANTIC_UI_ENABLED=true         # Enable Semantic UI
+SEMANTIC_THEME=light            # Semantic UI theme
+SEMANTIC_BUTTON_COLOR=blue      # Button color scheme
+
+PRELINE_UI_ENABLED=false        # Enable when ready to use Preline UI
+PRELINE_THEME=light            # Preline UI theme
+PRELINE_COLOR_SCHEME=blue      # Color scheme
 ```
 
-## Usage
+### Publish Configuration Files
 
-### Basic Usage (Unified API)
+```bash
+# Publish UI configuration
+php artisan vendor:publish --tag=ui-config
 
-The unified API works with both form builders:
+# Publish form configuration  
+php artisan vendor:publish --tag=form-config
+```
+
+## 🛠️ Usage
+
+### Basic UI Framework Usage
+
+```php
+// Get current UI framework
+$framework = current_ui_framework(); // 'semantic' or 'preline'
+
+// Check current framework
+if (is_semantic_ui()) {
+    // Semantic UI specific code
+}
+
+if (is_preline_ui()) {
+    // Preline UI specific code
+}
+
+// Get CSS classes for components
+$buttonClass = ui_class('button');
+$formClass = ui_class('form', ['additional-class']);
+
+// Use in Blade templates
+<form class="{{ ui_class('form') }}">
+    <button class="{{ ui_class('button', ['primary']) }}">Submit</button>
+</form>
+```
+
+### Form Builder Integration
 
 ```php
 use Laravolt\SemanticForm\UnifiedFacade as Form;
 
-// This will use the configured default form builder
+// Unified form API - works with both frameworks
 {!! Form::open(route('users.store')) !!}
     {!! Form::text('name')->label('Full Name') !!}
     {!! Form::email('email')->label('Email Address') !!}
     {!! Form::submit('Save User') !!}
 {!! Form::close() !!}
-```
 
-### Switching Form Builders
+// Explicit framework switching
+{!! Form::semantic()->open(route('classic.form')) !!}
+    {!! Form::text('username')->label('Username') !!}
+{!! Form::close() !!}
 
-#### Method 1: Configuration
-Set the default in `config/form.php`:
-
-```php
-'default' => 'preline', // or 'semantic'
-```
-
-#### Method 2: Environment Variable
-```env
-FORM_BUILDER=preline
-```
-
-#### Method 3: Runtime Switching
-```php
-// Switch to Preline UI for this section
 {!! Form::preline()->open(route('modern.form')) !!}
     {!! Form::text('username')->label('Username') !!}
-    {!! Form::password('password')->label('Password') !!}
     {!! Form::submit('Login')->primary() !!}
 {!! Form::close() !!}
-
-// Switch back to Semantic UI
-{!! Form::semantic()->open(route('classic.form')) !!}
-    {!! Form::text('search')->label('Search') !!}
-    {!! Form::submit('Search') !!}
-{!! Form::close() !!}
 ```
 
-#### Method 4: Direct Driver Access
-```php
-// Use specific driver
-{!! form('preline')->open(route('tailwind.form')) !!}
-{!! form('semantic')->open(route('semantic.form')) !!}
-```
-
-### Auto-Detection
-
-Enable auto-detection to automatically choose the best form builder:
+### UI Manager Advanced Usage
 
 ```php
-// In config/form.php
-'auto_detect' => [
+$uiManager = app('ui-manager');
+
+// Switch frameworks programmatically
+$uiManager->switchTo('preline');
+
+// Get framework information
+$info = $uiManager->getFrameworkInfo();
+/*
+[
+    'name' => 'Semantic UI',
+    'framework' => 'semantic',
+    'css_framework' => 'semantic-ui',
+    'js_framework' => 'jquery',
+    'form_builder' => 'semantic',
     'enabled' => true,
-    'detection_method' => 'css_scan', // or 'config'
-],
+    'is_current' => true
+]
+*/
+
+// Auto-detection
+$bestFramework = $uiManager->autoDetect();
+
+// Get CSS classes
+$containerClass = $uiManager->getCssClass('container');
+$customButtonClass = $uiManager->buildCssClass('button', ['large', 'primary']);
 ```
 
-The system will automatically detect:
-- **Tailwind CSS** → Uses Preline Form
-- **Semantic UI** → Uses Semantic Form
+## 🚀 Artisan Commands
 
-## Artisan Commands
+### UI Framework Management
 
-### List Available Form Builders
 ```bash
+# List available UI frameworks
+php artisan ui:framework list
+
+# Switch to a different framework
+php artisan ui:framework switch preline
+php artisan ui:framework switch semantic
+
+# Get framework information
+php artisan ui:framework info
+php artisan ui:framework info preline
+
+# Auto-detect best framework
+php artisan ui:framework detect
+
+# Show framework status and statistics
+php artisan ui:framework status
+
+# Enable a framework
+php artisan ui:framework switch preline --enable
+```
+
+### Form Builder Management
+
+```bash
+# List available form builders
 php artisan form:builder list
-```
 
-### Switch Form Builder
-```bash
+# Switch form builders
 php artisan form:builder switch preline
 php artisan form:builder switch semantic
-```
 
-### Show Form Builder Information
-```bash
+# Get form builder information
 php artisan form:builder info
-php artisan form:builder info preline
-```
 
-### Auto-Detect Best Form Builder
-```bash
+# Auto-detect best form builder
 php artisan form:builder detect
 ```
 
-### Publish Configuration
-```bash
-php artisan form:builder list --publish
-```
+## 🎨 Framework Comparison
 
-## Form Builders
+| Feature | Semantic UI | Preline UI |
+|---------|-------------|------------|
+| **CSS Approach** | Component-based classes | Utility-first classes |
+| **Bundle Size** | Larger (full framework) | Smaller (tree-shakeable) |
+| **Customization** | Theme-based | Utility classes |
+| **JavaScript** | jQuery required | Vanilla JS/Alpine.js |
+| **Learning Curve** | Easier (semantic names) | Steeper (utility classes) |
+| **Performance** | Good | Excellent |
+| **Modern Features** | Traditional | Cutting-edge |
 
-### 1. Semantic Form
-- **UI Framework**: Semantic UI
-- **CSS Framework**: Semantic UI CSS
-- **Best for**: Applications using Semantic UI, jQuery-based interactions
-- **Package**: `packages/semantic-form`
+## 📱 Component Mapping
 
-#### Example:
-```php
-{!! SemanticForm::open() !!}
-    {!! SemanticForm::text('username')->label('Username') !!}
-    {!! SemanticForm::submit('Login') !!}
-{!! SemanticForm::close() !!}
-```
-
-### 2. Preline Form  
-- **UI Framework**: Preline UI
-- **CSS Framework**: Tailwind CSS
-- **Best for**: Modern applications using Tailwind CSS, component-based design
-- **Package**: `packages/preline-form`
-
-#### Example:
-```php
-{!! PrelineForm::open() !!}
-    {!! PrelineForm::text('username')->label('Username') !!}
-    {!! PrelineForm::submit('Login')->primary() !!}
-{!! PrelineForm::close() !!}
-```
-
-## API Reference
-
-Both form builders support the same API:
-
-### Form Elements
-```php
-Form::text($name, $value)
-Form::email($name, $value)
-Form::password($name)
-Form::number($name, $value)
-Form::textarea($name, $value)
-Form::select($name, $options, $selected)
-Form::selectMultiple($name, $options, $selected)
-Form::checkbox($name, $value, $checked)
-Form::radio($name, $value, $checked)
-Form::radioGroup($name, $options, $checked)
-Form::checkboxGroup($name, $options, $checked)
-Form::file($name)
-Form::hidden($name, $value)
-Form::date($name, $value)
-Form::time($name, $value)
-Form::color($name, $value)
-```
-
-### Buttons
-```php
-Form::button($text)
-Form::submit($text)
-
-// Preline Form additional button styles
-Form::submit('Save')->primary()
-Form::button('Cancel')->secondary()
-Form::submit('Delete')->danger()
-Form::submit('Confirm')->success()
-```
-
-### Form Methods
-```php
-Form::open($action, $model)
-Form::get($url)
-Form::post($url)
-Form::put($url)
-Form::patch($url)
-Form::delete($url)
-Form::close()
-```
-
-### Model Binding
-```php
-{!! Form::open(route('users.update', $user), $user) !!}
-// or
-{!! Form::bind($user)->put(route('users.update', $user)) !!}
-```
-
-## Helper Functions
+The system automatically maps components between frameworks:
 
 ```php
-// Get form manager
-$manager = form();
-
-// Get specific form builder
-$semantic = form('semantic');
-$preline = form('preline');
-
-// Direct access to builders
-$semantic = semantic_form();
-$preline = preline_form();
-```
-
-## Form Builder Information
-
-Get information about form builders:
-
-```php
-$manager = form();
-
-// Current form builder
-$current = $manager->getCurrentDriver(); // 'semantic' or 'preline'
-
-// Available form builders
-$available = $manager->getAvailableDrivers(); // ['semantic', 'preline']
-
-// Form builder details
-$info = $manager->getBuilderInfo('preline');
-/*
-[
-    'driver' => 'preline',
-    'class' => 'Laravolt\PrelineForm\PrelineForm',
-    'ui_framework' => 'preline-ui',
-    'css_framework' => 'tailwindcss',
-    'description' => 'Preline UI form builder with Tailwind CSS styling',
-    'is_current' => false
-]
-*/
-```
-
-## Styling Differences
-
-### Semantic Form (Semantic UI)
-- Uses Semantic UI CSS classes
-- jQuery-based interactions
-- Grid system with `ui form` classes
-- Semantic color scheme
-
-### Preline Form (Tailwind CSS)
-- Uses Tailwind CSS utility classes
-- Modern design with Preline UI components
-- Flexbox/Grid layout with spacing utilities
-- Customizable with Tailwind configuration
-
-## Migration Guide
-
-### From Semantic Form to Preline Form
-
-1. **Switch the default builder**:
-   ```env
-   FORM_BUILDER=preline
-   ```
-
-2. **Update your CSS**: Replace Semantic UI with Tailwind CSS + Preline UI
-
-3. **Test your forms**: The API is identical, but styling will be different
-
-### From Preline Form to Semantic Form
-
-1. **Switch the default builder**:
-   ```env
-   FORM_BUILDER=semantic
-   ```
-
-2. **Update your CSS**: Replace Tailwind CSS with Semantic UI
-
-3. **Remove Preline-specific styling**: Some Preline Form features (like button variants) may not apply
-
-## Advanced Configuration
-
-### Custom Form Builder
-
-You can register custom form builders in `config/form.php`:
-
-```php
-'builders' => [
-    'custom' => [
-        'driver' => 'custom',
-        'class' => \App\Forms\CustomFormBuilder::class,
-        'facade' => \App\Forms\CustomFacade::class,
-        'ui_framework' => 'custom-ui',
-        'css_framework' => 'custom-css',
-        'description' => 'Custom form builder',
+// config/ui.php - Component Mapping
+'component_mapping' => [
+    'button' => [
+        'semantic' => 'ui button',
+        'preline' => 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md',
+    ],
+    'input' => [
+        'semantic' => 'ui input',
+        'preline' => 'block w-full border-gray-300 rounded-md shadow-sm',
+    ],
+    'form' => [
+        'semantic' => 'ui form',
+        'preline' => 'space-y-6',
+    ],
+    'container' => [
+        'semantic' => 'ui container',
+        'preline' => 'max-w-7xl mx-auto px-4',
     ],
 ],
 ```
 
-### Runtime Configuration
+## 🔧 Configuration Reference
+
+### UI Framework Configuration (`config/ui.php`)
 
 ```php
-// Check if runtime switching is enabled
-if (config('form.runtime_switching.enabled')) {
-    $builder = Form::switchTo('preline');
-}
-
-// Get form builder information
-$info = Form::info();
+return [
+    // Current framework
+    'framework' => env('UI_FRAMEWORK', 'semantic'),
+    
+    // Framework definitions
+    'frameworks' => [
+        'semantic' => [
+            'name' => 'Semantic UI',
+            'css_framework' => 'semantic-ui',
+            'js_framework' => 'jquery',
+            'form_builder' => 'semantic',
+            'enabled' => true,
+            'settings' => [
+                'font_size' => env('SEMANTIC_FONT_SIZE', 'sm'),
+                'theme' => env('SEMANTIC_THEME', 'light'),
+                'button_color' => env('SEMANTIC_BUTTON_COLOR', 'blue'),
+            ],
+        ],
+        'preline' => [
+            'name' => 'Preline UI',
+            'css_framework' => 'tailwindcss',
+            'js_framework' => 'vanilla',
+            'form_builder' => 'preline',
+            'enabled' => env('PRELINE_UI_ENABLED', false),
+            'settings' => [
+                'font_size' => env('PRELINE_FONT_SIZE', 'text-sm'),
+                'theme' => env('PRELINE_THEME', 'light'),
+                'color_scheme' => env('PRELINE_COLOR_SCHEME', 'blue'),
+            ],
+        ],
+    ],
+    
+    // Auto-detection settings
+    'auto_detect' => [
+        'enabled' => env('UI_AUTO_DETECT', false),
+        'priority' => ['preline', 'semantic'],
+        'detection_methods' => [
+            'package_json' => true,
+            'css_files' => true,
+            'config_hints' => true,
+        ],
+    ],
+];
 ```
 
-## Troubleshooting
+### Form Builder Configuration (`config/form.php`)
 
-### Form Builder Not Found
-- Ensure the form builder package is installed
-- Check `config/form.php` configuration
-- Verify the driver name is correct
+```php
+return [
+    // Default form builder
+    'default' => env('FORM_BUILDER', 'semantic'),
+    
+    // Builder definitions
+    'builders' => [
+        'semantic' => [
+            'driver' => 'semantic',
+            'class' => \Laravolt\SemanticForm\SemanticForm::class,
+            'ui_framework' => 'semantic-ui',
+            'css_framework' => 'semantic-ui',
+        ],
+        'preline' => [
+            'driver' => 'preline',
+            'class' => \Laravolt\PrelineForm\PrelineForm::class,
+            'ui_framework' => 'preline-ui',
+            'css_framework' => 'tailwindcss',
+        ],
+    ],
+    
+    // Runtime switching
+    'runtime_switching' => [
+        'enabled' => env('FORM_RUNTIME_SWITCHING', true),
+        'cache_builder_instances' => true,
+    ],
+];
+```
 
-### Styles Not Applied
-- **Semantic UI**: Ensure Semantic UI CSS is loaded
-- **Preline/Tailwind**: Ensure Tailwind CSS and Preline UI are configured
+## 🎯 Migration Guide
 
-### Runtime Switching Issues
-- Check if `runtime_switching.enabled` is `true` in config
-- Clear config cache: `php artisan config:clear`
+### From Single Framework to Multi-Framework
 
-## Credits
+1. **Update Environment Variables**:
+   ```env
+   UI_FRAMEWORK=semantic  # Your current framework
+   FORM_BUILDER=semantic  # Matching form builder
+   ```
 
-- **Semantic Form**: Based on [Laravolt Semantic Form](https://github.com/laravolt/semantic-form)
-- **Preline Form**: Built for [Preline UI](https://preline.co/) with Tailwind CSS
-- **Form Manager**: Unified system for managing multiple form builders
+2. **Update Templates** (Optional):
+   ```blade
+   {{-- Before --}}
+   <form class="ui form">
+   
+   {{-- After (framework-agnostic) --}}
+   <form class="{{ ui_class('form') }}">
+   ```
+
+3. **Test Different Frameworks**:
+   ```bash
+   php artisan ui:framework switch preline
+   php artisan config:clear
+   ```
+
+### Enabling Preline UI (When Ready)
+
+1. **Install Tailwind CSS & Preline UI**:
+   ```bash
+   npm install -D tailwindcss @tailwindcss/forms
+   npm install preline
+   ```
+
+2. **Enable in Configuration**:
+   ```env
+   PRELINE_UI_ENABLED=true
+   ```
+
+3. **Switch Framework**:
+   ```bash
+   php artisan ui:framework switch preline
+   ```
+
+## ⚡ Performance Features
+
+- **Memory Optimization**: Compiled configuration caching
+- **CSS Class Caching**: Cached component-to-CSS mappings
+- **Lazy Loading**: Framework detection results cached
+- **Minimal File Operations**: Optimized for in-memory deployments
+- **Static Analysis**: Pre-compiled configurations for production
+
+## 🔍 Auto-Detection
+
+The system can automatically detect the best UI framework based on:
+
+1. **Package.json Analysis**: Checks for framework dependencies
+2. **CSS File Detection**: Scans for framework-specific CSS files
+3. **Configuration Hints**: Uses existing configuration settings
+4. **Priority Order**: Configurable framework preference
+
+## 🎁 Preline UI Integration (Future)
+
+Currently, the system is fully prepared for Preline UI integration:
+
+- ✅ **Infrastructure Ready**: All systems support Preline UI
+- ✅ **Configuration Complete**: Preline UI fully configured
+- ✅ **Form Builder**: PrelineForm package created and ready
+- ✅ **Component Mapping**: CSS class mappings defined
+- ⏳ **Integration Pending**: Awaiting Preline UI discussion/implementation
+
+To enable Preline UI when ready:
+```env
+PRELINE_UI_ENABLED=true
+UI_FRAMEWORK=preline
+```
+
+## 🤝 Contributing
+
+This system is designed to be extensible. To add new UI frameworks:
+
+1. **Define Framework Configuration** in `config/ui.php`
+2. **Create Form Builder** (if needed)
+3. **Add Component Mappings**
+4. **Update Detection Logic**
+5. **Test Integration**
+
+## 📚 Documentation
+
+- **Form Builder API**: Same API for all frameworks
+- **UI Framework Guide**: Switching and configuration
+- **Component Reference**: Available components and mappings
+- **Performance Guide**: Optimization for production
+- **Migration Guide**: Moving between frameworks
+
+This configurable system provides the foundation for supporting multiple UI frameworks while maintaining a consistent developer experience and allowing for future expansion to additional frameworks as needed.

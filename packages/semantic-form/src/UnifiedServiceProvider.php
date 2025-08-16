@@ -34,12 +34,18 @@ class UnifiedServiceProvider extends BaseServiceProvider
             return new FormManager($app);
         });
 
+        // Register the UI manager
+        $this->app->singleton('ui-manager', function ($app) {
+            return new UIManager($app);
+        });
+
         // Register individual form builders for direct access if needed
         $this->registerSemanticForm();
         $this->registerPrelineForm();
 
         // Register unified facade alias
         $this->app->alias('form-manager', 'form');
+        $this->app->alias('ui-manager', 'ui');
     }
 
     /**
@@ -88,6 +94,10 @@ class UnifiedServiceProvider extends BaseServiceProvider
             __DIR__.'/../config/form.php' => config_path('form.php'),
         ], 'form-config');
 
+        $this->publishes([
+            __DIR__.'/../../config/ui.php' => config_path('ui.php'),
+        ], 'ui-config');
+
         // Load views for both form builders
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/'), 'semantic-form');
         
@@ -104,6 +114,7 @@ class UnifiedServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \Laravolt\SemanticForm\Console\FormBuilderCommand::class,
+                \Laravolt\SemanticForm\Console\UIFrameworkCommand::class,
             ]);
         }
 
@@ -121,6 +132,6 @@ class UnifiedServiceProvider extends BaseServiceProvider
      */
     public function provides()
     {
-        return ['form-manager', 'form', 'semantic-form', 'preline-form'];
+        return ['form-manager', 'form', 'ui-manager', 'ui', 'semantic-form', 'preline-form'];
     }
 }

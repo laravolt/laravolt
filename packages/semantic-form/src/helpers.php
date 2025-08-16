@@ -27,6 +27,71 @@ if (! function_exists('semantic_form')) {
     }
 }
 
+if (! function_exists('ui')) {
+    /**
+     * Get the UI manager instance.
+     * 
+     * @param string|null $component
+     * @return \Laravolt\SemanticForm\UIManager|string
+     */
+    function ui($component = null)
+    {
+        $manager = app('ui-manager');
+        
+        return $component ? $manager->getCssClass($component) : $manager;
+    }
+}
+
+if (! function_exists('ui_class')) {
+    /**
+     * Get CSS class for a component in the current UI framework.
+     * 
+     * @param string $component
+     * @param array $additionalClasses
+     * @return string
+     */
+    function ui_class($component, $additionalClasses = [])
+    {
+        return app('ui-manager')->buildCssClass($component, $additionalClasses);
+    }
+}
+
+if (! function_exists('current_ui_framework')) {
+    /**
+     * Get the current UI framework.
+     * 
+     * @return string
+     */
+    function current_ui_framework()
+    {
+        return app('ui-manager')->getCurrentFramework();
+    }
+}
+
+if (! function_exists('is_semantic_ui')) {
+    /**
+     * Check if current UI framework is Semantic UI.
+     * 
+     * @return bool
+     */
+    function is_semantic_ui()
+    {
+        return app('ui-manager')->isSemantic();
+    }
+}
+
+if (! function_exists('is_preline_ui')) {
+    /**
+     * Check if current UI framework is Preline UI.
+     * 
+     * @return bool
+     */
+    function is_preline_ui()
+    {
+        return app('ui-manager')->isPreline();
+    }
+}
+
 if (! function_exists('form_escape')) {
     /**
      * Escape HTML special characters in a string.
