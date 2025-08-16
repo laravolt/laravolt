@@ -53,6 +53,8 @@ class InstallCommand extends Command
             base_path('.gitignore') => [
                 '/public/laravolt',
                 '/build/coverage',
+                '/phpunit-coverage-result.xml',
+                '/phpunit-execution-result.xml',
             ],
         ];
 
