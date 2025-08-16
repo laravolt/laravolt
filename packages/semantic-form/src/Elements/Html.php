@@ -29,9 +29,7 @@ class Html extends Element
 
         $this->beforeRender();
 
-        $result = '<div style="margin-top: .5em"';
-        $result .= $this->renderAttributes();
-        $result .= ">$this->content</div>";
+        $result = $this->content;
         $result .= $this->renderHint();
 
         return $result;

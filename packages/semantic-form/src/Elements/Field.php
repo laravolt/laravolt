@@ -5,7 +5,7 @@ namespace Laravolt\SemanticForm\Elements;
 class Field extends Wrapper
 {
     protected $attributes = [
-        'class' => 'space-y-1',
+        'class' => 'grid sm:grid-cols-12 gap-y-1.5 sm:gap-y-0 sm:gap-x-5',
     ];
 
     public function render()

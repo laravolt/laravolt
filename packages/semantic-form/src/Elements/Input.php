@@ -36,11 +36,13 @@ abstract class Input extends FormControl
 
         $this->attribute('id', $this->idAttribute);
 
-        $result = '<input';
+        $result = '<div class="sm:col-span-8 xl:col-span-4">';
+        $result .= '<input';
         $result .= $this->renderAttributes();
         $result .= ' />';
         $result .= $this->renderHint();
         $result .= $this->renderError();
+        $result .= '</div>';
 
         return $result;
     }

@@ -10,12 +10,14 @@ class FormOpen extends Element
     protected $attributes = [
         'method' => 'POST',
         'action' => '',
-        'class' => 'grid gap-y-4',
+        'class' => 'space-y-5',
     ];
 
     protected $withToken = true;
 
     protected $hiddenMethod;
+
+    protected $token = '';
 
     /**
      * FormOpen constructor.
@@ -141,6 +143,7 @@ class FormOpen extends Element
         return $this->encodingType('multipart/form-data');
     }
 
+    /** @deprecated */
     public function horizontal()
     {
         $this->addClass('horizontal');

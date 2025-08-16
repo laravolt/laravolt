@@ -19,7 +19,7 @@ return [
     'settings' => [
         [
             'type' => 'html',
-            'content' => '<h3 class="ui horizontal divider section m-t-3">Informasi Umum</h3>',
+            'content' => '<h2 class="font-semibold text-gray-800 dark:text-neutral-200">Informasi Umum</h2>',
         ],
         [
             'type' => 'text',
@@ -27,7 +27,7 @@ return [
             'label' => 'Name',
         ],
         [
-            'type' => 'text',
+            'type' => 'textarea',
             'name' => 'brand_description',
             'label' => 'Description',
         ],
@@ -35,6 +35,12 @@ return [
             'type' => 'uploader',
             'name' => 'brand_image',
             'label' => 'Logo',
+        ],
+        [
+            'type' => \Laravolt\Fields\Field::DROPDOWN_COLOR,
+            'name' => 'color',
+            'label' => 'Warna Aksen',
+            'inline' => true,
         ],
         // [
         //     'type' => 'html',
@@ -61,12 +67,6 @@ return [
         //     'label' => 'Tema',
         //     'inline' => true,
         // ],
-        [
-            'type' => \Laravolt\Fields\Field::DROPDOWN_COLOR,
-            'name' => 'color',
-            'label' => 'Warna Aksen',
-            'inline' => true,
-        ],
         // [
         //     'type' => 'html',
         //     'content' => '<h3 class="ui horizontal divider section m-t-3">Halaman Login</h3>',

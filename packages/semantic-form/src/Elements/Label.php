@@ -27,7 +27,8 @@ class Label extends Element
         $this->addClass(trim(($existing ? $existing.' ' : '').$defaultClasses));
         $this->attribute('for', $this->getAttribute('for'));
 
-        $result = '<label';
+        $result = '<div class="sm:col-span-4 xl:col-span-3 2xl:col-span-2">';
+        $result .= '<label';
         $result .= $this->renderAttributes();
         $result .= '>';
 
@@ -42,6 +43,7 @@ class Label extends Element
         }
 
         $result .= '</label>';
+        $result .= '</div>';
 
         return $result;
     }

@@ -6,6 +6,10 @@ namespace Laravolt\Media\MediaHandler;
 
 use Laravolt\Platform\Models\Guest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 
@@ -13,7 +17,26 @@ class FileuploaderMediaHandler
 {
     public function __invoke()
     {
-        $action = request('_action');
+        $req = request();
+        $action = $req->input('_action', $req->query('_action'));
+
+        // Infer action when missing: if any file fields exist, treat as upload; if id present without file, treat as delete
+        if (!$action) {
+            if (count($req->allFiles()) > 0) {
+                $action = 'upload';
+            } elseif ($req->filled('id')) {
+                $action = 'delete';
+            }
+        }
+
+        // Whitelist allowed actions to avoid calling unintended methods
+        $allowed = ['upload', 'delete'];
+        if (!$action || !in_array($action, $allowed, true) || !method_exists($this, $action)) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Invalid action',
+            ], 400);
+        }
 
         return $this->{$action}();
     }
@@ -21,7 +44,7 @@ class FileuploaderMediaHandler
     protected function upload()
     {
         /** @var \Spatie\MediaLibrary\InteractsWithMedia $user */
-        $user = auth()->user() ?? Guest::first();
+        $user = Auth::user() ?? Guest::query()->first();
 
         try {
             $media = $user->addMediaFromRequest(request('_key'))->toMediaCollection();
@@ -48,20 +71,21 @@ class FileuploaderMediaHandler
                 'message' => $e->getMessage(),
             ];
 
-            report($e);
+            Log::error('File upload failed', ['exception' => $e]);
         } finally {
-            return response()->json($response);
+            return new JsonResponse($response);
         }
     }
 
     protected function delete()
     {
         /** @var Model */
-        $model = config('media-library.media_model');
+        $model = Config::get('media-library.media_model');
         /** @var Media */
-        $media = $model::query()->findOrfail(request('id'));
+        $mediaId = request('id');
+        $media = $model::query()->findOrFail($mediaId);
         $media->delete();
 
-        return response()->json(true);
+        return new JsonResponse(true);
     }
 }
