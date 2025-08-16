@@ -5,7 +5,9 @@ namespace Laravolt\PrelineForm\Elements;
 class Text extends Element
 {
     protected $name;
+
     protected $hasError = false;
+
     protected $errorMessage = '';
 
     public function __construct($name)

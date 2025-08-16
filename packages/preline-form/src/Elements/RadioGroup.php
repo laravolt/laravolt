@@ -5,9 +5,13 @@ namespace Laravolt\PrelineForm\Elements;
 class RadioGroup extends Element
 {
     protected $name;
+
     protected $options = [];
+
     protected $checkedValue;
+
     protected $hasError = false;
+
     protected $errorMessage = '';
 
     public function __construct($name, $options = [])
@@ -63,7 +67,7 @@ class RadioGroup extends Element
 
         foreach ($this->options as $value => $label) {
             $radio = new RadioButton($this->name, $value);
-            
+
             if ($this->checkedValue == $value) {
                 $radio->checked(true);
             }

@@ -5,9 +5,13 @@ namespace Laravolt\PrelineForm\Elements;
 class RadioButton extends Element
 {
     protected $name;
+
     protected $value;
+
     protected $checked = false;
+
     protected $hasError = false;
+
     protected $errorMessage = '';
 
     public function __construct($name, $value = null)
@@ -39,7 +43,7 @@ class RadioButton extends Element
 
     public function defaultChecked($checked = true)
     {
-        if (!$this->checked) {
+        if (! $this->checked) {
             $this->checked($checked);
         }
 
@@ -69,7 +73,7 @@ class RadioButton extends Element
     protected function renderControl()
     {
         $output = sprintf('<input%s>', $this->renderAttributes());
-        
+
         if ($this->label) {
             $labelText = $this->label instanceof Label ? $this->label->render() : $this->label;
             $output = sprintf(
@@ -90,6 +94,7 @@ class RadioButton extends Element
             $output .= $this->renderError();
             $output .= $this->renderHint();
             $output .= '</div>';
+
             return $output;
         }
 

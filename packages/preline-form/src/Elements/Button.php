@@ -5,6 +5,7 @@ namespace Laravolt\PrelineForm\Elements;
 class Button extends Element
 {
     protected $value;
+
     protected $type;
 
     public function __construct($value, $type = 'button')

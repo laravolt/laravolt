@@ -91,7 +91,7 @@ return [
     | backward compatibility.
     |
     */
-    
+
     // Font Size - Available options: xs, sm, md, xl, lg
     'font_size' => env('UI_FONT_SIZE', config('ui.frameworks.semantic.settings.font_size', 'sm')),
 

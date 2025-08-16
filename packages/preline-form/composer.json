@@ -2,13 +2,13 @@
     "name": "laravolt/preline-form",
     "description": "Preline UI form helpers",
     "keywords": ["laravel", "laravolt", "form", "preline UI"],
-    "homepage": "https://github.com/laravolt/preline-form",
+    "homepage": "https://github.com/laravolt/laravolt",
     "license": "MIT",
     "authors": [
         {
-            "name": "Bayu Hendra Winata",
-            "email": "bayu.hendra@javan.co.id",
-            "homepage": "https://laravolt.dev",
+            "name": "Qisthi Ramadhani",
+            "email": "rama@qisthi.dev",
+            "homepage": "https://qisthi.dev",
             "role": "Developer"
         }
     ],

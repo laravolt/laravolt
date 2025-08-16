@@ -5,10 +5,15 @@ namespace Laravolt\PrelineForm\Elements;
 class Select extends Element
 {
     protected $name;
+
     protected $options = [];
+
     protected $selectedValue;
+
     protected $hasError = false;
+
     protected $errorMessage = '';
+
     protected $placeholder;
 
     public function __construct($name, $options = [])

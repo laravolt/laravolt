@@ -3,7 +3,6 @@
 namespace Laravolt\PrelineForm\Elements;
 
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 
 class FormOpen extends Element
 {

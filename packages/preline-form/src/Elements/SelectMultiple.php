@@ -11,7 +11,7 @@ class SelectMultiple extends Select
         parent::__construct($name, $options);
         $this->setAttribute('multiple', 'multiple');
         // Change name to array format for multiple selection
-        $this->setAttribute('name', $name . '[]');
+        $this->setAttribute('name', $name.'[]');
     }
 
     public function value($values)

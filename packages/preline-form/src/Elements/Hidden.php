@@ -5,6 +5,7 @@ namespace Laravolt\PrelineForm\Elements;
 class Hidden extends Element
 {
     protected $name;
+
     protected $value;
 
     public function __construct($name)

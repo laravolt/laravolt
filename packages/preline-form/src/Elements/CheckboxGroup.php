@@ -5,9 +5,13 @@ namespace Laravolt\PrelineForm\Elements;
 class CheckboxGroup extends Element
 {
     protected $name;
+
     protected $options = [];
+
     protected $checkedValues = [];
+
     protected $hasError = false;
+
     protected $errorMessage = '';
 
     public function __construct($name, $options = [])
@@ -62,8 +66,8 @@ class CheckboxGroup extends Element
         $output = '<div class="space-y-2">';
 
         foreach ($this->options as $value => $label) {
-            $checkbox = new Checkbox($this->name . '[]', $value);
-            
+            $checkbox = new Checkbox($this->name.'[]', $value);
+
             if (in_array($value, $this->checkedValues)) {
                 $checkbox->checked(true);
             }

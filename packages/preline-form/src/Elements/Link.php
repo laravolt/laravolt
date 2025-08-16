@@ -5,6 +5,7 @@ namespace Laravolt\PrelineForm\Elements;
 class Link extends Element
 {
     protected $url;
+
     protected $text;
 
     public function __construct($url, $text)

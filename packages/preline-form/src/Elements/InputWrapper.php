@@ -5,6 +5,7 @@ namespace Laravolt\PrelineForm\Elements;
 class InputWrapper extends Text
 {
     protected $prependElement;
+
     protected $appendElement;
 
     public function prependIcon($icon)
@@ -44,20 +45,20 @@ class InputWrapper extends Text
     protected function renderControl()
     {
         $output = '';
-        
+
         if ($this->prependElement || $this->appendElement) {
             $output .= '<div class="relative">';
-            
+
             if ($this->prependElement) {
                 $output .= $this->prependElement;
             }
-            
+
             $output .= sprintf('<input%s>', $this->renderAttributes());
-            
+
             if ($this->appendElement) {
                 $output .= $this->appendElement;
             }
-            
+
             $output .= '</div>';
         } else {
             $output = sprintf('<input%s>', $this->renderAttributes());

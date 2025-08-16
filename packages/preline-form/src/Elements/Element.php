@@ -3,7 +3,6 @@
 namespace Laravolt\PrelineForm\Elements;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 abstract class Element
 {
@@ -40,7 +39,7 @@ abstract class Element
     {
         $existingClasses = $this->getAttribute('class');
         if ($existingClasses) {
-            $this->setAttribute('class', $existingClasses . ' ' . $class);
+            $this->setAttribute('class', $existingClasses.' '.$class);
         } else {
             $this->setAttribute('class', $class);
         }
@@ -54,7 +53,7 @@ abstract class Element
         if ($existingClasses) {
             $classes = explode(' ', $existingClasses);
             // Remove all classes that contain the $class substring
-            $classes = array_filter($classes, function($c) use ($class) {
+            $classes = array_filter($classes, function ($c) use ($class) {
                 return strpos($c, $class) === false;
             });
             $this->setAttribute('class', implode(' ', $classes));
@@ -72,7 +71,7 @@ abstract class Element
 
     public function data($attribute, $value = null)
     {
-        $this->setAttribute('data-' . $attribute, $value);
+        $this->setAttribute('data-'.$attribute, $value);
 
         return $this;
     }
@@ -182,7 +181,7 @@ abstract class Element
     protected function renderError()
     {
         if ($this->hasError()) {
-            return '<p class="text-sm text-red-600 mt-1">' . $this->getError() . '</p>';
+            return '<p class="text-sm text-red-600 mt-1">'.$this->getError().'</p>';
         }
 
         return '';

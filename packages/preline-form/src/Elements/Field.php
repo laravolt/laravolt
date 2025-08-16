@@ -15,11 +15,11 @@ class Field extends Element
     public function render()
     {
         $output = sprintf('<div%s>', $this->renderAttributes());
-        
+
         if ($this->content) {
             $output .= $this->content;
         }
-        
+
         $output .= '</div>';
 
         return $output;

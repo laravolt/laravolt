@@ -5,8 +5,11 @@ namespace Laravolt\PrelineForm\Elements;
 class TextArea extends Element
 {
     protected $name;
+
     protected $value;
+
     protected $hasError = false;
+
     protected $errorMessage = '';
 
     public function __construct($name)

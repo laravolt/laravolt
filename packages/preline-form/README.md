@@ -216,7 +216,7 @@ For every form element, you can call and chain the following methods:
 - `removeClass($string)`
 - `attribute($name, $value)`
 - `data($name, $value)`
-- `hint($text)` 
+- `hint($text)`
 - `hint($text, $class)`
 
 #### Example
@@ -233,18 +233,21 @@ PrelineForm::password($name, $value)->label('Password')->hint('Minimum 6 charact
 This package uses Tailwind CSS classes for styling. The default styling follows Preline UI design patterns:
 
 ### Default Input Styling
+
 - Border: `border-gray-200`
 - Focus: `focus:border-blue-500 focus:ring-blue-500`
 - Dark mode: `dark:bg-slate-900 dark:border-gray-700`
 - Error state: `border-red-500 focus:border-red-500`
 
 ### Buttons
+
 - Primary: Blue background with white text
 - Secondary: White background with gray border
 - Danger: Red background for destructive actions
 - Success: Green background for positive actions
 
 ### Form Layout
+
 - Forms use `space-y-6` for vertical spacing
 - Field groups use `space-y-4`
 - Individual fields use `space-y-1`
@@ -259,7 +262,7 @@ PrelineForm::text('username')
     ->addClass('border-purple-500 focus:border-purple-600')
     ->removeClass('border-gray-200 focus:border-blue-500');
 
-// Custom button styling  
+// Custom button styling
 PrelineForm::submit('Save')
     ->addClass('bg-purple-600 hover:bg-purple-700')
     ->removeClass('bg-blue-600 hover:bg-blue-700');
@@ -271,7 +274,7 @@ For best results, include Preline UI CSS and JavaScript in your project:
 
 ```html
 <!-- Include Preline UI CSS -->
-<link href="https://preline.co/assets/css/main.min.css" rel="stylesheet">
+<link href="https://preline.co/assets/css/main.min.css" rel="stylesheet" />
 
 <!-- Include Preline UI JavaScript -->
 <script src="https://preline.co/assets/js/preline.js"></script>
