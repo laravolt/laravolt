@@ -5,6 +5,7 @@ All notable changes to `preline-form` will be documented in this file.
 ## [1.0.0] - 2024-01-01
 
 ### Added
+
 - Initial release of Preline Form package
 - Support for all basic form elements (text, email, password, textarea, select, etc.)
 - Checkbox and radio button support with grouping
@@ -18,6 +19,7 @@ All notable changes to `preline-form` will be documented in this file.
 - Comprehensive API compatible with Semantic Form
 
 ### Features
+
 - **Form Elements**: Text, Email, Password, Number, Date, Time, Color, Textarea, Select, Multiple Select
 - **Interactive Elements**: Checkbox, Radio Button, Checkbox Group, Radio Group
 - **File Handling**: File input with multiple file support

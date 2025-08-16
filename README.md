@@ -14,6 +14,7 @@ A comprehensive Laravel platform with configurable UI frameworks and form builde
 ## 🏗️ Architecture
 
 ### UI Framework System
+
 - **UI Manager**: Handles switching between UI frameworks
 - **Form Manager**: Manages form builders for different UI frameworks
 - **Component Mapping**: Maps components between frameworks for consistency
@@ -22,15 +23,17 @@ A comprehensive Laravel platform with configurable UI frameworks and form builde
 ### Supported UI Frameworks
 
 #### 1. Semantic UI (Default)
+
 - **CSS Framework**: Semantic UI
 - **JavaScript**: jQuery-based components
 - **Form Builder**: SemanticForm
 - **Best for**: Traditional web applications, jQuery-based interactions
 
 #### 2. Preline UI (Ready for Integration)
+
 - **CSS Framework**: Tailwind CSS
 - **JavaScript**: Vanilla JS/Alpine.js compatible
-- **Form Builder**: PrelineForm  
+- **Form Builder**: PrelineForm
 - **Best for**: Modern applications, utility-first CSS, component-based design
 
 ## 📦 Installation & Configuration
@@ -44,7 +47,7 @@ UI_AUTO_DETECT=false              # Enable automatic detection
 UI_FONT_SIZE=sm                   # Font size for current framework
 UI_THEME=light                    # Theme: light or dark
 
-# Form Builder Configuration  
+# Form Builder Configuration
 FORM_BUILDER=semantic             # Matches UI framework
 FORM_AUTO_DETECT=false           # Auto-detect form builder
 FORM_RUNTIME_SWITCHING=true     # Allow runtime switching
@@ -65,7 +68,7 @@ PRELINE_COLOR_SCHEME=blue      # Color scheme
 # Publish UI configuration
 php artisan vendor:publish --tag=ui-config
 
-# Publish form configuration  
+# Publish form configuration
 php artisan vendor:publish --tag=form-config
 ```
 
@@ -194,15 +197,15 @@ php artisan form:builder detect
 
 ## 🎨 Framework Comparison
 
-| Feature | Semantic UI | Preline UI |
-|---------|-------------|------------|
-| **CSS Approach** | Component-based classes | Utility-first classes |
-| **Bundle Size** | Larger (full framework) | Smaller (tree-shakeable) |
-| **Customization** | Theme-based | Utility classes |
-| **JavaScript** | jQuery required | Vanilla JS/Alpine.js |
-| **Learning Curve** | Easier (semantic names) | Steeper (utility classes) |
-| **Performance** | Good | Excellent |
-| **Modern Features** | Traditional | Cutting-edge |
+| Feature             | Semantic UI             | Preline UI                |
+| ------------------- | ----------------------- | ------------------------- |
+| **CSS Approach**    | Component-based classes | Utility-first classes     |
+| **Bundle Size**     | Larger (full framework) | Smaller (tree-shakeable)  |
+| **Customization**   | Theme-based             | Utility classes           |
+| **JavaScript**      | jQuery required         | Vanilla JS/Alpine.js      |
+| **Learning Curve**  | Easier (semantic names) | Steeper (utility classes) |
+| **Performance**     | Good                    | Excellent                 |
+| **Modern Features** | Traditional             | Cutting-edge              |
 
 ## 📱 Component Mapping
 
@@ -238,7 +241,7 @@ The system automatically maps components between frameworks:
 return [
     // Current framework
     'framework' => env('UI_FRAMEWORK', 'semantic'),
-    
+
     // Framework definitions
     'frameworks' => [
         'semantic' => [
@@ -266,7 +269,7 @@ return [
             ],
         ],
     ],
-    
+
     // Auto-detection settings
     'auto_detect' => [
         'enabled' => env('UI_AUTO_DETECT', false),
@@ -286,7 +289,7 @@ return [
 return [
     // Default form builder
     'default' => env('FORM_BUILDER', 'semantic'),
-    
+
     // Builder definitions
     'builders' => [
         'semantic' => [
@@ -302,7 +305,7 @@ return [
             'css_framework' => 'tailwindcss',
         ],
     ],
-    
+
     // Runtime switching
     'runtime_switching' => [
         'enabled' => env('FORM_RUNTIME_SWITCHING', true),
@@ -316,16 +319,18 @@ return [
 ### From Single Framework to Multi-Framework
 
 1. **Update Environment Variables**:
+
    ```env
    UI_FRAMEWORK=semantic  # Your current framework
    FORM_BUILDER=semantic  # Matching form builder
    ```
 
 2. **Update Templates** (Optional):
+
    ```blade
    {{-- Before --}}
    <form class="ui form">
-   
+
    {{-- After (framework-agnostic) --}}
    <form class="{{ ui_class('form') }}">
    ```
@@ -339,12 +344,14 @@ return [
 ### Enabling Preline UI (When Ready)
 
 1. **Install Tailwind CSS & Preline UI**:
+
    ```bash
    npm install -D tailwindcss @tailwindcss/forms
    npm install preline
    ```
 
 2. **Enable in Configuration**:
+
    ```env
    PRELINE_UI_ENABLED=true
    ```
@@ -382,6 +389,7 @@ Currently, the system is fully prepared for Preline UI integration:
 - ⏳ **Integration Pending**: Awaiting Preline UI discussion/implementation
 
 To enable Preline UI when ready:
+
 ```env
 PRELINE_UI_ENABLED=true
 UI_FRAMEWORK=preline
