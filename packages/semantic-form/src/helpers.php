@@ -5,7 +5,7 @@ if (! function_exists('form')) {
      * Get the form manager instance or specific form builder.
      * 
      * @param string|null $driver
-     * @return \Laravolt\SemanticForm\FormManager|mixed
+     * @return \Laravolt\SemanticForm\FormManager|\Laravolt\SemanticForm\SemanticForm|\Laravolt\PrelineForm\PrelineForm
      */
     function form($driver = null)
     {
