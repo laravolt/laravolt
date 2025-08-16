@@ -7,11 +7,11 @@
             @include('laravolt::menu.actionbar')
         @endif
 
-        <main class="p-4 sm:p-6 lg:p-8" up-main="modal"
-              data-font-size="{{ config('laravolt.ui.font_size') }}"
-              data-theme="{{ config('laravolt.ui.theme') }}"
-              data-accent-color="{{ config('laravolt.ui.color') }}"
-              data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}"
+        <main class="p-2 sm:p-5 sm:py-0 md:pt-5 space-y-3"
+            data-font-size="{{ config('laravolt.ui.font_size') }}"
+            data-theme="{{ config('laravolt.ui.theme') }}"
+            data-accent-color="{{ config('laravolt.ui.color') }}"
+            data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}"
         >
             {{ $slot }}
             @stack('main')
