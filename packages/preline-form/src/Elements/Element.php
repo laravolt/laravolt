@@ -53,7 +53,10 @@ abstract class Element
         $existingClasses = $this->getAttribute('class');
         if ($existingClasses) {
             $classes = explode(' ', $existingClasses);
-            $classes = array_diff($classes, [$class]);
+            // Remove all classes that contain the $class substring
+            $classes = array_filter($classes, function($c) use ($class) {
+                return strpos($c, $class) === false;
+            });
             $this->setAttribute('class', implode(' ', $classes));
         }
 
