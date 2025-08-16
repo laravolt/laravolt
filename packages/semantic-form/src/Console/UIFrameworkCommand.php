@@ -319,7 +319,9 @@ class UIFrameworkCommand extends Command
         $envContent = file_get_contents($envPath);
         
         if (preg_match("/^{$key}=.*$/m", $envContent)) {
-            $envContent = preg_replace("/^{$key}=.*$/m", "{$key}={$value}", $envContent);
+        $escapedKey = preg_quote($key, '/');
+        if (preg_match("/^{$escapedKey}=.*$/m", $envContent)) {
+            $envContent = preg_replace("/^{$escapedKey}=.*$/m", "{$key}={$value}", $envContent);
         } else {
             $envContent .= "\n{$key}={$value}\n";
         }
