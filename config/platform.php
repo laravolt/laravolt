@@ -40,7 +40,7 @@ return [
             'type' => \Laravolt\Fields\Field::DROPDOWN_COLOR,
             'name' => 'color',
             'label' => 'Warna Aksen',
-            'inline' => true,
+            // 'inline' => true,
         ],
         // [
         //     'type' => 'html',

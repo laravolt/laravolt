@@ -104,7 +104,9 @@ class LaravoltBladeDirectives
                   const extensions = (input.dataset.extensions || "")
                     .split(",")
                     .map((e) => e.trim().toLowerCase())
-                    .filter((e) => e); // Ensure hidden list input (stores uploaded IDs)
+                    .filter((e) => e);
+
+                  // Ensure hidden list input (stores uploaded IDs)
                   let listInputEl = listInputName
                     ? document.querySelector(`input[name="${listInputName}"]`)
                     : null;

@@ -82,7 +82,24 @@ class Uploader extends Input
             if (json_last_error() == JSON_ERROR_NONE) {
                 $mediaCollection = $temp;
             } else {
-                $mediaCollection = [$mediaCollection];
+                $path = parse_url($mediaCollection, PHP_URL_PATH) ?? $mediaCollection;
+                $segments = array_values(array_filter(explode('/', $path), fn($s) => $s !== ''));
+                if (count($segments) >= 2) {
+                    $candidate = $segments[count($segments)-2];
+                    if (ctype_digit($candidate)) {
+                        $mediaID = (int) $candidate;
+
+                        /** @var \Illuminate\Database\Eloquent\Model */
+                        $model = config('media-library.media_model');
+                        /** @var Media */
+                        $media = $model::query()->findOrfail($mediaID);
+                        $mediaCollection = [$media];
+                    } else {
+                        $mediaCollection = [$mediaCollection];
+                    }
+                } else {
+                    $mediaCollection = [$mediaCollection];
+                }
             }
         }
 
