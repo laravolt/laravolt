@@ -2,11 +2,28 @@
 
 if (! function_exists('form')) {
     /**
+     * Get the form manager instance or specific form builder.
+     * 
+     * @param string|null $driver
+     * @return \Laravolt\SemanticForm\FormManager|mixed
+     */
+    function form($driver = null)
+    {
+        $manager = app('form-manager');
+        
+        return $driver ? $manager->driver($driver) : $manager;
+    }
+}
+
+if (! function_exists('semantic_form')) {
+    /**
+     * Get the SemanticForm builder instance.
+     * 
      * @return \Laravolt\SemanticForm\SemanticForm
      */
-    function form()
+    function semantic_form()
     {
-        return app('semantic-form');
+        return app('form-manager')->driver('semantic');
     }
 }
 

@@ -46,11 +46,13 @@
         },
         "laravel": {
             "providers": [
-                "Laravolt\\SemanticForm\\ServiceProvider"
+                "Laravolt\\SemanticForm\\ServiceProvider",
+                "Laravolt\\SemanticForm\\UnifiedServiceProvider"
             ],
             "aliases": {
-                "Form": "Laravolt\\SemanticForm\\Facade",
-                "SemanticForm": "Laravolt\\SemanticForm\\Facade"
+                "Form": "Laravolt\\SemanticForm\\UnifiedFacade",
+                "SemanticForm": "Laravolt\\SemanticForm\\Facade",
+                "PrelineForm": "Laravolt\\PrelineForm\\Facade"
             }
         }
     }
