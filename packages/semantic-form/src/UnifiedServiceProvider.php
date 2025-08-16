@@ -102,7 +102,12 @@ class UnifiedServiceProvider extends BaseServiceProvider
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/'), 'semantic-form');
         
         if (is_dir(realpath(__DIR__.'/../../preline-form/resources/views/'))) {
-            $this->loadViewsFrom(realpath(__DIR__.'/../../preline-form/resources/views/'), 'preline-form');
+        if (class_exists(\Laravolt\PrelineForm\PrelineForm::class)) {
+            $reflection = new \ReflectionClass(\Laravolt\PrelineForm\PrelineForm::class);
+            $prelineFormPath = dirname($reflection->getFileName(), 2) . '/resources/views/';
+            if (is_dir($prelineFormPath)) {
+                $this->loadViewsFrom($prelineFormPath, 'preline-form');
+            }
         }
 
         // Load routes
