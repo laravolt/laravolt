@@ -336,7 +336,16 @@ class UIManager
 
             $content = file_get_contents($packageJsonPath);
             $packageJsonCache = json_decode($content, true) ?: false;
-        }
+        $cacheKey = 'ui_manager.package_json';
+        $packageJsonCache = Cache::remember($cacheKey, 300, function () {
+            $packageJsonPath = base_path('package.json');
+            if (!file_exists($packageJsonPath)) {
+                return false;
+            }
+
+            $content = file_get_contents($packageJsonPath);
+            return json_decode($content, true) ?: false;
+        });
 
         if (!$packageJsonCache) {
             return false;
