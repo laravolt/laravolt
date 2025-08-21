@@ -1,76 +1,54 @@
 <?php
 
-namespace Tests\Feature\Auth;
-
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Tests\TestCase;
 
-class ResetPasswordTest extends TestCase
-{
-    use LazilyRefreshDatabase;
+uses(LazilyRefreshDatabase::class);
 
-    protected $email = 'fulan@example.com';
+beforeEach(function () {
+    $this->email = 'fulan@example.com';
+    $this->table = (new User)->getTable();
 
-    protected $token;
+    $user = User::factory()->create(['email' => $this->email]);
+    $this->token = app('auth.password.broker')->createToken($user);
+});
 
-    protected $table;
+test('it can display page', function () {
+    $this->get(route('auth::reset.show', $this->token))
+        ->assertOk()
+        ->assertSeeText(__('Email'))
+        ->assertSeeText(__('Password'))
+        ->assertSeeText(__('Confirm New Password'));
+});
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+test('it can reset password', function () {
+    $payload = [
+        'token' => $this->token,
+        'email' => $this->email,
+        'password' => 'asdf1234',
+        'password_confirmation' => 'asdf1234',
+    ];
+    $this->post(route('auth::reset.store', $this->token), $payload)
+        ->assertRedirect(route('auth::login.show'));
+});
 
-        $this->table = (new User)->getTable();
+test('it can handle failed password reset', function () {
+    $payload = [
+        'token' => $this->token,
+        'email' => $this->email,
+        'password' => 'asdf1234',
+        'password_confirmation' => 'asdf1234',
+    ];
 
-        $user = User::factory()->create(['email' => $this->email]);
-        $this->token = app('auth.password.broker')->createToken($user);
-    }
+    \Password::shouldReceive('reset')->andReturn(\Password::RESET_THROTTLED);
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_display_page()
-    {
-        $this->get(route('auth::reset.show', $this->token))
-            ->assertOk()
-            ->assertSeeText(__('Email'))
-            ->assertSeeText(__('Password'))
-            ->assertSeeText(__('Confirm New Password'));
-    }
+    $this->get(route('auth::reset.show', $this->token));
+    $this->post(route('auth::reset.store', $this->token), $payload)
+        ->assertRedirect(route('auth::reset.show', $this->token))
+        ->assertSessionHasErrors('email')
+        ->assertSessionHasInput('email');
+});
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_reset_password()
-    {
-        $payload = [
-            'token' => $this->token,
-            'email' => $this->email,
-            'password' => 'asdf1234',
-            'password_confirmation' => 'asdf1234',
-        ];
-        $this->post(route('auth::reset.store', $this->token), $payload)
-            ->assertRedirect(route('auth::login.show'));
-    }
-
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_handle_failed_passwor_reset()
-    {
-        $payload = [
-            'token' => $this->token,
-            'email' => $this->email,
-            'password' => 'asdf1234',
-            'password_confirmation' => 'asdf1234',
-        ];
-
-        \Password::shouldReceive('reset')->andReturn(\Password::RESET_THROTTLED);
-
-        $this->get(route('auth::reset.show', $this->token));
-        $this->post(route('auth::reset.store', $this->token), $payload)
-            ->assertRedirect(route('auth::reset.show', $this->token))
-            ->assertSessionHasErrors('email')
-            ->assertSessionHasInput('email');
-    }
-
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_has_errors_if_failed()
-    {
-        $this->post(route('auth::reset.store', 'asdf1234'))->assertSessionHasErrors();
-    }
-}
+test('it has errors if failed', function () {
+    $this->post(route('auth::reset.store', 'asdf1234'))->assertSessionHasErrors();
+});

@@ -2,13 +2,14 @@
 
 namespace Laravolt\Thunderclap;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use ReflectionClass;
 
 class ModelDetector
 {
     protected $appModelsPath;
+
     protected $namespace;
 
     public function __construct()
@@ -23,8 +24,8 @@ class ModelDetector
     public function detectExistingModel(string $table): ?array
     {
         $modelName = Str::singular(Str::studly($table));
-        $modelPath = $this->appModelsPath . '/' . $modelName . '.php';
-        $modelClass = $this->namespace . $modelName;
+        $modelPath = $this->appModelsPath.'/'.$modelName.'.php';
+        $modelClass = $this->namespace.$modelName;
 
         if (File::exists($modelPath) && class_exists($modelClass) && $this->isEloquentModel($modelClass)) {
             // Verify the model actually uses the specified table
@@ -32,7 +33,7 @@ class ModelDetector
             if ($modelTable && $modelTable !== $table) {
                 // Model exists but uses different table, check for naming variations
                 $variations = $this->getTableNameVariations($table);
-                if (!in_array($modelTable, $variations)) {
+                if (! in_array($modelTable, $variations)) {
                     return null; // Model doesn't match the table
                 }
             }
@@ -49,8 +50,8 @@ class ModelDetector
         // Try alternative naming conventions
         $alternatives = $this->getModelNameAlternatives($table);
         foreach ($alternatives as $altName) {
-            $altPath = $this->appModelsPath . '/' . $altName . '.php';
-            $altClass = $this->namespace . $altName;
+            $altPath = $this->appModelsPath.'/'.$altName.'.php';
+            $altClass = $this->namespace.$altName;
 
             if (File::exists($altPath) && class_exists($altClass) && $this->isEloquentModel($altClass)) {
                 $modelTable = $this->getTableFromModel($altClass);
@@ -74,7 +75,7 @@ class ModelDetector
      */
     public function getAllModels(): array
     {
-        if (!is_dir($this->appModelsPath)) {
+        if (! is_dir($this->appModelsPath)) {
             return [];
         }
 
@@ -84,7 +85,7 @@ class ModelDetector
         foreach ($files as $file) {
             if ($file->getExtension() === 'php') {
                 $modelName = $file->getFilenameWithoutExtension();
-                $modelClass = $this->namespace . $modelName;
+                $modelClass = $this->namespace.$modelName;
 
                 if (class_exists($modelClass)) {
                     // Verify it's an Eloquent model
@@ -121,14 +122,14 @@ class ModelDetector
             $usedTraits = $this->getAllTraits($reflection);
 
             foreach ($requiredTraits as $trait) {
-                if (!in_array($trait, $usedTraits)) {
+                if (! in_array($trait, $usedTraits)) {
                     $missingTraits[] = $trait;
                 }
             }
         }
 
         return [
-            'needs_enhancement' => !empty($missingTraits),
+            'needs_enhancement' => ! empty($missingTraits),
             'missing_traits' => $missingTraits,
             'has_searchable_columns' => $this->hasSearchableColumns($modelClass),
         ];
@@ -154,11 +155,12 @@ class ModelDetector
      */
     protected function hasSearchableColumns(string $modelClass): bool
     {
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             return false;
         }
 
         $reflection = new ReflectionClass($modelClass);
+
         return $reflection->hasProperty('searchableColumns');
     }
 
@@ -167,12 +169,13 @@ class ModelDetector
      */
     public function getTableFromModel(string $modelClass): ?string
     {
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             return null;
         }
 
         try {
             $model = new $modelClass;
+
             return $model->getTable();
         } catch (\Exception $e) {
             return null;
@@ -200,7 +203,7 @@ class ModelDetector
             if (Str::startsWith($table, $prefix)) {
                 $variations[] = Str::after($table, $prefix);
             } else {
-                $variations[] = $prefix . $table;
+                $variations[] = $prefix.$table;
             }
         }
 
@@ -225,8 +228,8 @@ class ModelDetector
 
         // With common prefixes/suffixes
         $base = Str::singular(Str::studly($table));
-        $alternatives[] = $base . 'Model';
-        $alternatives[] = 'App' . $base;
+        $alternatives[] = $base.'Model';
+        $alternatives[] = 'App'.$base;
 
         return array_unique($alternatives);
     }
@@ -236,12 +239,13 @@ class ModelDetector
      */
     protected function isEloquentModel(string $class): bool
     {
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             return false;
         }
 
         try {
             $reflection = new ReflectionClass($class);
+
             return $reflection->isSubclassOf('Illuminate\Database\Eloquent\Model');
         } catch (\Exception $e) {
             return false;

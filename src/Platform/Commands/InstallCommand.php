@@ -30,9 +30,14 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        $this->info('Starting Laravolt installation...');
+
         $this->addEntries();
         Artisan::call(ExtractAssetsCommand::class);
         Artisan::call(LinkCommand::class);
+
+        $this->info('1/2: Publishing Laravolt skeleton files...');
+
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-assets']);
@@ -41,8 +46,16 @@ class InstallCommand extends Command
             ['--tag' => 'migrations', '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider']
         );
 
-        $this->newLine();
+        $this->info('2/2: PestPHP installation...');
+
+        // Install Pest v4 for modern testing
+        Artisan::call(Pest4InstallCommand::class);
+
         $this->info(sprintf('Application ready: %s', url('/')));
+
+        $this->info('Done. Laravolt installation complete, please run this command to finish the installation:');
+
+        $this->line('php artisan migrate:fresh');
 
         return self::SUCCESS;
     }
@@ -53,8 +66,8 @@ class InstallCommand extends Command
             base_path('.gitignore') => [
                 '/public/laravolt',
                 '/build/coverage',
-                '/phpunit-coverage-result.xml',
-                '/phpunit-execution-result.xml',
+                '/pestphp-coverage-result.xml',
+                '/pestphp-execution-result.xml',
             ],
         ];
 

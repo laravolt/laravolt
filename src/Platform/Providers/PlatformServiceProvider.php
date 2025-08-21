@@ -25,6 +25,7 @@ use Laravolt\Platform\Commands\MakeChartCommnad;
 use Laravolt\Platform\Commands\MakeStatisticCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\MakeViewCommnad;
+use Laravolt\Platform\Commands\Pest4InstallCommand;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\Backlink;
 use Laravolt\Platform\Components\BrandImage;
@@ -65,6 +66,7 @@ class PlatformServiceProvider extends ServiceProvider
         MakeStatisticCommnad::class,
         ManageRole::class,
         ManageUser::class,
+        Pest4InstallCommand::class,
         SyncPermission::class,
     ];
 

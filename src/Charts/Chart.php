@@ -2,9 +2,9 @@
 
 namespace Laravolt\Charts;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Illuminate\Support\Facades\Cache;
 
 abstract class Chart extends Component
 {
@@ -50,16 +50,12 @@ abstract class Chart extends Component
     /**
      * Get chart series data. This is the method that should be implemented by child classes
      * to provide the chart data.
-     *
-     * @return array
      */
     abstract public function series(): array;
 
     /**
      * Load series data with caching applied.
      * All select queries are cached by default.
-     *
-     * @return array
      */
     protected function loadSeriesData(): array
     {
@@ -82,7 +78,7 @@ abstract class Chart extends Component
         }
 
         // Generate a cache key based on class name and relevant properties
-        return 'laravolt_chart_' . class_basename($this) . '_' . md5(json_encode([
+        return 'laravolt_chart_'.class_basename($this).'_'.md5(json_encode([
             'title' => $this->title,
             'type' => $this->type,
             'height' => $this->height,

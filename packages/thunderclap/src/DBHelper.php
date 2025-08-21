@@ -68,7 +68,7 @@ class DBHelper
 
         $port = null;
 
-        if (!$isSQLite) {
+        if (! $isSQLite) {
             $port = (int) $laravelConfig['port'] ?? '5432';
         }
 
