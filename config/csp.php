@@ -19,7 +19,7 @@ return [
         // Scripts and styles allow nonce; styles often need 'unsafe-inline' due to 3rd-party libs
         // Replace 'https:' with explicit trusted script sources as needed:
         'script-src' => ["'self'", "'nonce-{nonce}'", 'https://cdn.jsdelivr.net', 'https://cdnjs.cloudflare.com'],
-        'style-src' => ["'self'", "'nonce-{nonce}'", 'https:', "'unsafe-inline'"],
+        'style-src' => ["'self'", "'nonce-{nonce}'", 'https:'],
 
         // Adjust connect/img/font/frame-src for your needs
         'connect-src' => ["'self'", 'https:'],
