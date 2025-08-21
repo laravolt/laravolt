@@ -61,7 +61,7 @@ class ContentSecurityPolicy
 
         $policy = trim(implode('; ', $compiled));
 
-        $headerName = config('laravolt.csp.report_only', $this->app->isLocal())
+        $headerName = config('laravolt.csp.report_only', true)
             ? 'Content-Security-Policy-Report-Only'
             : 'Content-Security-Policy';
 
