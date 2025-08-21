@@ -8,7 +8,7 @@ uses(LazilyRefreshDatabase::class);
 beforeEach(function () {
     $this->email = 'fulan@example.com';
     $this->table = (new User)->getTable();
-    
+
     $user = User::factory()->create(['email' => $this->email]);
     $this->token = app('auth.password.broker')->createToken($user);
 });
