@@ -21,6 +21,7 @@ use Laravolt\Platform\Commands\AdminCommand;
 use Laravolt\Platform\Commands\ExtractAssetsCommand;
 use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
+use Laravolt\Platform\Commands\Pest4InstallCommand;
 use Laravolt\Platform\Commands\MakeChartCommnad;
 use Laravolt\Platform\Commands\MakeStatisticCommnad;
 use Laravolt\Platform\Commands\MakeTableCommnad;
@@ -65,6 +66,7 @@ class PlatformServiceProvider extends ServiceProvider
         MakeStatisticCommnad::class,
         ManageRole::class,
         ManageUser::class,
+        Pest4InstallCommand::class,
         SyncPermission::class,
     ];
 

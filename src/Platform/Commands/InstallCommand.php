@@ -40,6 +40,9 @@ class InstallCommand extends Command
             'vendor:publish',
             ['--tag' => 'migrations', '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider']
         );
+        
+        // Install Pest v4 for modern testing
+        Artisan::call(Pest4InstallCommand::class);
 
         $this->newLine();
         $this->info(sprintf('Application ready: %s', url('/')));
@@ -53,8 +56,8 @@ class InstallCommand extends Command
             base_path('.gitignore') => [
                 '/public/laravolt',
                 '/build/coverage',
-                '/phpunit-coverage-result.xml',
-                '/phpunit-execution-result.xml',
+                '/pestphp-coverage-result.xml',
+                '/pestphp-execution-result.xml',
             ],
         ];
 
