@@ -8,13 +8,10 @@ use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Contracts\View\Factory;
 
 class ContentSecurityPolicy
 {
-    public function __construct(private readonly Application $app)
-    {
-    }
+    public function __construct(private readonly Application $app) {}
 
     public function handle(Request $request, Closure $next): Response
     {
@@ -39,7 +36,7 @@ class ContentSecurityPolicy
         $directives = config('laravolt.csp.directives', []);
 
         // Skip if no directives configured
-        if (empty($directives) || !is_array($directives)) {
+        if (empty($directives) || ! is_array($directives)) {
             return $response;
         }
 

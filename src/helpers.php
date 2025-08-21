@@ -239,6 +239,7 @@ if (! function_exists('csp_nonce')) {
         try {
             /** @var \Illuminate\Http\Request|null $request */
             $request = app('request');
+
             return (string) ($request?->attributes->get('csp_nonce') ?? '');
         } catch (\Throwable $e) {
             return '';
