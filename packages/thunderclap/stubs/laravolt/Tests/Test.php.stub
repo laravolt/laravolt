@@ -4,7 +4,7 @@ namespace :Namespace:\:ModuleName:\Tests;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use :Namespace:\:ModuleName:\Models\:ModuleName:;
+:MODEL_IMPORT:
 use Tests\TestCase;
 
 class :ModuleName:Test extends TestCase
@@ -23,19 +23,19 @@ class :ModuleName:Test extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_index_page()
+    public function it_can_open_index_page(): void
     {
         $this->get(route(':route-url-prefix:.index'))->assertStatus(200);
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_create_page()
+    public function it_can_open_create_page(): void
     {
         $this->get(route(':route-url-prefix:.create'))->assertStatus(200);
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_store_data()
+    public function it_can_store_data(): void
     {
         $attributes = :ModuleName:::factory()->raw();
 
@@ -45,7 +45,7 @@ class :ModuleName:Test extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_show_page()
+    public function it_can_open_show_page(): void
     {
         $:moduleName: = :ModuleName:::factory()->create();
 
@@ -53,7 +53,7 @@ class :ModuleName:Test extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_edit_page()
+    public function it_can_open_edit_page(): void
     {
         $:moduleName: = :ModuleName:::factory()->create();
 
@@ -61,7 +61,7 @@ class :ModuleName:Test extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_update_data()
+    public function it_can_update_data(): void
     {
         $:moduleName: = :ModuleName:::factory()->create();
         $attributes = $:moduleName:->toArray();
@@ -73,7 +73,7 @@ class :ModuleName:Test extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_delete_data()
+    public function it_can_delete_data(): void
     {
         $:moduleName: = :ModuleName:::factory()->create();
 

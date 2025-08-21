@@ -2,20 +2,27 @@
 
 namespace :Namespace:\:ModuleName:\Tables;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Laravolt\Suitable\Columns\Numbering;
 use Laravolt\Suitable\Columns\RestfulButton;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
-use :Namespace:\:ModuleName:\Models\:ModuleName:;
+:MODEL_IMPORT:
 
 class :ModuleName:TableView extends TableView
 {
-    public function source()
+    /**
+     * @return LengthAwarePaginator<int, :ModuleName:>
+     */
+    public function source(): LengthAwarePaginator
     {
         return :ModuleName:::autoSort()->latest()->autoSearch(request('search'))->paginate();
     }
 
-    protected function columns()
+    /**
+     * @return array<int, mixed>
+     */
+    protected function columns(): array
     {
         return [
             Numbering::make('No'),

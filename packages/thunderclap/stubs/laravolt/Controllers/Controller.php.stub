@@ -2,7 +2,10 @@
 
 namespace :Namespace:\:ModuleName:\Controllers;
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
 use :Namespace:\:ModuleName:\Requests\Store;
 use :Namespace:\:ModuleName:\Requests\Update;
@@ -10,41 +13,46 @@ use :Namespace:\:ModuleName:\Tables\:ModuleName:TableView;
 
 class :ModuleName:Controller extends Controller
 {
-    public function index()
+    public function index(): Responsable
     {
         return :ModuleName:TableView::make()->view(':module-name:::index');
     }
 
-    public function create()
+    public function create(): View
     {
-        return view(':module-name:::create');
+        /** @var view-string */
+        $view = ':module-name:::create';
+        return view($view);
     }
 
-    public function store(Store $request)
+    public function store(Store $request): RedirectResponse
     {
         :ModuleName:::create($request->validated());
-
         return to_route(':route-url-prefix:.index')->withSuccess(':Module Name: saved');
     }
 
-    public function show(:ModuleName: $:moduleName:)
+    public function show(:ModuleName: $:moduleName:): View
     {
-        return view(':module-name:::show', compact(':moduleName:'));
+        /** @var view-string $view */
+        $view = ':module-name:::show';
+        return view($view, compact(':moduleName:'));
     }
 
-    public function edit(:ModuleName: $:moduleName:)
+    public function edit(:ModuleName: $:moduleName:): View
     {
-        return view(':module-name:::edit', compact(':moduleName:'));
+        /** @var view-string $view */
+        $view = ':module-name:::edit';
+        return view($view, compact(':moduleName:'));
     }
 
-    public function update(Update $request, :ModuleName: $:moduleName:)
+    public function update(Update $request, :ModuleName: $:moduleName:): RedirectResponse
     {
         $:moduleName:->update($request->validated());
 
-        return to_route(':route-url-prefix:.index')->withSuccess(':Module Name: saved');
+        return to_route(':route-url-prefix:.index')->withSuccess(':Module Name: updated');
     }
 
-    public function destroy(:ModuleName: $:moduleName:)
+    public function destroy(:ModuleName: $:moduleName:): RedirectResponse
     {
         $:moduleName:->delete();
 
