@@ -53,7 +53,7 @@ class Generator extends Command
         $this->DBHelper = $DBHelper;
         $this->packerHelper = $packerHelper;
         $this->transformer = app(config('laravolt.thunderclap.transformer'));
-        $this->modelDetector = new ModelDetector();
+        $this->modelDetector = new ModelDetector;
         $this->modelEnhancer = new ModelEnhancer($this->transformer);
     }
 
@@ -87,7 +87,7 @@ class Generator extends Command
             // If --use-existing-models is explicitly set, auto-enhance
             if ($this->option('use-existing-models')) {
                 $modelAction = 'enhance';
-                $this->info("🔧 Auto-enhancing existing model...");
+                $this->info('🔧 Auto-enhancing existing model...');
                 $this->enhanceExistingModel($existingModel, $columns);
                 $skipModelGeneration = true;
             } else {
@@ -95,7 +95,7 @@ class Generator extends Command
                 $choice = $this->choice('How would you like to proceed?', [
                     'enhance' => 'Enhance existing model',
                     'create' => 'Create new model in module',
-                    'skip' => 'Skip model generation'
+                    'skip' => 'Skip model generation',
                 ], 'enhance');
 
                 $modelAction = $choice;
@@ -179,6 +179,7 @@ class Generator extends Command
                 // Skip model generation if using existing model
                 if ($skipModelGeneration && Str::contains($file, '/Models/') && Str::endsWith($file, 'Model.php.stub')) {
                     File::delete($file);
+
                     continue;
                 }
 
@@ -246,11 +247,11 @@ class Generator extends Command
             // 5. Run code style fix
             $this->info('🔁 Running code style fix...');
 
-            $pintCommand = base_path('vendor/bin/pint') . ' --parallel ' . escapeshellarg($modulePath);
+            $pintCommand = base_path('vendor/bin/pint').' --parallel '.escapeshellarg($modulePath);
             exec($pintCommand, $output, $returnCode);
 
             if ($isUsingExistingModel) {
-                $pintCommand = base_path('vendor/bin/pint') . ' --parallel ' . escapeshellarg($existingModel['path']);
+                $pintCommand = base_path('vendor/bin/pint').' --parallel '.escapeshellarg($existingModel['path']);
                 exec($pintCommand, $output, $returnCode);
             }
 
@@ -315,8 +316,9 @@ class Generator extends Command
         // Check what enhancements are needed
         $enhancement = $this->modelDetector->needsEnhancement($modelInfo['class']);
 
-        if (!$enhancement['needs_enhancement'] && $enhancement['has_searchable_columns']) {
+        if (! $enhancement['needs_enhancement'] && $enhancement['has_searchable_columns']) {
             $this->info('✓ Model already has all required traits and searchable columns');
+
             return;
         }
 
@@ -330,8 +332,8 @@ class Generator extends Command
             if ($this->transformer) {
                 $searchableString = $this->transformer->toSearchableColumns();
                 $searchableColumns = array_map('trim', explode(',', trim($searchableString, "'")));
-                $searchableColumns = array_filter($searchableColumns, function($col) {
-                    return !empty($col) && $col !== "''";
+                $searchableColumns = array_filter($searchableColumns, function ($col) {
+                    return ! empty($col) && $col !== "''";
                 });
             }
 
@@ -341,11 +343,11 @@ class Generator extends Command
             if ($success) {
                 $this->info('✓ Successfully enhanced existing model');
 
-                if (!empty($enhancement['missing_traits'])) {
-                    $this->info('  - Added traits: ' . implode(', ', array_map('class_basename', $enhancement['missing_traits'])));
+                if (! empty($enhancement['missing_traits'])) {
+                    $this->info('  - Added traits: '.implode(', ', array_map('class_basename', $enhancement['missing_traits'])));
                 }
 
-                if (!$enhancement['has_searchable_columns'] && !empty($searchableColumns)) {
+                if (! $enhancement['has_searchable_columns'] && ! empty($searchableColumns)) {
                     $this->info('  - Added searchableColumns property');
                 }
 
@@ -356,7 +358,7 @@ class Generator extends Command
             }
         } catch (\Exception $e) {
             $this->error("✗ Error enhancing model: {$e->getMessage()}");
-            $this->info("Restoring from backup...");
+            $this->info('Restoring from backup...');
             $this->modelEnhancer->restoreFromBackup($modelInfo['path'], $backup);
         }
     }
@@ -381,7 +383,7 @@ class Generator extends Command
                 $this->line("  Model: <fg=yellow>Skipped (using existing {$existingModel['class']})</fg=yellow>");
                 break;
             default:
-                $this->line("  Model: <fg=green>Created new model in module</fg=green>");
+                $this->line('  Model: <fg=green>Created new model in module</fg=green>');
         }
 
         $this->newLine();
@@ -402,7 +404,7 @@ class Generator extends Command
      */
     protected function postProcessControllerForExistingModel(string $controllerPath, array $existingModel, string $moduleName): void
     {
-        if (!File::exists($controllerPath)) {
+        if (! File::exists($controllerPath)) {
             return;
         }
 

@@ -54,15 +54,15 @@ class ExtractAssetsCommand extends Command
     /**
      * Extract a ZIP file to the specified destination.
      *
-     * @param string $zipPath Path to the ZIP file
-     * @param string $destination Destination directory
-     * @param string $description Description for user feedback
-     * @return bool
+     * @param  string  $zipPath  Path to the ZIP file
+     * @param  string  $destination  Destination directory
+     * @param  string  $description  Description for user feedback
      */
     protected function extractFile(string $zipPath, string $destination, string $description): bool
     {
-        if (!file_exists($zipPath)) {
+        if (! file_exists($zipPath)) {
             $this->warn("ZIP file not found: {$zipPath}");
+
             return false;
         }
 
@@ -72,18 +72,20 @@ class ExtractAssetsCommand extends Command
             return false;
         }
 
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         $result = $zip->open($zipPath);
 
-        if ($result !== TRUE) {
+        if ($result !== true) {
             $this->error("Failed to open ZIP file: {$zipPath}. Error code: {$result}");
+
             return false;
         }
 
         // Extract files
-        if (!$zip->extractTo($destination)) {
+        if (! $zip->extractTo($destination)) {
             $this->error("Failed to extract {$description} to {$destination}");
             $zip->close();
+
             return false;
         }
 
@@ -95,17 +97,15 @@ class ExtractAssetsCommand extends Command
 
     /**
      * Check if a directory has files or subdirectories.
-     *
-     * @param string $directory
-     * @return bool
      */
     protected function hasFiles(string $directory): bool
     {
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return false;
         }
 
         $files = array_diff(scandir($directory), ['.', '..']);
+
         return count($files) > 0;
     }
 }

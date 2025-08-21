@@ -4,7 +4,6 @@ namespace Laravolt\Thunderclap;
 
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\DateType;
-use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\TextType;
 use Illuminate\Support\Str;
 
@@ -297,7 +296,7 @@ TEMPLATE;
                 } elseif (Str::contains($name, 'name')) {
                     return "\$attributes['{$name}'] = 'Updated Name';";
                 } else {
-                    return "\$attributes['{$name}'] = 'Updated " . Str::title(str_replace('_', ' ', $name)) . "';";
+                    return "\$attributes['{$name}'] = 'Updated ".Str::title(str_replace('_', ' ', $name))."';";
                 }
             case \Doctrine\DBAL\Types\TextType::class:
                 if (Str::contains($name, 'description')) {

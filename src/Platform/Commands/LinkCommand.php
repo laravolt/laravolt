@@ -40,9 +40,11 @@ class LinkCommand extends Command
                 // If it's a directory and not a symlink, check if it has extracted assets
                 if ($this->hasExtractedAssets($target)) {
                     $this->info('Directory [public/laravolt] contains extracted assets, keeping as is.');
+
                     return;
                 } else {
                     $this->error('A non-symlink file/directory exists at [public/laravolt]. Please remove it manually.');
+
                     return;
                 }
             }
@@ -59,13 +61,10 @@ class LinkCommand extends Command
 
     /**
      * Check if the directory contains extracted assets from assets.zip
-     *
-     * @param string $directory
-     * @return bool
      */
     protected function hasExtractedAssets(string $directory): bool
     {
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return false;
         }
 
@@ -73,7 +72,7 @@ class LinkCommand extends Command
         $assetIndicators = ['css', 'js', 'images', 'fonts'];
 
         foreach ($assetIndicators as $indicator) {
-            if (file_exists($directory . '/' . $indicator)) {
+            if (file_exists($directory.'/'.$indicator)) {
                 return true;
             }
         }

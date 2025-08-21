@@ -2,8 +2,8 @@
 
 namespace Laravolt\Ui;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
 
 class Statistic extends Component
 {
@@ -57,10 +57,9 @@ class Statistic extends Component
      * Load data with caching applied.
      * This method should be overridden in child classes that need to fetch data.
      *
-     * @param callable $callback The function that fetches data
-     * @param string|null $customKey Optional custom cache key
-     * @param int|null $duration Optional custom cache duration
-     * @return mixed
+     * @param  callable  $callback  The function that fetches data
+     * @param  string|null  $customKey  Optional custom cache key
+     * @param  int|null  $duration  Optional custom cache duration
      */
     protected function loadWithCache(callable $callback, ?string $customKey = null, ?int $duration = null): mixed
     {
@@ -91,7 +90,8 @@ class Statistic extends Component
             'icon' => $this->icon,
             'color' => $this->color,
         ];
-        return 'laravolt_statistic_' . class_basename($this) . '_' . md5(serialize($properties));
+
+        return 'laravolt_statistic_'.class_basename($this).'_'.md5(serialize($properties));
     }
 
     public function render()
