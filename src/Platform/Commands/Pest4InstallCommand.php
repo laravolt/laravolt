@@ -26,8 +26,6 @@ class Pest4InstallCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -35,8 +33,9 @@ class Pest4InstallCommand extends Command
         $this->newLine();
 
         // Check if Pest is already installed
-        if ($this->isPestInstalled() && !$this->option('force')) {
+        if ($this->isPestInstalled() && ! $this->option('force')) {
             $this->info('✅ Pest is already installed. Use --force to reinstall.');
+
             return self::SUCCESS;
         }
 
@@ -49,14 +48,15 @@ class Pest4InstallCommand extends Command
         // Install Pest v4
         $this->info('📦 Installing Pest v4 with all dependencies...');
         $success = $this->runComposerCommand([
-            'require', 
-            'pestphp/pest', 
-            '--dev', 
-            '--with-all-dependencies'
+            'require',
+            'pestphp/pest',
+            '--dev',
+            '--with-all-dependencies',
         ]);
 
-        if (!$success) {
+        if (! $success) {
             $this->error('❌ Failed to install Pest v4');
+
             return self::FAILURE;
         }
 
@@ -76,7 +76,7 @@ class Pest4InstallCommand extends Command
         $this->info('✅ Pest v4 installation complete!');
         $this->info('🚀 Run "./vendor/bin/pest" to execute your tests');
         $this->info('📖 Check PEST_MIGRATION_GUIDE.md for migration instructions');
-        
+
         return self::SUCCESS;
     }
 
@@ -103,7 +103,7 @@ class Pest4InstallCommand extends Command
     {
         $process = new Process(array_merge(['composer'], $command), base_path());
         $process->setTimeout(300); // 5 minutes timeout
-        
+
         $process->run(function ($type, $buffer) {
             $this->output->write($buffer);
         });
@@ -118,7 +118,7 @@ class Pest4InstallCommand extends Command
     {
         // Create tests/Pest.php
         $pestConfigPath = base_path('tests/Pest.php');
-        if (!File::exists($pestConfigPath)) {
+        if (! File::exists($pestConfigPath)) {
             $pestConfig = <<<'PHP'
 <?php
 
@@ -172,12 +172,12 @@ function something()
 PHP;
 
             File::put($pestConfigPath, $pestConfig);
-            $this->line("   ✅ Created tests/Pest.php");
+            $this->line('   ✅ Created tests/Pest.php');
         }
 
         // Create pest.xml (replacing phpunit.xml for Pest)
-        $pestXmlPath = base_path('pest.xml');
-        if (!File::exists($pestXmlPath)) {
+        $pestXmlPath = base_path('phpunit.xml');
+        if (! File::exists($pestXmlPath)) {
             $pestXml = <<<'XML'
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -186,6 +186,9 @@ PHP;
          colors="true"
 >
     <testsuites>
+        <testsuite name="Modules">
+            <directory>modules/*/Tests</directory>
+        </testsuite>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
@@ -196,8 +199,24 @@ PHP;
     <source>
         <include>
             <directory>app</directory>
+            <directory>modules</directory>
         </include>
+        <exclude>
+            <directory suffix=".blade.php">modules/*/resources</directory>
+            <directory suffix="Factory.php">modules/*/Models</directory>
+            <directory suffix="Test.php">modules/*/Tests</directory>
+            <directory>modules/*/routes</directory>
+        </exclude>
     </source>
+    <coverage>
+        <report>
+            <html outputDirectory="build/coverage" />
+            <clover outputFile="pestphp-coverage-result.xml" />
+        </report>
+    </coverage>
+    <logging>
+        <junit outputFile="pestphp-execution-result.xml" />
+    </logging>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
@@ -215,7 +234,7 @@ PHP;
 XML;
 
             File::put($pestXmlPath, $pestXml);
-            $this->line("   ✅ Created pest.xml");
+            $this->line('   ✅ Created pest.xml');
         }
     }
 
@@ -225,7 +244,7 @@ XML;
     private function updateGitignore(): void
     {
         $gitignorePath = base_path('.gitignore');
-        if (!File::exists($gitignorePath)) {
+        if (! File::exists($gitignorePath)) {
             return;
         }
 
@@ -237,10 +256,10 @@ XML;
 
         $contents = File::get($gitignorePath);
         $lines = explode("\n", $contents);
-        
+
         foreach ($entries as $entry) {
-            if (!in_array($entry, $lines, true)) {
-                File::append($gitignorePath, $entry . "\n");
+            if (! in_array($entry, $lines, true)) {
+                File::append($gitignorePath, $entry."\n");
                 $this->line("   ✅ Added {$entry} to .gitignore");
             }
         }
@@ -252,7 +271,7 @@ XML;
     private function createMigrationGuide(): void
     {
         $guidePath = base_path('PEST_MIGRATION_GUIDE.md');
-        
+
         $guide = <<<'MARKDOWN'
 # PHPUnit to Pest v4 Migration Guide
 
@@ -372,6 +391,6 @@ Run `./vendor/bin/pest --help` for available options and commands.
 MARKDOWN;
 
         File::put($guidePath, $guide);
-        $this->line("   ✅ Created PEST_MIGRATION_GUIDE.md");
+        $this->line('   ✅ Created PEST_MIGRATION_GUIDE.md');
     }
 }
