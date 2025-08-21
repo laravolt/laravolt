@@ -17,7 +17,8 @@ return [
         'form-action' => ["'self'"],
 
         // Scripts and styles allow nonce; styles often need 'unsafe-inline' due to 3rd-party libs
-        'script-src' => ["'self'", "'nonce-{nonce}'", 'https:'],
+        // Replace 'https:' with explicit trusted script sources as needed:
+        'script-src' => ["'self'", "'nonce-{nonce}'", 'https://cdn.jsdelivr.net', 'https://cdnjs.cloudflare.com'],
         'style-src' => ["'self'", "'nonce-{nonce}'", 'https:', "'unsafe-inline'"],
 
         // Adjust connect/img/font/frame-src for your needs
