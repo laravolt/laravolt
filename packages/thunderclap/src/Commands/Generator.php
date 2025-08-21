@@ -169,7 +169,9 @@ class Generator extends Command
             $replacer[':Namespace:\:ModuleName:\Models\:ModuleName:'] = $existingModel['class'];
             $replacer[':MODEL_IMPORT:'] = "use {$existingModel['class']};";
         } else {
-            $replacer[':MODEL_IMPORT:'] = "use :Namespace:\:ModuleName:\Models\:ModuleName:;";
+            $modelNamespace = $namespace.'\\'.$moduleName.'\\Models\\'.$moduleName;
+            $replacer[':Namespace:\:ModuleName:\Models\:ModuleName:'] = $modelNamespace;
+            $replacer[':MODEL_IMPORT:'] = "use {$modelNamespace};";
         }
 
         $classToBePrefixed = config('laravolt.thunderclap.prefixed');
