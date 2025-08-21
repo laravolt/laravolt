@@ -16,13 +16,14 @@ class ListModelsCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->modelDetector = new ModelDetector();
+        $this->modelDetector = new ModelDetector;
     }
 
     public function handle()
     {
         if ($table = $this->option('table')) {
             $this->showModelForTable($table);
+
             return;
         }
 
@@ -52,10 +53,11 @@ class ListModelsCommand extends Command
 
         if (empty($models)) {
             $this->warn('No models found in app/Models directory');
+
             return;
         }
 
-        $this->info("Found " . count($models) . " model(s):");
+        $this->info('Found '.count($models).' model(s):');
         $this->newLine();
 
         $headers = ['Model', 'Class', 'Table', 'Auto Traits', 'Searchable'];
@@ -73,7 +75,7 @@ class ListModelsCommand extends Command
                 $model['class'],
                 $table,
                 $autoTraits,
-                $searchable
+                $searchable,
             ];
         }
 
@@ -101,21 +103,21 @@ class ListModelsCommand extends Command
         $this->line('<fg=cyan>Enhancement Status:</fg=cyan>');
 
         if ($enhancement['needs_enhancement']) {
-            $this->line("  <fg=yellow>Missing traits:</fg=yellow>");
+            $this->line('  <fg=yellow>Missing traits:</fg=yellow>');
             foreach ($enhancement['missing_traits'] as $trait) {
-                $this->line("    - " . class_basename($trait));
+                $this->line('    - '.class_basename($trait));
             }
         } else {
-            $this->line("  <fg=green>✓ All required traits present</fg=green>");
+            $this->line('  <fg=green>✓ All required traits present</fg=green>');
         }
 
         if ($enhancement['has_searchable_columns']) {
-            $this->line("  <fg=green>✓ Has searchableColumns property</fg=green>");
+            $this->line('  <fg=green>✓ Has searchableColumns property</fg=green>');
         } else {
-            $this->line("  <fg=yellow>❌ Missing searchableColumns property</fg=yellow>");
+            $this->line('  <fg=yellow>❌ Missing searchableColumns property</fg=yellow>');
         }
 
-        if ($enhancement['needs_enhancement'] || !$enhancement['has_searchable_columns']) {
+        if ($enhancement['needs_enhancement'] || ! $enhancement['has_searchable_columns']) {
             $this->newLine();
             $this->line('<fg=cyan>To enhance this model, run:</fg=cyan>');
             $this->line("  php artisan laravolt:clap --table={$table} --use-existing-models");

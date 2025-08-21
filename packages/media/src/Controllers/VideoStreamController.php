@@ -20,7 +20,7 @@ class VideoStreamController extends \Illuminate\Routing\Controller
 
         $path = $media->getPathRelativeToRoot();
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             abort(404);
         }
 
@@ -60,7 +60,7 @@ class VideoStreamController extends \Illuminate\Routing\Controller
             fseek($fp, $start);
             $bytesToRead = $end - $start + 1;
             $buffer = 1024 * 8;
-            while ($bytesToRead > 0 && !feof($fp)) {
+            while ($bytesToRead > 0 && ! feof($fp)) {
                 $readLength = ($bytesToRead > $buffer) ? $buffer : $bytesToRead;
                 echo fread($fp, $readLength);
                 flush();
@@ -76,7 +76,7 @@ class VideoStreamController extends \Illuminate\Routing\Controller
         $disk = Storage::disk('s3');
         $path = $media->getPath();
 
-        if (!$disk->exists($path)) {
+        if (! $disk->exists($path)) {
             abort(404);
         }
 
@@ -115,7 +115,7 @@ class VideoStreamController extends \Illuminate\Routing\Controller
             fseek($stream, $start);
             $bytesToRead = $end - $start + 1;
             $buffer = 1024 * 8;
-            while ($bytesToRead > 0 && !feof($stream)) {
+            while ($bytesToRead > 0 && ! feof($stream)) {
                 $readLength = ($bytesToRead > $buffer) ? $buffer : $bytesToRead;
                 echo fread($stream, $readLength);
                 flush();

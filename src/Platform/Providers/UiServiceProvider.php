@@ -197,7 +197,7 @@ class UiServiceProvider extends BaseServiceProvider
     private function ensureAssetsExtracted()
     {
         // Only run in production or when assets are missing
-        if (!app()->environment('local') || $this->shouldExtractAssets()) {
+        if (! app()->environment('local') || $this->shouldExtractAssets()) {
             $this->extractAssets();
         }
 
@@ -210,7 +210,7 @@ class UiServiceProvider extends BaseServiceProvider
         $iconsPath = base_path('resources/icons');
         $publicPath = public_path('laravolt');
 
-        return !$this->hasFiles($iconsPath) || !$this->hasFiles($publicPath);
+        return ! $this->hasFiles($iconsPath) || ! $this->hasFiles($publicPath);
     }
 
     private function extractAssets(): void
@@ -232,14 +232,14 @@ class UiServiceProvider extends BaseServiceProvider
         } catch (\Exception $e) {
             // Log error but don't fail the application
             if (function_exists('logger')) {
-                logger()->warning("Failed to extract Laravolt assets: " . $e->getMessage());
+                logger()->warning('Failed to extract Laravolt assets: '.$e->getMessage());
             }
         }
     }
 
     private function extractFile(string $zipPath, string $destination, string $description): bool
     {
-        if (!file_exists($zipPath) || !class_exists('\ZipArchive')) {
+        if (! file_exists($zipPath) || ! class_exists('\ZipArchive')) {
             return false;
         }
 
@@ -249,10 +249,10 @@ class UiServiceProvider extends BaseServiceProvider
             return false;
         }
 
-        $zip = new \ZipArchive();
+        $zip = new \ZipArchive;
         $result = $zip->open($zipPath);
 
-        if ($result !== TRUE) {
+        if ($result !== true) {
             return false;
         }
 
@@ -264,11 +264,12 @@ class UiServiceProvider extends BaseServiceProvider
 
     private function hasFiles(string $directory): bool
     {
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return false;
         }
 
         $files = array_diff(scandir($directory), ['.', '..']);
+
         return count($files) > 0;
     }
 }

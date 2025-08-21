@@ -10,14 +10,11 @@ class ComposerScripts
 {
     /**
      * Handle post-install and post-update events.
-     *
-     * @param Event $event
-     * @return void
      */
     public static function postAutoloadDump(Event $event): void
     {
         // Only run if we're in a Laravel project
-        if (!self::isLaravelProject()) {
+        if (! self::isLaravelProject()) {
             return;
         }
 
@@ -26,28 +23,26 @@ class ComposerScripts
 
     /**
      * Extract Laravolt assets to the appropriate directories.
-     *
-     * @return void
      */
     public static function extractAssets(): void
     {
         $vendorDir = self::getVendorDir();
-        $laravoltDir = $vendorDir . '/laravolt/laravolt';
+        $laravoltDir = $vendorDir.'/laravolt/laravolt';
 
-        if (!is_dir($laravoltDir)) {
+        if (! is_dir($laravoltDir)) {
             return;
         }
 
         // Extract icons.zip to resources/icons
         self::extractFile(
-            $laravoltDir . '/resources/icons.zip',
+            $laravoltDir.'/resources/icons.zip',
             \Laravolt\platform_path('resources'),
             'icons'
         );
 
         // Extract assets.zip to public/laravolt
         self::extractFile(
-            $laravoltDir . '/resources/assets.zip',
+            $laravoltDir.'/resources/assets.zip',
             \Laravolt\platform_path(''),
             'public assets'
         );
@@ -55,15 +50,10 @@ class ComposerScripts
 
     /**
      * Extract a ZIP file to the specified destination.
-     *
-     * @param string $zipPath
-     * @param string $destination
-     * @param string $description
-     * @return bool
      */
     private static function extractFile(string $zipPath, string $destination, string $description): bool
     {
-        if (!file_exists($zipPath) || !class_exists('\ZipArchive')) {
+        if (! file_exists($zipPath) || ! class_exists('\ZipArchive')) {
             return false;
         }
 
@@ -74,14 +64,14 @@ class ComposerScripts
         }
 
         // Create destination directory if it doesn't exist
-        if (!file_exists($destination)) {
+        if (! file_exists($destination)) {
             mkdir($destination, 0755, true);
         }
 
-        $zip = new \ZipArchive();
+        $zip = new \ZipArchive;
         $result = $zip->open($zipPath);
 
-        if ($result !== TRUE) {
+        if ($result !== true) {
             return false;
         }
 
@@ -93,39 +83,34 @@ class ComposerScripts
 
     /**
      * Check if the current directory is a Laravel project.
-     *
-     * @return bool
      */
     private static function isLaravelProject(): bool
     {
-        return file_exists(getcwd() . '/artisan') &&
-               file_exists(getcwd() . '/composer.json');
+        return file_exists(getcwd().'/artisan') &&
+               file_exists(getcwd().'/composer.json');
     }
 
     /**
      * Get the vendor directory path.
-     *
-     * @return string
      */
     private static function getVendorDir(): string
     {
         $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
+
         return dirname(dirname($reflection->getFileName()));
     }
 
     /**
      * Check if a directory has files or subdirectories.
-     *
-     * @param string $directory
-     * @return bool
      */
     private static function hasFiles(string $directory): bool
     {
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return false;
         }
 
         $files = array_diff(scandir($directory), ['.', '..']);
+
         return count($files) > 0;
     }
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\MediaHandler;
 
-use Laravolt\Platform\Models\Guest;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Laravolt\Platform\Models\Guest;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FileuploaderMediaHandler
 {

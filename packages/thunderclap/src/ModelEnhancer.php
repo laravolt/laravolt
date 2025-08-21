@@ -23,12 +23,12 @@ class ModelEnhancer
         $content = File::get($modelPath);
 
         // Add missing traits
-        if (!empty($enhancement['missing_traits'])) {
+        if (! empty($enhancement['missing_traits'])) {
             $content = $this->addTraits($content, $enhancement['missing_traits']);
         }
 
         // Add or update searchableColumns
-        if (!empty($searchableColumns) && !$enhancement['has_searchable_columns']) {
+        if (! empty($searchableColumns) && ! $enhancement['has_searchable_columns']) {
             $content = $this->addSearchableColumns($content, $searchableColumns);
         }
 
@@ -74,13 +74,13 @@ class ModelEnhancer
                 }
             }
 
-            if (!$found) {
+            if (! $found) {
                 $newUseStatements[] = $useStatement;
             }
         }
 
         // Insert new use statements
-        if (!empty($newUseStatements)) {
+        if (! empty($newUseStatements)) {
             $insertIndex = $useEndLine !== null ? $useEndLine + 1 : $classLine;
             array_splice($lines, $insertIndex, 0, $newUseStatements);
         }
@@ -106,12 +106,12 @@ class ModelEnhancer
         if (preg_match('/class\s+\w+[^{]*{[^}]*?use\s+([^;]+);/s', $content, $matches)) {
             // Existing use statement found, append to it
             $existingTraits = $matches[1];
-            $newTraits = $existingTraits . ', ' . implode(', ', $traitNames);
+            $newTraits = $existingTraits.', '.implode(', ', $traitNames);
             $content = str_replace($matches[1], $newTraits, $content);
         } else {
             // No existing use statement, add one after class opening brace
-            $useStatement = "\n    use " . implode(', ', $traitNames) . ";\n";
-            $content = preg_replace('/(\n\s*class\s+\w+[^{]*{)(\s*)/', '$1' . $useStatement . '$2', $content);
+            $useStatement = "\n    use ".implode(', ', $traitNames).";\n";
+            $content = preg_replace('/(\n\s*class\s+\w+[^{]*{)(\s*)/', '$1'.$useStatement.'$2', $content);
         }
 
         return $content;
@@ -122,16 +122,16 @@ class ModelEnhancer
      */
     protected function addSearchableColumns(string $content, array $searchableColumns): string
     {
-        $columnsString = "'" . implode("', '", $searchableColumns) . "'";
+        $columnsString = "'".implode("', '", $searchableColumns)."'";
         $property = "\n    /** @var array<string> */\n    protected \$searchableColumns = [{$columnsString}];\n";
 
         // Find a good place to insert the property (after existing properties or use statements)
         if (preg_match('/(\n\s*protected\s+\$[^;]+;)/', $content)) {
             // Insert after last protected property
-            $content = preg_replace('/(\n\s*protected\s+\$[^;]+;)(?!\n\s*protected\s+\$)/', '$1' . $property, $content, 1);
+            $content = preg_replace('/(\n\s*protected\s+\$[^;]+;)(?!\n\s*protected\s+\$)/', '$1'.$property, $content, 1);
         } else {
             // Insert after use statements
-            $content = preg_replace('/(\n\s*use\s+[^;]+;\s*)(\n\s*(?:public|protected|private|\}))/', '$1' . $property . '$2', $content);
+            $content = preg_replace('/(\n\s*use\s+[^;]+;\s*)(\n\s*(?:public|protected|private|\}))/', '$1'.$property.'$2', $content);
         }
 
         return $content;
@@ -142,8 +142,9 @@ class ModelEnhancer
      */
     public function createBackup(string $modelPath): string
     {
-        $backupPath = $modelPath . '.backup.' . date('YmdHis');
+        $backupPath = $modelPath.'.backup.'.date('YmdHis');
         File::copy($modelPath, $backupPath);
+
         return $backupPath;
     }
 
@@ -155,6 +156,7 @@ class ModelEnhancer
         if (File::exists($backupPath)) {
             return File::delete($backupPath);
         }
+
         return false;
     }
 
@@ -166,6 +168,7 @@ class ModelEnhancer
         if (File::exists($backupPath)) {
             return File::move($backupPath, $modelPath);
         }
+
         return false;
     }
 }
