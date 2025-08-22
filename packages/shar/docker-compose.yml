@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  nats:
+    image: nats:2.10-alpine
+    container_name: shar-nats
+    ports:
+      - "4222:4222"
+      - "8222:8222"  # HTTP monitoring port
+      - "6222:6222"  # Routing port for clustering
+    command: [
+      "--jetstream",
+      "--store_dir=/data",
+      "--http_port=8222"
+    ]
+    volumes:
+      - nats_data:/data
+    networks:
+      - shar-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8222/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  shar:
+    build: .
+    container_name: shar-server
+    ports:
+      - "8080:8080"
+    environment:
+      - NATS_URL=nats://nats:4222
+      - SHAR_LOG_LEVEL=info
+      - SHAR_PORT=8080
+      - SHAR_HOST=0.0.0.0
+    depends_on:
+      nats:
+        condition: service_healthy
+    networks:
+      - shar-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+networks:
+  shar-network:
+    driver: bridge
+
+volumes:
+  nats_data:
+    driver: local
