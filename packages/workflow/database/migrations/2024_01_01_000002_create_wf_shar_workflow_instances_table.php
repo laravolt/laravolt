@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('wf_shar_workflow_instances', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('workflow_name');
-            $table->enum('status', ['running', 'completed', 'failed', 'cancelled'])->default('running');
+            $table->enum('status', ['launching', 'running', 'completed', 'failed', 'cancelled'])->default('launching');
             $table->json('variables')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();

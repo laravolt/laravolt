@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('bpmn_xml');
             $table->text('description')->nullable();
             $table->unsignedInteger('version')->default(1);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', ['creating', 'active', 'inactive', 'failed'])->default('creating');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
 

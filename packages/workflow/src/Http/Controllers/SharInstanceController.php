@@ -7,15 +7,20 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Laravolt\Workflow\Exceptions\SharException;
 use Laravolt\Workflow\SharWorkflowService;
+use Laravolt\Workflow\SharAsyncWorkflowService;
 use Illuminate\Support\Facades\Validator;
 
 class SharInstanceController extends Controller
 {
     protected SharWorkflowService $sharWorkflowService;
+    protected SharAsyncWorkflowService $asyncService;
 
-    public function __construct(SharWorkflowService $sharWorkflowService)
-    {
+    public function __construct(
+        SharWorkflowService $sharWorkflowService,
+        SharAsyncWorkflowService $asyncService
+    ) {
         $this->sharWorkflowService = $sharWorkflowService;
+        $this->asyncService = $asyncService;
     }
 
     /**
@@ -120,23 +125,42 @@ class SharInstanceController extends Controller
     /**
      * Sync workflow instance with SHAR
      */
-    public function sync(string $instanceId): JsonResponse
+    public function sync(Request $request, string $instanceId): JsonResponse
     {
-        try {
-            $instance = $this->sharWorkflowService->syncWorkflowInstance($instanceId);
+        $async = $request->boolean('async', true); // Default to async
+        $callbackUrl = $request->input('callback_url');
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Workflow instance synced successfully',
-                'data' => [
-                    'id' => $instance->id,
-                    'workflow_name' => $instance->workflow_name,
-                    'status' => $instance->status,
-                    'variables' => $instance->variables,
-                    'started_at' => $instance->started_at,
-                    'completed_at' => $instance->completed_at,
-                ],
-            ]);
+        try {
+            if ($async) {
+                // Queue sync job
+                $this->asyncService->syncWorkflowInstanceAsync($instanceId, $callbackUrl);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Workflow instance sync queued successfully',
+                    'data' => [
+                        'instance_id' => $instanceId,
+                        'async' => true,
+                    ],
+                ], 202); // 202 Accepted for async operations
+            } else {
+                // Synchronous sync (blocking)
+                $instance = $this->sharWorkflowService->syncWorkflowInstance($instanceId);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Workflow instance synced successfully',
+                    'data' => [
+                        'id' => $instance->id,
+                        'workflow_name' => $instance->workflow_name,
+                        'status' => $instance->status,
+                        'variables' => $instance->variables,
+                        'started_at' => $instance->started_at,
+                        'completed_at' => $instance->completed_at,
+                        'async' => false,
+                    ],
+                ]);
+            }
         } catch (SharException $e) {
             return response()->json([
                 'success' => false,

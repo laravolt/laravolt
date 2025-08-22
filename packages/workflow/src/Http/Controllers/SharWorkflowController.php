@@ -9,14 +9,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravolt\Workflow\Exceptions\SharException;
 use Laravolt\Workflow\SharWorkflowService;
+use Laravolt\Workflow\SharAsyncWorkflowService;
 
 class SharWorkflowController extends Controller
 {
     protected SharWorkflowService $sharWorkflowService;
+    protected SharAsyncWorkflowService $asyncService;
 
-    public function __construct(SharWorkflowService $sharWorkflowService)
-    {
+    public function __construct(
+        SharWorkflowService $sharWorkflowService,
+        SharAsyncWorkflowService $asyncService
+    ) {
         $this->sharWorkflowService = $sharWorkflowService;
+        $this->asyncService = $asyncService;
     }
 
     /**
@@ -58,6 +63,8 @@ class SharWorkflowController extends Controller
             'name' => 'required|string|max:255',
             'bpmn_xml' => 'required|string',
             'description' => 'nullable|string|max:1000',
+            'async' => 'boolean',
+            'callback_url' => 'nullable|url',
         ]);
 
         if ($validator->fails()) {
@@ -68,26 +75,56 @@ class SharWorkflowController extends Controller
             ], 422);
         }
 
-        try {
-            $workflow = $this->sharWorkflowService->createWorkflow(
-                $request->input('name'),
-                $request->input('bpmn_xml'),
-                $request->input('description'),
-                Auth::id()
-            );
+        $async = $request->boolean('async', true); // Default to async
+        $callbackUrl = $request->input('callback_url');
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Workflow created successfully',
-                'data' => [
-                    'id' => $workflow->id,
-                    'name' => $workflow->name,
-                    'description' => $workflow->description,
-                    'version' => $workflow->version,
-                    'status' => $workflow->status,
-                    'created_at' => $workflow->created_at,
-                ],
-            ], 201);
+        try {
+            if ($async) {
+                // Create with placeholder and queue background job
+                $workflow = $this->asyncService->createWorkflowWithPlaceholder(
+                    $request->input('name'),
+                    $request->input('bpmn_xml'),
+                    $request->input('description'),
+                    Auth::id(),
+                    $callbackUrl
+                );
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Workflow creation queued successfully',
+                    'data' => [
+                        'id' => $workflow->id,
+                        'name' => $workflow->name,
+                        'description' => $workflow->description,
+                        'version' => $workflow->version,
+                        'status' => $workflow->status,
+                        'created_at' => $workflow->created_at,
+                        'async' => true,
+                    ],
+                ], 202); // 202 Accepted for async operations
+            } else {
+                // Synchronous creation (blocking)
+                $workflow = $this->sharWorkflowService->createWorkflow(
+                    $request->input('name'),
+                    $request->input('bpmn_xml'),
+                    $request->input('description'),
+                    Auth::id()
+                );
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Workflow created successfully',
+                    'data' => [
+                        'id' => $workflow->id,
+                        'name' => $workflow->name,
+                        'description' => $workflow->description,
+                        'version' => $workflow->version,
+                        'status' => $workflow->status,
+                        'created_at' => $workflow->created_at,
+                        'async' => false,
+                    ],
+                ], 201);
+            }
         } catch (SharException $e) {
             return response()->json([
                 'success' => false,
@@ -159,6 +196,8 @@ class SharWorkflowController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'variables' => 'nullable|array',
+            'async' => 'boolean',
+            'callback_url' => 'nullable|url',
         ]);
 
         if ($validator->fails()) {
@@ -169,24 +208,52 @@ class SharWorkflowController extends Controller
             ], 422);
         }
 
-        try {
-            $instance = $this->sharWorkflowService->launchWorkflowInstance(
-                $name,
-                $request->input('variables', []),
-                Auth::id()
-            );
+        $async = $request->boolean('async', true); // Default to async
+        $callbackUrl = $request->input('callback_url');
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Workflow instance launched successfully',
-                'data' => [
-                    'id' => $instance->id,
-                    'workflow_name' => $instance->workflow_name,
-                    'status' => $instance->status,
-                    'variables' => $instance->variables,
-                    'started_at' => $instance->started_at,
-                ],
-            ], 201);
+        try {
+            if ($async) {
+                // Launch with placeholder and queue background job
+                $instance = $this->asyncService->launchInstanceWithPlaceholder(
+                    $name,
+                    $request->input('variables', []),
+                    Auth::id(),
+                    $callbackUrl
+                );
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Workflow instance launch queued successfully',
+                    'data' => [
+                        'id' => $instance->id,
+                        'workflow_name' => $instance->workflow_name,
+                        'status' => $instance->status,
+                        'variables' => $instance->variables,
+                        'started_at' => $instance->started_at,
+                        'async' => true,
+                    ],
+                ], 202); // 202 Accepted for async operations
+            } else {
+                // Synchronous launch (blocking)
+                $instance = $this->sharWorkflowService->launchWorkflowInstance(
+                    $name,
+                    $request->input('variables', []),
+                    Auth::id()
+                );
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Workflow instance launched successfully',
+                    'data' => [
+                        'id' => $instance->id,
+                        'workflow_name' => $instance->workflow_name,
+                        'status' => $instance->status,
+                        'variables' => $instance->variables,
+                        'started_at' => $instance->started_at,
+                        'async' => false,
+                    ],
+                ], 201);
+            }
         } catch (SharException $e) {
             return response()->json([
                 'success' => false,

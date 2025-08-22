@@ -20,6 +20,9 @@ use Laravolt\Workflow\Commands\SharCleanupCommand;
 use Laravolt\Workflow\Commands\SharBatchCommand;
 use Laravolt\Workflow\Commands\SharSetupCommand;
 use Laravolt\Workflow\Commands\SharHelpCommand;
+use Laravolt\Workflow\Commands\SharQueueCommand;
+use Laravolt\Workflow\Events\SharWorkflowInstanceCompleted;
+use Laravolt\Workflow\Listeners\SendWorkflowCompletionNotification;
 use Laravolt\Workflow\Clients\SharClient;
 use Laravolt\Workflow\Livewire\DefinitionTable;
 use Laravolt\Workflow\Livewire\ProcessInstancesTable;
@@ -40,6 +43,11 @@ class WorkflowServiceProvider extends BaseServiceProvider
         $this->app->singleton(SharWorkflowService::class, function ($app) {
             return new SharWorkflowService($app->make(SharClient::class));
         });
+        
+        // Register SHAR async workflow service
+        $this->app->singleton(SharAsyncWorkflowService::class, function ($app) {
+            return new SharAsyncWorkflowService();
+        });
     }
 
     public function boot()
@@ -54,6 +62,7 @@ class WorkflowServiceProvider extends BaseServiceProvider
             WorkflowCheckCommand::class,
             SharHelpCommand::class,
             SharSetupCommand::class,
+            SharQueueCommand::class,
             SharHealthCommand::class,
             SharStatisticsCommand::class,
             SharMonitorCommand::class,
@@ -75,6 +84,12 @@ class WorkflowServiceProvider extends BaseServiceProvider
         // Load SHAR routes if enabled
         if (config('workflow.shar.enabled')) {
             $this->loadRoutesFrom(__DIR__.'/../routes/shar.php');
+            
+            // Register event listeners
+            $this->app['events']->listen(
+                SharWorkflowInstanceCompleted::class,
+                SendWorkflowCompletionNotification::class
+            );
         }
     }
 
