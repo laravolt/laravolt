@@ -1,46 +1,55 @@
-@isset($url)
-    <a href="{{ $url }}" class="ui card segments panel x-card shadow" style="overflow: hidden">
-@else
-    <div class="ui card segments panel x-card shadow-md p-1">
-@endisset
+@props([
+    'title' => null,
+    'subtitle' => null,
+    'actions' => null,
+    'footer' => null,
+    'padding' => true,
+    'border' => true,
+    'shadow' => true
+])
 
-    @if($attributes['cover'])
-        <div class="image">
-            <img src="{{ $attributes['cover'] }}" alt="">
+<div {{ $attributes->merge(['class' => 'bg-white overflow-hidden' . 
+    ($border ? ' border border-gray-200 dark:border-gray-700' : '') .
+    ($shadow ? ' shadow-sm' : '') .
+    ' rounded-xl dark:bg-slate-900'
+]) }}>
+    
+    @if($title || $subtitle || $actions)
+    <!-- Header -->
+    <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-4 sm:px-6">
+        <div class="flex items-center justify-between">
+            <div class="min-w-0 flex-1">
+                @if($title)
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                    {{ $title }}
+                </h3>
+                @endif
+                @if($subtitle)
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    {{ $subtitle }}
+                </p>
+                @endif
+            </div>
+            @if($actions)
+            <div class="flex items-center space-x-2">
+                {{ $actions }}
+            </div>
+            @endif
         </div>
-    @endif
-
-    @if($title or $content or $attributes['meta.before'] or $attributes['meta.after'])
-    <div class="content x-card__header">
-
-        @if($attributes['meta.before'])
-        <div class="meta x-card__meta--before">{!! $attributes['meta.before'] !!}</div>
-        @endif
-
-        @if($title)
-        <div class="header">{{ $title }}</div>
-        @endif
-
-        @if($attributes['meta.after'])
-        <div class="meta x-card__meta--after">{!! $attributes['meta.after'] !!}</div>
-        @endif
-
-        @if($content)
-        <div class="description">
-            {{ $content }}
-        </div>
-        @endif
-
     </div>
     @endif
-
-    {{ $body ?? null }}
-
-    {{ $slot }}
-
-@isset($url)
-    </a>
-@else
+    
+    <!-- Body -->
+    <div class="{{ $padding ? 'px-4 py-4 sm:px-6' : '' }}">
+        {{ $slot }}
     </div>
-@endisset
+    
+    @if($footer)
+    <!-- Footer -->
+    <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-3 sm:px-6 bg-gray-50 dark:bg-slate-800">
+        {{ $footer }}
+    </div>
+    @endif
+    
+</div>
 
