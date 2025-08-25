@@ -6,16 +6,6 @@ class LaravoltBladeDirectives
 {
     public static function scripts($expression)
     {
-        $calendarLocalization = '';
-        if (config('app.locale') === 'id') {
-            $calendarLang = json_encode(form_calendar_text());
-            $calendarLang = <<<HTML
-            <script>
-                $.fn.calendar.settings.text = $calendarLang;
-            </script>
-            HTML;
-        }
-
         return <<<'HTML'
           <!-- Required plugins -->
           <script src="/laravolt/assets/vendor/preline/dist/index.js?v=3.0.1"></script>
