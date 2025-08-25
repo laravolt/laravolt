@@ -1,4 +1,4 @@
-<x-volt-app :title="':Module Name:'">
+<x-volt-app title=":Module Name:">
     <x-slot name="actions">
         <x-volt-link-button
             :url="route('modules:::module-name:.create')"
