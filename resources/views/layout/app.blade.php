@@ -1,29 +1,15 @@
 <x-volt-base :title="$title">
-    <div class="layout--app">
+    @include('laravolt::menu.topbar')
+    @include('laravolt::menu.sidebar')
 
-        @include('laravolt::menu.topbar')
-        @include('laravolt::menu.sidebar')
+    <div class="w-full pt-14 lg:ps-64" up-main="root">
+        @if (! empty($title))
+            @include('laravolt::menu.actionbar')
+        @endif
 
-        <div class="content"
-              up-main="root"
-        >
-
-            <div class="content__inner">
-
-                @include('laravolt::menu.actionbar')
-
-                <main class="ui container-fluid content__body p-3"
-                      up-main="modal"
-                      data-font-size="{{ config('laravolt.ui.font_size') }}"
-                      data-theme="{{ config('laravolt.ui.theme') }}"
-                      data-accent-color="{{ config('laravolt.ui.color') }}"
-                      data-sidebar-density="{{ config('laravolt.ui.sidebar_density') }}"
-                >
-                    {{ $slot }}
-                    @stack('main')
-                </main>
-
-            </div>
-        </div>
+        <main class="p-2 sm:p-5 sm:py-0 md:pt-5 space-y-3">
+            {{ $slot }}
+            @stack('main')
+        </main>
     </div>
 </x-volt-base>

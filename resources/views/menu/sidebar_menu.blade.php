@@ -1,30 +1,23 @@
-<div class="sidebar__menu">
-    @if(!$items->isEmpty())
-        @if(config('laravolt.platform.features.quick_switcher'))
-            @include('laravolt::quick-switcher.modal')
+@if (!$items->isEmpty())
+    @foreach ($items as $item)
+        @if ($item->hasChildren())
+            @if (!empty($item->title))
+                <li
+                    class="pt-5 px-5 lg:px-8 mt-5 border-t border-gray-200 first:border-transparent first:pt-0 dark:border-neutral-700 dark:first:border-transparent">
+                    <span class="block text-xs uppercase text-gray-500 dark:text-neutral-500">
+                        {{ $item->title }}
+                    </span>
+                </li>
+            @endif
+            @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
+        @else
+            <div>
+                <a class="flex items-center gap-x-2 px-3 py-2 rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-neutral-700 {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
+                    href="{{ $item->url() }}">
+                    <i class="{{ $item->data('icon') }}"></i>
+                    <span>{{ $item->title }}</span>
+                </a>
+            </div>
         @endif
-
-        <div class="ui attached vertical menu fluid" data-role="original-menu">
-
-            @foreach($items as $item)
-                @if($item->hasChildren())
-                    <div class="item">
-                        <div class="header">{{ $item->title }}</div>
-                    </div>
-                    <div class="ui accordion sidebar__accordion" data-role="sidenav">
-                        @include('laravolt::menu.sidebar_items', ['items' => $item->children()])
-                    </div>
-                @else
-                    <div class="ui accordion sidebar__accordion">
-                        <a class="title title__1 item empty {{ \Laravolt\Platform\Services\SidebarMenu::setActiveParent($item->children(), $item->isActive) }}"
-                           href="{{ $item->url() }}">
-                            <i class="left icon {{ $item->data('icon') }}"></i>
-                            <span>{{ $item->title }}</span>
-                        </a>
-                        <div class="content"></div>
-                    </div>
-                @endif
-            @endforeach
-        </div>
-    @endif
-</div>
+    @endforeach
+@endif
