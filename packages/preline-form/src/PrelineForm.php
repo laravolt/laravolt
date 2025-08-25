@@ -3,6 +3,7 @@
 namespace Laravolt\PrelineForm;
 
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Collection as BaseCollection;
 use Laravolt\PrelineForm\Elements\Button;
 use Laravolt\PrelineForm\Elements\Checkbox;
 use Laravolt\PrelineForm\Elements\CheckboxGroup;
@@ -323,7 +324,7 @@ class PrelineForm
         $this->model = null;
     }
 
-    protected function getValueFor($name)
+    public function getValueFor($name)
     {
         if ($this->hasOldInput()) {
             return $this->getOldInput($name);
@@ -346,14 +347,28 @@ class PrelineForm
         return $this->oldInput->getOldInput($key);
     }
 
-    protected function hasError($key)
+    public function hasError($name)
     {
-        return $this->errorStore && $this->errorStore->hasError($key);
+        return $this->errorStore && $this->errorStore->hasError($name);
     }
 
-    protected function getError($key)
+    public function getError($name, $format = null)
     {
-        return $this->errorStore->getError($key);
+        if (! isset($this->errorStore)) {
+            return null;
+        }
+
+        if (! $this->hasError($name)) {
+            return '';
+        }
+
+        $message = $this->errorStore->getError($name);
+
+        if ($format) {
+            $message = str_replace(':message', $message, $format);
+        }
+
+        return $message;
     }
 
     protected function hasModelValue($key)
@@ -364,5 +379,81 @@ class PrelineForm
     protected function getModelValue($key)
     {
         return data_get($this->model, $key);
+    }
+
+    public function make(array|BaseCollection $fields)
+    {
+        return new FieldCollection($fields);
+    }
+
+    public function dropdown($name, $options = [], $defaultValue = null)
+    {
+        return $this->select($name, $options, $defaultValue);
+    }
+
+    public function label($name)
+    {
+        return new \Laravolt\PrelineForm\Elements\Label($name);
+    }
+
+    public function link($label, $url)
+    {
+        return new \Laravolt\PrelineForm\Elements\Link($label, $url);
+    }
+
+    public function html($content)
+    {
+        return new \Laravolt\PrelineForm\Elements\Html($content);
+    }
+
+    public function color($name, $defaultValue = null)
+    {
+        $color = new \Laravolt\PrelineForm\Elements\Color($name);
+
+        if (! is_null($value = $this->getValueFor($name))) {
+            $color->value($value);
+        }
+
+        $color->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $color->setError();
+        }
+
+        return $color;
+    }
+
+    public function date($name, $defaultValue = null)
+    {
+        $date = new \Laravolt\PrelineForm\Elements\Date($name);
+
+        if (! is_null($value = $this->getValueFor($name))) {
+            $date->value($value);
+        }
+
+        $date->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $date->setError();
+        }
+
+        return $date;
+    }
+
+    public function time($name, $defaultValue = null)
+    {
+        $time = new \Laravolt\PrelineForm\Elements\Time($name);
+
+        if (! is_null($value = $this->getValueFor($name))) {
+            $time->value($value);
+        }
+
+        $time->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $time->setError();
+        }
+
+        return $time;
     }
 }

@@ -43,6 +43,11 @@ class RadioGroup extends Element
         return $this;
     }
 
+    public function setChecked($value)
+    {
+        return $this->checked($value);
+    }
+
     public function setError($message = '')
     {
         $this->hasError = true;

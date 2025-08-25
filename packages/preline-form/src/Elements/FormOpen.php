@@ -118,4 +118,24 @@ class FormOpen extends Element
     {
         return ! is_null($this->hiddenMethod);
     }
+
+    public function horizontal()
+    {
+        // For Preline UI, we can add specific classes for horizontal form layout
+        $this->addClass('horizontal');
+
+        return $this;
+    }
+
+    public function encodingType($type)
+    {
+        $this->setAttribute('enctype', $type);
+
+        return $this;
+    }
+
+    public function multipart()
+    {
+        return $this->encodingType('multipart/form-data');
+    }
 }

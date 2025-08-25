@@ -69,6 +69,19 @@ abstract class Element
         return $this;
     }
 
+    public function attributes($attributes)
+    {
+        foreach ($attributes as $attribute => $value) {
+            if ($attribute == 'class') {
+                $this->addClass($value);
+            } else {
+                $this->setAttribute($attribute, $value);
+            }
+        }
+
+        return $this;
+    }
+
     public function data($attribute, $value = null)
     {
         $this->setAttribute('data-'.$attribute, $value);

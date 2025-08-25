@@ -43,6 +43,11 @@ class CheckboxGroup extends Element
         return $this;
     }
 
+    public function setChecked($values)
+    {
+        return $this->checked($values);
+    }
+
     public function setError($message = '')
     {
         $this->hasError = true;

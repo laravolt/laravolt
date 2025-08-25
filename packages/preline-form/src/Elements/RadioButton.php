@@ -50,6 +50,21 @@ class RadioButton extends Element
         return $this;
     }
 
+    public function defaultCheckedState($checked = true)
+    {
+        return $this->defaultChecked($checked);
+    }
+
+    public function check()
+    {
+        return $this->checked(true);
+    }
+
+    public function uncheck()
+    {
+        return $this->checked(false);
+    }
+
     public function setError($message = '')
     {
         $this->hasError = true;
