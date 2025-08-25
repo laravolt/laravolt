@@ -3,7 +3,6 @@
 namespace :Namespace:\:ModuleName:\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
@@ -13,9 +12,9 @@ use :Namespace:\:ModuleName:\Tables\:ModuleName:TableView;
 
 class :ModuleName:Controller extends Controller
 {
-    public function index(): Responsable
+    public function index(): View
     {
-        return :ModuleName:TableView::make()->view(':module-name:::index');
+        return view(':module-name:::index');
     }
 
     public function create(): View
