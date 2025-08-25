@@ -43,6 +43,8 @@ abstract class TableView extends Component
 
     public int $perPage = self::DEFAULT_PER_PAGE;
 
+    public int $page = 1;
+
     protected $queryString = [
         'page' => ['except' => 1],
         'search' => ['except' => ''],
