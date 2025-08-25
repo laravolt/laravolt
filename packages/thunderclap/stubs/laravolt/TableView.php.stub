@@ -1,0 +1,32 @@
+<?php
+
+namespace :Namespace:\:ModuleName:;
+
+use Illuminate\Database\Eloquent\Builder;
+use Laravolt\Suitable\Columns\Numbering;
+use Laravolt\Suitable\Columns\RestfulButton;
+use Laravolt\Suitable\Columns\Text;
+use Laravolt\Ui\TableView;
+:MODEL_IMPORT:
+
+class :ModuleName:TableView extends TableView
+{
+    public function data(): Builder
+    {
+        /** @var Builder */
+        $query = :ModuleName:::query()
+            ->autoSort($this->sortPayload())
+            ->autoSearch(trim($this->search));
+
+        return $query->latest();
+    }
+
+    public function columns(): array
+    {
+        return [
+            Numbering::make('No'),
+:TABLE_VIEW_FIELDS:
+            RestfulButton::make('modules:::module-name:'),
+        ];
+    }
+}
