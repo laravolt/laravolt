@@ -59,23 +59,16 @@
                         class="hs-dropdown inline-flex [--strategy:absolute] [--auto-close:inside] [--placement:bottom-right] relative text-start">
                         <button id="hs-dnad" type="button"
                             class="inline-flex shrink-0 items-center gap-x-3 text-start rounded-full focus:outline-hidden"
-                            aria-haspopup="menu" aria-expanded="true" aria-label="Dropdown">
+                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                             <img class="shrink-0 size-9.5 rounded-full" src="{{ $user->avatar }}" alt="Avatar" />
                         </button>
 
                         <!-- Account Dropdown -->
-                        <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 z-20 bg-white rounded-xl shadow-xl dark:bg-neutral-900 block"
-                            role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad" data-placement="bottom-end"
-                            style="
-                position: absolute;
-                transform: translate3d(-202px, 48px, 0px);
-                margin: 0px;
-              ">
+                        <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-white rounded-xl shadow-xl dark:bg-neutral-900"
+                            role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad">
                             <div class="border-gray-200 dark:border-neutral-800 p-1">
-                                <a class="py-2 px-3 flex items-center gap-x-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                <div class="py-2 px-3 flex items-center gap-x-3 rounded-lg text-sm text-gray-800 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 dark:text-neutral-300 dark:focus:bg-neutral-800"
                                     href="#">
-                                    <img class="shrink-0 size-8 rounded-full" src="{{ $user->avatar }}" alt="Avatar" />
-
                                     <div class="grow">
                                         <span class="text-sm font-semibold text-gray-800 dark:text-neutral-300">
                                             {{ $user->name }}
@@ -84,7 +77,7 @@
                                             {{ $user->email }}
                                         </p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
 
                             <div class="border-gray-200 border-y dark:border-neutral-800 px-4 py-3.5">
