@@ -5,7 +5,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Hapus',
     'delete_permanent' => 'Hapus Selamanya',
-    'search' => 'Search...',
+    'search' => 'Cari...',
     'manage' => 'Kelola',
     'save' => 'Simpan',
     'cancel' => 'Batal',
