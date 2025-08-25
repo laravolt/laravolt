@@ -20,14 +20,24 @@
 
 
     <div>
-        <!-- Table Section -->
+        {{-- <!-- Table Section -->
         <div
             class="overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
             <div class="min-w-full inline-block align-middle">
                 @include('laravolt::ui-component.table-view.table')
             </div>
         </div>
-        <!-- End Table Section -->
+        <!-- End Table Section --> --}}
+        <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div
+                        class="border border-gray-200 rounded-lg shadow-xs overflow-hidden dark:border-neutral-700 dark:shadow-gray-900">
+                        @include('laravolt::ui-component.table-view.table')
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @if ($data instanceof \Illuminate\Contracts\Pagination\Paginator)
             <!-- Footer -->
