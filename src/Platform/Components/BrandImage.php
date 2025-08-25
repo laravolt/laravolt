@@ -36,7 +36,7 @@ class BrandImage extends Component
 
         if (Str::of($brandImage)->endsWith('.svg')) {
             $isSvg = true;
-            $cacheKey = "brand_image_" . md5($brandImage);
+            $cacheKey = 'brand_image_'.md5($brandImage);
             $brandImage = Cache::remember($cacheKey, 60, function () use ($brandImage) {
                 // Handle URLs (http/https)
                 if (Str::of($brandImage)->startsWith(['http://', 'https://'])) {
@@ -45,11 +45,13 @@ class BrandImage extends Component
                         if ($response->successful()) {
                             return $response->body();
                         }
+
                         // Fallback to default if URL fails
                         return file_get_contents(public_path('laravolt/img/default/logo.png'));
                     } catch (\Exception $e) {
                         // Log error and return fallback
                         Log::warning("Failed to fetch brand image from URL: {$brandImage}", ['error' => $e->getMessage()]);
+
                         return file_get_contents(public_path('laravolt/img/default/logo.png'));
                     }
                 }
