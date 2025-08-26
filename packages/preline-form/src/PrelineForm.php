@@ -405,6 +405,11 @@ class PrelineForm
         return new \Laravolt\PrelineForm\Elements\Link($label, $url);
     }
 
+    public function linkButton($label, $url)
+    {
+        return new \Laravolt\PrelineForm\Elements\LinkButton($label, $url);
+    }
+
     public function html($content)
     {
         return new \Laravolt\PrelineForm\Elements\Html($content);

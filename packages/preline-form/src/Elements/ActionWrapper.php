@@ -13,12 +13,14 @@ class ActionWrapper extends Element
 
     public function render()
     {
-        $result = '<div class="flex gap-2">';
+        $result = '<div class="p-6 pt-0 flex justify-end gap-x-2">';
+        $result = '<div class="w-full flex justify-end items-center gap-x-2">';
 
         foreach ($this->actions as $action) {
             $result .= $action->render();
         }
 
+        $result .= '</div>';
         $result .= '</div>';
 
         return $result;
