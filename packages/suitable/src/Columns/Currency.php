@@ -20,7 +20,7 @@ class Currency extends Column implements ColumnInterface
     {
         try {
             $value = data_get($cell, $this->field);
-        } catch (MathException ) {
+        } catch (MathException) {
             return '-';
         }
 

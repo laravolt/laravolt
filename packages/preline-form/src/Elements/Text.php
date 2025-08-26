@@ -71,8 +71,12 @@ class Text extends Input
 
     public function render()
     {
+        $idAttribute = $this->getAttribute('id') ?? md5($this->getAttribute('name'));
+
+        $this->attribute('id', $idAttribute);
+
         if ($this->label) {
-            return $this->renderField();
+            return $this->renderField($idAttribute);
         }
 
         $this->beforeRender();

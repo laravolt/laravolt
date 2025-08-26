@@ -256,11 +256,15 @@ abstract class Element
         return $output;
     }
 
-    protected function renderLabel()
+    protected function renderLabel(?string $id = null)
     {
         if ($this->label instanceof \Laravolt\PrelineForm\Elements\Label) {
             /** @var \Laravolt\PrelineForm\Elements\Label $label */
             $label = $this->label;
+
+            if ($id) {
+                $label->attribute('for', $id);
+            }
 
             return $label->render();
         }
@@ -268,9 +272,9 @@ abstract class Element
         return '';
     }
 
-    protected function renderField()
+    protected function renderField($idInputField = null)
     {
-        $label = $this->renderLabel();
+        $label = $this->renderLabel($idInputField);
         $input = $this->renderControl();
         $error = $this->renderError();
         $hint = $this->renderHint();
@@ -281,11 +285,12 @@ abstract class Element
               $label
             </div>
 
-            <div class="sm:col-span-9 relative">
+            <div class="sm:col-span-9">
               $input
+
+              $error
             </div>
 
-            $error
             $hint
           </div>
         HTML;
@@ -302,12 +307,18 @@ abstract class Element
 
     protected function hasError()
     {
-        return false; // Override in form elements that support errors
+        /** @var \Illuminate\Support\ViewErrorBag */
+        $errorsBag = request()->session()->get('errors');
+
+        return $errorsBag->has($this->getAttribute('name'));
     }
 
     protected function getError()
     {
-        return '';
+        /** @var \Illuminate\Support\ViewErrorBag */
+        $errorsBag = request()->session()->get('errors');
+
+        return $errorsBag->first($this->getAttribute('name'));
     }
 
     protected function renderControl()

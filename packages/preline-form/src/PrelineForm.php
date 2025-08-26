@@ -32,7 +32,7 @@ class PrelineForm
 
     private $oldInput;
 
-    private $errorStore;
+    private \Laravolt\PrelineForm\ErrorStore\IlluminateErrorStore $errorStore;
 
     private $model;
 
@@ -110,7 +110,7 @@ class PrelineForm
         $text->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $text->setError();
+            $text->setError($this->errorStore->getError($name));
         }
 
         return $text;
@@ -127,7 +127,7 @@ class PrelineForm
         $number->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $number->setError();
+            $number->setError($this->errorStore->getError($name));
         }
 
         return $number;
@@ -144,7 +144,7 @@ class PrelineForm
         $email->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $email->setError();
+            $email->setError($this->errorStore->getError($name));
         }
 
         return $email;
@@ -155,7 +155,7 @@ class PrelineForm
         $password = new Password($name);
 
         if ($this->hasError($name)) {
-            $password->setError();
+            $password->setError($this->errorStore->getError($name));
         }
 
         return $password;
@@ -172,7 +172,7 @@ class PrelineForm
         $textarea->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $textarea->setError();
+            $textarea->setError($this->errorStore->getError($name));
         }
 
         return $textarea;
@@ -189,7 +189,7 @@ class PrelineForm
         $select->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $select->setError();
+            $select->setError($this->errorStore->getError($name));
         }
 
         return $select;
@@ -206,7 +206,7 @@ class PrelineForm
         $checkbox->defaultChecked($checked);
 
         if ($this->hasError($name)) {
-            $checkbox->setError();
+            $checkbox->setError($this->errorStore->getError($name));
         }
 
         return $checkbox;
@@ -223,7 +223,7 @@ class PrelineForm
         $radio->defaultChecked($checked);
 
         if ($this->hasError($name)) {
-            $radio->setError();
+            $radio->setError($this->errorStore->getError($name));
         }
 
         return $radio;
@@ -240,7 +240,7 @@ class PrelineForm
         $radioGroup->defaultChecked($checkedOption);
 
         if ($this->hasError($name)) {
-            $radioGroup->setError();
+            $radioGroup->setError($this->errorStore->getError($name));
         }
 
         return $radioGroup;
@@ -257,7 +257,7 @@ class PrelineForm
         $checkboxGroup->defaultChecked($checkedOptions);
 
         if ($this->hasError($name)) {
-            $checkboxGroup->setError();
+            $checkboxGroup->setError($this->errorStore->getError($name));
         }
 
         return $checkboxGroup;
@@ -268,7 +268,7 @@ class PrelineForm
         $file = new File($name);
 
         if ($this->hasError($name)) {
-            $file->setError();
+            $file->setError($this->errorStore->getError($name));
         }
 
         return $file;
@@ -308,7 +308,7 @@ class PrelineForm
         $input->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $input->setError();
+            $input->setError($this->errorStore->getError($name));
         }
 
         return $input;
@@ -426,7 +426,7 @@ class PrelineForm
         $color->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $color->setError();
+            $color->setError($this->errorStore->getError($name));
         }
 
         return $color;
@@ -443,7 +443,7 @@ class PrelineForm
         $date->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $date->setError();
+            $date->setError($this->errorStore->getError($name));
         }
 
         return $date;
@@ -460,7 +460,7 @@ class PrelineForm
         $time->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $time->setError();
+            $time->setError($this->errorStore->getError($name));
         }
 
         return $time;
@@ -477,7 +477,7 @@ class PrelineForm
         $select->defaultValue($defaultValue);
 
         if ($this->hasError($name)) {
-            $select->setError();
+            $select->setError($this->errorStore->getError($name));
         }
 
         return $select;
@@ -605,7 +605,7 @@ class PrelineForm
     //     $datetime->defaultValue($defaultValue);
 
     //     if ($this->hasError($name)) {
-    //         $datetime->setError();
+    //         $datetime->setError($this->errorStore->getError($name));
     //     }
 
     //     return $datetime;
