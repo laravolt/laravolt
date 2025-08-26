@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="max-w-xl mx-auto">
-        {!! form()->post(route('modules:::module-name:.store'))->horizontal()->multipart() !!}
+        {!! form()->post(route('modules:::module-name:.store')) !!}
             @include(':module-name:::_form')
         {!! form()->close() !!}
     </div>

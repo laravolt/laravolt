@@ -6,7 +6,7 @@
 
 {!!
     form()->action([
-        form()->linkButton('Batal', route('modules:::module-name:.index'))
-        form()->submit('Simpan'),
+        form()->linkButton('Batal', route('modules:::module-name:.index')),
+        form()->submit('Simpan')
     ])
 !!}

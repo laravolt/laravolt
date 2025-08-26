@@ -1,9 +1,11 @@
 <x-volt-app :title="__('laravolt::action.edit') . ' :Module Name:'">
-    <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"></x-backlink>
+    <x-slot name="actions">
+        <x-volt-backlink url="{{ route('modules:::module-name:.index') }}" />
+    </x-slot>
 
-    <x-volt-panel title="Tambah :Module Name:">
-        {!! form()->bind($:moduleName:)->put(route('modules:::module-name:.update', $:moduleName:->getRouteKey()))->horizontal()->multipart() !!}
+    <div class="max-w-xl mx-auto">
+        {!! form()->bind($:moduleName:)->put(route('modules:::module-name:.update', $:moduleName:->getRouteKey())) !!}
             @include(':module-name:::_form')
         {!! form()->close() !!}
-    </x-volt-panel>
+    </div>
 </x-volt-app>
