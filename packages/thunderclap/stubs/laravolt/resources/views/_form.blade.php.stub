@@ -1,8 +1,12 @@
-:FORM_CREATE_FIELDS:
+<div class="py-2 sm:py-4 px-2">
+    <div class="p-4 space-y-5">
+        :FORM_CREATE_FIELDS:
+    </div>
+</div>
 
 {!!
     form()->action([
+        form()->linkButton('Batal', route('modules:::module-name:.index'))
         form()->submit('Simpan'),
-        form()->link('Batal', route('modules:::module-name:.index'))
     ])
 !!}
