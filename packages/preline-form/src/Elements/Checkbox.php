@@ -2,15 +2,13 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class Checkbox extends Element
+class Checkbox extends Input
 {
-    protected $name;
-
-    protected $value;
+    protected $attributes = [
+        'type' => 'checkbox',
+    ];
 
     protected $checked = false;
-
-    protected $hasError = false;
 
     protected $errorMessage = '';
 
@@ -18,11 +16,8 @@ class Checkbox extends Element
 
     public function __construct($name, $value = 1)
     {
-        $this->name = $name;
-        $this->value = $value;
-        $this->setAttribute('type', 'checkbox');
-        $this->setAttribute('name', $name);
-        $this->setAttribute('value', $value);
+        parent::__construct($name);
+        $this->setValue($value);
         $this->setDefaultClasses();
     }
 
@@ -82,7 +77,7 @@ class Checkbox extends Element
 
     public function setError($message = '')
     {
-        $this->hasError = true;
+        parent::setError();
         $this->errorMessage = $message;
         $this->removeClass('border-gray-200 focus:ring-blue-500');
         $this->addClass('border-red-500 focus:ring-red-500');
@@ -90,9 +85,9 @@ class Checkbox extends Element
         return $this;
     }
 
-    protected function hasError()
+    public function hasError()
     {
-        return $this->hasError;
+        return parent::hasError();
     }
 
     protected function getError()

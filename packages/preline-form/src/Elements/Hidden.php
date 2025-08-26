@@ -2,22 +2,20 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class Hidden extends Element
+class Hidden extends Input
 {
-    protected $name;
-
-    protected $value;
+    protected $attributes = [
+        'type' => 'hidden',
+    ];
 
     public function __construct($name)
     {
-        $this->name = $name;
-        $this->setAttribute('type', 'hidden');
-        $this->setAttribute('name', $name);
+        parent::__construct($name);
     }
 
     public function value($value)
     {
-        $this->setAttribute('value', $value);
+        $this->setValue($value);
 
         return $this;
     }
@@ -33,6 +31,12 @@ class Hidden extends Element
 
     public function render()
     {
-        return sprintf('<input%s>', $this->renderAttributes());
+        $this->beforeRender();
+
+        $result = '<input';
+        $result .= $this->renderAttributes();
+        $result .= '>';
+
+        return $result;
     }
 }

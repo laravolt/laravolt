@@ -2,19 +2,17 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class Text extends Element
+class Text extends Input
 {
-    protected $name;
-
-    protected $hasError = false;
+    protected $attributes = [
+        'type' => 'text',
+    ];
 
     protected $errorMessage = '';
 
     public function __construct($name)
     {
-        $this->name = $name;
-        $this->setAttribute('type', 'text');
-        $this->setAttribute('name', $name);
+        parent::__construct($name);
         $this->setDefaultClasses();
     }
 
@@ -25,7 +23,7 @@ class Text extends Element
 
     public function value($value)
     {
-        $this->setAttribute('value', $value);
+        $this->setValue($value);
 
         return $this;
     }
@@ -48,7 +46,7 @@ class Text extends Element
 
     public function setError($message = '')
     {
-        $this->hasError = true;
+        parent::setError();
         $this->errorMessage = $message;
         $this->removeClass('border-gray-200 focus:border-blue-500 focus:ring-blue-500');
         $this->addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
@@ -56,14 +54,19 @@ class Text extends Element
         return $this;
     }
 
+    public function hasError()
+    {
+        return parent::hasError();
+    }
+
     protected function getError()
     {
         return $this->errorMessage;
     }
 
-    protected function renderControl()
+    protected function hasValue()
     {
-        return sprintf('<input%s>', $this->renderAttributes());
+        return isset($this->attributes['value']);
     }
 
     public function render()
@@ -72,6 +75,18 @@ class Text extends Element
             return $this->renderField();
         }
 
-        return $this->renderControl();
+        $this->beforeRender();
+
+        $result = '<input';
+        $result .= $this->renderAttributes();
+        $result .= '>';
+        $result .= $this->renderHint();
+
+        return $result;
+    }
+
+    protected function renderControl()
+    {
+        return sprintf('<input%s>', $this->renderAttributes());
     }
 }

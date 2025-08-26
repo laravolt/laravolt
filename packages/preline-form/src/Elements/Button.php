@@ -2,15 +2,21 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class Button extends Element
+class Button extends FormControl
 {
-    protected $value;
+    protected $attributes = [
+        'type' => 'button',
+    ];
+
+    protected $text;
 
     protected $type;
 
-    public function __construct($value, $type = 'button')
+    public function __construct($text, $name = null, $type = 'button')
     {
-        $this->value = $value;
+        parent::__construct($name);
+        
+        $this->text = $text;
         $this->type = $type;
         $this->setAttribute('type', $type);
         $this->setDefaultClasses();
@@ -59,13 +65,15 @@ class Button extends Element
 
     public function text($text)
     {
-        $this->value = $text;
+        $this->text = $text;
 
         return $this;
     }
 
     public function render()
     {
-        return sprintf('<button%s>%s</button>', $this->renderAttributes(), form_escape($this->value));
+        $this->beforeRender();
+
+        return sprintf('<button%s>%s</button>', $this->renderAttributes(), form_escape($this->text));
     }
 }

@@ -2,15 +2,11 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class Select extends Element
+class Select extends FormControl
 {
-    protected $name;
-
     protected $options = [];
 
     protected $selectedValue;
-
-    protected $hasError = false;
 
     protected $errorMessage = '';
 
@@ -18,9 +14,8 @@ class Select extends Element
 
     public function __construct($name, $options = [])
     {
-        $this->name = $name;
+        parent::__construct($name);
         $this->options = $options;
-        $this->setAttribute('name', $name);
         $this->setDefaultClasses();
     }
 
@@ -102,7 +97,7 @@ class Select extends Element
 
     public function setError($message = '')
     {
-        $this->hasError = true;
+        parent::setError();
         $this->errorMessage = $message;
         $this->removeClass('border-gray-200 focus:border-blue-500 focus:ring-blue-500');
         $this->addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
@@ -110,9 +105,9 @@ class Select extends Element
         return $this;
     }
 
-    protected function hasError()
+    public function hasError()
     {
-        return $this->hasError;
+        return parent::hasError();
     }
 
     protected function getError()

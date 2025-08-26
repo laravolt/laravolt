@@ -2,19 +2,17 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class File extends Element
+class File extends Input
 {
-    protected $name;
-
-    protected $hasError = false;
+    protected $attributes = [
+        'type' => 'file',
+    ];
 
     protected $errorMessage = '';
 
     public function __construct($name)
     {
-        $this->name = $name;
-        $this->setAttribute('type', 'file');
-        $this->setAttribute('name', $name);
+        parent::__construct($name);
         $this->setDefaultClasses();
     }
 
@@ -39,7 +37,7 @@ class File extends Element
 
     public function setError($message = '')
     {
-        $this->hasError = true;
+        parent::setError();
         $this->errorMessage = $message;
         $this->removeClass('border-gray-200 focus:border-blue-500 focus:ring-blue-500');
         $this->addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
@@ -47,19 +45,14 @@ class File extends Element
         return $this;
     }
 
-    protected function hasError()
+    public function hasError()
     {
-        return $this->hasError;
+        return parent::hasError();
     }
 
     protected function getError()
     {
         return $this->errorMessage;
-    }
-
-    protected function renderControl()
-    {
-        return sprintf('<input%s>', $this->renderAttributes());
     }
 
     public function render()
@@ -68,6 +61,18 @@ class File extends Element
             return $this->renderField();
         }
 
-        return $this->renderControl();
+        $this->beforeRender();
+
+        $result = '<input';
+        $result .= $this->renderAttributes();
+        $result .= '>';
+        $result .= $this->renderHint();
+
+        return $result;
+    }
+
+    protected function renderControl()
+    {
+        return sprintf('<input%s>', $this->renderAttributes());
     }
 }

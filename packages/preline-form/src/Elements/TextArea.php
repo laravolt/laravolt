@@ -2,20 +2,18 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class TextArea extends Element
+class TextArea extends FormControl
 {
-    protected $name;
-
-    protected $value;
-
-    protected $hasError = false;
+    protected $attributes = [
+        'rows' => 10,
+        'cols' => 50,
+    ];
 
     protected $errorMessage = '';
 
     public function __construct($name)
     {
-        $this->name = $name;
-        $this->setAttribute('name', $name);
+        parent::__construct($name);
         $this->setDefaultClasses();
     }
 
@@ -63,7 +61,7 @@ class TextArea extends Element
 
     public function setError($message = '')
     {
-        $this->hasError = true;
+        parent::setError();
         $this->errorMessage = $message;
         $this->removeClass('border-gray-200 focus:border-blue-500 focus:ring-blue-500');
         $this->addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
@@ -71,9 +69,14 @@ class TextArea extends Element
         return $this;
     }
 
-    protected function hasError()
+    public function hasError()
     {
-        return $this->hasError;
+        return parent::hasError();
+    }
+
+    protected function hasValue()
+    {
+        return isset($this->value);
     }
 
     protected function getError()
@@ -81,17 +84,38 @@ class TextArea extends Element
         return $this->errorMessage;
     }
 
+    public function render()
+    {
+        if ($this->label) {
+            $element = clone $this;
+            $element->label = false;
+
+            return $this->decorateField(new Field($this->label, $element))->render();
+        }
+
+        $this->beforeRender();
+
+        $result = '<textarea';
+        $result .= $this->renderAttributes();
+        $result .= '>';
+        $result .= form_escape($this->getValue());
+        $result .= '</textarea>';
+        $result .= $this->renderHint();
+
+        return $result;
+    }
+
     protected function renderControl()
     {
         return sprintf('<textarea%s>%s</textarea>', $this->renderAttributes(), form_escape($this->value ?? ''));
     }
 
-    public function render()
+    protected function decorateField(Field $field)
     {
-        if ($this->label) {
-            return $this->renderField();
+        if ($this->fieldCallback instanceof \Closure) {
+            call_user_func($this->fieldCallback, $field);
         }
 
-        return $this->renderControl();
+        return $field;
     }
 }
