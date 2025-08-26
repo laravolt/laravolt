@@ -14,9 +14,7 @@ class Button extends FormControl
 
     public function __construct($text, $name = null, $type = 'button')
     {
-        if ($name) {
-            parent::__construct($name);
-        }
+        parent::__construct($name);
         
         $this->text = $text;
         $this->type = $type;
