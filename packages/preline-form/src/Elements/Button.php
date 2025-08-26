@@ -57,6 +57,13 @@ class Button extends Element
         return $this;
     }
 
+    public function text($text)
+    {
+        $this->value = $text;
+
+        return $this;
+    }
+
     public function render()
     {
         return sprintf('<button%s>%s</button>', $this->renderAttributes(), form_escape($this->value));

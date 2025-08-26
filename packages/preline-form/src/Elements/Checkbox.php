@@ -14,6 +14,8 @@ class Checkbox extends Element
 
     protected $errorMessage = '';
 
+    protected $fieldLabel;
+
     public function __construct($name, $value = 1)
     {
         $this->name = $name;
@@ -71,6 +73,13 @@ class Checkbox extends Element
         return $this->checked(false);
     }
 
+    public function fieldLabel($label)
+    {
+        $this->fieldLabel = $label;
+
+        return $this;
+    }
+
     public function setError($message = '')
     {
         $this->hasError = true;
@@ -89,6 +98,11 @@ class Checkbox extends Element
     protected function getError()
     {
         return $this->errorMessage;
+    }
+
+    public function displayValue()
+    {
+        return $this->isChecked ? 'Yes' : 'No';
     }
 
     protected function renderControl()

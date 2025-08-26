@@ -85,6 +85,11 @@ class RadioButton extends Element
         return $this->errorMessage;
     }
 
+    public function displayValue()
+    {
+        return $this->isChecked ? $this->value : '';
+    }
+
     protected function renderControl()
     {
         $output = sprintf('<input%s>', $this->renderAttributes());
