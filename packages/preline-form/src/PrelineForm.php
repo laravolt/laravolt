@@ -8,6 +8,7 @@ use Laravolt\PrelineForm\Elements\Button;
 use Laravolt\PrelineForm\Elements\Checkbox;
 use Laravolt\PrelineForm\Elements\CheckboxGroup;
 use Laravolt\PrelineForm\Elements\Email;
+use Laravolt\PrelineForm\Elements\Field;
 use Laravolt\PrelineForm\Elements\File;
 use Laravolt\PrelineForm\Elements\FormOpen;
 use Laravolt\PrelineForm\Elements\Hidden;
@@ -17,10 +18,12 @@ use Laravolt\PrelineForm\Elements\Password;
 use Laravolt\PrelineForm\Elements\RadioButton;
 use Laravolt\PrelineForm\Elements\RadioGroup;
 use Laravolt\PrelineForm\Elements\Select;
+use Laravolt\PrelineForm\Elements\SelectMultiple;
 use Laravolt\PrelineForm\Elements\Text;
 use Laravolt\PrelineForm\Elements\TextArea;
 use Laravolt\PrelineForm\ErrorStore\ErrorStoreInterface;
 use Laravolt\PrelineForm\OldInput\OldInputInterface;
+use Laravolt\PrelineForm\FieldCollection;
 
 class PrelineForm
 {
@@ -326,6 +329,8 @@ class PrelineForm
 
     public function getValueFor($name)
     {
+        $name = $this->normalizeName($name);
+
         if ($this->hasOldInput()) {
             return $this->getOldInput($name);
         }
@@ -380,8 +385,6 @@ class PrelineForm
     {
         return data_get($this->model, $key);
     }
-<<<<<<< Current (Your changes)
-=======
 
     public function make(array|BaseCollection $fields)
     {
@@ -458,5 +461,222 @@ class PrelineForm
 
         return $time;
     }
->>>>>>> Incoming (Background Agent changes)
+
+    public function selectMultiple($name, $options = [], $defaultValue = null)
+    {
+        $select = new SelectMultiple($name, $options);
+
+        if (! is_null($value = $this->getValueFor($name))) {
+            $select->value($value);
+        }
+
+        $select->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $select->setError();
+        }
+
+        return $select;
+    }
+
+    public function boolean(string $name, array $options = [], $checked = null)
+    {
+        if (empty($options)) {
+            $options = [0 => 'No', 1 => 'Yes'];
+        }
+
+        return $this->radioGroup($name, $options, $checked);
+    }
+
+    public function action($actions)
+    {
+        $actions = collect(is_array($actions) ? $actions : func_get_args());
+
+        $actions->transform(function ($action) {
+            if (is_string($action) && static::hasMacro($action)) {
+                return call_user_func_array(\Closure::bind(static::$macros[$action], null, static::class), []);
+            }
+
+            return $action;
+        });
+
+        return new \Laravolt\PrelineForm\Elements\ActionWrapper($actions);
+    }
+
+    public function selectMonth($name, $format = '%B')
+    {
+        $months = [];
+        foreach (range(1, 12) as $month) {
+            $months[$month] = \Carbon\Carbon::createFromDate(2020, $month, 1)->translatedFormat('F');
+        }
+
+        return $this->select($name, $months);
+    }
+
+    public function selectRange($name, $begin, $end)
+    {
+        $range = array_combine($range = range($begin, $end), $range);
+
+        return $this->select($name, $range);
+    }
+
+    public function openFields()
+    {
+        return new \Laravolt\PrelineForm\Elements\FieldsOpen;
+    }
+
+    public function closeFields()
+    {
+        return '</div>';
+    }
+
+    public function selectDate($name, $beginYear = 1900, $endYear = null)
+    {
+        if (! $endYear) {
+            $endYear = date('Y') + 10;
+        }
+
+        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)));
+        $month = (new Field($this->selectMonth('_'.$name.'[month]')));
+        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)));
+
+        return new \Laravolt\PrelineForm\Elements\SelectDateWrapper($date, $month, $year);
+    }
+
+    public function selectDateTime($name, $beginYear = 1900, $endYear = null, $interval = 30)
+    {
+        if (! $endYear) {
+            $endYear = date('Y') + 10;
+        }
+
+        $date = (new Field($this->selectRange('_'.$name.'[date]', 1, 31)));
+        $month = (new Field($this->selectMonth('_'.$name.'[month]')));
+        $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)));
+
+        $timeOptions = $this->getTimeOptions($interval);
+
+        $time = (new Field($this->select('_'.$name.'[time]', $timeOptions)));
+
+        $control = new \Laravolt\PrelineForm\Elements\SelectDateTimeWrapper($date, $month, $year, $time);
+
+        if (! is_null($value = $this->getValueFor($name))) {
+            $control->value($value);
+        }
+
+        return $control;
+    }
+
+    public function dropdownColor($name, $defaultValue)
+    {
+        // For now, return a simple select with basic colors
+        $options = [
+            'red' => 'Red',
+            'blue' => 'Blue',
+            'green' => 'Green',
+            'yellow' => 'Yellow',
+            'purple' => 'Purple',
+            'pink' => 'Pink',
+            'gray' => 'Gray',
+        ];
+
+        return $this->radioGroup($name, $options, $defaultValue);
+    }
+
+    public function datepicker($name, $defaultValue = null, $format = 'YYYY-MM-DD')
+    {
+        // For now, return a regular date input
+        return $this->date($name, $defaultValue);
+    }
+
+    public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d H:i:s')
+    {
+        // For now, return a regular datetime-local input
+        $datetime = new \Laravolt\PrelineForm\Elements\DateTime($name);
+
+        if (! is_null($value = $this->getValueFor($name))) {
+            $datetime->value($value);
+        }
+
+        $datetime->defaultValue($defaultValue);
+
+        if ($this->hasError($name)) {
+            $datetime->setError();
+        }
+
+        return $datetime;
+    }
+
+    public function timepicker($name, $defaultValue = null)
+    {
+        // For now, return a regular time input
+        return $this->time($name, $defaultValue);
+    }
+
+    public function redactor($name, $defaultValue = null)
+    {
+        // For now, return a textarea with a note that this is a rich text field
+        $textarea = $this->textarea($name, $defaultValue);
+        $textarea->addClass('redactor-placeholder');
+        return $textarea;
+    }
+
+    public function coordinate($name, $defaultValue = null)
+    {
+        // For now, return a readonly text input
+        $text = $this->text($name, $defaultValue);
+        $text->readonly();
+        return $text;
+    }
+
+    public function dropdownDB($name, $query, $keyColumn = null, $valueColumn = null)
+    {
+        // For now, return an empty select - this would need database integration
+        return $this->select($name, []);
+    }
+
+    public function uploader($name)
+    {
+        // For now, return a file input
+        return $this->file($name);
+    }
+
+    public function rupiah($name, $defaultValue = null)
+    {
+        // For now, return a number input with currency formatting class
+        $number = $this->number($name, $defaultValue);
+        $number->addClass('currency-input');
+        return $number;
+    }
+
+    public function multirow($name, $definition)
+    {
+        // For now, return HTML with a note that this is a complex field
+        return $this->html('<div class="multirow-placeholder">Multirow field: ' . $name . '</div>');
+    }
+
+    protected function getTimeOptions($interval)
+    {
+        $times = [];
+        $today = \Carbon\Carbon::create(1970, 01, 01, 0, 0, 0);
+        $tomorrow = clone $today;
+        $tomorrow->addDay(1);
+
+        while ($today < $tomorrow) {
+            $key = $val = sprintf('%s:%s', $today->format('H'), $today->format('i'));
+            $times[$key] = $val;
+
+            $today->addMinutes($interval);
+        }
+
+        return $times;
+    }
+
+    protected function normalizeName($name)
+    {
+        if (substr($name, -2) == '[]') {
+            return substr($name, 0, -2);
+        }
+
+        return $name;
+    }
 }
