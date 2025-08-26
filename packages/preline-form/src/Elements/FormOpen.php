@@ -9,7 +9,7 @@ class FormOpen extends Element
     protected $attributes = [
         'method' => 'POST',
         'action' => '',
-        'class' => 'space-y-6',
+        'class' => '',
     ];
 
     protected $withToken = true;
@@ -28,7 +28,8 @@ class FormOpen extends Element
 
     public function render()
     {
-        $result = '<form';
+        $result = '<div class="bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">';
+        $result .= '<form';
         $result .= $this->renderAttributes();
         $result .= '>';
 

@@ -102,7 +102,7 @@ class Checkbox extends Element
 
     public function displayValue()
     {
-        return $this->isChecked ? 'Yes' : 'No';
+        return $this->checked ? 'Yes' : 'No';
     }
 
     protected function renderControl()

@@ -329,14 +329,25 @@ abstract class Element
 
     protected function renderField()
     {
-        $output = '<div class="space-y-1">';
-        $output .= $this->renderLabel();
-        $output .= $this->renderControl();
-        $output .= $this->renderError();
-        $output .= $this->renderHint();
-        $output .= '</div>';
+        $label = $this->renderLabel();
+        $input = $this->renderControl();
+        $error = $this->renderError();
+        $hint = $this->renderHint();
 
-        return $output;
+        return <<<HTML
+          <div class="grid sm:grid-cols-12 gap-y-1.5 sm:gap-y-0 sm:gap-x-5">
+            <div class="sm:col-span-3">
+              $label
+            </div>
+
+            <div class="sm:col-span-9 relative">
+              $input
+            </div>
+
+            $error
+            $hint
+          </div>
+        HTML;
     }
 
     protected function renderError()

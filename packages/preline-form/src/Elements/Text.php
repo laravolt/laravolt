@@ -20,7 +20,7 @@ class Text extends Element
 
     protected function setDefaultClasses()
     {
-        $this->addClass('py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600');
+        $this->addClass('py-1.5 sm:py-2 px-3 block w-full border-gray-200 rounded-lg sm:text-sm placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:placeholder:text-white/60 dark:focus:ring-neutral-600');
     }
 
     public function value($value)
@@ -54,11 +54,6 @@ class Text extends Element
         $this->addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
 
         return $this;
-    }
-
-    protected function hasError()
-    {
-        return $this->hasError;
     }
 
     protected function getError()

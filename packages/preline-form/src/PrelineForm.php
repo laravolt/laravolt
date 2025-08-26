@@ -96,7 +96,7 @@ class PrelineForm
     {
         $this->unbindModel();
 
-        return '</form>';
+        return '</form></div>';
     }
 
     public function text($name, $defaultValue = null)
