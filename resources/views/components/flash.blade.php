@@ -73,8 +73,7 @@
                 Toastify({
                     text: createToast({!! json_encode($bag) !!}),
                     className: "hs-toastify-on:opacity-100 opacity-0 fixed bottom-5 end-5 z-[100] transition-all duration-300 w-72 [&>.toast-close]:hidden p-0",
-                    // duration: {{ $bag['displayTime'] === 'auto' ? $bag['minDisplayTime'] ?? 3000 : $bag['displayTime'] }},
-                    duration: 3000000,
+                    duration: {{ $bag['displayTime'] === 'auto' ? $bag['minDisplayTime'] ?? 3000 : $bag['displayTime'] }},
                     close: true,
                     escapeMarkup: false,
                     gravity: "bottom",
