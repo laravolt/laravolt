@@ -23,6 +23,9 @@ class LaravoltBladeDirectives
               const csrfMeta = document.querySelector('meta[name="csrf-token"]')?.content || "";
             });
           </script>
+
+          <!-- Vendor -->
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
         HTML;
     }
 
@@ -31,6 +34,9 @@ class LaravoltBladeDirectives
         $accent = config('laravolt.ui.colors.'.config('laravolt.ui.color'), '#3b82f6');
 
         return <<<HTML
+          <!-- Vendor -->
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
           <!-- Font -->
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -68,6 +74,11 @@ class LaravoltBladeDirectives
               background-color: transparent !important;
               border: none !important;
               box-shadow: none !important;
+            }
+            .toastify {
+              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+              padding: 0px !important;
+              border-radius: 1rem !important;
             }
           </style>
         HTML;

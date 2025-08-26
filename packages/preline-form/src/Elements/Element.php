@@ -168,8 +168,6 @@ abstract class Element
         return $this;
     }
 
-
-
     public function getValue()
     {
         return $this->getAttribute('value');
@@ -260,8 +258,11 @@ abstract class Element
 
     protected function renderLabel()
     {
-        if ($this->label) {
-            return $this->label->render();
+        if ($this->label instanceof \Laravolt\PrelineForm\Elements\Label) {
+            /** @var \Laravolt\PrelineForm\Elements\Label $label */
+            $label = $this->label;
+
+            return $label->render();
         }
 
         return '';

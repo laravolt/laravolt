@@ -289,12 +289,12 @@ class PrelineForm
 
     public function submit($value = 'Submit')
     {
-        return new Button($value, 'submit');
+        return new Button($value, type: 'submit');
     }
 
     public function button($value = 'Button')
     {
-        return new Button($value, 'button');
+        return new Button($value, type: 'button');
     }
 
     public function input($name, $defaultValue = null)
@@ -592,23 +592,24 @@ class PrelineForm
         return $this->date($name, $defaultValue);
     }
 
-    public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d H:i:s')
-    {
-        // For now, return a regular datetime-local input
-        $datetime = new \Laravolt\PrelineForm\Elements\DateTime($name);
+    /** TODO: Implement datetimepicker */
+    // public function datetimepicker($name, $defaultValue = null, $format = 'Y-m-d H:i:s')
+    // {
+    //     // For now, return a regular datetime-local input
+    //     $datetime = new \Laravolt\PrelineForm\Elements\DateTime($name);
 
-        if (! is_null($value = $this->getValueFor($name))) {
-            $datetime->value($value);
-        }
+    //     if (! is_null($value = $this->getValueFor($name))) {
+    //         $datetime->value($value);
+    //     }
 
-        $datetime->defaultValue($defaultValue);
+    //     $datetime->defaultValue($defaultValue);
 
-        if ($this->hasError($name)) {
-            $datetime->setError();
-        }
+    //     if ($this->hasError($name)) {
+    //         $datetime->setError();
+    //     }
 
-        return $datetime;
-    }
+    //     return $datetime;
+    // }
 
     public function timepicker($name, $defaultValue = null)
     {

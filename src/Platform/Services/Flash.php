@@ -136,7 +136,14 @@ class Flash
             $message = $session->get('errors');
 
             if ($message instanceof ViewErrorBag) {
-                $message = collect($message->unique())->implode('<br />');
+                $errors = collect($message->unique());
+                if ($errors->count() > 1) {
+                    $message = '<ul class="list-disc list-inside space-y-1">'.
+                              $errors->map(fn ($error) => '<li>'.$error.'</li>')->implode('').
+                              '</ul>';
+                } else {
+                    $message = $errors->first();
+                }
             }
 
             $this->error($message);

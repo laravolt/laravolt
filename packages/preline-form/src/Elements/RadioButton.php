@@ -61,8 +61,6 @@ class RadioButton extends Checkbox
         return $this->checked(false);
     }
 
-
-
     public function displayValue()
     {
         return $this->isChecked ? $this->value : '';

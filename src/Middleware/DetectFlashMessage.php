@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Support\ViewErrorBag;
 use Laravolt\Platform\Services\Flash;
 
@@ -46,7 +47,14 @@ class DetectFlashMessage
                 $message = $request->session()->get('errors');
 
                 if ($message instanceof ViewErrorBag) {
-                    $message = collect($message->unique())->implode('<br />');
+                    $errors = collect($message->unique());
+                    if ($errors->count() > 1) {
+                        $message = '<ul class="list-disc list-inside space-y-1">'.
+                                  $errors->map(fn ($error) => '<li>'.$error.'</li>')->implode('').
+                                  '</ul>';
+                    } else {
+                        $message = $errors->first();
+                    }
                 }
 
                 $this->flash->now()->error($message);

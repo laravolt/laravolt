@@ -5,7 +5,7 @@ namespace Laravolt\PrelineForm\Elements;
 class TextArea extends FormControl
 {
     protected $attributes = [
-        'rows' => 10,
+        'rows' => 3,
         'cols' => 50,
     ];
 
@@ -87,10 +87,7 @@ class TextArea extends FormControl
     public function render()
     {
         if ($this->label) {
-            $element = clone $this;
-            $element->label = false;
-
-            return $this->decorateField(new Field($this->label, $element))->render();
+            return $this->renderField();
         }
 
         $this->beforeRender();
