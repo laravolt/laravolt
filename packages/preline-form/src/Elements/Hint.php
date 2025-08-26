@@ -6,7 +6,7 @@ class Hint extends Element
 {
     protected $text;
 
-    public static $defaultClass = 'text-sm text-gray-500 dark:text-gray-400 mt-1';
+    public static $defaultClass = 'mt-2 text-sm text-gray-500 dark:text-neutral-500';
 
     public function __construct($text, $class = null)
     {

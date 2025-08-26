@@ -289,9 +289,9 @@ abstract class Element
               $input
 
               $error
-            </div>
 
-            $hint
+              $hint
+            </div>
           </div>
         HTML;
     }

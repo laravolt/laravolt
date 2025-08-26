@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravolt\Fields\Field;
 use Laravolt\PrelineForm\Contracts\HasFormOptions;
+use Laravolt\PrelineForm\Elements\FormControl;
 use Laravolt\PrelineForm\Elements\Html;
 
 class FieldCollection extends Collection
@@ -43,6 +44,27 @@ class FieldCollection extends Collection
         $macro = false;
 
         switch ($type) {
+            case 'color':
+            case 'date':
+            case 'email':
+            case 'hidden':
+            case 'number':
+            case 'password':
+            case 'redactor':
+            case 'rupiah':
+            case 'text':
+            case 'textarea':
+            case 'time':
+            case 'uploader':
+                $element = form()
+                    ->{$type}($field['name'])
+                    ->label($field['label'])
+                    ->hint($field['hint'])
+                    ->attributes($field['attributes']);
+                if (isset($field['ajax'])) {
+                    $element->ajax($field['ajax']);
+                }
+                break;
             case 'email':
             case 'hidden':
             case 'number':
@@ -108,6 +130,48 @@ class FieldCollection extends Collection
             case 'html':
                 $element = new Html(Arr::get($field, 'content'));
                 $element->label($field['label'] ?? null);
+                break;
+
+            case 'boolean':
+            case 'checkboxGroup':
+            case 'radioGroup':
+            case 'dropdown':
+            case 'dropdownColor':
+                $options = $field['options'] ?? [];
+                if (is_string($options) && ($model = app($options)) instanceof HasFormOptions) {
+                    $options = $model->toFormOptions();
+                }
+
+                $element = form()
+                    ->{$type}($field['name'], $options, $field['value'] ?? null)
+                    ->label($field['label'])
+                    ->hint($field['hint'])
+                    // ->inline($field['inline'] ?? false)
+                    ->attributes($field['attributes']);
+                break;
+
+            case 'dropdownDB':
+            case Field::BELONGS_TO:
+                $element = form()
+                    ->dropdownDB(
+                        $field['name'],
+                        $field['query'],
+                        $field['query_key_column'] ?? null,
+                        $field['query_display_column'] ?? null
+                    )
+                    ->label($field['label'])
+                    ->hint($field['hint'])
+                    ->connection($field['connection'] ?? null)
+                    ->attributes($field['attributes']);
+                if ($field['dependency'] ?? false) {
+                    $dependency = $this->get($field['dependency']);
+                    if ($dependency instanceof FormControl) {
+                        $element->dependency($field['dependency'], $dependency->getValue());
+                    }
+                }
+                if ($field['multiple'] ?? false) {
+                    $element->multiple();
+                }
                 break;
 
             default:
