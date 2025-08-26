@@ -8,7 +8,7 @@ class Link extends Element
 
     protected $text;
 
-    public function __construct($url, $text)
+    public function __construct($text, $url)
     {
         $this->url = $url;
         $this->text = $text;

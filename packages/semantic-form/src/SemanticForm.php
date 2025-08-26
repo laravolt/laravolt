@@ -739,7 +739,7 @@ class SemanticForm
         if ($callback) {
             return collect($fields)->map($callback);
         }
-        
+
         // Or return the fields as-is for further processing
         return collect($fields);
     }

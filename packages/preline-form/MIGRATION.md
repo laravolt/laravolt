@@ -39,7 +39,7 @@ use Laravolt\SemanticForm\Facade as Form;
 use Laravolt\PrelineForm\Facade as PrelineForm;
 
 // Or use the helper function
-// form() becomes preline_form()
+// form() becomes form()
 ```
 
 ### 3. Update CSS Framework

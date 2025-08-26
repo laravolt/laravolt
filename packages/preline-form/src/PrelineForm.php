@@ -2,8 +2,8 @@
 
 namespace Laravolt\PrelineForm;
 
-use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Collection as BaseCollection;
+use Illuminate\Support\Traits\Macroable;
 use Laravolt\PrelineForm\Elements\Button;
 use Laravolt\PrelineForm\Elements\Checkbox;
 use Laravolt\PrelineForm\Elements\CheckboxGroup;
@@ -23,7 +23,6 @@ use Laravolt\PrelineForm\Elements\Text;
 use Laravolt\PrelineForm\Elements\TextArea;
 use Laravolt\PrelineForm\ErrorStore\ErrorStoreInterface;
 use Laravolt\PrelineForm\OldInput\OldInputInterface;
-use Laravolt\PrelineForm\FieldCollection;
 
 class PrelineForm
 {
@@ -617,6 +616,7 @@ class PrelineForm
         // For now, return a textarea with a note that this is a rich text field
         $textarea = $this->textarea($name, $defaultValue);
         $textarea->addClass('redactor-placeholder');
+
         return $textarea;
     }
 
@@ -625,6 +625,7 @@ class PrelineForm
         // For now, return a readonly text input
         $text = $this->text($name, $defaultValue);
         $text->readonly();
+
         return $text;
     }
 
@@ -645,13 +646,14 @@ class PrelineForm
         // For now, return a number input with currency formatting class
         $number = $this->number($name, $defaultValue);
         $number->addClass('currency-input');
+
         return $number;
     }
 
     public function multirow($name, $definition)
     {
         // For now, return HTML with a note that this is a complex field
-        return $this->html('<div class="multirow-placeholder">Multirow field: ' . $name . '</div>');
+        return $this->html('<div class="multirow-placeholder">Multirow field: '.$name.'</div>');
     }
 
     protected function getTimeOptions($interval)

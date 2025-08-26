@@ -83,7 +83,7 @@ See [MIGRATION.md](MIGRATION.md) for detailed migration guide.
 
 ## 📚 API Reference
 
-**Note: You can use either facade `PrelineForm::method()` or helper `preline_form()->method()`.**
+**Note: You can use either facade `PrelineForm::method()` or helper `form()->method()`.**
 
 <details>
 <summary><strong>📝 Text & Input Elements</strong></summary>

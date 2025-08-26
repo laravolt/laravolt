@@ -77,7 +77,7 @@ class CheckboxGroup extends Element
 
     public function displayValue()
     {
-        if (!is_array($this->checkedValues)) {
+        if (! is_array($this->checkedValues)) {
             return '';
         }
 
@@ -85,7 +85,7 @@ class CheckboxGroup extends Element
         foreach ($this->checkedValues as $value) {
             $labels[] = $this->options[$value] ?? $value;
         }
-        
+
         return implode(', ', $labels);
     }
 

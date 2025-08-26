@@ -5,7 +5,9 @@ namespace Laravolt\PrelineForm\Elements;
 class SelectDateWrapper extends Element
 {
     protected $date;
+
     protected $month;
+
     protected $year;
 
     public function __construct($date, $month, $year)

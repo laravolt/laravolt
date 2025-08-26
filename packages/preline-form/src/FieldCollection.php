@@ -49,7 +49,7 @@ class FieldCollection extends Collection
             case 'password':
             case 'text':
             case 'textarea':
-                $element = preline_form()
+                $element = form()
                     ->{$type}($field['name'])
                     ->label($field['label'])
                     ->hint($field['hint'])
@@ -57,7 +57,7 @@ class FieldCollection extends Collection
                 break;
 
             case 'checkbox':
-                $element = preline_form()
+                $element = form()
                     ->checkbox($field['name'])
                     ->label($field['label'])
                     ->hint($field['hint'])
@@ -67,7 +67,7 @@ class FieldCollection extends Collection
 
             case 'button':
             case 'submit':
-                $element = preline_form()->{$type}($field['label'], $field['name'])->attributes($field['attributes']);
+                $element = form()->{$type}($field['label'], $field['name'])->attributes($field['attributes']);
                 break;
 
             case 'radioGroup':
@@ -77,7 +77,7 @@ class FieldCollection extends Collection
                     $options = $model->toFormOptions();
                 }
 
-                $element = preline_form()
+                $element = form()
                     ->{$type}($field['name'], $options, $field['value'] ?? null)
                     ->label($field['label'])
                     ->hint($field['hint'])
@@ -90,7 +90,7 @@ class FieldCollection extends Collection
                     $options = $model->toFormOptions();
                 }
 
-                $element = preline_form()
+                $element = form()
                     ->checkboxGroup($field['name'], $options, $field['value'] ?? [])
                     ->label($field['label'])
                     ->hint($field['hint'])
@@ -98,7 +98,7 @@ class FieldCollection extends Collection
                 break;
 
             case 'file':
-                $element = preline_form()
+                $element = form()
                     ->file($field['name'])
                     ->label($field['label'])
                     ->hint($field['hint'])
@@ -114,7 +114,7 @@ class FieldCollection extends Collection
                 if (! PrelineForm::hasMacro($type)) {
                     throw new \InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
                 }
-                $element = preline_form()->{$type}($field->toArray());
+                $element = form()->{$type}($field->toArray());
                 $macro = true;
                 break;
         }

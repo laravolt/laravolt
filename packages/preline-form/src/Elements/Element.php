@@ -276,7 +276,7 @@ abstract class Element
     {
         $normalizedName = $this->normalizedName();
         $parts = explode('.', $normalizedName);
-        
+
         return $parts[0] ?? '';
     }
 

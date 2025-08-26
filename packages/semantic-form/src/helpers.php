@@ -6,7 +6,7 @@ if (! function_exists('form')) {
      */
     function form()
     {
-        return app('semantic-form');
+        return app('preline-form');
     }
 }
 
