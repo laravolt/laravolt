@@ -61,7 +61,7 @@ class TextArea extends FormControl
 
     public function setError($message = '')
     {
-        parent::setError(true);
+        parent::setError();
         $this->errorMessage = $message;
         $this->removeClass('border-gray-200 focus:border-blue-500 focus:ring-blue-500');
         $this->addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
