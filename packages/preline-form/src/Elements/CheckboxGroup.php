@@ -14,6 +14,8 @@ class CheckboxGroup extends Element
 
     protected $errorMessage = '';
 
+    protected $inline = false;
+
     public function __construct($name, $options = [])
     {
         $this->name = $name;
@@ -48,6 +50,13 @@ class CheckboxGroup extends Element
         return $this->checked($values);
     }
 
+    public function inline($inline = true)
+    {
+        $this->inline = $inline;
+
+        return $this;
+    }
+
     public function setError($message = '')
     {
         $this->hasError = true;
@@ -64,6 +73,20 @@ class CheckboxGroup extends Element
     protected function getError()
     {
         return $this->errorMessage;
+    }
+
+    public function displayValue()
+    {
+        if (!is_array($this->checkedValues)) {
+            return '';
+        }
+
+        $labels = [];
+        foreach ($this->checkedValues as $value) {
+            $labels[] = $this->options[$value] ?? $value;
+        }
+        
+        return implode(', ', $labels);
     }
 
     protected function renderControl()

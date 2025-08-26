@@ -43,6 +43,13 @@ class Select extends Element
         return $this;
     }
 
+    public function select($value)
+    {
+        $this->selectedValue = $value;
+
+        return $this;
+    }
+
     public function defaultValue($value)
     {
         if (is_null($this->selectedValue)) {
@@ -69,6 +76,26 @@ class Select extends Element
     public function appendOption($key, $label)
     {
         $this->options[$key] = $label;
+
+        return $this;
+    }
+
+    public function addOption($value, $label)
+    {
+        $this->options[$value] = $label;
+
+        return $this;
+    }
+
+    public function multiple()
+    {
+        $name = $this->getAttribute('name');
+        if (substr($name, -2) != '[]') {
+            $name .= '[]';
+        }
+
+        $this->setAttribute('name', $name);
+        $this->setAttribute('multiple', 'multiple');
 
         return $this;
     }
@@ -121,6 +148,15 @@ class Select extends Element
             $this->renderAttributes(),
             $this->renderOptions()
         );
+    }
+
+    public function displayValue()
+    {
+        if (is_string($this->selectedValue) || is_int($this->selectedValue)) {
+            return $this->options[$this->selectedValue] ?? $this->selectedValue;
+        }
+
+        return null;
     }
 
     public function render()

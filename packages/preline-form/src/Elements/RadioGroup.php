@@ -14,6 +14,8 @@ class RadioGroup extends Element
 
     protected $errorMessage = '';
 
+    protected $inline = false;
+
     public function __construct($name, $options = [])
     {
         $this->name = $name;
@@ -48,6 +50,13 @@ class RadioGroup extends Element
         return $this->checked($value);
     }
 
+    public function inline($inline = true)
+    {
+        $this->inline = $inline;
+
+        return $this;
+    }
+
     public function setError($message = '')
     {
         $this->hasError = true;
@@ -64,6 +73,15 @@ class RadioGroup extends Element
     protected function getError()
     {
         return $this->errorMessage;
+    }
+
+    public function displayValue()
+    {
+        if ($this->checkedValue === null) {
+            return '';
+        }
+
+        return $this->options[$this->checkedValue] ?? $this->checkedValue;
     }
 
     protected function renderControl()

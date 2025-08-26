@@ -35,6 +35,27 @@ abstract class Element
         return Arr::get($this->attributes, $attribute);
     }
 
+    protected function removeAttribute($attribute)
+    {
+        unset($this->attributes[$attribute]);
+    }
+
+    public function hasAttribute($attribute)
+    {
+        return isset($this->attributes[$attribute]);
+    }
+
+    public function clear($attribute)
+    {
+        if (! isset($this->attributes[$attribute])) {
+            return $this;
+        }
+
+        $this->removeAttribute($attribute);
+
+        return $this;
+    }
+
     public function addClass($class)
     {
         $existingClasses = $this->getAttribute('class');
@@ -42,6 +63,15 @@ abstract class Element
             $this->setAttribute('class', $existingClasses.' '.$class);
         } else {
             $this->setAttribute('class', $class);
+        }
+
+        return $this;
+    }
+
+    public function addClassIf($condition, $class)
+    {
+        if ($condition) {
+            $this->addClass($class);
         }
 
         return $this;
@@ -96,6 +126,12 @@ abstract class Element
         return $this;
     }
 
+    public function fieldWidth($width)
+    {
+        // For Preline compatibility - can be enhanced as needed
+        return $this;
+    }
+
     protected function setId($id)
     {
         $this->setAttribute('id', $id);
@@ -130,6 +166,118 @@ abstract class Element
         $this->hint[] = new Hint($text, $class);
 
         return $this;
+    }
+
+    // Form control methods for compatibility
+    public function required($required = true)
+    {
+        if ($required) {
+            $this->setAttribute('required', 'required');
+        } else {
+            $this->removeAttribute('required');
+        }
+
+        return $this;
+    }
+
+    public function optional()
+    {
+        $this->removeAttribute('required');
+
+        return $this;
+    }
+
+    public function readonly($readonly = true)
+    {
+        if ($readonly) {
+            $this->setAttribute('readonly', 'readonly');
+        } else {
+            $this->removeAttribute('readonly');
+        }
+
+        return $this;
+    }
+
+    public function disable($disable = true)
+    {
+        if ($disable) {
+            $this->setAttribute('disabled', 'disabled');
+        } else {
+            $this->removeAttribute('disabled');
+        }
+
+        return $this;
+    }
+
+    public function enable($enable = true)
+    {
+        $this->disable(! $enable);
+
+        return $this;
+    }
+
+    public function autofocus()
+    {
+        $this->setAttribute('autofocus', 'autofocus');
+
+        return $this;
+    }
+
+    public function unfocus()
+    {
+        $this->removeAttribute('autofocus');
+
+        return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->getAttribute('value');
+    }
+
+    public function display()
+    {
+        return sprintf(
+            '<tr %s><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
+            $this->renderFieldAttributes(),
+            $this->getAttribute('name'),
+            $this->label,
+            $this->displayValue()
+        );
+    }
+
+    public function displayValue()
+    {
+        return nl2br($this->getValue() ?? '');
+    }
+
+    public function populateValue($values)
+    {
+        $name = $this->getAttribute('name');
+        if ($name && isset($values[$name])) {
+            if (method_exists($this, 'value')) {
+                $this->value($values[$name]);
+            } else {
+                $this->setAttribute('value', $values[$name]);
+            }
+        }
+
+        return $this;
+    }
+
+    public function normalizedName()
+    {
+        $name = $this->getAttribute('name');
+
+        return trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
+    }
+
+    public function basename()
+    {
+        $normalizedName = $this->normalizedName();
+        $parts = explode('.', $normalizedName);
+        
+        return $parts[0] ?? '';
     }
 
     abstract public function render();
