@@ -118,8 +118,6 @@ class FormOpen extends Element
     {
         return ! is_null($this->hiddenMethod);
     }
-<<<<<<< Current (Your changes)
-=======
 
     public function horizontal()
     {
@@ -140,5 +138,4 @@ class FormOpen extends Element
     {
         return $this->encodingType('multipart/form-data');
     }
->>>>>>> Incoming (Background Agent changes)
 }
