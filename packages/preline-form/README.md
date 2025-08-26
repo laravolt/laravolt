@@ -1,25 +1,141 @@
 # Preline Form
 
-[Preline UI](https://preline.co/) form builder for Laravel, built with Tailwind CSS.
+[![Latest Version](https://img.shields.io/packagist/v/laravolt/preline-form.svg)](https://packagist.org/packages/laravolt/preline-form)
+[![Total Downloads](https://img.shields.io/packagist/dt/laravolt/preline-form.svg)](https://packagist.org/packages/laravolt/preline-form)
+[![License](https://img.shields.io/packagist/l/laravolt/preline-form.svg)](https://packagist.org/packages/laravolt/preline-form)
+[![Tests](https://github.com/laravolt/laravolt/workflows/Tests/badge.svg)](https://github.com/laravolt/laravolt/actions)
 
-This package is based on [laravolt/semantic-form](https://github.com/laravolt/semantic-form) but adapted to use Preline UI components and Tailwind CSS classes instead of Semantic UI.
+🎨 **Beautiful forms for Laravel with Preline UI and Tailwind CSS**
 
-## Installation
+**✨ SemanticForm Compatible** • **🎯 Laravel Ready** • **🎨 Tailwind Styled** • **🌙 Dark Mode**
 
-```bash
-$ composer require laravolt/preline-form
+[Preline UI](https://preline.co/) form builder for Laravel, built with Tailwind CSS. This package is based on [laravolt/semantic-form](https://github.com/laravolt/semantic-form) but adapted to use Preline UI components and Tailwind CSS classes instead of Semantic UI.
+
+## 📋 Table of Contents
+
+- [🚀 Quick Start](#-quick-start)
+- [📦 Installation](#-installation)
+- [📋 Requirements](#-requirements)
+- [🔄 Migration from SemanticForm](#-migration-from-semanticform)
+- [📚 API Reference](#-api-reference)
+- [🎨 Advanced Features](#-advanced-features)
+- [💡 Complete Examples](#-complete-examples)
+- [🎨 Styling & Customization](#-styling--customization)
+- [🔍 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
+
+## 🚀 Quick Start
+
+After installation, add this to your Blade template:
+
+```php
+{!! PrelineForm::open('user.store')->post() !!}
+    {!! PrelineForm::text('username')->label('Username')->required() !!}
+    {!! PrelineForm::email('email')->label('Email Address')->required() !!}
+    {!! PrelineForm::password('password')->label('Password')->required() !!}
+    {!! PrelineForm::submit('Create Account')->primary() !!}
+{!! PrelineForm::close() !!}
 ```
 
-## Requirements
+## 📦 Installation
 
-- PHP >= 7.3
-- Laravel >= 7.0
-- Tailwind CSS
-- Preline UI (recommended)
+```bash
+composer require laravolt/preline-form
+```
 
-## API
+## 📋 Requirements
+
+| Requirement      | Version                       | Notes                              |
+| ---------------- | ----------------------------- | ---------------------------------- |
+| **PHP**          | `>= 8.2`                      | Updated requirement                |
+| **Laravel**      | `^10.0 \|\| ^11.0 \|\| ^12.0` | Support for latest versions        |
+| **Tailwind CSS** | `^3.0`                        | Required for styling               |
+| **Preline UI**   | `^2.0`                        | Recommended for full functionality |
+
+### Browser Support
+
+- Chrome/Edge 88+
+- Firefox 85+
+- Safari 14+
+
+## 🔄 Migration from SemanticForm
+
+PrelineForm is designed to be **API-compatible** with SemanticForm for smooth migration:
+
+```php
+// SemanticForm (old)
+Form::text('username')->attributes(['class' => 'large'])
+
+// PrelineForm (new) - same API!
+PrelineForm::text('username')->attributes(['class' => 'large'])
+```
+
+### ✅ Key Compatibility Features:
+
+- ✅ `->attributes()` method on all elements
+- ✅ `->horizontal()` method for form layout
+- ✅ `->make()` method for dynamic field generation
+- ✅ Same method signatures and chaining patterns
+- ✅ Compatible error handling and validation
+- ✅ Model binding support
+
+See [MIGRATION.md](MIGRATION.md) for detailed migration guide.
+
+## 📚 API Reference
 
 **Note: You can use either facade `PrelineForm::method()` or helper `preline_form()->method()`.**
+
+<details>
+<summary><strong>📝 Text & Input Elements</strong></summary>
+
+- [`text()`](#text-input) - Text input field
+- [`email()`](#email-input) - Email input field
+- [`password()`](#password-input) - Password input field
+- [`number()`](#number-input) - Number input field
+- [`date()`](#date--time-inputs) - Date input field
+- [`time()`](#date--time-inputs) - Time input field
+- [`color()`](#color-picker) - Color picker input
+- [`textarea()`](#textarea) - Multi-line text area
+- [`hidden()`](#hidden-input) - Hidden input field
+
+</details>
+
+<details>
+<summary><strong>🎛️ Selection Elements</strong></summary>
+
+- [`select()`](#select-box-dropdown) - Dropdown selection
+- [`selectMultiple()`](#multiple-select) - Multiple selection
+- [`radio()`](#radio-button) - Radio button
+- [`radioGroup()`](#radio-group) - Radio button group
+- [`checkbox()`](#checkbox) - Checkbox
+- [`checkboxGroup()`](#checkbox-group) - Checkbox group
+
+</details>
+
+<details>
+<summary><strong>📁 File & Media</strong></summary>
+
+- [`file()`](#file-input) - File upload input
+
+</details>
+
+<details>
+<summary><strong>🎯 Buttons & Actions</strong></summary>
+
+- [`submit()`](#buttons) - Submit button
+- [`button()`](#buttons) - Regular button
+- [`link()`](#links) - Link element
+
+</details>
+
+<details>
+<summary><strong>🔧 Utility & Layout</strong></summary>
+
+- [`html()`](#html-content) - Custom HTML content
+- [`input()`](#input-wrapper) - Input wrapper with icons
+- [`make()`](#dynamic-field-generation) - Dynamic field generation
+
+</details>
 
 ### Opening Form
 
@@ -59,8 +175,22 @@ PrelineForm::post('search')->withoutToken();
 ### Text Input
 
 ```php
-PrelineForm::text($name, $value)->label('Username');
-PrelineForm::text($name, $value)->placeholder('Enter username');
+text(string $name, mixed $defaultValue = null): Text
+```
+
+**Parameters:**
+
+- `$name` (string): The input name attribute
+- `$defaultValue` (mixed): Default value for the input
+
+**Example:**
+
+```php
+PrelineForm::text('username', 'john_doe')
+    ->label('Username')
+    ->placeholder('Enter your username')
+    ->required()
+    ->attributes(['maxlength' => 50]);
 ```
 
 ### Number Input
@@ -75,6 +205,25 @@ PrelineForm::number($name)->min(0)->max(100)->step(1);
 ```php
 PrelineForm::date($name, $value)->label('Birthday');
 PrelineForm::time($name, $value)->label('Start Time');
+```
+
+### Color Picker
+
+```php
+PrelineForm::color($name, $defaultValue)->label('Theme Color');
+```
+
+### HTML Content
+
+```php
+PrelineForm::html('<div class="alert alert-info">Custom HTML content</div>');
+```
+
+### Links
+
+```php
+PrelineForm::link('Visit Website', 'https://example.com')
+    ->addClass('text-blue-600 hover:text-blue-800');
 ```
 
 ### Password Input
@@ -211,24 +360,172 @@ PrelineForm::text('email')->label('Email Address');
 
 For every form element, you can call and chain the following methods:
 
-- `id($string)`
-- `addClass($string)`
-- `removeClass($string)`
-- `attribute($name, $value)`
-- `data($name, $value)`
-- `hint($text)`
-- `hint($text, $class)`
+- `id($string)` - Set element ID
+- `addClass($string)` - Add CSS class
+- `removeClass($string)` - Remove CSS class
+- `attribute($name, $value)` - Set single attribute
+- `attributes($array)` - Set multiple attributes at once
+- `data($name, $value)` - Set data attribute
+- `hint($text)` - Add help text
+- `hint($text, $class)` - Add help text with custom styling
 
 #### Example
 
 ```php
-PrelineForm::text($name, $value)->label('Username')->id('username')->addClass('custom-class');
-PrelineForm::text($name, $value)->label('Username')->data('url', 'http://example.com');
-PrelineForm::password($name, $value)->label('Password')->hint('Minimum 6 characters');
-PrelineForm::password($name, $value)->label('Password')->hint('Minimum 6 characters', 'text-red-500');
+PrelineForm::text($name, $value)
+    ->label('Username')
+    ->id('username')
+    ->addClass('custom-class')
+    ->attributes(['maxlength' => 50, 'data-validate' => 'true']);
+
+PrelineForm::password($name, $value)
+    ->label('Password')
+    ->hint('Minimum 6 characters', 'text-red-500');
 ```
 
-## Styling with Tailwind CSS
+## 🎨 Advanced Features
+
+### Dynamic Field Generation
+
+Create forms dynamically using the `make()` method:
+
+```php
+$fields = [
+    'name' => ['type' => 'text', 'label' => 'Full Name', 'required' => true],
+    'email' => ['type' => 'email', 'label' => 'Email Address'],
+    'bio' => ['type' => 'textarea', 'label' => 'Biography', 'rows' => 4],
+    'country' => ['type' => 'select', 'label' => 'Country', 'options' => $countries]
+];
+
+echo PrelineForm::make($fields);
+```
+
+### Form Layout Options
+
+```php
+// Horizontal form layout
+PrelineForm::open('user.store')->horizontal();
+
+// Custom form classes
+PrelineForm::open('user.store')->addClass('max-w-md mx-auto');
+
+// Grid layout
+PrelineForm::open('user.store')->addClass('grid grid-cols-2 gap-4');
+```
+
+### Advanced Validation & Error Handling
+
+```php
+// Check for errors
+if (PrelineForm::hasError('username')) {
+    // Handle error state
+}
+
+// Get error message
+$error = PrelineForm::getError('username');
+
+// Custom error styling
+PrelineForm::text('username')
+    ->addClassIf($errors->has('username'), 'border-red-500');
+```
+
+### File Upload with Validation
+
+```php
+PrelineForm::file('avatar')
+    ->label('Profile Picture')
+    ->accept('image/*')
+    ->multiple()
+    ->hint('Maximum file size: 2MB per file');
+```
+
+## 💡 Complete Examples
+
+### User Registration Form
+
+```php
+{!! PrelineForm::open('auth.register')->post()->addClass('max-w-md mx-auto') !!}
+    <div class="space-y-6">
+        {!! PrelineForm::text('username')
+            ->label('Username')
+            ->placeholder('Enter your username')
+            ->required()
+            ->hint('Must be unique and at least 3 characters') !!}
+
+        {!! PrelineForm::email('email')
+            ->label('Email Address')
+            ->placeholder('your@email.com')
+            ->required() !!}
+
+        {!! PrelineForm::password('password')
+            ->label('Password')
+            ->required()
+            ->hint('Minimum 8 characters with numbers and symbols') !!}
+
+        {!! PrelineForm::password('password_confirmation')
+            ->label('Confirm Password')
+            ->required() !!}
+
+        <div class="flex items-center">
+            {!! PrelineForm::checkbox('terms', 1)
+                ->label('I agree to the Terms of Service')
+                ->required() !!}
+        </div>
+
+        <div class="pt-4">
+            {!! PrelineForm::submit('Create Account')
+                ->primary()
+                ->addClass('w-full') !!}
+        </div>
+    </div>
+{!! PrelineForm::close() !!}
+```
+
+### Product Creation Form
+
+```php
+{!! PrelineForm::open('products.store')->post()->multipart() !!}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-4">
+            {!! PrelineForm::text('name')
+                ->label('Product Name')
+                ->required() !!}
+
+            {!! PrelineForm::textarea('description')
+                ->label('Description')
+                ->rows(4) !!}
+
+            {!! PrelineForm::number('price')
+                ->label('Price')
+                ->min(0)
+                ->step(0.01)
+                ->required() !!}
+        </div>
+
+        <div class="space-y-4">
+            {!! PrelineForm::select('category_id', $categories)
+                ->label('Category')
+                ->placeholder('Select a category')
+                ->required() !!}
+
+            {!! PrelineForm::file('images')
+                ->label('Product Images')
+                ->multiple()
+                ->accept('image/*') !!}
+
+            {!! PrelineForm::checkbox('is_featured', 1)
+                ->label('Featured Product') !!}
+        </div>
+    </div>
+
+    <div class="mt-6 flex gap-3">
+        {!! PrelineForm::submit('Save Product')->primary() !!}
+        {!! PrelineForm::button('Cancel')->secondary() !!}
+    </div>
+{!! PrelineForm::close() !!}
+```
+
+## 🎨 Styling & Customization
 
 This package uses Tailwind CSS classes for styling. The default styling follows Preline UI design patterns:
 
@@ -239,14 +536,14 @@ This package uses Tailwind CSS classes for styling. The default styling follows 
 - Dark mode: `dark:bg-slate-900 dark:border-gray-700`
 - Error state: `border-red-500 focus:border-red-500`
 
-### Buttons
+### Button Variants
 
-- Primary: Blue background with white text
-- Secondary: White background with gray border
-- Danger: Red background for destructive actions
-- Success: Green background for positive actions
+- **Primary**: `bg-blue-600 hover:bg-blue-700 text-white`
+- **Secondary**: `bg-white border-gray-300 text-gray-700`
+- **Danger**: `bg-red-600 hover:bg-red-700 text-white`
+- **Success**: `bg-green-600 hover:bg-green-700 text-white`
 
-### Form Layout
+### Form Layout Classes
 
 - Forms use `space-y-6` for vertical spacing
 - Field groups use `space-y-4`
@@ -273,6 +570,9 @@ PrelineForm::submit('Save')
 For best results, include Preline UI CSS and JavaScript in your project:
 
 ```html
+<!-- Include Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
 <!-- Include Preline UI CSS -->
 <link href="https://preline.co/assets/css/main.min.css" rel="stylesheet" />
 
@@ -283,7 +583,95 @@ For best results, include Preline UI CSS and JavaScript in your project:
 Or install via npm:
 
 ```bash
-npm install preline
+npm install preline tailwindcss
+```
+
+### Tailwind Configuration
+
+Add PrelineForm files to your `tailwind.config.js`:
+
+```javascript
+module.exports = {
+  content: [
+    "./resources/**/*.blade.php",
+    "./vendor/laravolt/preline-form/**/*.php",
+  ],
+  // ... rest of your config
+};
+```
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+#### Styles not applying correctly
+
+```bash
+# Make sure Tailwind CSS is properly configured
+npm install -D tailwindcss
+npx tailwindcss init
+
+# Add to your tailwind.config.js
+content: [
+    "./vendor/laravolt/preline-form/**/*.php",
+]
+
+# Rebuild CSS
+npm run build
+```
+
+#### JavaScript components not working
+
+```html
+<!-- Make sure Preline UI JS is loaded -->
+<script src="https://preline.co/assets/js/preline.js"></script>
+
+<!-- Initialize components after DOM is ready -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    window.HSStaticMethods.autoInit();
+  });
+</script>
+```
+
+#### Validation errors not showing
+
+```php
+// Ensure error store is configured properly
+// This is usually handled automatically by Laravel
+```
+
+#### Form submission issues
+
+```php
+// Make sure CSRF token is included (automatically handled)
+// For custom forms, ensure proper method spoofing
+PrelineForm::open('route')->put(); // Adds _method=PUT hidden field
+```
+
+### Performance Tips
+
+1. **Optimize Tailwind CSS** - Use PurgeCSS to remove unused styles
+2. **Load Preline UI selectively** - Only include components you use
+3. **Cache form configurations** - Use Laravel's config caching
+
+## 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+git clone https://github.com/laravolt/laravolt
+cd packages/preline-form
+composer install
+```
+
+### Running Tests
+
+```bash
+composer test
+composer test:coverage
 ```
 
 ## Credits
