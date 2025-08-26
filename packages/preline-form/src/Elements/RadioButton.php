@@ -2,25 +2,21 @@
 
 namespace Laravolt\PrelineForm\Elements;
 
-class RadioButton extends Element
+class RadioButton extends Checkbox
 {
-    protected $name;
-
-    protected $value;
-
-    protected $checked = false;
-
-    protected $hasError = false;
-
-    protected $errorMessage = '';
+    protected $attributes = [
+        'type' => 'radio',
+    ];
 
     public function __construct($name, $value = null)
     {
-        $this->name = $name;
-        $this->value = $value;
-        $this->setAttribute('type', 'radio');
-        $this->setAttribute('name', $name);
-        $this->setAttribute('value', $value);
+        parent::__construct($name);
+
+        if (is_null($value)) {
+            $value = $name;
+        }
+
+        $this->setValue($value);
         $this->setDefaultClasses();
     }
 
@@ -65,25 +61,7 @@ class RadioButton extends Element
         return $this->checked(false);
     }
 
-    public function setError($message = '')
-    {
-        $this->hasError = true;
-        $this->errorMessage = $message;
-        $this->removeClass('border-gray-200 focus:ring-blue-500');
-        $this->addClass('border-red-500 focus:ring-red-500');
 
-        return $this;
-    }
-
-    protected function hasError()
-    {
-        return $this->hasError;
-    }
-
-    protected function getError()
-    {
-        return $this->errorMessage;
-    }
 
     public function displayValue()
     {
