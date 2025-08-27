@@ -17,6 +17,7 @@ class LaravoltBladeDirectives
           <script src="/laravolt/assets/vendor/lodash/lodash.min.js"></script>
           <script src="/laravolt/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
           <script src="/laravolt/assets/vendor/preline/dist/helper-apexcharts.js"></script>
+          <script src="/laravolt/assets/vendor/basictable/basictable.min.js"></script>
           <!-- JS INITIALIZATIONS -->
           <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -27,6 +28,247 @@ class LaravoltBladeDirectives
           <!-- Vendor -->
           <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
         HTML;
+    }
+
+    public static function basictable($expression)
+    {
+        // Parse the expression to get selector and options
+        $params = static::parseExpression($expression);
+
+        $selector = $params[0] ?? '.basictable';
+        $options = isset($params[1]) ? $params[1] : [];
+
+        // Convert options array to JavaScript object
+        $jsOptions = static::arrayToJsObject($options);
+
+        return <<<HTML
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              new basictable('{$selector}', {$jsOptions});
+            });
+          </script>
+        HTML;
+    }
+
+    public static function basictableResponsive($expression)
+    {
+        $params = static::parseExpression($expression);
+        $selector = $params[0] ?? '.basictable';
+        $options = isset($params[1]) ? $params[1] : [];
+
+        $defaultOptions = [
+            'tableWrap' => true,
+            'cardStyle' => 'default',
+            'forceResponsive' => true,
+        ];
+
+        $mergedOptions = array_merge($defaultOptions, $options);
+        $jsOptions = static::arrayToJsObject($mergedOptions);
+
+        return <<<HTML
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              new basictable('{$selector}', {$jsOptions});
+            });
+          </script>
+        HTML;
+    }
+
+    public static function basictableCompact($expression)
+    {
+        $params = static::parseExpression($expression);
+        $selector = $params[0] ?? '.basictable';
+        $options = isset($params[1]) ? $params[1] : [];
+
+        $defaultOptions = [
+            'tableWrap' => true,
+            'cardStyle' => 'compact',
+            'forceResponsive' => true,
+        ];
+
+        $mergedOptions = array_merge($defaultOptions, $options);
+        $jsOptions = static::arrayToJsObject($mergedOptions);
+
+        return <<<HTML
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              new basictable('{$selector}', {$jsOptions});
+            });
+          </script>
+        HTML;
+    }
+
+    public static function basictableInline($expression)
+    {
+        $params = static::parseExpression($expression);
+        $selector = $params[0] ?? '.basictable';
+        $options = isset($params[1]) ? $params[1] : [];
+
+        $defaultOptions = [
+            'tableWrap' => true,
+            'cardStyle' => 'inline',
+            'forceResponsive' => true,
+            'inlineSeparator' => 'none',
+        ];
+
+        $mergedOptions = array_merge($defaultOptions, $options);
+        $jsOptions = static::arrayToJsObject($mergedOptions);
+
+        return <<<HTML
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              new basictable('{$selector}', {$jsOptions});
+            });
+          </script>
+        HTML;
+    }
+
+    public static function basictableScrollable($expression)
+    {
+        $params = static::parseExpression($expression);
+        $selector = $params[0] ?? '.basictable';
+        $maxHeight = $params[1] ?? '300px';
+        $options = isset($params[2]) ? $params[2] : [];
+
+        $defaultOptions = [
+            'tableWrap' => true,
+            'scrollable' => true,
+            'maxHeight' => $maxHeight,
+            'forceResponsive' => true,
+        ];
+
+        $mergedOptions = array_merge($defaultOptions, $options);
+        $jsOptions = static::arrayToJsObject($mergedOptions);
+
+        return <<<HTML
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              new basictable('{$selector}', {$jsOptions});
+            });
+          </script>
+        HTML;
+    }
+
+    protected static function parseExpression($expression)
+    {
+        // Remove parentheses and trim
+        $expression = trim($expression, '()');
+
+        if (empty($expression)) {
+            return [];
+        }
+
+        // Simple parsing - split by comma and handle arrays
+        $parts = [];
+        $current = '';
+        $bracketCount = 0;
+        $quoteChar = null;
+
+        for ($i = 0; $i < strlen($expression); $i++) {
+            $char = $expression[$i];
+
+            if ($quoteChar !== null) {
+                if ($char === $quoteChar) {
+                    $quoteChar = null;
+                }
+                $current .= $char;
+            } elseif ($char === '"' || $char === "'") {
+                $quoteChar = $char;
+                $current .= $char;
+            } elseif ($char === '[') {
+                $bracketCount++;
+                $current .= $char;
+            } elseif ($char === ']') {
+                $bracketCount--;
+                $current .= $char;
+            } elseif ($char === ',' && $bracketCount === 0) {
+                $parts[] = trim($current);
+                $current = '';
+            } else {
+                $current .= $char;
+            }
+        }
+
+        if (!empty($current)) {
+            $parts[] = trim($current);
+        }
+
+        // Convert string representations to actual values
+        foreach ($parts as &$part) {
+            $part = static::parseValue($part);
+        }
+
+        return $parts;
+    }
+
+    protected static function parseValue($value)
+    {
+        $value = trim($value);
+
+        // Handle arrays
+        if (strpos($value, '[') === 0 && strrpos($value, ']') === strlen($value) - 1) {
+            $arrayContent = trim($value, '[]');
+            if (empty($arrayContent)) {
+                return [];
+            }
+
+            $items = explode(',', $arrayContent);
+            $parsedItems = [];
+
+            foreach ($items as $item) {
+                $parsedItems[] = static::parseValue(trim($item));
+            }
+
+            return $parsedItems;
+        }
+
+        // Handle strings
+        if ((strpos($value, '"') === 0 && strrpos($value, '"') === strlen($value) - 1) ||
+            (strpos($value, "'") === 0 && strrpos($value, "'") === strlen($value) - 1)) {
+            return trim($value, '"\'');
+        }
+
+        // Handle booleans
+        if ($value === 'true') {
+            return true;
+        }
+        if ($value === 'false') {
+            return false;
+        }
+
+        // Handle null
+        if ($value === 'null') {
+            return null;
+        }
+
+        // Handle numbers
+        if (is_numeric($value)) {
+            return strpos($value, '.') !== false ? (float) $value : (int) $value;
+        }
+
+        // Default to string
+        return $value;
+    }
+
+    protected static function arrayToJsObject(array $array): string
+    {
+        $items = [];
+
+        foreach ($array as $key => $value) {
+            if ($value === null) {
+                $items[] = "'{$key}': null";
+            } elseif (is_bool($value)) {
+                $items[] = "'{$key}': " . ($value ? 'true' : 'false');
+            } elseif (is_numeric($value)) {
+                $items[] = "'{$key}': {$value}";
+            } elseif (is_string($value)) {
+                $items[] = "'{$key}': '{$value}'";
+            } elseif (is_array($value)) {
+                $items[] = "'{$key}': " . static::arrayToJsObject($value);
+            }
+        }
+
+        return '{' . implode(', ', $items) . '}';
     }
 
     public static function styles($expression)
@@ -42,6 +284,7 @@ class LaravoltBladeDirectives
 
           <!-- CSS HS -->
           <link rel="stylesheet" href="/laravolt/assets/css/main.min.css?v=3.0.1">
+          <link rel="stylesheet" href="/laravolt/assets/vendor/basictable/basictable.min.css">
 
           <!-- Theme Check and Update -->
           <script>
@@ -79,6 +322,14 @@ class LaravoltBladeDirectives
               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
               padding: 0px !important;
               border-radius: 1rem !important;
+            }
+            @media (max-width: 568px) {
+              table.basictable {
+                border: unset
+              }
+              .bt-card-inline table.bt tbody td .bt-content > span {
+                color: #9ca3af !important;
+              }
             }
           </style>
         HTML;

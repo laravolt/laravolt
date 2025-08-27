@@ -3,7 +3,10 @@
     "description": "The Laravolt Platform.",
     "license": "MIT",
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "require": {
         "php": ">=8.2",

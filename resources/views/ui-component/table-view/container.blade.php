@@ -32,7 +32,7 @@
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
                     <div
-                        class="border border-gray-200 rounded-lg shadow-xs overflow-hidden dark:border-neutral-700 dark:shadow-gray-900">
+                        class="rounded-lg shadow-xs overflow-hidden dark:shadow-gray-900">
                         @include('laravolt::ui-component.table-view.table')
                     </div>
                 </div>

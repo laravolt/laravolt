@@ -27,6 +27,7 @@
     @livewireScripts
     @stack('script')
     @stack('body')
+    @basictableInline('.basictable')
 </body>
 
 </html>

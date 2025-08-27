@@ -1,12 +1,12 @@
 <!-- Table -->
-<table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700" aria-label="table">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 basictable" aria-label="table">
     <thead class="bg-gray-50 dark:bg-neutral-700">
         <tr class="divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
             @foreach ($columns as $column)
                 @if ($column->getSortableColumn())
                     <th scope="col" class="min-w-40">
                         <!-- Sort Dropdown -->
-                        <div class="hs-dropdown relative inline-flex w-full cursor-pointer">
+                        <div class="hs-dropdown relative inline-flex w-full cursor-pointer basictable">
                             <button type="button"
                                 class="px-4 py-2.5 text-start w-full flex items-center gap-x-1 text-sm text-nowrap font-normal text-gray-500 focus:outline-hidden focus:bg-gray-100 dark:text-neutral-500 dark:focus:bg-neutral-700"
                                 wire:click.prevent="sortBy('{{ $column->getSortableColumn() }}')"
@@ -52,7 +52,7 @@
             @php($outerLoop = $loop)
             <tr class="hover:bg-gray-100 dark:hover:bg-neutral-700">
                 @foreach ($columns as $column)
-                    <td class="size-px whitespace-nowrap px-4 py-1" {!! $column->cellAttributes($item) !!}>
+                    <td class="whitespace-nowrap px-4 py-1" {!! $column->cellAttributes($item) !!}>
                         <span class="text-sm text-gray-600 dark:text-neutral-400">
                             {!! $column->cell($item, $data, $outerLoop) !!}
                         </span>

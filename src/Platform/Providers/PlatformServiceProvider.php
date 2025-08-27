@@ -390,6 +390,13 @@ class PlatformServiceProvider extends ServiceProvider
         Blade::directive('laravoltScripts', [LaravoltBladeDirectives::class, 'scripts']);
         Blade::directive('laravoltStyles', [LaravoltBladeDirectives::class, 'styles']);
 
+        // BasicTable directives
+        Blade::directive('basictable', [LaravoltBladeDirectives::class, 'basictable']);
+        Blade::directive('basictableResponsive', [LaravoltBladeDirectives::class, 'basictableResponsive']);
+        Blade::directive('basictableCompact', [LaravoltBladeDirectives::class, 'basictableCompact']);
+        Blade::directive('basictableInline', [LaravoltBladeDirectives::class, 'basictableInline']);
+        Blade::directive('basictableScrollable', [LaravoltBladeDirectives::class, 'basictableScrollable']);
+
         return $this;
     }
 }
