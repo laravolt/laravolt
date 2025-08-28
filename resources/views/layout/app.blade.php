@@ -9,7 +9,6 @@
             @endif
 
             {{ $slot ?? null }}
-            @stack('main')
         </div>
     </main>
 </x-volt-base>

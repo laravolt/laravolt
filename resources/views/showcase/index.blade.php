@@ -1,34 +1,15 @@
-@extends('laravolt::layout.app')
-
-@section('title', 'Component Showcase')
-
-@push('styles')
-<style>
-    .component-card {
-        transition: all 0.2s ease-in-out;
-    }
-    .component-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-    .category-section {
-        scroll-margin-top: 100px;
-    }
-</style>
-@endpush
-
-@section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<x-volt-app title="Component Showcase">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Header -->
     <div class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Preline UI Component Showcase
         </h1>
         <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-3xl mx-auto">
-            Explore our comprehensive collection of Preline UI v3.0 components. Each component is built with accessibility, 
+            Explore our comprehensive collection of Preline UI v3.0 components. Each component is built with accessibility,
             modern design principles, and seamless Laravel integration in mind.
         </p>
-        
+
         <!-- Quick Stats -->
         <div class="flex justify-center gap-8 mt-8">
             <div class="text-center">
@@ -59,10 +40,10 @@
                     'Utility' => ['icon' => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z', 'count' => 4],
                 ]);
             @endphp
-            
+
             @foreach($categories as $category => $data)
-                <a href="#{{ Str::slug($category) }}" 
-                   class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200 dark:text-neutral-400 dark:hover:text-blue-400 dark:hover:bg-neutral-800">
+                <a href="#{{ Str::slug($category) }}"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200 dark:text-neutral-400 dark:hover:text-blue-400 dark:hover:bg-neutral-800">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $data['icon'] }}"/>
                     </svg>
@@ -88,7 +69,7 @@
                     {{ $categoryComponents->count() }} components
                 </span>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($categoryComponents as $componentKey => $component)
                     <div class="component-card bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 p-6 hover:border-blue-300 dark:hover:border-blue-600">
@@ -100,11 +81,11 @@
                                 <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full dark:bg-green-900 dark:text-green-300">Interactive</span>
                             @endif
                         </div>
-                        
+
                         <p class="text-gray-600 dark:text-neutral-400 text-sm mb-4 line-clamp-2">
                             {{ $component['description'] }}
                         </p>
-                        
+
                         <!-- Component Features -->
                         <div class="mb-4">
                             <div class="flex flex-wrap gap-1 mb-3">
@@ -117,7 +98,7 @@
                                     <span class="text-gray-500 text-xs px-2 py-1">+{{ count($component['variants']) - 3 }} more</span>
                                 @endif
                             </div>
-                            
+
                             @if(!empty($component['sizes']))
                                 <div class="text-xs text-gray-500 dark:text-neutral-400">
                                     Sizes: {{ implode(', ', array_slice($component['sizes'], 0, 4)) }}
@@ -127,7 +108,7 @@
                                 </div>
                             @endif
                         </div>
-                        
+
                         <!-- Features List -->
                         @if(!empty($component['features']))
                             <div class="mb-4">
@@ -144,14 +125,14 @@
                                 </div>
                             </div>
                         @endif
-                        
+
                         <!-- Action Button -->
                         <div class="flex gap-2">
-                            <a href="{{ route('platform::components.show', $componentKey) }}" 
-                               class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-center">
+                            <a href="{{ route('platform::components.show', $componentKey) }}"
+                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-center">
                                 View Component
                             </a>
-                            <button onclick="copyComponentUsage('{{ $componentKey }}')" 
+                            <button onclick="copyComponentUsage('{{ $componentKey }}')"
                                     class="bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-lg transition-colors duration-200 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-300"
                                     title="Copy usage example">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,12 +163,27 @@
     </div>
 </div>
 
-@push('scripts')
+@push('styles')
+<style>
+    .component-card {
+        transition: all 0.2s ease-in-out;
+    }
+    .component-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .category-section {
+        scroll-margin-top: 100px;
+    }
+</style>
+@endpush
+
+@push('script')
 <script>
 // Copy component usage example
 function copyComponentUsage(component) {
     const usageExample = `<x-volt-${component} />`;
-    
+
     if (navigator.clipboard) {
         navigator.clipboard.writeText(usageExample).then(() => {
             showNotification('Copied to clipboard!', 'success');
@@ -213,14 +209,14 @@ function showNotification(message, type = 'info') {
     }`;
     notification.textContent = message;
     notification.style.transform = 'translateX(100%)';
-    
+
     document.body.appendChild(notification);
-    
+
     // Animate in
     setTimeout(() => {
         notification.style.transform = 'translateX(0)';
     }, 10);
-    
+
     // Remove after 3 seconds
     setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
@@ -245,4 +241,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 </script>
 @endpush
-@endsection
+</x-volt-app>
