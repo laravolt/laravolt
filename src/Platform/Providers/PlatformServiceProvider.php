@@ -27,6 +27,7 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\Pest4InstallCommand;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Components\AdvancedDatepicker;
 use Laravolt\Platform\Components\Alert;
 use Laravolt\Platform\Components\Avatar;
 use Laravolt\Platform\Components\Backlink;
@@ -60,6 +61,7 @@ use Laravolt\Platform\Components\Skeleton;
 use Laravolt\Platform\Components\Stepper;
 use Laravolt\Platform\Components\Tab;
 use Laravolt\Platform\Components\TabContent;
+use Laravolt\Platform\Components\TimePicker;
 use Laravolt\Platform\Components\ToggleSwitch;
 use Laravolt\Platform\Components\Table;
 use Laravolt\Platform\Components\Titlebar;
@@ -337,7 +339,7 @@ class PlatformServiceProvider extends ServiceProvider
             'modal' => 'laravolt::components.modal',
             'workflow-diagram-button' => 'laravolt::workflow.components.diagram-button',
 
-            // New Preline UI Components
+            // Updated Preline UI v3.0 Components
             'alert' => 'laravolt::components.alert',
             'avatar' => 'laravolt::components.avatar',
             'badge' => 'laravolt::components.badge',
@@ -353,6 +355,7 @@ class PlatformServiceProvider extends ServiceProvider
             'link' => 'laravolt::components.link',
             'link-button' => 'laravolt::components.link-button',
             'list-group' => 'laravolt::components.list-group',
+            'modal' => 'laravolt::components.modal',
             'offcanvas' => 'laravolt::components.offcanvas',
             'pagination' => 'laravolt::components.pagination',
             'panel' => 'laravolt::components.panel',
@@ -370,8 +373,13 @@ class PlatformServiceProvider extends ServiceProvider
             'textarea' => 'laravolt::components.textarea',
             'toast' => 'laravolt::components.toast',
             'tooltip' => 'laravolt::components.tooltip',
+            
+            // New Preline UI v3.0 Components
+            'time-picker' => 'laravolt::components.time-picker',
+            'advanced-datepicker' => 'laravolt::components.advanced-datepicker',
 
-            // Class-based Components
+            // Class-based Components (Updated for Preline UI v3.0)
+            AdvancedDatepicker::class,
             Alert::class,
             Avatar::class,
             Backlink::class,
@@ -393,6 +401,7 @@ class PlatformServiceProvider extends ServiceProvider
             LinkButton::class,
             ListGroup::class,
             MediaLibrary::class,
+            Modal::class,
             Offcanvas::class,
             Pagination::class,
             Panel::class,
@@ -405,6 +414,7 @@ class PlatformServiceProvider extends ServiceProvider
             Tab::class,
             TabContent::class,
             Table::class,
+            TimePicker::class,
             ToggleSwitch::class,
             Titlebar::class,
             Toast::class,

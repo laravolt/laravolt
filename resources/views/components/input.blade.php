@@ -19,14 +19,14 @@
         'lg' => 'py-3.5 px-4 text-base'
     ];
 
-    // Base input classes
-    $baseClasses = 'block w-full border rounded-lg shadow-sm focus:outline-hidden focus:ring-2 transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-neutral-200 dark:placeholder-neutral-500';
+    // Enhanced base input classes for Preline UI v3.0
+    $baseClasses = 'py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600';
 
-    // Variant styles
+    // Enhanced variant styles for Preline UI v3.0
     $variantClasses = [
-        'default' => $baseClasses . ' border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-800',
-        'error' => $baseClasses . ' border-red-300 bg-white text-gray-900 placeholder-gray-500 focus:border-red-500 focus:ring-red-500 dark:border-red-800 dark:bg-neutral-800',
-        'success' => $baseClasses . ' border-green-300 bg-white text-gray-900 placeholder-gray-500 focus:border-green-500 focus:ring-green-500 dark:border-green-800 dark:bg-neutral-800'
+        'default' => $baseClasses,
+        'error' => str_replace(['focus:border-blue-500', 'focus:ring-blue-500'], ['focus:border-red-500', 'focus:ring-red-500'], $baseClasses) . ' border-red-500 dark:border-red-600',
+        'success' => str_replace(['focus:border-blue-500', 'focus:ring-blue-500'], ['focus:border-teal-500', 'focus:ring-teal-500'], $baseClasses) . ' border-teal-500 dark:border-teal-600'
     ];
 
     $classes = ($sizeClasses[$size] ?? $sizeClasses['md']) . ' ' . ($variantClasses[$variant] ?? $variantClasses['default']);
