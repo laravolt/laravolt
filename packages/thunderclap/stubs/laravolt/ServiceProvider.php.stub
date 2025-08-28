@@ -36,7 +36,7 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
             if ($menu->modules) {
                 $menu->modules
                     ->add(':Module Name:', route('modules:::module-name:.index'))
-                    ->data('icon', 'circle')
+                    ->data('icon', $this->config['icon'] ?? 'circle')
                     ->data('permission', $this->config['permission'] ?? [])
                     ->active('modules/:module-name:/*');
             }
