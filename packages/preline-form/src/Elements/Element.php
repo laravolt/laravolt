@@ -278,6 +278,23 @@ abstract class Element
         $input = $this->renderControl();
         $error = $this->renderError();
         $hint = $this->renderHint();
+        $stateField = $this->renderFieldState();
+
+        return <<<HTML
+          <div>
+            $label
+
+            <div class="relative">
+              $input
+
+              $stateField
+            </div>
+
+            $error
+
+            $hint
+          </div>
+        HTML;
 
         return <<<HTML
           <div class="grid sm:grid-cols-12 gap-y-1.5 sm:gap-y-0 sm:gap-x-5">
@@ -324,5 +341,55 @@ abstract class Element
     protected function renderControl()
     {
         return '';
+    }
+
+    protected function renderFieldState()
+    {
+        if (!$this->getError()) {
+            return;
+        }
+
+        if ($this->hasError()) {
+            return <<<HTML
+              <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+                <svg
+                  class="shrink-0 size-4 text-red-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" x2="12" y1="8" y2="12"></line>
+                  <line x1="12" x2="12.01" y1="16" y2="16"></line>
+                </svg>
+              </div>
+            HTML;
+        }
+
+
+        return <<<HTML
+          <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+            <svg
+              class="shrink-0 size-4 text-teal-500"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        HTML;
     }
 }

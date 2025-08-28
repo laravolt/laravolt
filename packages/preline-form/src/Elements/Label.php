@@ -9,7 +9,7 @@ class Label extends Element
     public function __construct($label)
     {
         $this->label = $label;
-        $this->addClass('sm:mt-2.5 inline-block text-sm text-gray-500 dark:text-neutral-500');
+        $this->addClass('block text-sm font-medium mb-2 dark:text-white');
     }
 
     public function render()
