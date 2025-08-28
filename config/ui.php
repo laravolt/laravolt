@@ -7,24 +7,6 @@ return [
     'brand_description' => env('APP_DESCRIPTION', 'Sample application powered by Laravolt'),
 
     /*
-     * Font Size
-     * Available options: xs, sm, md, xl, lg
-     * */
-    'font_size' => 'sm',
-
-    /*
-     * Sidebar menu density
-     * Available options: "compact", "default", or "cozy"
-     * */
-    'sidebar_density' => 'default',
-
-    /*
-     * Set default theme
-     * Available themes: dark, light
-     * */
-    'theme' => 'light',
-
-    /*
      * Button color
      * Choose one of the following colors that match closely with the theme
      * Available colors: blue, indigo, cyan, teal
