@@ -76,11 +76,11 @@
                 {{ $componentData['category'] }}
             </span>
         </div>
-        
+
         <p class="text-xl text-gray-600 dark:text-neutral-400 mb-6">
             {{ $componentData['description'] }}
         </p>
-        
+
         <!-- Quick Info -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 p-4">
@@ -91,7 +91,7 @@
                     @endforeach
                 </div>
             </div>
-            
+
             @if(!empty($componentData['sizes']))
                 <div class="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 p-4">
                     <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Sizes</h3>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             @endif
-            
+
             <div class="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 p-4">
                 <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Features</h3>
                 <div class="space-y-1">
@@ -124,30 +124,29 @@
         @if($component === 'alert' && !empty($sampleData['examples']))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Examples</h2>
-                
+
                 <div class="space-y-8">
                     @foreach($sampleData['examples'] as $example)
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 capitalize">{{ $example['variant'] }} Alert</h3>
-                            
                             <!-- Demo -->
                             <div class="demo-section">
-                                <x-volt-alert 
-                                    variant="{{ $example['variant'] }}" 
-                                    title="{{ $example['title'] }}" 
+                                <x-volt-alert
+                                    variant="{{ $example['variant'] }}"
+                                    title="{{ $example['title'] }}"
                                     message="{{ $example['message'] }}"
                                     :dismissible="{{ $example['dismissible'] }}"
                                 />
                             </div>
-                            
+
                             <!-- Code -->
                             <div class="code-block">
-                                <pre><code>&lt;x-volt-alert 
-    variant="{{ $example['variant'] }}" 
-    title="{{ $example['title'] }}" 
-    message="{{ $example['message'] }}"
-    :dismissible="{{ $example['dismissible'] ? 'true' : 'false' }}"
-/&gt;</code></pre>
+                                <pre><code>{!! '&lt;x-volt-alert
+    variant=&quot;' . $example['variant'] . '&quot;
+    title=&quot;' . $example['title'] . '&quot;
+    message=&quot;' . $example['message'] . '&quot;
+    :dismissible=&quot;' . ($example['dismissible'] ? 'true' : 'false') . '&quot;
+/&gt;' !!}</code></pre>
                             </div>
                         </div>
                     @endforeach
@@ -158,11 +157,11 @@
         @if($component === 'button' && !empty($sampleData['examples']))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Button Variants</h2>
-                
+
                 <div class="demo-section">
                     <div class="flex flex-wrap gap-4">
                         @foreach($sampleData['examples'] as $example)
-                            <x-volt-button 
+                            <x-volt-button
                                 variant="{{ $example['variant'] }}"
                                 :loading="{{ $example['loading'] ?? false }}"
                             >
@@ -171,7 +170,7 @@
                         @endforeach
                     </div>
                 </div>
-                
+
                 <!-- Size Examples -->
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mt-8 mb-4">Button Sizes</h3>
                 <div class="demo-section">
@@ -183,7 +182,7 @@
                         @endforeach
                     </div>
                 </div>
-                
+
                 <!-- Code Example -->
                 <div class="code-block">
                     <pre><code>&lt;x-volt-button variant="primary" size="md"&gt;
@@ -200,17 +199,17 @@
         @if($component === 'accordion' && !empty($sampleData['items']))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Accordion Example</h2>
-                
+
                 <div class="demo-section">
-                    <x-volt-accordion 
+                    <x-volt-accordion
                         :items="$sampleData['items']"
                         variant="default"
                         :allow-multiple="false"
                     />
                 </div>
-                
+
                 <div class="code-block">
-                    <pre><code>&lt;x-volt-accordion 
+                    <pre><code>&lt;x-volt-accordion
     :items="[
         [
             'title' => 'Getting Started',
@@ -218,7 +217,7 @@
             'open' => true
         ],
         [
-            'title' => 'Advanced Features', 
+            'title' => 'Advanced Features',
             'content' => 'Explore advanced features...'
         ]
     ]"
@@ -232,17 +231,17 @@
         @if($component === 'timeline' && !empty($sampleData['items']))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Timeline Example</h2>
-                
+
                 <div class="demo-section">
-                    <x-volt-timeline 
+                    <x-volt-timeline
                         :items="$sampleData['items']"
                         variant="primary"
                         :show-connector="true"
                     />
                 </div>
-                
+
                 <div class="code-block">
-                    <pre><code>&lt;x-volt-timeline 
+                    <pre><code>&lt;x-volt-timeline
     :items="[
         [
             'title' => 'Project Planning',
@@ -252,7 +251,7 @@
         ],
         [
             'title' => 'Development Phase',
-            'description' => 'Core functionality implementation', 
+            'description' => 'Core functionality implementation',
             'timestamp' => '2024-02-01',
             'status' => 'current'
         ]
@@ -267,17 +266,17 @@
         @if($component === 'steps' && !empty($sampleData))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Steps Example</h2>
-                
+
                 <div class="demo-section">
-                    <x-volt-steps 
+                    <x-volt-steps
                         :steps="$sampleData['steps']"
                         :current-step="$sampleData['currentStep']"
                         :clickable="false"
                     />
                 </div>
-                
+
                 <div class="code-block">
-                    <pre><code>&lt;x-volt-steps 
+                    <pre><code>&lt;x-volt-steps
     :steps="[
         ['title' => 'Account Setup', 'description' => 'Create your account'],
         ['title' => 'Profile Information', 'description' => 'Add your details'],
@@ -294,7 +293,7 @@
         @if($component === 'rating' && !empty($sampleData['examples']))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Rating Examples</h2>
-                
+
                 <div class="space-y-6">
                     @foreach($sampleData['examples'] as $index => $example)
                         <div>
@@ -305,9 +304,9 @@
                                     Interactive Rating
                                 @endif
                             </h3>
-                            
+
                             <div class="demo-section">
-                                <x-volt-rating 
+                                <x-volt-rating
                                     :value="$example['value']"
                                     :max="$example['max'] ?? 5"
                                     :readonly="$example['readonly']"
@@ -319,9 +318,9 @@
                         </div>
                     @endforeach
                 </div>
-                
+
                 <div class="code-block">
-                    <pre><code>&lt;x-volt-rating 
+                    <pre><code>&lt;x-volt-rating
     :value="4.5"
     :max="5"
     variant="yellow"
@@ -337,14 +336,14 @@
         @if(!in_array($component, ['alert', 'button', 'accordion', 'timeline', 'steps', 'rating']))
             <section>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Basic Example</h2>
-                
+
                 <div class="demo-section">
                     @switch($component)
                         @case('pin-code')
                             <x-volt-pin-code :length="4" :mask="false" size="md" />
                             @break
                         @case('copy-markup')
-                            <x-volt-copy-markup 
+                            <x-volt-copy-markup
                                 content="<div class='example'>Hello World!</div>"
                                 language="html"
                                 :show-copy-button="true"
@@ -354,7 +353,7 @@
                             <x-volt-scroll-indicator variant="top" color="blue" size="md" />
                             @break
                         @case('notification')
-                            <x-volt-notification 
+                            <x-volt-notification
                                 title="Success!"
                                 message="Your changes have been saved successfully."
                                 variant="success"
@@ -363,14 +362,14 @@
                             @break
                         @default
                             <p class="text-gray-600 dark:text-neutral-400">
-                                Component examples will be displayed here. 
+                                Component examples will be displayed here.
                                 Use the basic component syntax: <code class="bg-gray-100 px-2 py-1 rounded text-sm dark:bg-neutral-700">&lt;x-volt-{{ $component }} /&gt;</code>
                             </p>
                     @endswitch
                 </div>
-                
+
                 <div class="code-block">
-                    <pre><code>&lt;x-volt-{{ $component }} /&gt;</code></pre>
+                    <pre><code>{!! '&lt;x-volt-' . $component . ' /&gt;' !!}</code></pre>
                 </div>
             </section>
         @endif
@@ -378,24 +377,24 @@
         <!-- Usage Instructions -->
         <section>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Usage</h2>
-            
+
             <div class="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 p-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Basic Usage</h3>
                 <div class="code-block">
-                    <pre><code>&lt;x-volt-{{ $component }} /&gt;</code></pre>
+                    <pre><code>{!! '&lt;x-volt-' . $component . ' /&gt;' !!}</code></pre>
                 </div>
-                
+
                 @if(!empty($componentData['variants']))
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 mt-6">With Variants</h3>
                     <div class="code-block">
-                        <pre><code>&lt;x-volt-{{ $component }} variant="{{ $componentData['variants'][0] }}" /&gt;</code></pre>
+                        <pre><code>{!! '&lt;x-volt-' . $component . ' variant=&quot;' . $componentData['variants'][0] . '&quot; /&gt;' !!}</code></pre>
                     </div>
                 @endif
-                
+
                 @if(!empty($componentData['sizes']))
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 mt-6">With Sizes</h3>
                     <div class="code-block">
-                        <pre><code>&lt;x-volt-{{ $component }} size="{{ $componentData['sizes'][0] }}" /&gt;</code></pre>
+                        <pre><code>{!! '&lt;x-volt-' . $component . ' size=&quot;' . $componentData['sizes'][0] . '&quot; /&gt;' !!}</code></pre>
                     </div>
                 @endif
             </div>
@@ -404,12 +403,12 @@
         <!-- API Reference -->
         <section>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">API Reference</h2>
-            
+
             <div class="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-neutral-700">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Component Properties</h3>
                 </div>
-                
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                         <thead class="bg-gray-50 dark:bg-neutral-700">
@@ -429,7 +428,7 @@
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">Component visual variant</td>
                                 </tr>
                             @endif
-                            
+
                             @if(!empty($componentData['sizes']))
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">size</td>
@@ -438,7 +437,7 @@
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">Component size</td>
                                 </tr>
                             @endif
-                            
+
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">class</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-400">string</td>
@@ -460,7 +459,7 @@
             </svg>
             Back to Components
         </a>
-        
+
         <button onclick="copyToClipboard('&lt;x-volt-{{ $component }} /&gt;')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
             Copy Basic Usage
         </button>
@@ -492,13 +491,13 @@ function showNotification(message, type = 'info') {
     }`;
     notification.textContent = message;
     notification.style.transform = 'translateX(100%)';
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.transform = 'translateX(0)';
     }, 10);
-    
+
     setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
         setTimeout(() => {

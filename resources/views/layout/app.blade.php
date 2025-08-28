@@ -1,4 +1,4 @@
-<x-volt-base :title="$title">
+<x-volt-base title="">
     @include('laravolt::menu.topbar')
     @include('laravolt::menu.sidebar')
 
@@ -8,7 +8,7 @@
                 @include('laravolt::menu.actionbar')
             @endif
 
-            {{ $slot }}
+            {{ $slot ?? null }}
             @stack('main')
         </div>
     </main>
