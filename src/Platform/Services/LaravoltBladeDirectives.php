@@ -189,7 +189,7 @@ class LaravoltBladeDirectives
             }
         }
 
-        if (!empty($current)) {
+        if (! empty($current)) {
             $parts[] = trim($current);
         }
 
@@ -258,17 +258,17 @@ class LaravoltBladeDirectives
             if ($value === null) {
                 $items[] = "'{$key}': null";
             } elseif (is_bool($value)) {
-                $items[] = "'{$key}': " . ($value ? 'true' : 'false');
+                $items[] = "'{$key}': ".($value ? 'true' : 'false');
             } elseif (is_numeric($value)) {
                 $items[] = "'{$key}': {$value}";
             } elseif (is_string($value)) {
                 $items[] = "'{$key}': '{$value}'";
             } elseif (is_array($value)) {
-                $items[] = "'{$key}': " . static::arrayToJsObject($value);
+                $items[] = "'{$key}': ".static::arrayToJsObject($value);
             }
         }
 
-        return '{' . implode(', ', $items) . '}';
+        return '{'.implode(', ', $items).'}';
     }
 
     public static function styles($expression)

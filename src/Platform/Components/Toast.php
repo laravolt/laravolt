@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class Toast extends Component
 {
     public $variant = 'info';
+
     public $position = 'bottom-right';
+
     public $autoHide = true;
+
     public $delay = 5000;
+
     public $show = true;
+
     public $message = '';
+
     public $title = '';
 
     public function __construct(

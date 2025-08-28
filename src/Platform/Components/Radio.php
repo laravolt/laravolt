@@ -7,9 +7,13 @@ use Illuminate\View\Component;
 class Radio extends Component
 {
     public $label = '';
+
     public $description = '';
+
     public $checked = false;
+
     public $disabled = false;
+
     public $value = '';
 
     public function __construct(

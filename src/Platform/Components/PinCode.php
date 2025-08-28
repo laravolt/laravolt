@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class PinCode extends Component
 {
     public $length = 4;
+
     public $mask = false;
+
     public $size = 'md';
+
     public $variant = 'default';
+
     public $disabled = false;
+
     public $placeholder = '○';
 
     public function __construct(

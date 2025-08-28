@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class Offcanvas extends Component
 {
     public $placement = 'end';
+
     public $show = false;
+
     public $backdrop = true;
+
     public $scrollable = false;
+
     public $title = '';
+
     public $content = '';
+
     public $footer = '';
 
     public function __construct(

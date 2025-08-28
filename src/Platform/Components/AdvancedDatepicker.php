@@ -7,14 +7,23 @@ use Illuminate\View\Component;
 class AdvancedDatepicker extends Component
 {
     public $label = '';
+
     public $placeholder = 'Select date';
+
     public $range = false;
+
     public $disabled = false;
+
     public $error = '';
+
     public $size = 'md';
+
     public $clearable = true;
+
     public $minDate = null;
+
     public $maxDate = null;
+
     public $format = 'Y-m-d';
 
     public function __construct(

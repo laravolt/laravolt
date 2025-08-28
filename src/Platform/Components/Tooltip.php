@@ -7,7 +7,9 @@ use Illuminate\View\Component;
 class Tooltip extends Component
 {
     public $placement = 'top';
+
     public $content = '';
+
     public $trigger = 'hover';
 
     public function __construct(

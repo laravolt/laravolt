@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class Stepper extends Component
 {
     public $steps = [];
+
     public $currentStep = 1;
+
     public $orientation = 'horizontal';
+
     public $variant = 'default';
 
     public function __construct(

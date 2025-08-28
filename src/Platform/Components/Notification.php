@@ -7,13 +7,21 @@ use Illuminate\View\Component;
 class Notification extends Component
 {
     public $title = '';
+
     public $message = '';
+
     public $variant = 'info';
+
     public $position = 'top-right';
+
     public $dismissible = true;
+
     public $autoHide = false;
+
     public $duration = 5000;
+
     public $icon = '';
+
     public $actions = [];
 
     public function __construct(

@@ -65,16 +65,16 @@ use Laravolt\Platform\Components\Rating;
 use Laravolt\Platform\Components\ScrollIndicator;
 use Laravolt\Platform\Components\Sidebar;
 use Laravolt\Platform\Components\Skeleton;
-use Laravolt\Platform\Components\Steps;
 use Laravolt\Platform\Components\Stepper;
+use Laravolt\Platform\Components\Steps;
 use Laravolt\Platform\Components\Tab;
 use Laravolt\Platform\Components\TabContent;
-use Laravolt\Platform\Components\TimePicker;
-use Laravolt\Platform\Components\Timeline;
-use Laravolt\Platform\Components\ToggleSwitch;
 use Laravolt\Platform\Components\Table;
+use Laravolt\Platform\Components\Timeline;
+use Laravolt\Platform\Components\TimePicker;
 use Laravolt\Platform\Components\Titlebar;
 use Laravolt\Platform\Components\Toast;
+use Laravolt\Platform\Components\ToggleSwitch;
 use Laravolt\Platform\Components\Tooltip;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltBladeDirectives;
@@ -382,7 +382,7 @@ class PlatformServiceProvider extends ServiceProvider
             'textarea' => 'laravolt::components.textarea',
             'toast' => 'laravolt::components.toast',
             'tooltip' => 'laravolt::components.tooltip',
-            
+
             // New Preline UI v3.0 Components
             'accordion' => 'laravolt::components.accordion',
             'advanced-datepicker' => 'laravolt::components.advanced-datepicker',

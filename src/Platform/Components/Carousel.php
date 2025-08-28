@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class Carousel extends Component
 {
     public $items = [];
+
     public $autoplay = false;
+
     public $interval = 3000;
+
     public $indicators = true;
+
     public $controls = true;
+
     public $fade = false;
+
     public $loop = true;
 
     public function __construct(

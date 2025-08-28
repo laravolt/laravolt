@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class Checkbox extends Component
 {
     public $label = '';
+
     public $description = '';
+
     public $checked = false;
+
     public $disabled = false;
 
     public function __construct(

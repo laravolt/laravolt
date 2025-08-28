@@ -2,14 +2,17 @@
 
 namespace Laravolt\Platform\Components;
 
-use Illuminate\View\Component;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\View\Component;
 
 class Pagination extends Component
 {
     public $paginator = null;
+
     public $links = null;
+
     public $currentPage = 1;
+
     public $totalPages = 10;
 
     public function __construct(

@@ -7,12 +7,19 @@ use Illuminate\View\Component;
 class Rating extends Component
 {
     public $value = 0;
+
     public $max = 5;
+
     public $size = 'md';
+
     public $variant = 'yellow';
+
     public $readonly = false;
+
     public $showCount = false;
+
     public $count = null;
+
     public $precision = 1;
 
     public function __construct(

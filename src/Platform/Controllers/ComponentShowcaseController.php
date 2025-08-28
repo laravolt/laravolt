@@ -15,8 +15,8 @@ class ComponentShowcaseController extends Controller
     public function component(Request $request, string $component)
     {
         $components = $this->getAvailableComponents();
-        
-        if (!isset($components[$component])) {
+
+        if (! isset($components[$component])) {
             abort(404, 'Component not found');
         }
 
@@ -36,7 +36,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Display important messages and notifications to users',
                 'variants' => ['success', 'error', 'warning', 'info', 'gray'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Dismissible', 'Icons', 'Custom styling']
+                'features' => ['Dismissible', 'Icons', 'Custom styling'],
             ],
             'button' => [
                 'name' => 'Button',
@@ -44,7 +44,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Interactive buttons with multiple variants and states',
                 'variants' => ['primary', 'secondary', 'soft', 'outline', 'ghost', 'link', 'danger', 'success'],
                 'sizes' => ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'],
-                'features' => ['Loading states', 'Icons', 'Pill shape', 'Disabled state']
+                'features' => ['Loading states', 'Icons', 'Pill shape', 'Disabled state'],
             ],
             'input' => [
                 'name' => 'Input',
@@ -52,7 +52,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Text input fields with validation states',
                 'variants' => ['default', 'error', 'success'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Icons', 'Helper text', 'Error states']
+                'features' => ['Icons', 'Helper text', 'Error states'],
             ],
             'switch' => [
                 'name' => 'Switch',
@@ -60,7 +60,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Toggle switches for boolean inputs',
                 'variants' => ['primary', 'success', 'warning', 'danger', 'gray'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Labels', 'Descriptions', 'Disabled state']
+                'features' => ['Labels', 'Descriptions', 'Disabled state'],
             ],
             'checkbox' => [
                 'name' => 'Checkbox',
@@ -68,7 +68,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Checkbox inputs for multiple selections',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Indeterminate state', 'Disabled state']
+                'features' => ['Indeterminate state', 'Disabled state'],
             ],
             'radio' => [
                 'name' => 'Radio',
@@ -76,7 +76,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Radio buttons for single selection from options',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Disabled state', 'Grouped options']
+                'features' => ['Disabled state', 'Grouped options'],
             ],
             'select' => [
                 'name' => 'Select',
@@ -84,7 +84,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Dropdown select for choosing from options',
                 'variants' => ['default', 'error', 'success'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Multiple selection', 'Search', 'Disabled state']
+                'features' => ['Multiple selection', 'Search', 'Disabled state'],
             ],
             'textarea' => [
                 'name' => 'Textarea',
@@ -92,7 +92,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Multi-line text input areas',
                 'variants' => ['default', 'error', 'success'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Auto-resize', 'Character count', 'Disabled state']
+                'features' => ['Auto-resize', 'Character count', 'Disabled state'],
             ],
             'file-input' => [
                 'name' => 'File Input',
@@ -100,7 +100,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'File upload inputs with drag and drop',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Drag & drop', 'Multiple files', 'File type validation']
+                'features' => ['Drag & drop', 'Multiple files', 'File type validation'],
             ],
             'pin-code' => [
                 'name' => 'PIN Code',
@@ -108,7 +108,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Secure PIN/OTP input fields',
                 'variants' => ['default', 'success', 'error'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Auto-focus', 'Masking', 'Paste support']
+                'features' => ['Auto-focus', 'Masking', 'Paste support'],
             ],
             'rating' => [
                 'name' => 'Rating',
@@ -116,7 +116,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Star rating input and display',
                 'variants' => ['yellow', 'orange', 'red', 'blue'],
                 'sizes' => ['xs', 'sm', 'md', 'lg', 'xl'],
-                'features' => ['Interactive', 'Half stars', 'Read-only mode']
+                'features' => ['Interactive', 'Half stars', 'Read-only mode'],
             ],
             'time-picker' => [
                 'name' => 'Time Picker',
@@ -124,7 +124,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Time selection input with picker',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['12h/24h format', 'Clearable', 'Custom format']
+                'features' => ['12h/24h format', 'Clearable', 'Custom format'],
             ],
             'advanced-datepicker' => [
                 'name' => 'Advanced Datepicker',
@@ -132,9 +132,9 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Advanced date picker with range support',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Date ranges', 'Min/max dates', 'Custom format']
+                'features' => ['Date ranges', 'Min/max dates', 'Custom format'],
             ],
-            
+
             // Layout Components
             'card' => [
                 'name' => 'Card',
@@ -142,7 +142,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Container for grouping related content',
                 'variants' => ['default', 'shadow', 'bordered'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Header', 'Footer', 'Actions']
+                'features' => ['Header', 'Footer', 'Actions'],
             ],
             'panel' => [
                 'name' => 'Panel',
@@ -150,7 +150,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Flexible content containers',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Header', 'Footer', 'Collapsible']
+                'features' => ['Header', 'Footer', 'Collapsible'],
             ],
             'modal' => [
                 'name' => 'Modal',
@@ -158,7 +158,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Overlay dialogs for focused content',
                 'variants' => ['default'],
                 'sizes' => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', 'full'],
-                'features' => ['Header', 'Footer', 'Scrollable', 'Centered']
+                'features' => ['Header', 'Footer', 'Scrollable', 'Centered'],
             ],
             'offcanvas' => [
                 'name' => 'Offcanvas',
@@ -166,7 +166,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Slide-out panels for navigation or content',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Multiple positions', 'Backdrop', 'Auto-close']
+                'features' => ['Multiple positions', 'Backdrop', 'Auto-close'],
             ],
             'sidebar' => [
                 'name' => 'Sidebar',
@@ -174,7 +174,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Navigation sidebar components',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Collapsible', 'Icons', 'Multi-level']
+                'features' => ['Collapsible', 'Icons', 'Multi-level'],
             ],
             'accordion' => [
                 'name' => 'Accordion',
@@ -182,9 +182,9 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Expandable content sections',
                 'variants' => ['default', 'light', 'shadow'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Multi-panel', 'Icons', 'Flush design']
+                'features' => ['Multi-panel', 'Icons', 'Flush design'],
             ],
-            
+
             // Navigation Components
             'breadcrumb' => [
                 'name' => 'Breadcrumb',
@@ -192,7 +192,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Hierarchical navigation trail',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Custom separators', 'Icons', 'Dropdown']
+                'features' => ['Custom separators', 'Icons', 'Dropdown'],
             ],
             'pagination' => [
                 'name' => 'Pagination',
@@ -200,7 +200,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Navigate through pages of content',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Previous/Next', 'Page numbers', 'Jump to page']
+                'features' => ['Previous/Next', 'Page numbers', 'Jump to page'],
             ],
             'tab' => [
                 'name' => 'Tabs',
@@ -208,7 +208,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Tabbed navigation interface',
                 'variants' => ['default', 'pills', 'underline'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Icons', 'Badges', 'Disabled tabs']
+                'features' => ['Icons', 'Badges', 'Disabled tabs'],
             ],
             'stepper' => [
                 'name' => 'Stepper',
@@ -216,7 +216,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Step-by-step navigation',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Linear', 'Non-linear', 'Custom icons']
+                'features' => ['Linear', 'Non-linear', 'Custom icons'],
             ],
             'steps' => [
                 'name' => 'Steps',
@@ -224,9 +224,9 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Visual progress through steps',
                 'variants' => ['default', 'success'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Clickable', 'Icons', 'Descriptions']
+                'features' => ['Clickable', 'Icons', 'Descriptions'],
             ],
-            
+
             // Data Display
             'table' => [
                 'name' => 'Table',
@@ -234,7 +234,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Structured data in rows and columns',
                 'variants' => ['default', 'striped', 'bordered'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Sortable', 'Responsive', 'Actions']
+                'features' => ['Sortable', 'Responsive', 'Actions'],
             ],
             'badge' => [
                 'name' => 'Badge',
@@ -242,7 +242,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Small status indicators and labels',
                 'variants' => ['primary', 'secondary', 'success', 'danger', 'warning', 'info'],
                 'sizes' => ['xs', 'sm', 'md', 'lg'],
-                'features' => ['Dot variant', 'Removable', 'Icons']
+                'features' => ['Dot variant', 'Removable', 'Icons'],
             ],
             'avatar' => [
                 'name' => 'Avatar',
@@ -250,7 +250,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'User profile images and initials',
                 'variants' => ['circle', 'square'],
                 'sizes' => ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
-                'features' => ['Initials fallback', 'Status indicator', 'Groups']
+                'features' => ['Initials fallback', 'Status indicator', 'Groups'],
             ],
             'timeline' => [
                 'name' => 'Timeline',
@@ -258,7 +258,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Chronological display of events',
                 'variants' => ['default', 'primary', 'success'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Icons', 'Status indicators', 'Connectors']
+                'features' => ['Icons', 'Status indicators', 'Connectors'],
             ],
             'list-group' => [
                 'name' => 'List Group',
@@ -266,9 +266,9 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Flexible component for displaying lists',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Actions', 'Badges', 'Custom content']
+                'features' => ['Actions', 'Badges', 'Custom content'],
             ],
-            
+
             // Feedback Components
             'toast' => [
                 'name' => 'Toast',
@@ -276,7 +276,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Brief notification messages',
                 'variants' => ['success', 'error', 'warning', 'info'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Auto-dismiss', 'Actions', 'Positioning']
+                'features' => ['Auto-dismiss', 'Actions', 'Positioning'],
             ],
             'notification' => [
                 'name' => 'Notification',
@@ -284,7 +284,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Rich notification with actions',
                 'variants' => ['success', 'error', 'warning', 'info'],
                 'sizes' => [],
-                'features' => ['Actions', 'Auto-hide', 'Positioning']
+                'features' => ['Actions', 'Auto-hide', 'Positioning'],
             ],
             'progress' => [
                 'name' => 'Progress',
@@ -292,7 +292,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Progress indicators and bars',
                 'variants' => ['default', 'striped', 'animated'],
                 'sizes' => ['xs', 'sm', 'md', 'lg'],
-                'features' => ['Indeterminate', 'Labels', 'Colors']
+                'features' => ['Indeterminate', 'Labels', 'Colors'],
             ],
             'skeleton' => [
                 'name' => 'Skeleton',
@@ -300,7 +300,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Loading placeholders',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Text', 'Avatar', 'Custom shapes']
+                'features' => ['Text', 'Avatar', 'Custom shapes'],
             ],
             'scroll-indicator' => [
                 'name' => 'Scroll Indicator',
@@ -308,9 +308,9 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Page scroll progress indicator',
                 'variants' => ['top', 'bottom'],
                 'sizes' => ['xs', 'sm', 'md', 'lg', 'xl'],
-                'features' => ['Colors', 'Positioning', 'Custom targets']
+                'features' => ['Colors', 'Positioning', 'Custom targets'],
             ],
-            
+
             // Utility Components
             'dropdown' => [
                 'name' => 'Dropdown',
@@ -318,7 +318,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Contextual overlays with actions',
                 'variants' => ['default'],
                 'sizes' => [],
-                'features' => ['Positioning', 'Auto-close', 'Floating UI']
+                'features' => ['Positioning', 'Auto-close', 'Floating UI'],
             ],
             'popover' => [
                 'name' => 'Popover',
@@ -326,7 +326,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Rich content overlays',
                 'variants' => ['default'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Positioning', 'Triggers', 'Rich content']
+                'features' => ['Positioning', 'Triggers', 'Rich content'],
             ],
             'tooltip' => [
                 'name' => 'Tooltip',
@@ -334,7 +334,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Helpful text on hover',
                 'variants' => ['default', 'dark', 'light'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Positioning', 'Delays', 'Rich content']
+                'features' => ['Positioning', 'Delays', 'Rich content'],
             ],
             'copy-markup' => [
                 'name' => 'Copy Markup',
@@ -342,7 +342,7 @@ class ComponentShowcaseController extends Controller
                 'description' => 'Code display with copy functionality',
                 'variants' => ['light', 'dark'],
                 'sizes' => ['sm', 'md', 'lg'],
-                'features' => ['Syntax highlighting', 'Line numbers', 'Copy button']
+                'features' => ['Syntax highlighting', 'Line numbers', 'Copy button'],
             ],
         ];
     }
@@ -356,7 +356,7 @@ class ComponentShowcaseController extends Controller
                     ['variant' => 'error', 'title' => 'Error!', 'message' => 'There was a problem processing your request.', 'dismissible' => true],
                     ['variant' => 'warning', 'title' => 'Warning!', 'message' => 'Please review your information before proceeding.', 'dismissible' => false],
                     ['variant' => 'info', 'title' => 'Information', 'message' => 'New features are now available in your dashboard.', 'dismissible' => true],
-                ]
+                ],
             ],
             'button' => [
                 'examples' => [
@@ -366,24 +366,24 @@ class ComponentShowcaseController extends Controller
                     ['variant' => 'ghost', 'label' => 'Ghost Button'],
                     ['variant' => 'danger', 'label' => 'Danger Button'],
                     ['variant' => 'success', 'label' => 'Success Button', 'loading' => false],
-                ]
+                ],
             ],
             'accordion' => [
                 'items' => [
                     [
                         'title' => 'Getting Started',
                         'content' => 'Learn how to integrate and use our components in your Laravel application. This section covers installation, configuration, and basic usage patterns.',
-                        'open' => true
+                        'open' => true,
                     ],
                     [
                         'title' => 'Advanced Features',
-                        'content' => 'Explore advanced component features including custom styling, event handling, and integration with other libraries.'
+                        'content' => 'Explore advanced component features including custom styling, event handling, and integration with other libraries.',
                     ],
                     [
                         'title' => 'Best Practices',
-                        'content' => 'Follow our recommended best practices for performance, accessibility, and maintainability when using Preline UI components.'
-                    ]
-                ]
+                        'content' => 'Follow our recommended best practices for performance, accessibility, and maintainability when using Preline UI components.',
+                    ],
+                ],
             ],
             'timeline' => [
                 'items' => [
@@ -391,44 +391,44 @@ class ComponentShowcaseController extends Controller
                         'title' => 'Project Planning',
                         'description' => 'Initial project setup and requirements gathering',
                         'timestamp' => '2024-01-15',
-                        'status' => 'completed'
+                        'status' => 'completed',
                     ],
                     [
                         'title' => 'Development Phase',
                         'description' => 'Core functionality implementation and testing',
                         'timestamp' => '2024-02-01',
-                        'status' => 'completed'
+                        'status' => 'completed',
                     ],
                     [
                         'title' => 'Testing & QA',
                         'description' => 'Comprehensive testing and quality assurance',
                         'timestamp' => '2024-02-15',
-                        'status' => 'current'
+                        'status' => 'current',
                     ],
                     [
                         'title' => 'Deployment',
                         'description' => 'Production deployment and monitoring',
                         'timestamp' => '2024-03-01',
-                        'status' => 'pending'
-                    ]
-                ]
+                        'status' => 'pending',
+                    ],
+                ],
             ],
             'steps' => [
                 'steps' => [
                     ['title' => 'Account Setup', 'description' => 'Create your account'],
                     ['title' => 'Profile Information', 'description' => 'Add your details'],
                     ['title' => 'Preferences', 'description' => 'Configure settings'],
-                    ['title' => 'Completion', 'description' => 'Review and finish']
+                    ['title' => 'Completion', 'description' => 'Review and finish'],
                 ],
-                'currentStep' => 2
+                'currentStep' => 2,
             ],
             'rating' => [
                 'examples' => [
                     ['value' => 4.5, 'readonly' => true, 'showCount' => true, 'count' => 128],
                     ['value' => 3, 'readonly' => false, 'max' => 5],
                     ['value' => 5, 'readonly' => true, 'variant' => 'yellow'],
-                ]
-            ]
+                ],
+            ],
         ];
 
         return $sampleData[$component] ?? [];

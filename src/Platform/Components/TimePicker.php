@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class TimePicker extends Component
 {
     public $label = '';
+
     public $placeholder = 'Select time';
+
     public $format = '24h';
+
     public $disabled = false;
+
     public $error = '';
+
     public $size = 'md';
+
     public $clearable = true;
 
     public function __construct(

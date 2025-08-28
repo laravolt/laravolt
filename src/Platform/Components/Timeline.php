@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Timeline extends Component
 {
     public $items = [];
+
     public $orientation = 'vertical';
+
     public $size = 'md';
+
     public $variant = 'default';
+
     public $showConnector = true;
+
     public $showIcons = true;
 
     public function __construct(

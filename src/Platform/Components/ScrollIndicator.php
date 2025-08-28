@@ -7,9 +7,13 @@ use Illuminate\View\Component;
 class ScrollIndicator extends Component
 {
     public $variant = 'top';
+
     public $size = 'md';
+
     public $color = 'blue';
+
     public $position = 'fixed';
+
     public $target = 'body';
 
     public function __construct(

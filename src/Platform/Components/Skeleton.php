@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Skeleton extends Component
 {
     public $variant = 'text';
+
     public $lines = 1;
+
     public $width = null;
+
     public $height = null;
+
     public $rounded = true;
+
     public $animate = true;
 
     public function __construct(

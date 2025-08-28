@@ -7,7 +7,9 @@ use Illuminate\View\Component;
 class Modal extends Component
 {
     public $key;
+
     public $size;
+
     public $wireModel;
 
     /**
@@ -25,7 +27,7 @@ class Modal extends Component
      */
     public function getKey(): string
     {
-        return $this->key ?: 'modal-' . uniqid();
+        return $this->key ?: 'modal-'.uniqid();
     }
 
     /**

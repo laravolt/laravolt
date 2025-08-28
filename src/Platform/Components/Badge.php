@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class Badge extends Component
 {
     public $variant = 'default';
+
     public $size = 'sm';
+
     public $dot = false;
+
     public $label = '';
 
     public function __construct(

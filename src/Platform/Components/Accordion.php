@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Accordion extends Component
 {
     public $items = [];
+
     public $allowMultiple = false;
+
     public $size = 'md';
+
     public $variant = 'default';
+
     public $bordered = true;
+
     public $flush = false;
 
     public function __construct(

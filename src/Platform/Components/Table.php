@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class Table extends Component
 {
     public $headers = [];
+
     public $rows = [];
+
     public $striped = false;
+
     public $bordered = true;
+
     public $hover = true;
+
     public $responsive = true;
+
     public $size = 'md';
 
     public function __construct(

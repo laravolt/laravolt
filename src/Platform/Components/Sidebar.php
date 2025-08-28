@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 class Sidebar extends Component
 {
     public $variant = 'default';
+
     public $collapsible = false;
 
     public function __construct(

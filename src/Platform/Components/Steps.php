@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class Steps extends Component
 {
     public $steps = [];
+
     public $currentStep = 1;
+
     public $orientation = 'horizontal';
+
     public $size = 'md';
+
     public $variant = 'default';
+
     public $showNumbers = true;
+
     public $clickable = false;
 
     public function __construct(

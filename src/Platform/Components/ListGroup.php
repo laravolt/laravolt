@@ -7,7 +7,9 @@ use Illuminate\View\Component;
 class ListGroup extends Component
 {
     public $variant = 'default';
+
     public $flush = false;
+
     public $items = [];
 
     public function __construct(

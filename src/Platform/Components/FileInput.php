@@ -7,11 +7,17 @@ use Illuminate\View\Component;
 class FileInput extends Component
 {
     public $label = '';
+
     public $helper = '';
+
     public $error = '';
+
     public $multiple = false;
+
     public $accept = '';
+
     public $maxSize = '';
+
     public $dragDrop = true;
 
     public function __construct(

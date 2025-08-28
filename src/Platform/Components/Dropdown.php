@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Dropdown extends Component
 {
     public $placement = 'bottom-left';
+
     public $trigger = 'click';
+
     public $offset = '0';
+
     public $header = '';
+
     public $menu = '';
+
     public $footer = '';
 
     public function __construct(

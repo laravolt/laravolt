@@ -19,7 +19,7 @@ $router->group(
             $router->view('form', 'laravolt::playground.form')->name('playground.form');
             $router->view('article', 'laravolt::playground.article')->name('playground.article');
         });
-        
+
         // Component Showcase Routes
         $router->group(['prefix' => 'components', 'as' => 'components.'], function (\Illuminate\Routing\Router $router) {
             $router->get('/', [\Laravolt\Platform\Controllers\ComponentShowcaseController::class, 'index'])->name('index');

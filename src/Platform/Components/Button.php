@@ -8,14 +8,23 @@ use Illuminate\View\Component;
 class Button extends Component
 {
     public $label = '';
+
     public $icon = '';
+
     public $class = '';
+
     public $url = '';
+
     public $variant = 'primary';
+
     public $size = 'md';
+
     public $iconPosition = 'left';
+
     public $loading = false;
+
     public $disabled = false;
+
     public $pill = false;
 
     /**

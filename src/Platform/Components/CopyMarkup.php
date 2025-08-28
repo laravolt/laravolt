@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class CopyMarkup extends Component
 {
     public $content = '';
+
     public $language = 'html';
+
     public $showCopyButton = true;
+
     public $showLineNumbers = false;
+
     public $theme = 'light';
+
     public $size = 'md';
 
     public function __construct(

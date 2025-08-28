@@ -7,12 +7,19 @@ use Illuminate\View\Component;
 class Alert extends Component
 {
     public $variant = 'info';
+
     public $message = '';
+
     public $title = '';
+
     public $dismissible = false;
+
     public $icon = '';
+
     public $size = 'md';
+
     public $rounded = true;
+
     public $border = true;
 
     public function __construct(

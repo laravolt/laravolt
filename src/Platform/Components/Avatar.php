@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Avatar extends Component
 {
     public $src = '';
+
     public $alt = '';
+
     public $initials = '';
+
     public $size = 'md';
+
     public $status = null;
+
     public $badge = null;
 
     public function __construct(

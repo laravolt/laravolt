@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class Popover extends Component
 {
     public $placement = 'bottom';
+
     public $trigger = 'click';
+
     public $content = '';
+
     public $title = '';
 
     public function __construct(
