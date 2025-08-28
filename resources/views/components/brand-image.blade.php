@@ -1,7 +1,9 @@
-<div data-role="x-brand-image" {{ $attributes->class('flex items-center justify-center') }}>
+<div data-role="x-brand-image" {{ $attributes->merge(['class' => 'inline-flex items-center justify-center']) }}>
     @if ($isSvg)
-        {!! $brandImage !!}
+        <div class="text-gray-900 dark:text-white">
+            {!! $brandImage !!}
+        </div>
     @else
-        <img src="{{ asset($brandImage) }}" alt="" class="h-11.5 w-auto" />
+        <img src="{{ asset($brandImage) }}" alt="" class="h-12 w-auto object-contain" />
     @endif
 </div>

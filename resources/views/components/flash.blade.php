@@ -45,21 +45,24 @@
 
             toastMarkup = `
                 <div class="max-w-xs relative bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabindex="-1">
-                    <div class="flex items-center p-4">
-                        <div class="shrink-0">
-                            <div class="inline-flex justify-center items-center size-8 rounded-full ${iconColor}">
+                    <div class="flex items-start gap-3 p-4">
+                        <div class="flex-shrink-0">
+                            <div class="inline-flex justify-center items-center w-8 h-8 rounded-full ${iconColor} bg-gray-50 dark:bg-neutral-700">
                                 ${icon}
                             </div>
-                            <button onclick="tostifyCustomClose(this)" type="button" class="absolute top-3 end-3 inline-flex shrink-0 justify-center items-center size-5 rounded-lg text-gray-800 opacity-50 hover:opacity-100 focus:outline-hidden focus:opacity-100 dark:text-white" aria-label="Close">
-                                <span class="sr-only">Close</span>
-                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                            </button>
                         </div>
-                        <div class="ms-4 me-5">
-                            <div class="text-sm ${textColor} dark:text-white">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium ${textColor} dark:text-white">
                                 ${bag.message}
                             </div>
                         </div>
+                        <button onclick="tostifyCustomClose(this)" type="button" class="flex-shrink-0 inline-flex justify-center items-center w-5 h-5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-gray-500 dark:text-neutral-400 dark:hover:text-neutral-200 dark:hover:bg-neutral-700" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"></path>
+                                <path d="m6 6 12 12"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             `;

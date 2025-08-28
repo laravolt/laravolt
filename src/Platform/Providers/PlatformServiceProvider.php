@@ -27,24 +27,44 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\Pest4InstallCommand;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Components\Alert;
+use Laravolt\Platform\Components\Avatar;
 use Laravolt\Platform\Components\Backlink;
+use Laravolt\Platform\Components\Badge;
 use Laravolt\Platform\Components\BrandImage;
 use Laravolt\Platform\Components\Breadcrumb;
 use Laravolt\Platform\Components\Button;
 use Laravolt\Platform\Components\Card;
 use Laravolt\Platform\Components\CardFooter;
 use Laravolt\Platform\Components\Cards;
+use Laravolt\Platform\Components\Checkbox;
+use Laravolt\Platform\Components\Dropdown;
+use Laravolt\Platform\Components\FileInput;
 use Laravolt\Platform\Components\Form;
 use Laravolt\Platform\Components\Icon;
 use Laravolt\Platform\Components\Item;
 use Laravolt\Platform\Components\Label;
 use Laravolt\Platform\Components\Link;
 use Laravolt\Platform\Components\LinkButton;
+use Laravolt\Platform\Components\ListGroup;
 use Laravolt\Platform\Components\MediaLibrary;
+use Laravolt\Platform\Components\Modal;
+use Laravolt\Platform\Components\Offcanvas;
+use Laravolt\Platform\Components\Pagination;
 use Laravolt\Platform\Components\Panel;
+use Laravolt\Platform\Components\Popover;
+use Laravolt\Platform\Components\Progress;
+use Laravolt\Platform\Components\Radio;
+use Laravolt\Platform\Components\Sidebar;
+use Laravolt\Platform\Components\Skeleton;
+use Laravolt\Platform\Components\Stepper;
 use Laravolt\Platform\Components\Tab;
 use Laravolt\Platform\Components\TabContent;
+use Laravolt\Platform\Components\ToggleSwitch;
+use Laravolt\Platform\Components\Table;
 use Laravolt\Platform\Components\Titlebar;
+use Laravolt\Platform\Components\Toast;
+use Laravolt\Platform\Components\Tooltip;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltBladeDirectives;
 use Laravolt\Platform\Services\Password;
@@ -303,34 +323,92 @@ class PlatformServiceProvider extends ServiceProvider
     protected function bootComponents()
     {
         $components = [
+            // Layout Components
             'base' => 'laravolt::layout.base',
             'auth' => 'laravolt::layout.auth',
             'app' => 'laravolt::layout.app',
             'public' => 'laravolt::layout.public',
+
+            // Base Components
             'inspire' => 'laravolt::components.inspire',
             'grid' => 'laravolt::components.grid',
             'row' => 'laravolt::components.row',
             'col' => 'laravolt::components.col',
             'modal' => 'laravolt::components.modal',
             'workflow-diagram-button' => 'laravolt::workflow.components.diagram-button',
+
+            // New Preline UI Components
+            'alert' => 'laravolt::components.alert',
+            'avatar' => 'laravolt::components.avatar',
+            'badge' => 'laravolt::components.badge',
+            'breadcrumb' => 'laravolt::components.breadcrumb',
+            'button' => 'laravolt::components.button',
+            'card' => 'laravolt::components.card',
+            'card-footer' => 'laravolt::components.card-footer',
+            'checkbox' => 'laravolt::components.checkbox',
+            'dropdown' => 'laravolt::components.dropdown',
+            'file-input' => 'laravolt::components.file-input',
+            'flash' => 'laravolt::components.flash',
+            'input' => 'laravolt::components.input',
+            'link' => 'laravolt::components.link',
+            'link-button' => 'laravolt::components.link-button',
+            'list-group' => 'laravolt::components.list-group',
+            'offcanvas' => 'laravolt::components.offcanvas',
+            'pagination' => 'laravolt::components.pagination',
+            'panel' => 'laravolt::components.panel',
+            'popover' => 'laravolt::components.popover',
+            'progress' => 'laravolt::components.progress',
+            'radio' => 'laravolt::components.radio',
+            'select' => 'laravolt::components.select',
+            'sidebar' => 'laravolt::components.sidebar',
+            'skeleton' => 'laravolt::components.skeleton',
+            'stepper' => 'laravolt::components.stepper',
+            'switch' => 'laravolt::components.switch',
+            'tab' => 'laravolt::components.tab',
+            'tab-content' => 'laravolt::components.tab-content',
+            'table' => 'laravolt::components.table',
+            'textarea' => 'laravolt::components.textarea',
+            'toast' => 'laravolt::components.toast',
+            'tooltip' => 'laravolt::components.tooltip',
+
+            // Class-based Components
+            Alert::class,
+            Avatar::class,
             Backlink::class,
+            Badge::class,
             BrandImage::class,
             Breadcrumb::class,
             Button::class,
             Card::class,
             CardFooter::class,
             Cards::class,
+            Checkbox::class,
+            Dropdown::class,
+            FileInput::class,
             Form::class,
             Icon::class,
             Item::class,
             Label::class,
             Link::class,
             LinkButton::class,
+            ListGroup::class,
             MediaLibrary::class,
+            Offcanvas::class,
+            Pagination::class,
             Panel::class,
+            Popover::class,
+            Progress::class,
+            Radio::class,
+            Sidebar::class,
+            Skeleton::class,
+            Stepper::class,
             Tab::class,
             TabContent::class,
+            Table::class,
+            ToggleSwitch::class,
             Titlebar::class,
+            Toast::class,
+            Tooltip::class,
         ];
 
         $this->loadViewComponentsAs('volt', $components);
