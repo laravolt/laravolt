@@ -20,7 +20,7 @@ class ActionWrapper extends Element
         }
 
         return <<<HTML
-          <div class="p-6 pt-0 flex justify-end gap-x-2">
+          <div class="p-4 pt-0 flex justify-end gap-x-2">
             <div class="w-full flex justify-end items-center gap-x-2">
               $elements
             </div>
