@@ -4,7 +4,7 @@
 
 <x-volt-app :title="$title">
     <div class="max-w-xl mx-auto">
-        <div class="my-5 flex gap-x-3">
+        <div class="mb-5 flex gap-x-3">
             <x-volt-icon :name="config('modules.:module-name:.icon')" class="shrink-0 size-10 text-gray-400 dark:text-neutral-600" />
 
             <div class="grow">
