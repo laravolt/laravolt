@@ -5,11 +5,7 @@
         </h1>
 
         <div class="flex justify-end items-center gap-x-2">
-            <x-volt-link-button
-                icon="plus"
-                :url="route('modules:::module-name:.create')"
-                :label="__('laravolt::action.add')"
-            />
+            <x-volt-link-button icon="plus" :url="route('modules:::module-name:.create')" :label="__('laravolt::action.add')" />
         </div>
     </div>
 

@@ -143,7 +143,7 @@ TEMPLATE;
     {
         $columns = $this->columns;
         $template = <<<'TEMPLATE'
-            <x-volt-data-display :label="__('%s')" :value="%s->%s" />
+                    <x-volt-data-display :label="__('%s')" :value="$%s->%s" />
         TEMPLATE;
 
         return $columns
@@ -186,7 +186,7 @@ TEMPLATE;
             $field .= '->required()';
         }
 
-        return "{!! $field !!}";
+        return "    {!! $field !!}";
     }
 
     protected function text()

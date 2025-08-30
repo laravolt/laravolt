@@ -17,7 +17,7 @@
                 </p>
             </div>
 
-            <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"/>
+            <x-volt-backlink url="{{ route('modules:::module-name:.index') }}" />
         </div>
 
         <x-volt-panel :title="$title">
