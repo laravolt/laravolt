@@ -7,4 +7,12 @@
             {{ $slot ?? null }}
         </div>
     </main>
+
+    <footer class="lg:ps-65 h-10 sm:h-16 absolute bottom-0 inset-x-0">
+        <div class="p-2 sm:p-5 flex justify-between items-center">
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-neutral-500">
+                &copy; {{ now()->year }} {{ config('app.name') }}.
+            </p>
+        </div>
+    </footer>
 </x-volt-base>
