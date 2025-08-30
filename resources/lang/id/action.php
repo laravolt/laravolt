@@ -3,6 +3,7 @@
 return [
     'add' => 'Tambah',
     'edit' => 'Edit',
+    'detail' => 'Detil',
     'delete' => 'Hapus',
     'delete_permanent' => 'Hapus Selamanya',
     'search' => 'Cari...',
