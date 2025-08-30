@@ -1,9 +1,27 @@
-<x-volt-app title="Detail :Module Name:">
-    <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"/>
+@php
+    $title = __('laravolt::action.detail') . ' :Module Name:';
+@endphp
 
-    <x-volt-panel title="Detil :Module Name:">
-        <table class="ui table definition">
+<x-volt-app :title="$title">
+    <div class="max-w-xl mx-auto">
+        <div class="mb-5 flex gap-x-3">
+            <x-volt-icon :name="config('modules.:module-name:.icon')" class="shrink-0 size-10 text-gray-400 dark:text-neutral-600" />
+
+            <div class="grow">
+                <h1 class="font-semibold text-xl text-gray-800 dark:text-neutral-200">
+                    {{ $title }}
+                </h1>
+
+                <p class="text-sm text-gray-500 dark:text-neutral-500">
+                    View the details of the selected :module-name: entry.
+                </p>
+            </div>
+
+            <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"/>
+        </div>
+
+        <x-volt-panel :title="$title">
 :DETAIL_FIELDS:
-        </table>
-    </x-volt-panel>
+        </x-volt-panel>
+    </div>
 </x-volt-app>
