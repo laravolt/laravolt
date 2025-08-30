@@ -42,6 +42,7 @@ use Laravolt\Platform\Components\Cards;
 use Laravolt\Platform\Components\Carousel;
 use Laravolt\Platform\Components\Checkbox;
 use Laravolt\Platform\Components\CopyMarkup;
+use Laravolt\Platform\Components\DataDisplay;
 use Laravolt\Platform\Components\Dropdown;
 use Laravolt\Platform\Components\FileInput;
 use Laravolt\Platform\Components\Form;
@@ -396,6 +397,9 @@ class PlatformServiceProvider extends ServiceProvider
             'time-picker' => 'laravolt::components.time-picker',
             'timeline' => 'laravolt::components.timeline',
 
+            // Custom Components
+            'data-display' => 'laravolt::components.data-display',
+
             // Class-based Components (Updated for Preline UI v3.0)
             Accordion::class,
             AdvancedDatepicker::class,
@@ -412,6 +416,7 @@ class PlatformServiceProvider extends ServiceProvider
             Carousel::class,
             Checkbox::class,
             CopyMarkup::class,
+            DataDisplay::class,
             Dropdown::class,
             FileInput::class,
             Form::class,
