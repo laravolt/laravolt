@@ -34,6 +34,7 @@
         "kalnoy/nestedset": "^6.0",
         "kirschbaum-development/eloquent-power-joins": "^4.1",
         "larastan/larastan": ">=2.9.14",
+        "laravel/octane": "^2.12",
         "laravolt/avatar": "^6.1",
         "lavary/laravel-menu": "^1.8.4",
         "livewire/livewire": "^3.5.20",
