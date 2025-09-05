@@ -1,4 +1,4 @@
-<x-volt-auth>
+<x-volt-auth :title="__('Login Page')">
     <div class="text-center">
         <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">@lang('laravolt::auth.login')</h1>
         @if (config('laravolt.platform.features.registration'))
