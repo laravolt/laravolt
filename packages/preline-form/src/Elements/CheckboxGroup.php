@@ -94,7 +94,9 @@ class CheckboxGroup extends Element
         $output = '<div class="space-y-2">';
 
         foreach ($this->options as $value => $label) {
+            $id = $this->name . '_' . $value . '_' . uniqid();
             $checkbox = new Checkbox($this->name.'[]', $value);
+            $checkbox->attributes(compact('id'));
 
             if (in_array($value, $this->checkedValues)) {
                 $checkbox->checked(true);
@@ -106,7 +108,7 @@ class CheckboxGroup extends Element
 
             $output .= '<div class="flex">';
             $output .= sprintf('<input%s>', $checkbox->renderAttributes());
-            $output .= sprintf('<label class="text-sm text-gray-500 ms-3 dark:text-gray-400">%s</label>', form_escape($label));
+            $output .= sprintf('<label class="text-sm text-gray-500 ms-3 dark:text-gray-400" for="%s">%s</label>', $id, form_escape($label));
             $output .= '</div>';
         }
 

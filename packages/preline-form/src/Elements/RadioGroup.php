@@ -89,7 +89,9 @@ class RadioGroup extends Element
         $output = '<div class="space-y-2">';
 
         foreach ($this->options as $value => $label) {
+            $id = $this->name . '_' . $value . '_' . uniqid();
             $radio = new RadioButton($this->name, $value);
+            $radio->attributes(compact('id'));
 
             if ($this->checkedValue == $value) {
                 $radio->checked(true);
@@ -101,7 +103,7 @@ class RadioGroup extends Element
 
             $output .= '<div class="flex">';
             $output .= sprintf('<input%s>', $radio->renderAttributes());
-            $output .= sprintf('<label class="text-sm text-gray-500 ms-3 dark:text-gray-400">%s</label>', form_escape($label));
+            $output .= sprintf('<label class="text-sm text-gray-500 ms-3 dark:text-gray-400" for="%s">%s</label>', $id, form_escape($label));
             $output .= '</div>';
         }
 
