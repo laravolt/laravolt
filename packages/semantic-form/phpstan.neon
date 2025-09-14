@@ -1,0 +1,40 @@
+includes:
+    - ../../vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 9
+    
+    paths:
+        - src
+        - tests
+    
+    excludePaths:
+        - vendor
+    
+    treatPhpDocTypesAsCertain: true
+    reportMaybes: true
+    reportStaticMethodSignatures: true
+    checkAlwaysTrueCheckTypeFunctionCall: true
+    checkAlwaysTrueInstanceof: true
+    checkAlwaysTrueStrictComparison: true
+    checkExplicitMixed: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkMissingIterableValueType: true
+    checkMissingVarTagTypehint: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkDynamicProperties: true
+    
+    ignoreErrors:
+        # Allow Laravel's magic methods for form components
+        - '#Call to an undefined method Illuminate\\View\\View#'
+        - '#Access to an undefined property Laravolt\\SemanticForm#'
+        
+    disallowedFunctionCalls:
+        -
+            function: 'dd()'
+            message: 'Remove debug statements from package code'
+        -
+            function: 'dump()'
+            message: 'Remove debug statements from package code'

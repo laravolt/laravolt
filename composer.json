@@ -113,6 +113,26 @@
     "scripts": {
         "post-autoload-dump": [
             "Laravolt\\Platform\\Scripts\\ComposerScripts::postAutoloadDump"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "phpstan:baseline": [
+            "vendor/bin/phpstan analyse --memory-limit=2G --generate-baseline"
+        ],
+        "phpstan:clear": [
+            "vendor/bin/phpstan clear-result-cache"
+        ],
+        "phpstan:pro": [
+            "vendor/bin/phpstan analyse --memory-limit=2G --pro"
+        ],
+        "code:analyse": [
+            "@phpstan",
+            "@pint --test"
+        ],
+        "code:fix": [
+            "@pint",
+            "@phpstan:clear"
         ]
     }
 }

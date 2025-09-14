@@ -1,0 +1,77 @@
+includes:
+    - ../vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 9
+    
+    paths:
+        - asset/src
+        - auto-crud/src
+        - database-monitor/src
+        - file-manager/src
+        - lookup/src
+        - mailkeeper/src
+        - media/src
+        - preline-form/src
+        - semantic-form/src
+        - suitable/src
+        - support/src
+        - thunderclap/src
+        - workflow/src
+    
+    excludePaths:
+        - '*/vendor'
+        - '*/node_modules'
+        - '*/tests/fixtures'
+        - semantic-form/tests
+    
+    treatPhpDocTypesAsCertain: true
+    reportMaybes: true
+    reportStaticMethodSignatures: true
+    checkAlwaysTrueCheckTypeFunctionCall: true
+    checkAlwaysTrueInstanceof: true
+    checkAlwaysTrueStrictComparison: true
+    checkExplicitMixed: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkMissingIterableValueType: true
+    checkMissingVarTagTypehint: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkDynamicProperties: true
+    
+    # Package-specific ignores
+    ignoreErrors:
+        # Allow Laravel's magic methods and dynamic properties
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder#'
+        - '#Call to an undefined method Illuminate\\Database\\Query\\Builder#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model#'
+        - '#Call to an undefined method Illuminate\\View\\View#'
+        
+        # Allow package-specific patterns
+        - '#Access to an undefined property Laravolt\\.*#'
+        - '#Call to an undefined method Laravolt\\.*#'
+        
+        # Allow configuration array access patterns
+        - '#Cannot access offset .* on mixed#'
+        - '#Offset .* does not exist on array#'
+    
+    disallowedFunctionCalls:
+        -
+            function: 'dd()'
+            message: 'Remove debug statements from package code'
+        -
+            function: 'dump()'
+            message: 'Remove debug statements from package code'
+        -
+            function: 'var_dump()'
+            message: 'Remove debug statements from package code'
+        -
+            function: 'print_r()'
+            message: 'Use proper logging in package code'
+        -
+            function: 'exit()'
+            message: 'Avoid exit() in package code - use proper exception handling'
+        -
+            function: 'die()'
+            message: 'Avoid die() in package code - use proper exception handling'

@@ -1,0 +1,21 @@
+{
+    "recommendations": [
+        "swordev.phpstan",
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "valeryanm.vscode-phpsab",
+        "junstyle.php-cs-fixer",
+        "ryannaddy.laravel-artisan",
+        "codingyu.laravel-goto-view",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "mohamedbenhida.laravel-intellisense",
+        "onecentlin.laravel-blade",
+        "onecentlin.laravel5-snippets",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml"
+    ],
+    "unwantedRecommendations": [
+        "felixfbecker.php-intellisense"
+    ]
+}
