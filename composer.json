@@ -38,6 +38,7 @@
         "spatie/eloquent-sortable": "^3.11|^4.4.2",
         "spatie/laravel-backup": "^9.2.7",
         "spatie/laravel-medialibrary": "^11.12.6",
+        "pion/laravel-chunk-upload": "^1.5",
         "spatie/laravel-web-tinker": "^1.10.1",
         "spatie/once": "^3.1.1",
         "spaze/phpstan-disallowed-calls": "^4.6"
