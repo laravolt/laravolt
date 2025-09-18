@@ -3,6 +3,7 @@
 namespace Laravolt\Media\Controllers;
 
 use Illuminate\Routing\Controller;
+use Laravolt\Media\MediaHandler\ChunkedMediaHandler;
 use Laravolt\Media\MediaHandler\FileuploaderMediaHandler;
 use Laravolt\Media\MediaHandler\RedactorMediaHandler;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -14,6 +15,9 @@ class MediaController extends Controller
         switch (request('handler')) {
             case 'fileuploader':
                 $handler = new FileuploaderMediaHandler;
+                break;
+            case 'chunked':
+                $handler = new ChunkedMediaHandler;
                 break;
             case 'redactor':
             default:

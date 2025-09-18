@@ -15,7 +15,7 @@ class ServiceProvider extends BaseServiceProvider
 {
     public function boot()
     {
-        $this->bootRoutes()->bootMacro();
+        $this->bootRoutes()->bootMacro()->bootConfig();
     }
 
     protected function bootRoutes()
@@ -30,6 +30,15 @@ class ServiceProvider extends BaseServiceProvider
         Request::macro('media', function ($key) {
             return new MediaInputBag($key);
         });
+
+        return $this;
+    }
+
+    protected function bootConfig()
+    {
+        $this->publishes([
+            __DIR__.'/../config/chunked-upload.php' => config_path('chunked-upload.php'),
+        ], 'chunked-upload-config');
 
         return $this;
     }
