@@ -31,12 +31,18 @@
 
 <a {{ $attributes->merge(['href' => $url, 'class' => $classes]) }}>
     @if($icon && $iconPosition === 'left')
-        <x-volt-icon :name="$icon" class="shrink-0 size-4" />
+        {!! svg(config('laravolt.ui.iconset') . '-' . $icon, null, [
+            'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+            'fill' => 'currentColor',
+        ])->toHtml() !!}
     @endif
 
     {{ $label ?? $slot }}
 
     @if($icon && $iconPosition === 'right')
-        <x-volt-icon :name="$icon" class="shrink-0 size-4" />
+        {!! svg(config('laravolt.ui.iconset') . '-' . $icon, null, [
+            'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+            'fill' => 'currentColor',
+        ])->toHtml() !!}
     @endif
 </a>

@@ -345,12 +345,12 @@ abstract class Element
 
     protected function renderFieldState()
     {
-        if (!$this->getError()) {
+        if (! $this->getError()) {
             return;
         }
 
         if ($this->hasError()) {
-            return <<<HTML
+            return <<<'HTML'
               <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                 <svg
                   class="shrink-0 size-4 text-red-500"
@@ -372,8 +372,7 @@ abstract class Element
             HTML;
         }
 
-
-        return <<<HTML
+        return <<<'HTML'
           <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
             <svg
               class="shrink-0 size-4 text-teal-500"

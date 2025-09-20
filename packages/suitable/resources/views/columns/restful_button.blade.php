@@ -4,7 +4,10 @@
             <a href="{{ $actions->get('show') }}" up-layer="new" up-mode="modal"
                 class="inline-flex justify-center items-center size-8 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 focus:outline-hidden focus:bg-gray-50 focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
                 title="View">
-                <x-volt-icon name="eye" size="16" />
+                {!! svg(config('laravolt.ui.iconset') . '-eye', null, [
+                    'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+                    'fill' => 'currentColor',
+                ])->toHtml() !!}
             </a>
         @endif
 
@@ -12,7 +15,10 @@
             <a href="{{ $actions->get('edit') }}" up-layer="new" up-mode="modal"
                 class="inline-flex justify-center items-center size-8 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 focus:outline-hidden focus:bg-gray-50 focus:text-gray-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
                 title="Edit">
-                <x-volt-icon name="pencil" size="16" />
+                {!! svg(config('laravolt.ui.iconset') . '-pencil', null, [
+                    'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+                    'fill' => 'currentColor',
+                ])->toHtml() !!}
             </a>
         @endif
 
@@ -20,7 +26,10 @@
             <button type="button"
                 class="inline-flex justify-center items-center size-8 text-sm font-medium rounded-lg border border-red-200 bg-white text-red-500 hover:bg-red-50 hover:text-red-700 hover:border-red-300 focus:outline-hidden focus:bg-red-50 focus:text-red-700 focus:border-red-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-red-600/50 dark:text-red-400 dark:hover:bg-red-600/10 dark:hover:text-red-300 dark:hover:border-red-600 dark:focus:bg-red-600/10 dark:focus:text-red-300 dark:focus:border-red-600"
                 title="Delete" data-modal-target="delete-modal-{{ md5($key) }}" onclick="showDeleteModal(this)">
-                <x-volt-icon name="trash" size="14" />
+                {!! svg(config('laravolt.ui.iconset') . '-trash', null, [
+                    'class' => 'shrink-0 mt-0.5 size-4',
+                    'fill' => 'currentColor',
+                ])->toHtml() !!}
             </button>
         @endif
     </div>

@@ -89,12 +89,27 @@ class CheckboxGroup extends Element
         return implode(', ', $labels);
     }
 
+    // public function attributes($attributes)
+    // {
+    //     foreach ($this->controls as $control) {
+    //         if ($control instanceof Checkbox) {
+    //             if ($attributes instanceof \Closure) {
+    //                 $attributes($control);
+    //             } else {
+    //                 $control->attributes($attributes);
+    //             }
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
     protected function renderControl()
     {
         $output = '<div class="space-y-2">';
 
         foreach ($this->options as $value => $label) {
-            $id = $this->name . '_' . $value . '_' . uniqid();
+            $id = $this->name.'_'.$value.'_'.uniqid();
             $checkbox = new Checkbox($this->name.'[]', $value);
             $checkbox->attributes(compact('id'));
 

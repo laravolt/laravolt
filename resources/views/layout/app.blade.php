@@ -1,9 +1,31 @@
-<x-volt-base :title="$title ?? ''">
+@php
+    $title = $title
+        ?? (isset($module)
+            ? $module->getLabel()
+            : config('app.name'));
+    $isShowTitleBar = isset($isShowTitleBar) ? (bool) $isShowTitleBar : true;
+@endphp
+
+<x-volt-base :title="$title">
     @include('laravolt::menu.topbar')
     @include('laravolt::menu.sidebar')
 
-    <main class="lg:ps-65 pt-15 pb-10 sm:pb-16">
+    <main id="content" class="lg:ps-65 pt-15 pb-10 sm:pb-16">
         <div class="p-2 sm:p-5 sm:py-0 md:pt-5 space-y-5">
+            @if ($isShowTitleBar)
+                <div class="flex justify-between items-center gap-x-5">
+                    <h2 class="inline-block text-lg font-semibold text-gray-800 dark:text-neutral-200">
+                        {{ $title }}
+                    </h2>
+
+                    @if (isset($headerActions))
+                        <div class="flex justify-end items-center gap-x-2">
+                            {{ $headerActions }}
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             {{ $slot ?? null }}
         </div>
     </main>

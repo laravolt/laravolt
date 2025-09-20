@@ -89,7 +89,7 @@ class RadioGroup extends Element
         $output = '<div class="space-y-2">';
 
         foreach ($this->options as $value => $label) {
-            $id = $this->name . '_' . $value . '_' . uniqid();
+            $id = $this->name.'_'.$value.'_'.uniqid();
             $radio = new RadioButton($this->name, $value);
             $radio->attributes(compact('id'));
 
