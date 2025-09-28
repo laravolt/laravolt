@@ -2,7 +2,7 @@
 
 if (! function_exists('form')) {
     /**
-     * @return \Laravolt\SemanticForm\SemanticForm
+     * @return \Laravolt\SemanticForm\SemanticForm|\Laravolt\PrelineForm\PrelineForm
      */
     function form()
     {
