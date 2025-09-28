@@ -5,7 +5,10 @@
         <button type="button"
             class="py-1.5 sm:py-2 px-2.5 inline-flex items-center gap-x-1.5 text-sm sm:text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
             data-role="suitable-filter-icon" aria-haspopup="menu" aria-expanded="false" aria-label="Filter">
-            <x-volt-icon name="filter" />
+            {!! svg(config('laravolt.ui.iconset') . '-' . 'filter', null, [
+                'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+                'fill' => 'currentColor',
+            ])->toHtml() !!}
             Filter
         </button>
         <!-- End Filter Button -->
@@ -22,7 +25,10 @@
                         <button type="button"
                             class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                             wire:click="resetFilters">
-                            <x-volt-icon name="times" />
+                            {!! svg(config('laravolt.ui.iconset') . '-' . 'times', null, [
+                                'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+                                'fill' => 'currentColor',
+                            ])->toHtml() !!}
                             Clear All
                         </button>
                     </div>

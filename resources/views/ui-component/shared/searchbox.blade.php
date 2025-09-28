@@ -2,7 +2,10 @@
     <!-- Search Input -->
     <div class="relative">
         <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
-            <x-volt-icon name="search" />
+            {!! svg(config('laravolt.ui.iconset') . '-' . 'search', null, [
+                'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
+                'fill' => 'currentColor',
+            ])->toHtml() !!}
         </div>
         <input type="text"
             class="py-1 sm:py-1.5 ps-10 pe-8 block w-full bg-gray-100 border-transparent rounded-lg sm:text-sm focus:bg-white focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:placeholder:text-neutral-400 dark:focus:bg-neutral-800 dark:focus:ring-neutral-600"
