@@ -175,31 +175,6 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootDatabase(): self
     {
-        // Define migrations to exclude
-        $excludedMigrations = [
-            '0001_01_01_000000_create_users_table.php',
-            '0001_01_01_000001_create_cache_table.php',
-            '0001_01_01_000002_create_jobs_table.php',
-        ];
-        // Get all migration files from the platform path
-        $allMigrations = glob(database_path('migrations').'/*.php');
-        // Filter out the excluded migrations
-        // and remove them from the database/migrations folder
-        // This is to prevent migration conflicts
-        // when using laravolt/laravolt package
-        foreach ($allMigrations as $migration) {
-            $filename = basename($migration);
-            if (in_array($filename, $excludedMigrations)) {
-                // remove existing migration files
-                try {
-                    \Illuminate\Support\Facades\File::delete($migration);
-                } catch (\Exception $e) {
-                    // Log the error or handle it as needed
-                    \Log::error("Failed to delete migration file: {$migration}. Error: {$e->getMessage()}");
-                }
-            }
-        }
-
         $migrationFolder = 'database/migrations';
 
         $this->publishes(

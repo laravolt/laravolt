@@ -34,7 +34,6 @@ class ServiceProvider extends MailServiceProvider
                     return $app->make('mail.manager')->mailer();
                 }
             );
-
         } else {
             parent::registerIlluminateMailer();
         }
