@@ -1,0 +1,125 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+    - ./vendor/spaze/phpstan-disallowed-calls/extension.neon
+
+parameters:
+    # Maximum analysis level for strictest type checking
+    level: 9
+    
+    paths:
+        - src
+        - packages
+        - config
+        - database/migrations
+        - routes
+        - tests
+    
+    # Exclude problematic paths
+    excludePaths:
+        - packages/*/vendor
+        - packages/*/node_modules
+        - resources/views
+        - bootstrap/cache
+        - storage
+    
+    # Strict type checking configuration
+    treatPhpDocTypesAsCertain: true
+    reportMaybes: true
+    reportStaticMethodSignatures: true
+    checkAlwaysTrueCheckTypeFunctionCall: true
+    checkAlwaysTrueInstanceof: true
+    checkAlwaysTrueStrictComparison: true
+    checkExplicitMixed: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkMissingIterableValueType: true
+    checkMissingVarTagTypehint: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkDynamicProperties: true
+    
+    # Laravel-specific configurations
+    noModelMake: true
+    noUnnecessaryCollectionCall: true
+    squashedMigrationsPath: ['database/migrations']
+    
+    # Custom rules for better code quality
+    disallowedFunctionCalls:
+        -
+            function: 'env()'
+            message: 'Use config() instead - see: https://laravel.com/docs/configuration#retrieving-configuration-values'
+        -
+            function: 'dd()'
+            message: 'Remove debug statements - use proper logging instead'
+        -
+            function: 'dump()'
+            message: 'Remove debug statements - use proper logging instead'
+        -
+            function: 'var_dump()'
+            message: 'Remove debug statements - use proper logging or testing assertions'
+        -
+            function: 'print_r()'
+            message: 'Use proper logging instead: Log::info() or logger()'
+        -
+            function: 'exit()'
+            message: 'Avoid exit() - use proper exception handling and HTTP responses'
+        -
+            function: 'die()'
+            message: 'Avoid die() - use proper exception handling and HTTP responses'
+        -
+            function: 'eval()'
+            message: 'eval() is dangerous and should never be used'
+        -
+            function: 'exec()'
+            message: 'Use Process facade or proper command execution methods'
+        -
+            function: 'shell_exec()'
+            message: 'Use Process facade or proper command execution methods'
+        -
+            function: 'system()'
+            message: 'Use Process facade or proper command execution methods'
+        -
+            function: 'passthru()'
+            message: 'Use Process facade or proper command execution methods'
+    
+    # Type coverage and unused code detection
+    reportUnmatchedIgnoredErrors: true
+    reportAnyTypeWideningInVarTag: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    
+    # Laravel-specific ignores (minimal and specific)
+    ignoreErrors:
+        # Allow Laravel's magic methods and dynamic properties for specific cases
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder#'
+        - '#Call to an undefined method Illuminate\\Database\\Query\\Builder#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model#'
+        
+        # Allow Laravel's service container dynamic resolution
+        - '#Parameter \#1 \$abstract of method Illuminate\\Contracts\\Container\\Container::make\(\) expects class-string\<T\>, string given#'
+        
+        # Allow Laravel's validation rules array structure
+        - '#Offset .* does not exist on array#'
+        
+        # Allow Laravel's config array access patterns
+        - '#Cannot access offset .* on mixed#'
+    
+    # Stub files for better Laravel integration
+    stubFiles:
+        - ./vendor/larastan/larastan/stubs/common.stub
+        - ./vendor/larastan/larastan/stubs/Model.stub
+        - ./vendor/larastan/larastan/stubs/Eloquent.stub
+    
+    # Memory and performance optimization
+    memoryLimitFile: .phpstan-memory-limit
+    
+    # Custom extensions for better analysis
+    services:
+        -
+            class: Larastan\Larastan\Methods\RelationForwardsCallsExtension
+            tags:
+                - phpstan.broker.methodsClassReflectionExtension
+        -
+            class: Larastan\Larastan\Methods\ModelForwardsCallsExtension
+            tags:
+                - phpstan.broker.methodsClassReflectionExtension
