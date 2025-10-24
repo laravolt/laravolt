@@ -7,7 +7,7 @@
             name="{{ $searchName }}"
             value="{{ request($searchName) }}"
             placeholder="{{ $this->searchPlaceholder ?? __('laravolt::action.search') }}"
-            wire:model.debounce.{{ $searchDebounce }}ms="search"
+            wire:model.live.debounce.{{ $searchDebounce }}ms="search"
         >
     </div>
 </form>
