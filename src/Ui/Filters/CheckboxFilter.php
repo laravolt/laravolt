@@ -21,7 +21,7 @@ class CheckboxFilter extends BaseFilter
             ->removeClass('clearable')
             ->attributes(function (Checkbox $control) use ($key) {
                 $value = $control->getValue();
-                $control->attribute('wire:model', "filters.$key.$value");
+                $control->attribute('wire:model.live', "filters.$key.$value");
             });
     }
 
