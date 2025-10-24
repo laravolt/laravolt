@@ -16,7 +16,7 @@ class DropdownFilter extends BaseFilter
         return $field
             ->label($this->label)
             ->removeClass('clearable')
-            ->attributes(['wire:model' => "filters.$key"]);
+            ->attributes(['wire:model.live' => "filters.$key"]);
     }
 
     public function options(): array
