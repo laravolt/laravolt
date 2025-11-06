@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laravolt\Media\Livewire;
 
 use Illuminate\Support\Facades\Storage;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -16,7 +15,6 @@ class DirectUpload extends Component
 {
     use WithFileUploads;
 
-    #[Validate('required|file|max:102400')] // 100MB max
     public $file;
 
     public $uploadedFiles = [];
@@ -36,7 +34,9 @@ class DirectUpload extends Component
 
     public function updatedFile()
     {
-        $this->validate();
+        $this->validate([
+            'file' => ['required', 'file', 'max:' . $this->maxFileSize],
+        ]);
 
         try {
             /** @var \Spatie\MediaLibrary\InteractsWithMedia $user */
@@ -79,10 +79,10 @@ class DirectUpload extends Component
     public function removeFile($id)
     {
         try {
-            /** @var \Illuminate\Database\Eloquent\Model */
-            $model = config('media-library.media_model');
+            /** @var \Illuminate\Database\Eloquent\Model $modelClass */
+            $modelClass = config('media-library.media_model');
             /** @var \Spatie\MediaLibrary\MediaCollections\Models\Media */
-            $media = $model::query()->findOrFail($id);
+            $media = app($modelClass)::query()->findOrFail($id);
             $media->delete();
 
             // Remove from uploaded files list
