@@ -61,6 +61,7 @@ class ServiceProvider extends BaseServiceProvider
 
             $this->publishes([
                 __DIR__.'/../../resources/views/media/chunked-upload-examples.blade.php' => resource_path('views/media/chunked-upload-examples.blade.php'),
+                __DIR__.'/../../resources/views/media/direct-upload-examples.blade.php' => resource_path('views/media/direct-upload-examples.blade.php'),
             ], 'laravolt-media-views');
         }
 
