@@ -5,6 +5,7 @@ namespace Laravolt\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Media\Console\CleanupStaleChunksCommand;
+use Livewire\Livewire;
 
 /**
  * Class PackageServiceProvider.
@@ -16,7 +17,7 @@ class ServiceProvider extends BaseServiceProvider
 {
     public function boot()
     {
-        $this->bootRoutes()->bootMacro()->bootCommands()->bootPublishing();
+        $this->bootRoutes()->bootMacro()->bootCommands()->bootPublishing()->bootLivewireComponents();
     }
 
     protected function bootRoutes()
@@ -51,6 +52,7 @@ class ServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/chunked-upload.php' => config_path('chunked-upload.php'),
+                __DIR__.'/../config/direct-upload.php' => config_path('direct-upload.php'),
             ], 'laravolt-media-config');
 
             $this->publishes([
@@ -61,6 +63,13 @@ class ServiceProvider extends BaseServiceProvider
                 __DIR__.'/../../resources/views/media/chunked-upload-examples.blade.php' => resource_path('views/media/chunked-upload-examples.blade.php'),
             ], 'laravolt-media-views');
         }
+
+        return $this;
+    }
+
+    protected function bootLivewireComponents()
+    {
+        Livewire::component('media::direct-upload', \Laravolt\Media\Livewire\DirectUpload::class);
 
         return $this;
     }

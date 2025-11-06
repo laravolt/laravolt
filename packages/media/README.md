@@ -1,11 +1,12 @@
 # Laravolt Media Package
 
-The Laravolt Media package provides file upload and media management capabilities with support for both traditional and chunked uploads.
+The Laravolt Media package provides file upload and media management capabilities with support for traditional, chunked, and direct cloud uploads.
 
 ## Features
 
 - **Traditional Upload**: Direct file upload using `RedactorMediaHandler` and `FileuploaderMediaHandler`
 - **Chunked Upload**: Large file upload support using `ChunkedMediaHandler` with client-side chunking
+- **Direct Cloud Upload**: 🆕 Upload files directly to cloud storage (S3, etc.) using Livewire 3.x, compatible with cloud architectures
 - **Multiple Clients**: Support for Resumable.js and FilePond
 - **Guest Support**: Anonymous file uploads using Guest model
 - **Media Library Integration**: Seamless integration with Spatie Media Library
@@ -53,6 +54,24 @@ $response = $this->post('/media/chunk', [
     'resumableFilename' => 'large-file.pdf',
 ]);
 ```
+
+### Direct Cloud Upload (NEW)
+
+The simplest way to upload files directly to cloud storage (S3, etc.):
+
+```blade
+{{-- Basic usage --}}
+<livewire:media::direct-upload />
+
+{{-- With custom configuration --}}
+<livewire:media::direct-upload 
+    disk="s3" 
+    collection="documents" 
+    :max-file-size="51200" 
+/>
+```
+
+See [DIRECT_UPLOAD_GUIDE.md](DIRECT_UPLOAD_GUIDE.md) for complete documentation.
 
 ## Frontend Implementation
 
