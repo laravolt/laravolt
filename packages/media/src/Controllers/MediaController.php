@@ -5,6 +5,7 @@ namespace Laravolt\Media\Controllers;
 use Illuminate\Routing\Controller;
 use Laravolt\Media\MediaHandler\ChunkedMediaHandler;
 use Laravolt\Media\MediaHandler\FileuploaderMediaHandler;
+use Laravolt\Media\MediaHandler\PresignedUrlMediaHandler;
 use Laravolt\Media\MediaHandler\RedactorMediaHandler;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -18,6 +19,9 @@ class MediaController extends Controller
                 break;
             case 'fileuploader':
                 $handler = new FileuploaderMediaHandler;
+                break;
+            case 'presigned':
+                $handler = new PresignedUrlMediaHandler;
                 break;
             case 'redactor':
             default:
