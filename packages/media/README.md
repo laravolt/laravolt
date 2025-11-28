@@ -1,16 +1,28 @@
 # Laravolt Media Package
 
-The Laravolt Media package provides file upload and media management capabilities with support for both traditional and chunked uploads.
+The Laravolt Media package provides file upload and media management capabilities with support for traditional, chunked, and client-side (direct-to-cloud) uploads.
 
 ## Features
 
 - **Traditional Upload**: Direct file upload using `RedactorMediaHandler` and `FileuploaderMediaHandler`
-- **Chunked Upload**: Large file upload support using `ChunkedMediaHandler` with client-side chunking
+- **Chunked Upload**: Large file upload support using `ChunkedMediaHandler` with server-side chunking
+- **Client-Side Upload**: Direct-to-cloud upload using presigned URLs (S3, R2, MinIO) - ideal for very large files
 - **Multiple Clients**: Support for Resumable.js and FilePond
 - **Guest Support**: Anonymous file uploads using Guest model
 - **Media Library Integration**: Seamless integration with Spatie Media Library
 - **Cleanup Jobs**: Automatic cleanup of stale chunk files
 - **Validation**: File size, type, and security validation
+
+## Upload Methods Comparison
+
+| Feature | Traditional | Server Chunked | Client-Side (Direct) |
+|---------|------------|----------------|---------------------|
+| File Path | Client → Server → Storage | Client → Server → Storage | Client → Cloud (direct) |
+| Server Load | High | High | Low (only generates URLs) |
+| Max File Size | Limited by PHP/server | Up to ~2GB | Up to 5TB (S3 limit) |
+| Best For | Small files (<10MB) | Medium files (10MB-500MB) | Large files (>100MB) |
+| Storage Backend | Any | Any | S3-compatible only |
+| Resumable | No | Yes | Yes |
 
 ## Installation
 
@@ -434,6 +446,69 @@ protected function upload(): JsonResponse
 # Error cases
 [ERROR] Chunk upload error: {"error":"Upload missing file exception",...}
 ```
+
+## Client-Side (Direct-to-Cloud) Upload
+
+For very large files, client-side upload provides the best performance by uploading directly from the browser to cloud storage (S3, R2, MinIO) without passing through your Laravel server.
+
+### Quick Start
+
+1. **Configure S3-compatible storage** in `config/filesystems.php`
+
+2. **Enable client-side upload** in `.env`:
+```env
+CLIENT_UPLOAD_ENABLED=true
+CLIENT_UPLOAD_DISK=s3
+```
+
+3. **Configure CORS** on your storage bucket to allow direct uploads
+
+4. **Publish assets**:
+```bash
+php artisan vendor:publish --tag=laravolt-media-assets
+```
+
+5. **Use the JavaScript client**:
+```html
+<div id="upload-zone" class="file-drop-zone">
+    <p>Drop files here or <button class="file-browse-button">Browse</button></p>
+</div>
+
+<script src="{{ asset('js/components/client-side-uploader.js') }}"></script>
+<script>
+const uploader = new ClientSideUploader(document.getElementById('upload-zone'), {
+    onProgress: (upload, progress) => console.log(`${Math.round(progress * 100)}%`),
+    onFileSuccess: (upload, response) => console.log('Uploaded:', response),
+    onFileError: (upload, error) => console.error('Failed:', error),
+});
+</script>
+```
+
+### Client-Side Upload API Endpoints
+
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| GET | `/media/client-upload/config` | Get upload configuration |
+| POST | `/media/client-upload/initiate` | Initiate upload (get presigned URL) |
+| POST | `/media/client-upload/presign-part` | Get presigned URL for multipart part |
+| POST | `/media/client-upload/presign-parts` | Get presigned URLs for multiple parts |
+| POST | `/media/client-upload/complete-simple` | Complete simple upload |
+| POST | `/media/client-upload/complete-multipart` | Complete multipart upload |
+| POST | `/media/client-upload/abort` | Abort multipart upload |
+
+### How It Works
+
+1. **Simple Upload** (files < 100MB):
+   - Client requests presigned URL from server
+   - Client uploads directly to cloud storage
+   - Client confirms completion with server
+
+2. **Multipart Upload** (files >= 100MB):
+   - Client initiates multipart upload
+   - Client uploads parts concurrently with presigned URLs
+   - Client completes multipart upload with ETags
+
+For detailed documentation, see [CLIENT_UPLOAD_GUIDE.md](CLIENT_UPLOAD_GUIDE.md).
 
 ## Contributing
 
