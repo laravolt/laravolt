@@ -635,7 +635,7 @@ class ClientSideUploader {
 
     // Utility methods
     generateId() {
-        return 'upload-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        return 'upload-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
     }
 
     getCsrfToken() {

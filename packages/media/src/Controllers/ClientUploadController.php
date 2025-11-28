@@ -294,6 +294,7 @@ class ClientUploadController extends Controller
             }, $validated['parts']);
 
             // Sort parts by part number
+            // S3/R2 API requires parts to be in ascending order by part number
             usort($parts, fn ($a, $b) => $a['PartNumber'] <=> $b['PartNumber']);
 
             // Complete the multipart upload
@@ -597,7 +598,9 @@ class ClientUploadController extends Controller
                 return null;
             }
 
-            [$json, $signature] = $parts;
+            // Extract JSON payload and signature from token
+            $json = $parts[0];
+            $signature = $parts[1];
 
             // Verify signature
             $expectedSignature = hash_hmac('sha256', $json, config('app.key'));
