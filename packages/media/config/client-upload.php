@@ -33,7 +33,7 @@ return [
     | configured as an S3-compatible disk (S3, R2, MinIO, etc.).
     |
     */
-    'disk' => env('CLIENT_UPLOAD_DISK', 's3'),
+    'disk' => env('CLIENT_UPLOAD_DISK', env('MEDIA_DISK', 's3')),
 
     /*
     |--------------------------------------------------------------------------
