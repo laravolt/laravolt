@@ -14,6 +14,12 @@ use Laravolt\Media\Console\CleanupStaleChunksCommand;
  */
 class ServiceProvider extends BaseServiceProvider
 {
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/chunked-upload.php', 'chunked-upload');
+        $this->mergeConfigFrom(__DIR__.'/../config/client-upload.php', 'client-upload');
+    }
+
     public function boot()
     {
         $this->bootRoutes()->bootMacro()->bootCommands()->bootPublishing();
@@ -51,10 +57,12 @@ class ServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/chunked-upload.php' => config_path('chunked-upload.php'),
+                __DIR__.'/../config/client-upload.php' => config_path('client-upload.php'),
             ], 'laravolt-media-config');
 
             $this->publishes([
                 __DIR__.'/../../resources/js/components/chunked-uploader.js' => public_path('js/components/chunked-uploader.js'),
+                __DIR__.'/../../resources/js/components/client-side-uploader.js' => public_path('js/components/client-side-uploader.js'),
             ], 'laravolt-media-assets');
 
             $this->publishes([
