@@ -37,6 +37,8 @@ class ClientSideUploader {
             allowedMimeTypes: null,
             allowedExtensions: null,
             maxFiles: null,
+            // CSRF token (can be passed explicitly)
+            csrfToken: null,
             ...options
         };
 
@@ -60,11 +62,20 @@ class ClientSideUploader {
 
     async fetchConfig() {
         try {
+            const csrfToken = this.getCsrfToken();
+            const headers = {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            };
+
+            // Add CSRF token if available (GET requests typically don't need it, but add for consistency)
+            if (csrfToken) {
+                headers['X-CSRF-TOKEN'] = csrfToken;
+            }
+
             const response = await fetch(this.options.configEndpoint, {
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
+                headers: headers,
+                credentials: 'same-origin' // Include cookies for session
             });
 
             if (response.ok) {
@@ -269,20 +280,32 @@ class ClientSideUploader {
     }
 
     async initiateUpload(upload) {
+        const csrfToken = this.getCsrfToken();
+        if (!csrfToken) {
+            console.warn('ClientSideUploader: CSRF token not found. Request may fail.');
+        }
+
         const response = await fetch(this.options.initiateEndpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'X-CSRF-TOKEN': this.getCsrfToken(),
+                'X-CSRF-TOKEN': csrfToken,
                 'X-Requested-With': 'XMLHttpRequest'
             },
+            credentials: 'same-origin', // Include cookies for session
             body: JSON.stringify({
                 filename: upload.fileName,
                 content_type: upload.contentType,
                 file_size: upload.fileSize
             })
         });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('ClientSideUploader: Initiate upload failed', response.status, errorText);
+            throw new Error(`Server error: ${response.status} - ${errorText}`);
+        }
 
         return await response.json();
     }
@@ -344,11 +367,18 @@ class ClientSideUploader {
                 'X-CSRF-TOKEN': this.getCsrfToken(),
                 'X-Requested-With': 'XMLHttpRequest'
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 key: upload.key,
                 upload_token: upload.uploadToken
             })
         });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('ClientSideUploader: Complete upload failed', response.status, errorText);
+            throw new Error(`Server error: ${response.status}`);
+        }
 
         const result = await response.json();
 
@@ -467,12 +497,17 @@ class ClientSideUploader {
                     'X-CSRF-TOKEN': this.getCsrfToken(),
                     'X-Requested-With': 'XMLHttpRequest'
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify({
                     key: upload.key,
                     upload_id: upload.multipartUploadId,
                     part_number: part.partNumber
                 })
             });
+
+            if (!presignResponse.ok) {
+                throw new Error(`Failed to get presigned URL: ${presignResponse.status}`);
+            }
 
             const presignData = await presignResponse.json();
 
@@ -523,6 +558,7 @@ class ClientSideUploader {
                 'X-CSRF-TOKEN': this.getCsrfToken(),
                 'X-Requested-With': 'XMLHttpRequest'
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 key: upload.key,
                 upload_id: upload.multipartUploadId,
@@ -530,6 +566,12 @@ class ClientSideUploader {
                 parts: upload.completedParts
             })
         });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('ClientSideUploader: Complete multipart failed', response.status, errorText);
+            throw new Error(`Server error: ${response.status}`);
+        }
 
         const result = await response.json();
 
@@ -549,24 +591,48 @@ class ClientSideUploader {
     }
 
     async abortUpload(upload) {
-        if (!upload.multipartUploadId) return;
-
-        try {
-            await fetch(this.options.abortEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': this.getCsrfToken(),
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify({
-                    key: upload.key,
-                    upload_id: upload.multipartUploadId
-                })
-            });
-        } catch (error) {
-            console.error('Failed to abort upload', error);
+        // For multipart uploads, abort on server
+        if (upload.multipartUploadId) {
+            try {
+                await fetch(this.options.abortEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': this.getCsrfToken(),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({
+                        key: upload.key,
+                        upload_id: upload.multipartUploadId,
+                        upload_token: upload.uploadToken // Include token to cleanup media record
+                    })
+                });
+            } catch (error) {
+                console.error('Failed to abort upload', error);
+            }
+        } else if (upload.uploadToken) {
+            // For simple uploads that were initiated but not completed, cleanup media record
+            try {
+                await fetch(this.options.abortEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': this.getCsrfToken(),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({
+                        key: upload.key || '',
+                        upload_id: '', // Empty for simple uploads
+                        upload_token: upload.uploadToken
+                    })
+                });
+            } catch (error) {
+                console.error('Failed to cleanup aborted simple upload', error);
+            }
         }
 
         upload.status = 'aborted';
@@ -639,8 +705,29 @@ class ClientSideUploader {
     }
 
     getCsrfToken() {
+        // First check if token was passed in options
+        if (this.options.csrfToken) {
+            return this.options.csrfToken;
+        }
+
+        // Check meta tag (standard Laravel approach)
         const meta = document.querySelector('meta[name="csrf-token"]');
-        return meta ? meta.getAttribute('content') : '';
+        if (meta) {
+            return meta.getAttribute('content');
+        }
+
+        // Check for Laravel's window object
+        if (typeof window !== 'undefined' && window.Laravel && window.Laravel.csrfToken) {
+            return window.Laravel.csrfToken;
+        }
+
+        // Check for jQuery's CSRF setup
+        if (typeof jQuery !== 'undefined' && jQuery.ajaxSettings && jQuery.ajaxSettings.headers) {
+            return jQuery.ajaxSettings.headers['X-CSRF-TOKEN'] || '';
+        }
+
+        console.warn('ClientSideUploader: CSRF token not found. Make sure <meta name="csrf-token"> is present in your HTML.');
+        return '';
     }
 
     formatBytes(bytes) {
