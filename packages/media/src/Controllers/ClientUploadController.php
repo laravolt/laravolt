@@ -556,10 +556,11 @@ class ClientUploadController extends Controller
             'expires_at' => now()->addMinutes(ClientUploadConfig::getUrlExpiration() + 30)->timestamp,
         ];
 
-        $json = json_encode($data);
+        $json = json_encode($data, JSON_UNESCAPED_SLASHES);
         $signature = hash_hmac('sha256', $json, config('app.key'));
 
-        return base64_encode($json.'.'.$signature);
+        // Use '|' as delimiter since '.' can appear in filenames/paths
+        return base64_encode($json.'|'.$signature);
     }
 
     /**
@@ -567,21 +568,44 @@ class ClientUploadController extends Controller
      */
     protected function verifyUploadToken(string $token, string $key): bool
     {
+        Log::debug('verifyUploadToken: Starting verification', [
+            'token_length' => strlen($token),
+            'key' => $key,
+        ]);
+
         $tokenData = $this->decodeUploadToken($token);
         if (! $tokenData) {
+            Log::debug('verifyUploadToken: Token decode failed');
             return false;
         }
 
+        Log::debug('verifyUploadToken: Token decoded successfully', [
+            'token_key' => $tokenData['key'] ?? 'NOT SET',
+            'request_key' => $key,
+            'keys_match' => ($tokenData['key'] ?? '') === $key,
+        ]);
+
         // Verify key matches
         if ($tokenData['key'] !== $key) {
+            Log::debug('verifyUploadToken: Key mismatch', [
+                'token_key' => $tokenData['key'],
+                'request_key' => $key,
+                'token_key_hex' => bin2hex($tokenData['key']),
+                'request_key_hex' => bin2hex($key),
+            ]);
             return false;
         }
 
         // Verify token hasn't expired
         if ($tokenData['expires_at'] < now()->timestamp) {
+            Log::debug('verifyUploadToken: Token expired', [
+                'expires_at' => $tokenData['expires_at'],
+                'now' => now()->timestamp,
+            ]);
             return false;
         }
 
+        Log::debug('verifyUploadToken: Verification successful');
         return true;
     }
 
@@ -591,25 +615,70 @@ class ClientUploadController extends Controller
     protected function decodeUploadToken(string $token): ?array
     {
         try {
-            $decoded = base64_decode($token);
-            $parts = explode('.', $decoded);
+            Log::debug('decodeUploadToken: Starting decode', [
+                'token_first_50' => substr($token, 0, 50),
+                'token_length' => strlen($token),
+            ]);
 
-            if (count($parts) !== 2) {
+            $decoded = base64_decode($token);
+            Log::debug('decodeUploadToken: Base64 decoded', [
+                'decoded_length' => strlen($decoded),
+                'decoded_first_100' => substr($decoded, 0, 100),
+            ]);
+
+            // Use '|' as delimiter (fallback to '.' for backward compatibility)
+            if (strpos($decoded, '|') !== false) {
+                $lastDelimiterPos = strrpos($decoded, '|');
+            } else {
+                // Backward compatibility: use last '.' for old tokens
+                $lastDelimiterPos = strrpos($decoded, '.');
+            }
+
+            if ($lastDelimiterPos === false) {
+                Log::debug('decodeUploadToken: No delimiter found');
                 return null;
             }
 
-            // Extract JSON payload and signature from token
-            $json = $parts[0];
-            $signature = $parts[1];
+            $json = substr($decoded, 0, $lastDelimiterPos);
+            $signature = substr($decoded, $lastDelimiterPos + 1);
+
+            Log::debug('decodeUploadToken: Split by delimiter', [
+                'json_length' => strlen($json),
+                'signature_length' => strlen($signature),
+            ]);
+
+            Log::debug('decodeUploadToken: Extracted parts', [
+                'json_length' => strlen($json),
+                'signature_length' => strlen($signature),
+                'json_preview' => substr($json, 0, 100),
+            ]);
 
             // Verify signature
             $expectedSignature = hash_hmac('sha256', $json, config('app.key'));
-            if (! hash_equals($expectedSignature, $signature)) {
+            $signatureMatch = hash_equals($expectedSignature, $signature);
+
+            Log::debug('decodeUploadToken: Signature verification', [
+                'expected_signature' => $expectedSignature,
+                'actual_signature' => $signature,
+                'match' => $signatureMatch,
+            ]);
+
+            if (! $signatureMatch) {
+                Log::debug('decodeUploadToken: Signature mismatch');
                 return null;
             }
 
-            return json_decode($json, true);
+            $data = json_decode($json, true);
+            Log::debug('decodeUploadToken: JSON decoded', [
+                'data' => $data,
+            ]);
+
+            return $data;
         } catch (\Exception $e) {
+            Log::debug('decodeUploadToken: Exception', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return null;
         }
     }
