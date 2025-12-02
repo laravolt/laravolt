@@ -239,7 +239,7 @@ class ClientUploadConfig
                 'initiate' => '/media/client-upload/initiate',
                 'presign' => '/media/client-upload/presign',
                 'presignPart' => '/media/client-upload/presign-part',
-                'complete' => '/media/client-upload/complete',
+                'complete' => '/media/client-upload/complete-simple',
                 'abort' => '/media/client-upload/abort',
             ],
         ];
