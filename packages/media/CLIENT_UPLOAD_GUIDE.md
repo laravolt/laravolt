@@ -127,19 +127,19 @@ This publishes `client-side-uploader.js` to `public/js/components/`.
     </div>
 
     <script src="{{ asset('js/components/client-side-uploader.js') }}"></script>
-    
+
     <script>
     const uploader = new ClientSideUploader(document.getElementById('upload-zone'), {
         onProgress: function(upload, progress) {
-            document.getElementById('progress').innerHTML = 
+            document.getElementById('progress').innerHTML =
                 `<p>Uploading ${upload.fileName}: ${Math.round(progress * 100)}%</p>`;
         },
         onFileSuccess: function(upload, response) {
-            document.getElementById('results').innerHTML += 
+            document.getElementById('results').innerHTML +=
                 `<p>✅ ${upload.fileName} uploaded successfully!</p>`;
         },
         onFileError: function(upload, error) {
-            document.getElementById('results').innerHTML += 
+            document.getElementById('results').innerHTML +=
                 `<p>❌ ${upload.fileName} failed: ${error}</p>`;
         }
     });
@@ -156,25 +156,25 @@ This publishes `client-side-uploader.js` to `public/js/components/`.
 return [
     // Enable/disable client-side upload
     'enabled' => env('CLIENT_UPLOAD_ENABLED', false),
-    
+
     // Storage disk (must be S3-compatible)
     'disk' => env('CLIENT_UPLOAD_DISK', 's3'),
-    
+
     // Upload path prefix
     'path_prefix' => env('CLIENT_UPLOAD_PATH_PREFIX', 'uploads'),
-    
+
     // Presigned URL expiration (minutes)
     'url_expiration' => env('CLIENT_UPLOAD_URL_EXPIRATION', 60),
-    
+
     // Maximum file size (bytes) - default 5GB
     'max_file_size' => env('CLIENT_UPLOAD_MAX_FILE_SIZE', 5 * 1024 * 1024 * 1024),
-    
+
     // Multipart upload threshold (bytes) - default 100MB
     'multipart_threshold' => env('CLIENT_UPLOAD_MULTIPART_THRESHOLD', 100 * 1024 * 1024),
-    
+
     // Multipart chunk size (bytes) - minimum 5MB
     'multipart_chunk_size' => env('CLIENT_UPLOAD_MULTIPART_CHUNK_SIZE', 10 * 1024 * 1024),
-    
+
     // Maximum concurrent part uploads
     'max_concurrent_uploads' => env('CLIENT_UPLOAD_MAX_CONCURRENT', 4),
 ];
@@ -189,22 +189,22 @@ const uploader = new ClientSideUploader(element, {
     // Configuration endpoints
     configEndpoint: '/media/client-upload/config',
     initiateEndpoint: '/media/client-upload/initiate',
-    
+
     // Upload limits (overridden by server config)
     maxFileSize: 5 * 1024 * 1024 * 1024,
     multipartThreshold: 100 * 1024 * 1024,
     multipartChunkSize: 10 * 1024 * 1024,
     maxConcurrentUploads: 4,
-    
+
     // Retry configuration
     retryAttempts: 3,
     retryDelay: 1000,
-    
+
     // File validation
     allowedMimeTypes: null,  // null = allow all
     allowedExtensions: null,
     maxFiles: null,
-    
+
     // Callbacks
     onFileAdded: function(upload) {},
     onUploadStart: function(upload) {},
@@ -316,12 +316,38 @@ Configure rate limiting in `config/client-upload.php`:
 
 ### CORS Errors
 
-**Symptom**: Upload fails with "No 'Access-Control-Allow-Origin' header"
+**Symptom**: Upload fails with "No 'Access-Control-Allow-Origin' header" or `PreflightMissingAllowOriginHeader`
 
-**Solution**: 
+**Solution**:
 1. Verify CORS is configured on your bucket
 2. Check that `AllowedOrigins` includes your domain
 3. Ensure `ExposeHeaders` includes `ETag`
+4. **Important**: Make sure `AllowedHeaders` is set to `["*"]` - this is required for preflight requests
+
+**Example of incomplete CORS (will fail)**:
+```json
+[
+  {
+    "AllowedOrigins": ["http://localhost:8000", "https://your-domain.com"],
+    "AllowedMethods": ["GET", "PUT", "POST"]
+  }
+]
+```
+
+**Complete CORS configuration (correct)**:
+```json
+[
+  {
+    "AllowedOrigins": ["http://localhost:8000", "https://your-domain.com"],
+    "AllowedMethods": ["GET", "PUT", "POST", "DELETE", "HEAD"],
+    "AllowedHeaders": ["*"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+The `PreflightMissingAllowOriginHeader` error typically occurs when `AllowedHeaders` is missing from your CORS policy.
 
 ### "Failed to initiate upload"
 
