@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravolt\Media\ClientUploadConfig;
 use Laravolt\Platform\Models\Guest;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ClientUploadController extends Controller
 {
@@ -30,6 +31,10 @@ class ClientUploadController extends Controller
      * Initiate a new upload session
      * For simple uploads, returns a presigned PUT URL
      * For multipart uploads, initiates the multipart upload and returns uploadId
+     *
+     * OPTIMIZED: Pre-creates a Media record to get the ID upfront,
+     * so the file is uploaded directly to the final path (media_id/filename)
+     * eliminating the need for file copy/move on completion.
      */
     public function initiate(Request $request): JsonResponse
     {
@@ -54,17 +59,28 @@ class ClientUploadController extends Controller
                 ], 422);
             }
 
+            // Pre-create Media record to get the ID for the path
+            $media = $this->preCreateMediaRecord($validated);
+            if (! $media) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to prepare upload',
+                ], 500);
+            }
+
             $disk = Storage::disk(ClientUploadConfig::getDisk());
-            $key = $this->generateKey($validated['filename']);
+
+            // Use Spatie's expected path format: {media_id}/{filename}
+            $key = $media->id.'/'.$media->file_name;
             $fileSize = (int) $validated['file_size'];
 
             // Check if we need multipart upload
             if (ClientUploadConfig::shouldUseMultipart($fileSize)) {
-                return $this->initiateMultipartUpload($disk, $key, $validated);
+                return $this->initiateMultipartUpload($disk, $key, $validated, $media);
             }
 
             // Simple upload - return presigned PUT URL
-            return $this->initiateSimpleUpload($disk, $key, $validated);
+            return $this->initiateSimpleUpload($disk, $key, $validated, $media);
         } catch (\Exception $e) {
             Log::error('Client upload initiation failed', [
                 'error' => $e->getMessage(),
@@ -79,9 +95,68 @@ class ClientUploadController extends Controller
     }
 
     /**
+     * Pre-create a Media record with pending status
+     * This allows us to know the media ID upfront and upload directly to the final path
+     */
+    protected function preCreateMediaRecord(array $validated): ?Media
+    {
+        try {
+            /** @var \Spatie\MediaLibrary\InteractsWithMedia $user */
+            $user = auth()->user() ?? Guest::first();
+
+            if (! $user) {
+                Log::warning('No user found for media pre-creation');
+                return null;
+            }
+
+            $disk = ClientUploadConfig::getDisk();
+            $filename = $validated['filename'];
+            $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+            // Generate a safe filename
+            $safeName = Str::slug(pathinfo($filename, PATHINFO_FILENAME));
+            $uniqueFilename = $safeName.'-'.substr(Str::uuid()->toString(), 0, 8).'.'.$extension;
+
+            $media = new Media();
+            $media->uuid = Str::uuid()->toString();
+            $media->model_type = get_class($user);
+            $media->model_id = $user->getKey();
+            $media->collection_name = 'default';
+            $media->name = pathinfo($filename, PATHINFO_FILENAME);
+            $media->file_name = $uniqueFilename;
+            $media->mime_type = $validated['content_type'];
+            $media->disk = $disk;
+            $media->conversions_disk = $disk;
+            $media->size = (int) $validated['file_size'];
+            $media->manipulations = [];
+            $media->custom_properties = [
+                'original_filename' => $filename,
+                'upload_type' => 'client_side',
+                'upload_status' => 'pending', // Mark as pending until confirmed
+                'initiated_at' => now()->toIso8601String(),
+            ];
+            $media->generated_conversions = [];
+            $media->responsive_images = [];
+            $media->order_column = Media::query()
+                ->where('model_type', get_class($user))
+                ->where('model_id', $user->getKey())
+                ->max('order_column') + 1;
+
+            $media->save();
+
+            return $media;
+        } catch (\Exception $e) {
+            Log::error('Failed to pre-create media record', [
+                'error' => $e->getMessage(),
+            ]);
+            return null;
+        }
+    }
+
+    /**
      * Generate a presigned URL for simple PUT upload
      */
-    protected function initiateSimpleUpload($disk, string $key, array $validated): JsonResponse
+    protected function initiateSimpleUpload($disk, string $key, array $validated, Media $media): JsonResponse
     {
         $expiration = now()->addMinutes(ClientUploadConfig::getUrlExpiration());
 
@@ -98,11 +173,12 @@ class ClientUploadController extends Controller
         $presignedRequest = $client->createPresignedRequest($command, $expiration);
         $presignedUrl = (string) $presignedRequest->getUri();
 
-        // Generate upload token for confirmation
-        $uploadToken = $this->generateUploadToken($key, $validated);
+        // Generate upload token for confirmation (includes media_id)
+        $uploadToken = $this->generateUploadToken($key, $validated, null, $media->id);
 
         Log::info('Simple upload initiated', [
             'key' => $key,
+            'media_id' => $media->id,
             'filename' => $validated['filename'],
             'file_size' => $validated['file_size'],
         ]);
@@ -113,6 +189,7 @@ class ClientUploadController extends Controller
             'upload_url' => $presignedUrl,
             'key' => $key,
             'upload_token' => $uploadToken,
+            'media_id' => $media->id, // Return media_id early for client reference
             'expires_at' => $expiration->toIso8601String(),
         ]);
     }
@@ -120,7 +197,7 @@ class ClientUploadController extends Controller
     /**
      * Initiate a multipart upload
      */
-    protected function initiateMultipartUpload($disk, string $key, array $validated): JsonResponse
+    protected function initiateMultipartUpload($disk, string $key, array $validated, Media $media): JsonResponse
     {
         $client = $disk->getClient();
         $bucket = $disk->getConfig()['bucket'];
@@ -137,11 +214,12 @@ class ClientUploadController extends Controller
         $chunkSize = ClientUploadConfig::getMultipartChunkSize();
         $totalParts = ClientUploadConfig::calculateParts($fileSize);
 
-        // Generate upload token for confirmation
-        $uploadToken = $this->generateUploadToken($key, $validated, $uploadId);
+        // Generate upload token for confirmation (includes media_id)
+        $uploadToken = $this->generateUploadToken($key, $validated, $uploadId, $media->id);
 
         Log::info('Multipart upload initiated', [
             'key' => $key,
+            'media_id' => $media->id,
             'upload_id' => $uploadId,
             'filename' => $validated['filename'],
             'file_size' => $fileSize,
@@ -154,6 +232,7 @@ class ClientUploadController extends Controller
             'key' => $key,
             'upload_id' => $uploadId,
             'upload_token' => $uploadToken,
+            'media_id' => $media->id, // Return media_id early for client reference
             'chunk_size' => $chunkSize,
             'total_parts' => $totalParts,
         ]);
@@ -430,37 +509,46 @@ class ClientUploadController extends Controller
     }
 
     /**
-     * Abort a multipart upload
+     * Abort a multipart upload or cleanup a simple upload
      */
     public function abort(Request $request): JsonResponse
     {
         try {
             $validated = $request->validate([
-                'key' => 'required|string',
-                'upload_id' => 'required|string',
+                'key' => 'nullable|string',
+                'upload_id' => 'nullable|string',
+                'upload_token' => 'nullable|string', // Optional: to clean up media record
             ]);
 
-            $disk = Storage::disk(ClientUploadConfig::getDisk());
-            $client = $disk->getClient();
-            $bucket = $disk->getConfig()['bucket'];
+            // For multipart uploads, abort on S3
+            if (! empty($validated['upload_id']) && ! empty($validated['key'])) {
+                $disk = Storage::disk(ClientUploadConfig::getDisk());
+                $client = $disk->getClient();
+                $bucket = $disk->getConfig()['bucket'];
 
-            $client->abortMultipartUpload([
-                'Bucket' => $bucket,
-                'Key' => $validated['key'],
-                'UploadId' => $validated['upload_id'],
-            ]);
+                $client->abortMultipartUpload([
+                    'Bucket' => $bucket,
+                    'Key' => $validated['key'],
+                    'UploadId' => $validated['upload_id'],
+                ]);
 
-            Log::info('Multipart upload aborted', [
-                'key' => $validated['key'],
-                'upload_id' => $validated['upload_id'],
-            ]);
+                Log::info('Multipart upload aborted', [
+                    'key' => $validated['key'],
+                    'upload_id' => $validated['upload_id'],
+                ]);
+            }
+
+            // Clean up pre-created media record if token provided
+            if (! empty($validated['upload_token'])) {
+                $this->cleanupPendingMedia($validated['upload_token']);
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Upload aborted',
             ]);
         } catch (\Exception $e) {
-            Log::error('Failed to abort multipart upload', [
+            Log::error('Failed to abort upload', [
                 'error' => $e->getMessage(),
             ]);
 
@@ -468,6 +556,31 @@ class ClientUploadController extends Controller
                 'success' => false,
                 'message' => 'Failed to abort upload',
             ], 500);
+        }
+    }
+
+    /**
+     * Clean up a pending media record (for aborted/failed uploads)
+     */
+    protected function cleanupPendingMedia(string $uploadToken): void
+    {
+        try {
+            $tokenData = $this->decodeUploadToken($uploadToken);
+            if (! $tokenData || empty($tokenData['media_id'])) {
+                return;
+            }
+
+            $media = Media::find($tokenData['media_id']);
+            if ($media) {
+                $uploadStatus = $media->custom_properties['upload_status'] ?? null;
+                // Only delete if still pending
+                if ($uploadStatus === 'pending') {
+                    $media->delete();
+                    Log::info('Cleaned up pending media record', ['media_id' => $tokenData['media_id']]);
+                }
+            }
+        } catch (\Exception $e) {
+            Log::warning('Failed to cleanup pending media', ['error' => $e->getMessage()]);
         }
     }
 
@@ -544,7 +657,7 @@ class ClientUploadController extends Controller
     /**
      * Generate an upload token containing file metadata
      */
-    protected function generateUploadToken(string $key, array $fileData, ?string $uploadId = null): string
+    protected function generateUploadToken(string $key, array $fileData, ?string $uploadId = null, ?int $mediaId = null): string
     {
         $data = [
             'key' => $key,
@@ -552,6 +665,7 @@ class ClientUploadController extends Controller
             'content_type' => $fileData['content_type'],
             'file_size' => $fileData['file_size'],
             'upload_id' => $uploadId,
+            'media_id' => $mediaId,
             'user_id' => auth()->id(),
             'expires_at' => now()->addMinutes(ClientUploadConfig::getUrlExpiration() + 30)->timestamp,
         ];
@@ -684,44 +798,54 @@ class ClientUploadController extends Controller
     }
 
     /**
-     * Save uploaded file to media library
+     * Complete the media record after upload
+     *
+     * OPTIMIZED: Since we pre-create the media record in initiate(),
+     * this method just updates the status. No file operations needed!
+     * The file is already at the correct path: {media_id}/{filename}
      */
     protected function saveToMediaLibrary(string $key, string $uploadToken)
     {
         try {
             $tokenData = $this->decodeUploadToken($uploadToken);
             if (! $tokenData) {
+                Log::error('Failed to decode upload token');
                 return null;
             }
 
-            /** @var \Spatie\MediaLibrary\InteractsWithMedia $user */
-            $user = auth()->user() ?? Guest::first();
-
-            if (! $user) {
-                Log::warning('No user found for media library save');
-
+            $mediaId = $tokenData['media_id'] ?? null;
+            if (! $mediaId) {
+                Log::error('No media_id in upload token');
                 return null;
             }
 
-            $disk = ClientUploadConfig::getDisk();
-            $url = Storage::disk($disk)->url($key);
+            // Find the pre-created media record
+            $media = Media::find($mediaId);
+            if (! $media) {
+                Log::error('Media record not found', ['media_id' => $mediaId]);
+                return null;
+            }
 
-            // Add media from URL
-            $media = $user->addMediaFromUrl($url)
-                ->usingName($tokenData['filename'])
-                ->usingFileName($tokenData['filename'])
-                ->withCustomProperties([
-                    'original_key' => $key,
-                    'upload_type' => 'client_side',
-                    'uploaded_at' => now()->toIso8601String(),
-                ])
-                ->toMediaCollection();
+            // Update the media record to mark upload as complete
+            $customProperties = $media->custom_properties ?? [];
+            $customProperties['upload_status'] = 'completed';
+            $customProperties['completed_at'] = now()->toIso8601String();
+            unset($customProperties['initiated_at']); // Clean up
+
+            $media->custom_properties = $customProperties;
+            $media->save();
+
+            Log::info('Media upload completed', [
+                'media_id' => $media->id,
+                'key' => $key,
+            ]);
 
             return $media;
         } catch (\Exception $e) {
-            Log::error('Failed to save to media library', [
+            Log::error('Failed to complete media record', [
                 'error' => $e->getMessage(),
                 'key' => $key,
+                'trace' => $e->getTraceAsString(),
             ]);
 
             return null;
