@@ -35,7 +35,7 @@
 
                     <div class="border-t border-gray-200 dark:border-neutral-700"></div>
 
-                    <form class="space-y-4" wire:submit="applyFilters">
+                    <form class="space-y-4" wire:submit.prevent="applyFilters">
                         @foreach ($this->filters() as $filter)
                             <div class="space-y-2">
                                 {!! $filter->render() !!}
