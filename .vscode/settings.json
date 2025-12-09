@@ -1,0 +1,60 @@
+{
+    "phpstan.enabled": true,
+    "phpstan.level": "9",
+    "phpstan.configFile": "./phpstan.neon",
+    "phpstan.binPath": "./vendor/bin/phpstan",
+    "phpstan.options": [
+        "--memory-limit=2G"
+    ],
+    "phpstan.showProgress": true,
+    "phpstan.timeout": 60,
+    
+    "php.validate.enable": true,
+    "php.validate.executablePath": "/usr/bin/php",
+    "php.validate.run": "onSave",
+    
+    "files.associations": {
+        "*.neon": "yaml",
+        "phpstan.neon": "yaml",
+        "phpstan.neon.dist": "yaml"
+    },
+    
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+    },
+    
+    "php.suggest.basic": false,
+    "php.completion.enabled": true,
+    
+    "problems.decorations.enabled": true,
+    "problems.showCurrentInStatus": true,
+    
+    "files.exclude": {
+        "**/vendor": true,
+        "**/node_modules": true,
+        "**/.phpstan-cache": true,
+        "**/storage/logs": true,
+        "**/storage/framework/cache": true,
+        "**/storage/framework/sessions": true,
+        "**/storage/framework/views": true
+    },
+    
+    "search.exclude": {
+        "**/vendor": true,
+        "**/node_modules": true,
+        "**/.phpstan-cache": true,
+        "**/storage/logs": true
+    },
+    
+    "phpcs.enable": true,
+    "phpcs.standard": "PSR12",
+    
+    "intelephense.diagnostics.enable": true,
+    "intelephense.completion.maxItems": 100,
+    "intelephense.format.enable": true,
+    
+    "laravel.completion.enabled": true,
+    "laravel.validation.enabled": true
+}
