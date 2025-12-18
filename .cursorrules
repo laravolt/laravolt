@@ -1,0 +1,265 @@
+# Laravolt Development Rules for AI Assistants
+
+## Project Context
+You are working on Laravolt, a Laravel-based rapid application development platform for information systems. The project uses Laravel 11/12, Livewire 3, and Semantic UI.
+
+## Code Style & Standards
+
+### PHP
+- Follow PSR-12 coding standards
+- Use strict types: `declare(strict_types=1);`
+- Use typed properties and return types
+- Prefer modern PHP 8.2+ features
+- Use Laravel Pint for formatting: `./vendor/bin/pint`
+
+### Naming Conventions
+- Controllers: `{Name}Controller.php` (e.g., `UserController.php`)
+- Requests: `{Action}.php` or `{Resource}/{Action}.php` (e.g., `Store.php`, `User/Update.php`)
+- Commands: Signature `laravolt:{action}`, Class `{Action}Command.php`
+- Routes: Use named routes with pattern `{module}::{resource}.{action}`
+- Views: Use namespace pattern `laravolt::{module}.{view}`
+
+### Database
+- Always use migrations for schema changes
+- Use Eloquent ORM, avoid raw queries
+- Implement proper indexing for performance
+- Use foreign key constraints
+- Follow Laravel migration naming: `{date}_{action}_{table}_table.php`
+
+### Forms
+- Use Semantic Form package for form building
+- Implement Form Request classes for validation
+- Use CSRF protection (enabled by default)
+- Example:
+  ```php
+  Form::post('route.name')
+      ->text('field')->label('Label')
+      ->submit('Submit')
+      ->close();
+  ```
+
+### Testing
+- Use PestPHP (v4) for all tests
+- Write feature tests for user-facing functionality
+- Write unit tests for business logic
+- Place tests in appropriate directories:
+  - Feature tests: `tests/Feature/{Module}/`
+  - Unit tests: `tests/Unit/{Module}/`
+- Run tests: `php artisan test`
+
+### Security
+- Always validate and sanitize user input
+- Use Form Requests for validation
+- Implement proper authorization (policies, gates)
+- Check permissions before sensitive operations
+- Use parameterized queries (Eloquent provides this)
+- Never expose sensitive data in responses
+
+### File Upload
+- Use traditional upload for files < 10MB
+- Use chunked upload for 10MB - 500MB files
+- Use client-side upload for files > 100MB
+- Always validate file types and sizes
+- Store uploaded files securely
+
+### Permissions & Authorization
+- Use Epicentrum for user management
+- Check permissions: `auth()->user()->hasPermission('permission.name')`
+- Check roles: `auth()->user()->hasRole('role_name')`
+- Apply middleware: `can:permission.name`
+- Sync permissions: `php artisan laravolt:sync-permissions`
+
+## Architecture Patterns
+
+### Controllers
+- Keep controllers thin
+- Delegate business logic to services or actions
+- Return views or JSON responses consistently
+- Use dependency injection
+
+### Models
+- Use Eloquent relationships
+- Implement traits for shared functionality
+- Use scopes for query reusability
+- Define accessors and mutators when needed
+
+### Services
+- Create service classes for complex business logic
+- Make services testable (dependency injection)
+- Keep single responsibility
+
+### Views
+- Use Blade templates
+- Leverage Semantic UI components
+- Keep views simple, avoid complex logic
+- Use view composers for shared data
+
+## Module Structure
+```
+packages/{module}/
+├── config/              # Module configuration
+├── database/            # Migrations, factories
+├── resources/           # Views, assets
+├── routes/              # Module routes
+├── src/                 # Source code
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   └── Requests/
+│   ├── Models/
+│   └── {Module}ServiceProvider.php
+└── tests/               # Module tests
+```
+
+## Common Tasks
+
+### Creating a New Feature
+1. Create migration if needed
+2. Create model with relationships
+3. Create form request for validation
+4. Create controller with actions
+5. Define routes
+6. Create views
+7. Add permissions if needed
+8. Write tests
+
+### Adding Permissions
+1. Define permission in config or database
+2. Sync permissions: `php artisan laravolt:sync-permissions`
+3. Assign to roles
+4. Check in controller or middleware
+5. Test authorization logic
+
+### Working with Forms
+```php
+// Controller
+public function create()
+{
+    return view('module.create');
+}
+
+// View (Blade)
+{!! Form::open()->post(route('module.store')) !!}
+    {!! Form::text('name')->label('Name')->required() !!}
+    {!! Form::email('email')->label('Email')->required() !!}
+    {!! Form::submit('Save') !!}
+{!! Form::close() !!}
+
+// Request Validation
+class Store extends FormRequest
+{
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+        ];
+    }
+}
+```
+
+### Working with Tables (Suitable)
+```php
+use Laravolt\Suitable\Columns\Text;
+use Laravolt\Suitable\Columns\Date;
+
+class UsersTable extends TableView
+{
+    protected function columns()
+    {
+        return [
+            Text::make('name', 'Name'),
+            Text::make('email', 'Email'),
+            Date::make('created_at', 'Registered'),
+        ];
+    }
+
+    protected function source()
+    {
+        return User::query();
+    }
+}
+```
+
+## Don't Do
+- Don't bypass authentication/authorization
+- Don't use raw SQL queries without parameterization
+- Don't commit sensitive data (credentials, keys)
+- Don't modify core Laravel files
+- Don't skip validation on user input
+- Don't ignore existing conventions
+- Don't create duplicate functionality that already exists in packages
+- Don't remove or modify working code unnecessarily
+
+## Development Commands
+```bash
+# Installation
+php artisan laravolt:install
+php artisan migrate:fresh
+php artisan laravolt:admin
+
+# Assets
+php artisan laravolt:assets
+php artisan laravolt:link
+
+# Testing
+php artisan test
+php artisan test --filter FeatureName
+
+# Code Style
+./vendor/bin/pint
+
+# Permissions
+php artisan laravolt:sync-permissions
+
+# Media Cleanup
+php artisan media:cleanup-chunks
+```
+
+## When Generating Code
+1. Always use existing Laravolt packages and helpers
+2. Follow the established patterns in the codebase
+3. Write self-documenting code with clear names
+4. Add PHPDoc blocks for complex methods
+5. Include proper error handling
+6. Think about edge cases
+7. Make code testable
+8. Consider security implications
+9. Optimize for readability first, performance second
+10. Keep backward compatibility in mind
+
+## Useful Helpers
+- `form()` - Access form builder
+- `auth()->user()` - Current user
+- `route('name')` - Generate route URL
+- `config('laravolt.platform.features')` - Check feature flags
+- `storage_path()`, `public_path()`, `base_path()` - Path helpers
+
+## Package-Specific Notes
+
+### Semantic Form
+- Use fluent API for form building
+- Support for model binding
+- All Semantic UI form elements available
+- Can create custom fields via macros
+
+### Media Upload
+- Three upload methods: traditional, chunked, client-side
+- Configure in `.env`: `CLIENT_UPLOAD_ENABLED`, `CLIENT_UPLOAD_DISK`
+- Supports Resumable.js and FilePond
+- Clean up chunks: `php artisan media:cleanup-chunks`
+
+### Epicentrum (User Management)
+- Built-in user management
+- Role-based access control
+- Permission management
+- Profile management
+- Password policies
+
+### Suitable (Data Tables)
+- Server-side processing
+- Export functionality
+- Custom column types
+- Livewire integration
+- Sortable and filterable
+
+Remember: Laravolt is designed for rapid development. Use existing components and packages before creating new ones. Follow the conventions to maintain consistency across the platform.

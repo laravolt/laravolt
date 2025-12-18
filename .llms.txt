@@ -1,0 +1,485 @@
+# Laravolt Platform - LLM Documentation
+
+> Platform untuk mengembangkan sistem informasi dalam 2 minggu (Platform for developing information systems in 2 weeks)
+
+## Project Overview
+
+Laravolt is a comprehensive Laravel-based platform designed for rapid application development of information systems. It provides a modular architecture with built-in components for user management, permissions, forms, media handling, workflows, and more.
+
+**Official Documentation**: https://laravolt.dev/
+
+## Version Compatibility
+
+| Laravolt | PHP       | Laravel        | Livewire |
+| -------- | --------- | -------------- | -------- |
+| 4.x      | ^7.3      | 6.x            | -        |
+| 5.x      | 8.0 - 8.3 | 8.x, 9.x, 10.x | 2.x      |
+| 6.x      | 8.2 - 8.4 | 11.x, 12.x     | 3.x      |
+
+**Current Version**: 6.x
+
+## Architecture
+
+### Core Modules
+
+1. **Platform Core** (`src/Platform/`)
+   - Main platform bootstrapping and configuration
+   - Console commands for installation and setup
+   - Middleware and service providers
+
+2. **Epicentrum** (`src/Epicentrum/`)
+   - User management system
+   - Role and permission management (ACL)
+   - User authentication and authorization
+   - Profile management
+
+3. **UI Components** (`src/Ui/`)
+   - Pre-built UI components
+   - Blade templates and layouts
+   - Asset management
+
+4. **Charts** (`src/Charts/`)
+   - Data visualization components
+
+5. **Fields** (`src/Fields/`)
+   - Custom form field types
+   - Dynamic field rendering
+
+### Package Modules
+
+Located in `packages/` directory:
+
+1. **asset** - Asset management and compilation
+2. **auto-crud** - Automatic CRUD generation
+3. **database-monitor** - Database performance monitoring
+4. **file-manager** - File upload and management
+5. **lookup** - Master data and lookup tables management
+6. **mailkeeper** - Email management and tracking
+7. **media** - Advanced media upload with chunked and client-side upload support
+8. **pint** - Code style formatting (Laravel Pint integration)
+9. **semantic-form** - Semantic UI form builder for Laravel
+10. **suitable** - Advanced data table component
+11. **support** - Utility classes and traits
+12. **thunderclap** - Notification system
+13. **workflow** - Business process workflow management
+
+## Key Features
+
+### User Management (Epicentrum)
+- User CRUD operations
+- Role-based access control (RBAC)
+- Permission management
+- Password management and reset
+- User profile management
+- Multi-level authorization
+
+### Form Building (Semantic Form)
+- Semantic UI integration
+- Form builder with fluent API
+- Multiple input types (text, select, date, etc.)
+- Model binding
+- Validation support
+- Custom field types via macros
+
+### Media Upload
+Three upload methods supported:
+1. **Traditional Upload** - Direct file upload (< 10MB)
+2. **Chunked Upload** - Large file support via server-side chunking (10MB - 500MB)
+3. **Client-Side Upload** - Direct-to-cloud upload via presigned URLs (> 100MB, up to 5TB)
+
+Supports Resumable.js and FilePond clients.
+
+### Data Tables (Suitable)
+- Server-side processing
+- Sorting and filtering
+- Export functionality
+- Custom column rendering
+- Livewire integration
+
+### Workflow System
+- Business process automation
+- State machine management
+- Custom workflow definitions
+- Transition management
+
+## Installation & Setup
+
+### Initial Installation
+```bash
+composer require laravolt/laravolt
+php artisan laravolt:install
+php artisan migrate:fresh
+```
+
+### Create Admin User
+```bash
+php artisan laravolt:admin
+```
+
+### Link Assets
+```bash
+php artisan laravolt:link
+```
+
+### Extract Assets
+```bash
+php artisan laravolt:assets
+```
+
+## Development Workflow
+
+### Testing
+The project uses PestPHP v4 for testing:
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test suites
+php artisan test tests/Feature/Acl/
+php artisan test tests/Feature/Media/
+php artisan test tests/Unit/
+
+# Run specific test file
+php artisan test tests/Feature/Media/ChunkedUploadTest.php
+```
+
+Test suites available:
+- **Acl**: Access control and permission tests
+- **Password**: Password management tests
+- **Unit**: Unit tests
+
+### Code Style
+Uses Laravel Pint for code formatting:
+
+```bash
+./vendor/bin/pint
+```
+
+Follows PSR-12 coding standards with custom rules in `.php_cs`.
+
+### Database Migrations
+```bash
+# Run migrations
+php artisan migrate
+
+# Fresh migration with seed
+php artisan migrate:fresh --seed
+
+# Rollback
+php artisan migrate:rollback
+```
+
+## Configuration
+
+Main configuration files in `config/`:
+- `platform.php` - Platform features and settings
+- `epicentrum.php` - User management configuration
+- `ui.php` - UI component settings
+- `password.php` - Password policy configuration
+- `menu/` - Menu configuration files
+
+### Feature Flags (platform.php)
+```php
+'features' => [
+    'database-monitor' => false,
+    'epicentrum' => true,
+    'mailkeeper' => false,
+    'lookup' => false,
+    'workflow' => false,
+    'registration' => true,
+    'verification' => true,
+    'captcha' => false,
+]
+```
+
+## Common Patterns
+
+### Form Building
+```php
+use Form;
+
+Form::open('route.name')
+    ->text('username')->label('Username')
+    ->email('email')->label('Email')
+    ->password('password')->label('Password')
+    ->submit('Register')
+    ->close();
+
+// Short syntax
+Form::post('search');
+Form::get('search');
+
+// Model binding
+Form::bind($user)->post('user.update');
+```
+
+### Permission Checking
+```php
+// Check permission
+if (auth()->user()->hasPermission('user.create')) {
+    // Allow action
+}
+
+// Check role
+if (auth()->user()->hasRole('admin')) {
+    // Allow action
+}
+
+// Middleware
+Route::middleware(['can:user.create'])->group(function() {
+    // Protected routes
+});
+```
+
+### Media Upload
+```php
+// Traditional upload
+$response = $this->post('/media/media', [
+    'handler' => 'fileuploader',
+    '_action' => 'upload',
+    'file' => $uploadedFile
+]);
+
+// Chunked upload
+$response = $this->post('/media/chunk', [
+    'file' => $chunkFile,
+    'resumableChunkNumber' => 1,
+    'resumableChunkSize' => 2097152,
+    'resumableTotalSize' => 10485760,
+]);
+```
+
+### Data Tables
+```php
+use Laravolt\Suitable\Columns\Text;
+
+class UserTable extends TableView
+{
+    protected function columns()
+    {
+        return [
+            Text::make('name'),
+            Text::make('email'),
+            Text::make('status'),
+        ];
+    }
+
+    protected function source()
+    {
+        return User::query();
+    }
+}
+```
+
+## Directory Structure
+
+```
+laravolt/
+├── config/              # Configuration files
+├── database/            # Migrations and seeders
+├── packages/            # Module packages
+│   ├── asset/
+│   ├── auto-crud/
+│   ├── database-monitor/
+│   ├── file-manager/
+│   ├── lookup/
+│   ├── mailkeeper/
+│   ├── media/
+│   ├── semantic-form/
+│   ├── suitable/
+│   ├── workflow/
+│   └── ...
+├── resources/           # Views, assets
+│   └── views/
+├── routes/              # Route definitions
+│   ├── web.php
+│   └── epicentrum.php
+├── src/                 # Core source code
+│   ├── Charts/
+│   ├── Contracts/
+│   ├── Epicentrum/     # User management
+│   ├── Fields/
+│   ├── Platform/       # Core platform
+│   └── Ui/             # UI components
+├── stubs/               # Code generation stubs
+└── tests/               # Test files
+```
+
+## API Endpoints
+
+### User Management (Epicentrum)
+- `GET /epicentrum/users` - List users
+- `POST /epicentrum/users` - Create user
+- `GET /epicentrum/users/{id}` - View user
+- `PUT /epicentrum/users/{id}` - Update user
+- `DELETE /epicentrum/users/{id}` - Delete user
+- `GET /epicentrum/roles` - List roles
+- `GET /epicentrum/permissions` - List permissions
+
+### Media Upload
+- `POST /media/media` - Traditional upload
+- `POST /media/chunk` - Chunked upload
+- `GET /media/chunk/status` - Check upload status
+- `GET /media/client-upload/config` - Get client upload config
+- `POST /media/client-upload/initiate` - Initiate client upload
+- `POST /media/client-upload/complete-simple` - Complete simple upload
+- `POST /media/client-upload/complete-multipart` - Complete multipart upload
+
+## Dependencies
+
+Key dependencies:
+- **Laravel**: 11.x, 12.x
+- **Livewire**: 3.x - For reactive components
+- **Spatie Media Library**: Media management
+- **Spatie Eloquent Sortable**: Sortable models
+- **Laravel Chunk Upload**: Chunked file uploads
+- **Semantic UI**: Frontend framework
+- **Blade Icons**: Icon components
+- **Laravel Enum**: Enum support
+
+## Environment Variables
+
+Common `.env` configurations:
+
+```env
+# Client Upload (Direct to Cloud)
+CLIENT_UPLOAD_ENABLED=true
+CLIENT_UPLOAD_DISK=s3
+
+# Captcha
+NOCAPTCHA_SITEKEY=
+NOCAPTCHA_SECRET=
+
+# File Upload
+UPLOAD_MAX_FILESIZE=100M
+POST_MAX_SIZE=100M
+```
+
+## Coding Conventions
+
+1. **Namespace Structure**: Follow PSR-4 autoloading
+   - Platform core: `Laravolt\Platform\`
+   - Epicentrum: `Laravolt\Epicentrum\`
+   - Packages: `Laravolt\{PackageName}\`
+
+2. **Controllers**: Use single action controllers or resourceful controllers
+   - Location: `src/{Module}/Http/Controllers/`
+   - Naming: `{Name}Controller.php`
+
+3. **Requests**: Form request validation
+   - Location: `src/{Module}/Http/Requests/`
+   - Naming: `{Action}.php` or `{Resource}/{Action}.php`
+
+4. **Models**: Eloquent models
+   - Use traits for common functionality
+   - Implement contracts/interfaces where appropriate
+
+5. **Views**: Blade templates
+   - Namespace: `laravolt::{module}.{view}`
+   - Layout: Semantic UI components
+
+6. **Routes**: 
+   - Prefix routes by module
+   - Use named routes
+   - Apply middleware consistently
+
+7. **Tests**:
+   - Use PestPHP syntax
+   - Feature tests in `tests/Feature/`
+   - Unit tests in `tests/Unit/`
+
+8. **Commands**:
+   - Signature: `laravolt:{action}`
+   - Location: `src/Platform/Commands/`
+
+## Security Considerations
+
+1. **File Upload Validation**:
+   - Always validate file types and sizes
+   - Use server-side validation
+   - Implement virus scanning for production
+
+2. **Permission Checking**:
+   - Use middleware for route protection
+   - Check permissions in controllers
+   - Use policy classes for model authorization
+
+3. **CSRF Protection**:
+   - Enabled by default for POST requests
+   - Use `@csrf` directive in forms
+
+4. **SQL Injection Prevention**:
+   - Use Eloquent ORM
+   - Use query builder with parameter binding
+   - Avoid raw queries when possible
+
+## Performance Tips
+
+1. **Media Upload**:
+   - Use chunked upload for files > 10MB
+   - Use client-side upload for files > 100MB
+   - Configure appropriate chunk sizes
+
+2. **Data Tables**:
+   - Use server-side processing for large datasets
+   - Implement proper indexing
+   - Use eager loading to avoid N+1 queries
+
+3. **Caching**:
+   - Cache configuration values
+   - Cache menu items
+   - Cache permissions and roles
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Upload Errors**:
+   - Check `php.ini` settings for `upload_max_filesize` and `post_max_size`
+   - Verify storage permissions
+   - Check disk space
+
+2. **Permission Denied**:
+   - Run `php artisan laravolt:sync-permissions`
+   - Clear cache: `php artisan cache:clear`
+   - Check role assignments
+
+3. **Asset Not Found**:
+   - Run `php artisan laravolt:assets`
+   - Run `php artisan laravolt:link`
+   - Check symbolic links
+
+4. **Migration Errors**:
+   - Ensure migrations are published
+   - Check database connection
+   - Verify foreign key constraints
+
+## License
+
+MIT License - Open source and free to use.
+
+## Contributing
+
+When contributing:
+1. Follow PSR-12 coding standards
+2. Add tests for new functionality
+3. Update documentation
+4. Ensure backward compatibility
+
+## Additional Resources
+
+- Official Documentation: https://laravolt.dev/
+- GitHub Repository: https://github.com/laravolt/laravolt
+- Semantic UI: http://semantic-ui.com/
+- Laravel Documentation: https://laravel.com/docs
+- Livewire Documentation: https://livewire.laravel.com/
+
+---
+
+**Note for AI/LLM Tools**: This documentation provides comprehensive context for code generation and assistance. When working with Laravolt:
+- Follow the established patterns and conventions
+- Use the provided APIs and helpers
+- Respect the modular architecture
+- Test changes thoroughly with PestPHP
+- Maintain backward compatibility with existing features

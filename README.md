@@ -6,6 +6,15 @@ Platform untuk mengembangkan sistem informasi dalam 2 minggu
 
 https://laravolt.dev/
 
+## AI/LLM Support 🤖
+
+Laravolt mendukung AI-assisted development untuk "vibe coding" yang lebih cepat dan produktif. Dokumentasi khusus untuk LLM/AI tools tersedia di:
+
+- **`.llms.txt`** - Dokumentasi komprehensif untuk AI assistants (GitHub Copilot, Cursor, dll)
+- **`.cursorrules`** - Aturan development untuk Cursor AI dan tools sejenis
+
+File-file ini berisi context lengkap tentang arsitektur, patterns, conventions, dan best practices Laravolt untuk membantu AI tools memberikan saran kode yang lebih akurat.
+
 ## Version Compatibility
 
 | Laravolt | PHP       | Laravel        | Livewire |
