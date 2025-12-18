@@ -1,5 +1,7 @@
 # Laravolt Development Rules for AI Assistants
 
+> Compatible with Cursor, Windsurf, and other AI coding assistants that support `.cursorrules` format
+
 ## Project Context
 You are working on Laravolt, a Laravel-based rapid application development platform for information systems. The project uses Laravel 11/12, Livewire 3, and Semantic UI.
 

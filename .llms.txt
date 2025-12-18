@@ -471,6 +471,17 @@ When contributing:
 3. Update documentation
 4. Ensure backward compatibility
 
+## Supported AI Tools
+
+This documentation is designed to work with various AI-powered coding assistants:
+
+- **GitHub Copilot** - Uses `.llms.txt` for additional context
+- **Cursor** - Reads `.cursorrules` and `.llms.txt` files
+- **Windsurf** - Compatible with `.cursorrules` format (also used by Google Project IDX)
+- **Any LLM-based coding assistant** - Can parse the structured documentation
+
+The `.llms.txt` file provides comprehensive project context, while `.cursorrules` offers development guidelines and best practices specific to Laravolt.
+
 ## Additional Resources
 
 - Official Documentation: https://laravolt.dev/
