@@ -186,10 +186,14 @@ Main configuration files in `config/`:
     'epicentrum' => true,
     'mailkeeper' => false,
     'lookup' => false,
-    'workflow' => false,
+    'kitchen_sink' => false,
+    'spa' => false,
+    'quick_switcher' => false,
     'registration' => true,
     'verification' => true,
     'captcha' => false,
+    'workflow' => false,
+    'enable_default_menu' => true,
 ]
 ```
 
