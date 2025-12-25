@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,17 +15,15 @@ return new class extends Migration
      */
     public function __construct()
     {
-        $this->table = app(config('laravolt.epicentrum.models.user'))->getTable();
+        $this->table = resolve(config('laravolt.epicentrum.models.user'))->getTable();
     }
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table($this->table, function (Blueprint $table) {
+        Schema::table($this->table, function (Blueprint $table): void {
             if (! Schema::hasColumn($this->table, 'status')) {
                 $table->string('status')->after('email')->index()->nullable();
             }
@@ -38,12 +38,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table($this->table, function (Blueprint $table) {
+        Schema::table($this->table, function (Blueprint $table): void {
             $table->dropColumn(['status', 'timezone', 'password_changed_at']);
         });
     }

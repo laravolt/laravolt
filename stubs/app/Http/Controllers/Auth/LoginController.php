@@ -1,33 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Providers\AppServiceProvider;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 
-class LoginController extends Controller
+final class LoginController extends Controller
 {
     /**
      * Display the login view.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
-    public function show()
+    public function show(): View
     {
         return view('auth.login');
     }
 
     /**
      * Handle an incoming authentication request.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(\App\Providers\AppServiceProvider::HOME);
+        return redirect()->intended(AppServiceProvider::HOME);
     }
 }

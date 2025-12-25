@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Support\Facades\Password;
 
-uses(LazilyRefreshDatabase::class);
-
-beforeEach(function () {
+beforeEach(function (): void {
     $this->email = 'fulan@example.com';
     $this->table = (new User)->getTable();
 
     $user = User::factory()->create(['email' => $this->email]);
-    $this->token = app('auth.password.broker')->createToken($user);
+    $this->token = resolve(PasswordBroker::class)->createToken($user);
 });
 
-test('it can display page', function () {
+test('it can display page', function (): void {
     $this->get(route('auth::reset.show', $this->token))
         ->assertOk()
         ->assertSeeText(__('Email'))
@@ -21,7 +22,7 @@ test('it can display page', function () {
         ->assertSeeText(__('Confirm New Password'));
 });
 
-test('it can reset password', function () {
+test('it can reset password', function (): void {
     $payload = [
         'token' => $this->token,
         'email' => $this->email,
@@ -32,7 +33,7 @@ test('it can reset password', function () {
         ->assertRedirect(route('auth::login.show'));
 });
 
-test('it can handle failed password reset', function () {
+test('it can handle failed password reset', function (): void {
     $payload = [
         'token' => $this->token,
         'email' => $this->email,
@@ -40,7 +41,7 @@ test('it can handle failed password reset', function () {
         'password_confirmation' => 'asdf1234',
     ];
 
-    \Password::shouldReceive('reset')->andReturn(\Password::RESET_THROTTLED);
+    Password::shouldReceive('reset')->andReturn(Password::RESET_THROTTLED);
 
     $this->get(route('auth::reset.show', $this->token));
     $this->post(route('auth::reset.store', $this->token), $payload)
@@ -49,6 +50,6 @@ test('it can handle failed password reset', function () {
         ->assertSessionHasInput('email');
 });
 
-test('it has errors if failed', function () {
+test('it has errors if failed', function (): void {
     $this->post(route('auth::reset.store', 'asdf1234'))->assertSessionHasErrors();
 });

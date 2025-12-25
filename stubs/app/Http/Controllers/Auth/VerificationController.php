@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Providers\AppServiceProvider;
@@ -12,7 +14,7 @@ use Illuminate\Routing\Controller;
 
 use function PHPUnit\Framework\assertInstanceOf;
 
-class VerificationController extends Controller
+final class VerificationController extends Controller
 {
     public function show(): View|RedirectResponse
     {

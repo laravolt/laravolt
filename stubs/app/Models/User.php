@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -14,7 +16,7 @@ use Laravolt\Suitable\AutoSort;
 /**
  * @use HasFactory<UserFactory>
  */
-class User extends BaseUser
+final class User extends BaseUser
 {
     use AutoFilter, AutoSearch, AutoSort;
 

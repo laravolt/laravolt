@@ -1,31 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
-class ForgotPasswordController extends Controller
+final class ForgotPasswordController extends Controller
 {
     /**
      * Display the form to request a password reset link.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
-    public function show()
+    public function show(): View
     {
         return view('auth.forgot');
     }
 
     /**
      * Send a reset link to the given user.
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate(['email' => ['required', 'email', 'exists:users']]);
 
@@ -34,19 +34,26 @@ class ForgotPasswordController extends Controller
         $user = User::whereEmail($request->email)->first();
 
         if ($user) {
-            $response = app('laravolt.password')->sendResetLink($user);
+            $response = resolve('laravolt.password')->sendResetLink($user);
         }
 
         if ($response === Password::RESET_LINK_SENT && $user) {
             $email = $user->getEmailForPasswordReset();
 
-            return redirect()
-                ->route('auth::forgot.show')
-                ->with('success', trans($response, ['email' => $email, 'emailMasked' => Str::maskEmail($email)]));
+            /** @var array<string, string> $translationParams */
+            $translationParams = ['email' => $email, 'emailMasked' => Str::maskEmail($email)];
+
+            return to_route('auth::forgot.show')
+                ->with('success', trans($response, $translationParams));
         }
 
-        return redirect()
-            ->route('auth::forgot.show')
-            ->with('error', ['email' => trans($response)]);
+        /** @var string $responseString */
+        $responseString = $response;
+
+        /** @var string $errorMessage */
+        $errorMessage = trans($responseString);
+
+        return to_route('auth::forgot.show')
+            ->with('error', ['email' => $errorMessage]);
     }
 }

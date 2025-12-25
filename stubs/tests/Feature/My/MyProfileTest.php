@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+declare(strict_types=1);
 
-uses(LazilyRefreshDatabase::class);
+use App\Models\User;
 
-test('it can visit my profile page', function () {
-    $this->actingAs(\App\Models\User::factory()->create());
+test('it can visit my profile page', function (): void {
+    $this->actingAs(User::factory()->create());
 
     $this->get(route('my::profile.edit'))
         ->assertSee('name')
@@ -14,8 +14,8 @@ test('it can visit my profile page', function () {
         ->assertStatus(200);
 });
 
-test('it can update my profile', function () {
-    $this->actingAs(\App\Models\User::factory()->create());
+test('it can update my profile', function (): void {
+    $this->actingAs(User::factory()->create());
     $payload = [
         'name' => 'fulan',
         'timezone' => 'UTC',
@@ -29,8 +29,8 @@ test('it can update my profile', function () {
     $this->assertDatabaseHas('users', $payload);
 });
 
-test('it can handle wrong current password', function () {
-    $this->actingAs(\App\Models\User::factory()->create());
+test('it can handle wrong current password', function (): void {
+    $this->actingAs(User::factory()->create());
     $payload = [
         'password_current' => 'foobar',
         'password' => 'new password',
