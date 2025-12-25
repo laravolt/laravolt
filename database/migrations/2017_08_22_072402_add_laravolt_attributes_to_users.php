@@ -2,20 +2,25 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    protected $table;
+    protected string $table;
 
     /**
      * AddStatusToUsers constructor.
      */
     public function __construct()
     {
-        $this->table = resolve(config('laravolt.epicentrum.models.user'))->getTable();
+        /** @var class-string $modelClass */
+        $modelClass = config('laravolt.epicentrum.models.user');
+        /** @var Model $model */
+        $model = resolve($modelClass);
+        $this->table = $model->getTable();
     }
 
     /**
