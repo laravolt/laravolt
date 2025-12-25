@@ -1,4 +1,4 @@
-# Ultra-high Quality Web Application
+# Ultra-high Quality Laravolt Application
 
 ## Getting Started
 
