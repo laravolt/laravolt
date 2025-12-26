@@ -1,13 +1,19 @@
+[![Quality Gate Status](https://sonarqube.test/api/project_badges/measure?project=laravolt_project&metric=alert_status)](https://sonarqube.test/dashboard?id=laravolt_project)
+[![Build Status](https://github.com/username/laravolt-project/actions/workflows/tests.yml/badge.svg)](https://github.com/username/laravolt-project/actions)
+[![Coverage](https://sonarqube.test/api/project_badges/measure?project=laravolt_project&metric=coverage)](https://sonarqube.test/dashboard?id=laravolt_project)
+
+<!-- TODO: Update placeholder for realtime project badges -->
+
 # Ultra-high Quality Laravolt Application
 
 ## Getting Started
 
 > **Requires [PHP 8.4+](https://php.net/releases/)**.
 
-Create your type-safe Laravel application using [Composer](https://getcomposer.org):
+Clone the repository using:
 
 ```bash
-composer create-project qisthidev/laravolt-starter-kit --prefer-dist example-app
+git clone https://github.com/qisthidev/laravolt-starter-kit laravolt-project
 ```
 
 ### Initial Setup
@@ -15,7 +21,7 @@ composer create-project qisthidev/laravolt-starter-kit --prefer-dist example-app
 Navigate to your project and complete the setup:
 
 ```bash
-cd example-app
+cd laravolt-project
 
 # Setup project
 composer setup
