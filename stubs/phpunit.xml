@@ -28,8 +28,8 @@
     </source>
     <coverage>
         <report>
-            <html outputDirectory="build/coverage" />
-            <clover outputFile="pestphp-coverage-result.xml" />
+            <html outputDirectory="coverage/html" />
+            <clover outputFile="coverage/clover.xml"/>
         </report>
     </coverage>
     <logging>
