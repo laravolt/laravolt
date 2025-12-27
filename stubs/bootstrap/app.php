@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Session\TokenMismatchException;
+use Laravolt\Middleware\CheckPassword;
+use Laravolt\Middleware\DetectFlashMessage;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,44 +20,45 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware): void {
         $middleware->appendToGroup('web', [
-            \Laravolt\Middleware\DetectFlashMessage::class,
-            \Laravolt\Middleware\CheckPassword::class,
+            DetectFlashMessage::class,
+            CheckPassword::class,
         ]);
 
         $middleware->alias([
-            'auth' => \App\Http\Middleware\Authenticate::class,
-            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+            'auth' => Authenticate::class,
+            'guest' => RedirectIfAuthenticated::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions) {
+    ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->dontReportDuplicates();
 
-        $exceptions->reportable(function (\Throwable $e) {
+        $exceptions->reportable(function (Throwable $e): void {
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e);
+                /** @var object $sentry */
+                $sentry = resolve('sentry');
+                /** @phpstan-ignore method.notFound */
+                $sentry->captureException($e);
             }
         });
 
-        $exceptions->render(function (\Illuminate\Session\TokenMismatchException $e) {
-            return back()->with(
-                'error',
-                __('Kami mendeteksi tidak ada aktivitas cukup lama, silakan kirim ulang form.')
-            );
-        });
+        $exceptions->render(fn (TokenMismatchException $e) => back()->with(
+            'error',
+            __('Kami mendeteksi tidak ada aktivitas cukup lama, silakan kirim ulang form.')
+        ));
 
-        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, Request $request) {
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->expectsJson()) {
                 return response()->json(['message' => $e->getMessage()], 401);
             }
 
             return redirect()
                 ->guest($e->redirectTo($request) ?? route('auth::login.show'))
-                ->with('warning', __('Silakan login terlebih dahulu') ?? '');
+                ->with('warning', __('Silakan login terlebih dahulu'));
         });
 
-        $exceptions->render(function (\Illuminate\Auth\Access\AuthorizationException $e, Request $request) {
+        $exceptions->render(function (AuthorizationException $e, Request $request) {
             if ($request->wantsJson()) {
                 return response()->json(['message' => $e->getMessage()], 403);
             }
@@ -57,8 +67,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return abort(403);
             }
 
-            return redirect()
-                ->back(302, [], route('home'))
+            return back(302, [], route('home'))
                 ->withInput()
                 ->with('error', $e->getMessage());
         });

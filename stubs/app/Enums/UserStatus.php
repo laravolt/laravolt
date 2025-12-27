@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
@@ -9,9 +11,9 @@ use BenSampo\Enum\Enum;
  */
 final class UserStatus extends Enum
 {
-    const PENDING = 'PENDING';
+    public const string PENDING = 'PENDING';
 
-    const ACTIVE = 'ACTIVE';
+    public const string ACTIVE = 'ACTIVE';
 
-    const BLOCKED = 'BLOCKED';
+    public const string BLOCKED = 'BLOCKED';
 }

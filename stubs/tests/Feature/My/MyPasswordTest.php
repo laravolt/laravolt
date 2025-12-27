@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
-uses(LazilyRefreshDatabase::class);
-
-test('it can visit my password page', function () {
+test('it can visit my password page', function (): void {
     /** @var User|Authenticatable */
     $user = User::factory()->create();
     $this->actingAs($user);
@@ -19,7 +18,7 @@ test('it can visit my password page', function () {
         ->assertStatus(200);
 });
 
-test('it can update my password', function () {
+test('it can update my password', function (): void {
     /** @var User|Authenticatable */
     $user = User::factory()->create();
     $this->actingAs($user);
@@ -34,11 +33,11 @@ test('it can update my password', function () {
         ->assertRedirect(route('my::password.edit'))
         ->assertSessionHas('success');
 
-    $user = User::first();
+    $user = User::query()->first();
     expect(Hash::check('new password', $user->password))->toBeTrue();
 });
 
-test('it can handle wrong current password', function () {
+test('it can handle wrong current password', function (): void {
     /** @var User|Authenticatable */
     $user = User::factory()->create();
     $this->actingAs($user);

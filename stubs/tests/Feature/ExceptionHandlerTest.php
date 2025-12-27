@@ -1,13 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
-uses(LazilyRefreshDatabase::class);
-
-test('it can handle authorization exception', function () {
-    Route::get('admin/page', static fn () => 'hello')->middleware('can:access-admin');
-    Route::get('livewire/foo', static fn () => 'hello')->middleware('can:access-admin');
+test('it can handle authorization exception', function (): void {
+    Route::get('admin/page', static fn (): string => 'hello')->middleware('can:access-admin');
+    Route::get('livewire/foo', static fn (): string => 'hello')->middleware('can:access-admin');
 
     // web visit
     $this->get('admin/page')->assertStatus(403);

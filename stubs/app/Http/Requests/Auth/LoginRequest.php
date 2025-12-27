@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
@@ -9,11 +11,11 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+final class LoginRequest extends FormRequest
 {
-    protected int $maxAttempts = 5;
+    private int $maxAttempts = 5;
 
-    protected int $decaySeconds = 60;
+    private int $decaySeconds = 60;
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,19 +25,17 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
         ];
     }
 
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function authenticate()
+    public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
@@ -55,11 +55,9 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function ensureIsNotRateLimited()
+    public function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), $this->maxAttempts)) {
             return;

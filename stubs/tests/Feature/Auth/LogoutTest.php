@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+declare(strict_types=1);
 
-uses(LazilyRefreshDatabase::class);
+use App\Models\User;
 
-test('it can logout', function () {
-    $this->actingAs(\App\Models\User::factory()->create());
+test('it can logout', function (): void {
+    $this->actingAs(User::factory()->create());
 
     $this->post(route('auth::logout'))
         ->assertRedirect('/');

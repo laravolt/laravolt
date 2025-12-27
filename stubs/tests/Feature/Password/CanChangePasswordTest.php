@@ -1,19 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 
-uses(LazilyRefreshDatabase::class);
-
-test('password changed at filled', function () {
+test('password changed at filled', function (): void {
     $user = User::factory()->create();
 
     expect($user->password_changed_at)->not->toBeNull();
 });
 
-test('can change password', function () {
+test('can change password', function (): void {
     $user = User::factory()->create();
 
     $user->setPassword('secret2', true);
@@ -25,7 +24,7 @@ test('can change password', function () {
     expect(Hash::check('secret2', $user->password))->toBeTrue();
 });
 
-test('password must be changed', function () {
+test('password must be changed', function (): void {
     $user = User::factory()->create();
 
     $user->setPassword('secret2', true);
@@ -41,11 +40,11 @@ test('password must be changed', function () {
     expect($user->passwordMustBeChanged(null))->toBeTrue();
 });
 
-test('password must be changed duration', function () {
+test('password must be changed duration', function (): void {
     $user = User::factory()->create();
 
     // Lets assume user changed their password 2 days ago,
-    $user->password_changed_at = Carbon::now()->subDays(2);
+    $user->password_changed_at = Date::now()->subDays(2);
 
     // So, when we have password duration = 2 days, user must change their password
     // because it is already equal with the limit

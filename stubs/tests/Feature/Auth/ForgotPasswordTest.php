@@ -1,19 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravolt\Platform\Services\Password;
 use Mockery\MockInterface;
 
-uses(LazilyRefreshDatabase::class);
-
-test('it can get forgot password page', function () {
+test('it can get forgot password page', function (): void {
     $this->get(route('auth::forgot.store'))
         ->assertSee('email')
         ->assertStatus(200);
 });
 
-test('it can handle correct email', function () {
+test('it can handle correct email', function (): void {
     $payload = [
         'email' => 'admin@laravolt.dev',
     ];
@@ -25,7 +24,7 @@ test('it can handle correct email', function () {
         ->assertSessionHas('success');
 });
 
-test('it can handle wrong email', function () {
+test('it can handle wrong email', function (): void {
     $payload = [
         'email' => 'zombie@laravolt.dev',
     ];
@@ -38,17 +37,17 @@ test('it can handle wrong email', function () {
         ->assertSessionHasErrors('email');
 });
 
-test('it has errors if failed', function () {
+test('it has errors if failed', function (): void {
     $this->post(route('auth::forgot.store'))->assertSessionHasErrors();
 });
 
-test('it can handle send email failure', function () {
+test('it can handle send email failure', function (): void {
     $payload = [
         'email' => 'admin@laravolt.dev',
     ];
 
-    $this->instance('laravolt.password', \Mockery::mock(Password::class, function (MockInterface $mock) {
-        $mock->shouldReceive('sendResetLink')->once()->andReturn(\Password::RESET_THROTTLED);
+    $this->instance('laravolt.password', Mockery::mock(Password::class, function (MockInterface $mock): void {
+        $mock->shouldReceive('sendResetLink')->once()->andReturn(Illuminate\Support\Facades\Password::RESET_THROTTLED);
     }));
 
     User::factory()->create($payload);
@@ -58,11 +57,11 @@ test('it can handle send email failure', function () {
         ->assertSessionHas('error');
 });
 
-test('it has register link', function () {
+test('it has register link', function (): void {
     $this->get(route('auth::forgot.show'))->assertSeeText(trans('laravolt::auth.register_here'));
 });
 
-test('it does not have register link if registration disabled', function () {
+test('it does not have register link if registration disabled', function (): void {
     $this->app['config']->set('laravolt.platform.features.registration', false);
     $this->get(route('auth::forgot.show'))->assertDontSeeText(trans('laravolt::auth.register_here'));
 });
