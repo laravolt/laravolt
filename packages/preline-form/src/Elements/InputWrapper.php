@@ -10,7 +10,7 @@ class InputWrapper extends Text
 
     public function prependIcon($icon)
     {
-        $this->prependElement = sprintf('<div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4"><i class="%s text-gray-400"></i></div>', $icon);
+        $this->prependElement = sprintf('<div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4"><i class="%s text-gray-400 dark:text-neutral-500"></i></div>', $icon);
         $this->addClass('ps-11');
 
         return $this;
@@ -18,7 +18,7 @@ class InputWrapper extends Text
 
     public function appendIcon($icon)
     {
-        $this->appendElement = sprintf('<div class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4"><i class="%s text-gray-400"></i></div>', $icon);
+        $this->appendElement = sprintf('<div class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4"><i class="%s text-gray-400 dark:text-neutral-500"></i></div>', $icon);
         $this->addClass('pe-11');
 
         return $this;
