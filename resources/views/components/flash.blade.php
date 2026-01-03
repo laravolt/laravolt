@@ -21,9 +21,9 @@
 
             // Create icon based on type
             let icon = '';
-            let bgColor = 'bg-white';
-            let textColor = 'text-gray-800';
-            let iconColor = 'text-gray-500';
+            let bgColor = 'bg-white dark:bg-neutral-800';
+            let textColor = 'text-gray-800 dark:text-white';
+            let iconColor = 'text-gray-500 dark:text-neutral-400';
 
             if (isError) {
                 icon =

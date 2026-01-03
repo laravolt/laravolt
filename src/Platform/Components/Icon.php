@@ -29,7 +29,7 @@ class Icon extends Component
         return function (array $data) {
             $iconset = config('laravolt.ui.iconset');
 
-            return svg("$iconset-{$this->name}", null, $data['attributes']->merge(['class' => 'x-icon'])->getAttributes())
+            return svg("$iconset-{$this->name}", null, $data['attributes']->merge(['class' => 'x-icon dark:fill-white'])->getAttributes())
                 ->width($this->size.'px')
                 ->toHtml();
         };

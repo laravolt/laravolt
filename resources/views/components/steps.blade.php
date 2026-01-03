@@ -31,14 +31,14 @@
     $variantClasses = [
         'default' => [
             'completed' => 'bg-blue-600 text-white border-blue-600',
-            'current' => 'bg-white text-blue-600 border-blue-600',
+            'current' => 'bg-white text-blue-600 border-blue-600 dark:bg-neutral-800 dark:text-blue-400 dark:border-blue-400',
             'pending' => 'bg-gray-100 text-gray-500 border-gray-300 dark:bg-neutral-700 dark:text-neutral-400 dark:border-neutral-600',
             'connector_completed' => 'bg-blue-600',
             'connector_pending' => 'bg-gray-200 dark:bg-neutral-700'
         ],
         'success' => [
             'completed' => 'bg-teal-600 text-white border-teal-600',
-            'current' => 'bg-white text-teal-600 border-teal-600',
+            'current' => 'bg-white text-teal-600 border-teal-600 dark:bg-neutral-800 dark:text-teal-400 dark:border-teal-400',
             'pending' => 'bg-gray-100 text-gray-500 border-gray-300 dark:bg-neutral-700 dark:text-neutral-400 dark:border-neutral-600',
             'connector_completed' => 'bg-teal-600',
             'connector_pending' => 'bg-gray-200 dark:bg-neutral-700'
@@ -61,20 +61,20 @@
                 $isCurrent = $stepNumber === $currentStep;
                 $isPending = $stepNumber > $currentStep;
                 $isLast = $index === count($steps) - 1;
-                
+
                 $title = $step['title'] ?? "Step {$stepNumber}";
                 $description = $step['description'] ?? null;
                 $icon = $step['icon'] ?? null;
                 $href = $step['href'] ?? null;
             @endphp
-            
+
             <div class="flex items-center {{ $isLast ? '' : 'flex-1' }}">
                 <!-- Step Item -->
                 <div class="flex flex-col items-center text-center">
                     @if($clickable && $href)
                         <a href="{{ $href }}" class="group">
                     @endif
-                    
+
                     <!-- Step Number/Icon -->
                     <div class="flex items-center justify-center {{ $currentSize['number'] }} border-2 rounded-full {{ $isCompleted ? $currentVariant['completed'] : ($isCurrent ? $currentVariant['current'] : $currentVariant['pending']) }} {{ $clickable ? 'hover:scale-110 transition-transform duration-200' : '' }}">
                         @if($isCompleted && !$icon)
@@ -94,7 +94,7 @@
                             {{ $stepNumber }}
                         @endif
                     </div>
-                    
+
                     <!-- Step Content -->
                     <div class="mt-2 {{ $currentSize['text'] }}">
                         <h3 class="font-medium {{ $isCompleted || $isCurrent ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-neutral-400' }}">
@@ -106,12 +106,12 @@
                             </p>
                         @endif
                     </div>
-                    
+
                     @if($clickable && $href)
                         </a>
                     @endif
                 </div>
-                
+
                 <!-- Connector Line -->
                 @if(!$isLast)
                     <div class="flex-1 mx-4">
