@@ -15,6 +15,6 @@ class DateFilter extends BaseFilter
 
         return $field
             ->label($this->label)
-            ->attributes(['wire:model' => "filters.$key"]);
+            ->attributes(['wire:model.live' => "filters.$key"]);
     }
 }

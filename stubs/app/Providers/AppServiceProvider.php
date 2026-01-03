@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+final class AppServiceProvider extends ServiceProvider
 {
     /**
      * The path to the "home" route for your application.
      *
      * Typically, users are redirected here after authentication.
-     *
-     * @var string
      */
-    public const HOME = '/home';
+    public const string HOME = '/home';
 
     /**
      * Register any application services.

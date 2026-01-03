@@ -12,7 +12,7 @@
             name="{{ $searchName }}"
             value="{{ request($searchName) }}"
             placeholder="{{ $this->searchPlaceholder ?? __('laravolt::action.search') }}"
-            wire:model.debounce.{{ $searchDebounce }}ms="search">
+            wire:model.live.debounce.{{ $searchDebounce }}ms="search">
         @if (isset($this->search) && !empty($this->search))
             <div class="absolute inset-y-0 end-0 flex items-center z-20 pe-1">
                 <button type="button"

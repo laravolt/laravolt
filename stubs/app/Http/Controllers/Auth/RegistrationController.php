@@ -1,22 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Providers\AppServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
-class RegistrationController extends Controller
+final class RegistrationController extends Controller
 {
     /**
      * Display the registration view.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
-    public function show()
+    public function show(): View
     {
         return view('auth.register');
     }
@@ -24,16 +28,14 @@ class RegistrationController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'confirmed', 'min:8'],
         ]);
 
         /** @var string $password */
@@ -54,7 +56,7 @@ class RegistrationController extends Controller
 
         event(new Registered($user));
 
-        return redirect(\App\Providers\AppServiceProvider::HOME)
+        return redirect(AppServiceProvider::HOME)
             ->with('success', __('Your account successfully created'));
     }
 }

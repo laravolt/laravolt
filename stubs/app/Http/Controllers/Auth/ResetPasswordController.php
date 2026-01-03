@@ -1,22 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
-class ResetPasswordController extends Controller
+final class ResetPasswordController extends Controller
 {
     /**
      * Display the password reset view.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
-    public function show(Request $request, ?string $token = null)
+    public function show(Request $request, ?string $token = null): View
     {
         return view('auth.reset', ['token' => $token]);
     }
@@ -24,17 +28,15 @@ class ResetPasswordController extends Controller
     /**
      * Handle an incoming new password request.
      *
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate(
             [
-                'token' => 'required',
-                'email' => 'required|email',
-                'password' => 'required|string|confirmed|min:8',
+                'token' => ['required'],
+                'email' => ['required', 'email'],
+                'password' => ['required', 'string', 'confirmed', 'min:8'],
             ]
         );
 
@@ -47,7 +49,7 @@ class ResetPasswordController extends Controller
         /** @var string $status */
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($password) {
+            function (User $user) use ($password): void {
                 $attributes = [
                     'password' => Hash::make($password),
                     'remember_token' => Str::random(60),
@@ -61,8 +63,8 @@ class ResetPasswordController extends Controller
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
-        return $status == Password::PASSWORD_RESET
-            ? redirect()->route('auth::login.show')->with('status', __($status))
+        return $status === Password::PASSWORD_RESET
+            ? to_route('auth::login.show')->with('status', __($status))
             : back()->withInput($request->only('email'))
                 ->withErrors(['email' => __($status)]);
     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/pestphp/pest/resources/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
 >
     <testsuites>
-        <testsuite name="Modules">
-            <directory>modules/*/Tests</directory>
+        <testsuite name="Browser">
+            <directory>tests/Browser</directory>
         </testsuite>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
@@ -18,7 +18,6 @@
     <source>
         <include>
             <directory>app</directory>
-            <directory>modules</directory>
         </include>
         <exclude>
             <directory suffix=".blade.php">modules/*/resources</directory>
@@ -29,8 +28,8 @@
     </source>
     <coverage>
         <report>
-            <html outputDirectory="build/coverage" />
-            <clover outputFile="pestphp-coverage-result.xml" />
+            <html outputDirectory="coverage/html" />
+            <clover outputFile="coverage/clover.xml"/>
         </report>
     </coverage>
     <logging>
@@ -40,6 +39,7 @@
         <env name="APP_ENV" value="testing"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="BROADCAST_CONNECTION" value="null"/>
         <env name="CACHE_STORE" value="array"/>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>

@@ -31,6 +31,9 @@ abstract class TableView extends Component
     #[Url]
     public array $filters = [];
 
+    #[Url]
+    public int $page = 1;
+
     protected bool $showPerPage = true;
 
     protected string $title = '';

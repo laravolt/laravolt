@@ -10,7 +10,7 @@ class StatusFilter extends CheckboxFilter
 
     public function apply($data, $value)
     {
-        $status = collect($value)->filter()->values()->toArray();
+        $status = collect($value)->filter()->keys()->toArray();
         if (! empty($status)) {
             $data->whereIn('status', $status);
         }

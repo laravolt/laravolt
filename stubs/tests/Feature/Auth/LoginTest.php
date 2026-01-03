@@ -1,27 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use App\Providers\AppServiceProvider;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
-uses(LazilyRefreshDatabase::class);
-
-beforeEach(function () {
-    Route::get('login-success', function () {
-        return 'login success';
-    });
+beforeEach(function (): void {
+    Route::get('login-success', fn (): string => 'login success');
 });
 
-test('it can display login page', function () {
+test('it can display login page', function (): void {
     $this->get(route('auth::login.show'))
         ->assertOk()
         ->assertSeeText('Email')
         ->assertSeeText('Password');
 });
 
-test('it can handle correct login', function () {
+test('it can handle correct login', function (): void {
     $payload = [
         'email' => 'admin@laravolt.dev',
         'status' => 'ACTIVE',
@@ -39,7 +36,7 @@ test('it can handle correct login', function () {
     $this->get(AppServiceProvider::HOME)->assertSee('Home');
 });
 
-test('it can handle wrong login', function () {
+test('it can handle wrong login', function (): void {
     $payload = [
         'email' => 'admin@laravolt.dev',
     ];
@@ -52,35 +49,35 @@ test('it can handle wrong login', function () {
     $response->assertRedirect(route('auth::login.show'));
 });
 
-test('ensure password required', function () {
+test('ensure password required', function (): void {
     $this->post(route('auth::login.store'), ['email' => 'user@laravolt.dev'])
         ->assertSessionHasErrors('password');
 });
 
-test('it has errors if failed', function () {
+test('it has errors if failed', function (): void {
     $this->post(route('auth::login.store'))->assertSessionHasErrors();
 });
 
-test('it has register link', function () {
+test('it has register link', function (): void {
     $this->app['config']->set('laravolt.platform.features.registration', true);
 
     $this->get(route('auth::login.show'))
         ->assertSeeText(trans('laravolt::auth.register_here'));
 });
 
-test('it does not have register link', function () {
+test('it does not have register link', function (): void {
     $this->app['config']->set('laravolt.platform.features.registration', false);
 
     $this->get(route('auth::login.show'))
         ->assertDontSeeText(trans('laravolt::auth.register_here'));
 });
 
-test('it has forgot password link', function () {
+test('it has forgot password link', function (): void {
     $this->get(route('auth::login.show'))
         ->assertSeeText(trans('laravolt::auth.forgot_password'));
 });
 
-test('ensure rate limiter', function () {
+test('ensure rate limiter', function (): void {
     $limit = 5;
     $payload = [
         'email' => 'admin@laravolt.dev',
