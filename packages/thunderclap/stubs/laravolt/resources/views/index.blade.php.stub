@@ -1,11 +1,13 @@
-<x-volt-app :title="':Module Name:'">
-    <x-slot name="actions">
-        <x-volt-link-button
-            :url="route('modules:::module-name:.create')"
-            icon="plus"
-            :label="__('laravolt::action.add')"
-        />
-    </x-slot>
+<x-volt-app title=":Module Name:">
+    <div class="flex justify-between items-center gap-x-3">
+        <h1 class="font-semibold text-xl text-gray-800 dark:text-neutral-200">
+            :Module Name:
+        </h1>
+
+        <div class="flex justify-end items-center gap-x-2">
+            <x-volt-link-button icon="plus" :url="route('modules:::module-name:.create')" :label="__('laravolt::action.add')" />
+        </div>
+    </div>
 
     @livewire(\:Namespace:\:ModuleName:\:ModuleName:TableView::class)
 </x-volt-app>

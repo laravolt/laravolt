@@ -3,9 +3,10 @@
 return [
     'add' => 'Add',
     'edit' => 'Edit',
+    'detail' => 'Detail',
     'delete' => 'Delete',
     'delete_permanent' => 'Delete Forever',
-    'search' => 'Cari user...',
+    'search' => 'Search...',
     'manage' => 'Manage',
     'save' => 'Save',
     'cancel' => 'Cancel',

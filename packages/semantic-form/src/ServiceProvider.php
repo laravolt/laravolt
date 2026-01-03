@@ -3,6 +3,9 @@
 namespace Laravolt\SemanticForm;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laravolt\PrelineForm\ErrorStore\IlluminateErrorStore as PrelineIlluminateErrorStore;
+use Laravolt\PrelineForm\OldInput\IlluminateOldInputProvider as PrelineInputIlluminateOldInputProvider;
+use Laravolt\PrelineForm\PrelineForm;
 use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 use Laravolt\SemanticForm\OldInput\IlluminateOldInputProvider;
 
@@ -29,6 +32,14 @@ class ServiceProvider extends BaseServiceProvider
             $builder = new SemanticForm($app['config']->get('laravolt.ui'));
             $builder->setErrorStore(new IlluminateErrorStore($app['session.store']));
             $builder->setOldInputProvider(new IlluminateOldInputProvider($app['session.store']));
+
+            return $builder;
+        });
+
+        $this->app->singleton('preline-form', function ($app) {
+            $builder = new PrelineForm($app['config']->get('laravolt.ui'));
+            $builder->setErrorStore(new PrelineIlluminateErrorStore($app['session.store']));
+            $builder->setOldInputProvider(new PrelineInputIlluminateOldInputProvider($app['session.store']));
 
             return $builder;
         });

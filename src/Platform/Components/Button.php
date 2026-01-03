@@ -15,15 +15,43 @@ class Button extends Component
 
     public $url = '';
 
+    public $variant = 'primary';
+
+    public $size = 'md';
+
+    public $iconPosition = 'left';
+
+    public $loading = false;
+
+    public $disabled = false;
+
+    public $pill = false;
+
     /**
-     * PanelComponent constructor.
+     * Button constructor with enhanced Preline UI v3.0 support.
      */
-    public function __construct(?string $label = null, ?string $class = null, ?string $url = null, ?string $icon = null)
-    {
+    public function __construct(
+        ?string $label = null,
+        ?string $class = null,
+        ?string $url = null,
+        ?string $icon = null,
+        ?string $variant = null,
+        ?string $size = null,
+        ?string $iconPosition = null,
+        ?bool $loading = null,
+        ?bool $disabled = null,
+        ?bool $pill = null
+    ) {
         $this->label = $label;
         $this->icon = $icon;
         $this->url = $url;
         $this->class = $class;
+        $this->variant = $variant ?? $this->variant;
+        $this->size = $size ?? $this->size;
+        $this->iconPosition = $iconPosition ?? $this->iconPosition;
+        $this->loading = $loading ?? $this->loading;
+        $this->disabled = $disabled ?? $this->disabled;
+        $this->pill = $pill ?? $this->pill;
     }
 
     /**

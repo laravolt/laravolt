@@ -27,24 +27,56 @@ use Laravolt\Platform\Commands\MakeTableCommnad;
 use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\Pest4InstallCommand;
 use Laravolt\Platform\Commands\SyncPermission;
+use Laravolt\Platform\Components\Accordion;
+use Laravolt\Platform\Components\AdvancedDatepicker;
+use Laravolt\Platform\Components\Alert;
+use Laravolt\Platform\Components\Avatar;
 use Laravolt\Platform\Components\Backlink;
+use Laravolt\Platform\Components\Badge;
 use Laravolt\Platform\Components\BrandImage;
 use Laravolt\Platform\Components\Breadcrumb;
 use Laravolt\Platform\Components\Button;
 use Laravolt\Platform\Components\Card;
 use Laravolt\Platform\Components\CardFooter;
 use Laravolt\Platform\Components\Cards;
+use Laravolt\Platform\Components\Carousel;
+use Laravolt\Platform\Components\Checkbox;
+use Laravolt\Platform\Components\CopyMarkup;
+use Laravolt\Platform\Components\DataDisplay;
+use Laravolt\Platform\Components\Dropdown;
+use Laravolt\Platform\Components\FileInput;
 use Laravolt\Platform\Components\Form;
 use Laravolt\Platform\Components\Icon;
 use Laravolt\Platform\Components\Item;
 use Laravolt\Platform\Components\Label;
 use Laravolt\Platform\Components\Link;
 use Laravolt\Platform\Components\LinkButton;
+use Laravolt\Platform\Components\ListGroup;
 use Laravolt\Platform\Components\MediaLibrary;
+use Laravolt\Platform\Components\Modal;
+use Laravolt\Platform\Components\Notification;
+use Laravolt\Platform\Components\Offcanvas;
+use Laravolt\Platform\Components\Pagination;
 use Laravolt\Platform\Components\Panel;
+use Laravolt\Platform\Components\PinCode;
+use Laravolt\Platform\Components\Popover;
+use Laravolt\Platform\Components\Progress;
+use Laravolt\Platform\Components\Radio;
+use Laravolt\Platform\Components\Rating;
+use Laravolt\Platform\Components\ScrollIndicator;
+use Laravolt\Platform\Components\Sidebar;
+use Laravolt\Platform\Components\Skeleton;
+use Laravolt\Platform\Components\Stepper;
+use Laravolt\Platform\Components\Steps;
 use Laravolt\Platform\Components\Tab;
 use Laravolt\Platform\Components\TabContent;
+use Laravolt\Platform\Components\Table;
+use Laravolt\Platform\Components\Timeline;
+use Laravolt\Platform\Components\TimePicker;
 use Laravolt\Platform\Components\Titlebar;
+use Laravolt\Platform\Components\Toast;
+use Laravolt\Platform\Components\ToggleSwitch;
+use Laravolt\Platform\Components\Tooltip;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltBladeDirectives;
 use Laravolt\Platform\Services\Password;
@@ -143,31 +175,6 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function bootDatabase(): self
     {
-        // Define migrations to exclude
-        $excludedMigrations = [
-            '0001_01_01_000000_create_users_table.php',
-            '0001_01_01_000001_create_cache_table.php',
-            '0001_01_01_000002_create_jobs_table.php',
-        ];
-        // Get all migration files from the platform path
-        $allMigrations = glob(database_path('migrations').'/*.php');
-        // Filter out the excluded migrations
-        // and remove them from the database/migrations folder
-        // This is to prevent migration conflicts
-        // when using laravolt/laravolt package
-        foreach ($allMigrations as $migration) {
-            $filename = basename($migration);
-            if (in_array($filename, $excludedMigrations)) {
-                // remove existing migration files
-                try {
-                    \Illuminate\Support\Facades\File::delete($migration);
-                } catch (\Exception $e) {
-                    // Log the error or handle it as needed
-                    \Log::error("Failed to delete migration file: {$migration}. Error: {$e->getMessage()}");
-                }
-            }
-        }
-
         $migrationFolder = 'database/migrations';
 
         $this->publishes(
@@ -303,34 +310,122 @@ class PlatformServiceProvider extends ServiceProvider
     protected function bootComponents()
     {
         $components = [
+            // Layout Components
             'base' => 'laravolt::layout.base',
             'auth' => 'laravolt::layout.auth',
             'app' => 'laravolt::layout.app',
             'public' => 'laravolt::layout.public',
+
+            // Base Components
             'inspire' => 'laravolt::components.inspire',
             'grid' => 'laravolt::components.grid',
             'row' => 'laravolt::components.row',
             'col' => 'laravolt::components.col',
             'modal' => 'laravolt::components.modal',
             'workflow-diagram-button' => 'laravolt::workflow.components.diagram-button',
+
+            // Updated Preline UI v3.0 Components
+            'alert' => 'laravolt::components.alert',
+            'avatar' => 'laravolt::components.avatar',
+            'badge' => 'laravolt::components.badge',
+            'breadcrumb' => 'laravolt::components.breadcrumb',
+            'button' => 'laravolt::components.button',
+            'card' => 'laravolt::components.card',
+            'card-footer' => 'laravolt::components.card-footer',
+            'checkbox' => 'laravolt::components.checkbox',
+            'dropdown' => 'laravolt::components.dropdown',
+            'file-input' => 'laravolt::components.file-input',
+            'flash' => 'laravolt::components.flash',
+            'input' => 'laravolt::components.input',
+            'link' => 'laravolt::components.link',
+            'link-button' => 'laravolt::components.link-button',
+            'list-group' => 'laravolt::components.list-group',
+            'modal' => 'laravolt::components.modal',
+            'offcanvas' => 'laravolt::components.offcanvas',
+            'pagination' => 'laravolt::components.pagination',
+            'panel' => 'laravolt::components.panel',
+            'popover' => 'laravolt::components.popover',
+            'progress' => 'laravolt::components.progress',
+            'radio' => 'laravolt::components.radio',
+            'select' => 'laravolt::components.select',
+            'sidebar' => 'laravolt::components.sidebar',
+            'skeleton' => 'laravolt::components.skeleton',
+            'stepper' => 'laravolt::components.stepper',
+            'switch' => 'laravolt::components.switch',
+            'tab' => 'laravolt::components.tab',
+            'tab-content' => 'laravolt::components.tab-content',
+            'table' => 'laravolt::components.table',
+            'textarea' => 'laravolt::components.textarea',
+            'toast' => 'laravolt::components.toast',
+            'tooltip' => 'laravolt::components.tooltip',
+
+            // New Preline UI v3.0 Components
+            'accordion' => 'laravolt::components.accordion',
+            'advanced-datepicker' => 'laravolt::components.advanced-datepicker',
+            'carousel' => 'laravolt::components.carousel',
+            'copy-markup' => 'laravolt::components.copy-markup',
+            'notification' => 'laravolt::components.notification',
+            'pin-code' => 'laravolt::components.pin-code',
+            'rating' => 'laravolt::components.rating',
+            'scroll-indicator' => 'laravolt::components.scroll-indicator',
+            'steps' => 'laravolt::components.steps',
+            'time-picker' => 'laravolt::components.time-picker',
+            'timeline' => 'laravolt::components.timeline',
+
+            // Custom Components
+            'data-display' => 'laravolt::components.data-display',
+
+            // Class-based Components (Updated for Preline UI v3.0)
+            Accordion::class,
+            AdvancedDatepicker::class,
+            Alert::class,
+            Avatar::class,
             Backlink::class,
+            Badge::class,
             BrandImage::class,
             Breadcrumb::class,
             Button::class,
             Card::class,
             CardFooter::class,
             Cards::class,
+            Carousel::class,
+            Checkbox::class,
+            CopyMarkup::class,
+            DataDisplay::class,
+            Dropdown::class,
+            FileInput::class,
             Form::class,
             Icon::class,
             Item::class,
             Label::class,
             Link::class,
             LinkButton::class,
+            ListGroup::class,
             MediaLibrary::class,
+            Modal::class,
+            Notification::class,
+            Offcanvas::class,
+            Pagination::class,
             Panel::class,
+            PinCode::class,
+            Popover::class,
+            Progress::class,
+            Radio::class,
+            Rating::class,
+            ScrollIndicator::class,
+            Sidebar::class,
+            Skeleton::class,
+            Steps::class,
+            Stepper::class,
             Tab::class,
             TabContent::class,
+            Table::class,
+            TimePicker::class,
+            Timeline::class,
+            ToggleSwitch::class,
             Titlebar::class,
+            Toast::class,
+            Tooltip::class,
         ];
 
         $this->loadViewComponentsAs('volt', $components);
@@ -389,6 +484,13 @@ class PlatformServiceProvider extends ServiceProvider
     {
         Blade::directive('laravoltScripts', [LaravoltBladeDirectives::class, 'scripts']);
         Blade::directive('laravoltStyles', [LaravoltBladeDirectives::class, 'styles']);
+
+        // BasicTable directives
+        Blade::directive('basictable', [LaravoltBladeDirectives::class, 'basictable']);
+        Blade::directive('basictableResponsive', [LaravoltBladeDirectives::class, 'basictableResponsive']);
+        Blade::directive('basictableCompact', [LaravoltBladeDirectives::class, 'basictableCompact']);
+        Blade::directive('basictableInline', [LaravoltBladeDirectives::class, 'basictableInline']);
+        Blade::directive('basictableScrollable', [LaravoltBladeDirectives::class, 'basictableScrollable']);
 
         return $this;
     }

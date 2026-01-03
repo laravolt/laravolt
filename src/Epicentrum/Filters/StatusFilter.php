@@ -21,8 +21,8 @@ class StatusFilter extends CheckboxFilter
     public function options(): array
     {
         return [
-            'ACTIVE' => 'ACTIVE',
-            'PENDING' => 'PENDING',
+            'ACTIVE' => 'Active',
+            'PENDING' => 'Pending',
         ];
     }
 }

@@ -1,4 +1,4 @@
-<x-volt-auth>
+<x-volt-auth :title="__('Verify Email Page')">
     <h3 class="ui header horizontal divider section">@lang('Verifikasi Email')</h3>
 
     <div class="ui message p-3">

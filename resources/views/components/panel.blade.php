@@ -1,44 +1,52 @@
-@php($icon = $icon ?? false)
+@php
+    $icon = $icon ?? false;
+    $headerClass = $attributes['headerClass'] ?? '';
+    $contentClass = $attributes['contentClass'] ?? 'p-6';
+    $attributes = $attributes->except(['headerClass', 'contentClass']);
 
-<div {{ $attributes->merge(['class' => 'ui segments panel']) }}>
-    @if($title or $icon)
-        <div class="ui segment panel__header {{ $attributes['headerClass'] ?? '' }}">
-            <div class="ui menu secondary borderless m-0 p-0" style="min-height: 0">
-                @if($icon)
-                    <div class="panel__icon item p-0 p-l-xs m-0">
-                        <x-volt-icon :name="$icon" :class="$iconClass"/>
-                    </div>
-                @endif
+    $panelClasses = 'bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700';
+@endphp
 
-                @if($title)
-                    <div class="item p-0 m-0">
-                        <h4 class="panel__title ui header p-x-sm p-y-0">
-                            {!! $title !!}
+<div {{ $attributes->merge(['class' => $panelClasses]) }}>
+    @if($title || $icon)
+        <div class="border-b border-gray-200 px-6 py-4 {{ $headerClass }} dark:border-neutral-700">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    @if($icon)
+                        <div class="flex-shrink-0">
+                            <x-volt-icon :name="$icon" :class="$iconClass ?? 'w-5 h-5 text-gray-600 dark:text-neutral-400'"/>
+                        </div>
+                    @endif
+
+                    @if($title)
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                {!! $title !!}
+                            </h3>
                             @if($description)
-                            <div class="sub header">{!! $description !!}</div>
+                                <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">
+                                    {!! $description !!}
+                                </p>
                             @endif
-                        </h4>
-                    </div>
-                @endif
+                        </div>
+                    @endif
+                </div>
 
                 @if(isset($action))
-                <div class="menu right">
-                    <div class="item p-0">
+                    <div class="flex-shrink-0">
                         {!! $action !!}
                     </div>
-                </div>
                 @endif
-
             </div>
         </div>
     @endif
 
-    <div class="ui segment {{ $attributes['contentClass'] ?? 'p-3' }}">
+    <div class="{{ $contentClass }}">
         {!! $slot !!}
     </div>
 
     @if(isset($footer))
-        <div class="ui segment">
+        <div class="border-t border-gray-200 px-6 py-4 dark:border-neutral-700">
             {!! $footer !!}
         </div>
     @endif

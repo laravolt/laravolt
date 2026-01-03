@@ -2,6 +2,8 @@
 
 namespace Laravolt\Suitable\Columns;
 
+use Illuminate\Support\Exceptions\MathException;
+
 class Currency extends Column implements ColumnInterface
 {
     protected string $prefix = '';
@@ -16,7 +18,11 @@ class Currency extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        $value = data_get($cell, $this->field);
+        try {
+            $value = data_get($cell, $this->field);
+        } catch (MathException) {
+            return '-';
+        }
 
         if ($value === null || $value === '') {
             return '-';

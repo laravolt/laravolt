@@ -110,7 +110,7 @@ class SidebarMenu extends BaseMenu
 
     public function allMenu()
     {
-        $isProduction = config('app.env') === 'production';
+        $isProduction = app()->isProduction();
         $items = $isProduction
             ? Cache::rememberForever('sidebar-items', fn () => $this->all())
             : $this->all();

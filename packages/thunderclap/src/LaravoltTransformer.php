@@ -142,10 +142,9 @@ TEMPLATE;
     public function toDetailFields($objectName)
     {
         $columns = $this->columns;
-        $template =
-            <<<'TEMPLATE'
-        <tr><td>%s</td><td>{{ $%s->%s }}</td></tr>
-TEMPLATE;
+        $template = <<<'TEMPLATE'
+                    <x-volt-data-display :label="__('%s')" :value="$%s->%s" />
+        TEMPLATE;
 
         return $columns
             ->keys()
@@ -187,7 +186,7 @@ TEMPLATE;
             $field .= '->required()';
         }
 
-        return "{!! $field !!}";
+        return "    {!! $field !!}";
     }
 
     protected function text()

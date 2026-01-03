@@ -733,6 +733,17 @@ class SemanticForm
         return new FieldCollection($fields);
     }
 
+    public function mapping($fields, $callback = null)
+    {
+        // Allow mapping over fields with an optional callback
+        if ($callback) {
+            return collect($fields)->map($callback);
+        }
+
+        // Or return the fields as-is for further processing
+        return collect($fields);
+    }
+
     protected function getTimeOptions($interval)
     {
         $times = [];
