@@ -14,4 +14,5 @@ return [
     'generate_password' => 'Random Password',
     'send_new_password' => 'Kirim Password Baru',
     'send_reset_password_link' => 'Kirim Link Reset Password',
+    'select_all' => 'Pilih Semua',
 ];

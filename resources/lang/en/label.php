@@ -11,4 +11,5 @@ return [
     'delete_role' => 'Delete Role',
     'reset_password_manual' => 'Manual',
     'reset_password_automatic' => 'Automatic',
+    'manage_permissions' => 'Manage Permission Descriptions',
 ];

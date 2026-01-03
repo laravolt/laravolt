@@ -11,4 +11,5 @@ return [
     'delete_role' => 'Hapus Role',
     'reset_password_manual' => 'Manual',
     'reset_password_automatic' => 'Otomatis',
+    'manage_permissions' => 'Atur Deskripsi Hak Akses',
 ];

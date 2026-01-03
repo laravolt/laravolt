@@ -14,4 +14,5 @@ return [
     'generate_password' => 'Generate',
     'send_new_password' => 'Send New Password',
     'send_reset_password_link' => 'Send Link To Reset Password',
+    'select_all' => 'Select All',
 ];
