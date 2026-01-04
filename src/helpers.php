@@ -11,7 +11,7 @@ if (! function_exists('platform_path')) {
     /**
      * Get Laravolt platform absolute directory path.
      */
-    function platform_path(string $path): string
+    function platform_path(string $path): string|bool
     {
         return realpath(__DIR__.'/../'.($path ? DIRECTORY_SEPARATOR.$path : $path));
     }
