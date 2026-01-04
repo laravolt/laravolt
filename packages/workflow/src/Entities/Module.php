@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow\Entities;
 
+use DomainException;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Laravolt\Workflow\Livewire\ProcessInstancesTable;
@@ -34,7 +37,7 @@ class Module extends DataTransferObject
         $config = config("laravolt.workflow-modules.$id");
 
         if (! $config) {
-            throw new \DomainException(
+            throw new DomainException(
                 "File config config/laravolt/workflow-modules/$id.php belum dibuat."
             );
         }

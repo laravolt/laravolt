@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 class Label extends Element
@@ -59,6 +61,11 @@ class Label extends Element
         return $this;
     }
 
+    public function getControl()
+    {
+        return $this->element;
+    }
+
     protected function renderElement()
     {
         if (! $this->element) {
@@ -66,10 +73,5 @@ class Label extends Element
         }
 
         return $this->element->render();
-    }
-
-    public function getControl()
-    {
-        return $this->element;
     }
 }

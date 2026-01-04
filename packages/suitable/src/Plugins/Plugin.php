@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Plugins;
 
 use Laravolt\Suitable\Builder;
@@ -20,7 +22,7 @@ abstract class Plugin
 
     public function filter($columns)
     {
-        if (count($this->only) == 0) {
+        if (count($this->only) === 0) {
             return $columns;
         }
 

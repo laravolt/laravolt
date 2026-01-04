@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
+
+use Closure;
 
 class Html extends Column implements ColumnInterface
 {
@@ -39,7 +43,7 @@ class Html extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        if ($this->field instanceof \Closure) {
+        if ($this->field instanceof Closure) {
             $html = call_user_func($this->field, $cell, $collection, $loop);
         } else {
             $html = data_get($cell, $this->field);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'routes' => [
         'enabled' => true,
@@ -12,7 +14,7 @@ return [
     'menu' => [
         'enabled' => false,
     ],
-    'permission' => \Laravolt\Platform\Enums\Permission::MANAGE_LOOKUP,
+    'permission' => Laravolt\Platform\Enums\Permission::MANAGE_LOOKUP,
     'collections' => [
         // Sample lookup collections
         'pekerjaan' => [

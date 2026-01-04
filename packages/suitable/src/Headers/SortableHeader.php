@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Headers;
 
 use Laravolt\Suitable\Concerns\HtmlHelper;
 use Laravolt\Suitable\Contracts\Header;
 
-class SortableHeader implements \Laravolt\Suitable\Contracts\Header
+class SortableHeader implements Header
 {
     use HtmlHelper;
 
@@ -46,7 +48,7 @@ class SortableHeader implements \Laravolt\Suitable\Contracts\Header
 
         $headerClass = '';
         $iconClass = 'sort';
-        if (request($sortByKey) == $this->column && in_array(request($sortDirectionKey), ['asc', 'desc'])) {
+        if (request($sortByKey) === $this->column && in_array(request($sortDirectionKey), ['asc', 'desc'])) {
             $headerClass = self::$classMapping[request($sortDirectionKey)]['header'];
             $iconClass = self::$classMapping[request($sortDirectionKey)]['icon'];
         }

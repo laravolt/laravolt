@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'brand_name' => env('APP_NAME', 'Laravolt'),
     'brand_image' => '/laravolt/assets/images/logo.svg',

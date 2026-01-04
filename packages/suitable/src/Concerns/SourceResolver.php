@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Concerns;
 
 use Illuminate\Contracts\Pagination\Paginator;
@@ -9,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use InvalidArgumentException;
 
 trait SourceResolver
 {
@@ -16,19 +19,26 @@ trait SourceResolver
     {
         if ($source instanceof Builder || $source instanceof \Illuminate\Database\Query\Builder) {
             return $source->paginate(request('per_page', $this->perPage));
-        } elseif (is_subclass_of($source, Model::class)) {
+        }
+        if (is_subclass_of($source, Model::class)) {
             return (new $source)->all();
-        } elseif (is_string($source) && Schema::hasTable($source)) {
+        }
+        if (is_string($source) && Schema::hasTable($source)) {
             return DB::table($source)->get();
-        } elseif ($source instanceof Paginator) {
+        }
+        if ($source instanceof Paginator) {
             return $source;
-        } elseif ($source instanceof Collection) {
+        }
+        if ($source instanceof Collection) {
             return $source;
-        } elseif ($source instanceof \Illuminate\Support\Collection) {
+        }
+        if ($source instanceof \Illuminate\Support\Collection) {
             return $source;
-        } elseif (is_array($source)) {
+        }
+        if (is_array($source)) {
             return collect($source);
-        } elseif ($source instanceof Response) {
+        }
+        if ($source instanceof Response) {
             return $source->collect();
         }
 
@@ -37,6 +47,6 @@ trait SourceResolver
             $type = get_class($source);
         }
 
-        throw new \InvalidArgumentException('Cannot generate table from '.$type);
+        throw new InvalidArgumentException('Cannot generate table from '.$type);
     }
 }

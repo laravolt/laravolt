@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     // Configuration for the default group. Feel free to add more groups.

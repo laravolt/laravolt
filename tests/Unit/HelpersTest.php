@@ -12,50 +12,6 @@ use function Laravolt\platform_path;
 
 class HelpersTest extends UnitTest
 {
-    public function test_platform_path()
-    {
-        $actual = platform_path('resources/files/file.txt');
-        $expected = realpath(__DIR__.'/../../resources/files/file.txt');
-
-        $this->assertSame($expected, $actual);
-        $this->assertFileExists($actual);
-    }
-
-    public function test_platform_path_with_trailing_slash()
-    {
-        $actual = platform_path('/resources/files/file.txt');
-        $expected = realpath(__DIR__.'/../../resources/files/file.txt');
-
-        $this->assertSame($expected, $actual);
-        $this->assertFileExists($actual);
-    }
-
-    /**
-     * @dataProvider provideRupiah
-     */
-    public function test_number_to_rupiah($number, $defaultOutput, $outputWithoutPrefix, $outputWithoutDecimals)
-    {
-        $this->assertEquals($defaultOutput, number_to_rupiah($number));
-        $this->assertEquals($outputWithoutPrefix, number_to_rupiah($number, 2, false));
-        $this->assertEquals($outputWithoutDecimals, number_to_rupiah($number, 0, true));
-    }
-
-    /**
-     * @dataProvider provideTerbilangWithSuffix
-     */
-    public function test_number_to_terbilang($number, $terbilang)
-    {
-        $this->assertEquals($terbilang, number_to_terbilang($number));
-    }
-
-    /**
-     * @dataProvider provideTerbilangWithoutSuffix
-     */
-    public function test_number_to_terbilang_without_suffix($number, $terbilang)
-    {
-        $this->assertEquals($terbilang, number_to_terbilang($number, ''));
-    }
-
     public static function provideRupiah()
     {
         return [
@@ -117,5 +73,49 @@ class HelpersTest extends UnitTest
             [1_010_000, 'satu juta sepuluh ribu'],
             [1_010_010, 'satu juta sepuluh ribu sepuluh'],
         ];
+    }
+
+    public function test_platform_path()
+    {
+        $actual = platform_path('resources/files/file.txt');
+        $expected = realpath(__DIR__.'/../../resources/files/file.txt');
+
+        $this->assertSame($expected, $actual);
+        $this->assertFileExists($actual);
+    }
+
+    public function test_platform_path_with_trailing_slash()
+    {
+        $actual = platform_path('/resources/files/file.txt');
+        $expected = realpath(__DIR__.'/../../resources/files/file.txt');
+
+        $this->assertSame($expected, $actual);
+        $this->assertFileExists($actual);
+    }
+
+    /**
+     * @dataProvider provideRupiah
+     */
+    public function test_number_to_rupiah($number, $defaultOutput, $outputWithoutPrefix, $outputWithoutDecimals)
+    {
+        $this->assertEquals($defaultOutput, number_to_rupiah($number));
+        $this->assertEquals($outputWithoutPrefix, number_to_rupiah($number, 2, false));
+        $this->assertEquals($outputWithoutDecimals, number_to_rupiah($number, 0, true));
+    }
+
+    /**
+     * @dataProvider provideTerbilangWithSuffix
+     */
+    public function test_number_to_terbilang($number, $terbilang)
+    {
+        $this->assertEquals($terbilang, number_to_terbilang($number));
+    }
+
+    /**
+     * @dataProvider provideTerbilangWithoutSuffix
+     */
+    public function test_number_to_terbilang_without_suffix($number, $terbilang)
+    {
+        $this->assertEquals($terbilang, number_to_terbilang($number, ''));
     }
 }

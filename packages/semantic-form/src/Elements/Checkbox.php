@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 class Checkbox extends Input
@@ -8,9 +10,9 @@ class Checkbox extends Input
         'type' => 'checkbox',
     ];
 
-    private $checked;
-
     protected $fieldLabel;
+
+    private $checked;
 
     public function __construct($name, $value = 1)
     {

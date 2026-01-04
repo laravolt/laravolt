@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\TextArea;
 
-class TextAreaTest extends \PHPUnit\Framework\TestCase
+class TextAreaTest extends PHPUnit\Framework\TestCase
 {
     public function test_render_basic_text_area()
     {

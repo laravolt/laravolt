@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Lookup\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Suitable\AutoFilter;
@@ -25,14 +26,9 @@ class Lookup extends Model
 
     protected $searchable = ['lookup_key', 'lookup_value', 'parent.lookup_value'];
 
-    public function parent()
-    {
-        return $this->belongsTo(self::class, 'parent_key', 'lookup_key');
-    }
-
     public static function createMultiple(array $data, string $category)
     {
-        \DB::transaction(function () use ($data, $category) {
+        DB::transaction(function () use ($data, $category) {
             foreach ($data as $lookup) {
                 self::create($lookup + ['category' => $category]);
             }
@@ -42,6 +38,11 @@ class Lookup extends Model
     public static function toDropdown($category)
     {
         return static::query()->whereCategory($category)->pluck('lookup_value', 'lookup_key')->toArray();
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_key', 'lookup_key');
     }
 
     public function getMetaAttribute(): SchemalessAttributes

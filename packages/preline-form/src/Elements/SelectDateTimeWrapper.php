@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class SelectDateTimeWrapper extends Element

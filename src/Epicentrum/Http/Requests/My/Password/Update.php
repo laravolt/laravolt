@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Requests\My\Password;
 
 use Illuminate\Foundation\Http\FormRequest;

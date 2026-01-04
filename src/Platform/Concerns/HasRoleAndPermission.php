@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Concerns;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -85,7 +87,7 @@ trait HasRoleAndPermission
             }
 
             if ($checkAll) {
-                return $match == count($role);
+                return $match === count($role);
             }
 
             return $match > 0;
@@ -165,7 +167,7 @@ trait HasRoleAndPermission
             }
 
             if ($checkAll) {
-                return $match == count($permission);
+                return $match === count($permission);
             }
 
             return $match > 0;

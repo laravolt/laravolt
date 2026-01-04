@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'click_to_reset' => '<a href=":link">Click this link</a> to reset your password.',
     'your_new_password' => 'Your new password: <strong>:password</strong>',

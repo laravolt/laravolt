@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class Select extends FormControl
@@ -17,11 +19,6 @@ class Select extends FormControl
         parent::__construct($name);
         $this->options = $options;
         $this->setDefaultClasses();
-    }
-
-    protected function setDefaultClasses()
-    {
-        $this->addClass('py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:focus:ring-neutral-600');
     }
 
     public function options($options)
@@ -85,7 +82,7 @@ class Select extends FormControl
     public function multiple()
     {
         $name = $this->getAttribute('name');
-        if (substr($name, -2) != '[]') {
+        if (mb_substr($name, -2) !== '[]') {
             $name .= '[]';
         }
 
@@ -110,6 +107,29 @@ class Select extends FormControl
         return parent::hasError();
     }
 
+    public function displayValue()
+    {
+        if (is_string($this->selectedValue) || is_int($this->selectedValue)) {
+            return $this->options[$this->selectedValue] ?? $this->selectedValue;
+        }
+
+        return null;
+    }
+
+    public function render()
+    {
+        if ($this->label) {
+            return $this->renderField();
+        }
+
+        return $this->renderControl();
+    }
+
+    protected function setDefaultClasses()
+    {
+        $this->addClass('py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:focus:ring-neutral-600');
+    }
+
     protected function getError()
     {
         return $this->errorMessage;
@@ -124,7 +144,7 @@ class Select extends FormControl
         }
 
         foreach ($this->options as $value => $label) {
-            $selected = ($this->selectedValue == $value) ? ' selected' : '';
+            $selected = ($this->selectedValue === $value) ? ' selected' : '';
             $output .= sprintf(
                 '<option value="%s"%s>%s</option>',
                 form_escape($value),
@@ -143,23 +163,5 @@ class Select extends FormControl
             $this->renderAttributes(),
             $this->renderOptions()
         );
-    }
-
-    public function displayValue()
-    {
-        if (is_string($this->selectedValue) || is_int($this->selectedValue)) {
-            return $this->options[$this->selectedValue] ?? $this->selectedValue;
-        }
-
-        return null;
-    }
-
-    public function render()
-    {
-        if ($this->label) {
-            return $this->renderField();
-        }
-
-        return $this->renderControl();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Toolbars;
 
 abstract class Toolbar
@@ -11,12 +13,12 @@ abstract class Toolbar
         return $this->render();
     }
 
+    abstract public function render();
+
     public function addClass($class)
     {
         $this->class[] = $class;
 
         return $this;
     }
-
-    abstract public function render();
 }

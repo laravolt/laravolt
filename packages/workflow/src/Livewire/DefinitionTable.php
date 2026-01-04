@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow\Livewire;
 
 use Laravolt\Suitable\Columns\Numbering;
@@ -15,7 +17,7 @@ class DefinitionTable extends TableView
     {
         $query = ProcessDefinition::query()
             ->autoSort($this->sortPayload())
-            ->whereLike(['name', 'key'], trim($this->search))
+            ->whereLike(['name', 'key'], mb_trim($this->search))
             ->orderByDesc('version')
             ->latest();
 

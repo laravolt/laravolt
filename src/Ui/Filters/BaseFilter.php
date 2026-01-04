@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Ui\Filters;
 
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 abstract class BaseFilter
 {
@@ -14,6 +17,6 @@ abstract class BaseFilter
 
     public function key(): string
     {
-        return Str::kebab((new \ReflectionClass($this))->getShortName());
+        return Str::kebab((new ReflectionClass($this))->getShortName());
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm;
 
+use Closure;
 use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\PrelineForm\Elements\Button;
@@ -32,7 +35,7 @@ class PrelineForm
 
     private $oldInput;
 
-    private \Laravolt\PrelineForm\ErrorStore\IlluminateErrorStore $errorStore;
+    private ErrorStore\IlluminateErrorStore $errorStore;
 
     private $model;
 
@@ -217,7 +220,7 @@ class PrelineForm
         $radio = new RadioButton($name, $value);
 
         if (! is_null($checkedValue = $this->getValueFor($name))) {
-            $radio->checked($checkedValue == $value);
+            $radio->checked($checkedValue === $value);
         }
 
         $radio->defaultChecked($checked);
@@ -321,11 +324,6 @@ class PrelineForm
         return $this;
     }
 
-    protected function unbindModel()
-    {
-        $this->model = null;
-    }
-
     public function getValueFor($name)
     {
         $name = $this->normalizeName($name);
@@ -339,16 +337,6 @@ class PrelineForm
         }
 
         return null;
-    }
-
-    protected function hasOldInput()
-    {
-        return $this->oldInput && $this->oldInput->hasOldInput();
-    }
-
-    protected function getOldInput($key)
-    {
-        return $this->oldInput->getOldInput($key);
     }
 
     public function hasError($name)
@@ -375,16 +363,6 @@ class PrelineForm
         return $message;
     }
 
-    protected function hasModelValue($key)
-    {
-        return $this->model && data_get($this->model, $key) !== null;
-    }
-
-    protected function getModelValue($key)
-    {
-        return data_get($this->model, $key);
-    }
-
     public function make(array|BaseCollection $fields)
     {
         return new FieldCollection($fields);
@@ -397,27 +375,27 @@ class PrelineForm
 
     public function label($name)
     {
-        return new \Laravolt\PrelineForm\Elements\Label($name);
+        return new Elements\Label($name);
     }
 
     public function link($label, $url)
     {
-        return new \Laravolt\PrelineForm\Elements\Link($label, $url);
+        return new Elements\Link($label, $url);
     }
 
     public function linkButton($label, $url)
     {
-        return new \Laravolt\PrelineForm\Elements\LinkButton($label, $url);
+        return new Elements\LinkButton($label, $url);
     }
 
     public function html($content)
     {
-        return new \Laravolt\PrelineForm\Elements\Html($content);
+        return new Elements\Html($content);
     }
 
     public function color($name, $defaultValue = null)
     {
-        $color = new \Laravolt\PrelineForm\Elements\Color($name);
+        $color = new Elements\Color($name);
 
         if (! is_null($value = $this->getValueFor($name))) {
             $color->value($value);
@@ -434,7 +412,7 @@ class PrelineForm
 
     public function date($name, $defaultValue = null)
     {
-        $date = new \Laravolt\PrelineForm\Elements\Date($name);
+        $date = new Elements\Date($name);
 
         if (! is_null($value = $this->getValueFor($name))) {
             $date->value($value);
@@ -451,7 +429,7 @@ class PrelineForm
 
     public function time($name, $defaultValue = null)
     {
-        $time = new \Laravolt\PrelineForm\Elements\Time($name);
+        $time = new Elements\Time($name);
 
         if (! is_null($value = $this->getValueFor($name))) {
             $time->value($value);
@@ -498,13 +476,13 @@ class PrelineForm
 
         $actions->transform(function ($action) {
             if (is_string($action) && static::hasMacro($action)) {
-                return call_user_func_array(\Closure::bind(static::$macros[$action], null, static::class), []);
+                return call_user_func_array(Closure::bind(static::$macros[$action], null, static::class), []);
             }
 
             return $action;
         });
 
-        return new \Laravolt\PrelineForm\Elements\ActionWrapper($actions);
+        return new Elements\ActionWrapper($actions);
     }
 
     public function selectMonth($name, $format = '%B')
@@ -526,7 +504,7 @@ class PrelineForm
 
     public function openFields()
     {
-        return new \Laravolt\PrelineForm\Elements\FieldsOpen;
+        return new Elements\FieldsOpen;
     }
 
     public function closeFields()
@@ -544,7 +522,7 @@ class PrelineForm
         $month = (new Field($this->selectMonth('_'.$name.'[month]')));
         $year = (new Field($this->selectRange('_'.$name.'[year]', $beginYear, $endYear)));
 
-        return new \Laravolt\PrelineForm\Elements\SelectDateWrapper($date, $month, $year);
+        return new Elements\SelectDateWrapper($date, $month, $year);
     }
 
     public function selectDateTime($name, $beginYear = 1900, $endYear = null, $interval = 30)
@@ -561,7 +539,7 @@ class PrelineForm
 
         $time = (new Field($this->select('_'.$name.'[time]', $timeOptions)));
 
-        $control = new \Laravolt\PrelineForm\Elements\SelectDateTimeWrapper($date, $month, $year, $time);
+        $control = new Elements\SelectDateTimeWrapper($date, $month, $year, $time);
 
         if (! is_null($value = $this->getValueFor($name))) {
             $control->value($value);
@@ -662,6 +640,31 @@ class PrelineForm
         return $this->html('<div class="multirow-placeholder">Multirow field: '.$name.'</div>');
     }
 
+    protected function unbindModel()
+    {
+        $this->model = null;
+    }
+
+    protected function hasOldInput()
+    {
+        return $this->oldInput && $this->oldInput->hasOldInput();
+    }
+
+    protected function getOldInput($key)
+    {
+        return $this->oldInput->getOldInput($key);
+    }
+
+    protected function hasModelValue($key)
+    {
+        return $this->model && data_get($this->model, $key) !== null;
+    }
+
+    protected function getModelValue($key)
+    {
+        return data_get($this->model, $key);
+    }
+
     protected function getTimeOptions($interval)
     {
         $times = [];
@@ -681,8 +684,8 @@ class PrelineForm
 
     protected function normalizeName($name)
     {
-        if (substr($name, -2) == '[]') {
-            return substr($name, 0, -2);
+        if (mb_substr($name, -2) === '[]') {
+            return mb_substr($name, 0, -2);
         }
 
         return $name;

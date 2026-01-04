@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Ui;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -10,12 +12,12 @@ use Livewire\WithPagination;
 
 abstract class TableView extends Component
 {
-    public string $headerTitle = '';
-
     use SourceResolver;
     use WithPagination;
 
     private const DEFAULT_PER_PAGE = 15;
+
+    public string $headerTitle = '';
 
     public bool $showSearchbox = true;
 
@@ -34,6 +36,12 @@ abstract class TableView extends Component
     #[Url]
     public int $page = 1;
 
+    public int $perPage = self::DEFAULT_PER_PAGE;
+
+    public ?string $sort = null;
+
+    public ?string $direction = null;
+
     protected bool $showPerPage = true;
 
     protected string $title = '';
@@ -44,8 +52,6 @@ abstract class TableView extends Component
 
     protected array $perPageOptions = [5, 15, 30, 50, 100, 250];
 
-    public int $perPage = self::DEFAULT_PER_PAGE;
-
     protected $queryString = [
         'page' => ['except' => 1],
         'search' => ['except' => ''],
@@ -54,9 +60,9 @@ abstract class TableView extends Component
         'perPage' => ['except' => self::DEFAULT_PER_PAGE],
     ];
 
-    public ?string $sort = null;
+    abstract public function data();
 
-    public ?string $direction = null;
+    abstract public function columns(): array;
 
     public function updatingSearch()
     {
@@ -160,13 +166,16 @@ abstract class TableView extends Component
         );
     }
 
-    abstract public function data();
-
-    abstract public function columns(): array;
-
     public function filters(): array
     {
         return [];
+    }
+
+    public function updatingPage()
+    {
+        if (empty(request()->input($this->searchName)) && ! empty($this->search)) {
+            request()->merge([$this->searchName => $this->search]);
+        }
     }
 
     protected function sortPayload()
@@ -175,12 +184,5 @@ abstract class TableView extends Component
             'sort' => $this->sort,
             'direction' => $this->direction,
         ];
-    }
-
-    public function updatingPage()
-    {
-        if (empty(request()->input($this->searchName)) && ! empty($this->search)) {
-            request()->merge([$this->searchName => $this->search]);
-        }
     }
 }

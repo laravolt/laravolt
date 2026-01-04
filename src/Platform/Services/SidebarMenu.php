@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
+use Closure;
 use Illuminate\Support\Facades\Cache;
 use Lavary\Menu\Builder;
 use Lavary\Menu\Item;
@@ -14,16 +15,6 @@ class SidebarMenu extends BaseMenu
     protected $callbacksCore = [];
 
     protected $callbacks = [];
-
-    public function registerCore(\Closure $callback)
-    {
-        $this->callbacksCore[] = $callback;
-    }
-
-    public function register(\Closure $callback)
-    {
-        $this->callbacks[] = $callback;
-    }
 
     public static function setVisible($children, $visible = 'visible')
     {
@@ -42,20 +33,29 @@ class SidebarMenu extends BaseMenu
 
         if ($isActive) {
             return $active;
-        } else {
-            foreach ($children as $child) {
-                if ($child->link->isActive) {
-                    return $active;
-                }
+        }
+        foreach ($children as $child) {
+            if ($child->link->isActive) {
+                return $active;
             }
         }
 
         return '';
     }
 
+    public function registerCore(Closure $callback)
+    {
+        $this->callbacksCore[] = $callback;
+    }
+
+    public function register(Closure $callback)
+    {
+        $this->callbacks[] = $callback;
+    }
+
     public function all()
     {
-        /** @var \Lavary\Menu\Builder $sidebar */
+        /** @var Builder $sidebar */
         $sidebar = app('laravolt.menu.sidebar')->make(
             'sidebar',
             function (Builder $menu) {

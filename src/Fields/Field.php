@@ -1,64 +1,66 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Fields;
 
 interface Field
 {
-    const BELONGS_TO = 'laravolt.fields.belongsTo';
+    public const BELONGS_TO = 'laravolt.fields.belongsTo';
 
-    const ACTION = 'action';
+    public const ACTION = 'action';
 
-    const BOOLEAN = 'boolean';
+    public const BOOLEAN = 'boolean';
 
-    const BUTTON = 'button';
+    public const BUTTON = 'button';
 
-    const CHECKBOX = 'checkbox';
+    public const CHECKBOX = 'checkbox';
 
-    const CHECKBOX_GROUP = 'checkboxGroup';
+    public const CHECKBOX_GROUP = 'checkboxGroup';
 
-    const COLOR = 'color';
+    public const COLOR = 'color';
 
-    const DATE = 'date';
+    public const DATE = 'date';
 
-    const DATE_PICKER = 'datepicker';
+    public const DATE_PICKER = 'datepicker';
 
-    const DATETIME_PICKER = 'datetimepicker';
+    public const DATETIME_PICKER = 'datetimepicker';
 
-    const DROPDOWN = 'dropdown';
+    public const DROPDOWN = 'dropdown';
 
-    const DROPDOWN_COLOR = 'dropdownColor';
+    public const DROPDOWN_COLOR = 'dropdownColor';
 
-    const DROPDOWN_DB = 'dropdownDB';
+    public const DROPDOWN_DB = 'dropdownDB';
 
-    const EMAIL = 'email';
+    public const EMAIL = 'email';
 
-    const HIDDEN = 'hidden';
+    public const HIDDEN = 'hidden';
 
-    const HTML = 'html';
+    public const HTML = 'html';
 
-    const NUMBER = 'number';
+    public const NUMBER = 'number';
 
-    const MULTIROW = 'multirow';
+    public const MULTIROW = 'multirow';
 
-    const PASSWORD = 'password';
+    public const PASSWORD = 'password';
 
-    const RADIO_GROUP = 'radioGroup';
+    public const RADIO_GROUP = 'radioGroup';
 
-    const REDACTOR = 'redactor';
+    public const REDACTOR = 'redactor';
 
-    const RESTFUL_BUTTON = 'restfulButton';
+    public const RESTFUL_BUTTON = 'restfulButton';
 
-    const RUPIAH = 'rupiah';
+    public const RUPIAH = 'rupiah';
 
-    const SEGMENT = 'segment';
+    public const SEGMENT = 'segment';
 
-    const SUBMIT = 'submit';
+    public const SUBMIT = 'submit';
 
-    const TEXT = 'text';
+    public const TEXT = 'text';
 
-    const TEXTAREA = 'textarea';
+    public const TEXTAREA = 'textarea';
 
-    const TIME = 'time';
+    public const TIME = 'time';
 
-    const UPLOADER = 'uploader';
+    public const UPLOADER = 'uploader';
 }

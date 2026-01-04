@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;

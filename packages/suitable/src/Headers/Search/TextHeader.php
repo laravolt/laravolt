@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Headers\Search;
 
 use Illuminate\Support\Arr;
@@ -18,14 +20,14 @@ class TextHeader implements \Laravolt\Suitable\Contracts\Header
         $this->name = $name;
     }
 
-    public static function make($name)
-    {
-        return new self($name);
-    }
-
     public function __toString()
     {
         return $this->render();
+    }
+
+    public static function make($name)
+    {
+        return new self($name);
     }
 
     public function setAttributes(array $attributes): \Laravolt\Suitable\Contracts\Header

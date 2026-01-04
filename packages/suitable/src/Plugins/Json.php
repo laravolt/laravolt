@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Plugins;
 
 use Laravolt\Suitable\Builder;
@@ -10,7 +12,7 @@ class Json extends Html implements \Laravolt\Suitable\Contracts\Plugin
 
     public function init()
     {
-        $this->shouldResponse = request()->wantsJson() || request('format') == 'json';
+        $this->shouldResponse = request()->wantsJson() || request('format') === 'json';
     }
 
     public function shouldResponse(): bool

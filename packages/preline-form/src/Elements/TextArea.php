@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
+
+use Closure;
 
 class TextArea extends FormControl
 {
@@ -15,11 +19,6 @@ class TextArea extends FormControl
     {
         parent::__construct($name);
         $this->setDefaultClasses();
-    }
-
-    protected function setDefaultClasses()
-    {
-        $this->addClass('py-2 px-3 sm:py-3 sm:px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:placeholder:text-white/60 dark:focus:ring-neutral-600');
     }
 
     public function value($value)
@@ -74,16 +73,6 @@ class TextArea extends FormControl
         return parent::hasError();
     }
 
-    protected function hasValue()
-    {
-        return isset($this->value);
-    }
-
-    protected function getError()
-    {
-        return $this->errorMessage;
-    }
-
     public function render()
     {
         $idAttribute = $this->getAttribute('id') ?? md5($this->getAttribute('name'));
@@ -106,6 +95,21 @@ class TextArea extends FormControl
         return $result;
     }
 
+    protected function setDefaultClasses()
+    {
+        $this->addClass('py-2 px-3 sm:py-3 sm:px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:placeholder:text-white/60 dark:focus:ring-neutral-600');
+    }
+
+    protected function hasValue()
+    {
+        return isset($this->value);
+    }
+
+    protected function getError()
+    {
+        return $this->errorMessage;
+    }
+
     protected function renderControl()
     {
         return sprintf('<textarea%s>%s</textarea>', $this->renderAttributes(), form_escape($this->value ?? ''));
@@ -113,7 +117,7 @@ class TextArea extends FormControl
 
     protected function decorateField(Field $field)
     {
-        if ($this->fieldCallback instanceof \Closure) {
+        if ($this->fieldCallback instanceof Closure) {
             call_user_func($this->fieldCallback, $field);
         }
 

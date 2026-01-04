@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'user_created' => 'Pengguna baru berhasil ditambahkan',
     'user_deleted' => 'Pengguna berhasil dihapus',

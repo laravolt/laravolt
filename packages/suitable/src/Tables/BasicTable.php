@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Tables;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -9,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Laravolt\Suitable\Columns\Text;
 use Laravolt\Suitable\TableView;
+use stdClass;
 
 class BasicTable extends TableView
 {
@@ -52,7 +55,7 @@ class BasicTable extends TableView
             $table = app($source)->getTable();
         } elseif ($source instanceof LengthAwarePaginator || $source instanceof Collection) {
             if (($item = $source->first()) !== null) {
-                if ($item instanceof \stdClass) {
+                if ($item instanceof stdClass) {
                     return array_keys((array) $item);
                 }
 
@@ -65,7 +68,7 @@ class BasicTable extends TableView
         }
 
         if (is_string($table) && Schema::hasTable($table)) {
-            return \Illuminate\Support\Facades\Schema::getColumnListing($table);
+            return Schema::getColumnListing($table);
         }
 
         return [];

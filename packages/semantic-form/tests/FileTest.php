@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\File;
 
-class FileTest extends \PHPUnit\Framework\TestCase
+class FileTest extends PHPUnit\Framework\TestCase
 {
     public function test_render_file_input()
     {

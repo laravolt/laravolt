@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'middleware' => ['web', 'auth'],
     'features' => [
@@ -37,7 +39,7 @@ return [
             'content' => '<h3 class="ui horizontal divider hidden m-t-3">Tampilan Sidebar</h3>',
         ],
         [
-            'type' => \Laravolt\Fields\Field::DROPDOWN_COLOR,
+            'type' => Laravolt\Fields\Field::DROPDOWN_COLOR,
             'name' => 'color',
             'label' => 'Warna Aksen',
             'inline' => true,

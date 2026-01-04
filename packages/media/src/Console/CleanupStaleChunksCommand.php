@@ -31,6 +31,7 @@ class CleanupStaleChunksCommand extends Command
 
         if ($hours <= 0) {
             $this->error('Hours must be a positive integer.');
+
             return 1;
         }
 

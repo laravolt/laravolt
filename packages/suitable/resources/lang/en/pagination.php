@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'summary' => 'Showing :from-:to from :total',
     'empty' => 'No data found',

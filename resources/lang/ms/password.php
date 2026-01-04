@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'click_to_reset' => '<a href=":link">Klik pautan ini</a> untuk menetapkan semula kata laluan anda.',
     'your_new_password' => 'Kata laluan baru anda: <strong>:password</strong>',

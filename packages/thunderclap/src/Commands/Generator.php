@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Thunderclap\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Laravolt\Thunderclap\DBHelper;
 use Laravolt\Thunderclap\FileTransformer;
 use Laravolt\Thunderclap\ModelDetector;
@@ -239,7 +243,7 @@ class Generator extends Command
                     if ($existingModel && $modelAction === 'enhance' && Str::endsWith($newFile, 'Controller.php')) {
                         $this->postProcessControllerForExistingModel($newFile, $existingModel, $moduleName);
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->error($e->getMessage());
                 }
             }
@@ -275,7 +279,7 @@ class Generator extends Command
             $str .= "'$val'".',';
         }
 
-        return substr($str, 0, -1);
+        return mb_substr($str, 0, -1);
     }
 
     protected function getRouteUrlPrefix($routePrefix, $module)
@@ -305,7 +309,7 @@ class Generator extends Command
         }
 
         // Throw exception if both directory doesn't exists
-        throw new \InvalidArgumentException(sprintf('Invalid directory for template named "%s"', $template));
+        throw new InvalidArgumentException(sprintf('Invalid directory for template named "%s"', $template));
     }
 
     /**
@@ -333,7 +337,7 @@ class Generator extends Command
             $searchableColumns = [];
             if ($this->transformer) {
                 $searchableString = $this->transformer->toSearchableColumns();
-                $searchableColumns = array_map('trim', explode(',', trim($searchableString, "'")));
+                $searchableColumns = array_map('trim', explode(',', mb_trim($searchableString, "'")));
                 $searchableColumns = array_filter($searchableColumns, function ($col) {
                     return ! empty($col) && $col !== "''";
                 });
@@ -358,7 +362,7 @@ class Generator extends Command
             } else {
                 $this->error('✗ Failed to enhance model');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error("✗ Error enhancing model: {$e->getMessage()}");
             $this->info('Restoring from backup...');
             $this->modelEnhancer->restoreFromBackup($modelInfo['path'], $backup);

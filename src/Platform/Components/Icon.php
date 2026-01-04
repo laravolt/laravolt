@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Components;
 
+use Closure;
 use Illuminate\View\Component;
 
 class Icon extends Component
@@ -22,7 +25,7 @@ class Icon extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Closure
+     * @return Closure
      */
     public function render()
     {

@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable;
 
+use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Laravolt\Suitable\Columns\ColumnInterface;
 use Laravolt\Suitable\Columns\Dummy;
 use Laravolt\Suitable\Columns\Raw;
@@ -60,7 +64,7 @@ class Builder
 
     public function source($collection)
     {
-        if ($collection instanceof \Closure) {
+        if ($collection instanceof Closure) {
             $collection = call_user_func($collection);
         }
 
@@ -101,7 +105,7 @@ class Builder
     public function search($search = true)
     {
         if (! is_bool($search) && ! is_string($search)) {
-            throw new \InvalidArgumentException('Only boolean or string allowed');
+            throw new InvalidArgumentException('Only boolean or string allowed');
         }
         if ($search === true) {
             $this->search = config('suitable.query_string.search');
@@ -274,16 +278,16 @@ class Builder
 
         $columnObject = Dummy::make(null, $header);
 
-        if (Arr::has($column, 'raw') && $column['raw'] instanceof \Closure) {
+        if (Arr::has($column, 'raw') && $column['raw'] instanceof Closure) {
             $columnObject = Raw::make($column['raw'], $header);
         }
 
         if ($view = Arr::get($column, 'view')) {
-            $columnObject = \Laravolt\Suitable\Columns\View::make($view, $header);
+            $columnObject = Columns\View::make($view, $header);
         }
 
         if ($field = Arr::get($column, 'field')) {
-            $columnObject = \Laravolt\Suitable\Columns\Text::make($field, $header);
+            $columnObject = Columns\Text::make($field, $header);
         }
 
         if ($columnObject instanceof ColumnInterface) {

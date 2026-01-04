@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\DatabaseMonitor\Controllers;
 
+use Exception;
 use Illuminate\Routing\Controller;
 use Laravolt\DatabaseMonitor\Jobs\BackupDatabaseJob;
 
@@ -27,7 +30,7 @@ class BackupController extends Controller
                         auth()->user()->email
                     )
                 );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         }
     }

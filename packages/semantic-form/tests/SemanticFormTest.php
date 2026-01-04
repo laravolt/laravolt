@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Session;
 use Laravolt\SemanticForm\SemanticForm;
 
-class SemanticFormTest extends \PHPUnit\Framework\TestCase
+class SemanticFormTest extends PHPUnit\Framework\TestCase
 {
     protected function setUp(): void
     {
@@ -866,7 +868,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
         $timeOptions = [];
         foreach (range(0, 23) as $hour) {
-            if (strlen($hour) == 1) {
+            if (mb_strlen($hour) === 1) {
                 $hour = '0'.$hour;
             }
             $key = $val = sprintf('%s:%s', $hour, '00');
@@ -905,7 +907,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
         $timeOptions = [];
         foreach (range(0, 23) as $hour) {
-            if (strlen($hour) == 1) {
+            if (mb_strlen($hour) === 1) {
                 $hour = '0'.$hour;
             }
             $key = $val = sprintf('%s:%s', $hour, '00');
@@ -956,7 +958,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
 
     public function test_uploader()
     {
-        \Illuminate\Support\Facades\Route::shouldReceive('has')->once()->andReturn(true);
+        Illuminate\Support\Facades\Route::shouldReceive('has')->once()->andReturn(true);
 
         $result = (string) $this->form->uploader('avatar');
         $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
@@ -1197,7 +1199,7 @@ class SemanticFormTest extends \PHPUnit\Framework\TestCase
     public function test_field_callback()
     {
         $expected = '<div class="field inline"><label>Name</label><input type="text" name="name"></div>';
-        $callback = function (\Laravolt\SemanticForm\Elements\Field $field) {
+        $callback = function (Laravolt\SemanticForm\Elements\Field $field) {
             $field->addClass('inline');
         };
         $result = $this->form->text('name')->label('Name', $callback)->render();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Toolbars;
 
 class Action extends Toolbar implements \Laravolt\Suitable\Contracts\Toolbar

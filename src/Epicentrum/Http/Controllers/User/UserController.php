@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Controllers\User;
 
+use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
@@ -33,7 +36,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function index()
     {

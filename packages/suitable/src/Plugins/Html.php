@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Plugins;
 
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
 use Laravolt\Suitable\Builder;
 use Laravolt\Suitable\Toolbars\Search;
 
@@ -47,7 +50,7 @@ class Html extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     public function search($search)
     {
         if (! is_bool($search) && ! is_string($search)) {
-            throw new \InvalidArgumentException('Only boolean or string allowed');
+            throw new InvalidArgumentException('Only boolean or string allowed');
         }
         if ($search === true) {
             $this->search = config('suitable.query_string.search');

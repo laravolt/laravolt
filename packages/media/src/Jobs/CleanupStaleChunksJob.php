@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\Jobs;
 
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class CleanupStaleChunksJob implements ShouldQueue
 {
@@ -48,18 +50,29 @@ class CleanupStaleChunksJob implements ShouldQueue
         try {
             $this->cleanupLocalChunks();
             $this->cleanupStorageChunks();
-            
+
             Log::info('Chunked upload cleanup completed', [
                 'stale_after_hours' => $this->staleAfterHours,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Chunked upload cleanup failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            
+
             throw $e;
         }
+    }
+
+    /**
+     * Handle a job failure.
+     */
+    public function failed(Throwable $exception): void
+    {
+        Log::error('Chunked upload cleanup job failed', [
+            'error' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString(),
+        ]);
     }
 
     /**
@@ -68,8 +81,8 @@ class CleanupStaleChunksJob implements ShouldQueue
     protected function cleanupLocalChunks(): void
     {
         $chunksPath = storage_path('app/chunks');
-        
-        if (!File::exists($chunksPath)) {
+
+        if (! File::exists($chunksPath)) {
             return;
         }
 
@@ -82,16 +95,16 @@ class CleanupStaleChunksJob implements ShouldQueue
 
         foreach ($chunkDirs as $chunkDir) {
             $lastModified = File::lastModified($chunkDir);
-            
+
             if ($lastModified < $staleTime->timestamp) {
                 // Calculate size before deletion
                 $dirSize = $this->getDirectorySize($chunkDir);
                 $totalSize += $dirSize;
-                
+
                 // Delete the entire chunk directory
                 File::deleteDirectory($chunkDir);
                 $deletedCount++;
-                
+
                 Log::debug('Deleted stale chunk directory', [
                     'path' => $chunkDir,
                     'size' => $dirSize,
@@ -116,8 +129,8 @@ class CleanupStaleChunksJob implements ShouldQueue
     {
         $disk = Storage::disk(config('filesystems.default'));
         $chunksPath = 'chunks';
-        
-        if (!$disk->exists($chunksPath)) {
+
+        if (! $disk->exists($chunksPath)) {
             return;
         }
 
@@ -130,18 +143,18 @@ class CleanupStaleChunksJob implements ShouldQueue
         foreach ($chunkDirs as $chunkDir) {
             try {
                 $lastModified = $disk->lastModified($chunkDir);
-                
+
                 if ($lastModified < $staleTime->timestamp) {
                     // Delete the entire chunk directory
                     $disk->deleteDirectory($chunkDir);
                     $deletedCount++;
-                    
+
                     Log::debug('Deleted stale chunk directory from storage', [
                         'path' => $chunkDir,
                         'last_modified' => date('Y-m-d H:i:s', $lastModified),
                     ]);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::warning('Failed to process chunk directory', [
                     'path' => $chunkDir,
                     'error' => $e->getMessage(),
@@ -162,8 +175,8 @@ class CleanupStaleChunksJob implements ShouldQueue
     protected function getDirectorySize(string $directory): int
     {
         $size = 0;
-        
-        if (!File::exists($directory)) {
+
+        if (! File::exists($directory)) {
             return 0;
         }
 
@@ -172,16 +185,5 @@ class CleanupStaleChunksJob implements ShouldQueue
         }
 
         return $size;
-    }
-
-    /**
-     * Handle a job failure.
-     */
-    public function failed(\Throwable $exception): void
-    {
-        Log::error('Chunked upload cleanup job failed', [
-            'error' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString(),
-        ]);
     }
 }

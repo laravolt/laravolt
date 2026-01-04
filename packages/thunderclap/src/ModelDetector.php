@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Thunderclap;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -136,6 +139,32 @@ class ModelDetector
     }
 
     /**
+     * Get table name from model
+     */
+    public function getTableFromModel(string $modelClass): ?string
+    {
+        if (! class_exists($modelClass)) {
+            return null;
+        }
+
+        try {
+            $model = new $modelClass;
+
+            return $model->getTable();
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Suggest model name for table
+     */
+    public function suggestModelName(string $table): string
+    {
+        return Str::singular(Str::studly($table));
+    }
+
+    /**
      * Get all traits used by a class including parent classes
      */
     protected function getAllTraits(ReflectionClass $reflection): array
@@ -162,32 +191,6 @@ class ModelDetector
         $reflection = new ReflectionClass($modelClass);
 
         return $reflection->hasProperty('searchableColumns');
-    }
-
-    /**
-     * Get table name from model
-     */
-    public function getTableFromModel(string $modelClass): ?string
-    {
-        if (! class_exists($modelClass)) {
-            return null;
-        }
-
-        try {
-            $model = new $modelClass;
-
-            return $model->getTable();
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-
-    /**
-     * Suggest model name for table
-     */
-    public function suggestModelName(string $table): string
-    {
-        return Str::singular(Str::studly($table));
     }
 
     /**
@@ -247,7 +250,7 @@ class ModelDetector
             $reflection = new ReflectionClass($class);
 
             return $reflection->isSubclassOf('Illuminate\Database\Eloquent\Model');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }

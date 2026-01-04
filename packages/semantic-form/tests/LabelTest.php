@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\Label;
 
-class LabelTest extends \PHPUnit\Framework\TestCase
+class LabelTest extends PHPUnit\Framework\TestCase
 {
     protected function tearDown(): void
     {

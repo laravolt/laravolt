@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
+use Closure;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -38,24 +42,25 @@ abstract class Element
         'sixteen',
     ];
 
-    protected function getPrimaryControl()
+    public function __toString()
     {
+        try {
+            return $this->render();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function __call($method, $params)
+    {
+        $params = count($params) ? $params : [$method];
+        $params = array_merge([$method], $params);
+        call_user_func_array([$this, 'attribute'], $params);
+
         return $this;
     }
 
-    protected function setAttribute($attribute, $value = null)
-    {
-        if (is_null($value)) {
-            return;
-        }
-
-        $this->attributes[$attribute] = $value;
-    }
-
-    protected function removeAttribute($attribute)
-    {
-        unset($this->attributes[$attribute]);
-    }
+    abstract public function render();
 
     public function getAttribute($attribute, $default = null)
     {
@@ -84,7 +89,7 @@ abstract class Element
     public function attributes($attributes)
     {
         foreach ($attributes as $attribute => $value) {
-            if ($attribute == 'class') {
+            if ($attribute === 'class') {
                 $this->addClass($value);
             } else {
                 $this->setAttribute($attribute, $value);
@@ -138,8 +143,8 @@ abstract class Element
             return $this;
         }
 
-        $class = trim(str_replace($class, '', $this->attributes['class']));
-        if ($class == '') {
+        $class = mb_trim(str_replace($class, '', $this->attributes['class']));
+        if ($class === '') {
             $this->removeAttribute('class');
 
             return $this;
@@ -157,12 +162,7 @@ abstract class Element
         return $this;
     }
 
-    protected function setId($id)
-    {
-        $this->setAttribute('id', $id);
-    }
-
-    public function label($label, ?\Closure $callback = null)
+    public function label($label, ?Closure $callback = null)
     {
         if ($label) {
             $this->label = new Label($label);
@@ -200,15 +200,77 @@ abstract class Element
         return $this;
     }
 
-    abstract public function render();
-
-    public function __toString()
+    public function display()
     {
-        try {
-            return $this->render();
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        return sprintf(
+            '<tr %s><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
+            $this->renderFieldAttributes(),
+            $this->getAttribute('name'),
+            $this->label,
+            $this->displayValue()
+        );
+    }
+
+    public function displayValue()
+    {
+        return nl2br($this->value ?? $this->getAttribute('value'));
+    }
+
+    public function bindAttribute()
+    {
+        $args = func_get_args();
+        $element = $this->getPrimaryControl();
+        $attribute = $args[0] ?? null;
+        if ($attribute) {
+            unset($args[0]);
+            $element->setAttribute($attribute, sprintf($element->getAttribute($attribute), ...$args));
         }
+
+        return $this;
+    }
+
+    public function populateValue($values)
+    {
+        $element = $this->getPrimaryControl();
+
+        return $element->value(Arr::get($values, $element->normalizedName()));
+    }
+
+    public function normalizedName()
+    {
+        $element = $this->getPrimaryControl();
+        $name = $element->getAttribute('name');
+
+        return mb_trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
+    }
+
+    public function basename()
+    {
+        return Str::before($this->normalizedName(), '.');
+    }
+
+    protected function getPrimaryControl()
+    {
+        return $this;
+    }
+
+    protected function setAttribute($attribute, $value = null)
+    {
+        if (is_null($value)) {
+            return;
+        }
+
+        $this->attributes[$attribute] = $value;
+    }
+
+    protected function removeAttribute($attribute)
+    {
+        unset($this->attributes[$attribute]);
+    }
+
+    protected function setId($id)
+    {
+        $this->setAttribute('id', $id);
     }
 
     protected function beforeRender()
@@ -253,68 +315,10 @@ abstract class Element
 
     protected function decorateField(Field $field)
     {
-        if ($this->fieldCallback instanceof \Closure) {
+        if ($this->fieldCallback instanceof Closure) {
             call_user_func($this->fieldCallback, $field);
         }
 
         return $field;
-    }
-
-    public function display()
-    {
-        return sprintf(
-            '<tr %s><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
-            $this->renderFieldAttributes(),
-            $this->getAttribute('name'),
-            $this->label,
-            $this->displayValue()
-        );
-    }
-
-    public function displayValue()
-    {
-        return nl2br($this->value ?? $this->getAttribute('value'));
-    }
-
-    public function bindAttribute()
-    {
-        $args = func_get_args();
-        $element = $this->getPrimaryControl();
-        $attribute = $args[0] ?? null;
-        if ($attribute) {
-            unset($args[0]);
-            $element->setAttribute($attribute, sprintf($element->getAttribute($attribute), ...$args));
-        }
-
-        return $this;
-    }
-
-    public function populateValue($values)
-    {
-        $element = $this->getPrimaryControl();
-
-        return $element->value(Arr::get($values, $element->normalizedName()));
-    }
-
-    public function normalizedName()
-    {
-        $element = $this->getPrimaryControl();
-        $name = $element->getAttribute('name');
-
-        return trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
-    }
-
-    public function basename()
-    {
-        return Str::before($this->normalizedName(), '.');
-    }
-
-    public function __call($method, $params)
-    {
-        $params = count($params) ? $params : [$method];
-        $params = array_merge([$method], $params);
-        call_user_func_array([$this, 'attribute'], $params);
-
-        return $this;
     }
 }

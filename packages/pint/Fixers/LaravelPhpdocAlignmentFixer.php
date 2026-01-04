@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Pint\Fixers;
 
 use PhpCsFixer\DocBlock\TypeExpression;
@@ -77,7 +79,7 @@ class LaravelPhpdocAlignmentFixer implements FixerInterface
                 $tokens[$index]->getContent()
             );
 
-            if ($newContent == $tokens[$index]->getContent()) {
+            if ($newContent === $tokens[$index]->getContent()) {
                 continue;
             }
 

@@ -7,6 +7,7 @@ namespace Laravolt\Support\Base;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use ReflectionClass;
 
 abstract class BaseServiceProvider extends ServiceProvider
 {
@@ -14,11 +15,6 @@ abstract class BaseServiceProvider extends ServiceProvider
     protected $config;
 
     abstract public function getIdentifier();
-
-    protected function enabled()
-    {
-        return config('laravolt.platform.features.'.$this->getIdentifier()) ?? true;
-    }
 
     public function register()
     {
@@ -45,6 +41,11 @@ abstract class BaseServiceProvider extends ServiceProvider
                 ->bootMigrations()
                 ->bootTranslations();
         }
+    }
+
+    protected function enabled()
+    {
+        return config('laravolt.platform.features.'.$this->getIdentifier()) ?? true;
     }
 
     protected function bootRoutes()
@@ -104,7 +105,7 @@ abstract class BaseServiceProvider extends ServiceProvider
 
     protected function packagePath($path)
     {
-        $rc = new \ReflectionClass(get_class($this));
+        $rc = new ReflectionClass(get_class($this));
         $dir = dirname($rc->getFileName());
 
         return sprintf('%s/../%s', $dir, $path);

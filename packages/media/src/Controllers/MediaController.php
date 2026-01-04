@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Media\Controllers;
 
 use Illuminate\Routing\Controller;

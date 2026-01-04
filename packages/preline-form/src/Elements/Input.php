@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
+
+use Closure;
 
 abstract class Input extends FormControl
 {
@@ -39,7 +43,7 @@ abstract class Input extends FormControl
 
     protected function decorateField(Field $field)
     {
-        if ($this->fieldCallback instanceof \Closure) {
+        if ($this->fieldCallback instanceof Closure) {
             call_user_func($this->fieldCallback, $field);
         }
 

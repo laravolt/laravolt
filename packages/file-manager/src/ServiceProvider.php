@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\FileManager;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;

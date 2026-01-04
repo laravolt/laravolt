@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
+
+use DateTimeImmutable;
 
 class Datepicker extends Date
 {
@@ -19,7 +23,7 @@ class Datepicker extends Date
 
     public function value($value)
     {
-        if ($value instanceof \DateTime) {
+        if ($value instanceof DateTimeImmutable) {
             $value = $value->format($this->format);
         }
 

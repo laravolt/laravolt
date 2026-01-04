@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -9,21 +11,6 @@ use Illuminate\Support\Str;
 /** @mixin Builder */
 trait AutoFilter
 {
-    private function isJsonColumn($castField, $column)
-    {
-        $jsonFieldName = $column;
-        if (Str::contains($column, '.')) {
-            $jsonFieldName = Str::beforeLast($column, '.');
-        }
-
-        // Filter item, with key == column  and value is array
-        $found = collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
-            return $key === $jsonFieldName && $value === 'array';
-        });
-
-        return count($found) > 0;
-    }
-
     public function scopeAutoFilter(Builder $query, $filter = 'filter')
     {
         // Only apply filter defined in $filterableColumns
@@ -61,5 +48,20 @@ trait AutoFilter
                 $query->whereIn($column, Arr::flatten($value));
             }
         }
+    }
+
+    private function isJsonColumn($castField, $column)
+    {
+        $jsonFieldName = $column;
+        if (Str::contains($column, '.')) {
+            $jsonFieldName = Str::beforeLast($column, '.');
+        }
+
+        // Filter item, with key == column  and value is array
+        $found = collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
+            return $key === $jsonFieldName && $value === 'array';
+        });
+
+        return count($found) > 0;
     }
 }

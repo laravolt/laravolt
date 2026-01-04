@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Repositories;
 
+use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -51,7 +54,7 @@ class EloquentRepository implements RepositoryInterface
      * @param  null  $roles
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function createByAdmin(array $attributes, $roles = null)
     {

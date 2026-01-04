@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 abstract class FormControl extends Element
@@ -11,11 +13,6 @@ abstract class FormControl extends Element
     public function __construct($name)
     {
         $this->setName($name);
-    }
-
-    protected function setName($name)
-    {
-        $this->setAttribute('name', $name);
     }
 
     public function readonly($readonly = true)
@@ -94,5 +91,10 @@ abstract class FormControl extends Element
     public function getValue()
     {
         return $this->value ?? $this->getAttribute('value');
+    }
+
+    protected function setName($name)
+    {
+        $this->setAttribute('name', $name);
     }
 }

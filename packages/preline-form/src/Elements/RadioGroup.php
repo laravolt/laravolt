@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class RadioGroup extends Element
@@ -65,6 +67,24 @@ class RadioGroup extends Element
         return $this;
     }
 
+    public function displayValue()
+    {
+        if ($this->checkedValue === null) {
+            return '';
+        }
+
+        return $this->options[$this->checkedValue] ?? $this->checkedValue;
+    }
+
+    public function render()
+    {
+        if ($this->label) {
+            return $this->renderField();
+        }
+
+        return $this->renderControl();
+    }
+
     protected function hasError()
     {
         return $this->hasError;
@@ -73,15 +93,6 @@ class RadioGroup extends Element
     protected function getError()
     {
         return $this->errorMessage;
-    }
-
-    public function displayValue()
-    {
-        if ($this->checkedValue === null) {
-            return '';
-        }
-
-        return $this->options[$this->checkedValue] ?? $this->checkedValue;
     }
 
     protected function renderControl()
@@ -93,7 +104,7 @@ class RadioGroup extends Element
             $radio = new RadioButton($this->name, $value);
             $radio->attributes(compact('id'));
 
-            if ($this->checkedValue == $value) {
+            if ($this->checkedValue === $value) {
                 $radio->checked(true);
             }
 
@@ -110,14 +121,5 @@ class RadioGroup extends Element
         $output .= '</div>';
 
         return $output;
-    }
-
-    public function render()
-    {
-        if ($this->label) {
-            return $this->renderField();
-        }
-
-        return $this->renderControl();
     }
 }

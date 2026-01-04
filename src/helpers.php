@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt;
 
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 if (! function_exists('platform_path')) {
     /**
@@ -40,9 +43,9 @@ if (! function_exists('platform_max_file_upload')) {
 if (! function_exists('shorthand_to_byte')) {
     function shorthand_to_byte($shorthand): int
     {
-        $shorthand = trim($shorthand);
+        $shorthand = mb_trim($shorthand);
         $val = (int) $shorthand;
-        $last = strtolower($shorthand[strlen($shorthand) - 1]);
+        $last = mb_strtolower($shorthand[mb_strlen($shorthand) - 1]);
 
         switch ($last) {
             case 'g':
@@ -91,9 +94,9 @@ if (! function_exists('readable_number')) {
         foreach ($thresholds as $suffix => $threshold) {
             if ($value < $threshold) {
                 $formattedNumber = number_format($value / ($threshold / $thresholds['']), $precision);
-                $cleanedNumber = (strpos($formattedNumber, '.') === false)
+                $cleanedNumber = (mb_strpos($formattedNumber, '.') === false)
                     ? $formattedNumber
-                    : rtrim(rtrim($formattedNumber, '0'), '.');
+                    : mb_rtrim(mb_rtrim($formattedNumber, '0'), '.');
 
                 return $cleanedNumber.$suffix;
             }
@@ -213,17 +216,17 @@ if (! function_exists('readable_number')) {
                     number_to_terbilang($hasil_mod, '')
                 );
             } else {
-                throw new \InvalidArgumentException('Bilangan terlalu besar');
+                throw new InvalidArgumentException('Bilangan terlalu besar');
             }
 
-            $str = trim($str);
+            $str = mb_trim($str);
             if ($suffix) {
                 $str .= ' '.$suffix;
             }
 
             if ((int) (string) $fraction) {
                 $str .= ' koma';
-                foreach (str_split($fraction) as $decimal) {
+                foreach (mb_str_split($fraction) as $decimal) {
                     $str .= ' '.$bilangan[$decimal];
                 }
             }

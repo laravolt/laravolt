@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Services;
 
 class LaravoltBladeDirectives
@@ -149,128 +151,6 @@ class LaravoltBladeDirectives
         HTML;
     }
 
-    protected static function parseExpression($expression)
-    {
-        // Remove parentheses and trim
-        $expression = trim($expression, '()');
-
-        if (empty($expression)) {
-            return [];
-        }
-
-        // Simple parsing - split by comma and handle arrays
-        $parts = [];
-        $current = '';
-        $bracketCount = 0;
-        $quoteChar = null;
-
-        for ($i = 0; $i < strlen($expression); $i++) {
-            $char = $expression[$i];
-
-            if ($quoteChar !== null) {
-                if ($char === $quoteChar) {
-                    $quoteChar = null;
-                }
-                $current .= $char;
-            } elseif ($char === '"' || $char === "'") {
-                $quoteChar = $char;
-                $current .= $char;
-            } elseif ($char === '[') {
-                $bracketCount++;
-                $current .= $char;
-            } elseif ($char === ']') {
-                $bracketCount--;
-                $current .= $char;
-            } elseif ($char === ',' && $bracketCount === 0) {
-                $parts[] = trim($current);
-                $current = '';
-            } else {
-                $current .= $char;
-            }
-        }
-
-        if (! empty($current)) {
-            $parts[] = trim($current);
-        }
-
-        // Convert string representations to actual values
-        foreach ($parts as &$part) {
-            $part = static::parseValue($part);
-        }
-
-        return $parts;
-    }
-
-    protected static function parseValue($value)
-    {
-        $value = trim($value);
-
-        // Handle arrays
-        if (strpos($value, '[') === 0 && strrpos($value, ']') === strlen($value) - 1) {
-            $arrayContent = trim($value, '[]');
-            if (empty($arrayContent)) {
-                return [];
-            }
-
-            $items = explode(',', $arrayContent);
-            $parsedItems = [];
-
-            foreach ($items as $item) {
-                $parsedItems[] = static::parseValue(trim($item));
-            }
-
-            return $parsedItems;
-        }
-
-        // Handle strings
-        if ((strpos($value, '"') === 0 && strrpos($value, '"') === strlen($value) - 1) ||
-            (strpos($value, "'") === 0 && strrpos($value, "'") === strlen($value) - 1)) {
-            return trim($value, '"\'');
-        }
-
-        // Handle booleans
-        if ($value === 'true') {
-            return true;
-        }
-        if ($value === 'false') {
-            return false;
-        }
-
-        // Handle null
-        if ($value === 'null') {
-            return null;
-        }
-
-        // Handle numbers
-        if (is_numeric($value)) {
-            return strpos($value, '.') !== false ? (float) $value : (int) $value;
-        }
-
-        // Default to string
-        return $value;
-    }
-
-    protected static function arrayToJsObject(array $array): string
-    {
-        $items = [];
-
-        foreach ($array as $key => $value) {
-            if ($value === null) {
-                $items[] = "'{$key}': null";
-            } elseif (is_bool($value)) {
-                $items[] = "'{$key}': ".($value ? 'true' : 'false');
-            } elseif (is_numeric($value)) {
-                $items[] = "'{$key}': {$value}";
-            } elseif (is_string($value)) {
-                $items[] = "'{$key}': '{$value}'";
-            } elseif (is_array($value)) {
-                $items[] = "'{$key}': ".static::arrayToJsObject($value);
-            }
-        }
-
-        return '{'.implode(', ', $items).'}';
-    }
-
     public static function styles($expression)
     {
         $accent = config('laravolt.ui.colors.'.config('laravolt.ui.color'), '#3b82f6');
@@ -333,5 +213,127 @@ class LaravoltBladeDirectives
             }
           </style>
         HTML;
+    }
+
+    protected static function parseExpression($expression)
+    {
+        // Remove parentheses and trim
+        $expression = mb_trim($expression, '()');
+
+        if (empty($expression)) {
+            return [];
+        }
+
+        // Simple parsing - split by comma and handle arrays
+        $parts = [];
+        $current = '';
+        $bracketCount = 0;
+        $quoteChar = null;
+
+        for ($i = 0; $i < mb_strlen($expression); $i++) {
+            $char = $expression[$i];
+
+            if ($quoteChar !== null) {
+                if ($char === $quoteChar) {
+                    $quoteChar = null;
+                }
+                $current .= $char;
+            } elseif ($char === '"' || $char === "'") {
+                $quoteChar = $char;
+                $current .= $char;
+            } elseif ($char === '[') {
+                $bracketCount++;
+                $current .= $char;
+            } elseif ($char === ']') {
+                $bracketCount--;
+                $current .= $char;
+            } elseif ($char === ',' && $bracketCount === 0) {
+                $parts[] = mb_trim($current);
+                $current = '';
+            } else {
+                $current .= $char;
+            }
+        }
+
+        if (! empty($current)) {
+            $parts[] = mb_trim($current);
+        }
+
+        // Convert string representations to actual values
+        foreach ($parts as &$part) {
+            $part = static::parseValue($part);
+        }
+
+        return $parts;
+    }
+
+    protected static function parseValue($value)
+    {
+        $value = mb_trim($value);
+
+        // Handle arrays
+        if (mb_strpos($value, '[') === 0 && mb_strrpos($value, ']') === mb_strlen($value) - 1) {
+            $arrayContent = mb_trim($value, '[]');
+            if (empty($arrayContent)) {
+                return [];
+            }
+
+            $items = explode(',', $arrayContent);
+            $parsedItems = [];
+
+            foreach ($items as $item) {
+                $parsedItems[] = static::parseValue(mb_trim($item));
+            }
+
+            return $parsedItems;
+        }
+
+        // Handle strings
+        if ((mb_strpos($value, '"') === 0 && mb_strrpos($value, '"') === mb_strlen($value) - 1) ||
+            (mb_strpos($value, "'") === 0 && mb_strrpos($value, "'") === mb_strlen($value) - 1)) {
+            return mb_trim($value, '"\'');
+        }
+
+        // Handle booleans
+        if ($value === 'true') {
+            return true;
+        }
+        if ($value === 'false') {
+            return false;
+        }
+
+        // Handle null
+        if ($value === 'null') {
+            return null;
+        }
+
+        // Handle numbers
+        if (is_numeric($value)) {
+            return mb_strpos($value, '.') !== false ? (float) $value : (int) $value;
+        }
+
+        // Default to string
+        return $value;
+    }
+
+    protected static function arrayToJsObject(array $array): string
+    {
+        $items = [];
+
+        foreach ($array as $key => $value) {
+            if ($value === null) {
+                $items[] = "'{$key}': null";
+            } elseif (is_bool($value)) {
+                $items[] = "'{$key}': ".($value ? 'true' : 'false');
+            } elseif (is_numeric($value)) {
+                $items[] = "'{$key}': {$value}";
+            } elseif (is_string($value)) {
+                $items[] = "'{$key}': '{$value}'";
+            } elseif (is_array($value)) {
+                $items[] = "'{$key}': ".static::arrayToJsObject($value);
+            }
+        }
+
+        return '{'.implode(', ', $items).'}';
     }
 }

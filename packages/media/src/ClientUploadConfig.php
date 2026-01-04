@@ -191,7 +191,7 @@ class ClientUploadConfig
     {
         $allowedExtensions = static::getAllowedExtensions();
 
-        return $allowedExtensions === null || in_array(strtolower($extension), $allowedExtensions, true);
+        return $allowedExtensions === null || in_array(mb_strtolower($extension), $allowedExtensions, true);
     }
 
     /**

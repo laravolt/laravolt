@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 if (! function_exists('preline_form')) {
     /**
-     * @return \Laravolt\PrelineForm\PrelineForm
+     * @return Laravolt\PrelineForm\PrelineForm
      */
     function preline_form()
     {
@@ -14,7 +16,7 @@ if (! function_exists('form_escape')) {
     /**
      * Escape HTML special characters in a string.
      *
-     * @param  \Illuminate\Contracts\Support\Htmlable|string  $value
+     * @param  Illuminate\Contracts\Support\Htmlable|string  $value
      * @return string
      */
     function form_escape($value)

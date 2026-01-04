@@ -1,6 +1,8 @@
 <?php
 
-\Illuminate\Support\Facades\Route::group(
+declare(strict_types=1);
+
+Illuminate\Support\Facades\Route::group(
     [
         'namespace' => '',
         'prefix' => '',
@@ -8,6 +10,6 @@
         'middleware' => ['web'],
     ],
     function ($router) {
-        $router->post('laravolt/api/dropdown', \Laravolt\SemanticForm\DbProxy::class)->name('api.dropdown');
+        $router->post('laravolt/api/dropdown', Laravolt\SemanticForm\DbProxy::class)->name('api.dropdown');
     }
 );

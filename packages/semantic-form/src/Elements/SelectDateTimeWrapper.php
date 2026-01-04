@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
+
+use Exception;
+use InvalidArgumentException;
 
 class SelectDateTimeWrapper extends SelectDateWrapper
 {
@@ -10,8 +15,8 @@ class SelectDateTimeWrapper extends SelectDateWrapper
     {
         try {
             $date = $this->asDateTime($value);
-        } catch (\Exception $e) {
-            throw new \InvalidArgumentException(
+        } catch (Exception $e) {
+            throw new InvalidArgumentException(
                 'Argument must be an instance of Carbon or DateTime, or date string in Y-m-d format.'
             );
         }

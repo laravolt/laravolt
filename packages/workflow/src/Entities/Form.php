@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Workflow\Entities;
 
+use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Laravolt\Fields\Field;
@@ -28,7 +29,7 @@ class Form extends DataTransferObject
         return $variables;
     }
 
-    public function modifyVariables(\Closure $callback): void
+    public function modifyVariables(Closure $callback): void
     {
         $this->callbacks[] = $callback;
     }

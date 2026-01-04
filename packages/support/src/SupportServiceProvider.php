@@ -28,11 +28,11 @@ class SupportServiceProvider extends ServiceProvider
         Str::mixin(new StrMixin);
 
         EloquentBuilder::macro('whereLike', function ($attributes, ?string $searchTerm) {
-            if ($searchTerm === null || trim($searchTerm) === '') {
+            if ($searchTerm === null || mb_trim($searchTerm) === '') {
                 return $this;
             }
 
-            $searchTerm = trim(DB::getPdo()->quote((strtolower($searchTerm))), "'");
+            $searchTerm = mb_trim(DB::getPdo()->quote((mb_strtolower($searchTerm))), "'");
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Asset;
 
 use Laravolt\Asset\Exceptions\AssetCollectionNotFoundException;
@@ -276,18 +278,6 @@ class AssetManager
     }
 
     /**
-     * Build link to local asset.
-     * Detects packages links.
-     *
-     * @param  string  $asset
-     * @return string the link
-     */
-    protected function buildLocalLink($asset)
-    {
-        return asset($asset);
-    }
-
-    /**
      * Build an HTML attribute string from an array.
      */
     public function buildTagAttributes(array $attributes): string
@@ -307,6 +297,18 @@ class AssetManager
         }
 
         return ! empty($html) ? ' '.implode(' ', $html) : '';
+    }
+
+    /**
+     * Build link to local asset.
+     * Detects packages links.
+     *
+     * @param  string  $asset
+     * @return string the link
+     */
+    protected function buildLocalLink($asset)
+    {
+        return asset($asset);
     }
 
     /**

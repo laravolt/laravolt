@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\AutoCrud;
 
 use Illuminate\Contracts\Support\Arrayable;
@@ -15,6 +17,16 @@ class SerializableRule implements Arrayable, JsonSerializable
     protected $ruleType;
 
     protected $parameters = [];
+
+    /**
+     * Convert the rule to a string when cast to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toString();
+    }
 
     /**
      * Create a new serializable unique rule.
@@ -130,16 +142,6 @@ class SerializableRule implements Arrayable, JsonSerializable
             return BaseRule::in($this->parameters['values']);
         }
 
-        return $this->toString();
-    }
-
-    /**
-     * Convert the rule to a string when cast to string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
         return $this->toString();
     }
 

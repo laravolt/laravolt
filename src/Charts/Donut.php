@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Charts;
 
 use Illuminate\Support\Arr;

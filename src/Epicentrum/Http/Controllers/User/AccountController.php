@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Controllers\User;
 
+use Exception;
 use Laravolt\Epicentrum\Contracts\Requests\Account\Update;
 
 class AccountController extends UserController
@@ -37,7 +40,7 @@ class AccountController extends UserController
             $this->repository->updateAccount($id, $request->except('_token', '_method'), $request->get('roles', []));
 
             return redirect()->back()->withSuccess(trans('laravolt::message.account_updated'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         }
     }

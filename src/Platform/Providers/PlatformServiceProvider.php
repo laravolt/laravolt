@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use App\Enums\Permission;
+use File;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -82,6 +83,7 @@ use Laravolt\Platform\Services\LaravoltBladeDirectives;
 use Laravolt\Platform\Services\Password;
 use Laravolt\Ui\ModalBag;
 use Livewire\Livewire;
+use PDOException;
 
 use function Laravolt\platform_path;
 
@@ -160,7 +162,7 @@ class PlatformServiceProvider extends ServiceProvider
 
     protected function registerConfig(): self
     {
-        $configFiles = \File::files(platform_path('config'));
+        $configFiles = File::files(platform_path('config'));
         $publishes = [];
         foreach ($configFiles as $file) {
             $c = $file->getBasename('.php');
@@ -244,7 +246,7 @@ class PlatformServiceProvider extends ServiceProvider
         $key = $this->app['config']['app.key'];
 
         if (Str::startsWith($key, 'base64:')) {
-            $key = base64_decode(substr($key, 7));
+            $key = base64_decode(mb_substr($key, 7));
         }
 
         $connection = $config['connection'] ?? null;
@@ -446,25 +448,9 @@ class PlatformServiceProvider extends ServiceProvider
     {
         try {
             return Schema::hasTable(app(config('laravolt.epicentrum.models.permission'))->getTable());
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
-    }
-
-    private function publishSkeleton()
-    {
-        $this->publishes(
-            [platform_path('stubs') => base_path()],
-            ['laravolt-skeleton']
-        );
-    }
-
-    private function publishAssets()
-    {
-        $this->publishes(
-            [platform_path('public') => public_path('laravolt')],
-            ['laravolt-assets']
-        );
     }
 
     protected function bootCustomAuthProvider()
@@ -493,5 +479,21 @@ class PlatformServiceProvider extends ServiceProvider
         Blade::directive('basictableScrollable', [LaravoltBladeDirectives::class, 'basictableScrollable']);
 
         return $this;
+    }
+
+    private function publishSkeleton()
+    {
+        $this->publishes(
+            [platform_path('stubs') => base_path()],
+            ['laravolt-skeleton']
+        );
+    }
+
+    private function publishAssets()
+    {
+        $this->publishes(
+            [platform_path('public') => public_path('laravolt')],
+            ['laravolt-assets']
+        );
     }
 }

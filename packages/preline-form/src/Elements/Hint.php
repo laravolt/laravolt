@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class Hint extends Element
 {
-    protected $text;
-
     public static $defaultClass = 'mt-2 text-sm text-gray-500 dark:text-neutral-500';
+
+    protected $text;
 
     public function __construct($text, $class = null)
     {

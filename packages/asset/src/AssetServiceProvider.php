@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Asset;
 
 use Laravolt\Support\Base\BaseServiceProvider;
@@ -11,17 +13,17 @@ class AssetServiceProvider extends BaseServiceProvider
         return 'asset';
     }
 
-    protected function enabled()
-    {
-        return true;
-    }
-
     public function boot()
     {
         $config = collect(config('laravolt.asset'));
         foreach ($config as $groupName => $groupConfig) {
             $this->bootAssetsManagerInstance($groupName, (array) $groupConfig);
         }
+    }
+
+    protected function enabled()
+    {
+        return true;
     }
 
     /**

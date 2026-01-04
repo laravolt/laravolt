@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Mailkeeper;
 
 use Symfony\Component\Mailer\SentMessage;
@@ -8,6 +10,11 @@ use Symfony\Component\Mime\Address;
 
 class DbTransport extends AbstractTransport
 {
+    public function __toString(): string
+    {
+        return 'db';
+    }
+
     protected function doSend(SentMessage $message): void
     {
         /** @var \Symfony\Component\Mime\Email $originalMessage */
@@ -33,11 +40,6 @@ class DbTransport extends AbstractTransport
         ];
 
         Mail::create($data);
-    }
-
-    public function __toString(): string
-    {
-        return 'db';
     }
 
     protected function normalizeAddresses(array $addresses): array

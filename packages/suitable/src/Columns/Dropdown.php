@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
 class Dropdown extends Column implements ColumnInterface
@@ -44,9 +46,10 @@ class Dropdown extends Column implements ColumnInterface
         $menu = collect($this->options)->map(function ($item) {
             if ($item === '-') {
                 return '<div class="divider"></div>';
-            } else {
-                return "<a class='item' href='{$item['url']}'><i class='icon {$item['icon']}'></i> {$item['label']}</a>";
             }
+
+            return "<a class='item' href='{$item['url']}'><i class='icon {$item['icon']}'></i> {$item['label']}</a>";
+
         })->implode('');
 
         $cssClass = collect($this->cssClass)->unique()->implode(' ');

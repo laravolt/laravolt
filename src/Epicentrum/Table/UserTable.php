@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Table;
 
 use Laravolt\Epicentrum\Repositories\RepositoryInterface;

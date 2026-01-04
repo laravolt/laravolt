@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\MessageBag;
 use Laravolt\SemanticForm\ErrorStore\IlluminateErrorStore;
 
-class IlluminateErrorStoreTest extends \PHPUnit\Framework\TestCase
+class IlluminateErrorStoreTest extends PHPUnit\Framework\TestCase
 {
     /**
      * @test

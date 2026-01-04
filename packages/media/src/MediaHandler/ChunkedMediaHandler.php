@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\MediaHandler;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Laravolt\Platform\Models\Guest;
 use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
@@ -61,7 +60,7 @@ class ChunkedMediaHandler
                 'success' => false,
                 'message' => 'Upload missing file exception',
             ], 400);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -132,7 +131,7 @@ class ChunkedMediaHandler
             $media->delete();
 
             return response()->json(['success' => true]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -155,7 +154,7 @@ class ChunkedMediaHandler
                 'status' => 'partial',
                 'percentage' => $handler->getPercentageDone(),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'not_found',
                 'percentage' => 0,

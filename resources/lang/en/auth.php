@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'activation_success' => 'Your account successfully activated.',
     'activation_subject' => 'Account Activation',

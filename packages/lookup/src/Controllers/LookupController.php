@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Lookup\Controllers;
 
+use Arr;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Laravolt\Lookup\Models\Lookup;
@@ -57,7 +58,7 @@ class LookupController extends Controller
     {
         $this->validateCollection($collection);
 
-        Lookup::createMultiple(\Arr::get($request->validated(), 'lookup'), $collection);
+        Lookup::createMultiple(Arr::get($request->validated(), 'lookup'), $collection);
 
         return redirect()->route('lookup::lookup.index', $collection)->withSuccess('Lookup berhasil disimpan');
     }

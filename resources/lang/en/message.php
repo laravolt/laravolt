@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'user_created' => 'New user added',
     'user_deleted' => 'User deleted',

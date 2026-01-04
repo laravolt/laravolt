@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
@@ -20,15 +22,6 @@ class InputWrapper extends Wrapper
 
         if (empty($this->controls)) {
             $this->controls[] = new Text('');
-        }
-    }
-
-    protected function beforeRender()
-    {
-        $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
-
-        if ($this->getPrimaryControl()->hasError()) {
-            $this->addClass('error');
         }
     }
 
@@ -144,6 +137,15 @@ class InputWrapper extends Wrapper
     public function hasError()
     {
         return $this->getPrimaryControl()->hasError();
+    }
+
+    protected function beforeRender()
+    {
+        $this->controls = array_merge(array_merge($this->controlsLeft, $this->controls), $this->controlsRight);
+
+        if ($this->getPrimaryControl()->hasError()) {
+            $this->addClass('error');
+        }
     }
 
     protected function clearLeftIcon()

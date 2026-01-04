@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class RadioButton extends Checkbox
@@ -18,11 +20,6 @@ class RadioButton extends Checkbox
 
         $this->setValue($value);
         $this->setDefaultClasses();
-    }
-
-    protected function setDefaultClasses()
-    {
-        $this->addClass('shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800');
     }
 
     public function checked($checked = true)
@@ -66,6 +63,26 @@ class RadioButton extends Checkbox
         return $this->isChecked ? $this->value : '';
     }
 
+    public function render()
+    {
+        if ($this->label) {
+            $output = '<div class="space-y-1">';
+            $output .= $this->renderControl();
+            $output .= $this->renderError();
+            $output .= $this->renderHint();
+            $output .= '</div>';
+
+            return $output;
+        }
+
+        return $this->renderControl();
+    }
+
+    protected function setDefaultClasses()
+    {
+        $this->addClass('shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800');
+    }
+
     protected function renderControl()
     {
         $output = sprintf('<input%s>', $this->renderAttributes());
@@ -80,20 +97,5 @@ class RadioButton extends Checkbox
         }
 
         return $output;
-    }
-
-    public function render()
-    {
-        if ($this->label) {
-            $output = '<div class="space-y-1">';
-            $output .= $this->renderControl();
-            $output .= $this->renderError();
-            $output .= $this->renderHint();
-            $output .= '</div>';
-
-            return $output;
-        }
-
-        return $this->renderControl();
     }
 }

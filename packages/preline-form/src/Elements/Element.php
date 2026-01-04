@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
+use Closure;
+use Exception;
 use Illuminate\Support\Arr;
 
 abstract class Element
@@ -16,29 +20,16 @@ abstract class Element
 
     protected $hint = [];
 
-    protected function getPrimaryControl()
+    public function __toString()
     {
-        return $this;
-    }
-
-    protected function setAttribute($attribute, $value = null)
-    {
-        if (is_null($value)) {
-            return;
+        try {
+            return $this->render();
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
-
-        $this->attributes[$attribute] = $value;
     }
 
-    protected function getAttribute($attribute)
-    {
-        return Arr::get($this->attributes, $attribute);
-    }
-
-    protected function removeAttribute($attribute)
-    {
-        unset($this->attributes[$attribute]);
-    }
+    abstract public function render();
 
     public function hasAttribute($attribute)
     {
@@ -84,7 +75,7 @@ abstract class Element
             $classes = explode(' ', $existingClasses);
             // Remove all classes that contain the $class substring
             $classes = array_filter($classes, function ($c) use ($class) {
-                return strpos($c, $class) === false;
+                return mb_strpos($c, $class) === false;
             });
             $this->setAttribute('class', implode(' ', $classes));
         }
@@ -102,7 +93,7 @@ abstract class Element
     public function attributes($attributes)
     {
         foreach ($attributes as $attribute => $value) {
-            if ($attribute == 'class') {
+            if ($attribute === 'class') {
                 $this->addClass($value);
             } else {
                 $this->setAttribute($attribute, $value);
@@ -132,12 +123,7 @@ abstract class Element
         return $this;
     }
 
-    protected function setId($id)
-    {
-        $this->setAttribute('id', $id);
-    }
-
-    public function label($label, ?\Closure $callback = null)
+    public function label($label, ?Closure $callback = null)
     {
         if ($label) {
             $this->label = new Label($label);
@@ -207,7 +193,7 @@ abstract class Element
     {
         $name = $this->getAttribute('name');
 
-        return trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
+        return mb_trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
     }
 
     public function basename()
@@ -218,15 +204,33 @@ abstract class Element
         return $parts[0] ?? '';
     }
 
-    abstract public function render();
-
-    public function __toString()
+    protected function getPrimaryControl()
     {
-        try {
-            return $this->render();
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        return $this;
+    }
+
+    protected function setAttribute($attribute, $value = null)
+    {
+        if (is_null($value)) {
+            return;
         }
+
+        $this->attributes[$attribute] = $value;
+    }
+
+    protected function getAttribute($attribute)
+    {
+        return Arr::get($this->attributes, $attribute);
+    }
+
+    protected function removeAttribute($attribute)
+    {
+        unset($this->attributes[$attribute]);
+    }
+
+    protected function setId($id)
+    {
+        $this->setAttribute('id', $id);
     }
 
     protected function beforeRender()
@@ -258,8 +262,8 @@ abstract class Element
 
     protected function renderLabel(?string $id = null)
     {
-        if ($this->label instanceof \Laravolt\PrelineForm\Elements\Label) {
-            /** @var \Laravolt\PrelineForm\Elements\Label $label */
+        if ($this->label instanceof Label) {
+            /** @var Label $label */
             $label = $this->label;
 
             if ($id) {

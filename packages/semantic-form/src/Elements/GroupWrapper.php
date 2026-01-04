@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 class GroupWrapper
@@ -11,14 +13,21 @@ class GroupWrapper
         $this->formGroup = $formGroup;
     }
 
-    public function render()
-    {
-        return $this->formGroup->render();
-    }
-
     public function __toString()
     {
         return $this->render();
+    }
+
+    public function __call($method, $parameters)
+    {
+        call_user_func_array([$this->formGroup->control(), $method], $parameters);
+
+        return $this;
+    }
+
+    public function render()
+    {
+        return $this->formGroup->render();
     }
 
     public function labelClass($class)
@@ -38,13 +47,6 @@ class GroupWrapper
     public function inline()
     {
         $this->formGroup->inline();
-
-        return $this;
-    }
-
-    public function __call($method, $parameters)
-    {
-        call_user_func_array([$this->formGroup->control(), $method], $parameters);
 
         return $this;
     }

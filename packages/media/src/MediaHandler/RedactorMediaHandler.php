@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\MediaHandler;
 
+use Exception;
 use Laravolt\Platform\Models\Guest;
 
 class RedactorMediaHandler
@@ -27,7 +28,7 @@ class RedactorMediaHandler
             }
 
             return response()->json($json);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(
                 [
                     'error' => $e->getMessage(),

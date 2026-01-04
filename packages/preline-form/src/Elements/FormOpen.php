@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 use Illuminate\Support\Facades\Session;
@@ -101,25 +103,6 @@ class FormOpen extends Element
         return $this->method('DELETE');
     }
 
-    protected function method($method)
-    {
-        $allowedMethods = ['GET', 'POST'];
-
-        if (in_array($method, $allowedMethods)) {
-            $this->setAttribute('method', $method);
-        } else {
-            $this->setAttribute('method', 'POST');
-            $this->hiddenMethod = $method;
-        }
-
-        return $this;
-    }
-
-    protected function hasHiddenMethod()
-    {
-        return ! is_null($this->hiddenMethod);
-    }
-
     public function horizontal()
     {
         // For Preline UI, we can add specific classes for horizontal form layout
@@ -138,5 +121,24 @@ class FormOpen extends Element
     public function multipart()
     {
         return $this->encodingType('multipart/form-data');
+    }
+
+    protected function method($method)
+    {
+        $allowedMethods = ['GET', 'POST'];
+
+        if (in_array($method, $allowedMethods)) {
+            $this->setAttribute('method', $method);
+        } else {
+            $this->setAttribute('method', 'POST');
+            $this->hiddenMethod = $method;
+        }
+
+        return $this;
+    }
+
+    protected function hasHiddenMethod()
+    {
+        return ! is_null($this->hiddenMethod);
     }
 }

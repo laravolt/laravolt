@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
 use Illuminate\Support\Facades\View;
@@ -27,11 +29,6 @@ class RestfulSwalButton extends RestfulButton
             ->render();
     }
 
-    protected function buildAdditionalButton($data)
-    {
-        return $this->additionalButton;
-    }
-
     public function additionalButton($label, $target)
     {
         $this->additionalButton = [
@@ -40,5 +37,10 @@ class RestfulSwalButton extends RestfulButton
         ];
 
         return $this;
+    }
+
+    protected function buildAdditionalButton($data)
+    {
+        return $this->additionalButton;
     }
 }

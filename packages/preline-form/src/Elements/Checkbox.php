@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class Checkbox extends Input
@@ -21,14 +23,9 @@ class Checkbox extends Input
         $this->setDefaultClasses();
     }
 
-    protected function setDefaultClasses()
-    {
-        $this->addClass('shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800');
-    }
-
     public function checked($checked = true)
     {
-        if ($checked == $this->value || $checked === true) {
+        if ($checked === $this->value || $checked === true) {
             $this->checked = true;
             $this->setAttribute('checked', 'checked');
         } else {
@@ -90,14 +87,34 @@ class Checkbox extends Input
         return parent::hasError();
     }
 
-    protected function getError()
-    {
-        return $this->errorMessage;
-    }
-
     public function displayValue()
     {
         return $this->checked ? 'Yes' : 'No';
+    }
+
+    public function render()
+    {
+        if ($this->label) {
+            $output = '<div class="space-y-1">';
+            $output .= $this->renderControl();
+            $output .= $this->renderError();
+            $output .= $this->renderHint();
+            $output .= '</div>';
+
+            return $output;
+        }
+
+        return $this->renderControl();
+    }
+
+    protected function setDefaultClasses()
+    {
+        $this->addClass('shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800');
+    }
+
+    protected function getError()
+    {
+        return $this->errorMessage;
     }
 
     protected function renderControl()
@@ -114,20 +131,5 @@ class Checkbox extends Input
         }
 
         return $output;
-    }
-
-    public function render()
-    {
-        if ($this->label) {
-            $output = '<div class="space-y-1">';
-            $output .= $this->renderControl();
-            $output .= $this->renderError();
-            $output .= $this->renderHint();
-            $output .= '</div>';
-
-            return $output;
-        }
-
-        return $this->renderControl();
     }
 }

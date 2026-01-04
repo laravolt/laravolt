@@ -1,28 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Suitable\AutoSort;
+use Throwable;
 
 class ProcessDefinition extends Model
 {
     use AutoSort;
 
-    protected $table = 'wf_process_definitions';
-
     public $incrementing = false;
+
+    protected $table = 'wf_process_definitions';
 
     protected $keyType = 'string';
 
     protected $guarded = [];
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public static function importFromCamunda(array $definitions)
     {
-        \DB::transaction(
+        DB::transaction(
             function () use ($definitions) {
                 foreach ($definitions as $definition) {
                     self::firstOrCreate(

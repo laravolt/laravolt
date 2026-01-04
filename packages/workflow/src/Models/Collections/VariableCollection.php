@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow\Models\Collections;
 
 use Illuminate\Contracts\Database\Eloquent\Castable;
@@ -9,16 +11,6 @@ use Laravolt\Camunda\Dto\Variable;
 
 class VariableCollection extends Collection implements Castable
 {
-    public function getValue($key, $default = null)
-    {
-        return $this->offsetExists($key) ? $this->get($key)->value : $default;
-    }
-
-    public function toArray()
-    {
-        return $this->map(fn (Variable $var) => $var->value)->all();
-    }
-
     public static function castUsing(array $arguments)
     {
         return new class implements CastsAttributes
@@ -54,5 +46,15 @@ class VariableCollection extends Collection implements Castable
                 return [$key => json_encode($value ?? [])];
             }
         };
+    }
+
+    public function getValue($key, $default = null)
+    {
+        return $this->offsetExists($key) ? $this->get($key)->value : $default;
+    }
+
+    public function toArray()
+    {
+        return $this->map(fn (Variable $var) => $var->value)->all();
     }
 }

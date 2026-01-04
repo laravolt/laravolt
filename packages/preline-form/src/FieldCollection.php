@@ -7,6 +7,7 @@ namespace Laravolt\PrelineForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Laravolt\Fields\Field;
 use Laravolt\PrelineForm\Contracts\HasFormOptions;
 use Laravolt\PrelineForm\Elements\FormControl;
@@ -35,6 +36,36 @@ class FieldCollection extends Collection
             $field += ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
             $this->put($field['name'], $this->createField($field));
         }
+    }
+
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    public function render()
+    {
+        $form = '';
+        foreach ($this->items as $item) {
+            $form .= (string) $item;
+        }
+
+        return $form;
+    }
+
+    public function bindValues(array $values)
+    {
+        foreach ($values as $key => $value) {
+            if (($element = $this->get($key)) !== null) {
+                if (method_exists($element, 'setChecked')) {
+                    $element->setChecked($value);
+                } elseif (method_exists($element, 'value')) {
+                    $element->value($value);
+                }
+            }
+        }
+
+        return $this;
     }
 
     protected function createField($field)
@@ -176,7 +207,7 @@ class FieldCollection extends Collection
 
             default:
                 if (! PrelineForm::hasMacro($type)) {
-                    throw new \InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
+                    throw new InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
                 }
                 $element = form()->{$type}($field->toArray());
                 $macro = true;
@@ -196,36 +227,6 @@ class FieldCollection extends Collection
         }
 
         return $element;
-    }
-
-    public function render()
-    {
-        $form = '';
-        foreach ($this->items as $item) {
-            $form .= (string) $item;
-        }
-
-        return $form;
-    }
-
-    public function bindValues(array $values)
-    {
-        foreach ($values as $key => $value) {
-            if (($element = $this->get($key)) !== null) {
-                if (method_exists($element, 'setChecked')) {
-                    $element->setChecked($value);
-                } elseif (method_exists($element, 'value')) {
-                    $element->value($value);
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->render();
     }
 
     private function applyRequiredValidation($field)

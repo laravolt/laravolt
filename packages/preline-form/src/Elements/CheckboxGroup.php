@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 class CheckboxGroup extends Element
@@ -65,16 +67,6 @@ class CheckboxGroup extends Element
         return $this;
     }
 
-    protected function hasError()
-    {
-        return $this->hasError;
-    }
-
-    protected function getError()
-    {
-        return $this->errorMessage;
-    }
-
     public function displayValue()
     {
         if (! is_array($this->checkedValues)) {
@@ -87,6 +79,25 @@ class CheckboxGroup extends Element
         }
 
         return implode(', ', $labels);
+    }
+
+    public function render()
+    {
+        if ($this->label) {
+            return $this->renderField();
+        }
+
+        return $this->renderControl();
+    }
+
+    protected function hasError()
+    {
+        return $this->hasError;
+    }
+
+    protected function getError()
+    {
+        return $this->errorMessage;
     }
 
     // public function attributes($attributes)
@@ -130,14 +141,5 @@ class CheckboxGroup extends Element
         $output .= '</div>';
 
         return $output;
-    }
-
-    public function render()
-    {
-        if ($this->label) {
-            return $this->renderField();
-        }
-
-        return $this->renderControl();
     }
 }

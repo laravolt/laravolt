@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\AutoCrud\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -56,56 +58,6 @@ class CrudRequest extends FormRequest
         $this->resourceConfig = config()->get($key) + ['key' => $resource];
 
         return true;
-    }
-
-    /**
-     * Resolve string rules back to Rule objects if needed.
-     *
-     * @param  mixed  $rule
-     * @return mixed
-     */
-    protected function resolveRule($rule)
-    {
-        if (! is_string($rule)) {
-            return $rule;
-        }
-
-        // Match rule format: unique:table,column
-        if (Str::startsWith($rule, 'unique:')) {
-            $parts = explode(':', $rule, 2);
-            if (isset($parts[1])) {
-                $params = explode(',', $parts[1]);
-                $table = $params[0] ?? null;
-                $column = $params[1] ?? null;
-
-                if ($table) {
-                    $uniqueRule = Rule::unique($table, $column);
-
-                    // If we're in update mode, ignore the current ID
-                    if ($this->method() === 'PUT' && $this->route('id')) {
-                        $uniqueRule->ignore($this->route('id'));
-                    }
-
-                    return $uniqueRule;
-                }
-            }
-        }
-
-        return $rule;
-    }
-
-    /**
-     * Process rules to resolve any serialized rules back to actual Rule objects.
-     */
-    protected function processRules(array $rules): array
-    {
-        return array_map(function ($rule) {
-            if (is_array($rule)) {
-                return $this->processRules($rule);
-            }
-
-            return $this->resolveRule($rule);
-        }, $rules);
     }
 
     public function rules()
@@ -169,6 +121,77 @@ class CrudRequest extends FormRequest
         )->toArray();
     }
 
+    public function data($key = null, $default = null)
+    {
+        $data = parent::validated();
+
+        // Special case for file uploader
+        collect($this->resourceConfig['schema'])->each(
+            function ($item) use (&$data) {
+                $key = Arr::get($item, 'name');
+                if (Arr::get($item, 'type') === 'uploader') {
+                    if (Arr::get($item, 'limit') === 1 && Arr::get($item, 'as_array') === false) {
+                        $data[$key] = request()->media($key)->first();
+                    } else {
+                        $data[$key] = request()->media($key)->toJson();
+                    }
+                }
+            }
+        );
+
+        return $data;
+    }
+
+    /**
+     * Resolve string rules back to Rule objects if needed.
+     *
+     * @param  mixed  $rule
+     * @return mixed
+     */
+    protected function resolveRule($rule)
+    {
+        if (! is_string($rule)) {
+            return $rule;
+        }
+
+        // Match rule format: unique:table,column
+        if (Str::startsWith($rule, 'unique:')) {
+            $parts = explode(':', $rule, 2);
+            if (isset($parts[1])) {
+                $params = explode(',', $parts[1]);
+                $table = $params[0] ?? null;
+                $column = $params[1] ?? null;
+
+                if ($table) {
+                    $uniqueRule = Rule::unique($table, $column);
+
+                    // If we're in update mode, ignore the current ID
+                    if ($this->method() === 'PUT' && $this->route('id')) {
+                        $uniqueRule->ignore($this->route('id'));
+                    }
+
+                    return $uniqueRule;
+                }
+            }
+        }
+
+        return $rule;
+    }
+
+    /**
+     * Process rules to resolve any serialized rules back to actual Rule objects.
+     */
+    protected function processRules(array $rules): array
+    {
+        return array_map(function ($rule) {
+            if (is_array($rule)) {
+                return $this->processRules($rule);
+            }
+
+            return $this->resolveRule($rule);
+        }, $rules);
+    }
+
     /**
      * Process potentially serialized validation rules.
      *
@@ -190,30 +213,9 @@ class CrudRequest extends FormRequest
                 $column = null;
             }
 
-            return \Illuminate\Validation\Rule::unique($table, $column);
+            return Rule::unique($table, $column);
         }
 
         return $rule;
-    }
-
-    public function data($key = null, $default = null)
-    {
-        $data = parent::validated();
-
-        // Special case for file uploader
-        collect($this->resourceConfig['schema'])->each(
-            function ($item) use (&$data) {
-                $key = Arr::get($item, 'name');
-                if (Arr::get($item, 'type') === 'uploader') {
-                    if (Arr::get($item, 'limit') === 1 && Arr::get($item, 'as_array') === false) {
-                        $data[$key] = request()->media($key)->first();
-                    } else {
-                        $data[$key] = request()->media($key)->toJson();
-                    }
-                }
-            }
-        );
-
-        return $data;
     }
 }

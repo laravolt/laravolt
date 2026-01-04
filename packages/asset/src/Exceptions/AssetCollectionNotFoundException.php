@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Asset\Exceptions;
 
-class AssetCollectionNotFoundException extends \Exception {}
+use Exception;
+
+class AssetCollectionNotFoundException extends Exception {}

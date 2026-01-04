@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Ui;
 
 use Illuminate\Support\Facades\Cache;
@@ -53,6 +55,11 @@ class Statistic extends Component
         return $this->color ?? config('laravolt.ui.color');
     }
 
+    public function render()
+    {
+        return view('laravolt::ui-component.statistic');
+    }
+
     /**
      * Load data with caching applied.
      * This method should be overridden in child classes that need to fetch data.
@@ -92,10 +99,5 @@ class Statistic extends Component
         ];
 
         return 'laravolt_statistic_'.class_basename($this).'_'.md5(serialize($properties));
-    }
-
-    public function render()
-    {
-        return view('laravolt::ui-component.statistic');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -59,13 +61,16 @@ class Role extends Model
         $ids = collect($permissions)->transform(function ($permission) {
             if (str($permission)->isUlid()) {
                 return (string) $permission;
-            } elseif (is_numeric($permission)) {
+            }
+            if (is_numeric($permission)) {
                 return (int) $permission;
-            } elseif (is_string($permission)) {
+            }
+            if (is_string($permission)) {
                 $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
 
                 return $permissionObject->getKey();
-            } elseif ($permission instanceof Model) {
+            }
+            if ($permission instanceof Model) {
                 return $permission->getKey();
             }
         })->filter(function ($id) {

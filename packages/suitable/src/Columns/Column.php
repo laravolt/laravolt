@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
+use Closure;
 use Illuminate\Support\Str;
 use Laravolt\Suitable\Concerns\HtmlHelper;
 use Laravolt\Suitable\Headers\Header;
@@ -42,7 +45,7 @@ abstract class Column
         $column = new static($header);
         $column->id = Str::snake($header);
 
-        if (is_string($field) || $field instanceof \Closure) {
+        if (is_string($field) || $field instanceof Closure) {
             $column->field = $field;
         }
 

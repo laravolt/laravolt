@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Components;
 
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -48,7 +51,7 @@ class BrandImage extends Component
 
                         // Fallback to default if URL fails
                         return file_get_contents(public_path('laravolt/img/default/logo.png'));
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         // Log error and return fallback
                         Log::warning("Failed to fetch brand image from URL: {$brandImage}", ['error' => $e->getMessage()]);
 

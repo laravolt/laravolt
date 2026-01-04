@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -14,7 +16,7 @@ class Delete extends FormRequest implements \Laravolt\Epicentrum\Contracts\Reque
     public function authorize()
     {
         $userToDelete = $this->segment(3);
-        if ($userToDelete == auth()->id()) {
+        if ($userToDelete === auth()->id()) {
             return false;
         }
 
