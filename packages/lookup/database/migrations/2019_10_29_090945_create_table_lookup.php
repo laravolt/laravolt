@@ -6,16 +6,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableLookup extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('platform_lookup', function (Blueprint $table) {
+        Schema::create('platform_lookup', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('category');
             $table->string('parent_key')->nullable();
@@ -30,11 +28,9 @@ class CreateTableLookup extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('platform_lookup');
     }
-}
+};

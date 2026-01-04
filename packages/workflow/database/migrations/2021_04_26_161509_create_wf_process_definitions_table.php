@@ -10,12 +10,10 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('wf_process_definitions', function (Blueprint $table) {
+        Schema::create('wf_process_definitions', function (Blueprint $table): void {
             $table->string('id')->primary();
             $table->string('key');
             $table->string('name')->nullable();
@@ -28,10 +26,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('wf_process_definitions');
     }
