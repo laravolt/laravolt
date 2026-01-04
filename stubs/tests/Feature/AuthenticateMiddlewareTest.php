@@ -3,13 +3,20 @@
 declare(strict_types=1);
 
 use App\Providers\AppServiceProvider;
+use Tests\TestCase;
 
 test('redirect to login', function (): void {
-    $response = $this->get(AppServiceProvider::HOME);
+    /** @var TestCase $test */
+    $test = $this;
+
+    $response = $test->get(AppServiceProvider::HOME);
     $response->assertRedirect(route('auth::login.show'));
 });
 
 test('return nothing', function (): void {
-    $response = $this->getJson(AppServiceProvider::HOME);
+    /** @var TestCase $test */
+    $test = $this;
+
+    $response = $test->getJson(AppServiceProvider::HOME);
     $response->assertStatus(401);
 });

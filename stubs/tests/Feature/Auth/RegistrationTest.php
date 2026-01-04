@@ -6,9 +6,13 @@ use App\Models\User;
 use App\Providers\AppServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 test('it can display registration page', function (): void {
-    $this->get(route('auth::registration.show'))
+    /** @var TestCase $test */
+    $test = $this;
+
+    $test->get(route('auth::registration.show'))
         ->assertOk()
         ->assertSeeText(__('Name'))
         ->assertSeeText(__('Email'))
@@ -16,6 +20,9 @@ test('it can display registration page', function (): void {
 });
 
 test('it can handle correct registration', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     $payload = [
         'name' => 'Jon Dodo',
         'email' => 'jon@laravolt.dev',
@@ -23,14 +30,17 @@ test('it can handle correct registration', function (): void {
         'password_confirmation' => 'asdf1234',
     ];
 
-    $response = $this->post(route('auth::registration.store'), $payload);
+    $response = $test->post(route('auth::registration.store'), $payload);
     $response->assertSessionHas('success')
         ->assertRedirect(AppServiceProvider::HOME);
 
-    $this->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->all());
+    $test->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->all());
 });
 
 test('it can handle correct registration with activation', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     Notification::fake();
     $email = 'jon@laravolt.dev';
 
@@ -41,16 +51,19 @@ test('it can handle correct registration with activation', function (): void {
         'password_confirmation' => 'asdf1234',
     ];
 
-    $response = $this->post(route('auth::registration.store'), $payload);
+    $response = $test->post(route('auth::registration.store'), $payload);
     $response->assertSessionHas('success')
         ->assertRedirect(AppServiceProvider::HOME);
 
-    $this->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->all());
+    $test->assertDatabaseHas('users', collect($payload)->only(['name', 'email'])->all());
 
     Notification::assertSentTo(User::query()->first(), VerifyEmail::class);
 });
 
 test('it can auto verify email', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     config(['laravolt.platform.features.verification' => false]);
     Notification::fake();
     $email = 'jon@laravolt.dev';
@@ -62,9 +75,9 @@ test('it can auto verify email', function (): void {
         'password_confirmation' => 'asdf1234',
     ];
 
-    $this->post(route('auth::registration.store'), $payload);
+    $test->post(route('auth::registration.store'), $payload);
 
-    $this->assertDatabaseMissing(
+    $test->assertDatabaseMissing(
         'users',
         collect($payload)->only(['name', 'email'])->all() + ['email_verified_at' => null]
     );
@@ -73,6 +86,9 @@ test('it can auto verify email', function (): void {
 });
 
 test('it has errors if failed', function (): void {
-    $this->post(route('auth::registration.store'))
+    /** @var TestCase $test */
+    $test = $this;
+
+    $test->post(route('auth::registration.store'))
         ->assertSessionHasErrors();
 });
