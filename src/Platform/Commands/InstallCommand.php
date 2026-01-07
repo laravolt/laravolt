@@ -51,6 +51,13 @@ class InstallCommand extends Command
         // Install Pest v4 for modern testing
         Artisan::call(Pest4InstallCommand::class);
 
+        // Remove default ExampleTest.php if it exists
+        $exampleTestPath = base_path('tests/Unit/ExampleTest.php');
+        if (file_exists($exampleTestPath)) {
+            unlink($exampleTestPath);
+            $this->line('Removed tests/Unit/ExampleTest.php');
+        }
+
         $this->info(sprintf('Application ready: %s', url('/')));
 
         $this->info('Done. Laravolt installation complete, please run this command to finish the installation:');
