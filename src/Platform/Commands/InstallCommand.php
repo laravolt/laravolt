@@ -39,6 +39,21 @@ class InstallCommand extends Command
         $this->info('1/2: Publishing Laravolt skeleton files...');
 
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
+
+        // Delete existing migration files to avoid duplication
+        $migrationFiles = [
+            'create_users_table.php',
+            'create_cache_table.php',
+            'create_jobs_table.php',
+        ];
+        foreach ($migrationFiles as $file) {
+            $matches = glob(database_path("migrations/*_{$file}"));
+            foreach ($matches as $match) {
+                unlink($match);
+                $this->line("Removed {$match}");
+            }
+        }
+
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-assets']);
         Artisan::call(
