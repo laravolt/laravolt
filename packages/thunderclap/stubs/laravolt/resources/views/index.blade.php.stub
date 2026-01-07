@@ -1,7 +1,7 @@
-<x-volt-app title=":Module Name:">
+<x-volt-app title="{{ __(':Module Name:') }}" :isShowTitleBar="false">
     <div class="flex justify-between items-center gap-x-3">
         <h1 class="font-semibold text-xl text-gray-800 dark:text-neutral-200">
-            :Module Name:
+            {{ __(':Module Name:') }}
         </h1>
 
         <div class="flex justify-end items-center gap-x-2">

@@ -24,7 +24,8 @@ class CheckboxFilter extends BaseFilter
             ->attributes(function (Checkbox $control) use ($key) {
                 $value = $control->getValue();
                 $control->attribute('wire:model.live', "filters.$key.$value");
-            });
+            })
+            ->render();
     }
 
     public function options(): array

@@ -90,9 +90,9 @@ abstract class TableView extends Component
         $this->filters = [];
     }
 
-    public function changePerPage($perPage)
+    public function changePerPage(int|string $perPage)
     {
-        $this->perPage = $perPage;
+        $this->perPage = (int) $perPage;
     }
 
     public function sortBy($column)

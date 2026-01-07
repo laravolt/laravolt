@@ -181,71 +181,69 @@ class Generator extends Command
         $classToBePrefixed = config('laravolt.thunderclap.prefixed');
 
         foreach (File::allFiles($modulePath, true) as $file) {
-            if (is_file($file)) {
-                // Skip model generation if using existing model
-                if ($skipModelGeneration && Str::contains($file, '/Models/') && Str::endsWith($file, 'Model.php.stub')) {
-                    File::delete($file);
+            // Skip model generation if using existing model
+            if ($skipModelGeneration && Str::contains($file, '/Models/') && Str::endsWith($file, 'Model.php.stub')) {
+                File::delete($file);
 
-                    continue;
+                continue;
+            }
+
+            $newFile = $deleteOriginal = false;
+
+            if (Str::endsWith($file, '.stub')) {
+                $newFile = Str::substr($file, 0, -5);
+                $deleteOriginal = true;
+            }
+
+            if (Str::endsWith($newFile, 'Model.php')) {
+                $newFile = Str::replaceLast('Model', $moduleName, $newFile);
+            }
+
+            if (Str::endsWith($newFile, 'Test.php')) {
+                $newFile = Str::replaceLast('Test', $moduleName.'Test', $newFile);
+            }
+
+            if (Str::endsWith($newFile, 'Factory.php')) {
+                $newFile = Str::replaceLast('Factory', $moduleName.'Factory', $newFile);
+            }
+
+            foreach ($classToBePrefixed as $filename) {
+                $class = Str::substr($filename, 0, -4);
+                if (Str::endsWith($newFile, $filename)) {
+                    $newFile = Str::replaceLast($class, $moduleName.$class, $newFile);
                 }
+            }
 
-                $newFile = $deleteOriginal = false;
+            if (Str::endsWith($newFile, 'config.php')) {
+                $newFile = Str::replaceLast('config', $templates['module-name'], $newFile);
+            }
 
-                if (Str::endsWith($file, '.stub')) {
-                    $newFile = Str::substr($file, 0, -5);
-                    $deleteOriginal = true;
+            if ($newFile) {
+                $fileNameReplacer = Arr::only($replacer, [
+                    ':module_name:',
+                    ':module-name:',
+                    ':moduleName:',
+                    ':ModuleName:',
+                ]);
+
+                $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
+            }
+
+            if (! $newFile) {
+                continue;
+            }
+
+            $this->info($newFile);
+
+            try {
+                $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
+
+                // Post-process controller files for existing models
+                if ($existingModel && $modelAction === 'enhance' && Str::endsWith($newFile, 'Controller.php')) {
+                    $this->postProcessControllerForExistingModel($newFile, $existingModel, $moduleName);
                 }
-
-                if (Str::endsWith($newFile, 'Model.php')) {
-                    $newFile = Str::replaceLast('Model', $moduleName, $newFile);
-                }
-
-                if (Str::endsWith($newFile, 'Test.php')) {
-                    $newFile = Str::replaceLast('Test', $moduleName.'Test', $newFile);
-                }
-
-                if (Str::endsWith($newFile, 'Factory.php')) {
-                    $newFile = Str::replaceLast('Factory', $moduleName.'Factory', $newFile);
-                }
-
-                foreach ($classToBePrefixed as $filename) {
-                    $class = Str::substr($filename, 0, -4);
-                    if (Str::endsWith($newFile, $filename)) {
-                        $newFile = Str::replaceLast($class, $moduleName.$class, $newFile);
-                    }
-                }
-
-                if (Str::endsWith($newFile, 'config.php')) {
-                    $newFile = Str::replaceLast('config', $templates['module-name'], $newFile);
-                }
-
-                if ($newFile) {
-                    $fileNameReplacer = Arr::only($replacer, [
-                        ':module_name:',
-                        ':module-name:',
-                        ':moduleName:',
-                        ':ModuleName:',
-                    ]);
-
-                    $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
-                }
-
-                if (! $newFile) {
-                    continue;
-                }
-
-                $this->info($newFile);
-
-                try {
-                    $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
-
-                    // Post-process controller files for existing models
-                    if ($existingModel && $modelAction === 'enhance' && Str::endsWith($newFile, 'Controller.php')) {
-                        $this->postProcessControllerForExistingModel($newFile, $existingModel, $moduleName);
-                    }
-                } catch (Exception $e) {
-                    $this->error($e->getMessage());
-                }
+            } catch (Exception $e) {
+                $this->error($e->getMessage());
             }
         }
 
