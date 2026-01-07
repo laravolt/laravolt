@@ -2,7 +2,6 @@
 
 namespace :Namespace:\:ModuleName:\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use :Namespace:\:ModuleName:\Models\:ModuleName:;
@@ -10,7 +9,7 @@ use :Namespace:\:ModuleName:\Requests\Store;
 use :Namespace:\:ModuleName:\Requests\Update;
 use :Namespace:\:ModuleName:\Tables\:ModuleName:TableView;
 
-class :ModuleName:Controller extends Controller
+class :ModuleName:Controller
 {
     public function index(): View
     {

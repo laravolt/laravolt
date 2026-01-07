@@ -1,82 +1,59 @@
 <?php
 
-namespace :Namespace:\:ModuleName:\Tests;
+declare(strict_types=1);
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 :MODEL_IMPORT:
 use Tests\TestCase;
 
-class :ModuleName:Test extends TestCase
-{
-    use LazilyRefreshDatabase;
+uses(TestCase::class, LazilyRefreshDatabase::class);
 
-    /** @var User */
-    protected $user;
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    $this->actingAs($this->user);
+});
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+it('can open index page', function () {
+    $this->get(route(':route-url-prefix:.index'))->assertStatus(200);
+});
 
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
-    }
+it('can open create page', function () {
+    $this->get(route(':route-url-prefix:.create'))->assertStatus(200);
+});
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_index_page(): void
-    {
-        $this->get(route(':route-url-prefix:.index'))->assertStatus(200);
-    }
+it('can store data', function () {
+    $attributes = :ModuleName:::factory()->raw();
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_create_page(): void
-    {
-        $this->get(route(':route-url-prefix:.create'))->assertStatus(200);
-    }
+    $this->post(route(':route-url-prefix:.store'), $attributes)
+        ->assertStatus(302)
+        ->assertSessionDoesntHaveErrors();
+});
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_store_data(): void
-    {
-        $attributes = :ModuleName:::factory()->raw();
+it('can open show page', function () {
+    $:moduleName: = :ModuleName:::factory()->create();
 
-        $this->post(route(':route-url-prefix:.store'), $attributes)
-            ->assertStatus(302)
-            ->assertSessionDoesntHaveErrors();
-    }
+    $this->get(route(':route-url-prefix:.show', $:moduleName:))->assertStatus(200);
+});
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_show_page(): void
-    {
-        $:moduleName: = :ModuleName:::factory()->create();
+it('can open edit page', function () {
+    $:moduleName: = :ModuleName:::factory()->create();
 
-        $this->get(route(':route-url-prefix:.show', $:moduleName:))->assertStatus(200);
-    }
+    $this->get(route(':route-url-prefix:.edit', $:moduleName:))->assertStatus(200);
+});
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_open_edit_page(): void
-    {
-        $:moduleName: = :ModuleName:::factory()->create();
+it('can update data', function () {
+    $:moduleName: = :ModuleName:::factory()->create();
+    $attributes = $:moduleName:->toArray();
+    :TEST_UPDATE_ATTRIBUTES:
 
-        $this->get(route(':route-url-prefix:.edit', $:moduleName:))->assertStatus(200);
-    }
+    $this->put(route(':route-url-prefix:.update', $:moduleName:), $attributes)
+        ->assertStatus(302)
+        ->assertSessionDoesntHaveErrors();
+});
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_update_data(): void
-    {
-        $:moduleName: = :ModuleName:::factory()->create();
-        $attributes = $:moduleName:->toArray();
-        :TEST_UPDATE_ATTRIBUTES:
+it('can delete data', function () {
+    $:moduleName: = :ModuleName:::factory()->create();
 
-        $this->put(route(':route-url-prefix:.update', $:moduleName:), $attributes)
-            ->assertStatus(302)
-            ->assertSessionDoesntHaveErrors();
-    }
-
-    #[\PHPUnit\Framework\Attributes\Test]
-    public function it_can_delete_data(): void
-    {
-        $:moduleName: = :ModuleName:::factory()->create();
-
-        $this->delete(route(':route-url-prefix:.destroy', $:moduleName:))->assertStatus(302);
-    }
-}
+    $this->delete(route(':route-url-prefix:.destroy', $:moduleName:))->assertStatus(302);
+});
