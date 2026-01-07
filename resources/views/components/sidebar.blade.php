@@ -50,7 +50,7 @@
                     </svg>
                 </div>
                 Components
-                <x-badge variant="success" class="ml-auto">New</x-badge>
+                <x-volt-badge variant="success" class="ml-auto">New</x-volt-badge>
             </a>
         </li>
     </ul>
