@@ -66,7 +66,7 @@ class InstallCommand extends Command
             base_path('.gitignore') => [
                 '',
                 '/public/laravolt',
-                '/build/coverage',
+                '/coverage',
                 '/pestphp-coverage-result.xml',
                 '/pestphp-execution-result.xml',
             ],
