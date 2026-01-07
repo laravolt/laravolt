@@ -64,6 +64,7 @@ class InstallCommand extends Command
     {
         $entries = [
             base_path('.gitignore') => [
+                '',
                 '/public/laravolt',
                 '/build/coverage',
                 '/pestphp-coverage-result.xml',
