@@ -44,6 +44,14 @@ Thunderclap is an intelligent code generator that creates complete CRUD modules 
 - [Model Enhancement](#-model-enhancement)
 - [Best Practices](#-best-practices)
 - [Troubleshooting](#-troubleshooting)
+- [Real-World Examples](#-real-world-examples)
+- [API Reference](#-api-reference)
+- [Contributing](#-contributing)
+- [Changelog](#-changelog)
+- [License](#-license)
+- [Credits](#-credits)
+- [Related Packages](#-related-packages)
+- [Additional Resources](#-additional-resources)
 
 ## 📦 Installation
 
