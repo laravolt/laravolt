@@ -8,7 +8,7 @@
                         <!-- Sort Dropdown -->
                         <div class="hs-dropdown relative inline-flex w-full cursor-pointer basictable">
                             <button type="button"
-                                class="px-4 py-2.5 text-start w-full flex items-center gap-x-1 text-sm text-nowrap font-normal text-gray-500 focus:outline-hidden focus:bg-gray-100 dark:text-neutral-500 dark:focus:bg-neutral-700"
+                                class="px-4 py-2.5 text-start w-full flex items-center gap-x-1 text-sm text-nowrap font-normal text-gray-500 focus:outline-hidden focus:bg-gray-100 dark:text-neutral-200 dark:focus:bg-neutral-700"
                                 wire:click.prevent="sortBy('{{ $column->getSortableColumn() }}')"
                                 {!! $column->headerAttributes(asHtml: true) !!}>
                                 {!! $column->getHeader() !!}
@@ -38,7 +38,7 @@
                     </th>
                 @else
                     <th scope="col"
-                        class="px-4 py-2.5 text-start text-sm text-nowrap font-normal text-gray-500 dark:text-neutral-500"
+                        class="px-4 py-2.5 text-start text-sm text-nowrap font-normal text-gray-500 dark:text-neutral-200"
                         {!! $column->headerAttributes(asHtml: true) !!}>
                         {!! $column->getHeader() !!}
                     </th>
