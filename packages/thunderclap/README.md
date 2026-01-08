@@ -1924,9 +1924,9 @@ Created by [Laravolt Team](https://laravolt.dev).
 
 ## 🔗 Related Packages
 
-- **[Laravolt Suitable](../suitable)** - Provides AutoFilter, AutoSearch, AutoSort traits
-- **[Laravolt Preline Form](../preline-form)** - Form builder used in generated views
-- **[Laravolt Platform](../../src/Platform)** - Core platform features
+- **[Laravolt Suitable](https://github.com/laravolt/laravolt/tree/main/packages/suitable)** - Provides AutoFilter, AutoSearch, AutoSort traits
+- **[Laravolt Preline Form](https://github.com/laravolt/laravolt/tree/main/packages/preline-form)** - Form builder used in generated views
+- **[Laravolt Platform](https://github.com/laravolt/laravolt/tree/main/src/Platform)** - Core platform features
 
 ## 📖 Additional Resources
 
