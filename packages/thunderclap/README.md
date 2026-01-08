@@ -58,7 +58,7 @@ composer require laravolt/thunderclap
 | Requirement | Version |
 |------------|---------|
 | **PHP** | `>= 8.2` |
-| **Laravel** | `^10.0 \|\| ^11.0 \|\| ^12.0` |
+| **Laravel** | `^10.0 || ^11.0 || ^12.0` |
 | **Doctrine DBAL** | `^3.0` |
 | **Laravolt Suitable** | For AutoFilter, AutoSearch, AutoSort traits |
 
