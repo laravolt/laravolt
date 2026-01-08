@@ -473,9 +473,6 @@ modules/Product/
 │   ├── Store.php                   # Validation for create
 │   └── Update.php                  # Validation for update
 │
-├── Tables/
-│   └── ProductTableView.php        # Livewire table component
-│
 ├── Tests/
 │   └── ProductTest.php             # Feature tests
 │
@@ -494,7 +491,7 @@ modules/Product/
 │   └── product.php                 # Module configuration
 │
 ├── ProductServiceProvider.php      # Service provider
-└── ProductTableView.php           # Alternative: TableView class
+└── ProductTableView.php            # Alternative: TableView class
 ```
 
 ### File Descriptions
