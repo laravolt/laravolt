@@ -1910,7 +1910,7 @@ php artisan test --coverage
 
 ## 📝 Changelog
 
-See [CHANGELOG.md](../../CHANGELOG.md) for recent changes.
+See the main [CHANGELOG.md](https://github.com/laravolt/laravolt/blob/main/CHANGELOG.md) for recent changes.
 
 ## 📄 License
 
