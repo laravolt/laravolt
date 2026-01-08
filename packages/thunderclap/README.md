@@ -612,7 +612,12 @@ class Store extends FormRequest
 ```php
 namespace Modules\Product;
 
+use Illuminate\Database\Eloquent\Builder;
+use Laravolt\Suitable\Columns\Numbering;
+use Laravolt\Suitable\Columns\RestfulButton;
+use Laravolt\Suitable\Columns\Text;
 use Laravolt\Ui\TableView;
+use Modules\Product\Models\Product;
 
 class ProductTableView extends TableView
 {
@@ -644,6 +649,7 @@ class ProductTableView extends TableView
 namespace Modules\Product;
 
 use Laravolt\Support\Base\BaseServiceProvider;
+use Livewire\Livewire;
 
 class ProductServiceProvider extends BaseServiceProvider
 {
