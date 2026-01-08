@@ -1540,7 +1540,9 @@ View [product::index] not found
 ```bash
 # Clear view cache
 php artisan view:clear
+```
 
+```php
 # Check view path registered in ServiceProvider
 # Verify resources/views/ directory exists
 
