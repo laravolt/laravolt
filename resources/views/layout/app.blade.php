@@ -3,7 +3,7 @@
         ?? (isset($module)
             ? $module->getLabel()
             : config('app.name'));
-    $isShowTitleBar = isset($isShowTitleBar) ? (bool) $isShowTitleBar : true;
+    $isShowTitleBar = isset($isShowTitleBar) ? filter_var($isShowTitleBar, FILTER_VALIDATE_BOOLEAN) : true;
 @endphp
 
 <x-volt-base :title="$title">
@@ -32,7 +32,7 @@
 
     <footer class="lg:ps-65 h-10 sm:h-16 absolute bottom-0 inset-x-0">
         <div class="p-2 sm:p-5 flex justify-between items-center">
-            <p class="text-xs sm:text-sm text-gray-500 dark:text-neutral-500">
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-neutral-200">
                 &copy; {{ now()->year }} {{ config('app.name') }}.
             </p>
         </div>
