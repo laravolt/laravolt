@@ -59,7 +59,7 @@ class SelectDateWrapper extends Wrapper
             return $value;
         }
 
-        // If the value is already a DateTime instance, we will just skip the rest of
+        // If the value is already a DateTimeInterface instance, we will just skip the rest of
         // these checks since they will be a waste of time, and hinder performance
         // when checking the field. We will just return the DateTime right away.
         if ($value instanceof DateTimeInterface) {
