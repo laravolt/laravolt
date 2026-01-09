@@ -17,7 +17,7 @@ class SelectDateTimeWrapper extends SelectDateWrapper
             $date = $this->asDateTime($value);
         } catch (Exception $e) {
             throw new InvalidArgumentException(
-                'Argument must be an instance of Carbon or DateTime, or date string in Y-m-d format.'
+                'Argument must be an instance of Carbon, DateTime, DateTimeImmutable, or date string in Y-m-d format.'
             );
         }
 
