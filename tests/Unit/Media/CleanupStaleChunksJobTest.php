@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Media\Jobs\CleanupStaleChunksJob;
 
@@ -60,12 +62,10 @@ test('cleanup job handles exceptions properly', function () {
 
 test('cleanup job calculates directory size correctly', function () {
     $job = new CleanupStaleChunksJob(24);
-
     // Use reflection to test private method
     $reflection = new ReflectionClass($job);
     $method = $reflection->getMethod('getDirectorySize');
     $method->setAccessible(true);
-
     // Test with non-existent directory
     $size = $method->invoke($job, '/non/existent/path');
     expect($size)->toBe(0);
@@ -73,7 +73,6 @@ test('cleanup job calculates directory size correctly', function () {
 
 test('cleanup job processes storage chunks correctly', function () {
     $job = new CleanupStaleChunksJob(1); // 1 hour
-
     // Create fake storage structure
     Storage::disk('local')->makeDirectory('chunks/test-chunk-1');
     Storage::disk('local')->makeDirectory('chunks/test-chunk-2');

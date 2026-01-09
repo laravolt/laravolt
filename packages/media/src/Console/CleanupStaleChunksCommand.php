@@ -12,7 +12,7 @@ class CleanupStaleChunksCommand extends Command
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'media:cleanup-chunks 
+    protected $signature = 'media:cleanup-chunks
                             {--hours=24 : Hours after which chunks are considered stale}
                             {--queue : Dispatch the cleanup job to queue instead of running synchronously}';
 
@@ -31,7 +31,6 @@ class CleanupStaleChunksCommand extends Command
 
         if ($hours <= 0) {
             $this->error('Hours must be a positive integer.');
-
             return 1;
         }
 

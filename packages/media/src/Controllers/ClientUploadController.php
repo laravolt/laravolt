@@ -428,7 +428,6 @@ class ClientUploadController extends Controller
 
             if (! $user) {
                 Log::warning('No user found for media pre-creation');
-
                 return null;
             }
 
@@ -693,7 +692,6 @@ class ClientUploadController extends Controller
         $tokenData = $this->decodeUploadToken($token);
         if (! $tokenData) {
             Log::debug('verifyUploadToken: Token decode failed');
-
             return false;
         }
 
@@ -711,7 +709,6 @@ class ClientUploadController extends Controller
                 'token_key_hex' => bin2hex($tokenData['key']),
                 'request_key_hex' => bin2hex($key),
             ]);
-
             return false;
         }
 
@@ -721,12 +718,10 @@ class ClientUploadController extends Controller
                 'expires_at' => $tokenData['expires_at'],
                 'now' => now()->timestamp,
             ]);
-
             return false;
         }
 
         Log::debug('verifyUploadToken: Verification successful');
-
         return true;
     }
 
@@ -787,7 +782,6 @@ class ClientUploadController extends Controller
 
             if (! $signatureMatch) {
                 Log::debug('decodeUploadToken: Signature mismatch');
-
                 return null;
             }
 
@@ -802,7 +796,6 @@ class ClientUploadController extends Controller
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-
             return null;
         }
     }
@@ -820,14 +813,12 @@ class ClientUploadController extends Controller
             $tokenData = $this->decodeUploadToken($uploadToken);
             if (! $tokenData) {
                 Log::error('Failed to decode upload token');
-
                 return null;
             }
 
             $mediaId = $tokenData['media_id'] ?? null;
             if (! $mediaId) {
                 Log::error('No media_id in upload token');
-
                 return null;
             }
 
@@ -835,7 +826,6 @@ class ClientUploadController extends Controller
             $media = Media::find($mediaId);
             if (! $media) {
                 Log::error('Media record not found', ['media_id' => $mediaId]);
-
                 return null;
             }
 

@@ -59,7 +59,6 @@ class CleanupStaleChunksJob implements ShouldQueue
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-
             throw $e;
         }
     }
@@ -95,7 +94,6 @@ class CleanupStaleChunksJob implements ShouldQueue
 
         foreach ($chunkDirs as $chunkDir) {
             $lastModified = File::lastModified($chunkDir);
-
             if ($lastModified < $staleTime->timestamp) {
                 // Calculate size before deletion
                 $dirSize = $this->getDirectorySize($chunkDir);
@@ -143,12 +141,10 @@ class CleanupStaleChunksJob implements ShouldQueue
         foreach ($chunkDirs as $chunkDir) {
             try {
                 $lastModified = $disk->lastModified($chunkDir);
-
                 if ($lastModified < $staleTime->timestamp) {
                     // Delete the entire chunk directory
                     $disk->deleteDirectory($chunkDir);
                     $deletedCount++;
-
                     Log::debug('Deleted stale chunk directory from storage', [
                         'path' => $chunkDir,
                         'last_modified' => date('Y-m-d H:i:s', $lastModified),

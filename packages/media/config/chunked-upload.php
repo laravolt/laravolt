@@ -54,7 +54,6 @@ return [
         'image/gif',
         'image/webp',
         'image/svg+xml',
-
         // Documents
         'application/pdf',
         'application/msword',
@@ -63,24 +62,20 @@ return [
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-powerpoint',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-
         // Text files
         'text/plain',
         'text/csv',
         'application/json',
         'application/xml',
-
         // Archives
         'application/zip',
         'application/x-rar-compressed',
         'application/x-tar',
         'application/gzip',
-
         // Audio
         'audio/mpeg',
         'audio/wav',
         'audio/ogg',
-
         // Video
         'video/mp4',
         'video/avi',

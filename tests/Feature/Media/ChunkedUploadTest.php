@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Media\Jobs\CleanupStaleChunksJob;
@@ -31,7 +30,9 @@ test('chunked upload handler can be instantiated', function () {
 });
 
 test('chunked upload endpoint returns json response', function () {
-    $response = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
     ]);
@@ -43,8 +44,9 @@ test('chunked upload endpoint returns json response', function () {
 test('chunked upload can handle file chunks', function () {
     // Create a test file
     $file = UploadedFile::fake()->create('test-file.txt', 1024); // 1MB file
-
-    $response = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
         'file' => $file,
@@ -77,8 +79,9 @@ test('chunked upload can handle file chunks', function () {
 
 test('chunked upload creates media entry in database', function () {
     $file = UploadedFile::fake()->create('test-document.pdf', 512);
-
-    $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
         'file' => $file,
@@ -91,14 +94,15 @@ test('chunked upload creates media entry in database', function () {
     ]);
 
     expect(Media::count())->toBe(1);
-
     $media = Media::first();
     expect($media->file_name)->toBe('test-document.pdf');
     expect($media->mime_type)->toBe('application/pdf');
 });
 
 test('chunked upload status endpoint works', function () {
-    $response = $this->get('/media/chunk/status', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->get('/media/chunk/status', [
         'resumableIdentifier' => 'non-existent-file',
         'resumableFilename' => 'test.txt',
     ]);
@@ -113,8 +117,9 @@ test('chunked upload status endpoint works', function () {
 test('chunked upload delete functionality works', function () {
     // First create a media entry
     $file = UploadedFile::fake()->create('delete-test.txt', 100);
-
-    $uploadResponse = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $uploadResponse = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
         'file' => $file,
@@ -127,12 +132,13 @@ test('chunked upload delete functionality works', function () {
     ]);
 
     $uploadResponse->assertSuccessful();
-
     $media = Media::first();
     expect($media)->not->toBeNull();
 
     // Now delete it
-    $deleteResponse = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $deleteResponse = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'delete',
         'id' => $media->id,
@@ -140,15 +146,15 @@ test('chunked upload delete functionality works', function () {
 
     $deleteResponse->assertSuccessful();
     $deleteResponse->assertJson(['success' => true]);
-
     expect(Media::count())->toBe(0);
 });
 
 test('chunked upload respects file size limits', function () {
     // This test would need to be adjusted based on actual configuration
     $largeFile = UploadedFile::fake()->create('large-file.txt', 1024 * 1024 * 200); // 200MB
-
-    $response = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
         'file' => $largeFile,
@@ -177,7 +183,9 @@ test('cleanup stale chunks job handles empty directories gracefully', function (
 });
 
 test('media controller routes chunked requests correctly', function () {
-    $response = $this->post('/media/media', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/media', [
         'handler' => 'chunked',
         '_action' => 'upload',
     ]);
@@ -188,11 +196,15 @@ test('media controller routes chunked requests correctly', function () {
 
 test('chunked upload works with guest user', function () {
     // Ensure we're not authenticated
-    $this->assertGuest();
+    /** @var TestCase */
+    $test = $this;
+    $test->assertGuest();
 
     $file = UploadedFile::fake()->create('guest-upload.txt', 256);
 
-    $response = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
         'file' => $file,
@@ -205,14 +217,15 @@ test('chunked upload works with guest user', function () {
     ]);
 
     $response->assertSuccessful();
-
     $media = Media::first();
     expect($media)->not->toBeNull();
     expect($media->model_type)->toBe(Guest::class);
 });
 
 test('chunked upload handles invalid actions gracefully', function () {
-    $response = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'invalid_action',
     ]);
@@ -223,8 +236,9 @@ test('chunked upload handles invalid actions gracefully', function () {
 
 test('chunked upload returns consistent json structure', function () {
     $file = UploadedFile::fake()->create('structure-test.txt', 128);
-
-    $response = $this->post('/media/chunk', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
         'file' => $file,
@@ -253,7 +267,6 @@ test('chunked upload returns consistent json structure', function () {
             ],
         ],
     ]);
-
     $data = $response->json();
     expect($data['success'])->toBe(true);
     expect($data['files'])->toBeArray();
