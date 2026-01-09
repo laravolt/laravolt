@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\SemanticForm\Elements;
 
 use Carbon\Carbon;
-use DateTimeImmutable;
+use DateTimeInterface;
 use Exception;
 
 class Date extends Text
@@ -30,7 +30,7 @@ class Date extends Text
 
     public function value($value)
     {
-        if ($value instanceof DateTimeImmutable) {
+        if ($value instanceof DateTimeInterface) {
             $value = $value->format('Y-m-d');
         }
 

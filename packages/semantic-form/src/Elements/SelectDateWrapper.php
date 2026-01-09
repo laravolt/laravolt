@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\SemanticForm\Elements;
 
 use Carbon\Carbon;
-use DateTime;
-use DateTimeImmutable;
+use DateTimeInterface;
 use Exception;
 use InvalidArgumentException;
 
@@ -63,7 +62,7 @@ class SelectDateWrapper extends Wrapper
         // If the value is already a DateTime instance, we will just skip the rest of
         // these checks since they will be a waste of time, and hinder performance
         // when checking the field. We will just return the DateTime right away.
-        if ($value instanceof DateTimeImmutable) {
+        if ($value instanceof DateTimeInterface) {
             return Carbon::instance($value);
         }
 
