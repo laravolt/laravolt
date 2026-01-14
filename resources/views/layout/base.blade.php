@@ -16,7 +16,6 @@
     @stack('meta')
 
     @laravoltStyles
-    @livewireStyles
 
     @stack('style')
     @stack('head')
@@ -28,7 +27,6 @@
 
     {{ $slot }}
 
-    @livewireScripts
     @stack('script')
     @stack('body')
 </body>
