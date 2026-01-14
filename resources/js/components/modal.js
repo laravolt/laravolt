@@ -24,7 +24,7 @@ window.LivewireModal = () => {
                 this.close(count);
             });
 
-            Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+            Livewire.hook('commit', ({ fail }) => {
                 fail(() => {
                     this.loading = false;
                     this.activeModal = this.modalStack.at(-1);
@@ -45,7 +45,7 @@ window.LivewireModal = () => {
             let closedModal = [];
             for (let i = 0; i < count; i++) {
                 const modal = this.modalStack.pop();
-                Livewire.dispatch('modalClosed', { modal: modal });
+                Livewire.dispatch('modalClosed', modal);
                 closedModal.push(modal);
             }
 
