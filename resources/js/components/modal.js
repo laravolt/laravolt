@@ -24,10 +24,12 @@ window.LivewireModal = () => {
                 this.close(count);
             });
 
-            Livewire.hook('message.failed', (message, component) => {
-                this.loading = false;
-                this.activeModal = this.modalStack.at(-1);
-                this.show = this.activeModal !== undefined;
+            Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+                fail(() => {
+                    this.loading = false;
+                    this.activeModal = this.modalStack.at(-1);
+                    this.show = this.activeModal !== undefined;
+                });
             });
 
             Livewire.on('activeModalChanged', (modal) => {
@@ -43,7 +45,7 @@ window.LivewireModal = () => {
             let closedModal = [];
             for (let i = 0; i < count; i++) {
                 const modal = this.modalStack.pop();
-                Livewire.emit('modalClosed', modal);
+                Livewire.dispatch('modalClosed', { modal: modal });
                 closedModal.push(modal);
             }
 
