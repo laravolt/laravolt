@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\Datepicker;
 
-class DatepickerTest extends \PHPUnit\Framework\TestCase
+class DatepickerTest extends PHPUnit\Framework\TestCase
 {
     public function test_can_render_basic_datepicker()
     {

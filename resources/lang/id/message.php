@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'user_created' => 'Pengguna baru berhasil ditambahkan',
     'user_deleted' => 'Pengguna berhasil dihapus',
@@ -17,4 +19,10 @@ return [
     'delete_role_intro' => 'Akan ada :count pengguna yang terkena dampak.',
     'reset_password_manual_intro' => 'User akan mendapat email yang berisi link untuk melakukan reset password. User harus mengisi sendiri password barunya.',
     'reset_password_automatic_intro' => 'Generate password baru, dan kirim password tersebut via email. User bisa langsung login menggunakan password baru tersebut.',
+    'warning' => 'Peringatan',
+    'users_will_lose_role' => 'Pengguna-pengguna ini akan kehilangan role ini beserta hak aksesnya.',
+    'no_roles' => 'Tidak ada role',
+    'create_first_role' => 'Mulai dengan membuat role pertama Anda.',
+    'permission_description_tip' => 'Memberikan deskripsi yang jelas akan membantu admin aplikasi ketika melakukan pengaturan hak akses.',
+    'permission_description_example' => 'Contoh: <strong>laravolt::manage-user</strong> bisa diperjelas deskripsinya menjadi <strong>Menambah, mengedit, dan menghapus pengguna</strong>.',
 ];

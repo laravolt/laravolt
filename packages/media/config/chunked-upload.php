@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ return [
     | The default chunk size in bytes. This can be overridden by client-side
     | configuration. Recommended values:
     | - 1MB (1048576) for files < 10MB
-    | - 2MB (2097152) for files 10-100MB  
+    | - 2MB (2097152) for files 10-100MB
     | - 5MB (5242880) for files > 100MB
     |
     */
@@ -52,7 +54,6 @@ return [
         'image/gif',
         'image/webp',
         'image/svg+xml',
-        
         // Documents
         'application/pdf',
         'application/msword',
@@ -61,24 +62,20 @@ return [
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-powerpoint',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        
         // Text files
         'text/plain',
         'text/csv',
         'application/json',
         'application/xml',
-        
         // Archives
         'application/zip',
         'application/x-rar-compressed',
         'application/x-tar',
         'application/gzip',
-        
         // Audio
         'audio/mpeg',
         'audio/wav',
         'audio/ogg',
-        
         // Video
         'video/mp4',
         'video/avi',

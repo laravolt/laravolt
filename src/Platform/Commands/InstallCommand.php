@@ -39,6 +39,21 @@ class InstallCommand extends Command
         $this->info('1/2: Publishing Laravolt skeleton files...');
 
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-skeleton', '--force' => true]);
+
+        // Delete existing migration files to avoid duplication
+        $migrationFiles = [
+            'create_users_table.php',
+            'create_cache_table.php',
+            'create_jobs_table.php',
+        ];
+        foreach ($migrationFiles as $file) {
+            $matches = glob(database_path("migrations/*_{$file}"));
+            foreach ($matches as $match) {
+                unlink($match);
+                $this->line("Removed {$match}");
+            }
+        }
+
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-migrations']);
         Artisan::call('vendor:publish', ['--tag' => 'laravolt-assets']);
         Artisan::call(
@@ -50,6 +65,13 @@ class InstallCommand extends Command
 
         // Install Pest v4 for modern testing
         Artisan::call(Pest4InstallCommand::class);
+
+        // Remove default ExampleTest.php if it exists
+        $exampleTestPath = base_path('tests/Unit/ExampleTest.php');
+        if (file_exists($exampleTestPath)) {
+            unlink($exampleTestPath);
+            $this->line('Removed tests/Unit/ExampleTest.php');
+        }
 
         $this->info(sprintf('Application ready: %s', url('/')));
 
@@ -64,8 +86,9 @@ class InstallCommand extends Command
     {
         $entries = [
             base_path('.gitignore') => [
+                '',
                 '/public/laravolt',
-                '/build/coverage',
+                '/coverage',
                 '/pestphp-coverage-result.xml',
                 '/pestphp-execution-result.xml',
             ],

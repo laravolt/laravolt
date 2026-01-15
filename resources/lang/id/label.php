@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'roles' => 'Roles',
     'permissions' => 'Hak Akses',
@@ -11,4 +13,5 @@ return [
     'delete_role' => 'Hapus Role',
     'reset_password_manual' => 'Manual',
     'reset_password_automatic' => 'Otomatis',
+    'manage_permissions' => 'Atur Deskripsi Hak Akses',
 ];

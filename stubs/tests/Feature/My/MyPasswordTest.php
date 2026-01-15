@@ -5,13 +5,17 @@ declare(strict_types=1);
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 test('it can visit my password page', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     /** @var User|Authenticatable */
     $user = User::factory()->create();
-    $this->actingAs($user);
+    $test->actingAs($user);
 
-    $this->get(route('my::password.edit'))
+    $test->get(route('my::password.edit'))
         ->assertSee('password_current')
         ->assertSee('password')
         ->assertSee('password_confirmation')
@@ -19,9 +23,12 @@ test('it can visit my password page', function (): void {
 });
 
 test('it can update my password', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     /** @var User|Authenticatable */
     $user = User::factory()->create();
-    $this->actingAs($user);
+    $test->actingAs($user);
 
     $payload = [
         'password_current' => 'password',
@@ -29,7 +36,7 @@ test('it can update my password', function (): void {
         'password_confirmation' => 'new password',
     ];
 
-    $this->post(route('my::password.update'), $payload)
+    $test->post(route('my::password.update'), $payload)
         ->assertRedirect(route('my::password.edit'))
         ->assertSessionHas('success');
 
@@ -38,9 +45,12 @@ test('it can update my password', function (): void {
 });
 
 test('it can handle wrong current password', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     /** @var User|Authenticatable */
     $user = User::factory()->create();
-    $this->actingAs($user);
+    $test->actingAs($user);
 
     $payload = [
         'password_current' => 'foobar',
@@ -48,7 +58,7 @@ test('it can handle wrong current password', function (): void {
         'password_confirmation' => 'new password',
     ];
 
-    $this->post(route('my::password.update'), $payload)
+    $test->post(route('my::password.update'), $payload)
         ->assertRedirect(route('my::password.edit'))
         ->assertSessionHas('error');
 });

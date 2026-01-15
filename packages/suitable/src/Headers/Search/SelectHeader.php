@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Headers\Search;
 
 use Illuminate\Support\Arr;
@@ -21,14 +23,14 @@ class SelectHeader implements \Laravolt\Suitable\Contracts\Header
         $this->options = $options;
     }
 
-    public static function make($name, array $options)
-    {
-        return new self($name, $options);
-    }
-
     public function __toString()
     {
         return $this->render();
+    }
+
+    public static function make($name, array $options)
+    {
+        return new self($name, $options);
     }
 
     public function setAttributes(array $attributes): \Laravolt\Suitable\Contracts\Header

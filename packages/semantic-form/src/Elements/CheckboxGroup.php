@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
+use Closure;
 use Illuminate\Support\Arr;
 use Laravolt\SemanticForm\SemanticForm;
 
@@ -89,7 +92,7 @@ class CheckboxGroup extends Wrapper
     {
         foreach ($this->controls as $control) {
             if ($control instanceof Checkbox) {
-                if ($attributes instanceof \Closure) {
+                if ($attributes instanceof Closure) {
                     $attributes($control);
                 } else {
                     $control->attributes($attributes);

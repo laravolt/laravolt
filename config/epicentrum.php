@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * Set specific configuration variables here
  */
@@ -9,16 +11,16 @@ return [
         'editable' => true,
     ],
     'repository' => [
-        'user' => \Laravolt\Epicentrum\Repositories\EloquentRepository::class,
-        'role' => \Laravolt\Epicentrum\Repositories\RoleRepository::class,
-        'timezone' => \Laravolt\Support\Repositories\TimezoneRepository::class,
+        'user' => Laravolt\Epicentrum\Repositories\EloquentRepository::class,
+        'role' => Laravolt\Epicentrum\Repositories\RoleRepository::class,
+        'timezone' => Laravolt\Support\Repositories\TimezoneRepository::class,
         'searchable' => ['name', 'email', 'status'],
     ],
     'requests' => [
         'account' => [
-            'store' => \Laravolt\Epicentrum\Http\Requests\Account\Store::class,
-            'update' => \Laravolt\Epicentrum\Http\Requests\Account\Update::class,
-            'delete' => \Laravolt\Epicentrum\Http\Requests\Account\Delete::class,
+            'store' => Laravolt\Epicentrum\Http\Requests\Account\Store::class,
+            'update' => Laravolt\Epicentrum\Http\Requests\Account\Update::class,
+            'delete' => Laravolt\Epicentrum\Http\Requests\Account\Delete::class,
         ],
     ],
     // Max user allowed
@@ -30,9 +32,9 @@ return [
         'BLOCKED' => 'BLOCKED',
     ],
     'models' => [
-        'user' => \App\Models\User::class,
-        'role' => \Laravolt\Platform\Models\Role::class,
-        'permission' => \Laravolt\Platform\Models\Permission::class,
+        'user' => App\Models\User::class,
+        'role' => Laravolt\Platform\Models\Role::class,
+        'permission' => Laravolt\Platform\Models\Permission::class,
     ],
-    'table_view' => \Laravolt\Epicentrum\Livewire\UserTable::class,
+    'table_view' => Laravolt\Epicentrum\Livewire\UserTable::class,
 ];

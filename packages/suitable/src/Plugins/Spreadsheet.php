@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Plugins;
 
+use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -52,7 +55,8 @@ class Spreadsheet extends Plugin implements \Laravolt\Suitable\Contracts\Plugin
     {
         if ($source instanceof LengthAwarePaginator) {
             return $source->items();
-        } elseif ($source instanceof \Closure) {
+        }
+        if ($source instanceof Closure) {
             return call_user_func($source);
         }
 

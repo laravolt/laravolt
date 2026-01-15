@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     // Enable/disable mailkeeper.
     // If enable, every outgoing mail will be intercepted.

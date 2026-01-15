@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Scripts;
 
 use Composer\Script\Event;
+use ReflectionClass;
+use ZipArchive;
 
 class ComposerScripts
 {
@@ -68,7 +70,7 @@ class ComposerScripts
             mkdir($destination, 0755, true);
         }
 
-        $zip = new \ZipArchive;
+        $zip = new ZipArchive;
         $result = $zip->open($zipPath);
 
         if ($result !== true) {
@@ -95,7 +97,7 @@ class ComposerScripts
      */
     private static function getVendorDir(): string
     {
-        $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
+        $reflection = new ReflectionClass(\Composer\Autoload\ClassLoader::class);
 
         return dirname(dirname($reflection->getFileName()));
     }

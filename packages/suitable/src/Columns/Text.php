@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
 class Text extends Column implements ColumnInterface
@@ -12,6 +14,6 @@ class Text extends Column implements ColumnInterface
             return '';
         }
 
-        return htmlspecialchars($data, ENT_QUOTES);
+        return htmlspecialchars((string) $data, ENT_QUOTES);
     }
 }

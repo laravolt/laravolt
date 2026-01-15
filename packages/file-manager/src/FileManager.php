@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\FileManager;
 
 use Carbon\Carbon;
@@ -72,19 +74,20 @@ class FileManager
         $items = $this->allFiles($path);
 
         $files = collect($items)->sort(function ($a, $b) {
-            if ($a['type'] == 'dir') {
-                if ($b['type'] == 'dir') {
-                    return (int) ($a['modified'] < $b['modified']);
-                } else {
-                    return -1;
-                }
-            } else {
-                if ($b['type'] == 'dir') {
-                    return 1;
-                } else {
+            if ($a['type'] === 'dir') {
+                if ($b['type'] === 'dir') {
                     return (int) ($a['modified'] < $b['modified']);
                 }
+
+                return -1;
+
             }
+            if ($b['type'] === 'dir') {
+                return 1;
+            }
+
+            return (int) ($a['modified'] < $b['modified']);
+
         });
 
         $isRoot = ! $path;
@@ -145,10 +148,39 @@ class FileManager
         return $this->baseDirectory.DIRECTORY_SEPARATOR.$path;
     }
 
+    public function encode($path)
+    {
+        return Crypt::encryptString(bin2hex($path));
+    }
+
+    public function decode($hash)
+    {
+        return hex2bin(Crypt::decryptString($hash));
+    }
+
+    public function allFiles(?string $path = null)
+    {
+        $files = $this->filesystem->files($path);
+        $directories = $this->filesystem->directories($path);
+        $items = [];
+
+        foreach ($directories as $item) {
+            $items[] = $this->getInfo($item);
+        }
+
+        foreach ($files as $item) {
+            if (! in_array(basename($item), $this->exclude)) {
+                $items[] = $this->getInfo($item);
+            }
+        }
+
+        return $items;
+    }
+
     protected function filesizeForHuman($bytes, $decimals = 0)
     {
         $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        $factor = floor((strlen($bytes) - 1) / 3);
+        $factor = floor((mb_strlen($bytes) - 1) / 3);
 
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).' '.@$size[$factor];
     }
@@ -159,7 +191,7 @@ class FileManager
         $count = 0;
         $dir_array = scandir($dir);
         foreach ($dir_array as $key => $filename) {
-            if ($filename != '..' && $filename != '.') {
+            if ($filename !== '..' && $filename !== '.') {
                 if (is_dir($dir.'/'.$filename)) {
                     $new_foldersize = $this->folderInfo($dir.'/'.$filename);
                     $count_size = $count_size + $new_foldersize[0];
@@ -190,35 +222,6 @@ class FileManager
             'pdf' => 'icon file pdf outline',
         ];
 
-        return Arr::get($types, strtolower($extension), 'icon file outline');
-    }
-
-    public function encode($path)
-    {
-        return Crypt::encryptString(bin2hex($path));
-    }
-
-    public function decode($hash)
-    {
-        return hex2bin(Crypt::decryptString($hash));
-    }
-
-    public function allFiles(?string $path = null)
-    {
-        $files = $this->filesystem->files($path);
-        $directories = $this->filesystem->directories($path);
-        $items = [];
-
-        foreach ($directories as $item) {
-            $items[] = $this->getInfo($item);
-        }
-
-        foreach ($files as $item) {
-            if (! in_array(basename($item), $this->exclude)) {
-                $items[] = $this->getInfo($item);
-            }
-        }
-
-        return $items;
+        return Arr::get($types, mb_strtolower($extension), 'icon file outline');
     }
 }

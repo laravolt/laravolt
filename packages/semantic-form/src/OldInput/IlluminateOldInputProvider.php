@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\OldInput;
 
 use Illuminate\Session\Store as Session;

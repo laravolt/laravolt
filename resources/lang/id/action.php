@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'add' => 'Tambah',
     'edit' => 'Edit',
+    'detail' => 'Detil',
     'delete' => 'Hapus',
     'delete_permanent' => 'Hapus Selamanya',
-    'search' => 'Search...',
+    'search' => 'Cari...',
     'manage' => 'Kelola',
     'save' => 'Simpan',
     'cancel' => 'Batal',
@@ -13,4 +16,5 @@ return [
     'generate_password' => 'Random Password',
     'send_new_password' => 'Kirim Password Baru',
     'send_reset_password_link' => 'Kirim Link Reset Password',
+    'select_all' => 'Pilih Semua',
 ];

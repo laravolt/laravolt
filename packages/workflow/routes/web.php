@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\Workflow\Http\Controllers\DefinitionController;
 use Laravolt\Workflow\Http\Controllers\DefinitionXmlController;
 use Laravolt\Workflow\Http\Controllers\EmbedFormController;

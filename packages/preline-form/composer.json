@@ -1,0 +1,62 @@
+{
+    "name": "laravolt/preline-form",
+    "description": "Preline UI form helpers",
+    "keywords": [
+        "laravel",
+        "laravolt",
+        "form",
+        "preline UI"
+    ],
+    "homepage": "https://github.com/laravolt/laravolt",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Qisthi Ramadhani",
+            "email": "rama@qisthi.dev",
+            "homepage": "https://qisthi.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "illuminate/support": "^10.0 || ^11.0 | ^12.0",
+        "nesbot/carbon": "^2.0",
+        "myclabs/deep-copy": "^1.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "mockery/mockery": "^1.2",
+        "squizlabs/php_codesniffer": "^3.4",
+        "php-coveralls/php-coveralls": "^2.1"
+    },
+    "suggest": {
+        "laravolt/platform": "Some preline-form components only works in Laravolt Platform"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\PrelineForm\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laravolt\\PrelineForm\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Laravolt\\PrelineForm\\ServiceProvider"
+            ],
+            "aliases": {
+                "Form": "Laravolt\\PrelineForm\\Facade",
+                "PrelineForm": "Laravolt\\PrelineForm\\Facade"
+            }
+        }
+    }
+}

@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
+
+use DateTimeImmutable;
 
 class Timepicker extends Text
 {
@@ -11,7 +15,7 @@ class Timepicker extends Text
 
     public function value($value)
     {
-        if ($value instanceof \DateTime) {
+        if ($value instanceof DateTimeImmutable) {
             $value = $value->format('H:i');
         }
 

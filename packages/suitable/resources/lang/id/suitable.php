@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'search_placeholder' => 'Cari...',
     'empty_message' => 'Tidak ada data',

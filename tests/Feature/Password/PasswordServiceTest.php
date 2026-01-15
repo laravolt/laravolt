@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Password;
 use Laravolt\Platform\Mail\NewPasswordInformation;
 use Laravolt\Platform\Mail\ResetPasswordLink;
 use Laravolt\Tests\FeatureTest;
+use Mockery;
 
 class PasswordServiceTest extends FeatureTest
 {
@@ -59,7 +60,7 @@ class PasswordServiceTest extends FeatureTest
         $token = 'asdf1234';
         $user = $this->createUser();
 
-        $tokenRepo = \Mockery::mock(TokenRepositoryInterface::class);
+        $tokenRepo = Mockery::mock(TokenRepositoryInterface::class);
         $tokenRepo->shouldReceive('create')->andReturn($token);
         $tokenRepo->shouldReceive('exists')->andReturn(true);
         $tokenRepo->shouldReceive('delete');

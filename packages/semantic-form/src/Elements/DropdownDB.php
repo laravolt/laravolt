@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
@@ -16,16 +18,6 @@ class DropdownDB extends Select
     protected $dependencyValue;
 
     protected $ajax = false;
-
-    protected function beforeRender()
-    {
-        $this->setupDependency();
-        $this->data('class', $this->getAttribute('class'));
-
-        if (! $this->ajax && ! Str::contains($this->query, ['%s', '%1$s'])) {
-            $this->options = $this->getOptionsFromDb();
-        }
-    }
 
     public function dependency(?string $dependency, $value = null)
     {
@@ -61,7 +53,7 @@ class DropdownDB extends Select
         }
 
         if (is_string($this->value) || is_numeric($this->value)) {
-            if (trim($this->value) === '') {
+            if (mb_trim($this->value) === '') {
                 return null;
             }
 
@@ -71,6 +63,16 @@ class DropdownDB extends Select
         }
 
         return $this->value;
+    }
+
+    protected function beforeRender()
+    {
+        $this->setupDependency();
+        $this->data('class', $this->getAttribute('class'));
+
+        if (! $this->ajax && ! Str::contains($this->query, ['%s', '%1$s'])) {
+            $this->options = $this->getOptionsFromDb();
+        }
     }
 
     private function setupDependency()

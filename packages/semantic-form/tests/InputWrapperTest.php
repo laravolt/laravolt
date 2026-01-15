@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\InputWrapper;
 
-class InputWrapperTest extends \PHPUnit\Framework\TestCase
+class InputWrapperTest extends PHPUnit\Framework\TestCase
 {
     public function test_can_render_basic_input()
     {

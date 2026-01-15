@@ -11,6 +11,7 @@ use Laravolt\Platform\Providers\PlatformServiceProvider;
 use Laravolt\Platform\Providers\UiServiceProvider;
 use Lavary\Menu\ServiceProvider;
 use Livewire\LivewireServiceProvider;
+use URL;
 
 trait Bootstrap
 {
@@ -38,7 +39,7 @@ trait Bootstrap
         $app['view']->addNamespace('dummy', __DIR__.'/Dummy');
         $app['config']->set('laravolt.auth.layout', 'dummy::layout');
 
-        \URL::forceRootUrl('http://localhost');
+        URL::forceRootUrl('http://localhost');
     }
 
     /**

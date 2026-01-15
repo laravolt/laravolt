@@ -9,73 +9,95 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 beforeEach(function (): void {
     config(['laravolt.platform.features.verification' => true]);
 });
 
 test('it can visit verification page', function (): void {
-    $this->actingAs(User::factory()->create(['email_verified_at' => null]));
+    /** @var TestCase $test */
+    $test = $this;
 
-    $this->get(route('verification.notice'))
+    $test->actingAs(User::factory()->create(['email_verified_at' => null]));
+
+    $test->get(route('verification.notice'))
         ->assertSeeText(__('Verifikasi Email'))
         ->assertStatus(200);
 });
 
 test('it cannot visit verification page if already verified', function (): void {
-    $this->actingAs(User::factory()->create(['email_verified_at' => now()]));
+    /** @var TestCase $test */
+    $test = $this;
 
-    $this->get(route('verification.notice'))
+    $test->actingAs(User::factory()->create(['email_verified_at' => now()]));
+
+    $test->get(route('verification.notice'))
         ->assertRedirect(AppServiceProvider::HOME);
 });
 
 test('it can resend verification email', function (): void {
-    $this->actingAs($user = User::factory()->create(['email_verified_at' => null]));
+    /** @var TestCase $test */
+    $test = $this;
+
+    $test->actingAs($user = User::factory()->create(['email_verified_at' => null]));
     Notification::fake();
 
-    $this->post(route('verification.send'))
+    $test->post(route('verification.send'))
         ->assertSessionHas('success');
 
     Notification::assertSentTo($user, VerifyEmail::class);
 });
 
 test('it cannot resend verification email if already verified', function (): void {
-    $this->actingAs(User::factory()->create());
+    /** @var TestCase $test */
+    $test = $this;
 
-    $this->post(route('verification.send'))
+    $test->actingAs(User::factory()->create());
+
+    $test->post(route('verification.send'))
         ->assertRedirect(AppServiceProvider::HOME);
 });
 
 test('it can verify email', function (): void {
-    $this->actingAs($user = User::factory()->create(['email_verified_at' => null]));
+    /** @var TestCase $test */
+    $test = $this;
 
-    $this->mock(EmailVerificationRequest::class, function ($mock) use ($user): void {
+    $test->actingAs($user = User::factory()->create(['email_verified_at' => null]));
+
+    $test->mock(EmailVerificationRequest::class, function ($mock) use ($user): void {
         $mock->shouldReceive('authorize')->andReturnTrue();
         $mock->shouldReceive('user')->andReturn($user);
     });
 
-    $this->withoutMiddleware()
+    $test->withoutMiddleware()
         ->get(route('verification.verify', ['id', 'hash']))
         ->assertRedirect(AppServiceProvider::HOME.'?verified=1');
 });
 
 test('it cannot verify email if already verified', function (): void {
-    $this->actingAs($user = User::factory()->create());
+    /** @var TestCase $test */
+    $test = $this;
 
-    $this->mock(EmailVerificationRequest::class, function ($mock) use ($user): void {
+    $test->actingAs($user = User::factory()->create());
+
+    $test->mock(EmailVerificationRequest::class, function ($mock) use ($user): void {
         $mock->shouldReceive('authorize')->andReturnTrue();
         $mock->shouldReceive('user')->andReturn($user);
     });
 
-    $this->withoutMiddleware()
+    $test->withoutMiddleware()
         ->get(route('verification.verify', ['id', 'hash']))
         ->assertRedirect(AppServiceProvider::HOME.'?verified=1');
 });
 
 test('validate user model concerns', function (): void {
+    /** @var TestCase $test */
+    $test = $this;
+
     config(['app.debug' => true]);
     Auth::shouldReceive('user')->andReturn(new stdClass);
-    $this->withoutMiddleware()->post(route('verification.send'))
+    $test->withoutMiddleware()->post(route('verification.send'))
         ->assertSeeText(MustVerifyEmail::class)
         ->assertStatus(500);
 });

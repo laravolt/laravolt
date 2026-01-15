@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Support\Repositories;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 
 class TimezoneRepository implements \Laravolt\Support\Contracts\TimezoneRepository
@@ -14,7 +16,7 @@ class TimezoneRepository implements \Laravolt\Support\Contracts\TimezoneReposito
         $offsets = [];
         foreach ($timezones as $timezone) {
             $tz = new DateTimeZone($timezone);
-            $offsets[$timezone] = $tz->getOffset(new DateTime);
+            $offsets[$timezone] = $tz->getOffset(new DateTimeImmutable());
         }
 
         // sort timezone by offset

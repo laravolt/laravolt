@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Ui\Filters;
 
 class DateFilter extends BaseFilter
@@ -15,6 +17,7 @@ class DateFilter extends BaseFilter
 
         return $field
             ->label($this->label)
-            ->attributes(['wire:model.live' => "filters.$key"]);
+            ->attributes(['wire:model.live' => "filters.$key"])
+            ->render();
     }
 }

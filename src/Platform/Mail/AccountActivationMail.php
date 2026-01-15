@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Mail;
 
 use Illuminate\Bus\Queueable;

@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Fields;
 
+use Closure;
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 class BelongsTo implements Field
 {
@@ -18,7 +22,7 @@ class BelongsTo implements Field
 
     protected string $query;
 
-    protected \Closure $display;
+    protected Closure $display;
 
     /**
      * BelongsTo constructor.
@@ -26,7 +30,7 @@ class BelongsTo implements Field
     public function __construct(string $belongsToClass)
     {
         $this->belongsToClass = $belongsToClass;
-        $this->label = Str::title((new \ReflectionClass($belongsToClass))->getShortName());
+        $this->label = Str::title((new ReflectionClass($belongsToClass))->getShortName());
     }
 
     public static function make(string $class): self
@@ -74,7 +78,7 @@ class BelongsTo implements Field
         ];
     }
 
-    public function display(\Closure $callback): self
+    public function display(Closure $callback): self
     {
         $this->display = $callback;
 

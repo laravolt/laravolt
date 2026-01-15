@@ -1,12 +1,16 @@
-<div id="actionbar" class="ui two column grid p-x-3 p-y-1 m-b-0">
-    <div class="column middle aligned">
-        @yield('breadcrumb')
-        <h3 class="ui header m-t-xs">
-            {{ $title }}
-            <div class="sub header">{{ $subtitle ?? '' }}</div>
-        </h3>
+<div class="flex justify-between items-center gap-x-5">
+    <div>
+        <h2 class="inline-block text-lg font-semibold text-gray-800 dark:text-neutral-200">
+            {{ $title ?? '' }}
+        </h2>
+        @if (!empty($subtitle))
+            <div class="text-sm text-gray-500 dark:text-neutral-400">{{ $subtitle }}</div>
+        @endif
     </div>
-    <div class="column right aligned middle aligned">
-        {{ $actions ?? '' }}
-    </div>
+
+    @if (!empty($actions))
+        <div class="flex justify-end items-center gap-x-2">
+            {{ $actions }}
+        </div>
+    @endif
 </div>

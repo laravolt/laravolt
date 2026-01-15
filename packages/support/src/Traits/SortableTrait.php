@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Support\Traits;
 
 use ArrayAccess;
@@ -43,6 +45,29 @@ trait SortableTrait
     }
 
     /**
+     * This function reorders the records: the record with the first id in the array
+     * will get order 1, the record with the second it will get order 2, ...
+     * A starting order number can be optionally supplied (defaults to 1).
+     *
+     * @param  array|ArrayAccess  $ids
+     */
+    public static function sort($ids, int $startPosition = 1)
+    {
+        if (! is_array($ids) && ! $ids instanceof ArrayAccess) {
+            throw new InvalidArgumentException('You must pass an array or ArrayAccess object to setNewOrder');
+        }
+
+        foreach ($ids as $id) {
+            if ($id instanceof Model) {
+                $id = $id->getKey();
+            }
+            static::withoutGlobalScope(SoftDeletingScope::class)
+                ->whereKey($id)
+                ->update([static::$sortable['column'] => $startPosition++]);
+        }
+    }
+
+    /**
      * Get current position.
      */
     public function getPosition(): ?int
@@ -67,29 +92,6 @@ trait SortableTrait
     public function scopeOrderByPosition(Builder $query, string $direction = 'asc')
     {
         return $query->orderBy($this->getSortableField(), $direction);
-    }
-
-    /**
-     * This function reorders the records: the record with the first id in the array
-     * will get order 1, the record with the second it will get order 2, ...
-     * A starting order number can be optionally supplied (defaults to 1).
-     *
-     * @param  array|\ArrayAccess  $ids
-     */
-    public static function sort($ids, int $startPosition = 1)
-    {
-        if (! is_array($ids) && ! $ids instanceof ArrayAccess) {
-            throw new InvalidArgumentException('You must pass an array or ArrayAccess object to setNewOrder');
-        }
-
-        foreach ($ids as $id) {
-            if ($id instanceof Model) {
-                $id = $id->getKey();
-            }
-            static::withoutGlobalScope(SoftDeletingScope::class)
-                ->whereKey($id)
-                ->update([static::$sortable['column'] => $startPosition++]);
-        }
     }
 
     /**
@@ -145,7 +147,7 @@ trait SortableTrait
      */
     public function moveToPosition(int $position): void
     {
-        if ($position == $this->getPosition()) {
+        if ($position === $this->getPosition()) {
             return;
         }
 
@@ -200,7 +202,7 @@ trait SortableTrait
     /**
      * Build eloquent builder of sortable.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     protected function buildSortableQuery()
     {

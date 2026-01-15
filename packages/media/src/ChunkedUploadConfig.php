@@ -220,7 +220,7 @@ class ChunkedUploadConfig
     public static function isFileSizeValid(int $fileSize): bool
     {
         $maxSize = static::getMaxFileSize();
-        
+
         return $maxSize === null || $fileSize <= $maxSize;
     }
 
@@ -230,7 +230,6 @@ class ChunkedUploadConfig
     public static function isMimeTypeValid(string $mimeType): bool
     {
         $allowedTypes = static::getAllowedMimeTypes();
-        
         return $allowedTypes === null || in_array($mimeType, $allowedTypes, true);
     }
 
@@ -240,7 +239,6 @@ class ChunkedUploadConfig
     public static function isFilenameValid(string $filename): bool
     {
         $pattern = static::getFilenamePattern();
-        
         return preg_match($pattern, $filename) === 1;
     }
 

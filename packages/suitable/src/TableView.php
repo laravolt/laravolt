@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable;
 
+use Closure;
 use Illuminate\Contracts\Support\Responsable;
 use Laravolt\Suitable\Plugins\Html;
 
@@ -31,6 +34,8 @@ abstract class TableView implements Responsable
 
         $this->init();
     }
+
+    abstract protected function columns();
 
     public static function make($source = null)
     {
@@ -160,7 +165,7 @@ abstract class TableView implements Responsable
         return $this;
     }
 
-    public function decorate(\Closure $callback)
+    public function decorate(Closure $callback)
     {
         $this->decorateCallback = $callback;
 
@@ -179,6 +184,4 @@ abstract class TableView implements Responsable
     protected function init() {}
 
     protected function segments() {}
-
-    abstract protected function columns();
 }

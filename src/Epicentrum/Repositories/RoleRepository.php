@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Repositories;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -44,7 +47,7 @@ class RoleRepository implements RoleRepositoryInterface
      * @param  null  $roles
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(array $attributes)
     {

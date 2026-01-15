@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
+
+use Illuminate\Support\Exceptions\MathException;
 
 class Currency extends Column implements ColumnInterface
 {
@@ -16,7 +20,11 @@ class Currency extends Column implements ColumnInterface
 
     public function cell($cell, $collection, $loop)
     {
-        $value = data_get($cell, $this->field);
+        try {
+            $value = data_get($cell, $this->field);
+        } catch (MathException) {
+            return '-';
+        }
 
         if ($value === null || $value === '') {
             return '-';

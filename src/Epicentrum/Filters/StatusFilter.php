@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Filters;
 
 use Laravolt\Ui\Filters\CheckboxFilter;
@@ -21,8 +23,8 @@ class StatusFilter extends CheckboxFilter
     public function options(): array
     {
         return [
-            'ACTIVE' => 'ACTIVE',
-            'PENDING' => 'PENDING',
+            'ACTIVE' => 'Active',
+            'PENDING' => 'Pending',
         ];
     }
 }

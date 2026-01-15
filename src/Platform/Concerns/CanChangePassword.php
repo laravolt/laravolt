@@ -27,7 +27,7 @@ trait CanChangePassword
     public function setPasswordAttribute($value): void
     {
         if ($value) {
-            if (strlen($value) === 60 && preg_match('/^\$2y\$/', $value)) {
+            if (mb_strlen($value) === 60 && preg_match('/^\$2y\$/', $value)) {
                 $this->attributes['password'] = $value;
             } else {
                 $this->attributes['password'] = Hash::make($value);

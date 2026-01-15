@@ -13,4 +13,5 @@ return [
         'enabled' => true,
     ],
     'permission' => [],
+    'icon' => 'circle',
 ];

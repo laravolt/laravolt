@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Media\Controllers;
 
 use Illuminate\Http\Request;
@@ -36,9 +38,9 @@ class VideoStreamController extends \Illuminate\Routing\Controller
         if ($request->hasHeader('Range')) {
             preg_match('/bytes=(\d+)-(\d*)/', $request->header('Range'), $matches);
             if (count($matches) >= 2) {
-                $start = intval($matches[1]);
+                $start = (int) ($matches[1]);
                 if (isset($matches[2]) && $matches[2] !== '') {
-                    $end = intval($matches[2]);
+                    $end = (int) ($matches[2]);
                 }
                 $length = $end - $start + 1;
                 $headers['Content-Range'] = "bytes $start-$end/$size";
@@ -92,9 +94,9 @@ class VideoStreamController extends \Illuminate\Routing\Controller
         if ($request->hasHeader('Range')) {
             preg_match('/bytes=(\d+)-(\d*)/', $request->header('Range'), $matches);
             if (count($matches) >= 2) {
-                $start = intval($matches[1]);
+                $start = (int) ($matches[1]);
                 if (isset($matches[2]) && $matches[2] !== '') {
-                    $end = intval($matches[2]);
+                    $end = (int) ($matches[2]);
                 }
                 $length = $end - $start + 1;
                 $headers['Content-Range'] = "bytes $start-$end/$size";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Mailkeeper;
 
 use Illuminate\Mail\MailManager;
@@ -7,7 +9,7 @@ use Illuminate\Mail\MailManager;
 class DbMailManager extends MailManager
 {
     /**
-     * @return \Laravolt\Mailkeeper\LegacyDbTransport
+     * @return LegacyDbTransport
      *
      * @deprecated
      */

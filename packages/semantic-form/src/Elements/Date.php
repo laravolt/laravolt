@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Carbon\Carbon;
+use DateTimeImmutable;
+use Exception;
 
 class Date extends Text
 {
@@ -26,7 +30,7 @@ class Date extends Text
 
     public function value($value)
     {
-        if ($value instanceof \DateTime) {
+        if ($value instanceof DateTimeImmutable) {
             $value = $value->format('Y-m-d');
         }
 
@@ -39,7 +43,7 @@ class Date extends Text
 
         try {
             return Carbon::createFromIsoFormat(static::$inputFormat, $value)->isoFormat(static::$displayFormat);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $value;
         }
     }

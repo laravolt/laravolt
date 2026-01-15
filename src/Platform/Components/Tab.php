@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Components;
 
 use Illuminate\View\Component;
 
 class Tab extends Component
 {
-    protected static $activeTab;
-
     public $key;
 
-    public static function getActiveTab()
-    {
-        return static::$activeTab;
-    }
+    protected static $activeTab;
 
     public function __construct()
     {
         $this->key = 'tab-'.bin2hex(random_bytes(5));
         static::$activeTab = $this->key;
+    }
+
+    public static function getActiveTab()
+    {
+        return static::$activeTab;
     }
 
     /**

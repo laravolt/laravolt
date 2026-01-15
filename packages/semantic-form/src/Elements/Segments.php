@@ -12,7 +12,7 @@ class Segments extends Wrapper
 
     public function __construct()
     {
-        if (func_num_args() == 1 && is_array(func_get_arg(0))) {
+        if (func_num_args() === 1 && is_array(func_get_arg(0))) {
             $controls = func_get_arg(0);
         } else {
             $controls = func_get_args();

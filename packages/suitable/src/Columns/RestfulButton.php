@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
+use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -95,7 +98,7 @@ class RestfulButton extends Column implements ColumnInterface
             return $this->deleteConfirmation;
         }
 
-        if ($this->deleteConfirmation instanceof \Closure) {
+        if ($this->deleteConfirmation instanceof Closure) {
             return call_user_func($this->deleteConfirmation, $data);
         }
 

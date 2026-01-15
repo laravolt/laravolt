@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 abstract class Input extends FormControl

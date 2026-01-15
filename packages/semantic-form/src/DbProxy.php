@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\SemanticForm;
 
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class DbProxy
 
             if ($term) {
                 $payload = decrypt(request('payload'));
-                $query = sprintf($payload['query'], trim($term));
+                $query = sprintf($payload['query'], mb_trim($term));
                 $connection = $payload['connection'] ?? config('database.default');
                 $results = collect(DB::connection($connection)->select($query))->transform(function ($item) use ($payload) {
                     $item = (array) $item;
@@ -32,7 +33,7 @@ class DbProxy
             $json = ['success' => true, 'results' => $results];
 
             return response()->json($json);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }

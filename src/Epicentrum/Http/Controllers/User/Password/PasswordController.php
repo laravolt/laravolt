@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Controllers\User\Password;
 
 use Illuminate\Routing\Controller;

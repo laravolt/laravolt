@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'activation_success' => 'Aktivasi berhasil. Silakan login.',
     'activation_subject' => 'Aktivasi Akun',

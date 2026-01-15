@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
 use Illuminate\Support\Facades\View;
 
 class Checkall extends Column implements ColumnInterface
 {
-    private $filldata;
-
     protected $headerAttributes = ['width' => '50px', 'class' => 'center aligned'];
 
     protected $cellAttributes = ['class' => 'numbering'];
+
+    private $filldata;
 
     public static function make($field, $header = null)
     {
@@ -18,15 +20,6 @@ class Checkall extends Column implements ColumnInterface
         $column->header = View::make('suitable::columns.checkall.header')->render();
 
         return $column;
-    }
-
-    private function isChecked($data)
-    {
-        if (! $this->filldata) {
-            return false;
-        }
-
-        return in_array($data->id, $this->filldata);
     }
 
     public function header()
@@ -40,5 +33,14 @@ class Checkall extends Column implements ColumnInterface
         $checkboxValue = data_get($data, $this->field);
 
         return View::make('suitable::columns.checkall.cell', compact('data', 'checked', 'checkboxValue'))->render();
+    }
+
+    private function isChecked($data)
+    {
+        if (! $this->filldata) {
+            return false;
+        }
+
+        return in_array($data->id, $this->filldata);
     }
 }

@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'add' => 'Add',
     'edit' => 'Edit',
+    'detail' => 'Detail',
     'delete' => 'Delete',
     'delete_permanent' => 'Delete Forever',
-    'search' => 'Cari user...',
+    'search' => 'Search...',
     'manage' => 'Manage',
     'save' => 'Save',
     'cancel' => 'Cancel',
@@ -13,4 +16,5 @@ return [
     'generate_password' => 'Generate',
     'send_new_password' => 'Send New Password',
     'send_reset_password_link' => 'Send Link To Reset Password',
+    'select_all' => 'Select All',
 ];

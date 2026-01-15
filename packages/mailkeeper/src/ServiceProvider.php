@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Mailkeeper;
 
 use Illuminate\Mail\MailServiceProvider;
@@ -34,7 +36,6 @@ class ServiceProvider extends MailServiceProvider
                     return $app->make('mail.manager')->mailer();
                 }
             );
-
         } else {
             parent::registerIlluminateMailer();
         }

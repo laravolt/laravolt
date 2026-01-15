@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\Select;
 
-class SelectTest extends \PHPUnit\Framework\TestCase
+class SelectTest extends PHPUnit\Framework\TestCase
 {
     public function test_can_render_basic_select()
     {

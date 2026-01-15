@@ -1,0 +1,398 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Laravolt\PrelineForm\Elements;
+
+use Closure;
+use Exception;
+use Illuminate\Support\Arr;
+
+abstract class Element
+{
+    protected $attributes = [];
+
+    protected $fieldAttributes = [];
+
+    protected $label = false;
+
+    protected $fieldCallback = null;
+
+    protected $hint = [];
+
+    public function __toString()
+    {
+        try {
+            return $this->render();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    abstract public function render();
+
+    public function hasAttribute($attribute)
+    {
+        return isset($this->attributes[$attribute]);
+    }
+
+    public function clear($attribute)
+    {
+        if (! isset($this->attributes[$attribute])) {
+            return $this;
+        }
+
+        $this->removeAttribute($attribute);
+
+        return $this;
+    }
+
+    public function addClass($class)
+    {
+        $existingClasses = $this->getAttribute('class');
+        if ($existingClasses) {
+            $this->setAttribute('class', $existingClasses.' '.$class);
+        } else {
+            $this->setAttribute('class', $class);
+        }
+
+        return $this;
+    }
+
+    public function addClassIf($condition, $class)
+    {
+        if ($condition) {
+            $this->addClass($class);
+        }
+
+        return $this;
+    }
+
+    public function removeClass($class)
+    {
+        $existingClasses = $this->getAttribute('class');
+        if ($existingClasses) {
+            $classes = explode(' ', $existingClasses);
+            // Remove all classes that contain the $class substring
+            $classes = array_filter($classes, function ($c) use ($class) {
+                return mb_strpos($c, $class) === false;
+            });
+            $this->setAttribute('class', implode(' ', $classes));
+        }
+
+        return $this;
+    }
+
+    public function attribute($attribute, $value = null)
+    {
+        $this->setAttribute($attribute, $value);
+
+        return $this;
+    }
+
+    public function attributes($attributes)
+    {
+        foreach ($attributes as $attribute => $value) {
+            if ($attribute === 'class') {
+                $this->addClass($value);
+            } else {
+                $this->setAttribute($attribute, $value);
+            }
+        }
+
+        return $this;
+    }
+
+    public function data($attribute, $value = null)
+    {
+        $this->setAttribute('data-'.$attribute, $value);
+
+        return $this;
+    }
+
+    public function id($id)
+    {
+        $this->setId($id);
+
+        return $this;
+    }
+
+    public function fieldWidth($width)
+    {
+        // For Preline compatibility - can be enhanced as needed
+        return $this;
+    }
+
+    public function label($label, ?Closure $callback = null)
+    {
+        if ($label) {
+            $this->label = new Label($label);
+            $this->fieldCallback = $callback;
+        } else {
+            $this->label = null;
+        }
+
+        return $this;
+    }
+
+    public function fieldAttributes($attributes)
+    {
+        $this->fieldAttributes = $attributes;
+
+        return $this;
+    }
+
+    public function getFieldAttributes()
+    {
+        return $this->fieldAttributes;
+    }
+
+    public function hint($text, $class = null)
+    {
+        $this->hint[] = new Hint($text, $class);
+
+        return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->getAttribute('value');
+    }
+
+    public function display()
+    {
+        return sprintf(
+            '<tr %s><td style="width:300px"><div title="%s">%s</div></td><td>%s</td></tr>',
+            $this->renderFieldAttributes(),
+            $this->getAttribute('name'),
+            $this->label,
+            $this->displayValue()
+        );
+    }
+
+    public function displayValue()
+    {
+        return nl2br($this->getValue() ?? '');
+    }
+
+    public function populateValue($values)
+    {
+        $name = $this->getAttribute('name');
+        if ($name && isset($values[$name])) {
+            if (method_exists($this, 'value')) {
+                $this->value($values[$name]);
+            } else {
+                $this->setAttribute('value', $values[$name]);
+            }
+        }
+
+        return $this;
+    }
+
+    public function normalizedName()
+    {
+        $name = $this->getAttribute('name');
+
+        return mb_trim(str_replace(']', '', str_replace('[', '.', $name)), '.');
+    }
+
+    public function basename()
+    {
+        $normalizedName = $this->normalizedName();
+        $parts = explode('.', $normalizedName);
+
+        return $parts[0] ?? '';
+    }
+
+    protected function getPrimaryControl()
+    {
+        return $this;
+    }
+
+    protected function setAttribute($attribute, $value = null)
+    {
+        if (is_null($value)) {
+            return;
+        }
+
+        $this->attributes[$attribute] = $value;
+    }
+
+    protected function getAttribute($attribute)
+    {
+        return Arr::get($this->attributes, $attribute);
+    }
+
+    protected function removeAttribute($attribute)
+    {
+        unset($this->attributes[$attribute]);
+    }
+
+    protected function setId($id)
+    {
+        $this->setAttribute('id', $id);
+    }
+
+    protected function beforeRender()
+    {
+        return true;
+    }
+
+    protected function renderAttributes()
+    {
+        return form_html_attributes($this->attributes ?? []);
+    }
+
+    protected function renderFieldAttributes()
+    {
+        return form_html_attributes($this->fieldAttributes ?? []);
+    }
+
+    protected function renderHint()
+    {
+        $output = '';
+        foreach ($this->hint as $hint) {
+            if ($hint instanceof Hint) {
+                $output .= $hint->render();
+            }
+        }
+
+        return $output;
+    }
+
+    protected function renderLabel(?string $id = null)
+    {
+        if ($this->label instanceof Label) {
+            /** @var Label $label */
+            $label = $this->label;
+
+            if ($id) {
+                $label->attribute('for', $id);
+            }
+
+            return $label->render();
+        }
+
+        return '';
+    }
+
+    protected function renderField($idInputField = null)
+    {
+        $label = $this->renderLabel($idInputField);
+        $input = $this->renderControl();
+        $error = $this->renderError();
+        $hint = $this->renderHint();
+        $stateField = $this->renderFieldState();
+
+        return <<<HTML
+          <div>
+            $label
+
+            <div class="relative">
+              $input
+
+              $stateField
+            </div>
+
+            $error
+
+            $hint
+          </div>
+        HTML;
+
+        return <<<HTML
+          <div class="grid sm:grid-cols-12 gap-y-1.5 sm:gap-y-0 sm:gap-x-5">
+            <div class="sm:col-span-3">
+              $label
+            </div>
+
+            <div class="sm:col-span-9">
+              $input
+
+              $error
+
+              $hint
+            </div>
+          </div>
+        HTML;
+    }
+
+    protected function renderError()
+    {
+        if ($this->hasError()) {
+            return '<p class="text-sm text-red-600 mt-1">'.$this->getError().'</p>';
+        }
+
+        return '';
+    }
+
+    protected function hasError()
+    {
+        /** @var \Illuminate\Support\ViewErrorBag */
+        $errorsBag = request()->session()->get('errors');
+
+        return $errorsBag->has($this->getAttribute('name'));
+    }
+
+    protected function getError()
+    {
+        /** @var \Illuminate\Support\ViewErrorBag */
+        $errorsBag = request()->session()->get('errors');
+
+        return $errorsBag->first($this->getAttribute('name'));
+    }
+
+    protected function renderControl()
+    {
+        return '';
+    }
+
+    protected function renderFieldState()
+    {
+        if (! $this->getError()) {
+            return;
+        }
+
+        if ($this->hasError()) {
+            return <<<'HTML'
+              <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+                <svg
+                  class="shrink-0 size-4 text-red-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" x2="12" y1="8" y2="12"></line>
+                  <line x1="12" x2="12.01" y1="16" y2="16"></line>
+                </svg>
+              </div>
+            HTML;
+        }
+
+        return <<<'HTML'
+          <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+            <svg
+              class="shrink-0 size-4 text-teal-500"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        HTML;
+    }
+}

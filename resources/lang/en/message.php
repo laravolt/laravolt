@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'user_created' => 'New user added',
     'user_deleted' => 'User deleted',
@@ -17,4 +19,10 @@ return [
     'delete_role_intro' => ':count user(s) will be affected.',
     'reset_password_manual_intro' => 'Users will get an email containing a link to reset the password. Users must fill their own new password.',
     'reset_password_automatic_intro' => 'Generate new password, and send the password via email. Users can login directly using the new password.',
+    'warning' => 'Warning',
+    'users_will_lose_role' => 'These users will lose this role and its associated permissions.',
+    'no_roles' => 'No roles found',
+    'create_first_role' => 'Get started by creating your first role.',
+    'permission_description_tip' => 'Providing clear descriptions will help application administrators when configuring access rights.',
+    'permission_description_example' => 'Example: <strong>laravolt::manage-user</strong> can be clarified as <strong>Add, edit, and delete users</strong>.',
 ];

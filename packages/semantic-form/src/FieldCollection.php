@@ -7,6 +7,7 @@ namespace Laravolt\SemanticForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Laravolt\Fields\Field;
 use Laravolt\SemanticForm\Contracts\HasFormOptions;
 use Laravolt\SemanticForm\Elements\ActionWrapper;
@@ -40,6 +41,66 @@ class FieldCollection extends Collection
             $field += ['type' => 'text', 'name' => null, 'label' => null, 'hint' => null, 'attributes' => []];
             $this->put($field['name'], $this->createField($field));
         }
+    }
+
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    public function render()
+    {
+        $form = '';
+        foreach ($this->items as $item) {
+            $form .= (string) $item;
+        }
+
+        return $form;
+    }
+
+    public function display()
+    {
+        $items = collect($this->items)->reject(function ($item) {
+            return $item instanceof ActionWrapper;
+        });
+
+        $table = "<table class='ui definition table'>";
+        $table .= '<tbody>';
+
+        $i = 0;
+        foreach ($items as $item) {
+            $i++;
+            if ($item instanceof Segments) {
+                $table .= '</tbody>';
+                $table .= '</table>';
+            }
+
+            $table .= $item->display();
+
+            if ($item instanceof Segments && $i < count($items)) {
+                $table .= "<table class='ui definition table'>";
+                $table .= '<tbody>';
+            }
+        }
+        $table .= '</tbody>';
+        $table .= '</table>';
+
+        return $table;
+    }
+
+    public function bindValues(array $values)
+    {
+        foreach ($values as $key => $value) {
+            if (($element = $this->get($key)) !== null) {
+                if ($element instanceof Checkbox || $element instanceof CheckboxGroup) {
+                    $element->setChecked($value);
+                } else {
+                    $element->value($value);
+                }
+            }
+        }
+
+        return $this;
     }
 
     protected function createField($field)
@@ -175,7 +236,7 @@ class FieldCollection extends Collection
 
             default:
                 if (! SemanticForm::hasMacro($type)) {
-                    throw new \InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
+                    throw new InvalidArgumentException(sprintf('Method atau macro %s belum didefinisikan', $type));
                 }
                 $element = form()->{$type}($field->toArray());
                 $macro = true;
@@ -195,66 +256,6 @@ class FieldCollection extends Collection
         }
 
         return $element;
-    }
-
-    public function render()
-    {
-        $form = '';
-        foreach ($this->items as $item) {
-            $form .= (string) $item;
-        }
-
-        return $form;
-    }
-
-    public function display()
-    {
-        $items = collect($this->items)->reject(function ($item) {
-            return $item instanceof ActionWrapper;
-        });
-
-        $table = "<table class='ui definition table'>";
-        $table .= '<tbody>';
-
-        $i = 0;
-        foreach ($items as $item) {
-            $i++;
-            if ($item instanceof Segments) {
-                $table .= '</tbody>';
-                $table .= '</table>';
-            }
-
-            $table .= $item->display();
-
-            if ($item instanceof Segments && $i < count($items)) {
-                $table .= "<table class='ui definition table'>";
-                $table .= '<tbody>';
-            }
-        }
-        $table .= '</tbody>';
-        $table .= '</table>';
-
-        return $table;
-    }
-
-    public function bindValues(array $values)
-    {
-        foreach ($values as $key => $value) {
-            if (($element = $this->get($key)) !== null) {
-                if ($element instanceof Checkbox || $element instanceof CheckboxGroup) {
-                    $element->setChecked($value);
-                } else {
-                    $element->value($value);
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->render();
     }
 
     private function applyRequiredValidation($field)

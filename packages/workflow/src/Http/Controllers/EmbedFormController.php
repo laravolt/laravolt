@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow\Http\Controllers;
 
 use Laravolt\Workflow\Entities\Module;

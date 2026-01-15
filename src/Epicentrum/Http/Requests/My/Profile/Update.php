@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Requests\My\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;

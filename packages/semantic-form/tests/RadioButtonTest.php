@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\RadioButton;
 
-class RadioButtonTest extends \PHPUnit\Framework\TestCase
+class RadioButtonTest extends PHPUnit\Framework\TestCase
 {
     public function test_render_basic_radio_button()
     {

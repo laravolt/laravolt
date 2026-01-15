@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Thunderclap;
 
 use Illuminate\Support\Facades\File;
@@ -36,6 +38,41 @@ class ModelEnhancer
     }
 
     /**
+     * Create backup of model file
+     */
+    public function createBackup(string $modelPath): string
+    {
+        $backupPath = $modelPath.'.backup.'.date('YmdHis');
+        File::copy($modelPath, $backupPath);
+
+        return $backupPath;
+    }
+
+    /**
+     * Remove backup of model file
+     */
+    public function removeBackup(string $backupPath): bool
+    {
+        if (File::exists($backupPath)) {
+            return File::delete($backupPath);
+        }
+
+        return false;
+    }
+
+    /**
+     * Restore model from backup
+     */
+    public function restoreFromBackup(string $modelPath, string $backupPath): bool
+    {
+        if (File::exists($backupPath)) {
+            return File::move($backupPath, $modelPath);
+        }
+
+        return false;
+    }
+
+    /**
      * Add traits to model
      */
     protected function addTraits(string $content, array $missingTraits): string
@@ -47,7 +84,7 @@ class ModelEnhancer
         $useEndLine = null;
 
         foreach ($lines as $index => $line) {
-            $trimmedLine = trim($line);
+            $trimmedLine = mb_trim($line);
 
             if (Str::startsWith($trimmedLine, 'use ') && Str::endsWith($trimmedLine, ';')) {
                 $useStatements[] = $index;
@@ -68,7 +105,7 @@ class ModelEnhancer
             // Check if use statement already exists
             $found = false;
             foreach ($lines as $line) {
-                if (trim($line) === $useStatement) {
+                if (mb_trim($line) === $useStatement) {
                     $found = true;
                     break;
                 }
@@ -135,40 +172,5 @@ class ModelEnhancer
         }
 
         return $content;
-    }
-
-    /**
-     * Create backup of model file
-     */
-    public function createBackup(string $modelPath): string
-    {
-        $backupPath = $modelPath.'.backup.'.date('YmdHis');
-        File::copy($modelPath, $backupPath);
-
-        return $backupPath;
-    }
-
-    /**
-     * Remove backup of model file
-     */
-    public function removeBackup(string $backupPath): bool
-    {
-        if (File::exists($backupPath)) {
-            return File::delete($backupPath);
-        }
-
-        return false;
-    }
-
-    /**
-     * Restore model from backup
-     */
-    public function restoreFromBackup(string $modelPath, string $backupPath): bool
-    {
-        if (File::exists($backupPath)) {
-            return File::move($backupPath, $modelPath);
-        }
-
-        return false;
     }
 }

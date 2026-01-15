@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Providers;
 
 use BladeUI\Icons\Factory;
+use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
@@ -14,6 +15,7 @@ use Laravolt\Asset\AssetManager;
 use Laravolt\Platform\Services\MenuBuilder;
 use Laravolt\Platform\Services\SidebarMenu;
 use Lavary\Menu\Builder;
+use ZipArchive;
 
 use function Laravolt\platform_path;
 
@@ -49,7 +51,7 @@ class UiServiceProvider extends BaseServiceProvider
         $isEnabled = config('laravolt.platform.features.enable_default_menu', true);
 
         if ($isEnabled) {
-            /** @var \Laravolt\Platform\Services\SidebarMenu */
+            /** @var SidebarMenu */
             $sidebarMenu = app('laravolt.menu.sidebar');
             $order = (int) config('laravolt.ui.system_menu.order');
             $sidebarMenu->registerCore(
@@ -229,7 +231,7 @@ class UiServiceProvider extends BaseServiceProvider
                 \Laravolt\platform_path(''),
                 'public assets'
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log error but don't fail the application
             if (function_exists('logger')) {
                 logger()->warning('Failed to extract Laravolt assets: '.$e->getMessage());
@@ -249,7 +251,7 @@ class UiServiceProvider extends BaseServiceProvider
             return false;
         }
 
-        $zip = new \ZipArchive;
+        $zip = new ZipArchive;
         $result = $zip->open($zipPath);
 
         if ($result !== true) {

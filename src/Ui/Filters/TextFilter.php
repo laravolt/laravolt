@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Ui\Filters;
 
 class TextFilter extends BaseFilter
@@ -15,6 +17,7 @@ class TextFilter extends BaseFilter
 
         return $field
             ->label($this->label)
-            ->attributes(['wire:model.live.debounce.300ms' => "filters.$key"]);
+            ->attributes(['wire:model.live.debounce.300ms' => "filters.$key"])
+            ->render();
     }
 }

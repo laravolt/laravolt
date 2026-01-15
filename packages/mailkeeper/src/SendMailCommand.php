@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Mailkeeper;
 
 use Illuminate\Console\Command;
 use Illuminate\Mail\Message;
+use Swift_SwiftException;
 
 class SendMailCommand extends Command
 {
@@ -71,7 +74,7 @@ class SendMailCommand extends Command
                         $message->replyTo($mail->reply_to);
                     }
                 });
-            } catch (\Swift_SwiftException $e) {
+            } catch (Swift_SwiftException $e) {
                 $this->error($e->getMessage());
                 $mail->error = $e->getMessage();
                 $mail->save();

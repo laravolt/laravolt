@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'routes' => [
         'enabled' => true,
@@ -10,5 +12,5 @@ return [
         'enabled' => true,
         'label' => 'Resources',
     ],
-    'permission' => \Laravolt\Platform\Enums\Permission::MANAGE_SYSTEM,
+    'permission' => Laravolt\Platform\Enums\Permission::MANAGE_SYSTEM,
 ];

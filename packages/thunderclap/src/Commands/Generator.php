@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Thunderclap\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Laravolt\Thunderclap\DBHelper;
 use Laravolt\Thunderclap\FileTransformer;
 use Laravolt\Thunderclap\ModelDetector;
@@ -177,71 +181,69 @@ class Generator extends Command
         $classToBePrefixed = config('laravolt.thunderclap.prefixed');
 
         foreach (File::allFiles($modulePath, true) as $file) {
-            if (is_file($file)) {
-                // Skip model generation if using existing model
-                if ($skipModelGeneration && Str::contains($file, '/Models/') && Str::endsWith($file, 'Model.php.stub')) {
-                    File::delete($file);
+            // Skip model generation if using existing model
+            if ($skipModelGeneration && Str::contains($file, '/Models/') && Str::endsWith($file, 'Model.php.stub')) {
+                File::delete($file);
 
-                    continue;
+                continue;
+            }
+
+            $newFile = $deleteOriginal = false;
+
+            if (Str::endsWith($file, '.stub')) {
+                $newFile = Str::substr($file, 0, -5);
+                $deleteOriginal = true;
+            }
+
+            if (Str::endsWith($newFile, 'Model.php')) {
+                $newFile = Str::replaceLast('Model', $moduleName, $newFile);
+            }
+
+            if (Str::endsWith($newFile, 'Test.php')) {
+                $newFile = Str::replaceLast('Test', $moduleName.'Test', $newFile);
+            }
+
+            if (Str::endsWith($newFile, 'Factory.php')) {
+                $newFile = Str::replaceLast('Factory', $moduleName.'Factory', $newFile);
+            }
+
+            foreach ($classToBePrefixed as $filename) {
+                $class = Str::substr($filename, 0, -4);
+                if (Str::endsWith($newFile, $filename)) {
+                    $newFile = Str::replaceLast($class, $moduleName.$class, $newFile);
                 }
+            }
 
-                $newFile = $deleteOriginal = false;
+            if (Str::endsWith($newFile, 'config.php')) {
+                $newFile = Str::replaceLast('config', $templates['module-name'], $newFile);
+            }
 
-                if (Str::endsWith($file, '.stub')) {
-                    $newFile = Str::substr($file, 0, -5);
-                    $deleteOriginal = true;
+            if ($newFile) {
+                $fileNameReplacer = Arr::only($replacer, [
+                    ':module_name:',
+                    ':module-name:',
+                    ':moduleName:',
+                    ':ModuleName:',
+                ]);
+
+                $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
+            }
+
+            if (! $newFile) {
+                continue;
+            }
+
+            $this->info($newFile);
+
+            try {
+                $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
+
+                // Post-process controller files for existing models
+                if ($existingModel && $modelAction === 'enhance' && Str::endsWith($newFile, 'Controller.php')) {
+                    $this->postProcessControllerForExistingModel($newFile, $existingModel, $moduleName);
                 }
-
-                if (Str::endsWith($newFile, 'Model.php')) {
-                    $newFile = Str::replaceLast('Model', $moduleName, $newFile);
-                }
-
-                if (Str::endsWith($newFile, 'Test.php')) {
-                    $newFile = Str::replaceLast('Test', $moduleName.'Test', $newFile);
-                }
-
-                if (Str::endsWith($newFile, 'Factory.php')) {
-                    $newFile = Str::replaceLast('Factory', $moduleName.'Factory', $newFile);
-                }
-
-                foreach ($classToBePrefixed as $filename) {
-                    $class = Str::substr($filename, 0, -4);
-                    if (Str::endsWith($newFile, $filename)) {
-                        $newFile = Str::replaceLast($class, $moduleName.$class, $newFile);
-                    }
-                }
-
-                if (Str::endsWith($newFile, 'config.php')) {
-                    $newFile = Str::replaceLast('config', $templates['module-name'], $newFile);
-                }
-
-                if ($newFile) {
-                    $fileNameReplacer = Arr::only($replacer, [
-                        ':module_name:',
-                        ':module-name:',
-                        ':moduleName:',
-                        ':ModuleName:',
-                    ]);
-
-                    $newFile = str_replace(array_keys($fileNameReplacer), array_values($fileNameReplacer), $newFile);
-                }
-
-                if (! $newFile) {
-                    continue;
-                }
-
-                $this->info($newFile);
-
-                try {
-                    $this->packerHelper->replaceAndSave($file, array_keys($replacer), array_values($replacer), $newFile, $deleteOriginal);
-
-                    // Post-process controller files for existing models
-                    if ($existingModel && $modelAction === 'enhance' && Str::endsWith($newFile, 'Controller.php')) {
-                        $this->postProcessControllerForExistingModel($newFile, $existingModel, $moduleName);
-                    }
-                } catch (\Exception $e) {
-                    $this->error($e->getMessage());
-                }
+            } catch (Exception $e) {
+                $this->error($e->getMessage());
             }
         }
 
@@ -275,7 +277,7 @@ class Generator extends Command
             $str .= "'$val'".',';
         }
 
-        return substr($str, 0, -1);
+        return mb_substr($str, 0, -1);
     }
 
     protected function getRouteUrlPrefix($routePrefix, $module)
@@ -305,7 +307,7 @@ class Generator extends Command
         }
 
         // Throw exception if both directory doesn't exists
-        throw new \InvalidArgumentException(sprintf('Invalid directory for template named "%s"', $template));
+        throw new InvalidArgumentException(sprintf('Invalid directory for template named "%s"', $template));
     }
 
     /**
@@ -333,7 +335,7 @@ class Generator extends Command
             $searchableColumns = [];
             if ($this->transformer) {
                 $searchableString = $this->transformer->toSearchableColumns();
-                $searchableColumns = array_map('trim', explode(',', trim($searchableString, "'")));
+                $searchableColumns = array_map('trim', explode(',', mb_trim($searchableString, "'")));
                 $searchableColumns = array_filter($searchableColumns, function ($col) {
                     return ! empty($col) && $col !== "''";
                 });
@@ -358,7 +360,7 @@ class Generator extends Command
             } else {
                 $this->error('✗ Failed to enhance model');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error("✗ Error enhancing model: {$e->getMessage()}");
             $this->info('Restoring from backup...');
             $this->modelEnhancer->restoreFromBackup($modelInfo['path'], $backup);

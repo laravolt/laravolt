@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Charts;
 
 use Illuminate\Support\Facades\Cache;
@@ -53,40 +55,6 @@ abstract class Chart extends Component
      */
     abstract public function series(): array;
 
-    /**
-     * Load series data with caching applied.
-     * All select queries are cached by default.
-     */
-    protected function loadSeriesData(): array
-    {
-        $key = $this->getCacheKey();
-
-        return Cache::remember(
-            $key,
-            $this->cacheDuration,
-            fn () => $this->series()
-        );
-    }
-
-    /**
-     * Generate or get a cache key for this chart
-     */
-    protected function getCacheKey(): string
-    {
-        if ($this->cacheKey) {
-            return $this->cacheKey;
-        }
-
-        // Generate a cache key based on class name and relevant properties
-        return 'laravolt_chart_'.class_basename($this).'_'.md5(json_encode([
-            'title' => $this->title,
-            'type' => $this->type,
-            'height' => $this->height,
-            'sparkline' => $this->sparkline,
-            'series' => $this->series,
-        ]));
-    }
-
     public function labels(): array
     {
         return array_keys(collect($this->series)->last());
@@ -133,14 +101,6 @@ abstract class Chart extends Component
         ];
     }
 
-    protected function formatSeries(): array
-    {
-        return collect($this->series)
-            ->transform(fn ($data, $name) => ['name' => $name, 'data' => array_values($data)])
-            ->values()
-            ->toArray();
-    }
-
     public function render()
     {
         if ($this->sparkline) {
@@ -148,5 +108,47 @@ abstract class Chart extends Component
         }
 
         return view('laravolt::ui-component.charts.chart');
+    }
+
+    /**
+     * Load series data with caching applied.
+     * All select queries are cached by default.
+     */
+    protected function loadSeriesData(): array
+    {
+        $key = $this->getCacheKey();
+
+        return Cache::remember(
+            $key,
+            $this->cacheDuration,
+            fn () => $this->series()
+        );
+    }
+
+    /**
+     * Generate or get a cache key for this chart
+     */
+    protected function getCacheKey(): string
+    {
+        if ($this->cacheKey) {
+            return $this->cacheKey;
+        }
+
+        // Generate a cache key based on class name and relevant properties
+        return 'laravolt_chart_'.class_basename($this).'_'.md5(json_encode([
+            'title' => $this->title,
+            'type' => $this->type,
+            'height' => $this->height,
+            'sparkline' => $this->sparkline,
+            'series' => $this->series,
+        ]));
+    }
+
+    protected function formatSeries(): array
+    {
+        return collect($this->series)
+            ->transform(fn ($data, $name) => ['name' => $name, 'data' => array_values($data)])
+            ->values()
+            ->toArray();
     }
 }

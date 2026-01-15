@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\AutoCrud;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Laravolt\Fields\Field;
+use ReflectionClass;
 
 class SchemaTransformer
 {
@@ -20,6 +24,57 @@ class SchemaTransformer
     public function getProcessedConfig(): array
     {
         return $this->config;
+    }
+
+    public function transform()
+    {
+        return collect($this->config['schema'])
+            ->transform(function ($item) {
+                if ($item['type'] === Field::BELONGS_TO) {
+                    /** @var \Illuminate\Database\Eloquent\Model $model */
+                    $model = app($this->config['model']);
+
+                    /** @var \Illuminate\Database\Eloquent\Relations\BelongsTo $relationship */
+                    $relationship = $model->{$item['name']}();
+
+                    /** @var \Illuminate\Database\Eloquent\Model $relatedModel */
+                    $relatedModel = $relationship->getRelated();
+
+                    $hasDisplayMethod = method_exists($relatedModel, 'display');
+
+                    $item['type'] = Field::DROPDOWN;
+                    $item['options'] =
+                        $relatedModel::query()->get()->mapWithKeys(function ($model) use ($hasDisplayMethod) {
+                            $label = $hasDisplayMethod ? $model->display() : (string) $model;
+
+                            return [$model->getKey() => $label];
+                        });
+                    $item['name'] = $relationship->getForeignKeyName();
+                }
+
+                return $item;
+            })
+            ->toArray();
+    }
+
+    public function getFieldsForCreate(): Collection
+    {
+        return collect($this->transform())->filter(fn ($item) => $item['show_on_create'] ?? true);
+    }
+
+    public function getFieldsForEdit(): Collection
+    {
+        return collect($this->transform())->filter(fn ($item) => $item['show_on_edit'] ?? true);
+    }
+
+    public function getFieldsForDetail(): Collection
+    {
+        return collect($this->transform())->filter(fn ($item) => $item['show_on_detail'] ?? true);
+    }
+
+    public function getFieldsForIndex(): Collection
+    {
+        return collect($this->config['schema'])->filter(fn ($item) => $item['show_on_index'] ?? true);
     }
 
     /**
@@ -72,12 +127,12 @@ class SchemaTransformer
     protected function getUniqueRuleTable($rule): string
     {
         try {
-            $reflector = new \ReflectionClass($rule);
+            $reflector = new ReflectionClass($rule);
             $property = $reflector->getProperty('table');
             $property->setAccessible(true);
 
             return $property->getValue($rule);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return 'unknown_table';
         }
     }
@@ -90,64 +145,13 @@ class SchemaTransformer
     protected function getUniqueRuleColumn($rule): string
     {
         try {
-            $reflector = new \ReflectionClass($rule);
+            $reflector = new ReflectionClass($rule);
             $property = $reflector->getProperty('column');
             $property->setAccessible(true);
 
             return $property->getValue($rule) ?: 'NULL';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return 'NULL';
         }
-    }
-
-    public function transform()
-    {
-        return collect($this->config['schema'])
-            ->transform(function ($item) {
-                if ($item['type'] === Field::BELONGS_TO) {
-                    /** @var \Illuminate\Database\Eloquent\Model $model */
-                    $model = app($this->config['model']);
-
-                    /** @var \Illuminate\Database\Eloquent\Relations\BelongsTo $relationship */
-                    $relationship = $model->{$item['name']}();
-
-                    /** @var \Illuminate\Database\Eloquent\Model $relatedModel */
-                    $relatedModel = $relationship->getRelated();
-
-                    $hasDisplayMethod = method_exists($relatedModel, 'display');
-
-                    $item['type'] = Field::DROPDOWN;
-                    $item['options'] =
-                        $relatedModel::query()->get()->mapWithKeys(function ($model) use ($hasDisplayMethod) {
-                            $label = $hasDisplayMethod ? $model->display() : (string) $model;
-
-                            return [$model->getKey() => $label];
-                        });
-                    $item['name'] = $relationship->getForeignKeyName();
-                }
-
-                return $item;
-            })
-            ->toArray();
-    }
-
-    public function getFieldsForCreate(): Collection
-    {
-        return collect($this->transform())->filter(fn ($item) => $item['show_on_create'] ?? true);
-    }
-
-    public function getFieldsForEdit(): Collection
-    {
-        return collect($this->transform())->filter(fn ($item) => $item['show_on_edit'] ?? true);
-    }
-
-    public function getFieldsForDetail(): Collection
-    {
-        return collect($this->transform())->filter(fn ($item) => $item['show_on_detail'] ?? true);
-    }
-
-    public function getFieldsForIndex(): Collection
-    {
-        return collect($this->config['schema'])->filter(fn ($item) => $item['show_on_index'] ?? true);
     }
 }

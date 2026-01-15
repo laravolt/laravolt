@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Database\Eloquent\Model;
@@ -56,6 +58,26 @@ class Uploader extends Input
         return $this;
     }
 
+    public function displayValue()
+    {
+        if (is_array($this->value)) {
+            $output = "<div class='ui list'>";
+            $output .= '</div>';
+
+            foreach ($this->value as $media) {
+                $output .= sprintf(
+                    "<div class='item'><a href='%s' target='_blank'>%s <i class='icon paperclip'></i></a></div>",
+                    $media['file'],
+                    $media['name']
+                );
+            }
+
+            return $output;
+        }
+
+        return null;
+    }
+
     protected function beforeRender()
     {
         $url = $this->mediaUrl;
@@ -79,7 +101,7 @@ class Uploader extends Input
 
         if (is_string($mediaCollection)) {
             $temp = json_decode($mediaCollection);
-            if (json_last_error() == JSON_ERROR_NONE) {
+            if (json_last_error() === JSON_ERROR_NONE) {
                 $mediaCollection = $temp;
             } else {
                 $mediaCollection = [$mediaCollection];
@@ -121,26 +143,6 @@ class Uploader extends Input
         return $this;
     }
 
-    public function displayValue()
-    {
-        if (is_array($this->value)) {
-            $output = "<div class='ui list'>";
-            $output .= '</div>';
-
-            foreach ($this->value as $media) {
-                $output .= sprintf(
-                    "<div class='item'><a href='%s' target='_blank'>%s <i class='icon paperclip'></i></a></div>",
-                    $media['file'],
-                    $media['name']
-                );
-            }
-
-            return $output;
-        }
-
-        return null;
-    }
-
     protected function getFileSizeFromPath($path)
     {
         // First try local file if available
@@ -165,7 +167,7 @@ class Uploader extends Input
             // Add more types as needed
         ];
 
-        return $mimeTypes[strtolower($extension)] ?? 'application/octet-stream';
+        return $mimeTypes[mb_strtolower($extension)] ?? 'application/octet-stream';
     }
 
     protected function extractIdFromMediaUrl($url)

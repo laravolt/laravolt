@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 test('pest4 install command can be executed', function () {
     $this->artisan('laravolt:pest4-install --force')
         ->expectsOutput('🧪 Installing Pest v4...')

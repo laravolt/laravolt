@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Livewire;
 
 use Laravolt\Epicentrum\Filters\EmailFilter;
@@ -24,7 +26,7 @@ class UserTable extends TableView
             ->with('roles')
             ->autoSort($this->sortPayload())
             ->autoFilter()
-            ->whereLike($searchabledColumns, trim($this->search))
+            ->whereLike($searchabledColumns, mb_trim($this->search))
             ->latest();
 
         return $query;

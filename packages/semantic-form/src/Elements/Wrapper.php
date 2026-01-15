@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
@@ -14,7 +16,7 @@ class Wrapper extends Element
 
     public function __construct()
     {
-        if (func_num_args() == 1 && is_array(func_get_arg(0))) {
+        if (func_num_args() === 1 && is_array(func_get_arg(0))) {
             $this->controls = func_get_arg(0);
         } else {
             $this->controls = func_get_args();
@@ -38,7 +40,7 @@ class Wrapper extends Element
 
         $element->beforeRender();
 
-        $html = sprintf($element->openTag, ltrim($element->renderAttributes()));
+        $html = sprintf($element->openTag, mb_ltrim($element->renderAttributes()));
 
         foreach ($element->controls as $control) {
             $html .= $control;

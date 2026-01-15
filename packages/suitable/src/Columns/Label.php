@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Columns;
 
 class Label extends Column implements ColumnInterface
@@ -31,7 +33,7 @@ class Label extends Column implements ColumnInterface
 
     public function addClass(string $class)
     {
-        array_push($this->labelClass, $class);
+        $this->labelClass[] = $class;
 
         return $this;
     }

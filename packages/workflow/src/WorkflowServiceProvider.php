@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Workflow;
 
 use Laravolt\Support\Base\BaseServiceProvider;

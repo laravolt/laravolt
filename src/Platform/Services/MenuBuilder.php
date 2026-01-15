@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Services;
 
+use Closure;
 use Illuminate\Support\Facades\Route;
 
 class MenuBuilder
@@ -17,7 +18,7 @@ class MenuBuilder
         $this->defaultIcon = config('laravolt.ui.default_menu_icon');
     }
 
-    public function register(\Closure $callback)
+    public function register(Closure $callback)
     {
         $this->registeredCallbacks[] = $callback;
     }
@@ -41,7 +42,7 @@ class MenuBuilder
             app('laravolt.menu.sidebar')->registerCore(
                 function ($sidebar) use ($title, $option, $order) {
                     /** @var \Lavary\Menu\Builder $section */
-                    $section = $sidebar->get(strtolower(trim($title)));
+                    $section = $sidebar->get(mb_strtolower(mb_trim($title)));
                     if ($section === null) {
                         $url = $this->generateUrl($option);
                         $section = $sidebar->add($title, $url)->data('order', $order);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\Command;
@@ -42,11 +44,11 @@ class LinkCommand extends Command
                     $this->info('Directory [public/laravolt] contains extracted assets, keeping as is.');
 
                     return;
-                } else {
-                    $this->error('A non-symlink file/directory exists at [public/laravolt]. Please remove it manually.');
-
-                    return;
                 }
+                $this->error('A non-symlink file/directory exists at [public/laravolt]. Please remove it manually.');
+
+                return;
+
             }
         }
 

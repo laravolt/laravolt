@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\Hint;
 use Laravolt\SemanticForm\Elements\Text;
 
-class HintTest extends \PHPUnit\Framework\TestCase
+class HintTest extends PHPUnit\Framework\TestCase
 {
     public function test_text_can_have_hint()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Headers;
 
 use Laravolt\Suitable\Concerns\HtmlHelper;
@@ -17,14 +19,14 @@ class Header implements \Laravolt\Suitable\Contracts\Header
         $this->content = $content;
     }
 
-    public static function make($content)
-    {
-        return new self($content);
-    }
-
     public function __toString()
     {
         return $this->render();
+    }
+
+    public static function make($content)
+    {
+        return new self($content);
     }
 
     public function setAttributes(array $attributes): \Laravolt\Suitable\Contracts\Header

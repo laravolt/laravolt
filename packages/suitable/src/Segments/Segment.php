@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Suitable\Segments;
 
 class Segment
@@ -47,7 +49,7 @@ class Segment
 
     public function appendLeft($toolbar)
     {
-        array_push($this->left, $toolbar);
+        $this->left[] = $toolbar;
 
         return $this;
     }
@@ -78,7 +80,7 @@ class Segment
 
     public function appendRight($toolbar)
     {
-        array_push($this->right, $toolbar);
+        $this->right[] = $toolbar;
 
         return $this;
     }

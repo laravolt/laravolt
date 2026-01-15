@@ -1,9 +1,27 @@
-<x-volt-app :title="__('laravolt::action.add') . ' :Module Name:'">
-    <x-volt-backlink url="{{ route('modules:::module-name:.index') }}"></x-backlink>
+@php
+    $title = __('laravolt::action.add') . ' :Module Name:';
+@endphp
 
-    <x-volt-panel title="Tambah :Module Name:">
-        {!! form()->post(route('modules:::module-name:.store'))->horizontal()->multipart() !!}
-            @include(':module-name:::_form')
-        {!! form()->close() !!}
-    </x-volt-panel>
+<x-volt-app :title="$title">
+    <div class="max-w-xl mx-auto">
+        <div class="mb-5 flex gap-x-3">
+            <x-volt-icon :name="config('modules.:module-name:.icon')" class="shrink-0 size-10 text-gray-400 dark:text-neutral-600" />
+
+            <div class="grow">
+                <h1 class="font-semibold text-xl text-gray-800 dark:text-neutral-200">
+                    {{ $title }}
+                </h1>
+
+                <p class="text-sm text-gray-500 dark:text-neutral-500">
+                    Create a new :module-name: entry.
+                </p>
+            </div>
+        </div>
+
+        <div class="bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+            {!! form()->post(route('modules:::module-name:.store')) !!}
+                @include(':module-name:::_form')
+            {!! form()->close() !!}
+        </div>
+    </div>
 </x-volt-app>

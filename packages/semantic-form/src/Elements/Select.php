@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Arr;
@@ -39,11 +41,6 @@ class Select extends FormControl
         return $this->select($value);
     }
 
-    protected function setOptions($options)
-    {
-        $this->options = $options;
-    }
-
     public function options($options)
     {
         $this->setOptions($options);
@@ -75,6 +72,70 @@ class Select extends FormControl
         $result .= $this->renderHint();
 
         return $result;
+    }
+
+    public function addOption($value, $label)
+    {
+        $this->options[$value] = $label;
+
+        return $this;
+    }
+
+    public function prependOption($value, $label)
+    {
+        $this->options = Arr::prepend($this->options, $label, $value);
+
+        return $this;
+    }
+
+    public function appendOption($value, $label)
+    {
+        $this->options[$value] = $label;
+
+        return $this;
+    }
+
+    public function placeholder($label = '-- Select --')
+    {
+        return $this->prependOption('', $label);
+    }
+
+    public function defaultValue($value)
+    {
+        if ($this->selected !== null) {
+            return $this;
+        }
+
+        $this->select($value);
+
+        return $this;
+    }
+
+    public function multiple()
+    {
+        $name = $this->attributes['name'];
+        if (mb_substr($name, -2) !== '[]') {
+            $name .= '[]';
+        }
+
+        $this->setName($name);
+        $this->setAttribute('multiple', 'multiple');
+
+        return $this;
+    }
+
+    public function displayValue()
+    {
+        if (is_string($this->value) || is_int($this->value)) {
+            return Arr::get($this->options, $this->value);
+        }
+
+        return null;
+    }
+
+    protected function setOptions($options)
+    {
+        $this->options = $options;
     }
 
     protected function renderOptions()
@@ -127,64 +188,5 @@ class Select extends FormControl
         }
 
         return in_array($value, (array) $selected);
-    }
-
-    public function addOption($value, $label)
-    {
-        $this->options[$value] = $label;
-
-        return $this;
-    }
-
-    public function prependOption($value, $label)
-    {
-        $this->options = Arr::prepend($this->options, $label, $value);
-
-        return $this;
-    }
-
-    public function appendOption($value, $label)
-    {
-        $this->options[$value] = $label;
-
-        return $this;
-    }
-
-    public function placeholder($label = '-- Select --')
-    {
-        return $this->prependOption('', $label);
-    }
-
-    public function defaultValue($value)
-    {
-        if ($this->selected !== null) {
-            return $this;
-        }
-
-        $this->select($value);
-
-        return $this;
-    }
-
-    public function multiple()
-    {
-        $name = $this->attributes['name'];
-        if (substr($name, -2) != '[]') {
-            $name .= '[]';
-        }
-
-        $this->setName($name);
-        $this->setAttribute('multiple', 'multiple');
-
-        return $this;
-    }
-
-    public function displayValue()
-    {
-        if (is_string($this->value) || is_int($this->value)) {
-            return Arr::get($this->options, $this->value);
-        }
-
-        return null;
     }
 }

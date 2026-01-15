@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Platform\Providers;
 
+use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -28,7 +29,7 @@ class EpicentrumServiceProvider extends BaseServiceProvider
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function register()
     {

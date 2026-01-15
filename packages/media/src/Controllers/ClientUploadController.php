@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Media\Controllers;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -81,7 +82,7 @@ class ClientUploadController extends Controller
 
             // Simple upload - return presigned PUT URL
             return $this->initiateSimpleUpload($disk, $key, $validated, $media);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Client upload initiation failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
@@ -90,6 +91,327 @@ class ClientUploadController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to initiate upload',
+            ], 500);
+        }
+    }
+
+    /**
+     * Generate presigned URLs for multipart upload parts
+     */
+    public function presignPart(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'key' => 'required|string',
+                'upload_id' => 'required|string',
+                'part_number' => 'required|integer|min:1|max:10000',
+            ]);
+
+            $disk = Storage::disk(ClientUploadConfig::getDisk());
+            $client = $disk->getClient();
+            $bucket = $disk->getConfig()['bucket'];
+
+            $expiration = now()->addMinutes(ClientUploadConfig::getUrlExpiration());
+
+            $command = $client->getCommand('UploadPart', [
+                'Bucket' => $bucket,
+                'Key' => $validated['key'],
+                'UploadId' => $validated['upload_id'],
+                'PartNumber' => $validated['part_number'],
+            ]);
+
+            $presignedRequest = $client->createPresignedRequest($command, $expiration);
+            $presignedUrl = (string) $presignedRequest->getUri();
+
+            return response()->json([
+                'success' => true,
+                'upload_url' => $presignedUrl,
+                'part_number' => $validated['part_number'],
+                'expires_at' => $expiration->toIso8601String(),
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to generate presigned URL for part', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to generate presigned URL',
+            ], 500);
+        }
+    }
+
+    /**
+     * Generate presigned URLs for multiple parts at once
+     */
+    public function presignParts(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'key' => 'required|string',
+                'upload_id' => 'required|string',
+                'part_numbers' => 'required|array|min:1|max:100',
+                'part_numbers.*' => 'required|integer|min:1|max:10000',
+            ]);
+
+            $disk = Storage::disk(ClientUploadConfig::getDisk());
+            $client = $disk->getClient();
+            $bucket = $disk->getConfig()['bucket'];
+
+            $expiration = now()->addMinutes(ClientUploadConfig::getUrlExpiration());
+            $urls = [];
+
+            foreach ($validated['part_numbers'] as $partNumber) {
+                $command = $client->getCommand('UploadPart', [
+                    'Bucket' => $bucket,
+                    'Key' => $validated['key'],
+                    'UploadId' => $validated['upload_id'],
+                    'PartNumber' => $partNumber,
+                ]);
+
+                $presignedRequest = $client->createPresignedRequest($command, $expiration);
+
+                $urls[] = [
+                    'part_number' => $partNumber,
+                    'upload_url' => (string) $presignedRequest->getUri(),
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'urls' => $urls,
+                'expires_at' => $expiration->toIso8601String(),
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to generate presigned URLs for parts', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to generate presigned URLs',
+            ], 500);
+        }
+    }
+
+    /**
+     * Complete a multipart upload
+     */
+    public function completeMultipart(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'key' => 'required|string',
+                'upload_id' => 'required|string',
+                'upload_token' => 'required|string',
+                'parts' => 'required|array|min:1',
+                'parts.*.part_number' => 'required|integer|min:1',
+                'parts.*.etag' => 'required|string',
+            ]);
+
+            // Verify upload token
+            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid upload token',
+                ], 403);
+            }
+
+            $disk = Storage::disk(ClientUploadConfig::getDisk());
+            $client = $disk->getClient();
+            $bucket = $disk->getConfig()['bucket'];
+
+            // Format parts for S3
+            $parts = array_map(function ($part) {
+                return [
+                    'PartNumber' => $part['part_number'],
+                    'ETag' => $part['etag'],
+                ];
+            }, $validated['parts']);
+
+            // Sort parts by part number
+            // S3/R2 API requires parts to be in ascending order by part number
+            usort($parts, fn ($a, $b) => $a['PartNumber'] <=> $b['PartNumber']);
+
+            // Complete the multipart upload
+            $result = $client->completeMultipartUpload([
+                'Bucket' => $bucket,
+                'Key' => $validated['key'],
+                'UploadId' => $validated['upload_id'],
+                'MultipartUpload' => [
+                    'Parts' => $parts,
+                ],
+            ]);
+
+            // Save to media library
+            $media = $this->saveToMediaLibrary($validated['key'], $validated['upload_token']);
+
+            Log::info('Multipart upload completed', [
+                'key' => $validated['key'],
+                'upload_id' => $validated['upload_id'],
+                'media_id' => $media?->id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Upload completed successfully',
+                'files' => [
+                    [
+                        'file' => $media?->getUrl() ?? $result['Location'],
+                        'name' => $media?->file_name ?? basename($validated['key']),
+                        'size' => $media?->size ?? 0,
+                        'type' => $media?->mime_type ?? '',
+                        'data' => [
+                            'id' => $media?->id,
+                            'url' => $media?->getUrl() ?? $result['Location'],
+                            'thumbnail' => $media?->getUrl() ?? $result['Location'],
+                            'key' => $validated['key'],
+                        ],
+                    ],
+                ],
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to complete multipart upload', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to complete upload: '.$e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Complete a simple upload (confirm and save to media library)
+     */
+    public function completeSimple(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'key' => 'required|string',
+                'upload_token' => 'required|string',
+            ]);
+
+            // Verify upload token
+            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid upload token',
+                ], 403);
+            }
+
+            $disk = Storage::disk(ClientUploadConfig::getDisk());
+
+            // Verify file exists
+            if (! $disk->exists($validated['key'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File not found',
+                ], 404);
+            }
+
+            // Optionally validate file after upload
+            if (ClientUploadConfig::shouldValidateAfterUpload()) {
+                $validationError = $this->validateUploadedFile($disk, $validated['key'], $validated['upload_token']);
+                if ($validationError) {
+                    // Delete the file if validation fails
+                    $disk->delete($validated['key']);
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => $validationError,
+                    ], 422);
+                }
+            }
+
+            // Save to media library
+            $media = $this->saveToMediaLibrary($validated['key'], $validated['upload_token']);
+
+            Log::info('Simple upload completed', [
+                'key' => $validated['key'],
+                'media_id' => $media?->id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Upload completed successfully',
+                'files' => [
+                    [
+                        'file' => $media?->getUrl() ?? $disk->url($validated['key']),
+                        'name' => $media?->file_name ?? basename($validated['key']),
+                        'size' => $media?->size ?? $disk->size($validated['key']),
+                        'type' => $media?->mime_type ?? $disk->mimeType($validated['key']),
+                        'data' => [
+                            'id' => $media?->id,
+                            'url' => $media?->getUrl() ?? $disk->url($validated['key']),
+                            'thumbnail' => $media?->getUrl() ?? $disk->url($validated['key']),
+                            'key' => $validated['key'],
+                        ],
+                    ],
+                ],
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to complete simple upload', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to complete upload: '.$e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Abort a multipart upload or cleanup a simple upload
+     */
+    public function abort(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'key' => 'nullable|string',
+                'upload_id' => 'nullable|string',
+                'upload_token' => 'nullable|string', // Optional: to clean up media record
+            ]);
+
+            // For multipart uploads, abort on S3
+            if (! empty($validated['upload_id']) && ! empty($validated['key'])) {
+                $disk = Storage::disk(ClientUploadConfig::getDisk());
+                $client = $disk->getClient();
+                $bucket = $disk->getConfig()['bucket'];
+
+                $client->abortMultipartUpload([
+                    'Bucket' => $bucket,
+                    'Key' => $validated['key'],
+                    'UploadId' => $validated['upload_id'],
+                ]);
+
+                Log::info('Multipart upload aborted', [
+                    'key' => $validated['key'],
+                    'upload_id' => $validated['upload_id'],
+                ]);
+            }
+
+            // Clean up pre-created media record if token provided
+            if (! empty($validated['upload_token'])) {
+                $this->cleanupPendingMedia($validated['upload_token']);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Upload aborted',
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to abort upload', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to abort upload',
             ], 500);
         }
     }
@@ -115,7 +437,7 @@ class ClientUploadController extends Controller
 
             // Generate a safe filename
             $safeName = Str::slug(pathinfo($filename, PATHINFO_FILENAME));
-            $uniqueFilename = $safeName.'-'.substr(Str::uuid()->toString(), 0, 8).'.'.$extension;
+            $uniqueFilename = $safeName.'-'.mb_substr(Str::uuid()->toString(), 0, 8).'.'.$extension;
 
             $media = new Media();
             $media->uuid = Str::uuid()->toString();
@@ -145,10 +467,11 @@ class ClientUploadController extends Controller
             $media->save();
 
             return $media;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Failed to pre-create media record', [
                 'error' => $e->getMessage(),
             ]);
+
             return null;
         }
     }
@@ -239,327 +562,6 @@ class ClientUploadController extends Controller
     }
 
     /**
-     * Generate presigned URLs for multipart upload parts
-     */
-    public function presignPart(Request $request): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'key' => 'required|string',
-                'upload_id' => 'required|string',
-                'part_number' => 'required|integer|min:1|max:10000',
-            ]);
-
-            $disk = Storage::disk(ClientUploadConfig::getDisk());
-            $client = $disk->getClient();
-            $bucket = $disk->getConfig()['bucket'];
-
-            $expiration = now()->addMinutes(ClientUploadConfig::getUrlExpiration());
-
-            $command = $client->getCommand('UploadPart', [
-                'Bucket' => $bucket,
-                'Key' => $validated['key'],
-                'UploadId' => $validated['upload_id'],
-                'PartNumber' => $validated['part_number'],
-            ]);
-
-            $presignedRequest = $client->createPresignedRequest($command, $expiration);
-            $presignedUrl = (string) $presignedRequest->getUri();
-
-            return response()->json([
-                'success' => true,
-                'upload_url' => $presignedUrl,
-                'part_number' => $validated['part_number'],
-                'expires_at' => $expiration->toIso8601String(),
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to generate presigned URL for part', [
-                'error' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to generate presigned URL',
-            ], 500);
-        }
-    }
-
-    /**
-     * Generate presigned URLs for multiple parts at once
-     */
-    public function presignParts(Request $request): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'key' => 'required|string',
-                'upload_id' => 'required|string',
-                'part_numbers' => 'required|array|min:1|max:100',
-                'part_numbers.*' => 'required|integer|min:1|max:10000',
-            ]);
-
-            $disk = Storage::disk(ClientUploadConfig::getDisk());
-            $client = $disk->getClient();
-            $bucket = $disk->getConfig()['bucket'];
-
-            $expiration = now()->addMinutes(ClientUploadConfig::getUrlExpiration());
-            $urls = [];
-
-            foreach ($validated['part_numbers'] as $partNumber) {
-                $command = $client->getCommand('UploadPart', [
-                    'Bucket' => $bucket,
-                    'Key' => $validated['key'],
-                    'UploadId' => $validated['upload_id'],
-                    'PartNumber' => $partNumber,
-                ]);
-
-                $presignedRequest = $client->createPresignedRequest($command, $expiration);
-
-                $urls[] = [
-                    'part_number' => $partNumber,
-                    'upload_url' => (string) $presignedRequest->getUri(),
-                ];
-            }
-
-            return response()->json([
-                'success' => true,
-                'urls' => $urls,
-                'expires_at' => $expiration->toIso8601String(),
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to generate presigned URLs for parts', [
-                'error' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to generate presigned URLs',
-            ], 500);
-        }
-    }
-
-    /**
-     * Complete a multipart upload
-     */
-    public function completeMultipart(Request $request): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'key' => 'required|string',
-                'upload_id' => 'required|string',
-                'upload_token' => 'required|string',
-                'parts' => 'required|array|min:1',
-                'parts.*.part_number' => 'required|integer|min:1',
-                'parts.*.etag' => 'required|string',
-            ]);
-
-            // Verify upload token
-            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'])) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid upload token',
-                ], 403);
-            }
-
-            $disk = Storage::disk(ClientUploadConfig::getDisk());
-            $client = $disk->getClient();
-            $bucket = $disk->getConfig()['bucket'];
-
-            // Format parts for S3
-            $parts = array_map(function ($part) {
-                return [
-                    'PartNumber' => $part['part_number'],
-                    'ETag' => $part['etag'],
-                ];
-            }, $validated['parts']);
-
-            // Sort parts by part number
-            // S3/R2 API requires parts to be in ascending order by part number
-            usort($parts, fn ($a, $b) => $a['PartNumber'] <=> $b['PartNumber']);
-
-            // Complete the multipart upload
-            $result = $client->completeMultipartUpload([
-                'Bucket' => $bucket,
-                'Key' => $validated['key'],
-                'UploadId' => $validated['upload_id'],
-                'MultipartUpload' => [
-                    'Parts' => $parts,
-                ],
-            ]);
-
-            // Save to media library
-            $media = $this->saveToMediaLibrary($validated['key'], $validated['upload_token']);
-
-            Log::info('Multipart upload completed', [
-                'key' => $validated['key'],
-                'upload_id' => $validated['upload_id'],
-                'media_id' => $media?->id,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Upload completed successfully',
-                'files' => [
-                    [
-                        'file' => $media?->getUrl() ?? $result['Location'],
-                        'name' => $media?->file_name ?? basename($validated['key']),
-                        'size' => $media?->size ?? 0,
-                        'type' => $media?->mime_type ?? '',
-                        'data' => [
-                            'id' => $media?->id,
-                            'url' => $media?->getUrl() ?? $result['Location'],
-                            'thumbnail' => $media?->getUrl() ?? $result['Location'],
-                            'key' => $validated['key'],
-                        ],
-                    ],
-                ],
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to complete multipart upload', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to complete upload: '.$e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
-     * Complete a simple upload (confirm and save to media library)
-     */
-    public function completeSimple(Request $request): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'key' => 'required|string',
-                'upload_token' => 'required|string',
-            ]);
-
-            // Verify upload token
-            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'])) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid upload token',
-                ], 403);
-            }
-
-            $disk = Storage::disk(ClientUploadConfig::getDisk());
-
-            // Verify file exists
-            if (! $disk->exists($validated['key'])) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'File not found',
-                ], 404);
-            }
-
-            // Optionally validate file after upload
-            if (ClientUploadConfig::shouldValidateAfterUpload()) {
-                $validationError = $this->validateUploadedFile($disk, $validated['key'], $validated['upload_token']);
-                if ($validationError) {
-                    // Delete the file if validation fails
-                    $disk->delete($validated['key']);
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => $validationError,
-                    ], 422);
-                }
-            }
-
-            // Save to media library
-            $media = $this->saveToMediaLibrary($validated['key'], $validated['upload_token']);
-
-            Log::info('Simple upload completed', [
-                'key' => $validated['key'],
-                'media_id' => $media?->id,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Upload completed successfully',
-                'files' => [
-                    [
-                        'file' => $media?->getUrl() ?? $disk->url($validated['key']),
-                        'name' => $media?->file_name ?? basename($validated['key']),
-                        'size' => $media?->size ?? $disk->size($validated['key']),
-                        'type' => $media?->mime_type ?? $disk->mimeType($validated['key']),
-                        'data' => [
-                            'id' => $media?->id,
-                            'url' => $media?->getUrl() ?? $disk->url($validated['key']),
-                            'thumbnail' => $media?->getUrl() ?? $disk->url($validated['key']),
-                            'key' => $validated['key'],
-                        ],
-                    ],
-                ],
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to complete simple upload', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to complete upload: '.$e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
-     * Abort a multipart upload or cleanup a simple upload
-     */
-    public function abort(Request $request): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'key' => 'nullable|string',
-                'upload_id' => 'nullable|string',
-                'upload_token' => 'nullable|string', // Optional: to clean up media record
-            ]);
-
-            // For multipart uploads, abort on S3
-            if (! empty($validated['upload_id']) && ! empty($validated['key'])) {
-                $disk = Storage::disk(ClientUploadConfig::getDisk());
-                $client = $disk->getClient();
-                $bucket = $disk->getConfig()['bucket'];
-
-                $client->abortMultipartUpload([
-                    'Bucket' => $bucket,
-                    'Key' => $validated['key'],
-                    'UploadId' => $validated['upload_id'],
-                ]);
-
-                Log::info('Multipart upload aborted', [
-                    'key' => $validated['key'],
-                    'upload_id' => $validated['upload_id'],
-                ]);
-            }
-
-            // Clean up pre-created media record if token provided
-            if (! empty($validated['upload_token'])) {
-                $this->cleanupPendingMedia($validated['upload_token']);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Upload aborted',
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to abort upload', [
-                'error' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to abort upload',
-            ], 500);
-        }
-    }
-
-    /**
      * Clean up a pending media record (for aborted/failed uploads)
      */
     protected function cleanupPendingMedia(string $uploadToken): void
@@ -579,7 +581,7 @@ class ClientUploadController extends Controller
                     Log::info('Cleaned up pending media record', ['media_id' => $tokenData['media_id']]);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::warning('Failed to cleanup pending media', ['error' => $e->getMessage()]);
         }
     }
@@ -595,7 +597,7 @@ class ClientUploadController extends Controller
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $safeName = Str::slug(pathinfo($filename, PATHINFO_FILENAME));
 
-        return sprintf('%s/%s/%s-%s.%s', $prefix, $date, $safeName, substr($uuid, 0, 8), $extension);
+        return sprintf('%s/%s/%s-%s.%s', $prefix, $date, $safeName, mb_substr($uuid, 0, 8), $extension);
     }
 
     /**
@@ -683,7 +685,7 @@ class ClientUploadController extends Controller
     protected function verifyUploadToken(string $token, string $key): bool
     {
         Log::debug('verifyUploadToken: Starting verification', [
-            'token_length' => strlen($token),
+            'token_length' => mb_strlen($token),
             'key' => $key,
         ]);
 
@@ -730,41 +732,42 @@ class ClientUploadController extends Controller
     {
         try {
             Log::debug('decodeUploadToken: Starting decode', [
-                'token_first_50' => substr($token, 0, 50),
-                'token_length' => strlen($token),
+                'token_first_50' => mb_substr($token, 0, 50),
+                'token_length' => mb_strlen($token),
             ]);
 
             $decoded = base64_decode($token);
             Log::debug('decodeUploadToken: Base64 decoded', [
-                'decoded_length' => strlen($decoded),
-                'decoded_first_100' => substr($decoded, 0, 100),
+                'decoded_length' => mb_strlen($decoded),
+                'decoded_first_100' => mb_substr($decoded, 0, 100),
             ]);
 
             // Use '|' as delimiter (fallback to '.' for backward compatibility)
-            if (strpos($decoded, '|') !== false) {
-                $lastDelimiterPos = strrpos($decoded, '|');
+            if (mb_strpos($decoded, '|') !== false) {
+                $lastDelimiterPos = mb_strrpos($decoded, '|');
             } else {
                 // Backward compatibility: use last '.' for old tokens
-                $lastDelimiterPos = strrpos($decoded, '.');
+                $lastDelimiterPos = mb_strrpos($decoded, '.');
             }
 
             if ($lastDelimiterPos === false) {
                 Log::debug('decodeUploadToken: No delimiter found');
+
                 return null;
             }
 
-            $json = substr($decoded, 0, $lastDelimiterPos);
-            $signature = substr($decoded, $lastDelimiterPos + 1);
+            $json = mb_substr($decoded, 0, $lastDelimiterPos);
+            $signature = mb_substr($decoded, $lastDelimiterPos + 1);
 
             Log::debug('decodeUploadToken: Split by delimiter', [
-                'json_length' => strlen($json),
-                'signature_length' => strlen($signature),
+                'json_length' => mb_strlen($json),
+                'signature_length' => mb_strlen($signature),
             ]);
 
             Log::debug('decodeUploadToken: Extracted parts', [
-                'json_length' => strlen($json),
-                'signature_length' => strlen($signature),
-                'json_preview' => substr($json, 0, 100),
+                'json_length' => mb_strlen($json),
+                'signature_length' => mb_strlen($signature),
+                'json_preview' => mb_substr($json, 0, 100),
             ]);
 
             // Verify signature
@@ -788,7 +791,7 @@ class ClientUploadController extends Controller
             ]);
 
             return $data;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::debug('decodeUploadToken: Exception', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
@@ -841,7 +844,7 @@ class ClientUploadController extends Controller
             ]);
 
             return $media;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Failed to complete media record', [
                 'error' => $e->getMessage(),
                 'key' => $key,

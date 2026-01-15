@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * Set specific configuration variables here
  */
@@ -16,7 +18,7 @@ return [
     ],
     'namespace' => 'Modules',
     'target_dir' => base_path('modules'),
-    'transformer' => \Laravolt\Thunderclap\LaravoltTransformer::class,
+    'transformer' => Laravolt\Thunderclap\LaravoltTransformer::class,
     'prefixed' => [
         'ServiceProvider.php',
         'Controller.php',

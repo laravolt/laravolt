@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravolt\SemanticForm\Elements\Date;
 
-class DateTest extends \PHPUnit\Framework\TestCase
+class DateTest extends PHPUnit\Framework\TestCase
 {
     public function test_render_date_input()
     {

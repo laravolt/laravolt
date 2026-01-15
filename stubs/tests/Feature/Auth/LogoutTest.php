@@ -3,10 +3,14 @@
 declare(strict_types=1);
 
 use App\Models\User;
+use Tests\TestCase;
 
 test('it can logout', function (): void {
-    $this->actingAs(User::factory()->create());
+    /** @var TestCase */
+    $test = $this;
 
-    $this->post(route('auth::logout'))
+    $test->actingAs(User::factory()->create());
+
+    $test->post(route('auth::logout'))
         ->assertRedirect('/');
 });

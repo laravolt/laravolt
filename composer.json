@@ -3,7 +3,10 @@
     "description": "The Laravolt Platform.",
     "license": "MIT",
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "require": {
         "php": ">=8.2",
@@ -31,6 +34,7 @@
         "kalnoy/nestedset": "^6.0",
         "kirschbaum-development/eloquent-power-joins": "^4.1",
         "larastan/larastan": ">=2.9.14",
+        "laravel/octane": "^2.12",
         "laravolt/avatar": "^6.1",
         "lavary/laravel-menu": "^1.8.4",
         "livewire/livewire": "^4.0",
@@ -65,6 +69,7 @@
             "Laravolt\\Mailkeeper\\": "packages/mailkeeper/src",
             "Laravolt\\Media\\": "packages/media/src",
             "Laravolt\\Pint\\": "packages/pint",
+            "Laravolt\\PrelineForm\\": "packages/preline-form/src",
             "Laravolt\\SemanticForm\\": "packages/semantic-form/src",
             "Laravolt\\Suitable\\": "packages/suitable/src",
             "Laravolt\\Support\\": "packages/support/src",

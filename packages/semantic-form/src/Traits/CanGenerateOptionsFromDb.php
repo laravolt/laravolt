@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Traits;
 
 use Illuminate\Support\Facades\DB;

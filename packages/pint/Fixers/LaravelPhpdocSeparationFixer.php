@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Pint\Fixers;
 
 use PhpCsFixer\AbstractFixer;
@@ -101,7 +103,7 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
     /**
      * Make sure the description is separated from the annotations.
      *
-     * @param  \PhpCsFixer\DocBlock\DocBlock  $doc
+     * @param  DocBlock  $doc
      * @return void
      */
     protected function fixDescription($doc)
@@ -114,7 +116,7 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
             if ($line->containsUsefulContent()) {
                 $next = $doc->getLine($index + 1);
 
-                if ($next != null && $next->containsATag()) {
+                if ($next !== null && $next->containsATag()) {
                     $line->addBlank();
 
                     break;
@@ -126,7 +128,7 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
     /**
      * Make sure the annotations are correctly separated.
      *
-     * @param  \PhpCsFixer\DocBlock\DocBlock  $doc
+     * @param  DocBlock  $doc
      * @return void
      */
     protected function fixAnnotations($doc)
@@ -134,11 +136,11 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
         foreach ($doc->getAnnotations() as $index => $annotation) {
             $next = $doc->getAnnotation($index + 1);
 
-            if ($next == null) {
+            if ($next === null) {
                 break;
             }
 
-            if ($next->getTag()->valid() == true) {
+            if ($next->getTag()->valid() === true) {
                 if ($this->shouldBeTogether($annotation->getTag(), $next->getTag())) {
                     $this->ensureAreTogether($doc, $annotation, $next);
                 } else {
@@ -151,7 +153,7 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
     /**
      * Ensure the given annotations to immediately follow each other.
      *
-     * @param  \PhpCsFixer\DocBlock\DocBlock  $doc
+     * @param  DocBlock  $doc
      * @param  \PhpCsFixer\DocBlock\Annotation  $annotation
      * @param  \PhpCsFixer\DocBlock\Annotation  $next
      * @return void
@@ -169,7 +171,7 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
     /**
      * Ensure the given annotations to have one empty line between each other.
      *
-     * @param  \PhpCsFixer\DocBlock\DocBlock  $doc
+     * @param  DocBlock  $doc
      * @param  \PhpCsFixer\DocBlock\Annotation  $annotation
      * @param  \PhpCsFixer\DocBlock\Annotation  $next
      * @return void
@@ -202,7 +204,7 @@ class LaravelPhpdocSeparationFixer extends AbstractFixer
         $firstName = $first->getName();
         $secondName = $second->getName();
 
-        if ($firstName == $secondName) {
+        if ($firstName === $secondName) {
             return true;
         }
 

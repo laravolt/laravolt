@@ -73,7 +73,7 @@ class Flash
     public function injectScript(Response $response): void
     {
         $content = $response->getContent();
-        $pos = strripos($content, '</main>');
+        $pos = mb_strripos($content, '</main>');
 
         $bags = $this->session->get($this->getSessionKey());
 
@@ -88,7 +88,7 @@ class Flash
         $script = $this->view->make('laravolt::components.flash', compact('bags'))->render();
 
         if ($pos !== false) {
-            $content = substr($content, 0, $pos).$script.substr($content, $pos);
+            $content = mb_substr($content, 0, $pos).$script.mb_substr($content, $pos);
         } else {
             $content .= $script;
         }
@@ -117,7 +117,7 @@ class Flash
     {
         foreach ($this->except as $except) {
             if ($except !== '/') {
-                $except = trim($except, '/');
+                $except = mb_trim($except, '/');
             }
 
             if ($request->is($except)) {
@@ -136,7 +136,14 @@ class Flash
             $message = $session->get('errors');
 
             if ($message instanceof ViewErrorBag) {
-                $message = collect($message->unique())->implode('<br />');
+                $errors = collect($message->unique());
+                if ($errors->count() > 1) {
+                    $message = '<ul class="list-disc list-inside space-y-1">'.
+                              $errors->map(fn ($error) => '<li>'.$error.'</li>')->implode('').
+                              '</ul>';
+                } else {
+                    $message = $errors->first();
+                }
             }
 
             $this->error($message);

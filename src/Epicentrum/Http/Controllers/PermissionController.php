@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\Epicentrum\Http\Controllers;
 
 use Illuminate\Routing\Controller;
@@ -9,7 +11,7 @@ class PermissionController extends Controller
     public function edit()
     {
         $permissions = config('laravolt.epicentrum.models.permission')::all()->sortBy(function ($item) {
-            return strtolower($item->name);
+            return mb_strtolower($item->name);
         });
 
         return view('laravolt::permissions.edit', compact('permissions'));

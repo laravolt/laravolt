@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Facades\Session;
@@ -48,16 +50,6 @@ class FormOpen extends Element
         }
 
         return $result;
-    }
-
-    protected function hasToken()
-    {
-        return (bool) $this->token;
-    }
-
-    protected function hasHiddenMethod()
-    {
-        return (bool) $this->hiddenMethod;
     }
 
     public function post()
@@ -146,5 +138,15 @@ class FormOpen extends Element
         $this->addClass('horizontal');
 
         return $this;
+    }
+
+    protected function hasToken()
+    {
+        return (bool) $this->token;
+    }
+
+    protected function hasHiddenMethod()
+    {
+        return (bool) $this->hiddenMethod;
     }
 }

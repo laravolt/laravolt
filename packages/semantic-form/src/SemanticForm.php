@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\SemanticForm;
 
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as BaseCollection;
@@ -336,7 +339,7 @@ class SemanticForm
 
         $oldValue = $this->getValueFor($name);
 
-        if ($value == $oldValue) {
+        if ($value === $oldValue) {
             $checkbox->check();
         }
 
@@ -389,7 +392,7 @@ class SemanticForm
 
         $oldValue = $this->getValueFor($name);
 
-        if ($value == $oldValue) {
+        if ($value === $oldValue) {
             $radio->check();
         }
 
@@ -417,8 +420,8 @@ class SemanticForm
                 $radio->data($dataKey, $dataValue);
             }
 
-            $singleOldValueChecked = $oldValue !== null && $value == $oldValue;
-            $explicitValueChecked = $oldValue === null && $value == $checked;
+            $singleOldValueChecked = $oldValue !== null && $value === $oldValue;
+            $explicitValueChecked = $oldValue === null && $value === $checked;
             $valueInArray = is_array($oldValue) && in_array($value, $oldValue);
             if ($singleOldValueChecked || $explicitValueChecked || $valueInArray) {
                 $radio->check();
@@ -467,7 +470,7 @@ class SemanticForm
 
         $actions->transform(function ($action) {
             if (is_string($action) && static::hasMacro($action)) {
-                return call_user_func_array(\Closure::bind(static::$macros[$action], null, static::class), []);
+                return call_user_func_array(Closure::bind(static::$macros[$action], null, static::class), []);
             }
 
             return $action;
@@ -625,41 +628,6 @@ class SemanticForm
         return $this->getModelValue($name);
     }
 
-    protected function hasOldInput()
-    {
-        if (! isset($this->oldInput)) {
-            return false;
-        }
-
-        return $this->oldInput->hasOldInput();
-    }
-
-    protected function getOldInput($name)
-    {
-        return $this->oldInput->getOldInput($name);
-    }
-
-    protected function getModelValue($name)
-    {
-        $name = str_replace('[', '.', str_replace(']', '', $name));
-        $value = data_get($this->model, $name, $this->model->{$name} ?? null);
-
-        if ($value instanceof Collection) {
-            $value = $value->pluck('id')->toArray();
-        }
-
-        if (is_string($value) || is_numeric($value) || is_bool($value) || is_array($value) || $value instanceof Carbon) {
-            return $value;
-        }
-
-        return null;
-    }
-
-    protected function unbindModel()
-    {
-        $this->model = null;
-    }
-
     public function selectMonth($name, $format = '%B')
     {
         $months = [];
@@ -733,6 +701,52 @@ class SemanticForm
         return new FieldCollection($fields);
     }
 
+    public function mapping($fields, $callback = null)
+    {
+        // Allow mapping over fields with an optional callback
+        if ($callback) {
+            return collect($fields)->map($callback);
+        }
+
+        // Or return the fields as-is for further processing
+        return collect($fields);
+    }
+
+    protected function hasOldInput()
+    {
+        if (! isset($this->oldInput)) {
+            return false;
+        }
+
+        return $this->oldInput->hasOldInput();
+    }
+
+    protected function getOldInput($name)
+    {
+        return $this->oldInput->getOldInput($name);
+    }
+
+    protected function getModelValue($name)
+    {
+        $name = str_replace('[', '.', str_replace(']', '', $name));
+        $value = data_get($this->model, $name, $this->model->{$name} ?? null);
+
+        if ($value instanceof Collection) {
+            $value = $value->pluck('id')->toArray();
+        }
+
+        if (is_string($value) || is_numeric($value) || is_bool($value) || is_array($value) || $value instanceof Carbon) {
+            return $value;
+        }
+
+        return null;
+    }
+
+    protected function unbindModel()
+    {
+        $this->model = null;
+    }
+
     protected function getTimeOptions($interval)
     {
         $times = [];
@@ -752,8 +766,8 @@ class SemanticForm
 
     protected function normalizeName($name)
     {
-        if (substr($name, -2) == '[]') {
-            return substr($name, 0, -2);
+        if (mb_substr($name, -2) === '[]') {
+            return mb_substr($name, 0, -2);
         }
 
         return $name;

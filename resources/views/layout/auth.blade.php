@@ -1,28 +1,15 @@
-<x-volt-base>
-    <div class="layout--auth is-{!! config('laravolt.ui.login_layout') !!}">
-        <div class="layout--auth__container">
-            <div class="x-inspire"
-                 style="background-image: url('{!! config('laravolt.ui.login_background') !!}')"
-            >
-                <div class="x-inspire__content">
-                    <div class="x-inspire__text">
-                        <x-volt-inspire/>
-                    </div>
-                </div>
+<x-volt-base :title="$title ?? ''">
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="w-full max-w-md">
+            <div class="flex justify-center mb-6">
+                <x-volt-brand-image />
             </div>
 
-
-            <div class="x-auth">
-                <main class="x-auth__content" up-main="root">
-                    <div class="p-2">
-                        <x-volt-brand-image/>
-                    </div>
-
-                    {{ $slot }}
-                    @stack('main')
-
-                </main>
-            </div>
+            <main up-main="root"
+                class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 dark:bg-neutral-800 dark:border-neutral-700">
+                {{ $slot }}
+                @stack('main')
+            </main>
         </div>
     </div>
 </x-volt-base>

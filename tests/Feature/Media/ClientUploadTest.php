@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Storage;
-use Laravolt\Media\ClientUploadConfig;
 use Laravolt\Platform\Models\Guest;
 
 beforeEach(function () {
@@ -20,7 +18,9 @@ beforeEach(function () {
 });
 
 test('client upload config endpoint returns json', function () {
-    $response = $this->get('/media/client-upload/config');
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->get('/media/client-upload/config');
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
@@ -37,7 +37,9 @@ test('client upload config endpoint returns json', function () {
 });
 
 test('client upload config endpoint returns correct endpoints', function () {
-    $response = $this->get('/media/client-upload/config');
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->get('/media/client-upload/config');
 
     $data = $response->json();
 
@@ -47,7 +49,9 @@ test('client upload config endpoint returns correct endpoints', function () {
 });
 
 test('client upload initiate requires filename', function () {
-    $response = $this->postJson('/media/client-upload/initiate', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/initiate', [
         'content_type' => 'image/jpeg',
         'file_size' => 1024,
     ]);
@@ -57,7 +61,9 @@ test('client upload initiate requires filename', function () {
 });
 
 test('client upload initiate requires content_type', function () {
-    $response = $this->postJson('/media/client-upload/initiate', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/initiate', [
         'filename' => 'test.jpg',
         'file_size' => 1024,
     ]);
@@ -67,7 +73,9 @@ test('client upload initiate requires content_type', function () {
 });
 
 test('client upload initiate requires file_size', function () {
-    $response = $this->postJson('/media/client-upload/initiate', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/initiate', [
         'filename' => 'test.jpg',
         'content_type' => 'image/jpeg',
     ]);
@@ -79,7 +87,9 @@ test('client upload initiate requires file_size', function () {
 test('client upload initiate validates file size limit', function () {
     config(['client-upload.max_file_size' => 1024]); // 1KB limit
 
-    $response = $this->postJson('/media/client-upload/initiate', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/initiate', [
         'filename' => 'test.jpg',
         'content_type' => 'image/jpeg',
         'file_size' => 2048, // 2KB - exceeds limit
@@ -94,7 +104,9 @@ test('client upload initiate validates file size limit', function () {
 test('client upload initiate validates mime type', function () {
     config(['client-upload.allowed_mime_types' => ['image/jpeg', 'image/png']]);
 
-    $response = $this->postJson('/media/client-upload/initiate', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/initiate', [
         'filename' => 'test.exe',
         'content_type' => 'application/x-msdownload',
         'file_size' => 1024,
@@ -113,7 +125,9 @@ test('client upload initiate validates extension', function () {
         'client-upload.allowed_extensions' => ['jpg', 'png'],
     ]);
 
-    $response = $this->postJson('/media/client-upload/initiate', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/initiate', [
         'filename' => 'test.exe',
         'content_type' => 'image/jpeg',
         'file_size' => 1024,
@@ -127,7 +141,9 @@ test('client upload initiate validates extension', function () {
 });
 
 test('client upload presign part requires key', function () {
-    $response = $this->postJson('/media/client-upload/presign-part', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/presign-part', [
         'upload_id' => 'test-upload-id',
         'part_number' => 1,
     ]);
@@ -137,7 +153,9 @@ test('client upload presign part requires key', function () {
 });
 
 test('client upload presign part requires upload_id', function () {
-    $response = $this->postJson('/media/client-upload/presign-part', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/presign-part', [
         'key' => 'uploads/test.jpg',
         'part_number' => 1,
     ]);
@@ -147,7 +165,9 @@ test('client upload presign part requires upload_id', function () {
 });
 
 test('client upload presign part requires part_number', function () {
-    $response = $this->postJson('/media/client-upload/presign-part', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/presign-part', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
     ]);
@@ -157,7 +177,9 @@ test('client upload presign part requires part_number', function () {
 });
 
 test('client upload presign part validates part_number range', function () {
-    $response = $this->postJson('/media/client-upload/presign-part', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/presign-part', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
         'part_number' => 0, // Invalid - must be >= 1
@@ -166,7 +188,9 @@ test('client upload presign part validates part_number range', function () {
     $response->assertStatus(422);
     $response->assertJsonValidationErrors(['part_number']);
 
-    $response = $this->postJson('/media/client-upload/presign-part', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/presign-part', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
         'part_number' => 10001, // Invalid - must be <= 10000
@@ -177,7 +201,9 @@ test('client upload presign part validates part_number range', function () {
 });
 
 test('client upload presign parts requires part_numbers array', function () {
-    $response = $this->postJson('/media/client-upload/presign-parts', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/presign-parts', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
     ]);
@@ -187,7 +213,9 @@ test('client upload presign parts requires part_numbers array', function () {
 });
 
 test('client upload complete multipart requires key', function () {
-    $response = $this->postJson('/media/client-upload/complete-multipart', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-multipart', [
         'upload_id' => 'test-upload-id',
         'upload_token' => 'test-token',
         'parts' => [
@@ -200,7 +228,9 @@ test('client upload complete multipart requires key', function () {
 });
 
 test('client upload complete multipart requires upload_id', function () {
-    $response = $this->postJson('/media/client-upload/complete-multipart', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-multipart', [
         'key' => 'uploads/test.jpg',
         'upload_token' => 'test-token',
         'parts' => [
@@ -213,7 +243,9 @@ test('client upload complete multipart requires upload_id', function () {
 });
 
 test('client upload complete multipart requires upload_token', function () {
-    $response = $this->postJson('/media/client-upload/complete-multipart', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-multipart', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
         'parts' => [
@@ -226,7 +258,9 @@ test('client upload complete multipart requires upload_token', function () {
 });
 
 test('client upload complete multipart requires parts', function () {
-    $response = $this->postJson('/media/client-upload/complete-multipart', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-multipart', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
         'upload_token' => 'test-token',
@@ -237,7 +271,9 @@ test('client upload complete multipart requires parts', function () {
 });
 
 test('client upload complete simple requires key', function () {
-    $response = $this->postJson('/media/client-upload/complete-simple', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-simple', [
         'upload_token' => 'test-token',
     ]);
 
@@ -246,7 +282,9 @@ test('client upload complete simple requires key', function () {
 });
 
 test('client upload complete simple requires upload_token', function () {
-    $response = $this->postJson('/media/client-upload/complete-simple', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-simple', [
         'key' => 'uploads/test.jpg',
     ]);
 
@@ -255,7 +293,9 @@ test('client upload complete simple requires upload_token', function () {
 });
 
 test('client upload abort requires key', function () {
-    $response = $this->postJson('/media/client-upload/abort', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/abort', [
         'upload_id' => 'test-upload-id',
     ]);
 
@@ -264,7 +304,9 @@ test('client upload abort requires key', function () {
 });
 
 test('client upload abort requires upload_id', function () {
-    $response = $this->postJson('/media/client-upload/abort', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/abort', [
         'key' => 'uploads/test.jpg',
     ]);
 
@@ -273,7 +315,9 @@ test('client upload abort requires upload_id', function () {
 });
 
 test('client upload complete simple rejects invalid token', function () {
-    $response = $this->postJson('/media/client-upload/complete-simple', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-simple', [
         'key' => 'uploads/test.jpg',
         'upload_token' => 'invalid-token',
     ]);
@@ -286,7 +330,9 @@ test('client upload complete simple rejects invalid token', function () {
 });
 
 test('client upload complete multipart rejects invalid token', function () {
-    $response = $this->postJson('/media/client-upload/complete-multipart', [
+    /** @var TestCase */
+    $test = $this;
+    $response = $test->postJson('/media/client-upload/complete-multipart', [
         'key' => 'uploads/test.jpg',
         'upload_id' => 'test-upload-id',
         'upload_token' => 'invalid-token',
