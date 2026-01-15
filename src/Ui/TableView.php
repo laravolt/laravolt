@@ -25,13 +25,13 @@ abstract class TableView extends Component
 
     public int $searchDebounce = 300;
 
-    #[Url]
+    #[Url(except: '')]
     public string $search = '';
 
     #[Url]
     public array $filters = [];
 
-    #[Url]
+    #[Url(except: 1)]
     public int $page = 1;
 
     protected bool $showPerPage = true;
@@ -44,18 +44,13 @@ abstract class TableView extends Component
 
     protected array $perPageOptions = [5, 15, 30, 50, 100, 250];
 
+    #[Url(except: self::DEFAULT_PER_PAGE)]
     public int $perPage = self::DEFAULT_PER_PAGE;
 
-    protected $queryString = [
-        'page' => ['except' => 1],
-        'search' => ['except' => ''],
-        'sort' => ['except' => null],
-        'direction',
-        'perPage' => ['except' => self::DEFAULT_PER_PAGE],
-    ];
-
+    #[Url(except: null)]
     public ?string $sort = null;
 
+    #[Url]
     public ?string $direction = null;
 
     public function updatingSearch()
