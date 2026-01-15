@@ -4,7 +4,7 @@ window.addEventListener('laravolt.toast', function (e) {
 
 // Reinitialization all Laravolt components when HTML fragment updated
 if (typeof Livewire !== "undefined") {
-    Livewire.hook('message.processed', (el, component) => {
+    Livewire.hook('morph.updated', ({ el, component }) => {
         Laravolt.init($('[wire\\:id="' + component.id + '"]'));
     })
 }

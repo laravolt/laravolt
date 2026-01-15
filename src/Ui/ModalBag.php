@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laravolt\Ui;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ModalBag extends Component
@@ -12,8 +13,7 @@ class ModalBag extends Component
 
     public array $modals = [];
 
-    protected $listeners = ['openModal'];
-
+    #[On('openModal')]
     public function openModal($modal): void
     {
         $id = $modal.'-'.md5($modal);
@@ -24,7 +24,7 @@ class ModalBag extends Component
 
         $this->activeModal = $id;
 
-        $this->emit('activeModalChanged', $id);
+        $this->dispatch('activeModalChanged', $id);
     }
 
     public function render()
