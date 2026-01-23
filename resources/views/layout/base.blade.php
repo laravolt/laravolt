@@ -13,7 +13,6 @@
     @stack('meta')
 
     @laravoltStyles
-    @livewireStyles
 
     @stack('style')
     @stack('head')
@@ -25,7 +24,6 @@
     class="bg-gray-50 dark:bg-neutral-900 text-gray-800 dark:text-neutral-200 {{ $bodyClass ?? '' }} @yield('body.class')">
     {{ $slot }}
 
-    @livewireScripts
     @stack('script')
     @stack('body')
     @basictableInline('.basictable')
