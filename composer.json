@@ -86,6 +86,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "7.0-dev"
+        },
         "laravel": {
             "providers": [
                 "Laravolt\\AutoCrud\\AutoCrudServiceProvider",
