@@ -1,34 +1,43 @@
-<div class="menu attached right bottom" data-role="pagination">
-    <!-- Previous Page Link -->
+<nav class="flex items-center gap-x-1" data-role="pagination">
     @if ($paginator->onFirstPage())
-        <div class="item disabled prev"><i class="icon left chevron"></i></div>
+        <button type="button" class="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-400 cursor-not-allowed focus:outline-none disabled:opacity-50 dark:text-neutral-500" disabled>
+            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+            <span class="sr-only">Previous</span>
+        </button>
     @else
-        <a class="item prev" href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="icon left chevron"></i></a>
+        <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+            <span class="sr-only">Previous</span>
+        </a>
     @endif
 
-    <!-- Pagination Elements -->
-    @foreach ($elements as $element)
-    <!-- "Three Dots" Separator -->
-        @if (is_string($element))
-            <div class="item disabled dots"><span>{{ $element }}</span></div>
-        @endif
+    <div class="flex items-center gap-x-1">
+        @foreach ($elements as $element)
+            @if (is_string($element))
+                <span class="min-h-[38px] min-w-[38px] flex justify-center items-center text-gray-400 text-sm dark:text-neutral-500">{{ $element }}</span>
+            @endif
 
-    <!-- Array Of Links -->
-        @if (is_array($element))
-            @foreach ($element as $page => $url)
-                @if ($page == $paginator->currentPage())
-                    <a class="item active number">{{ $page }}</a>
-                @else
-                    <a class="item number" href="{{ $url }}">{{ $page }}</a>
-                @endif
-            @endforeach
-        @endif
-    @endforeach
+            @if (is_array($element))
+                @foreach ($element as $page => $url)
+                    @if ($page == $paginator->currentPage())
+                        <span class="min-h-[38px] min-w-[38px] flex justify-center items-center bg-blue-600 text-white text-sm rounded-lg focus:outline-none dark:bg-blue-500">{{ $page }}</span>
+                    @else
+                        <a href="{{ $url }}" class="min-h-[38px] min-w-[38px] flex justify-center items-center text-gray-800 hover:bg-gray-100 text-sm rounded-lg focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">{{ $page }}</a>
+                    @endif
+                @endforeach
+            @endif
+        @endforeach
+    </div>
 
-    <!-- Next Page Link -->
     @if ($paginator->hasMorePages())
-        <a class="item next" href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="icon right chevron"></i></a>
+        <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+            <span class="sr-only">Next</span>
+            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+        </a>
     @else
-        <div class="item disabled next"><i class="icon right chevron"></i></div>
+        <button type="button" class="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-400 cursor-not-allowed focus:outline-none disabled:opacity-50 dark:text-neutral-500" disabled>
+            <span class="sr-only">Next</span>
+            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+        </button>
     @endif
-</div>
+</nav>
