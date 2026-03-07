@@ -1,16 +1,4 @@
-<?php
-
-$tableClass = '';
-    if ($showHeader && $showFooter) {
-        $tableClass = 'attached';
-    } elseif ($showHeader) {
-        $tableClass = 'bottom attached';
-    } elseif($showFooter) {
-        $tableClass = 'top attached';
-    }
-?>
-
-<table class="ui {{ $tableClass }} table unstackable responsive">
+<x-volt-table>
     <thead>
     <tr>
         @foreach($columns as $column)
@@ -22,7 +10,7 @@ $tableClass = '';
         @endforeach
     </tr>
     @if($hasSearchableColumns)
-    <tr class="ui form" data-role="suitable-header-searchable">
+    <tr data-role="suitable-header-searchable">
         @foreach($columns as $column)
             @if($column->isSearchable())
                 {!! $column->searchableHeader()->render() !!}
@@ -33,13 +21,13 @@ $tableClass = '';
     </tr>
     @endif
     </thead>
-    <tbody class="collection">
+    <tbody class="collection divide-y divide-gray-200 dark:divide-neutral-700">
     @forelse($collection as $data)
         @php($outerLoop = $loop)
         @if($row)
             @include($row)
         @else
-            <tr>
+            <tr class="hover:bg-gray-50 dark:hover:bg-neutral-800">
                 @foreach($columns as $column)
                     <td {!! $column->cellAttributes($data) !!}>{!! $column->cell($data, $collection, $outerLoop) !!}</td>
                 @endforeach
@@ -49,4 +37,4 @@ $tableClass = '';
         @include('suitable::empty')
     @endforelse
     </tbody>
-</table>
+</x-volt-table>
