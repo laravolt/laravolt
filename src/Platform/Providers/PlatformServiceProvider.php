@@ -29,6 +29,25 @@ use Laravolt\Platform\Commands\MakeViewCommnad;
 use Laravolt\Platform\Commands\Pest4InstallCommand;
 use Laravolt\Platform\Commands\SyncPermission;
 use Laravolt\Platform\Components\Accordion;
+use Laravolt\Platform\Components\AdvancedSelect;
+use Laravolt\Platform\Components\AvatarGroup;
+use Laravolt\Platform\Components\ButtonGroup;
+use Laravolt\Platform\Components\Chart;
+use Laravolt\Platform\Components\ComboBox;
+use Laravolt\Platform\Components\ContextMenu;
+use Laravolt\Platform\Components\Datatable;
+use Laravolt\Platform\Components\Datepicker;
+use Laravolt\Platform\Components\DragDrop;
+use Laravolt\Platform\Components\Editor;
+use Laravolt\Platform\Components\FileUpload;
+use Laravolt\Platform\Components\FileUploadProgress;
+use Laravolt\Platform\Components\InputGroup;
+use Laravolt\Platform\Components\InputNumber;
+use Laravolt\Platform\Components\LegendIndicator;
+use Laravolt\Platform\Components\RangeSlider;
+use Laravolt\Platform\Components\SearchBox;
+use Laravolt\Platform\Components\StrongPassword;
+use Laravolt\Platform\Components\TreeView;
 use Laravolt\Platform\Components\AdvancedDatepicker;
 use Laravolt\Platform\Components\Alert;
 use Laravolt\Platform\Components\Avatar;
@@ -374,12 +393,58 @@ class PlatformServiceProvider extends ServiceProvider
             'time-picker' => 'laravolt::components.time-picker',
             'timeline' => 'laravolt::components.timeline',
 
+            // Phase 1: Form Enhancement
+            'advanced-select' => 'laravolt::components.advanced-select',
+            'combobox' => 'laravolt::components.combobox',
+            'searchbox' => 'laravolt::components.searchbox',
+            'input-number' => 'laravolt::components.input-number',
+            'datepicker' => 'laravolt::components.datepicker',
+
+            // Phase 2: Data Presentation
+            'chart' => 'laravolt::components.chart',
+            'datatable' => 'laravolt::components.datatable',
+            'tree-view' => 'laravolt::components.tree-view',
+
+            // Phase 3: Content & Upload
+            'editor' => 'laravolt::components.editor',
+            'file-upload' => 'laravolt::components.file-upload',
+
+            // Phase 4: UX Polish
+            'avatar-group' => 'laravolt::components.avatar-group',
+            'button-group' => 'laravolt::components.button-group',
+            'input-group' => 'laravolt::components.input-group',
+            'range-slider' => 'laravolt::components.range-slider',
+            'legend-indicator' => 'laravolt::components.legend-indicator',
+            'context-menu' => 'laravolt::components.context-menu',
+            'strong-password' => 'laravolt::components.strong-password',
+            'file-upload-progress' => 'laravolt::components.file-upload-progress',
+            'drag-drop' => 'laravolt::components.drag-drop',
+
             // Custom Components
             'data-display' => 'laravolt::components.data-display',
 
             // Class-based Components (Updated for Preline UI v3.0)
             Accordion::class,
             AdvancedDatepicker::class,
+            AdvancedSelect::class,
+            AvatarGroup::class,
+            ButtonGroup::class,
+            Chart::class,
+            ComboBox::class,
+            ContextMenu::class,
+            Datatable::class,
+            Datepicker::class,
+            DragDrop::class,
+            Editor::class,
+            FileUpload::class,
+            FileUploadProgress::class,
+            InputGroup::class,
+            InputNumber::class,
+            LegendIndicator::class,
+            RangeSlider::class,
+            SearchBox::class,
+            StrongPassword::class,
+            TreeView::class,
             Alert::class,
             Avatar::class,
             Backlink::class,

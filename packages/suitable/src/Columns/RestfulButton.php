@@ -131,6 +131,10 @@ class RestfulButton extends Column implements ColumnInterface
 
                 $policyEnabled = Gate::getPolicyFor(get_class($data)) !== null;
 
+                if (! Auth::user()) {
+                    return false;
+                }
+
                 return $policyEnabled && Auth::user()->cannot($action, $data);
             })
             ->mapWithKeys(function ($action) use ($data) {

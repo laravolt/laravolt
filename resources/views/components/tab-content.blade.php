@@ -16,9 +16,12 @@
 @endpush
 
 @push('tab.contents.'.\Laravolt\Platform\Components\Tab::getActiveTab())
+    @php
+        $activeContentClass = $isActive ? 'block opacity-100' : '';
+    @endphp
     <div
         id="tab-{{ $key }}"
-        {{ $attributes->merge(['class' => "hidden opacity-0 transition-opacity duration-200 {$isActive ? 'block opacity-100' : ''}"]) }}
+        {{ $attributes->merge(['class' => "hidden opacity-0 transition-opacity duration-200 {$activeContentClass}"]) }}
         role="tabpanel"
         aria-labelledby="tab-link-{{ $key }}"
     >

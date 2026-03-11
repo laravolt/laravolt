@@ -79,6 +79,20 @@ class Select extends FormControl
         return $this;
     }
 
+    public function dependency($fieldName)
+    {
+        $this->setAttribute('data-dependency', $fieldName);
+
+        return $this;
+    }
+
+    public function ajax($ajax = true)
+    {
+        $this->setAttribute('data-ajax', $ajax ? 'true' : 'false');
+
+        return $this;
+    }
+
     public function multiple()
     {
         $name = $this->getAttribute('name');

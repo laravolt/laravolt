@@ -19,18 +19,17 @@
         {!! form()->select('status', $statuses)->label(__('laravolt::users.status')) !!}
         {!! form()->select('timezone', $timezones, config('app.timezone'))->label(__('laravolt::users.timezone')) !!}
 
-        <div class="ui divider section"></div>
+        <div class="border-t border-gray-200 dark:border-neutral-700 my-6"></div>
 
-        <div class="field">
-
-            <label for="">Opsi Tambahan</label>
-            <div class="field">
+        <div class="space-y-3">
+            <label class="block text-sm font-medium text-gray-900 dark:text-white">Opsi Tambahan</label>
+            <div class="space-y-2">
                 {!! form()->checkbox('send_account_information', 1)->label(__('laravolt::users.send_account_information_via_email')) !!}
                 {!! form()->checkbox('must_change_password', 1)->label(__('laravolt::users.change_password_on_first_login')) !!}
             </div>
         </div>
 
-        <div class="ui divider section"></div>
+        <div class="border-t border-gray-200 dark:border-neutral-700 my-6"></div>
 
         {!! form()->action(form()->submit(__('laravolt::action.save')), form()->link(__('laravolt::action.cancel'), route('epicentrum::users.index'))) !!}
         {!! form()->close() !!}
@@ -39,14 +38,17 @@
 
     @push('body')
         <script>
-            $(function () {
-                $('.randomize').on('click', function (e) {
-                    $(e.currentTarget).prev().val(Math.random().toString(36).substr(2, 8));
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.randomize').forEach(function (btn) {
+                    btn.addEventListener('click', function (e) {
+                        const input = e.currentTarget.previousElementSibling;
+                        if (input) {
+                            input.value = Math.random().toString(36).substr(2, 8);
+                        }
+                    });
                 });
             });
         </script>
     @endpush
 
-</x-volt-app>>
-
-
+</x-volt-app>

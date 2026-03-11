@@ -1,5 +1,5 @@
-<div data-role="brand" class="ui segment basic p-2 m-b-0">
-    <h4 class="ui header">
-        {{ config('laravolt.ui.brand_name') }}
+<div data-role="brand" class="p-2 mb-0">
+    <h4 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
+        {{ config('laravolt.ui.brand_name', config('app.name')) }}
     </h4>
 </div>
