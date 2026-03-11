@@ -2,32 +2,39 @@
 <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-1">Modal / Overlay</h2>
 <p class="text-sm text-gray-500 dark:text-neutral-400 mb-4">Animated dialogs powered by <code class="text-xs bg-gray-100 dark:bg-neutral-700 px-1.5 py-0.5 rounded">hs-overlay</code> plugin with multiple animation styles.</p>
 
-<x-volt-panel title="Modal Demos">
-    <div class="flex flex-wrap gap-3">
-        {{-- Default Modal --}}
-        <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-default" data-hs-overlay="#hs-modal-default">
-            Default Modal
-        </button>
-
-        {{-- Slide Down --}}
-        <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-slide" data-hs-overlay="#hs-modal-slide">
-            Slide Down
-        </button>
-
-        {{-- Scale --}}
-        <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-scale" data-hs-overlay="#hs-modal-scale">
-            Scale Animation
-        </button>
-
-        {{-- Large --}}
-        <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-large" data-hs-overlay="#hs-modal-large">
-            Large Modal
-        </button>
+<div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-800 dark:border-neutral-700">
+        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Click a button to open a modal with different animation styles.</p>
     </div>
-</x-volt-panel>
+    <div class="p-4 md:p-5">
+        <div class="flex flex-wrap gap-3">
+            {{-- Default Modal --}}
+            <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-default" data-hs-overlay="#hs-modal-default">
+                Default Modal
+            </button>
 
+            {{-- Slide Down --}}
+            <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-slide" data-hs-overlay="#hs-modal-slide">
+                Slide Down
+            </button>
+
+            {{-- Scale --}}
+            <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-scale" data-hs-overlay="#hs-modal-scale">
+                Scale Animation
+            </button>
+
+            {{-- Large --}}
+            <button type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-modal-large" data-hs-overlay="#hs-modal-large">
+                Large Modal
+            </button>
+        </div>
+    </div>
+</div>
+
+{{-- Push modal overlays to body level to avoid z-index conflicts with sticky header and Preline backdrop --}}
+@push('body')
 {{-- Default Modal --}}
-<div id="hs-modal-default" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="hs-modal-default-label">
+<div id="hs-modal-default" class="hs-overlay hidden size-full fixed top-0 start-0 overflow-x-hidden overflow-y-auto" style="z-index:80" role="dialog" tabindex="-1" aria-labelledby="hs-modal-default-label">
     <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
             <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
@@ -49,7 +56,7 @@
 </div>
 
 {{-- Slide Down Modal --}}
-<div id="hs-modal-slide" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto [--overlay-backdrop:static]" role="dialog" tabindex="-1" aria-labelledby="hs-modal-slide-label">
+<div id="hs-modal-slide" class="hs-overlay hidden size-full fixed top-0 start-0 overflow-x-hidden overflow-y-auto" style="z-index:80" role="dialog" tabindex="-1" aria-labelledby="hs-modal-slide-label">
     <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-14 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
             <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
@@ -67,7 +74,7 @@
 </div>
 
 {{-- Scale Modal --}}
-<div id="hs-modal-scale" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="hs-modal-scale-label">
+<div id="hs-modal-scale" class="hs-overlay hidden size-full fixed top-0 start-0 overflow-x-hidden overflow-y-auto" style="z-index:80" role="dialog" tabindex="-1" aria-labelledby="hs-modal-scale-label">
     <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:scale-100 hs-overlay-open:duration-500 mt-0 opacity-0 scale-95 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
             <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
@@ -85,7 +92,7 @@
 </div>
 
 {{-- Large Modal --}}
-<div id="hs-modal-large" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="hs-modal-large-label">
+<div id="hs-modal-large" class="hs-overlay hidden size-full fixed top-0 start-0 overflow-x-hidden overflow-y-auto" style="z-index:80" role="dialog" tabindex="-1" aria-labelledby="hs-modal-large-label">
     <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 transition-all sm:max-w-4xl sm:w-full m-3 sm:mx-auto">
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
             <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
@@ -101,3 +108,4 @@
         </div>
     </div>
 </div>
+@endpush

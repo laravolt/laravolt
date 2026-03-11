@@ -7,7 +7,7 @@
         {{-- Item 1 --}}
         <div class="flex gap-x-3">
             <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
-                <div class="relative z-10 size-7 flex justify-center items-center">
+                <div class="relative size-7 flex justify-center items-center" style="z-index:1">
                     <div class="size-2 rounded-full bg-blue-600 dark:bg-blue-500"></div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         {{-- Item 2 --}}
         <div class="flex gap-x-3">
             <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
-                <div class="relative z-10 size-7 flex justify-center items-center">
+                <div class="relative size-7 flex justify-center items-center" style="z-index:1">
                     <div class="size-2 rounded-full bg-green-500"></div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
         {{-- Item 3 --}}
         <div class="flex gap-x-3">
             <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
-                <div class="relative z-10 size-7 flex justify-center items-center">
+                <div class="relative size-7 flex justify-center items-center" style="z-index:1">
                     <div class="size-2 rounded-full bg-amber-500"></div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
         {{-- Item 4 --}}
         <div class="flex gap-x-3">
             <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
-                <div class="relative z-10 size-7 flex justify-center items-center">
+                <div class="relative size-7 flex justify-center items-center" style="z-index:1">
                     <div class="size-2 rounded-full bg-gray-400 dark:bg-neutral-600"></div>
                 </div>
             </div>

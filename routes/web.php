@@ -9,6 +9,18 @@ use Laravolt\Platform\Controllers\DumpRequestController;
 /** @var Illuminate\Support\Facades\Route $router */
 $router = app('router');
 
+// Public Preline UI Showcase (no auth required)
+$router->group(
+    [
+        'middleware' => ['web'],
+        'prefix' => 'platform',
+        'as' => 'platform::',
+    ],
+    function (Illuminate\Routing\Router $router) {
+        $router->view('preline', 'laravolt::playground.showcase')->name('preline.showcase');
+    }
+);
+
 $router->group(
     [
         'middleware' => config('laravolt.platform.middleware'),
