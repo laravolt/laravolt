@@ -20,6 +20,12 @@ abstract class Element
 
     protected $hint = [];
 
+    /** @var string|null Alpine.js x-show expression */
+    protected $showIfExpression = null;
+
+    /** @var string|null Alpine.js x-data init expression (for binding) */
+    protected $alpineData = null;
+
     public function __toString()
     {
         try {
@@ -30,6 +36,29 @@ abstract class Element
     }
 
     abstract public function render();
+
+    /**
+     * Show this field only when the given Alpine.js expression is truthy.
+     * Example: ->showIf('type === "company"')
+     */
+    public function showIf(string $expression): static
+    {
+        $this->showIfExpression = $expression;
+
+        return $this;
+    }
+
+    /**
+     * Hide this field when the given Alpine.js expression is truthy.
+     * Equivalent to showIf with a negated expression.
+     * Example: ->hideIf('type === "individual"')
+     */
+    public function hideIf(string $expression): static
+    {
+        $this->showIfExpression = "!({$expression})";
+
+        return $this;
+    }
 
     public function hasAttribute($attribute)
     {
@@ -283,9 +312,10 @@ abstract class Element
         $error = $this->renderError();
         $hint = $this->renderHint();
         $stateField = $this->renderFieldState();
+        $showIfAttr = $this->renderShowIfAttribute();
 
         return <<<HTML
-          <div>
+          <div{$showIfAttr}>
             $label
 
             <div class="relative">
@@ -394,5 +424,18 @@ abstract class Element
             </svg>
           </div>
         HTML;
+    }
+
+    /**
+     * Render x-show attribute if showIf/hideIf was called.
+     * The wrapping field div will carry the Alpine.js directive.
+     */
+    protected function renderShowIfAttribute(): string
+    {
+        if ($this->showIfExpression === null) {
+            return '';
+        }
+
+        return sprintf(' x-show="%s"', htmlspecialchars($this->showIfExpression, ENT_QUOTES));
     }
 }
