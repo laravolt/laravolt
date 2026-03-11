@@ -12,6 +12,8 @@ class LaravoltBladeDirectives
           <!-- Required plugins -->
           <script src="/laravolt/assets/vendor/preline/dist/index.js?v=4.1.2"></script>
           <script src="/laravolt/assets/vendor/preline/dist/overlay.js?v=4.1.2"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/datepicker.js?v=4.1.2"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/select.js?v=4.1.2"></script>
           <!-- Clipboard -->
           <script src="/laravolt/assets/vendor/clipboard/dist/clipboard.min.js"></script>
           <script src="/laravolt/assets/js/hs-copy-clipboard-helper.js"></script>
