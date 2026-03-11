@@ -13,6 +13,7 @@ use Laravolt\PrelineForm\Elements\CheckboxGroup;
 use Laravolt\PrelineForm\Elements\Email;
 use Laravolt\PrelineForm\Elements\Field;
 use Laravolt\PrelineForm\Elements\File;
+use Laravolt\PrelineForm\Elements\Filepond;
 use Laravolt\PrelineForm\Elements\FormOpen;
 use Laravolt\PrelineForm\Elements\Hidden;
 use Laravolt\PrelineForm\Elements\InputWrapper;
@@ -275,6 +276,17 @@ class PrelineForm
         }
 
         return $file;
+    }
+
+    public function filepond($name)
+    {
+        $filepond = new Filepond($name);
+
+        if ($this->hasError($name)) {
+            $filepond->setError($this->errorStore->getError($name));
+        }
+
+        return $filepond;
     }
 
     public function hidden($name, $value = null)
@@ -691,3 +703,4 @@ class PrelineForm
         return $name;
     }
 }
+
