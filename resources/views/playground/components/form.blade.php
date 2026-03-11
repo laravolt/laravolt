@@ -12,12 +12,24 @@
     {!! form()->uploader('avatar')->label('Single File Upload') !!}
     {!! form()->uploader('attachments')->limit(10)->label('Multiple File Upload') !!}
     {!! form()->uploader('attachments_non_ajax')->ajax(false)->limit(10)->label('Multiple File Upload Wihout Ajax') !!}
-    <h3 class="ui divider horizontal section">Chained Dropdown</h3>
-    <p class="ui message">Silakan pilih salah satu user, makan dropdown kedua akan otomatis ter-update dengan
+
+    <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>
+        <div class="relative flex justify-center"><span class="bg-white px-3 text-sm font-medium text-gray-500 dark:bg-neutral-800 dark:text-neutral-400">Chained Dropdown</span></div>
+    </div>
+
+    <div class="rounded-lg border border-blue-200 bg-blue-50 p-3 mb-4 dark:bg-blue-900/50 dark:border-blue-800">
+        <p class="text-sm text-blue-700 dark:text-blue-300">Silakan pilih salah satu user, makan dropdown kedua akan otomatis ter-update dengan
         menampilkan daftar user yang berhubungan</p>
+    </div>
     {!! form()->dropdownDB('user1', 'select id, email as name from users')->label('User') !!}
     {!! form()->dropdownDB('user2', 'select id, email as name from users where id = %s')->label('Similar User')->dependency('user1') !!}
-    <h3 class="ui divider horizontal section">Dropdown With Remove Content</h3>
+
+    <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>
+        <div class="relative flex justify-center"><span class="bg-white px-3 text-sm font-medium text-gray-500 dark:bg-neutral-800 dark:text-neutral-400">Dropdown With Remove Content</span></div>
+    </div>
+
     {!! form()->dropdownDB('user3', 'select id, email as name from users where email like "%%%s%%" limit 10')->prependOption(2, 'Foo')->ajax()->label('Search User') !!}
     {!! form()->coordinate('koordinat')->label('Koordinat') !!}
     {!! form()->redactor('redactor')->label('WYSIWYG (Redactor)') !!}
@@ -31,31 +43,43 @@
     {!! form()->close() !!}
 </x-volt-panel>
 
-<div class="ui grid equal width">
-    <div class="column">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
         <x-volt-panel title="Horizontal Form">
             {!! form()->get()->horizontal() !!}
-            <h3 class="ui horizontal divider section">Basic Info</h3>
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>
+                <div class="relative flex justify-center"><span class="bg-white px-3 text-sm font-medium text-gray-500 dark:bg-neutral-800 dark:text-neutral-400">Basic Info</span></div>
+            </div>
             {!! form()->text('nama')->label('Nama') !!}
             {!! form()->dropdown('lokasi', ['Indonesia', 'Malaysia'])->label('Lokasi') !!}
-            <h3 class="ui horizontal divider section">Localization</h3>
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>
+                <div class="relative flex justify-center"><span class="bg-white px-3 text-sm font-medium text-gray-500 dark:bg-neutral-800 dark:text-neutral-400">Localization</span></div>
+            </div>
             {!! form()->dropdown('language', ['Indonesia', 'Malaysia'])->label('Language') !!}
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->action(form()->submit('Simpan')) !!}
             {!! form()->close() !!}
         </x-volt-panel>
     </div>
-    <div class="column">
+    <div>
         <x-volt-panel title="Vertical Form">
             {!! form()->get() !!}
-            <h3 class="ui horizontal divider section">Basic Info</h3>
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>
+                <div class="relative flex justify-center"><span class="bg-white px-3 text-sm font-medium text-gray-500 dark:bg-neutral-800 dark:text-neutral-400">Basic Info</span></div>
+            </div>
             {!! form()->text('nama')->label('Nama') !!}
             {!! form()->dropdown('lokasi', ['Indonesia', 'Malaysia'])->label('Lokasi') !!}
-            <h3 class="ui horizontal divider section">Localization</h3>
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>
+                <div class="relative flex justify-center"><span class="bg-white px-3 text-sm font-medium text-gray-500 dark:bg-neutral-800 dark:text-neutral-400">Localization</span></div>
+            </div>
             {!! form()->dropdown('language', ['Indonesia', 'Malaysia'])->label('Language') !!}
             {!! form()->dropdown('timezone', ['Indonesia', 'Malaysia'])->label('Timezone') !!}
             {!! form()->submit('Simpan') !!}
-            {!! form()->action(form()->close()) !!}
+            {!! form()->close() !!}
         </x-volt-panel>
     </div>
 </div>

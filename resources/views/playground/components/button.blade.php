@@ -3,34 +3,28 @@
     <x-volt-button label="Secondary Button" class="secondary"></x-volt-button>
     <x-volt-button label="Basic Button" class="basic"></x-volt-button>
 
-    <div class="ui divider section"></div>
+    <div class="border-t border-gray-200 dark:border-neutral-700 my-6"></div>
 
-    <div class="ui buttons">
+    <div class="flex items-center gap-x-2">
         <x-volt-button label="Primary Button" class="primary"></x-volt-button>
         <x-volt-button label="Basic Button" class="basic"></x-volt-button>
     </div>
 
-    <div class="ui divider section"></div>
+    <div class="border-t border-gray-200 dark:border-neutral-700 my-6"></div>
 
-    <div class="ui horizontal list">
+    <div class="flex flex-wrap items-center gap-2">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
-            <div class="item">
-                <x-volt-button class="{{ $color }}">{{ $color }}</x-volt-button>
-            </div>
+            <x-volt-button class="{{ $color }}">{{ $color }}</x-volt-button>
         @endforeach
     </div>
-    <div class="ui horizontal list">
+    <div class="flex flex-wrap items-center gap-2 mt-4">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
-            <div class="item">
-                <x-volt-button class="{{ $color }} secondary">{{ $color }}</x-volt-button>
-            </div>
+            <x-volt-button class="{{ $color }} secondary">{{ $color }}</x-volt-button>
         @endforeach
     </div>
-    <div class="ui horizontal list">
+    <div class="flex flex-wrap items-center gap-2 mt-4">
         @foreach(config('laravolt.ui.colors') as $color => $hex)
-            <div class="item">
-                <x-volt-button class="{{ $color }} basic">{{ $color }}</x-volt-button>
-            </div>
+            <x-volt-button class="{{ $color }} basic">{{ $color }}</x-volt-button>
         @endforeach
     </div>
 </x-volt-panel>

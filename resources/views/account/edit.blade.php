@@ -17,9 +17,8 @@
 
 
     @unless($roleEditable)
-        <div class="field">
-            <label for="">&nbsp;</label>
-            <div class="ui message m-t-0">Editing role are disabled by system configuration.</div>
+        <div class="rounded-lg border border-blue-200 bg-blue-50 p-3 dark:bg-blue-900/50 dark:border-blue-800">
+            <p class="text-sm text-blue-700 dark:text-blue-300">Editing role are disabled by system configuration.</p>
         </div>
     @endif
 
@@ -28,19 +27,21 @@
     {!! form()->close() !!}
 
 
-    <div class="ui divider section"></div>
+    <div class="border-t border-gray-200 dark:border-neutral-700 my-6"></div>
 
-    <div class="ui red segment p-2">
-        <h4 class="ui header">@lang('laravolt::users.delete_account')</h4>
+    <div class="rounded-xl border border-red-200 bg-red-50 p-5 dark:bg-red-900/30 dark:border-red-800">
+        <h4 class="text-base font-semibold text-red-800 dark:text-red-300 mb-3">@lang('laravolt::users.delete_account')</h4>
 
         @if($user['id'] == auth()->id())
-            <div class="ui message warning">@lang('laravolt::message.cannot_delete_yourself')</div>
+            <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:bg-amber-900/50 dark:border-amber-800">
+                <p class="text-sm text-amber-700 dark:text-amber-300">@lang('laravolt::message.cannot_delete_yourself')</p>
+            </div>
         @else
             {!! form()->open()->delete()->action(route('epicentrum::users.destroy', $user['id'])) !!}
-            <p>Menghapus pengguna dan semua data yang berhubungan dengan pengguna ini.
+            <p class="text-sm text-gray-700 dark:text-neutral-300 mb-4">Menghapus pengguna dan semua data yang berhubungan dengan pengguna ini.
                 <br>
                 Aksi ini tidak bisa dibatalkan.</p>
-            <x-volt-button class="red" value="1">
+            <x-volt-button variant="danger" value="1">
                 @lang('laravolt::action.delete') {{ $user->name }}
             </x-volt-button>
             {!! form()->close() !!}

@@ -1,5 +1,5 @@
 <x-volt-app title="Platform Check">
-    <div class="ui container">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <x-volt-panel title="Form Submission Check">
             {!! form()->post(route('platform::dump'))->multipart() !!}
             {!! form()->uploader('file')->ajax(false)->label('Upload File')->hint('Max file upload detected from php.ini: ' . \Laravolt\platform_max_file_upload(true)) !!}

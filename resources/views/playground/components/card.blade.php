@@ -1,10 +1,10 @@
-<div class="ui  container p-y-2">
-    <h2 class="ui header">
+<div class="py-2">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
         Card
-        <div class="sub header">
+        <span class="block text-sm font-normal text-gray-500 dark:text-neutral-400 mt-1">
             Card adalah representasi khusus panel yang biasanya disajikan dalam bentuk grid.
             Card dalam satu row dijamin memiliki height yang sama.
-        </div>
+        </span>
     </h2>
 </div>
 
@@ -16,8 +16,8 @@
             url="#"
     >
         <x-slot name="body">
-            <div class="content">
-                <div class="description">
+            <div class="p-4">
+                <div class="flex flex-wrap gap-2">
                     <x-volt-label label="foo" color="theme solid"></x-volt-label>
                     <x-volt-label label="bar" color="theme secondary"></x-volt-label>
                 </div>
@@ -40,4 +40,3 @@
         <x-volt-card-footer left='<i class="icon check"></i> 121 votes' right="right" />
     </x-volt-card>
 </x-volt-cards>
-

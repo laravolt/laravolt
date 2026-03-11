@@ -10,8 +10,8 @@ class LaravoltBladeDirectives
     {
         return <<<'HTML'
           <!-- Required plugins -->
-          <script src="/laravolt/assets/vendor/preline/dist/index.js?v=3.0.1"></script>
-          <script src="/laravolt/assets/vendor/preline/dist/overlay.js?v=3.0.1"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/index.js?v=4.1.2"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/overlay.js?v=4.1.2"></script>
           <!-- Clipboard -->
           <script src="/laravolt/assets/vendor/clipboard/dist/clipboard.min.js"></script>
           <script src="/laravolt/assets/js/hs-copy-clipboard-helper.js"></script>
@@ -163,7 +163,7 @@ class LaravoltBladeDirectives
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
           <!-- CSS HS -->
-          <link rel="stylesheet" href="/laravolt/assets/css/main.min.css?v=3.0.1">
+          <link rel="stylesheet" href="/laravolt/assets/css/main.min.css?v=4.1.2">
           <link rel="stylesheet" href="/laravolt/assets/vendor/basictable/basictable.min.css">
 
           <!-- Theme Check and Update -->

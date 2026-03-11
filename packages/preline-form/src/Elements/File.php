@@ -32,6 +32,23 @@ class File extends Input
         return $this;
     }
 
+    public function limit($limit)
+    {
+        $this->setAttribute('data-limit', (string) $limit);
+        if ($limit > 1) {
+            $this->multiple();
+        }
+
+        return $this;
+    }
+
+    public function ajax($ajax = true)
+    {
+        $this->setAttribute('data-ajax', $ajax ? 'true' : 'false');
+
+        return $this;
+    }
+
     public function setError($message = '')
     {
         parent::setError();

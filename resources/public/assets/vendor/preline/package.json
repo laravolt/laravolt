@@ -1,0 +1,69 @@
+{
+	"name": "preline",
+	"version": "3.0.1",
+	"description": "Preline UI is an open-source set of prebuilt UI components based on the utility-first Tailwind CSS framework.",
+	"main": "index.js",
+	"module": "./src/index.ts",
+	"repository": "https://github.com/htmlstreamofficial/preline.git",
+	"homepage": "https://preline.co",
+	"keywords": [
+		"preline",
+		"html",
+		"css",
+		"javascript",
+		"typescript",
+		"tailwind",
+		"tailwind examples",
+		"tailwind components",
+		"tailwind components library",
+		"tailwind elements",
+		"tailwind library",
+		"tailwind sections",
+		"tailwind css",
+		"tailwind ui",
+		"tailwind css react",
+		"tailwind css next",
+		"tailwind css nextjs",
+		"tailwind css vue",
+		"tailwind css nuxtjs",
+		"tailwind css angular",
+		"tailwind css astro",
+		"tailwind css solidjs",
+		"tailwind css qwik",
+		"tailwind css svelte",
+		"tailwind css remix",
+		"tailwind css laravel"
+	],
+	"author": "Preline Labs Ltd.",
+	"license": "Licensed under MIT and Preline UI Fair Use License",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"watch": "webpack --config webpack.config.js --watch",
+		"watch:mjs": "webpack --config webpack.config.mjs.js --watch",
+		"build": "webpack --config webpack.config.js",
+		"build:mjs": "webpack --config webpack.config.mjs.js",
+		"pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\"",
+		"generate-dts": "dts-bundle-generator --config dts-config.js"
+	},
+	"dependencies": {
+    "@floating-ui/dom": "^1.6.13"
+  },
+	"devDependencies": {
+		"@types/clipboard": "^2.0.7",
+		"@types/dropzone": "^5.7.8",
+		"@types/jquery": "^3.5.30",
+		"@types/lodash": "^4.17.6",
+		"@types/nouislider": "^15.0.0",
+		"@types/prismjs": "^1.26.4",
+		"@types/vinyl": "^2.0.12",
+		"dts-bundle-generator": "^9.0.0",
+		"prettier": "^3.0.1",
+		"source-map-loader": "^4.0.1",
+		"terser-webpack-plugin": "^5.3.9",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.5.3",
+		"webpack-cli": "^5.0.1"
+	}
+}

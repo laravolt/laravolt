@@ -1,4 +1,4 @@
-<form method="GET" action="" class="ui form" >
+<form method="GET" action="" >
     <!-- Search Input -->
     <div class="relative">
         <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
