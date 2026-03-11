@@ -17,7 +17,7 @@ jobs:
         extensions: xdebug
     - uses: actions/checkout@v3
     - name: Install Laravel
-      run: composer create-project laravel/laravel -q --no-ansi --no-interaction --no-scripts --prefer-dist
+      run: composer create-project laravolt/laravel-starter-kit -q --no-ansi --no-interaction --no-scripts --prefer-dist
     - name: Laravel Version
       run: php laravel/artisan --version
     - name: Copy .env
