@@ -36,12 +36,6 @@ abstract class TableView extends Component
     #[Url(except: 1)]
     public int $page = 1;
 
-    public int $perPage = self::DEFAULT_PER_PAGE;
-
-    public ?string $sort = null;
-
-    public ?string $direction = null;
-
     protected bool $showPerPage = true;
 
     protected string $title = '';
