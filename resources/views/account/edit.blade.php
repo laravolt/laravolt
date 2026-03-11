@@ -18,7 +18,7 @@
 
     @unless($roleEditable)
         <div class="rounded-lg border border-blue-200 bg-blue-50 p-3 dark:bg-blue-900/50 dark:border-blue-800">
-            <p class="text-sm text-blue-700 dark:text-blue-300">Editing role are disabled by system configuration.</p>
+            <p class="text-sm text-blue-700 dark:text-blue-300">Editing roles is disabled by system configuration.</p>
         </div>
     @endif
 
