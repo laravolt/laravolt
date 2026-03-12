@@ -45,8 +45,8 @@ jobs:
       run: |
         cd laravel
         composer config repositories.laravolt path ./..
-        composer require laravolt/laravolt:dev-master
-        composer require brianium/paratest --dev
+        composer require laravolt/laravolt:dev-master --no-scripts
+        composer require brianium/paratest --dev --no-scripts
         php artisan laravolt:install
     - name: Migrate database
       env:
