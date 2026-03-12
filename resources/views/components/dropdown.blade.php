@@ -75,7 +75,7 @@
 </div>
 
 {{-- Dropdown Item Component for easier usage --}}
-@pushOnce('dropdown-item-styles')
+@pushOnce('style')
 <style>
 .dropdown-item {
     @apply flex items-center gap-x-2 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700;

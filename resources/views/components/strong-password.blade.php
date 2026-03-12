@@ -1,12 +1,12 @@
 @php
-    $id = $id ?? 'strong-password-' . uniqid();
-    $name = $name ?? 'password';
-    $placeholder = $placeholder ?? 'Enter password';
-    $minLength = $minLength ?? 8;
-    $specialChars = $specialChars ?? true;
-    $numbers = $numbers ?? true;
-    $uppercase = $uppercase ?? true;
-    $lowercase = $lowercase ?? true;
+    $id = $attributes->get('id', 'strong-password-' . uniqid());
+    $name = $attributes->get('name', 'password');
+    $placeholder = $attributes->get('placeholder', 'Enter password');
+    $minLength = $attributes->get('min-length', 8);
+    $specialChars = $attributes->get('special-chars', true);
+    $numbers = $attributes->get('numbers', true);
+    $uppercase = $attributes->get('uppercase', true);
+    $lowercase = $attributes->get('lowercase', true);
     $hsStrongPasswordConfig = json_encode(array_filter([
         'target' => '#' . $id,
         'hints' => '#' . $id . '-hints',
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-@pushOnce('strong-password-scripts')
+@pushOnce('script')
 <script>
 function checkPasswordStrength_{{ str_replace('-','_',$id) }}(val) {
     var score = 0;

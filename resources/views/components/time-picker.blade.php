@@ -61,7 +61,7 @@
     @endif
 </div>
 
-@pushOnce('timepicker-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI TimePickers

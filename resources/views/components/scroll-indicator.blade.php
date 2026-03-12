@@ -51,7 +51,7 @@
     ></div>
 </div>
 
-@pushOnce('scroll-indicator-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize scroll indicators

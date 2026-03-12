@@ -133,7 +133,7 @@
     </div>
 </div>
 
-@pushOnce('notification-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI Remove Element
