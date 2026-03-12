@@ -1,10 +1,10 @@
 @php
-    $id = $id ?? 'tree-view-' . uniqid();
-    $items = $items ?? [];
-    $selectable = $selectable ?? false;
-    $collapsible = $collapsible ?? true;
-    $selectedValue = $selectedValue ?? null;
-    $checkbox = $checkbox ?? false;
+    $id = $attributes->get('id', 'tree-view-' . uniqid());
+    $items = $attributes->get('items', []);
+    $selectable = $attributes->get('selectable', false);
+    $collapsible = $attributes->get('collapsible', true);
+    $selectedValue = $attributes->get('selected-value', null);
+    $checkbox = $attributes->get('checkbox', false);
 
     $renderTreeItems = null;
     $renderTreeItems = function($items, $level = 0) use (&$renderTreeItems, $selectable, $checkbox, $selectedValue) {
@@ -16,7 +16,7 @@
             $hasChildren = !empty($children);
             $isSelected = $selectedValue && $value == $selectedValue;
 
-            $html .= '<div class="hs-accordion" id="tree-' . md5($value . $level) . '">';
+            $html .= '<div' . ($hasChildren ? ' class="hs-accordion"' : '') . ' id="tree-' . md5($value . $level) . '">';
 
             if ($hasChildren) {
                 $html .= '<button class="hs-accordion-toggle py-1.5 px-2 w-full flex items-center gap-x-2 text-start text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-expanded="false">';
