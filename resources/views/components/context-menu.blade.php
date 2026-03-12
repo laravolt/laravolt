@@ -1,6 +1,6 @@
 @php
-    $id = $id ?? 'context-menu-' . uniqid();
-    $items = $items ?? [];
+    $id = $attributes->get('id', 'context-menu-' . uniqid());
+    $items = $attributes->get('items', []);
 @endphp
 
 <div id="{{ $id }}" class="hs-dropdown [--trigger:contextmenu] relative inline-flex" {{ $attributes->except(['items']) }}>

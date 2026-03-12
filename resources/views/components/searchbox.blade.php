@@ -1,12 +1,12 @@
 @php
-    $id = $id ?? 'searchbox-' . uniqid();
-    $placeholder = $placeholder ?? 'Search...';
-    $value = $value ?? null;
-    $action = $action ?? null;
-    $name = $name ?? 'q';
-    $size = $size ?? 'md';
-    $autofocus = $autofocus ?? false;
-    $shortcutKey = $shortcutKey ?? null;
+    $id = $attributes->get('id', 'searchbox-' . uniqid());
+    $placeholder = $attributes->get('placeholder', 'Search...');
+    $value = $attributes->get('value', null);
+    $action = $attributes->get('action', null);
+    $name = $attributes->get('name', 'q');
+    $size = $attributes->get('size', 'md');
+    $autofocus = $attributes->get('autofocus', false);
+    $shortcutKey = $attributes->get('shortcut-key', null);
     $sizeClasses = [
         'sm' => 'py-1.5 ps-8 pe-3 text-sm',
         'md' => 'py-2 ps-10 pe-4 text-sm',
@@ -54,7 +54,7 @@
 </div>
 
 @if($shortcutKey)
-@pushOnce('searchbox-shortcut-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('keydown', function(e) {
     if (e.key === '/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) {

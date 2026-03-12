@@ -1,11 +1,11 @@
 @php
-    $id = $id ?? 'editor-' . uniqid();
-    $name = $name ?? $id;
-    $value = $value ?? null;
-    $placeholder = $placeholder ?? 'Write something...';
-    $minHeight = $minHeight ?? 200;
-    $disabled = $disabled ?? false;
-    $toolbar = $toolbar ?? ['bold', 'italic', 'underline', 'strike', 'link', 'ol', 'ul', 'blockquote', 'code'];
+    $id = $attributes->get('id', 'editor-' . uniqid());
+    $name = $attributes->get('name', $id);
+    $value = $attributes->get('value', null);
+    $placeholder = $attributes->get('placeholder', 'Write something...');
+    $minHeight = $attributes->get('min-height', 200);
+    $disabled = $attributes->get('disabled', false);
+    $toolbar = $attributes->get('toolbar', ['bold', 'italic', 'underline', 'strike', 'link', 'ol', 'ul', 'blockquote', 'code']);
     $toolbarMap = [
         'bold' => '<button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-action="bold"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 12a4 4 0 0 0 0-8H6v8"/><path d="M15 20a4 4 0 0 0 0-8H6v8Z"/></svg></button>',
         'italic' => '<button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-action="italic"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg></button>',
@@ -41,7 +41,7 @@
     <textarea id="{{ $id }}" name="{{ $name }}" class="hidden">{!! $value !!}</textarea>
 </div>
 
-@pushOnce('editor-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[id$="-editor"][contenteditable="true"]').forEach(function(editor) {

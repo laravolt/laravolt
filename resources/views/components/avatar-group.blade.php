@@ -1,7 +1,7 @@
 @php
-    $avatars = $avatars ?? [];
-    $max = $max ?? null;
-    $size = $size ?? 'md';
+    $avatars = $attributes->get('avatars', []);
+    $max = $attributes->get('max', null);
+    $size = $attributes->get('size', 'md');
     $sizeClasses = [
         'xs' => 'size-6 text-[8px]',
         'sm' => 'size-8 text-xs',

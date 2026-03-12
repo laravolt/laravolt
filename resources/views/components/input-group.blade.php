@@ -1,9 +1,9 @@
 @php
-    $prefix = $prefix ?? null;
-    $suffix = $suffix ?? null;
-    $prefixIcon = $prefixIcon ?? null;
-    $suffixIcon = $suffixIcon ?? null;
-    $size = $size ?? 'md';
+    $prefix = $attributes->get('prefix', null);
+    $suffix = $attributes->get('suffix', null);
+    $prefixIcon = $attributes->get('prefix-icon', null);
+    $suffixIcon = $attributes->get('suffix-icon', null);
+    $size = $attributes->get('size', 'md');
     $sizeClasses = [
         'sm' => 'text-sm',
         'md' => 'text-sm',

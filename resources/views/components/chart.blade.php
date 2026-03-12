@@ -1,13 +1,13 @@
 @php
-    $id = $id ?? 'chart-' . uniqid();
-    $type = $type ?? 'bar';
-    $series = $series ?? [];
-    $categories = $categories ?? [];
-    $height = $height ?? 320;
-    $title = $title ?? null;
-    $colors = $colors ?? ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
-    $stacked = $stacked ?? false;
-    $toolbar = $toolbar ?? true;
+    $id = $attributes->get('id', 'chart-' . uniqid());
+    $type = $attributes->get('type', 'bar');
+    $series = $attributes->get('series', []);
+    $categories = $attributes->get('categories', []);
+    $height = $attributes->get('height', 320);
+    $title = $attributes->get('title', null);
+    $colors = $attributes->get('colors', ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']);
+    $stacked = $attributes->get('stacked', false);
+    $toolbar = $attributes->get('toolbar', true);
     $chartConfig = [
         'chart' => [
             'type' => $type,
@@ -55,7 +55,7 @@
 
 <div id="{{ $id }}" {{ $attributes->except(['type', 'series', 'categories', 'height', 'title', 'colors', 'stacked', 'toolbar']) }}></div>
 
-@pushOnce('chart-apexcharts-cdn')
+@pushOnce('script')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 @endPushOnce
 

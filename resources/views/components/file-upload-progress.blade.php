@@ -1,9 +1,9 @@
 @php
-    $id = $id ?? 'file-progress-' . uniqid();
-    $fileName = $fileName ?? 'file.pdf';
-    $progress = $progress ?? 0;
-    $fileSize = $fileSize ?? '0 KB';
-    $status = $status ?? 'uploading';
+    $id = $attributes->get('id', 'file-progress-' . uniqid());
+    $fileName = $attributes->get('file-name', 'file.pdf');
+    $progress = $attributes->get('progress', 0);
+    $fileSize = $attributes->get('file-size', '0 KB');
+    $status = $attributes->get('status', 'uploading');
     $statusConfig = [
         'uploading' => ['color' => 'bg-blue-600', 'text' => 'Uploading...', 'icon' => 'animate'],
         'complete' => ['color' => 'bg-teal-500', 'text' => 'Complete', 'icon' => 'check'],

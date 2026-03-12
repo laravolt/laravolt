@@ -1,15 +1,15 @@
 @php
-    $id = $id ?? 'advanced-select-' . uniqid();
-    $name = $name ?? $id;
-    $placeholder = $placeholder ?? 'Select option...';
-    $value = $value ?? null;
-    $options = $options ?? [];
-    $multiple = $multiple ?? false;
-    $searchable = $searchable ?? true;
-    $taggable = $taggable ?? false;
-    $clearable = $clearable ?? true;
-    $size = $size ?? 'md';
-    $disabled = $disabled ?? false;
+    $id = $attributes->get('id', 'advanced-select-' . uniqid());
+    $name = $attributes->get('name', $id);
+    $placeholder = $attributes->get('placeholder', 'Select option...');
+    $value = $attributes->get('value', null);
+    $options = $attributes->get('options', []);
+    $multiple = $attributes->get('multiple', false);
+    $searchable = $attributes->get('searchable', true);
+    $taggable = $attributes->get('taggable', false);
+    $clearable = $attributes->get('clearable', true);
+    $size = $attributes->get('size', 'md');
+    $disabled = $attributes->get('disabled', false);
 
     $hsSelectConfig = json_encode(array_filter([
         'placeholder' => $placeholder,

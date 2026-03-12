@@ -1,12 +1,12 @@
 @php
-    $id = $id ?? 'range-' . uniqid();
-    $name = $name ?? $id;
-    $value = $value ?? 50;
-    $min = $min ?? 0;
-    $max = $max ?? 100;
-    $step = $step ?? 1;
-    $showValue = $showValue ?? true;
-    $disabled = $disabled ?? false;
+    $id = $attributes->get('id', 'range-' . uniqid());
+    $name = $attributes->get('name', $id);
+    $value = $attributes->get('value', 50);
+    $min = $attributes->get('min', 0);
+    $max = $attributes->get('max', 100);
+    $step = $attributes->get('step', 1);
+    $showValue = $attributes->get('show-value', true);
+    $disabled = $attributes->get('disabled', false);
 @endphp
 
 <div {{ $attributes->except(['value', 'min', 'max', 'step', 'show-value', 'disabled']) }}>
