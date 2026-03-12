@@ -51,7 +51,7 @@
     >
 </div>
 
-@pushOnce('pincode-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI PIN Input

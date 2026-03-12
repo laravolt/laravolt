@@ -124,7 +124,7 @@
 </div>
 
 @if($clickable)
-@pushOnce('steps-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Add click handling for steps if needed

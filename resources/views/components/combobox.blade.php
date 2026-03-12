@@ -1,14 +1,14 @@
 @php
-    $id = $id ?? 'combobox-' . uniqid();
-    $name = $name ?? $id;
-    $placeholder = $placeholder ?? 'Type to search...';
-    $value = $value ?? null;
-    $options = $options ?? [];
-    $apiUrl = $apiUrl ?? null;
-    $minChars = $minChars ?? 1;
-    $disabled = $disabled ?? false;
-    $size = $size ?? 'md';
-    $groupField = $groupField ?? null;
+    $id = $attributes->get('id', 'combobox-' . uniqid());
+    $name = $attributes->get('name', $id);
+    $placeholder = $attributes->get('placeholder', 'Type to search...');
+    $value = $attributes->get('value', null);
+    $options = $attributes->get('options', []);
+    $apiUrl = $attributes->get('api-url', null);
+    $minChars = $attributes->get('min-chars', 1);
+    $disabled = $attributes->get('disabled', false);
+    $size = $attributes->get('size', 'md');
+    $groupField = $attributes->get('group-field', null);
 
     $sizeClasses = [
         'sm' => 'py-1.5 px-2.5 text-sm',

@@ -1,14 +1,14 @@
 @php
-    $id = $id ?? 'datepicker-' . uniqid();
-    $name = $name ?? $id;
-    $value = $value ?? null;
-    $placeholder = $placeholder ?? 'Select date';
-    $format = $format ?? 'DD.MM.YYYY';
-    $min = $min ?? null;
-    $max = $max ?? null;
-    $range = $range ?? false;
-    $disabled = $disabled ?? false;
-    $size = $size ?? 'md';
+    $id = $attributes->get('id', 'datepicker-' . uniqid());
+    $name = $attributes->get('name', $id);
+    $value = $attributes->get('value', null);
+    $placeholder = $attributes->get('placeholder', 'Select date');
+    $format = $attributes->get('format', 'DD.MM.YYYY');
+    $min = $attributes->get('min', null);
+    $max = $attributes->get('max', null);
+    $range = $attributes->get('range', false);
+    $disabled = $attributes->get('disabled', false);
+    $size = $attributes->get('size', 'md');
     $hsDatepickerConfig = json_encode(array_filter([
         'dateFormat' => $format,
         'dateMin' => $min,

@@ -1,8 +1,11 @@
 @php
-    $icon = $icon ?? false;
+    $icon = $attributes->get('icon', false);
+    $title = $attributes->get('title', null);
+    $description = $attributes->get('description', null);
+    $iconClass = $attributes->get('icon-class', 'w-5 h-5 text-gray-600 dark:text-neutral-400');
     $headerClass = $attributes['headerClass'] ?? '';
     $contentClass = $attributes['contentClass'] ?? 'p-6';
-    $attributes = $attributes->except(['headerClass', 'contentClass']);
+    $attributes = $attributes->except(['headerClass', 'contentClass', 'title', 'description', 'icon-class']);
 
     $panelClasses = 'bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700';
 @endphp

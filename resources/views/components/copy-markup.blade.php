@@ -84,7 +84,7 @@
 </div>
 
 @if($showCopyButton)
-@pushOnce('copy-markup-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI Copy Markup

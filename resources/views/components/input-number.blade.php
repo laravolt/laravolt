@@ -1,14 +1,14 @@
 @php
-    $id = $id ?? 'input-number-' . uniqid();
-    $name = $name ?? $id;
-    $value = $value ?? 0;
-    $min = $min ?? null;
-    $max = $max ?? null;
-    $step = $step ?? 1;
-    $size = $size ?? 'md';
-    $disabled = $disabled ?? false;
-    $prefix = $prefix ?? null;
-    $suffix = $suffix ?? null;
+    $id = $attributes->get('id', 'input-number-' . uniqid());
+    $name = $attributes->get('name', $id);
+    $value = $attributes->get('value', 0);
+    $min = $attributes->get('min', null);
+    $max = $attributes->get('max', null);
+    $step = $attributes->get('step', 1);
+    $size = $attributes->get('size', 'md');
+    $disabled = $attributes->get('disabled', false);
+    $prefix = $attributes->get('prefix', null);
+    $suffix = $attributes->get('suffix', null);
     $hsInputNumberConfig = json_encode(array_filter([
         'min' => $min,
         'max' => $max,

@@ -1,13 +1,13 @@
 @php
-    $id = $id ?? 'file-upload-' . uniqid();
-    $name = $name ?? 'files';
-    $multiple = $multiple ?? false;
-    $accept = $accept ?? null;
-    $maxSize = $maxSize ?? null;
-    $maxFiles = $maxFiles ?? null;
-    $preview = $preview ?? true;
-    $dragDrop = $dragDrop ?? true;
-    $disabled = $disabled ?? false;
+    $id = $attributes->get('id', 'file-upload-' . uniqid());
+    $name = $attributes->get('name', 'files');
+    $multiple = $attributes->get('multiple', false);
+    $accept = $attributes->get('accept', null);
+    $maxSize = $attributes->get('max-size', null);
+    $maxFiles = $attributes->get('max-files', null);
+    $preview = $attributes->get('preview', true);
+    $dragDrop = $attributes->get('drag-drop', true);
+    $disabled = $attributes->get('disabled', false);
     $maxSizeFormatted = $maxSize ? (($maxSize >= 1024) ? round($maxSize / 1024, 1) . ' GB' : $maxSize . ' MB') : null;
     $acceptLabel = $accept ? str_replace(',', ', ', $accept) : 'All file types';
 @endphp

@@ -182,7 +182,7 @@
 <script>
 // Copy component usage example
 function copyComponentUsage(component) {
-    const usageExample = `<x-volt-${component} />`;
+    const usageExample = '<x-volt' + `-${component} />`;
 
     if (navigator.clipboard) {
         navigator.clipboard.writeText(usageExample).then(() => {

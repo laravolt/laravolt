@@ -1,12 +1,12 @@
 @php
-    $id = $id ?? 'datatable-' . uniqid();
-    $columns = $columns ?? [];
-    $data = $data ?? [];
-    $search = $search ?? true;
-    $sorting = $sorting ?? true;
-    $pageLength = $pageLength ?? 10;
-    $pageLengths = $pageLengths ?? [5, 10, 25, 50];
-    $ajaxUrl = $ajaxUrl ?? null;
+    $id = $attributes->get('id', 'datatable-' . uniqid());
+    $columns = $attributes->get('columns', []);
+    $data = $attributes->get('data', []);
+    $search = $attributes->get('search', true);
+    $sorting = $attributes->get('sorting', true);
+    $pageLength = $attributes->get('page-length', 10);
+    $pageLengths = $attributes->get('page-lengths', [5, 10, 25, 50]);
+    $ajaxUrl = $attributes->get('ajax-url', null);
     $tableId = $id;
 @endphp
 
@@ -84,7 +84,7 @@
 </div>
 
 @if($search || $sorting)
-@pushOnce('datatable-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[id^="datatable-"][id$="-search"]').forEach(function(searchInput) {

@@ -104,7 +104,7 @@
     @endif
 </div>
 
-@pushOnce('accordion-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI Accordion

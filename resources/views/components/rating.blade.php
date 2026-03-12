@@ -117,7 +117,7 @@
 </div>
 
 @unless($readonly)
-@pushOnce('rating-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI Rating

@@ -73,7 +73,7 @@
     @endif
 </div>
 
-@pushOnce('datepicker-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI Advanced Datepickers

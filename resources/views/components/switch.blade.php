@@ -98,7 +98,7 @@
     @endif
 </div>
 
-@pushOnce('switch-scripts')
+@pushOnce('script')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Preline UI switches

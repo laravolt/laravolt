@@ -1,6 +1,6 @@
 @php
-    $items = $items ?? [];
-    $layout = $layout ?? 'horizontal';
+    $items = $attributes->get('items', []);
+    $layout = $attributes->get('layout', 'horizontal');
     $layoutClass = $layout === 'vertical' ? 'flex-col space-y-2' : 'flex-wrap gap-x-4 gap-y-1';
 @endphp
 
