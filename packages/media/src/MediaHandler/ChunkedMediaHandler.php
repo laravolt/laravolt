@@ -156,10 +156,10 @@ class ChunkedMediaHandler
             ]);
         }
 
-        // Return 204 so Resumable.js knows the chunk is missing and needs to be sent
+        // Return 404 so Resumable.js knows the chunk is missing and needs to be sent
         return response()->json([
             'status' => 'not_found',
             'percentage' => 0,
-        ], 204);
+        ], 404);
     }
 }
