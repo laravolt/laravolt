@@ -77,18 +77,42 @@ class ResumableHandler
         $finalPath = storage_path('app/chunks/'.$this->identifier.'_assembled_'.$safeFilename);
 
         $destination = fopen($finalPath, 'wb');
-
-        for ($i = 1; $i <= $this->totalChunks; $i++) {
-            $chunkPath = $this->chunksDirectory.'/'.$i;
-            $chunk = fopen($chunkPath, 'rb');
-            stream_copy_to_stream($chunk, $destination);
-            fclose($chunk);
-            @unlink($chunkPath);
+        if ($destination === false) {
+            throw new \RuntimeException(sprintf('Unable to open destination file for writing: %s', $finalPath));
         }
 
-        fclose($destination);
-        @rmdir($this->chunksDirectory);
+        $assembled = false;
 
+        try {
+            for ($i = 1; $i <= $this->totalChunks; $i++) {
+                $chunkPath = $this->chunksDirectory.'/'.$i;
+                $chunk = fopen($chunkPath, 'rb');
+                if ($chunk === false) {
+                    throw new \RuntimeException(sprintf('Unable to open chunk file for reading: %s', $chunkPath));
+                }
+
+                $copied = stream_copy_to_stream($chunk, $destination);
+                fclose($chunk);
+
+                if ($copied === false) {
+                    throw new \RuntimeException(sprintf('Failed to copy chunk from %s to %s', $chunkPath, $finalPath));
+                }
+
+                @unlink($chunkPath);
+            }
+
+            $assembled = true;
+        } finally {
+            if (is_resource($destination)) {
+                fclose($destination);
+            }
+
+            if (! $assembled && file_exists($finalPath)) {
+                @unlink($finalPath);
+            }
+
+            @rmdir($this->chunksDirectory);
+        }
         return $finalPath;
     }
 
