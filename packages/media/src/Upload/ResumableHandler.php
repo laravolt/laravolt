@@ -6,6 +6,7 @@ namespace Laravolt\Media\Upload;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Laravolt\Media\ChunkedUploadConfig;
 
 /**
  * Handles server-side chunked file uploads using the Resumable.js protocol.
@@ -25,10 +26,17 @@ class ResumableHandler
 
     public function __construct(Request $request)
     {
+        $maxChunks = max(1, ChunkedUploadConfig::getMaxChunksPerFile());
+
         $rawIdentifier = $request->input('resumableIdentifier', $request->input('identifier', ''));
         $this->identifier = $this->sanitizeIdentifier($rawIdentifier);
-        $this->chunkNumber = (int) $request->input('resumableChunkNumber', $request->input('chunkNumber', 1));
-        $this->totalChunks = max(1, (int) $request->input('resumableTotalChunks', $request->input('totalChunks', 1)));
+
+        $totalChunks = max(1, (int) $request->input('resumableTotalChunks', $request->input('totalChunks', 1)));
+        $this->totalChunks = min($totalChunks, $maxChunks);
+
+        $chunkNumber = max(1, (int) $request->input('resumableChunkNumber', $request->input('chunkNumber', 1)));
+        $this->chunkNumber = min($chunkNumber, $this->totalChunks);
+
         $this->filename = $request->input('resumableFilename', $request->input('filename', 'upload'));
         $this->chunksDirectory = storage_path('app/chunks/'.$this->identifier);
     }
