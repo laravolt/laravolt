@@ -111,7 +111,7 @@ class PlatformServiceProvider extends ServiceProvider
             }
         );
 
-        if (config('laravolt.platform.features.captcha')) {
+        if (config('laravolt.platform.features.captcha') && class_exists('Anhskohbo\NoCaptcha\NoCaptchaServiceProvider')) {
             $this->app->register('Anhskohbo\NoCaptcha\NoCaptchaServiceProvider');
         }
     }

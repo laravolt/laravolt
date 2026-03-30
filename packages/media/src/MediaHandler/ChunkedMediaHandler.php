@@ -7,11 +7,9 @@ namespace Laravolt\Media\MediaHandler;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
+use Laravolt\Media\Upload\ResumableHandler;
 use Laravolt\Platform\Models\Guest;
-use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
-use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
-use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
-use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -30,36 +28,36 @@ class ChunkedMediaHandler
     protected function upload(): JsonResponse
     {
         try {
-            // Create the file receiver
-            $receiver = new FileReceiver('file', request(), HandlerFactory::classFromRequest(request()));
-
-            // Check if the upload is successful, throw exception or return response you need
-            if ($receiver->isUploaded() === false) {
-                throw new UploadMissingFileException();
+            if (! request()->hasFile('file') || ! request()->file('file')->isValid()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Upload missing file exception',
+                ], 400);
             }
 
-            // Receive the file
-            $save = $receiver->receive();
+            $handler = new ResumableHandler(request());
+            $handler->saveChunk(request()->file('file'));
 
-            // Check if the upload has finished (in chunk mode it will send smaller files)
-            if ($save->isFinished()) {
-                // Save the file and return any response you need, current example uses `move` function.
-                return $this->saveFile($save->getFile());
+            if ($handler->isComplete()) {
+                $assembledPath = $handler->assembleChunks();
+                $rawFilename = request()->input('resumableFilename', request()->input('filename', 'upload'));
+                $filename = basename($rawFilename);
+
+                $uploadedFile = new UploadedFile(
+                    $assembledPath,
+                    $filename,
+                    null,
+                    null,
+                    true
+                );
+
+                return $this->saveFile($uploadedFile);
             }
-
-            // We are in chunk mode, lets send the current progress
-            /** @var AbstractHandler $handler */
-            $handler = $save->handler();
 
             return response()->json([
                 'done' => $handler->getPercentageDone(),
                 'status' => true,
             ]);
-        } catch (UploadMissingFileException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Upload missing file exception',
-            ], 400);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
@@ -144,21 +142,19 @@ class ChunkedMediaHandler
      */
     protected function status(): JsonResponse
     {
-        try {
-            $receiver = new FileReceiver('file', request(), HandlerFactory::classFromRequest(request()));
+        $handler = new ResumableHandler(request());
 
-            // Check if we have an existing upload in progress
-            $handler = $receiver->receive()->handler();
-
+        if ($handler->chunkExists()) {
             return response()->json([
                 'status' => 'partial',
                 'percentage' => $handler->getPercentageDone(),
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'not_found',
-                'percentage' => 0,
-            ]);
         }
+
+        // Return 204 so Resumable.js knows the chunk is missing and needs to be sent
+        return response()->json([
+            'status' => 'not_found',
+            'percentage' => 0,
+        ], 204);
     }
 }

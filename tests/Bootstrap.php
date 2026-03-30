@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laravolt\Tests;
 
-use Anhskohbo\NoCaptcha\NoCaptchaServiceProvider;
 use Laravolt\Platform\Models\User;
 use Laravolt\Platform\Providers\EpicentrumServiceProvider;
 use Laravolt\Platform\Providers\PlatformServiceProvider;
@@ -48,15 +47,20 @@ trait Bootstrap
      */
     protected function getPackageProviders($app)
     {
-        return [
+        $providers = [
             ServiceProvider::class,
             EpicentrumServiceProvider::class,
-            NoCaptchaServiceProvider::class,
             PlatformServiceProvider::class,
             UiServiceProvider::class,
             LivewireServiceProvider::class,
             \Akaunting\Setting\Provider::class,
         ];
+
+        if (class_exists('Anhskohbo\NoCaptcha\NoCaptchaServiceProvider')) {
+            $providers[] = \Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class;
+        }
+
+        return $providers;
     }
 
     /**
