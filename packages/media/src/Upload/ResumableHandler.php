@@ -97,10 +97,6 @@ class ResumableHandler
      */
     public function getPercentageDone(): float
     {
-        if ($this->totalChunks === 0) {
-            return 100.0;
-        }
-
         $received = 0;
         for ($i = 1; $i <= $this->totalChunks; $i++) {
             if (file_exists($this->chunksDirectory.'/'.$i)) {
