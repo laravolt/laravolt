@@ -51,7 +51,12 @@ class ChunkedMediaHandler
                     true
                 );
 
-                return $this->saveFile($uploadedFile);
+                try {
+                    return $this->saveFile($uploadedFile);
+                } catch (Exception $e) {
+                    @unlink($assembledPath);
+                    throw $e;
+                }
             }
 
             return response()->json([
