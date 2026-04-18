@@ -20,19 +20,23 @@ trait HasRoleAndPermission
     public function permissions(): Collection
     {
         // save users permissions result for 1 hour (3600 seconds)
-        return Cache::remember("users.{$this->getKey()}.permissions", 3600, function () {
-            /** @var Permission $permissionModel */
-            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        return Cache::remember(
+            "users.{$this->getKey()}.permissions", 3600, function () {
+                /**
+            * @var Permission $permissionModel
+            */
+                $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
-            return $permissionModel
-                ->newModelQuery()
-                ->selectRaw('acl_permissions.*')
-                ->join('acl_permission_role', 'acl_permissions.id', '=', 'acl_permission_role.permission_id')
-                ->join('acl_role_user', 'acl_role_user.role_id', '=', 'acl_permission_role.role_id')
-                ->join('users', 'users.id', '=', 'acl_role_user.user_id')
-                ->where('users.id', $this->getKey())
-                ->get()->unique();
-        });
+                return $permissionModel
+                    ->newModelQuery()
+                    ->selectRaw('acl_permissions.*')
+                    ->join('acl_permission_role', 'acl_permissions.id', '=', 'acl_permission_role.permission_id')
+                    ->join('acl_role_user', 'acl_role_user.role_id', '=', 'acl_permission_role.role_id')
+                    ->join('users', 'users.id', '=', 'acl_role_user.user_id')
+                    ->where('users.id', $this->getKey())
+                    ->get()->unique();
+            }
+        );
     }
 
     public function getPermissionsAttribute(): Collection
@@ -81,38 +85,35 @@ trait HasRoleAndPermission
     public function hasRole($role, $checkAll = false): bool
     {
         if (is_array($role)) {
-            $match = 0;
             foreach ($role as $r) {
-                $match += (int) $this->hasRole($r, $checkAll);
+                $has = $this->hasRole($r, $checkAll);
+
+                if ($checkAll && ! $has) {
+                    return false;
+                }
+
+                if (! $checkAll && $has) {
+                    return true;
+                }
             }
 
-            if ($checkAll) {
-                return $match === count($role);
-            }
-
-            return $match > 0;
+            return $checkAll;
         }
 
         if (Str::isUuid($role)) {
-            $role = $this->roles->firstWhere('id', $role);
+            return $this->roles->contains('id', $role);
         }
 
         if (is_string($role)) {
-            $role = $this->roles->firstWhere('name', $role);
+            return $this->roles->contains('name', $role);
         }
 
         if (is_int($role)) {
-            $role = $this->roles->firstWhere('id', $role);
+            return $this->roles->contains('id', $role);
         }
 
-        if (! $role instanceof Model) {
-            return false;
-        }
-
-        foreach ($this->roles as $assignedRole) {
-            if ($role->is($assignedRole)) {
-                return true;
-            }
+        if ($role instanceof Model) {
+            return $this->roles->contains($role->getKeyName(), $role->getKey());
         }
 
         return false;
@@ -120,29 +121,33 @@ trait HasRoleAndPermission
 
     public function syncRoles($roles): self
     {
-        $ids = collect($roles)->transform(function ($role) {
-            if (is_numeric($role)) {
-                return (int) $role;
-            }
+        $ids = collect($roles)->transform(
+            function ($role) {
+                if (is_numeric($role)) {
+                    return (int) $role;
+                }
 
-            if (Str::isUuid($role)) {
+                if (Str::isUuid($role)) {
+                    return $role;
+                }
+
+                if (is_string($role)) {
+                    $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
+
+                    return $role->getKey();
+                }
+
+                if ($role instanceof Model) {
+                    return $role->getKey();
+                }
+
                 return $role;
             }
-
-            if (is_string($role)) {
-                $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
-
-                return $role->getKey();
+        )->filter(
+            function ($id) {
+                return $id > 0;
             }
-
-            if ($role instanceof Model) {
-                return $role->getKey();
-            }
-
-            return $role;
-        })->filter(function ($id) {
-            return $id > 0;
-        });
+        );
 
         $this->roles()->sync($ids);
 
@@ -151,9 +156,11 @@ trait HasRoleAndPermission
 
     public function hasPermission($permission, $checkAll = false): bool
     {
-        $result = once(function () use ($permission, $checkAll) {
-            return $this->_hasPermission($permission, $checkAll);
-        });
+        $result = once(
+            function () use ($permission, $checkAll) {
+                return $this->_hasPermission($permission, $checkAll);
+            }
+        );
 
         return $result;
     }
@@ -161,32 +168,35 @@ trait HasRoleAndPermission
     protected function _hasPermission($permission, $checkAll = false): bool
     {
         if (is_array($permission)) {
-            $match = 0;
             foreach ($permission as $perm) {
-                $match += (int) $this->hasPermission($perm);
+                $has = $this->hasPermission($perm);
+
+                if ($checkAll && ! $has) {
+                    return false;
+                }
+
+                if (! $checkAll && $has) {
+                    return true;
+                }
             }
 
-            if ($checkAll) {
-                return $match === count($permission);
-            }
-
-            return $match > 0;
+            return $checkAll;
         }
 
         if (Str::isUuid($permission)) {
-            return (bool) $this->permissions()->where('id', $permission)->first();
+            return $this->permissions()->contains('id', $permission);
         }
 
         if (is_string($permission)) {
-            return (bool) $this->permissions()->where('name', $permission)->first();
+            return $this->permissions()->contains('name', $permission);
         }
 
         if (is_int($permission)) {
-            return (bool) $this->permissions()->where('id', $permission)->first();
+            return $this->permissions()->contains('id', $permission);
         }
 
         if ($permission instanceof Model) {
-            return (bool) $this->permissions()->where('id', $permission->id)->first()?->getKey();
+            return $this->permissions()->contains($permission->getKeyName(), $permission->getKey());
         }
 
         return false;
