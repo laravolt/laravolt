@@ -57,11 +57,6 @@ trait AutoFilter
             $jsonFieldName = Str::beforeLast($column, '.');
         }
 
-        // Filter item, with key == column  and value is array
-        $found = collect($castField)->filter(function ($value, $key) use ($jsonFieldName) {
-            return $key === $jsonFieldName && $value === 'array';
-        });
-
-        return count($found) > 0;
+        return isset($castField[$jsonFieldName]) && $castField[$jsonFieldName] === 'array';
     }
 }
