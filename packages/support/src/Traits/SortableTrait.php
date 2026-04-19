@@ -57,14 +57,33 @@ trait SortableTrait
             throw new InvalidArgumentException('You must pass an array or ArrayAccess object to setNewOrder');
         }
 
-        foreach ($ids as $id) {
-            if ($id instanceof Model) {
-                $id = $id->getKey();
-            }
-            static::withoutGlobalScope(SoftDeletingScope::class)
-                ->whereKey($id)
-                ->update([static::$sortable['column'] => $startPosition++]);
+        $ids = collect($ids)->map(function ($id) {
+            return $id instanceof Model ? $id->getKey() : $id;
+        })->all();
+
+        if (empty($ids)) {
+            return;
         }
+
+        $instance = new static();
+        $column = $instance->getSortableField();
+        $keyName = $instance->getKeyName();
+        $builder = static::withoutGlobalScope(SoftDeletingScope::class)->whereIn($keyName, $ids);
+        $grammar = $builder->getQuery()->getGrammar();
+
+        $cases = [];
+        $bindings = [];
+        foreach ($ids as $id) {
+            $cases[] = "WHEN {$grammar->wrap($keyName)} = ? THEN ?";
+            $bindings[] = $id;
+            $bindings[] = $startPosition++;
+        }
+
+        $rawSql = "CASE " . implode(' ', $cases) . " ELSE {$grammar->wrap($column)} END";
+
+        $builder->getQuery()->addBinding($bindings, 'update');
+
+        $builder->update([$column => DB::raw($rawSql)]);
     }
 
     /**
@@ -184,18 +203,12 @@ trait SortableTrait
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->previousPosition, $this->getPosition()])
                 ->whereKeyNot($this->getKey())
-                ->each(function ($model) {
-                    $model->timestamps = false;
-                    $model->decrement('order');
-                });
+                ->decrement('order');
         } elseif ($delta < 0) {
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->getPosition(), $this->previousPosition])
                 ->whereKeyNot($this->getKey())
-                ->each(function ($model) {
-                    $model->timestamps = false;
-                    $model->increment('order');
-                });
+                ->increment('order');
         }
     }
 
