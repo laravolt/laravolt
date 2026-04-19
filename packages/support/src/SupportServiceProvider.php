@@ -32,7 +32,7 @@ class SupportServiceProvider extends ServiceProvider
                 return $this;
             }
 
-            $searchTerm = mb_trim(DB::getPdo()->quote((mb_strtolower($searchTerm))), "'");
+            $searchTerm = mb_strtolower(mb_trim($searchTerm));
             $this->where(function (EloquentBuilder $query) use ($attributes, $searchTerm) {
                 foreach (Arr::wrap($attributes) as $attribute) {
                     $query->when(
@@ -43,11 +43,10 @@ class SupportServiceProvider extends ServiceProvider
                             $query->orWhereHas(
                                 $relationName,
                                 function (EloquentBuilder $query) use ($relationAttribute, $searchTerm) {
-                                    $query->whereRaw(sprintf(
-                                        "LOWER(%s) LIKE '%%%s%%'",
-                                        $relationAttribute,
-                                        $searchTerm
-                                    ));
+                                    $query->whereRaw(
+                                        sprintf('LOWER(%s) LIKE ?', $query->getQuery()->getGrammar()->wrap($relationAttribute)),
+                                        ["%$searchTerm%"]
+                                    );
                                 }
                             );
                         },
@@ -56,12 +55,10 @@ class SupportServiceProvider extends ServiceProvider
                             if (Str::contains($attribute, '->')) {
                                 $query->orWhere($attribute, 'ilike', "%$searchTerm%");
                             } else {
-                                $query->orWhereRaw(sprintf(
-                                    "LOWER(%s.%s) LIKE '%%%s%%'",
-                                    $table,
-                                    $attribute,
-                                    $searchTerm
-                                ));
+                                $query->orWhereRaw(
+                                    sprintf('LOWER(%s.%s) LIKE ?', $query->getQuery()->getGrammar()->wrap($table), $query->getQuery()->getGrammar()->wrap($attribute)),
+                                    ["%$searchTerm%"]
+                                );
                             }
                         }
                     );
