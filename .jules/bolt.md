@@ -1,0 +1,3 @@
+## 2024-06-25 - Optimize Collection and Eloquent Lookups
+**Learning:** For Laravel Collections in loops or hot paths, using `contains()` instead of `firstWhere()` or `where(...)->first()` followed by a loop avoids unnecessary collection allocations and allows early exits, resulting in faster and more efficient collection lookups. For Eloquent Query Builders, using `exists()` instead of `first()` executes a much faster `SELECT 1` query without hydrating an Eloquent Model. Note the difference: `contains()` is for Collections, while `exists()` is for Query Builders.
+**Action:** Prefer `contains()` when checking for the existence of an item in a Collection, and prefer `exists()` when checking for existence on an Eloquent Query Builder.
