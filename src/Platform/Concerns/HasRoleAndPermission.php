@@ -94,28 +94,22 @@ trait HasRoleAndPermission
         }
 
         if (Str::isUuid($role)) {
-            $role = $this->roles->firstWhere('id', $role);
+            return $this->roles->containsStrict('id', $role);
         }
 
         if (is_string($role)) {
-            $role = $this->roles->firstWhere('name', $role);
+            return $this->roles->containsStrict('name', $role);
         }
 
         if (is_int($role)) {
-            $role = $this->roles->firstWhere('id', $role);
+            return $this->roles->containsStrict('id', $role);
         }
 
         if (! $role instanceof Model) {
             return false;
         }
 
-        foreach ($this->roles as $assignedRole) {
-            if ($role->is($assignedRole)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->roles->contains($role);
     }
 
     public function syncRoles($roles): self
@@ -174,19 +168,19 @@ trait HasRoleAndPermission
         }
 
         if (Str::isUuid($permission)) {
-            return (bool) $this->permissions()->where('id', $permission)->first();
+            return $this->permissions()->containsStrict('id', $permission);
         }
 
         if (is_string($permission)) {
-            return (bool) $this->permissions()->where('name', $permission)->first();
+            return $this->permissions()->containsStrict('name', $permission);
         }
 
         if (is_int($permission)) {
-            return (bool) $this->permissions()->where('id', $permission)->first();
+            return $this->permissions()->containsStrict('id', $permission);
         }
 
         if ($permission instanceof Model) {
-            return (bool) $this->permissions()->where('id', $permission->id)->first()?->getKey();
+            return $this->permissions()->containsStrict('id', $permission->id);
         }
 
         return false;
