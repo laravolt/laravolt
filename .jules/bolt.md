@@ -1,0 +1,3 @@
+## 2024-06-25 - Avoid where()->first() on Collections
+**Learning:** In Laravolt Platform, traits like HasRoleAndPermission cache relationships into Illuminate\Database\Eloquent\Collection objects. Using Query Builder style methods like `where('id', $id)->first()` on a Collection is an anti-pattern as it iterates through the entire collection and allocates a new filtered Collection object just to get the first element.
+**Action:** Always prefer `contains('id', $id)` over `where('id', $id)->first()` when checking for existence in an already-hydrated Eloquent Collection to short-circuit iteration and avoid unnecessary object allocations.

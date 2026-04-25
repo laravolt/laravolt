@@ -174,19 +174,19 @@ trait HasRoleAndPermission
         }
 
         if (Str::isUuid($permission)) {
-            return (bool) $this->permissions()->where('id', $permission)->first();
+            return $this->permissions()->contains('id', $permission);
         }
 
         if (is_string($permission)) {
-            return (bool) $this->permissions()->where('name', $permission)->first();
+            return $this->permissions()->contains('name', $permission);
         }
 
         if (is_int($permission)) {
-            return (bool) $this->permissions()->where('id', $permission)->first();
+            return $this->permissions()->contains('id', $permission);
         }
 
         if ($permission instanceof Model) {
-            return (bool) $this->permissions()->where('id', $permission->id)->first()?->getKey();
+            return $this->permissions()->contains('id', $permission->getKey());
         }
 
         return false;
