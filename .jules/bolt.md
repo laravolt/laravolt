@@ -1,0 +1,4 @@
+
+## 2024-05-25 - Use Collections `contains` instead of `where()->first()` for caching checks
+**Learning:** When using cached Eloquent Collections (such as returning all permissions for a user via `Cache::remember`), using `$collection->where('key', $value)->first()` creates a brand new Collection instance by filtering the array, and then returns the first element. This causes unnecessary memory allocations and iterations over the full collection. Using `$collection->contains('key', $value)` natively short-circuits the iteration as soon as a match is found and avoids instantiating new collections, providing an O(1) space and O(N) worst-case (but average better-case) time complexity.
+**Action:** Always prefer `$collection->contains()` over `firstWhere()` or `where()->first()` when doing simple existence checks on Collections to avoid memory bloat.
