@@ -145,7 +145,15 @@ trait HasRoleAndPermission
             }
         )->filter(
             function ($id) {
-                return $id > 0;
+                if (is_int($id)) {
+                    return $id > 0;
+                }
+
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
+
+                return false;
             }
         );
 
