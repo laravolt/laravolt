@@ -23,8 +23,8 @@ trait HasRoleAndPermission
         return Cache::remember(
             "users.{$this->getKey()}.permissions", 3600, function () {
                 /**
-            * @var Permission $permissionModel
-            */
+                 * @var Permission $permissionModel
+                 */
                 $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
                 return $permissionModel
