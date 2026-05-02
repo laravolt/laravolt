@@ -25,11 +25,14 @@ class QueryBuilderMixin
     public function whereLike()
     {
         return function ($attributes, ?string $searchTerm) {
-            if ($searchTerm) {
-                $searchTerm = mb_trim(DB::getPdo()->quote((mb_strtolower($searchTerm))), "'");
+            if ($searchTerm !== null && mb_trim($searchTerm) !== '') {
+                $searchTerm = mb_strtolower(mb_trim($searchTerm));
                 $this->where(function (Builder $query) use ($attributes, $searchTerm) {
                     foreach (Arr::wrap($attributes) as $column) {
-                        $query->orWhereRaw(sprintf("LOWER(%s) LIKE '%%%s%%'", $column, $searchTerm));
+                        $query->orWhereRaw(
+                            sprintf('LOWER(%s) LIKE ?', $query->getGrammar()->wrap($column)),
+                            ["%$searchTerm%"]
+                        );
                     }
                 });
             }
