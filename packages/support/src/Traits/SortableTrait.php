@@ -181,21 +181,21 @@ trait SortableTrait
         // Decide whether model instance move up ($delta > 0) or move down ($delta < 0),
         // so we can reorder sibling fields correctly
         if ($delta > 0) {
+            // Bolt: Replace O(N) each loop with O(1) bulk decrement
+            // Use toBase() to ensure timestamps are not updated, preserving exact original behavior
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->previousPosition, $this->getPosition()])
                 ->whereKeyNot($this->getKey())
-                ->each(function ($model) {
-                    $model->timestamps = false;
-                    $model->decrement('order');
-                });
+                ->toBase()
+                ->decrement('order');
         } elseif ($delta < 0) {
+            // Bolt: Replace O(N) each loop with O(1) bulk increment
+            // Use toBase() to ensure timestamps are not updated, preserving exact original behavior
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->getPosition(), $this->previousPosition])
                 ->whereKeyNot($this->getKey())
-                ->each(function ($model) {
-                    $model->timestamps = false;
-                    $model->increment('order');
-                });
+                ->toBase()
+                ->increment('order');
         }
     }
 
