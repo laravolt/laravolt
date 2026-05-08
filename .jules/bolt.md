@@ -5,3 +5,7 @@
 ## 2024-05-15 - Array check performance issue in ACL
 **Learning:** Checking roles and permissions array sequentially via full evaluation, without exiting early, causes a noticeable O(n^2) scaling when checking lots of items.
 **Action:** Always short circuit and return early in arrays evaluations and replace sequential array scans on collections with `.contains('key', 'val')` lookups.
+
+## 2024-05-16 - Collection lookup over DB query in ACL
+**Learning:** Found an N+1 query vulnerability in `Laravolt\Platform\Models\Role::_hasPermission` where a DB query was executed to fetch a Permission model simply to check its existence, despite the model already eagerly loading `permissions`. This was executed repeatedly in a loop for array checks.
+**Action:** Always prefer Collection `contains()` methods on eagerly loaded relations to check existence directly in memory rather than running redundant database lookups.
