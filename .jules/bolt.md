@@ -5,3 +5,7 @@
 ## 2024-05-15 - Array check performance issue in ACL
 **Learning:** Checking roles and permissions array sequentially via full evaluation, without exiting early, causes a noticeable O(n^2) scaling when checking lots of items.
 **Action:** Always short circuit and return early in arrays evaluations and replace sequential array scans on collections with `.contains('key', 'val')` lookups.
+
+## 2024-05-16 - Collection N+1 Query Anti-Pattern in Roles
+**Learning:** Found a sneaky N+1 anti-pattern in `src/Platform/Models/Role.php` where checking permissions via string or ID executed database queries `first()` or `find()` instead of checking the eager-loaded `$this->permissions` collection.
+**Action:** Always verify if a relationship is eager-loaded before issuing database queries inside model methods. Use Eloquent Collection methods like `$collection->contains('name', $value)` to check existence in memory without database queries.
