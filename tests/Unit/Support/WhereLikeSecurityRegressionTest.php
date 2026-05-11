@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Unit\Support;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Support\SupportServiceProvider;
 use Laravolt\Tests\UnitTest;
@@ -65,7 +66,7 @@ class WhereLikeSecurityUser extends Model
     protected $table = 'users';
     public $timestamps = false;
 
-    public function profile()
+    public function profile(): HasOne
     {
         return $this->hasOne(WhereLikeSecurityProfile::class, 'user_id');
     }
