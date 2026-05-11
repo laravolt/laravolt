@@ -57,14 +57,37 @@ trait SortableTrait
             throw new InvalidArgumentException('You must pass an array or ArrayAccess object to setNewOrder');
         }
 
-        foreach ($ids as $id) {
-            if ($id instanceof Model) {
-                $id = $id->getKey();
-            }
-            static::withoutGlobalScope(SoftDeletingScope::class)
-                ->whereKey($id)
-                ->update([static::$sortable['column'] => $startPosition++]);
+        $ids = collect($ids)->map(function ($id) {
+            return $id instanceof Model ? $id->getKey() : $id;
+        })->unique()->values()->all();
+
+        if (empty($ids)) {
+            return;
         }
+
+        $instance = new static();
+        $column = $instance->getSortableField();
+        $keyName = $instance->getKeyName();
+        $builder = static::withoutGlobalScope(SoftDeletingScope::class)->whereIn($keyName, $ids);
+        $grammar = $builder->getQuery()->getGrammar();
+
+        $cases = [];
+        $bindings = [];
+        foreach ($ids as $id) {
+            $cases[] = "WHEN {$grammar->wrap($keyName)} = ? THEN ?";
+            $bindings[] = $id;
+            $bindings[] = $startPosition++;
+        }
+
+        $wrappedTable = $grammar->wrapTable($instance->getTable());
+        $wrappedKeyName = $grammar->wrap($keyName);
+        $wrappedColumn = $grammar->wrap($column);
+        $placeholders = implode(', ', array_fill(0, count($ids), '?'));
+        $rawSql = "UPDATE {$wrappedTable} SET {$wrappedColumn} = CASE "
+            . implode(' ', $cases)
+            . " ELSE {$wrappedColumn} END WHERE {$wrappedKeyName} IN ({$placeholders})";
+
+        $builder->getConnection()->update($rawSql, array_merge($bindings, $ids));
     }
 
     /**
@@ -179,23 +202,25 @@ trait SortableTrait
         $delta = $this->getPosition() - $this->previousPosition;
 
         // Decide whether model instance move up ($delta > 0) or move down ($delta < 0),
-        // so we can reorder sibling fields correctly
+        // so we can reorder sibling fields correctly.
+        //
+        // We use ->toBase() before decrement/increment so the bulk update runs on the
+        // underlying query builder. Calling decrement/increment on the Eloquent builder
+        // would automatically touch `updated_at` on every affected sibling, which is a
+        // behavioral regression compared to the previous per-model loop that explicitly
+        // disabled timestamps via `$model->timestamps = false`.
         if ($delta > 0) {
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->previousPosition, $this->getPosition()])
                 ->whereKeyNot($this->getKey())
-                ->each(function ($model) {
-                    $model->timestamps = false;
-                    $model->decrement('order');
-                });
+                ->toBase()
+                ->decrement('order');
         } elseif ($delta < 0) {
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->getPosition(), $this->previousPosition])
                 ->whereKeyNot($this->getKey())
-                ->each(function ($model) {
-                    $model->timestamps = false;
-                    $model->increment('order');
-                });
+                ->toBase()
+                ->increment('order');
         }
     }
 
