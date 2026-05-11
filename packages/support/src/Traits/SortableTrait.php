@@ -59,7 +59,7 @@ trait SortableTrait
 
         $ids = collect($ids)->map(function ($id) {
             return $id instanceof Model ? $id->getKey() : $id;
-        })->all();
+        })->unique()->values()->all();
 
         if (empty($ids)) {
             return;
