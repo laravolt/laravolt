@@ -79,11 +79,15 @@ trait SortableTrait
             $bindings[] = $startPosition++;
         }
 
-        $rawSql = "CASE " . implode(' ', $cases) . " ELSE {$grammar->wrap($column)} END";
+        $wrappedTable = $grammar->wrapTable($instance->getTable());
+        $wrappedKeyName = $grammar->wrap($keyName);
+        $wrappedColumn = $grammar->wrap($column);
+        $placeholders = implode(', ', array_fill(0, count($ids), '?'));
+        $rawSql = "UPDATE {$wrappedTable} SET {$wrappedColumn} = CASE "
+            . implode(' ', $cases)
+            . " ELSE {$wrappedColumn} END WHERE {$wrappedKeyName} IN ({$placeholders})";
 
-        $builder->getQuery()->addBinding($bindings, 'update');
-
-        $builder->update([$column => DB::raw($rawSql)]);
+        $builder->getConnection()->update($rawSql, array_merge($bindings, $ids));
     }
 
     /**
