@@ -82,6 +82,30 @@ class Role extends Model
 
     protected function _hasPermission($permission)
     {
+        // ⚡ Bolt: Fast-path for checking permissions without instantiating models
+        // if the permissions are eager-loaded
+        if ($this->relationLoaded('permissions')) {
+            if ($permission instanceof Model) {
+                return $this->permissions->contains($permission->getKeyName(), $permission->getKey());
+            }
+
+            if (is_int($permission)) {
+                return $this->permissions->contains('id', $permission);
+            }
+
+            if (is_string($permission)) {
+                $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+                $keyType = $permissionModel->getKeyType();
+                if ($keyType === 'string' && \Illuminate\Support\Str::isUlid($permission)) {
+                    // Try to match key first, fallback to name
+                    return $this->permissions->containsStrict($permissionModel->getKeyName(), $permission)
+                        || $this->permissions->containsStrict('name', $permission);
+                }
+
+                return $this->permissions->containsStrict('name', $permission);
+            }
+        }
+
         $model = $permission;
         $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
