@@ -202,16 +202,24 @@ trait SortableTrait
         $delta = $this->getPosition() - $this->previousPosition;
 
         // Decide whether model instance move up ($delta > 0) or move down ($delta < 0),
-        // so we can reorder sibling fields correctly
+        // so we can reorder sibling fields correctly.
+        //
+        // We use ->toBase() before decrement/increment so the bulk update runs on the
+        // underlying query builder. Calling decrement/increment on the Eloquent builder
+        // would automatically touch `updated_at` on every affected sibling, which is a
+        // behavioral regression compared to the previous per-model loop that explicitly
+        // disabled timestamps via `$model->timestamps = false`.
         if ($delta > 0) {
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->previousPosition, $this->getPosition()])
                 ->whereKeyNot($this->getKey())
+                ->toBase()
                 ->decrement('order');
         } elseif ($delta < 0) {
             $this->buildSortableQuery()
                 ->whereBetween('order', [$this->getPosition(), $this->previousPosition])
                 ->whereKeyNot($this->getKey())
+                ->toBase()
                 ->increment('order');
         }
     }
