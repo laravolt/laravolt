@@ -21,8 +21,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install Laravel
       run: composer create-project laravolt/laravel-starter-kit --no-install --no-ansi --no-interaction --no-scripts --prefer-dist laravel
-    - name: Laravel Version
-      run: php laravel/artisan --version
     - name: Copy .env
       run: |
         cd laravel
@@ -38,6 +36,8 @@ jobs:
         composer config repositories.laravolt path ./..
         composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         composer require brianium/paratest --dev --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Laravel Version
+      run: php laravel/artisan --version
     - name: Generate key
       run: |
         cd laravel
