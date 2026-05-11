@@ -1,11 +1,13 @@
 @php
     $variant = $attributes->get('variant', 'primary');
     $size = $attributes->get('size', 'md');
+    $icon = $icon ?? $attributes->get('icon');
     $iconPosition = $attributes->get('icon-position', 'left');
+    $label = $label ?? $attributes->get('label');
     $loading = $attributes->get('loading', false);
     $disabled = $attributes->get('disabled', false);
     $pill = $attributes->get('pill', false);
-    $attributes = $attributes->except(['variant', 'size', 'icon-position', 'loading', 'disabled', 'pill']);
+    $attributes = $attributes->except(['variant', 'size', 'icon', 'icon-position', 'label', 'loading', 'disabled', 'pill']);
 
     // Base button classes with Preline UI v3.0 patterns
     $baseClasses = 'hs-button inline-flex items-center gap-x-2 text-sm font-medium border focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none';

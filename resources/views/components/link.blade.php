@@ -1,7 +1,9 @@
 @php
     $variant = $attributes->get('variant', 'default');
+    $icon = $icon ?? $attributes->get('icon');
     $iconPosition = $attributes->get('icon-position', 'left');
-    $attributes = $attributes->except(['variant', 'icon-position']);
+    $label = $label ?? $attributes->get('label');
+    $attributes = $attributes->except(['variant', 'icon', 'icon-position', 'label']);
 
     $linkClasses = match($variant) {
         'primary' => 'text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300',
