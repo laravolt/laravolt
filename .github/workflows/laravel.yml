@@ -33,8 +33,8 @@ jobs:
     - name: Install Dependencies
       run: |
         cd laravel
-        composer config repositories.laravolt path ./..
-        composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        composer config repositories.laravolt '{"type":"path","url":"./..","options":{"versions":{"laravolt/laravolt":"dev-master"}}}'
+        composer update --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         composer require brianium/paratest --dev --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Laravel Version
       run: php laravel/artisan --version
