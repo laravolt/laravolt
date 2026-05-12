@@ -16,7 +16,7 @@ jobs:
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '8.4'
-        extensions: bcmath, ctype, curl, dom, fileinfo, gd, mbstring, pdo_sqlite, sqlite3, tokenizer, xml, zip, xdebug
+        extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, mbstring, pdo_sqlite, sockets, sqlite3, tokenizer, xml, zip, xdebug
         coverage: xdebug
     - uses: actions/checkout@v4
     - name: Install Laravel
