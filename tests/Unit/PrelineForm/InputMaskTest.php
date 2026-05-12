@@ -56,6 +56,22 @@ class InputMaskTest extends UnitTest
         $this->assertSame('AAA-9999', $options['mask']);
     }
 
+    public function test_datetime_and_time_placeholders_match_input_formats(): void
+    {
+        $datetimeOptions = $this->inputmaskOptions((string) (new Text('starts_at'))->mask('datetime'));
+        $timeOptions = $this->inputmaskOptions((string) (new Text('starts_at_time'))->mask('time'));
+
+        $this->assertSame($datetimeOptions['inputFormat'], $datetimeOptions['placeholder']);
+        $this->assertSame($timeOptions['inputFormat'], $timeOptions['placeholder']);
+    }
+
+    public function test_optional_numeric_mask_uses_numeric_inputmode(): void
+    {
+        $html = (string) (new Text('extension'))->mask('9999[9]');
+
+        $this->assertStringContainsString('inputmode="numeric"', $html);
+    }
+
     public function test_raw_inputmask_options_are_supported(): void
     {
         $html = (string) (new Text('code'))->inputmask([

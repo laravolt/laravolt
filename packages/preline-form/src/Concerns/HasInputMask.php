@@ -80,12 +80,12 @@ trait HasInputMask
             'datetime' => [
                 'alias' => 'datetime',
                 'inputFormat' => 'yyyy-mm-dd HH:MM',
-                'placeholder' => 'yyyy-mm-dd hh:mm',
+                'placeholder' => 'yyyy-mm-dd HH:MM',
             ],
             'time' => [
                 'alias' => 'datetime',
                 'inputFormat' => 'HH:MM',
-                'placeholder' => 'hh:mm',
+                'placeholder' => 'HH:MM',
             ],
             'email' => ['alias' => 'email'],
             default => ['mask' => $mask],
@@ -94,6 +94,6 @@ trait HasInputMask
 
     protected function looksNumericMask(string $mask): bool
     {
-        return preg_match('/^[0-9+()\- ._{}]+$/', $mask) === 1;
+        return preg_match('/^[0-9+()\- ._{}\[\]]+$/', $mask) === 1;
     }
 }
