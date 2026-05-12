@@ -66,8 +66,7 @@ class ClientValidation
 
     public static function rulesFor(string $name): array
     {
-        $normalized = static::normalizeName($name);
-        $rules = Arr::get(static::$rules, $normalized, Arr::get(static::$rules, $name, []));
+        $rules = static::findRulesFor($name);
 
         if ($rules === []) {
             return [];
@@ -78,6 +77,24 @@ class ClientValidation
         }
 
         return is_array($rules) ? $rules : [$rules];
+    }
+
+    protected static function findRulesFor(string $name): mixed
+    {
+        $normalized = static::normalizeName($name);
+        $rules = Arr::get(static::$rules, $normalized, Arr::get(static::$rules, $name, []));
+
+        if ($rules !== []) {
+            return $rules;
+        }
+
+        foreach (static::$rules as $key => $rules) {
+            if (str_contains((string) $key, '*') && Str::is((string) $key, $normalized)) {
+                return $rules;
+            }
+        }
+
+        return [];
     }
 
     protected static function makeFormRequest(string $request): FormRequest
@@ -129,8 +146,13 @@ class ClientValidation
     {
         if (is_string($rule)) {
             [$name, $parameters] = array_pad(explode(':', $rule, 2), 2, '');
+            $name = Str::snake(mb_strtolower($name));
 
-            return [Str::snake(mb_strtolower($name)), $parameters === '' ? [] : str_getcsv($parameters)];
+            if (in_array($name, ['regex', 'not_regex'], true)) {
+                return [$name, $parameters === '' ? [] : [$parameters]];
+            }
+
+            return [$name, $parameters === '' ? [] : str_getcsv($parameters)];
         }
 
         if ($rule instanceof In) {
@@ -219,7 +241,41 @@ class ClientValidation
             return '';
         }
 
-        return trim($regex, '/');
+        $delimiter = $regex[0];
+
+        if (ctype_alnum($delimiter) || $delimiter === '\\') {
+            return $regex;
+        }
+
+        $end = static::findRegexDelimiterEnd($regex, $delimiter);
+
+        if ($end === null) {
+            return $regex;
+        }
+
+        return substr($regex, 1, $end - 1);
+    }
+
+    protected static function findRegexDelimiterEnd(string $regex, string $delimiter): ?int
+    {
+        for ($position = strlen($regex) - 1; $position > 0; $position--) {
+            if ($regex[$position] === $delimiter && ! static::isEscaped($regex, $position)) {
+                return $position;
+            }
+        }
+
+        return null;
+    }
+
+    protected static function isEscaped(string $value, int $position): bool
+    {
+        $slashes = 0;
+
+        for ($index = $position - 1; $index >= 0 && $value[$index] === '\\'; $index--) {
+            $slashes++;
+        }
+
+        return $slashes % 2 === 1;
     }
 
     protected static function messageFor(string $name, array $rules): ?string
@@ -227,9 +283,26 @@ class ClientValidation
         $normalized = static::normalizeName($name);
 
         foreach (array_keys($rules) as $rule) {
-            $message = static::$messages["{$normalized}.{$rule}"] ?? static::$messages["{$name}.{$rule}"] ?? null;
+            $message = static::findMessageFor($normalized, $name, $rule);
 
             if ($message) {
+                return $message;
+            }
+        }
+
+        return null;
+    }
+
+    protected static function findMessageFor(string $normalized, string $name, string $rule): ?string
+    {
+        $exact = static::$messages["{$normalized}.{$rule}"] ?? static::$messages["{$name}.{$rule}"] ?? null;
+
+        if ($exact) {
+            return $exact;
+        }
+
+        foreach (static::$messages as $key => $message) {
+            if (str_contains((string) $key, '*') && Str::is((string) $key, "{$normalized}.{$rule}")) {
                 return $message;
             }
         }

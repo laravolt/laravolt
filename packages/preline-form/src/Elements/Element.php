@@ -28,6 +28,8 @@ abstract class Element
     /** @var string|null Alpine.js x-data init expression (for binding) */
     protected $alpineData = null;
 
+    protected bool $preparedForRender = false;
+
     public function __toString()
     {
         try {
@@ -266,11 +268,17 @@ abstract class Element
 
     protected function beforeRender()
     {
+        if ($this->preparedForRender) {
+            return true;
+        }
+
         $name = $this->getAttribute('name');
 
         if (is_string($name) && $name !== '') {
             $this->attributes = ClientValidation::apply($name, $this->attributes);
         }
+
+        $this->preparedForRender = true;
 
         return true;
     }

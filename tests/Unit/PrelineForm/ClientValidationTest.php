@@ -74,6 +74,45 @@ class ClientValidationTest extends UnitTest
         $this->assertStringContainsString('inputmode="numeric"', $html);
         $this->assertStringNotContainsString('minlength="18"', $html);
     }
+
+    public function test_wildcard_array_rules_match_indexed_field_names(): void
+    {
+        ClientValidation::use(new WildcardClientValidationFormRequest);
+
+        $html = (string) new Text('items[0][name]');
+
+        $this->assertStringContainsString('required="required"', $html);
+        $this->assertStringContainsString('minlength="3"', $html);
+        $this->assertStringContainsString('data-validation-message="Each item needs a name."', $html);
+    }
+
+    public function test_regex_rules_keep_commas_and_strip_laravel_delimiters_and_modifiers(): void
+    {
+        ClientValidation::use(['code' => ['required', 'regex:/^[A-Z]{2,4},[0-9]+$/i']]);
+
+        $html = (string) new Text('code');
+
+        $this->assertStringContainsString('pattern="^[A-Z]{2,4},[0-9]+$"', $html);
+        $this->assertStringContainsString('&quot;regex&quot;', $html);
+        $this->assertStringContainsString('^[A-Z]{2,4},[0-9]+$', $html);
+    }
+}
+
+class WildcardClientValidationFormRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'items.*.name' => 'required|min:3',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'items.*.name.required' => 'Each item needs a name.',
+        ];
+    }
 }
 
 class ClientValidationFormRequest extends FormRequest
