@@ -133,4 +133,30 @@ class RoleTest extends FeatureTest
 
         $this->assertCount(4, $role->permissions);
     }
+
+    public function test_sync_permission_invalidates_assigned_users_permission_cache_and_sessions()
+    {
+        $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $user = $this->createUser();
+        $user->assignRole($role);
+        $this->createSessionFor($user);
+
+        $role->syncPermission(['create']);
+
+        $this->assertAccessControlInvalidatedFor($user);
+    }
+
+    public function test_sync_permission_keeps_sessions_when_permissions_do_not_change()
+    {
+        $role = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => 'create']);
+        $role->syncPermission([$permission]);
+        $user = $this->createUser();
+        $user->assignRole($role);
+        $this->createSessionFor($user);
+
+        $role->syncPermission([$permission]);
+
+        $this->assertAccessControlStillValidFor($user);
+    }
 }

@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Laravolt\Platform\Models\User;
+use Laravolt\Platform\Services\AccessControlInvalidator;
 
 /**
  * Class UserRepositoryEloquent.
@@ -15,7 +17,7 @@ use Illuminate\Support\Arr;
 class EloquentRepository implements RepositoryInterface
 {
     /**
-     * @var \Laravolt\Platform\Models\User
+     * @var User
      */
     protected $model;
 
@@ -77,10 +79,20 @@ class EloquentRepository implements RepositoryInterface
         $user->update($account);
 
         if (config('laravolt.epicentrum.role.editable')) {
-            $user->roles()->sync($roles);
+            $changes = $user->roles()->sync($roles);
+
+            if ($this->hasSyncChanges($changes)) {
+                $user->unsetRelation('roles');
+                app(AccessControlInvalidator::class)->invalidateUser($user);
+            }
         }
 
         return $user;
+    }
+
+    protected function hasSyncChanges(array $changes): bool
+    {
+        return collect($changes)->flatten()->isNotEmpty();
     }
 
     public function updatePassword($password, $id)
