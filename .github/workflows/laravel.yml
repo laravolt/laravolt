@@ -16,7 +16,7 @@ jobs:
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '8.4'
-        extensions: bcmath, ctype, curl, dom, fileinfo, gd, mbstring, pdo_sqlite, sqlite3, tokenizer, xml, zip, xdebug
+        extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, mbstring, pdo_sqlite, sockets, sqlite3, tokenizer, xml, zip, xdebug
         coverage: xdebug
     - uses: actions/checkout@v4
     - name: Install Laravel
@@ -33,8 +33,8 @@ jobs:
     - name: Install Dependencies
       run: |
         cd laravel
-        composer config repositories.laravolt path ./..
-        composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        composer config repositories.laravolt '{"type":"path","url":"./..","options":{"versions":{"laravolt/laravolt":"dev-master"}}}'
+        composer update --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         composer require brianium/paratest --dev --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Laravel Version
       run: php laravel/artisan --version
