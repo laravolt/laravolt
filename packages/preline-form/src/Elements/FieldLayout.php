@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laravolt\PrelineForm\Elements;
 
 use Laravolt\PrelineForm\FieldCollection;
@@ -9,8 +11,6 @@ class FieldLayout extends Element
     protected FieldCollection $fields;
 
     protected array $items;
-
-    protected string $type;
 
     protected int $columns;
 
@@ -76,9 +76,8 @@ class FieldLayout extends Element
         13 => 'col-start-13',
     ];
 
-    public function __construct(string $type, FieldCollection $fields, array $options = [])
+    public function __construct(FieldCollection $fields, array $options = [])
     {
-        $this->type = $type;
         $this->fields = $fields;
         $this->items = array_values($options['items'] ?? []);
         $this->columns = $this->normalizeColumns($options['columns'] ?? $options['column'] ?? 1);

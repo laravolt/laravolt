@@ -84,7 +84,7 @@ class FieldCollection extends Collection
         switch ($type) {
             case 'grid':
             case 'row':
-                $element = new FieldLayout($type, new static($field['items'] ?? []), $field->toArray());
+                $element = new FieldLayout(new static($field['items'] ?? []), $field->toArray());
                 break;
 
             case 'color':
