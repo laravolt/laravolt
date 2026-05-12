@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Laravolt\Tests;
 
+use Akaunting\Setting\Provider;
+use Anhskohbo\NoCaptcha\NoCaptchaServiceProvider;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Laravolt\Platform\Models\User;
 use Laravolt\Platform\Providers\EpicentrumServiceProvider;
 use Laravolt\Platform\Providers\PlatformServiceProvider;
@@ -28,7 +34,7 @@ trait Bootstrap
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -42,7 +48,7 @@ trait Bootstrap
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -53,18 +59,18 @@ trait Bootstrap
             PlatformServiceProvider::class,
             UiServiceProvider::class,
             LivewireServiceProvider::class,
-            \Akaunting\Setting\Provider::class,
+            Provider::class,
         ];
 
         if (class_exists('Anhskohbo\NoCaptcha\NoCaptchaServiceProvider')) {
-            $providers[] = \Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class;
+            $providers[] = NoCaptchaServiceProvider::class;
         }
 
         return $providers;
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageAliases($app)
@@ -80,5 +86,30 @@ trait Bootstrap
             'email' => 'fulan@example.com',
             'password' => bcrypt('secret'),
         ]);
+    }
+
+    protected function createSessionFor(User $user): void
+    {
+        Cache::put("users.{$user->getKey()}.permissions", collect(['stale']), 3600);
+        DB::table('sessions')->insert([
+            'id' => (string) Str::ulid(),
+            'user_id' => $user->getKey(),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'PHPUnit',
+            'payload' => 'payload',
+            'last_activity' => (string) Str::ulid(),
+        ]);
+    }
+
+    protected function assertAccessControlInvalidatedFor(User $user): void
+    {
+        $this->assertFalse(Cache::has("users.{$user->getKey()}.permissions"));
+        $this->assertDatabaseMissing('sessions', ['user_id' => $user->getKey()]);
+    }
+
+    protected function assertAccessControlStillValidFor(User $user): void
+    {
+        $this->assertTrue(Cache::has("users.{$user->getKey()}.permissions"));
+        $this->assertDatabaseHas('sessions', ['user_id' => $user->getKey()]);
     }
 }

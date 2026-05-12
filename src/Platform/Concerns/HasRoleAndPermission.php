@@ -6,13 +6,15 @@ namespace Laravolt\Platform\Concerns;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Laravolt\Platform\Models\Permission;
+use Laravolt\Platform\Services\AccessControlInvalidator;
 
 trait HasRoleAndPermission
 {
-    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(config('laravolt.epicentrum.models.role'), 'acl_role_user', 'user_id', 'role_id');
     }
@@ -46,38 +48,24 @@ trait HasRoleAndPermission
 
     public function assignRole($role): self
     {
-        if (is_array($role)) {
-            foreach ($role as $r) {
-                $this->assignRole($r);
-            }
+        $changes = $this->roles()->syncWithoutDetaching($this->resolveRoleIds($role, true));
 
-            return $this;
+        if ($this->hasSyncChanges($changes)) {
+            $this->unsetRelation('roles');
+            $this->invalidateAccessControl();
         }
-
-        if (is_string($role) && ! Str::isUuid($role)) {
-            $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
-        }
-
-        $this->roles()->syncWithoutDetaching($role);
 
         return $this;
     }
 
     public function revokeRole($role): self
     {
-        if (is_array($role)) {
-            foreach ($role as $r) {
-                $this->revokeRole($r);
-            }
+        $detached = $this->roles()->detach($this->resolveRoleIds($role));
 
-            return $this;
+        if ($detached > 0) {
+            $this->unsetRelation('roles');
+            $this->invalidateAccessControl();
         }
-
-        if (is_string($role) && ! Str::isUuid($role)) {
-            $role = app(config('laravolt.epicentrum.models.role'))->where('name', $role)->first();
-        }
-
-        $this->roles()->detach($role);
 
         return $this;
     }
@@ -121,43 +109,12 @@ trait HasRoleAndPermission
 
     public function syncRoles($roles): self
     {
-        $ids = collect($roles)->transform(
-            function ($role) {
-                if (is_numeric($role)) {
-                    return (int) $role;
-                }
+        $changes = $this->roles()->sync($this->resolveRoleIds($roles, true));
 
-                if (Str::isUuid($role)) {
-                    return $role;
-                }
-
-                if (is_string($role)) {
-                    $role = app(config('laravolt.epicentrum.models.role'))->firstOrCreate(['name' => $role]);
-
-                    return $role->getKey();
-                }
-
-                if ($role instanceof Model) {
-                    return $role->getKey();
-                }
-
-                return $role;
-            }
-        )->filter(
-            function ($id) {
-                if (is_int($id)) {
-                    return $id > 0;
-                }
-
-                if (is_string($id)) {
-                    return trim($id) !== '';
-                }
-
-                return false;
-            }
-        );
-
-        $this->roles()->sync($ids);
+        if ($this->hasSyncChanges($changes)) {
+            $this->unsetRelation('roles');
+            $this->invalidateAccessControl();
+        }
 
         return $this;
     }
@@ -171,6 +128,55 @@ trait HasRoleAndPermission
         );
 
         return $result;
+    }
+
+    protected function resolveRoleIds($roles, bool $createMissing = false): array
+    {
+        return collect(is_array($roles) ? $roles : [$roles])
+            ->map(function ($role) use ($createMissing) {
+                if (is_numeric($role)) {
+                    return (int) $role;
+                }
+
+                if (is_string($role) && Str::isUuid($role)) {
+                    return $role;
+                }
+
+                if (is_string($role)) {
+                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
+                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+
+                    return $role?->getKey();
+                }
+
+                if ($role instanceof Model) {
+                    return $role->getKey();
+                }
+
+                return $role;
+            })
+            ->filter(function ($id) {
+                if (is_int($id)) {
+                    return $id > 0;
+                }
+
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
+
+                return false;
+            })
+            ->all();
+    }
+
+    protected function hasSyncChanges(array $changes): bool
+    {
+        return collect($changes)->flatten()->isNotEmpty();
+    }
+
+    protected function invalidateAccessControl(): void
+    {
+        app(AccessControlInvalidator::class)->invalidateUser($this);
     }
 
     protected function _hasPermission($permission, $checkAll = false): bool

@@ -6,6 +6,7 @@ namespace Laravolt\Tests\Feature\Acl;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravolt\Epicentrum\Repositories\EloquentRepository;
 use Laravolt\Tests\FeatureTest;
 
 class HasRoleAndPermissionTest extends FeatureTest
@@ -133,6 +134,42 @@ class HasRoleAndPermissionTest extends FeatureTest
         $user->syncRoles([1, $operator, 'Staff']);
 
         $this->assertSame(3, $user->roles->count());
+    }
+
+    public function test_sync_roles_invalidates_user_permission_cache_and_sessions()
+    {
+        $user = $this->createUser();
+        $operator = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Operator']);
+        $this->createSessionFor($user);
+
+        $user->syncRoles([$operator]);
+
+        $this->assertAccessControlInvalidatedFor($user);
+    }
+
+    public function test_repository_role_update_invalidates_user_permission_cache_and_sessions()
+    {
+        config(['laravolt.epicentrum.role.editable' => true]);
+        $user = $this->createUser();
+        $operator = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Operator']);
+        $this->createSessionFor($user);
+
+        app(EloquentRepository::class)->updateAccount($user->getKey(), ['name' => 'Fulan Updated'], [$operator->getKey()]);
+
+        $this->assertAccessControlInvalidatedFor($user);
+    }
+
+    public function test_repository_role_update_keeps_sessions_when_roles_do_not_change()
+    {
+        config(['laravolt.epicentrum.role.editable' => true]);
+        $user = $this->createUser();
+        $operator = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Operator']);
+        $user->assignRole($operator);
+        $this->createSessionFor($user);
+
+        app(EloquentRepository::class)->updateAccount($user->getKey(), ['name' => 'Fulan Updated'], [$operator->getKey()]);
+
+        $this->assertAccessControlStillValidFor($user);
     }
 
     public function test_has_permission()

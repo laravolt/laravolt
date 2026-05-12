@@ -6,6 +6,8 @@ namespace Laravolt\Platform\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Laravolt\Platform\Services\AccessControlInvalidator;
 
 class Role extends Model
 {
@@ -34,6 +36,8 @@ class Role extends Model
         }
 
         $this->permissions()->attach($permission);
+        $this->unsetRelation('permissions');
+        $this->invalidateAssignedUsersAccessControl();
 
         return $this;
     }
@@ -45,6 +49,8 @@ class Role extends Model
         }
 
         $this->permissions()->detach($permission);
+        $this->unsetRelation('permissions');
+        $this->invalidateAssignedUsersAccessControl();
 
         return $this;
     }
@@ -59,8 +65,8 @@ class Role extends Model
     public function syncPermission(array $permissions)
     {
         $ids = collect($permissions)->transform(function ($permission) {
-            if (str($permission)->isUlid()) {
-                return (string) $permission;
+            if (is_string($permission) && str($permission)->isUlid()) {
+                return $permission;
             }
             if (is_numeric($permission)) {
                 return (int) $permission;
@@ -74,10 +80,35 @@ class Role extends Model
                 return $permission->getKey();
             }
         })->filter(function ($id) {
-            return $id > 0;
+            if (is_int($id)) {
+                return $id > 0;
+            }
+
+            if (is_string($id)) {
+                return trim($id) !== '';
+            }
+
+            return false;
         });
 
-        return $this->permissions()->sync($ids->toArray());
+        $changes = $this->permissions()->sync($ids->toArray());
+
+        if ($this->hasSyncChanges($changes)) {
+            $this->unsetRelation('permissions');
+            $this->invalidateAssignedUsersAccessControl();
+        }
+
+        return $changes;
+    }
+
+    protected function hasSyncChanges(array $changes): bool
+    {
+        return collect($changes)->flatten()->isNotEmpty();
+    }
+
+    protected function invalidateAssignedUsersAccessControl(): void
+    {
+        app(AccessControlInvalidator::class)->invalidateUsers($this->users()->cursor());
     }
 
     protected function _hasPermission($permission)
@@ -96,7 +127,7 @@ class Role extends Model
             if (is_string($permission)) {
                 $permissionModel = app(config('laravolt.epicentrum.models.permission'));
                 $keyType = $permissionModel->getKeyType();
-                if ($keyType === 'string' && \Illuminate\Support\Str::isUlid($permission)) {
+                if ($keyType === 'string' && Str::isUlid($permission)) {
                     // Try to match key first, fallback to name
                     return $this->permissions->containsStrict($permissionModel->getKeyName(), $permission)
                         || $this->permissions->containsStrict('name', $permission);
