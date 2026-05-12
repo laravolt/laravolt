@@ -6,6 +6,7 @@ All notable changes to `preline-form` will be documented in this file.
 
 ### Added
 
+- **🎭 Input Masking**: Text-like inputs now support Inputmask-compatible masking with `mask()`, `inputmask()`, and `unmask()` helpers plus common presets (`phone`, `currency`, `date`, `datetime`, `time`, `email`).
 - **🔄 SemanticForm API Compatibility**: Full compatibility with SemanticForm API for smooth migration
   - Added `attributes()` method to all form elements for setting multiple attributes at once
   - Added `horizontal()` method to FormOpen for horizontal form layouts

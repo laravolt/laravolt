@@ -371,6 +371,42 @@ Use Laravel `FormRequest` rules to automatically render native HTML validation a
 
 Rules such as `required`, `email`, `url`, `min`, `max`, `between`, `size`, `digits`, `digits_between`, `regex`, and `in` are converted into browser-friendly attributes while the original rules are also exposed through `data-validation-rules` for custom JavaScript integrations.
 
+### Input Masking
+
+Text-like inputs can render [Inputmask](https://github.com/RobinHerbots/Inputmask)-compatible options through `data-inputmask` attributes:
+
+```php
+PrelineForm::text('phone')->mask('phone');
+PrelineForm::text('amount')->mask('currency');
+PrelineForm::text('birthday')->mask('date');
+
+// Override preset options
+PrelineForm::text('birthday')->mask('date', [
+    'inputFormat' => 'dd/mm/yyyy',
+    'placeholder' => 'dd/mm/yyyy',
+]);
+
+// Custom mask pattern
+PrelineForm::text('sku')->mask('AAA-9999');
+
+// Raw Inputmask options
+PrelineForm::text('code')->inputmask([
+    'mask' => '999-AAA',
+    'casing' => 'upper',
+]);
+```
+
+Available presets: `phone`, `currency`, `date`, `datetime`, `time`, and `email`. Include Inputmask in your frontend and initialize fields that have `data-inputmask`:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/inputmask@5/dist/inputmask.min.js"></script>
+<script>
+  document.querySelectorAll('[data-inputmask]').forEach((element) => {
+    Inputmask(JSON.parse(element.dataset.inputmask)).mask(element);
+  });
+</script>
+```
+
 ### General Functions
 
 For every form element, you can call and chain the following methods:
@@ -381,6 +417,9 @@ For every form element, you can call and chain the following methods:
 - `attribute($name, $value)` - Set single attribute
 - `attributes($array)` - Set multiple attributes at once
 - `data($name, $value)` - Set data attribute
+- `mask($presetOrPattern, $options = [])` - Add Inputmask-compatible masking to text-like inputs
+- `inputmask($options)` - Add raw Inputmask options to text-like inputs
+- `unmask()` - Remove masking attributes from text-like inputs
 - `hint($text)` - Add help text
 - `hint($text, $class)` - Add help text with custom styling
 
