@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Laravolt\Fields\Field;
 use Laravolt\PrelineForm\Contracts\HasFormOptions;
+use Laravolt\PrelineForm\Elements\FieldLayout;
 use Laravolt\PrelineForm\Elements\FormControl;
 use Laravolt\PrelineForm\Elements\Html;
 
@@ -65,6 +66,12 @@ class FieldCollection extends Collection
             }
         }
 
+        foreach ($this->items as $element) {
+            if (method_exists($element, 'bindValues')) {
+                $element->bindValues($values);
+            }
+        }
+
         return $this;
     }
 
@@ -75,6 +82,11 @@ class FieldCollection extends Collection
         $macro = false;
 
         switch ($type) {
+            case 'grid':
+            case 'row':
+                $element = new FieldLayout($type, new static($field['items'] ?? []), $field->toArray());
+                break;
+
             case 'color':
             case 'date':
             case 'email':
