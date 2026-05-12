@@ -7,6 +7,8 @@ namespace Laravolt\PrelineForm\Elements;
 use Closure;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\ViewErrorBag;
+use Laravolt\PrelineForm\Validation\ClientValidation;
 
 abstract class Element
 {
@@ -264,11 +266,19 @@ abstract class Element
 
     protected function beforeRender()
     {
+        $name = $this->getAttribute('name');
+
+        if (is_string($name) && $name !== '') {
+            $this->attributes = ClientValidation::apply($name, $this->attributes);
+        }
+
         return true;
     }
 
     protected function renderAttributes()
     {
+        $this->beforeRender();
+
         return form_html_attributes($this->attributes ?? []);
     }
 
@@ -307,6 +317,8 @@ abstract class Element
 
     protected function renderField($idInputField = null)
     {
+        $this->beforeRender();
+
         $label = $this->renderLabel($idInputField);
         $input = $this->renderControl();
         $error = $this->renderError();
@@ -358,7 +370,7 @@ abstract class Element
 
     protected function hasError()
     {
-        /** @var \Illuminate\Support\ViewErrorBag */
+        /** @var ViewErrorBag */
         $errorsBag = request()->session()->get('errors');
 
         return $errorsBag->has($this->getAttribute('name'));
@@ -366,7 +378,7 @@ abstract class Element
 
     protected function getError()
     {
-        /** @var \Illuminate\Support\ViewErrorBag */
+        /** @var ViewErrorBag */
         $errorsBag = request()->session()->get('errors');
 
         return $errorsBag->first($this->getAttribute('name'));

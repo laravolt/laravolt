@@ -356,6 +356,21 @@ PrelineForm::text('email')->label('Email Address');
 // The field will show red border and error message if validation fails
 ```
 
+### Client-side Validation
+
+Use Laravel `FormRequest` rules to automatically render native HTML validation attributes on matching fields:
+
+```php
+{!! PrelineForm::post('posts.store')->validate(UpdatePostRequest::class) !!}
+
+{!! PrelineForm::text('title')->label('Title') !!}
+{!! PrelineForm::text('email')->label('Email') !!}
+
+{!! PrelineForm::close() !!}
+```
+
+Rules such as `required`, `email`, `url`, `min`, `max`, `between`, `size`, `digits`, `digits_between`, `regex`, and `in` are converted into browser-friendly attributes while the original rules are also exposed through `data-validation-rules` for custom JavaScript integrations.
+
 ### General Functions
 
 For every form element, you can call and chain the following methods:

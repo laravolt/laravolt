@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laravolt\PrelineForm\Elements;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Session;
+use Laravolt\PrelineForm\Validation\ClientValidation;
 
 class FormOpen extends Element
 {
@@ -24,6 +26,14 @@ class FormOpen extends Element
     public function __construct($action = null)
     {
         $this->action($action);
+
+        return $this;
+    }
+
+    public function validate(FormRequest|string|array $request): static
+    {
+        ClientValidation::use($request);
+        $this->setAttribute('data-client-validation', 'true');
 
         return $this;
     }
