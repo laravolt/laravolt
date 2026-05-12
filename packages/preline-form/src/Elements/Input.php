@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Laravolt\PrelineForm\Elements;
 
 use Closure;
+use Laravolt\PrelineForm\Concerns\HasInputMask;
 
 abstract class Input extends FormControl
 {
+    use HasInputMask;
+
     public function render()
     {
         if ($this->label) {
