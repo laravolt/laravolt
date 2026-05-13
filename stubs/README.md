@@ -30,13 +30,20 @@ composer setup
 composer dev
 ```
 
-### Optional: Browser Testing Setup
+### Browser Testing Setup
 
-If you plan to use Pest's browser testing capabilities:
+Laravolt ships with Pest browser testing support so UI regression checks stay cheap and fast:
 
 ```bash
-npm install playwright
-npx playwright install
+npm install --save-dev playwright@1.59.1
+npx playwright install chromium
+php artisan laravolt:test:browser
+```
+
+Use debug/headed mode when developing a failing scenario:
+
+```bash
+php artisan laravolt:test:browser --debug
 ```
 
 ### Verify Installation
@@ -65,6 +72,7 @@ You should see 100% test coverage and all quality checks passing.
 - `composer test:type-coverage` - Ensures 100% type coverage with Pest
 - `composer test:types` - Runs PHPStan at level 9 (maximum strictness)
 - `composer test:unit` - Runs Pest tests with 100% code coverage requirement
+- `php artisan laravolt:test:browser` - Runs browser regression tests through Pest + Playwright
 - `composer test` - Runs the complete test suite (type coverage, unit tests, linting, static analysis)
 
 ### Maintenance

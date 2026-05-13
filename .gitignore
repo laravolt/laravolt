@@ -6,3 +6,6 @@ node_modules
 public/*
 resources/icons/*
 preline-ui
+/tests/Browser/Screenshots
+/test-results
+/playwright-report

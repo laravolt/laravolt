@@ -49,6 +49,7 @@
         "mockery/mockery": "^1.6.12",
         "orchestra/testbench-browser-kit": ">=8.6",
         "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-browser": "^4.0",
         "php-coveralls/php-coveralls": "^2.7",
         "squizlabs/php_codesniffer": "^3.11.3"
     },

@@ -20,7 +20,13 @@ pest()->extend(TestCase::class)
 
         $this->freezeTime();
     })
-    ->in('Browser', 'Feature', 'Unit');
+    ->in('Feature', 'Unit');
+
+pest()->extend(TestCase::class)
+    ->use(RefreshDatabase::class)
+    ->in('Browser');
+
+pest()->browser()->timeout(10000);
 
 expect()->extend('toBeOne', fn () => $this->toBe(1));
 

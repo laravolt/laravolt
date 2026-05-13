@@ -45,11 +45,12 @@ class Pest4InstallCommand extends Command
             $this->runComposerCommand(['remove', 'phpunit/phpunit', '--dev']);
         }
 
-        // Install Pest v4
-        $this->info('📦 Installing Pest v4 with all dependencies...');
+        // Install Pest v4 and browser testing support
+        $this->info('📦 Installing Pest v4 with browser testing support...');
         $success = $this->runComposerCommand([
             'require',
-            'pestphp/pest',
+            'pestphp/pest:^4.0',
+            'pestphp/pest-plugin-browser:^4.0',
             '--dev',
             '--with-all-dependencies',
         ]);
@@ -75,6 +76,8 @@ class Pest4InstallCommand extends Command
         $this->newLine();
         $this->info('✅ Pest v4 installation complete!');
         $this->info('🚀 Run "./vendor/bin/pest" to execute your tests');
+        $this->info('🌐 Run "npm install --save-dev playwright@1.59.1 && npx playwright install" before running browser tests');
+        $this->info('🌐 Run "php artisan laravolt:test:browser" to execute browser tests');
         $this->info('📖 Check PEST_MIGRATION_GUIDE.md for migration instructions');
 
         return self::SUCCESS;
@@ -175,6 +178,35 @@ PHP;
             $this->line('   ✅ Created tests/Pest.php');
         }
 
+        // Create a minimal browser smoke test
+        $browserTestPath = base_path('tests/Browser/LoginTest.php');
+        if (! File::exists($browserTestPath)) {
+            File::ensureDirectoryExists(dirname($browserTestPath));
+            $browserTest = <<<'PHP'
+<?php
+
+declare(strict_types=1);
+
+it('renders the Laravolt login page', function (): void {
+    $page = visit('/auth/login');
+
+    $page
+        ->assertPathIs('/auth/login')
+        ->assertSee('Login')
+        ->assertSee('Email')
+        ->assertSee('Password')
+        ->assertPresent('input[name="email"]')
+        ->assertPresent('input[name="password"]')
+        ->type('email', 'admin@example.test')
+        ->type('password', 'secret')
+        ->assertValue('email', 'admin@example.test');
+});
+PHP;
+
+            File::put($browserTestPath, $browserTest);
+            $this->line('   ✅ Created tests/Browser/LoginTest.php');
+        }
+
         // Create pest.xml (replacing phpunit.xml for Pest)
         $pestXmlPath = base_path('phpunit.xml');
         if (! File::exists($pestXmlPath)) {
@@ -252,6 +284,9 @@ XML;
             '/build/coverage',
             '/pestphp-coverage-result.xml',
             '/pestphp-execution-result.xml',
+            '/tests/Browser/Screenshots',
+            '/test-results',
+            '/playwright-report',
         ];
 
         $contents = File::get($gitignorePath);
@@ -375,6 +410,14 @@ expect($actual)->toBe('expected');
 # Run specific test suite
 ./vendor/bin/pest --testsuite=Feature
 
+# Run browser tests
+npm install --save-dev playwright@1.59.1
+npx playwright install chromium
+php artisan laravolt:test:browser
+
+# Run browser tests in debug/headed mode
+php artisan laravolt:test:browser --debug
+
 # Run with coverage
 ./vendor/bin/pest --coverage
 ```
@@ -382,6 +425,7 @@ expect($actual)->toBe('expected');
 ## Resources
 
 - [Pest Documentation](https://pestphp.com/docs)
+- [Pest Browser Testing](https://pestphp.com/docs/browser-testing)
 - [Migration Guide](https://pestphp.com/docs/migrating-from-phpunit)
 - [Expectations API](https://pestphp.com/docs/expectations)
 

@@ -7,10 +7,12 @@ namespace Laravolt\Platform\Providers;
 use App\Enums\Permission;
 use File;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
+use Illuminate\Auth\Passwords\TokenRepositoryInterface;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravolt\Contracts\HasRoleAndPermission;
@@ -19,6 +21,7 @@ use Laravolt\Epicentrum\Auth\UserObserver;
 use Laravolt\Epicentrum\Console\Commands\ManageRole;
 use Laravolt\Epicentrum\Console\Commands\ManageUser;
 use Laravolt\Platform\Commands\AdminCommand;
+use Laravolt\Platform\Commands\BrowserTestCommand;
 use Laravolt\Platform\Commands\ExtractAssetsCommand;
 use Laravolt\Platform\Commands\InstallCommand;
 use Laravolt\Platform\Commands\LinkCommand;
@@ -33,11 +36,11 @@ use Laravolt\Platform\Components\Cards;
 use Laravolt\Platform\Components\Form;
 use Laravolt\Platform\Components\Icon;
 use Laravolt\Platform\Components\Item;
-use Livewire\Blaze\Blaze;
 use Laravolt\Platform\Services\Acl;
 use Laravolt\Platform\Services\LaravoltBladeDirectives;
 use Laravolt\Platform\Services\Password;
 use Laravolt\Ui\ModalBag;
+use Livewire\Blaze\Blaze;
 use Livewire\Livewire;
 use PDOException;
 
@@ -47,6 +50,7 @@ class PlatformServiceProvider extends ServiceProvider
 {
     protected $commands = [
         AdminCommand::class,
+        BrowserTestCommand::class,
         ExtractAssetsCommand::class,
         InstallCommand::class,
         LinkCommand::class,
@@ -181,7 +185,7 @@ class PlatformServiceProvider extends ServiceProvider
     protected function bootRoutes(): self
     {
         if (Str::startsWith(config('app.url'), 'https')) {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
+            URL::forceScheme('https');
         }
 
         if (! $this->app->routesAreCached()) {
@@ -195,7 +199,7 @@ class PlatformServiceProvider extends ServiceProvider
      * Create a token repository instance based on the given configuration.
      *
      *
-     * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
+     * @return TokenRepositoryInterface
      */
     protected function createTokenRepository(array $config)
     {
