@@ -197,11 +197,8 @@ class PlatformServiceProvider extends ServiceProvider
 
     /**
      * Create a token repository instance based on the given configuration.
-     *
-     *
-     * @return TokenRepositoryInterface
      */
-    protected function createTokenRepository(array $config)
+    protected function createTokenRepository(array $config): TokenRepositoryInterface
     {
         $key = $this->app['config']['app.key'];
 

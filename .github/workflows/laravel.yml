@@ -83,4 +83,4 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: |
         cd laravel
-        php artisan laravolt:test:browser --browser=chrome
+        php artisan laravolt:test:browser tests/Browser/LoginTest.php --browser=chrome

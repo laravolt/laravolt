@@ -15,7 +15,7 @@ class BrowserTestCommand extends Command
      * @var string
      */
     protected $signature = 'laravolt:test:browser
-        {path=tests/Browser : Browser test path or filter to run}
+        {path=tests/Browser : Browser test path to run}
         {--debug : Run browser tests in headed mode and enable browser assertion debugging}
         {--browser=chrome : Browser name to use: chrome, firefox, or safari}
         {--parallel : Run browser tests in parallel}';
@@ -32,7 +32,7 @@ class BrowserTestCommand extends Command
      */
     public function handle(): int
     {
-        $command = [base_path('vendor/bin/pest'), (string) $this->argument('path')];
+        $command = [base_path('vendor/bin/pest'), (string) $this->argument('path'), '--no-coverage'];
 
         if ($this->option('debug')) {
             $command[] = '--debug';

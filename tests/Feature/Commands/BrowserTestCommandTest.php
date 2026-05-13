@@ -70,7 +70,7 @@ it('runs browser tests through Pest', function (): void {
     Process::assertRan(function ($process): bool {
         return $process->path === getcwd()
             && $process->timeout === null
-            && $process->command === [getcwd().'/vendor/bin/pest', 'tests/Browser', '--browser', 'chrome'];
+            && $process->command === [getcwd().'/vendor/bin/pest', 'tests/Browser', '--no-coverage', '--browser', 'chrome'];
     });
 });
 
@@ -88,6 +88,7 @@ it('passes browser test options to Pest', function (): void {
         return $process->command === [
             getcwd().'/vendor/bin/pest',
             'tests/Browser/LoginTest.php',
+            '--no-coverage',
             '--debug',
             '--headed',
             '--browser',

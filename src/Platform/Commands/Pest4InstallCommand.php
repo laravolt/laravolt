@@ -8,6 +8,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 
+use function Laravolt\platform_path;
+
 class Pest4InstallCommand extends Command
 {
     /**
@@ -76,7 +78,7 @@ class Pest4InstallCommand extends Command
         $this->newLine();
         $this->info('✅ Pest v4 installation complete!');
         $this->info('🚀 Run "./vendor/bin/pest" to execute your tests');
-        $this->info('🌐 Run "npm install --save-dev playwright@1.59.1 && npx playwright install" before running browser tests');
+        $this->info('🌐 Run "npm install --save-dev playwright@1.59.1 && npx playwright install chromium" before running browser tests');
         $this->info('🌐 Run "php artisan laravolt:test:browser" to execute browser tests');
         $this->info('📖 Check PEST_MIGRATION_GUIDE.md for migration instructions');
 
@@ -122,59 +124,7 @@ class Pest4InstallCommand extends Command
         // Create tests/Pest.php
         $pestConfigPath = base_path('tests/Pest.php');
         if (! File::exists($pestConfigPath)) {
-            $pestConfig = <<<'PHP'
-<?php
-
-declare(strict_types=1);
-
-use Tests\TestCase;
-
-/*
-|--------------------------------------------------------------------------
-| Test Case
-|--------------------------------------------------------------------------
-|
-| The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "pest()" function to bind a different classes or traits.
-|
-*/
-
-pest()->extend(TestCase::class)->in('Feature', 'Unit');
-
-/*
-|--------------------------------------------------------------------------
-| Expectations
-|--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
-*/
-
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
-
-/*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
-*/
-
-function something()
-{
-    // ..
-}
-PHP;
-
-            File::put($pestConfigPath, $pestConfig);
+            File::copy(platform_path('stubs/tests/Pest.php'), $pestConfigPath);
             $this->line('   ✅ Created tests/Pest.php');
         }
 
@@ -182,28 +132,7 @@ PHP;
         $browserTestPath = base_path('tests/Browser/LoginTest.php');
         if (! File::exists($browserTestPath)) {
             File::ensureDirectoryExists(dirname($browserTestPath));
-            $browserTest = <<<'PHP'
-<?php
-
-declare(strict_types=1);
-
-it('renders the Laravolt login page', function (): void {
-    $page = visit('/auth/login');
-
-    $page
-        ->assertPathIs('/auth/login')
-        ->assertSee('Login')
-        ->assertSee('Email')
-        ->assertSee('Password')
-        ->assertPresent('input[name="email"]')
-        ->assertPresent('input[name="password"]')
-        ->type('email', 'admin@example.test')
-        ->type('password', 'secret')
-        ->assertValue('email', 'admin@example.test');
-});
-PHP;
-
-            File::put($browserTestPath, $browserTest);
+            File::copy(platform_path('stubs/tests/Browser/LoginTest.php'), $browserTestPath);
             $this->line('   ✅ Created tests/Browser/LoginTest.php');
         }
 
