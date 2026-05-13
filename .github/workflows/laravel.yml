@@ -19,6 +19,9 @@ jobs:
         extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, mbstring, pdo_sqlite, sockets, sqlite3, tokenizer, xml, zip, xdebug
         coverage: xdebug
     - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
     - name: Install Laravel
       run: composer create-project laravolt/laravel-starter-kit --no-install --no-ansi --no-interaction --no-scripts --prefer-dist laravel
     - name: Copy .env
@@ -57,6 +60,11 @@ jobs:
       run: |
         cd laravel
         php artisan migrate
+    - name: Install Playwright browsers
+      run: |
+        cd laravel
+        npm install --save-dev playwright@1.59.1
+        npx playwright install --with-deps chromium
     - name: Pint test
       run: |
         cd laravel
@@ -68,3 +76,11 @@ jobs:
       run: |
         cd laravel
         php artisan test tests/Feature -p --no-coverage
+    - name: Browser tests
+      env:
+        APP_URL: http://127.0.0.1:8000
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: |
+        cd laravel
+        php artisan laravolt:test:browser tests/Browser/LoginTest.php --browser=chrome

@@ -8,6 +8,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 
+use function Laravolt\platform_path;
+
 class Pest4InstallCommand extends Command
 {
     /**
@@ -45,11 +47,12 @@ class Pest4InstallCommand extends Command
             $this->runComposerCommand(['remove', 'phpunit/phpunit', '--dev']);
         }
 
-        // Install Pest v4
-        $this->info('📦 Installing Pest v4 with all dependencies...');
+        // Install Pest v4 and browser testing support
+        $this->info('📦 Installing Pest v4 with browser testing support...');
         $success = $this->runComposerCommand([
             'require',
-            'pestphp/pest',
+            'pestphp/pest:^4.0',
+            'pestphp/pest-plugin-browser:^4.0',
             '--dev',
             '--with-all-dependencies',
         ]);
@@ -75,6 +78,8 @@ class Pest4InstallCommand extends Command
         $this->newLine();
         $this->info('✅ Pest v4 installation complete!');
         $this->info('🚀 Run "./vendor/bin/pest" to execute your tests');
+        $this->info('🌐 Run "npm install --save-dev playwright@1.59.1 && npx playwright install chromium" before running browser tests');
+        $this->info('🌐 Run "php artisan laravolt:test:browser" to execute browser tests');
         $this->info('📖 Check PEST_MIGRATION_GUIDE.md for migration instructions');
 
         return self::SUCCESS;
@@ -119,60 +124,16 @@ class Pest4InstallCommand extends Command
         // Create tests/Pest.php
         $pestConfigPath = base_path('tests/Pest.php');
         if (! File::exists($pestConfigPath)) {
-            $pestConfig = <<<'PHP'
-<?php
-
-declare(strict_types=1);
-
-use Tests\TestCase;
-
-/*
-|--------------------------------------------------------------------------
-| Test Case
-|--------------------------------------------------------------------------
-|
-| The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "pest()" function to bind a different classes or traits.
-|
-*/
-
-pest()->extend(TestCase::class)->in('Feature', 'Unit');
-
-/*
-|--------------------------------------------------------------------------
-| Expectations
-|--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
-*/
-
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
-
-/*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
-*/
-
-function something()
-{
-    // ..
-}
-PHP;
-
-            File::put($pestConfigPath, $pestConfig);
+            File::copy(platform_path('stubs/tests/Pest.php'), $pestConfigPath);
             $this->line('   ✅ Created tests/Pest.php');
+        }
+
+        // Create a minimal browser smoke test
+        $browserTestPath = base_path('tests/Browser/LoginTest.php');
+        if (! File::exists($browserTestPath)) {
+            File::ensureDirectoryExists(dirname($browserTestPath));
+            File::copy(platform_path('stubs/tests/Browser/LoginTest.php'), $browserTestPath);
+            $this->line('   ✅ Created tests/Browser/LoginTest.php');
         }
 
         // Create pest.xml (replacing phpunit.xml for Pest)
@@ -252,6 +213,9 @@ XML;
             '/build/coverage',
             '/pestphp-coverage-result.xml',
             '/pestphp-execution-result.xml',
+            '/tests/Browser/Screenshots',
+            '/test-results',
+            '/playwright-report',
         ];
 
         $contents = File::get($gitignorePath);
@@ -375,6 +339,14 @@ expect($actual)->toBe('expected');
 # Run specific test suite
 ./vendor/bin/pest --testsuite=Feature
 
+# Run browser tests
+npm install --save-dev playwright@1.59.1
+npx playwright install chromium
+php artisan laravolt:test:browser
+
+# Run browser tests in debug/headed mode
+php artisan laravolt:test:browser --debug
+
 # Run with coverage
 ./vendor/bin/pest --coverage
 ```
@@ -382,6 +354,7 @@ expect($actual)->toBe('expected');
 ## Resources
 
 - [Pest Documentation](https://pestphp.com/docs)
+- [Pest Browser Testing](https://pestphp.com/docs/browser-testing)
 - [Migration Guide](https://pestphp.com/docs/migrating-from-phpunit)
 - [Expectations API](https://pestphp.com/docs/expectations)
 
