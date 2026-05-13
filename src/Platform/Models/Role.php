@@ -64,22 +64,45 @@ class Role extends Model
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
-            }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        $ids = collect();
+        $stringNames = [];
 
-                return $permissionObject->getKey();
+        foreach ($permissions as $permission) {
+            if (is_string($permission) && str($permission)->isUlid()) {
+                $ids->push($permission);
+            } elseif (is_numeric($permission)) {
+                $ids->push((int) $permission);
+            } elseif (is_string($permission)) {
+                $stringNames[] = trim($permission);
+            } elseif ($permission instanceof Model) {
+                $ids->push($permission->getKey());
             }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
+        }
+
+        $stringNames = array_filter($stringNames, fn ($name) => $name !== '');
+
+        if (! empty($stringNames)) {
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+            // ⚡ Bolt: Prevent N+1 query when assigning permissions by name
+            // Bulk fetch all existing string permissions via a single whereIn query
+            // and only execute firstOrCreate() for the missing names
+            $existingPermissions = $permissionModel->whereIn('name', $stringNames)->get();
+            $existingNames = $existingPermissions->pluck('name')->toArray();
+
+            foreach ($existingPermissions as $permission) {
+                $ids->push($permission->getKey());
             }
-        })->filter(function ($id) {
+
+            $missingNames = array_diff($stringNames, $existingNames);
+
+            foreach ($missingNames as $missingName) {
+                $newPermission = $permissionModel->firstOrCreate(['name' => $missingName]);
+                $ids->push($newPermission->getKey());
+            }
+        }
+
+        $ids = $ids->filter(function ($id) {
             if (is_int($id)) {
                 return $id > 0;
             }
