@@ -34,7 +34,12 @@ class ModelEnhancer
             $content = $this->addSearchableColumns($content, $searchableColumns);
         }
 
-        return File::put($modelPath, $content);
+        // Existing models need an explicit mass-assignment policy for generated CRUD.
+        if (! $this->hasMassAssignmentProperty($content)) {
+            $content = $this->addGuardedProperty($content);
+        }
+
+        return File::put($modelPath, $content) !== false;
     }
 
     /**
@@ -155,6 +160,22 @@ class ModelEnhancer
     }
 
     /**
+     * Check if model already defines mass-assignment rules
+     */
+    protected function hasMassAssignmentProperty(string $content): bool
+    {
+        return preg_match('/\n\s*protected\s+\$(fillable|guarded)\s*=/', $content) === 1;
+    }
+
+    /**
+     * Add guarded property to model
+     */
+    protected function addGuardedProperty(string $content): string
+    {
+        return $this->insertProperty($content, "\n    protected \$guarded = [];\n");
+    }
+
+    /**
      * Add searchableColumns property to model
      */
     protected function addSearchableColumns(string $content, array $searchableColumns): string
@@ -162,15 +183,21 @@ class ModelEnhancer
         $columnsString = "'".implode("', '", $searchableColumns)."'";
         $property = "\n    /** @var array<string> */\n    protected \$searchableColumns = [{$columnsString}];\n";
 
+        return $this->insertProperty($content, $property);
+    }
+
+    /**
+     * Insert property after existing properties or class traits
+     */
+    protected function insertProperty(string $content, string $property): string
+    {
         // Find a good place to insert the property (after existing properties or use statements)
         if (preg_match('/(\n\s*protected\s+\$[^;]+;)/', $content)) {
             // Insert after last protected property
-            $content = preg_replace('/(\n\s*protected\s+\$[^;]+;)(?!\n\s*protected\s+\$)/', '$1'.$property, $content, 1);
-        } else {
-            // Insert after use statements
-            $content = preg_replace('/(\n\s*use\s+[^;]+;\s*)(\n\s*(?:public|protected|private|\}))/', '$1'.$property.'$2', $content);
+            return preg_replace('/(\n\s*protected\s+\$[^;]+;)(?!\n\s*protected\s+\$)/', '$1'.$property, $content, 1);
         }
 
-        return $content;
+        // Insert after use statements
+        return preg_replace('/(\n\s*use\s+[^;]+;\s*)(\n\s*(?:public|protected|private|\}))/', '$1'.$property.'$2', $content);
     }
 }

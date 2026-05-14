@@ -335,10 +335,10 @@ class Generator extends Command
             $searchableColumns = [];
             if ($this->transformer) {
                 $searchableString = $this->transformer->toSearchableColumns();
-                $searchableColumns = array_map('trim', explode(',', mb_trim($searchableString, "'")));
-                $searchableColumns = array_filter($searchableColumns, function ($col) {
-                    return ! empty($col) && $col !== "''";
-                });
+                $searchableColumns = array_map(function ($column) {
+                    return trim($column, " \t\n\r\0\x0B'\"");
+                }, explode(',', $searchableString));
+                $searchableColumns = array_filter($searchableColumns);
             }
 
             // Enhance the model
@@ -372,6 +372,10 @@ class Generator extends Command
      */
     protected function showGenerationSummary(string $modelAction, ?array $existingModel, string $moduleName): void
     {
+        $namespace = config('laravolt.thunderclap.namespace', 'Modules');
+        $targetDir = trim(str_replace(base_path(), '', config('laravolt.thunderclap.target_dir', base_path('modules'))), DIRECTORY_SEPARATOR) ?: 'modules';
+        $providerClass = "{$namespace}\\{$moduleName}\\{$moduleName}ServiceProvider::class";
+
         $this->newLine();
         $this->info('🎉 Module generation completed!');
         $this->newLine();
@@ -393,11 +397,16 @@ class Generator extends Command
         $this->newLine();
         $this->line('<fg=cyan>Next steps:</fg=cyan>');
         $this->line('  1. Review the generated code');
-        $this->line('  2. Update routes and controllers as needed');
-        $this->line('  3. Run migrations if not already done');
+        $this->line("  2. Ensure composer.json autoload.psr-4 contains \"{$namespace}\\\\\": \"{$targetDir}/\"");
+        $this->line("  3. Register the module provider in bootstrap/providers.php: {$providerClass},");
+        $this->line('  4. Refresh autoload and cached Laravel state:');
+        $this->line('     composer dump-autoload');
+        $this->line('     php artisan optimize:clear');
+        $this->line('  5. Run migrations if not already done');
+        $this->line('  6. Run the generated module tests');
 
         if ($modelAction === 'enhance') {
-            $this->line('  4. Test the enhanced model functionality');
+            $this->line('  7. Test the enhanced model functionality');
         }
 
         $this->newLine();
