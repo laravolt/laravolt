@@ -66,8 +66,8 @@ composer require laravolt/thunderclap
 | Requirement | Version |
 |------------|---------|
 | **PHP** | `>= 8.2` |
-| **Laravel** | `^10.0 || ^11.0 || ^12.0` |
-| **Doctrine DBAL** | `^3.0` |
+| **Laravel** | `^11.0 || ^12.0 || ^13.0` |
+| **Doctrine DBAL** | `^4.0` |
 | **Laravolt Suitable** | For AutoFilter, AutoSearch, AutoSort traits |
 
 ### Optional Dependencies
@@ -187,12 +187,19 @@ class UserController
 
 **Model** (`User.php`):
 ```php
-class User extends Model
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Laravolt\Suitable\AutoFilter;
+use Laravolt\Suitable\AutoSearch;
+use Laravolt\Suitable\AutoSort;
+use Modules\User\Models\UserFactory;
+
+final class User extends Model
 {
-    use AutoFilter, AutoSearch, AutoSort, HasFactory;
+    use HasFactory, AutoFilter, AutoSearch, AutoSort;
 
     protected $table = 'users';
-    
+
     protected $guarded = [];
 
     /** @var array<string> */
@@ -287,15 +294,21 @@ class User extends Model
 }
 
 // After Enhancement (automatic)
-class User extends Model
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravolt\Suitable\AutoFilter;
+use Laravolt\Suitable\AutoSearch;
+use Laravolt\Suitable\AutoSort;
+use Modules\User\Models\UserFactory;
+
+final class User extends Model
 {
-    use AutoFilter, AutoSearch, AutoSort, HasFactory;
-    
+    use HasFactory, AutoFilter, AutoSearch, AutoSort;
+
     protected $table = 'users';
-    
+
     /** @var array<string> */
     protected $searchableColumns = ["name", "email"];
-    
+
     protected static function newFactory()
     {
         return UserFactory::new();
@@ -521,20 +534,22 @@ class ProductController
 ```php
 namespace Modules\Product\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Laravolt\Suitable\AutoFilter;
 use Laravolt\Suitable\AutoSearch;
 use Laravolt\Suitable\AutoSort;
 
-class Product extends Model
+final class Product extends Model
 {
-    use AutoFilter, AutoSearch, AutoSort, HasFactory;
-    
+    use HasFactory, AutoFilter, AutoSearch, AutoSort;
+
     protected $table = 'products';
     protected $guarded = [];
-    
+
     /** @var array<string> */
     protected $searchableColumns = ["name", "description", "sku"];
-    
+
     protected static function newFactory()
     {
         return ProductFactory::new();
@@ -546,7 +561,7 @@ class Product extends Model
 ```php
 namespace Modules\Product\Models;
 
-class ProductFactory extends Factory
+final class ProductFactory extends Factory
 {
     protected $model = Product::class;
     

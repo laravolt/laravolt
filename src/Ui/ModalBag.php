@@ -16,7 +16,7 @@ class ModalBag extends Component
     #[On('openModal')]
     public function openModal($modal): void
     {
-        $id = $modal.'-'.md5($modal);
+        $id = $modal.'-'.hash('sha256', $modal);
 
         $this->modals[$id] = [
             'name' => $modal,

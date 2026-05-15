@@ -142,7 +142,7 @@ class Filepond extends FormControl
     {
         $name = $this->getAttribute('name');
         $inputName = $this->isMultiple ? rtrim($name, '[]').'[]' : $name;
-        $id = $this->getAttribute('id') ?? 'filepond_'.md5($name);
+        $id = $this->getAttribute('id') ?? 'filepond_'.hash('sha256', $name);
 
         // Build data attributes for FilePond config
         $dataAttrs = '';

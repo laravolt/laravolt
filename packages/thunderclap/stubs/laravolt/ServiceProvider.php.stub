@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace :Namespace:\:ModuleName:;
 
 use Livewire\Livewire;
 use Laravolt\Support\Base\BaseServiceProvider;
 
-class :ModuleName:ServiceProvider extends BaseServiceProvider
+final class :ModuleName:ServiceProvider extends BaseServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
         Livewire::component('modules.:module-name:.:module-name:-table-view', :ModuleName:TableView::class);
@@ -30,7 +32,7 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
         }
     }
 
-    protected function menu(): void
+    public function menu(): void
     {
         app('laravolt.menu.builder')->register(function ($menu) {
             if ($menu->modules) {
@@ -43,7 +45,7 @@ class :ModuleName:ServiceProvider extends BaseServiceProvider
         });
     }
 
-    protected function packagePath($path)
+    public function packagePath($path): string
     {
         $rc = new \ReflectionClass(get_class($this));
         $dir = dirname($rc->getFileName());

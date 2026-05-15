@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 trait Activation
 {
@@ -46,7 +47,7 @@ trait Activation
 
     protected function createToken(Model $user)
     {
-        $token = md5(uniqid(rand(), true));
+        $token = hash('sha256', Str::random(64));
         DB::table('users_activation')->insert([
             'user_id' => $user->getKey(),
             'token' => $token,

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace :Namespace:\:ModuleName:\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Store extends FormRequest
+final class Store extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -23,7 +25,7 @@ class Store extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }

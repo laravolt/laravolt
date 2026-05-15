@@ -98,6 +98,6 @@ class Statistic extends Component
             'color' => $this->color,
         ];
 
-        return 'laravolt_statistic_'.class_basename($this).'_'.md5(serialize($properties));
+        return 'laravolt_statistic_'.class_basename($this).'_'.hash('sha256', serialize($properties));
     }
 }

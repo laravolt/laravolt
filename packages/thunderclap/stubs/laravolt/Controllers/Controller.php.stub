@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace :Namespace:\:ModuleName:\Controllers;
 
 use Illuminate\Http\RedirectResponse;
@@ -9,7 +11,7 @@ use :Namespace:\:ModuleName:\Requests\Store;
 use :Namespace:\:ModuleName:\Requests\Update;
 use :Namespace:\:ModuleName:\Tables\:ModuleName:TableView;
 
-class :ModuleName:Controller
+final class :ModuleName:Controller
 {
     public function index(): View
     {

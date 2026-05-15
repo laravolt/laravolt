@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace :Namespace:\:ModuleName:;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -9,7 +11,7 @@ use Laravolt\Suitable\Columns\Text;
 use Laravolt\Ui\TableView;
 :MODEL_IMPORT:
 
-class :ModuleName:TableView extends TableView
+final class :ModuleName:TableView extends TableView
 {
     public function data(): Builder
     {

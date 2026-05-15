@@ -39,7 +39,7 @@ class BrandImage extends Component
 
         if (Str::of($brandImage)->endsWith('.svg')) {
             $isSvg = true;
-            $cacheKey = 'brand_image_'.md5($brandImage);
+            $cacheKey = 'brand_image_'.hash('sha256', $brandImage);
             $brandImage = Cache::remember($cacheKey, 60, function () use ($brandImage) {
                 // Handle URLs (http/https)
                 if (Str::of($brandImage)->startsWith(['http://', 'https://'])) {

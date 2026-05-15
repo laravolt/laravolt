@@ -124,8 +124,10 @@ class ModelDetector
             $reflection = new ReflectionClass($modelClass);
             $usedTraits = $this->getAllTraits($reflection);
 
+            $usedTraitNames = array_map(fn (string $trait): string => class_basename($trait), $usedTraits);
+
             foreach ($requiredTraits as $trait) {
-                if (! in_array($trait, $usedTraits)) {
+                if (! in_array(class_basename($trait), $usedTraitNames)) {
                     $missingTraits[] = $trait;
                 }
             }
@@ -172,7 +174,10 @@ class ModelDetector
         $traits = [];
 
         while ($reflection) {
-            $traits = array_merge($traits, array_keys($reflection->getTraits()));
+            $traits = array_merge(
+                $traits,
+                array_map(fn (string $trait): string => class_basename($trait), array_keys($reflection->getTraits()))
+            );
             $reflection = $reflection->getParentClass();
         }
 

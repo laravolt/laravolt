@@ -58,7 +58,7 @@ class Text extends Input
 
     public function render()
     {
-        $idAttribute = $this->getAttribute('id') ?? md5($this->getAttribute('name'));
+        $idAttribute = $this->getAttribute('id') ?? hash('sha256', $this->getAttribute('name'));
 
         $this->attribute('id', $idAttribute);
 

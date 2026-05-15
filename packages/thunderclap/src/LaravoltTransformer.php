@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Laravolt\Thunderclap;
 
+use Doctrine\DBAL\Types\BigIntType;
+use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\DateType;
+use Doctrine\DBAL\Types\DecimalType;
+use Doctrine\DBAL\Types\FloatType;
+use Doctrine\DBAL\Types\IntegerType;
+use Doctrine\DBAL\Types\SmallIntType;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\TextType;
 use Illuminate\Support\Str;
 
@@ -245,7 +252,7 @@ TEMPLATE;
         $type = get_class($column['type']);
 
         switch ($type) {
-            case \Doctrine\DBAL\Types\StringType::class:
+            case StringType::class:
                 if (Str::contains($name, 'email')) {
                     return "            '{$name}' => \$this->faker->unique()->safeEmail(),";
                 }
@@ -281,15 +288,31 @@ TEMPLATE;
                 return "            '{$name}' => \$this->faker->date(),";
             case DateTimeType::class:
                 return "            '{$name}' => \$this->faker->dateTime(),";
+            case DecimalType::class:
+            case FloatType::class:
+                return "            '{$name}' => \$this->faker->randomFloat(2, 10, 1000),";
+            case BigIntType::class:
+            case IntegerType::class:
+            case SmallIntType::class:
+                if (Str::contains($name, '_id')) {
+                    return null; // Skip foreign keys
+                }
+
+                return "            '{$name}' => \$this->faker->numberBetween(1, 100),";
+            case BooleanType::class:
+                return "            '{$name}' => \$this->faker->boolean(),";
             default:
                 if (Str::contains($name, '_id')) {
                     return null; // Skip foreign keys
                 }
-                if (Str::contains($name, 'price') || Str::contains($name, 'amount')) {
+                if (Str::contains($name, 'price') || Str::contains($name, 'amount') || Str::contains($name, 'cost')) {
                     return "            '{$name}' => \$this->faker->randomFloat(2, 10, 1000),";
                 }
-                if (Str::contains($name, 'quantity') || Str::contains($name, 'count')) {
+                if (Str::contains($name, 'quantity') || Str::contains($name, 'count') || Str::contains($name, 'point')) {
                     return "            '{$name}' => \$this->faker->numberBetween(1, 100),";
+                }
+                if (Str::startsWith($name, 'is_') || Str::startsWith($name, 'has_')) {
+                    return "            '{$name}' => \$this->faker->boolean(),";
                 }
 
                 return "            '{$name}' => \$this->faker->word(),";
@@ -302,7 +325,7 @@ TEMPLATE;
         $type = get_class($column['type']);
 
         switch ($type) {
-            case \Doctrine\DBAL\Types\StringType::class:
+            case StringType::class:
                 if (Str::contains($name, 'title')) {
                     return "\$attributes['{$name}'] = 'Updated Title';";
                 }
@@ -323,6 +346,15 @@ TEMPLATE;
                 return "\$attributes['{$name}'] = now()->format('Y-m-d');";
             case DateTimeType::class:
                 return "\$attributes['{$name}'] = now();";
+            case DecimalType::class:
+            case FloatType::class:
+                return "\$attributes['{$name}'] = 123.45;";
+            case BigIntType::class:
+            case IntegerType::class:
+            case SmallIntType::class:
+                return "\$attributes['{$name}'] = 123;";
+            case BooleanType::class:
+                return "\$attributes['{$name}'] = true;";
             default:
                 return "\$attributes['{$name}'] = 'Updated Value';";
         }

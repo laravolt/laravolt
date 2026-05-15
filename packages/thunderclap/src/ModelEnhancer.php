@@ -19,7 +19,7 @@ class ModelEnhancer
     /**
      * Enhance existing model with required traits and properties
      */
-    public function enhanceModel(array $modelInfo, array $enhancement, array $searchableColumns = []): bool
+    public function enhanceModel(array $modelInfo, array $enhancement, array $searchableColumns = [], ?string $factoryClass = null): bool
     {
         $modelPath = $modelInfo['path'];
         $content = File::get($modelPath);
@@ -37,6 +37,10 @@ class ModelEnhancer
         // Existing models need an explicit mass-assignment policy for generated CRUD.
         if (! $this->hasMassAssignmentProperty($content)) {
             $content = $this->addGuardedProperty($content);
+        }
+
+        if ($factoryClass !== null && ! $this->hasNewFactoryMethod($content)) {
+            $content = $this->addFactoryMethod($content, $factoryClass);
         }
 
         return File::put($modelPath, $content) !== false;
@@ -78,60 +82,80 @@ class ModelEnhancer
     }
 
     /**
-     * Add traits to model
+     * Add an import statement to the model if it does not already exist.
      */
-    protected function addTraits(string $content, array $missingTraits): string
+    protected function addImport(string $content, string $class): string
     {
-        // Extract namespace and use statements
         $lines = explode("\n", $content);
-        $useStatements = [];
-        $classLine = null;
         $useEndLine = null;
+        $classLine = null;
+        $useStatement = "use {$class};";
 
         foreach ($lines as $index => $line) {
             $trimmedLine = mb_trim($line);
 
+            if ($trimmedLine === $useStatement) {
+                return $content;
+            }
+
             if (Str::startsWith($trimmedLine, 'use ') && Str::endsWith($trimmedLine, ';')) {
-                $useStatements[] = $index;
                 $useEndLine = $index;
             }
 
-            if (Str::startsWith($trimmedLine, 'class ')) {
+            if (preg_match('/^(?:abstract\s+|final\s+|readonly\s+)*class\s+/', $trimmedLine) === 1) {
                 $classLine = $index;
                 break;
             }
         }
 
-        // Add missing use statements
-        $newUseStatements = [];
-        foreach ($missingTraits as $trait) {
-            $useStatement = "use {$trait};";
+        $insertIndex = $useEndLine !== null ? $useEndLine + 1 : $classLine;
+        if ($insertIndex === null) {
+            return $content;
+        }
 
-            // Check if use statement already exists
-            $found = false;
-            foreach ($lines as $line) {
-                if (mb_trim($line) === $useStatement) {
-                    $found = true;
+        array_splice($lines, $insertIndex, 0, [$useStatement]);
+
+        return implode("\n", $lines);
+    }
+
+    /**
+     * Add traits to model
+     */
+    protected function addTraits(string $content, array $missingTraits): string
+    {
+        $content = $this->removeBareTraitImports($content, $missingTraits);
+
+        foreach ($missingTraits as $trait) {
+            $content = $this->addImport($content, $trait);
+        }
+
+        return $this->addTraitsToClass($content, $missingTraits);
+    }
+
+    /**
+     * Remove malformed file-scope imports such as `use AutoFilter;`.
+     */
+    protected function removeBareTraitImports(string $content, array $traits): string
+    {
+        $shortTraitNames = array_map(fn (string $trait): string => class_basename($trait), $traits);
+        $lines = explode("\n", $content);
+
+        foreach ($lines as $index => $line) {
+            $trimmedLine = mb_trim($line);
+
+            if (preg_match('/^(?:abstract\s+|final\s+|readonly\s+)*class\s+/', $trimmedLine) === 1) {
+                break;
+            }
+
+            foreach ($shortTraitNames as $traitName) {
+                if ($trimmedLine === "use {$traitName};") {
+                    unset($lines[$index]);
                     break;
                 }
             }
-
-            if (! $found) {
-                $newUseStatements[] = $useStatement;
-            }
         }
 
-        // Insert new use statements
-        if (! empty($newUseStatements)) {
-            $insertIndex = $useEndLine !== null ? $useEndLine + 1 : $classLine;
-            array_splice($lines, $insertIndex, 0, $newUseStatements);
-        }
-
-        // Add traits to class
-        $content = implode("\n", $lines);
-        $content = $this->addTraitsToClass($content, $missingTraits);
-
-        return $content;
+        return implode("\n", $lines);
     }
 
     /**
@@ -139,24 +163,31 @@ class ModelEnhancer
      */
     protected function addTraitsToClass(string $content, array $missingTraits): string
     {
-        $traitNames = [];
-        foreach ($missingTraits as $trait) {
-            $traitNames[] = class_basename($trait);
+        $traitNames = array_map(fn (string $trait): string => class_basename($trait), $missingTraits);
+
+        // Find consecutive trait use statements at the start of the class body and collapse them.
+        if (preg_match('/((?:abstract\s+|final\s+|readonly\s+)*class\s+\w+[^{}]*{\s*)((?:use\s+[^;]+;\s*)+)/s', $content, $matches)) {
+            preg_match_all('/use\s+([^;]+);/', $matches[2], $traitMatches);
+            $existingTraits = collect($traitMatches[1])
+                ->flatMap(fn (string $traits) => array_map('mb_trim', explode(',', $traits)))
+                ->map(fn (string $trait) => class_basename(ltrim($trait, '\\')))
+                ->filter()
+                ->all();
+
+            $newTraits = array_values(array_unique(array_merge($existingTraits, $traitNames)));
+
+            return preg_replace(
+                '/((?:abstract\s+|final\s+|readonly\s+)*class\s+\w+[^{}]*{\s*)((?:use\s+[^;]+;\s*)+)/s',
+                '$1use '.implode(', ', $newTraits).";\n\n",
+                $content,
+                1
+            ) ?? $content;
         }
 
-        // Find existing use statement in class
-        if (preg_match('/class\s+\w+[^{]*{[^}]*?use\s+([^;]+);/s', $content, $matches)) {
-            // Existing use statement found, append to it
-            $existingTraits = $matches[1];
-            $newTraits = $existingTraits.', '.implode(', ', $traitNames);
-            $content = str_replace($matches[1], $newTraits, $content);
-        } else {
-            // No existing use statement, add one after class opening brace
-            $useStatement = "\n    use ".implode(', ', $traitNames).";\n";
-            $content = preg_replace('/(\n\s*class\s+\w+[^{]*{)(\s*)/', '$1'.$useStatement.'$2', $content);
-        }
+        // No existing trait use statement, add one after class opening brace.
+        $useStatement = "\n    use ".implode(', ', $traitNames).";\n";
 
-        return $content;
+        return preg_replace('/(\n\s*(?:abstract\s+|final\s+|readonly\s+)*class\s+\w+[^{}]*{)(\s*)/', '$1'.$useStatement.'$2', $content, 1) ?? $content;
     }
 
     /**
@@ -165,6 +196,26 @@ class ModelEnhancer
     protected function hasMassAssignmentProperty(string $content): bool
     {
         return preg_match('/\n\s*protected\s+\$(fillable|guarded)\s*=/', $content) === 1;
+    }
+
+    /**
+     * Check if model already defines a factory resolver.
+     */
+    protected function hasNewFactoryMethod(string $content): bool
+    {
+        return preg_match('/\n\s*protected\s+static\s+function\s+newFactory\s*\(/', $content) === 1;
+    }
+
+    /**
+     * Add module factory resolver to existing model.
+     */
+    protected function addFactoryMethod(string $content, string $factoryClass): string
+    {
+        $content = $this->addImport($content, $factoryClass);
+        $factoryName = class_basename($factoryClass);
+        $method = "\n    protected static function newFactory()\n    {\n        return {$factoryName}::new();\n    }\n";
+
+        return preg_replace('/\n}/', $method."\n}", $content, 1) ?? $content;
     }
 
     /**

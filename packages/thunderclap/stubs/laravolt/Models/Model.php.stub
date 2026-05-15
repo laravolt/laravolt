@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace :Namespace:\:ModuleName:\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,9 +10,9 @@ use Laravolt\Suitable\AutoFilter;
 use Laravolt\Suitable\AutoSearch;
 use Laravolt\Suitable\AutoSort;
 
-class :ModuleName: extends Model
+final class :ModuleName: extends Model
 {
-    use AutoFilter, AutoSearch, AutoSort, HasFactory;
+    use HasFactory, AutoFilter, AutoSearch, AutoSort;
 
     protected $table = ':table:';
 

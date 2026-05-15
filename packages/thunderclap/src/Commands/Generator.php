@@ -14,6 +14,7 @@ use Laravolt\Thunderclap\DBHelper;
 use Laravolt\Thunderclap\FileTransformer;
 use Laravolt\Thunderclap\ModelDetector;
 use Laravolt\Thunderclap\ModelEnhancer;
+use Symfony\Component\Process\Process;
 
 class Generator extends Command
 {
@@ -92,7 +93,7 @@ class Generator extends Command
             if ($this->option('use-existing-models')) {
                 $modelAction = 'enhance';
                 $this->info('🔧 Auto-enhancing existing model...');
-                $this->enhanceExistingModel($existingModel, $columns);
+                $this->enhanceExistingModel($existingModel, $columns, $moduleName);
                 $skipModelGeneration = true;
             } else {
                 // Otherwise, show the choice menu
@@ -105,7 +106,7 @@ class Generator extends Command
                 $modelAction = $choice;
 
                 if ($choice === 'enhance') {
-                    $this->enhanceExistingModel($existingModel, $columns);
+                    $this->enhanceExistingModel($existingModel, $columns, $moduleName);
                     $skipModelGeneration = true;
                 } elseif ($choice === 'skip') {
                     $skipModelGeneration = true;
@@ -251,12 +252,10 @@ class Generator extends Command
             // 5. Run code style fix
             $this->info('🔁 Running code style fix...');
 
-            $pintCommand = base_path('vendor/bin/pint').' --parallel '.escapeshellarg($modulePath);
-            exec($pintCommand, $output, $returnCode);
+            $returnCode = $this->runPint($modulePath);
 
             if ($isUsingExistingModel) {
-                $pintCommand = base_path('vendor/bin/pint').' --parallel '.escapeshellarg($existingModel['path']);
-                exec($pintCommand, $output, $returnCode);
+                $returnCode = max($returnCode, $this->runPint($existingModel['path']));
             }
 
             if ($returnCode === 0) {
@@ -268,6 +267,14 @@ class Generator extends Command
 
         // Show summary
         $this->showGenerationSummary($modelAction, $existingModel, $moduleName);
+    }
+
+    protected function runPint(string $path): int
+    {
+        $process = new Process([base_path('vendor/bin/pint'), '--parallel', $path]);
+        $process->run();
+
+        return $process->getExitCode() ?? 1;
     }
 
     protected function toArrayElement($array)
@@ -313,7 +320,7 @@ class Generator extends Command
     /**
      * Enhance existing model with required traits and searchable columns
      */
-    protected function enhanceExistingModel(array $modelInfo, $columns): void
+    protected function enhanceExistingModel(array $modelInfo, $columns, string $moduleName): void
     {
         $this->info("Enhancing existing model: {$modelInfo['class']}");
 
@@ -342,7 +349,10 @@ class Generator extends Command
             }
 
             // Enhance the model
-            $success = $this->modelEnhancer->enhanceModel($modelInfo, $enhancement, $searchableColumns);
+            $namespace = config('laravolt.thunderclap.namespace', 'Modules');
+            $factoryClass = $namespace.'\\'.$moduleName.'\\Models\\'.$moduleName.'Factory';
+
+            $success = $this->modelEnhancer->enhanceModel($modelInfo, $enhancement, $searchableColumns, $factoryClass);
 
             if ($success) {
                 $this->info('✓ Successfully enhanced existing model');
