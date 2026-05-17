@@ -36,7 +36,7 @@ class UserTable extends TableView
                 },
                 trans('laravolt::users.roles')
             ),
-            Label::make('status', trans('laravolt::users.status'))->addClass('mini'),
+            Label::make('status', trans('laravolt::users.status')),
             Date::make('created_at', trans('laravolt::users.registered_at'))->sortable(),
             RestfulButton::make('epicentrum::users', trans('laravolt::users.action'))->only('edit', 'delete'),
         ];

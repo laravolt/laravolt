@@ -25,7 +25,14 @@ class Label extends Column implements ColumnInterface
                 $class .= " $additionalClass";
             }
 
-            return sprintf('<div class="ui label %s">%s</div>', $class, $label);
+            $base = 'inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium';
+            $defaultPalette = 'bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white';
+
+            // If the caller passed no palette via addClassIf()/map(), give a sensible
+            // neutral Preline badge palette so v7 admin tables don't render bare text.
+            $palette = trim($class) !== '' ? $class : $defaultPalette;
+
+            return sprintf('<span class="%s %s">%s</span>', $base, $palette, $label);
         }
 
         return '-';
