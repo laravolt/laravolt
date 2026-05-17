@@ -1,5 +1,6 @@
-<!-- Table -->
-<table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 basictable" aria-label="table">
+{{-- Livewire TableView body rendered through the <x-volt-table> primitive
+     so it shares Preline styling with Suitable and any hand-rolled tables. --}}
+<x-volt-table class="basictable">
     <thead class="bg-gray-50 dark:bg-neutral-700">
         <tr class="divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
             @foreach ($columns as $column)
@@ -50,7 +51,7 @@
     <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
         @forelse($data as $item)
             @php($outerLoop = $loop)
-            <tr class="hover:bg-gray-100 dark:hover:bg-neutral-700">
+            <tr class="hover:bg-gray-50 dark:hover:bg-neutral-800">
                 @foreach ($columns as $column)
                     <td class="whitespace-nowrap px-4 py-1" {!! $column->cellAttributes($item) !!}>
                         <span class="text-sm text-gray-600 dark:text-neutral-400">
@@ -63,5 +64,4 @@
             @include('laravolt::ui-component.table-view.empty')
         @endforelse
     </tbody>
-</table>
-<!-- End Table -->
+</x-volt-table>
