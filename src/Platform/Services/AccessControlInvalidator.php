@@ -16,20 +16,34 @@ class AccessControlInvalidator
     {
         $userId = $user->getKey();
 
-        Cache::forget("users.{$userId}.permissions");
+        $this->invalidateUserCache($userId);
         $this->deleteDatabaseSessions($userId);
     }
 
     public function invalidateUsers(iterable $users): void
     {
+        $userIds = [];
+
         foreach ($users as $user) {
             if ($user instanceof Model) {
-                $this->invalidateUser($user);
+                // Invalidate cache immediately for each user
+                $userId = $user->getKey();
+                $this->invalidateUserCache($userId);
+                $userIds[] = $userId;
             }
+        }
+
+        if (!empty($userIds)) {
+            $this->deleteDatabaseSessions($userIds);
         }
     }
 
-    protected function deleteDatabaseSessions(mixed $userId): void
+    protected function invalidateUserCache(mixed $userId): void
+    {
+        Cache::forget("users.{$userId}.permissions");
+    }
+
+    protected function deleteDatabaseSessions(mixed $userIds): void
     {
         try {
             $connection = config('session.connection');
@@ -40,7 +54,14 @@ class AccessControlInvalidator
                 return;
             }
 
-            DB::connection($connection)->table($table)->where('user_id', $userId)->delete();
+            $query = DB::connection($connection)->table($table);
+
+            // ⚡ Bolt: Fast-path for bulk database session deletion
+            if (is_array($userIds)) {
+                $query->whereIn('user_id', $userIds)->delete();
+            } else {
+                $query->where('user_id', $userIds)->delete();
+            }
         } catch (Throwable) {
             // Session invalidation is best-effort because Laravolt can run with
             // non-database session drivers or applications without session table.
