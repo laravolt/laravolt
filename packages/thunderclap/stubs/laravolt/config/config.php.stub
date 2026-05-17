@@ -12,6 +12,17 @@ return [
     'menu' => [
         'enabled' => true,
     ],
-    'permission' => [],
+    // Permission name(s) gating this module. The same value protects
+    // both the sidebar menu entry (via SidebarMenu) and every generated
+    // route (via the can:<permission> middleware in routes/web.php).
+    //
+    // Set to false (or an empty array) to leave the module wide-open
+    // behind plain auth. Set to a single permission string for module-
+    // wide gating, or pass an array for OR-checks.
+    //
+    // To use per-action gates (view / create / update / delete), set
+    // this to false here and add explicit ->middleware('can:...') calls
+    // in routes/web.php per Route::*().
+    'permission' => 'modules.:module-name:.view',
     'icon' => 'circle',
 ];

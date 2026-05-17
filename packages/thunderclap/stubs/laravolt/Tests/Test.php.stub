@@ -5,12 +5,19 @@ declare(strict_types=1);
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 :MODEL_IMPORT:
+use Laravolt\Platform\Models\Permission;
+use Laravolt\Platform\Models\Role;
 use Tests\TestCase;
 
 uses(TestCase::class, LazilyRefreshDatabase::class);
 
 beforeEach(function () {
+    // Create a role with wildcard permission so generated CRUD tests pass.
+    $role = Role::firstOrCreate(['name' => 'admin']);
+    $role->syncPermission(['*']);
+
     $this->user = User::factory()->create();
+    $this->user->assignRole($role);
     $this->actingAs($this->user);
 });
 

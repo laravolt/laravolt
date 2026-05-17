@@ -3,13 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use :Namespace:\:ModuleName:\Controllers\:ModuleName:Controller;
 
+$permission = config('modules.:module-name:.permission');
+
+$middleware = config('modules.:module-name:.routes.middleware');
+if (! empty($permission) && is_string($permission)) {
+    $middleware = array_merge((array) $middleware, ['can:'.$permission]);
+}
+
 Route::group(
     [
         'prefix' => config('modules.:module-name:.routes.prefix'),
         'as' => 'modules::',
-        'middleware' => config('modules.:module-name:.routes.middleware'),
+        'middleware' => $middleware,
     ],
     function () {
         Route::resource(':module-name:', :ModuleName:Controller::class);
     }
 );
+
