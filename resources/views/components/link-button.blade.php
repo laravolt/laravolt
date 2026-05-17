@@ -1,8 +1,11 @@
 @php
     $variant = $attributes->get('variant', 'primary');
     $size = $attributes->get('size', 'md');
+    $icon = $icon ?? $attributes->get('icon');
     $iconPosition = $attributes->get('icon-position', 'left');
-    $attributes = $attributes->except(['variant', 'size', 'icon-position']);
+    $label = $label ?? $attributes->get('label');
+    $url = $url ?? $attributes->get('url', $attributes->get('href', '#'));
+    $attributes = $attributes->except(['variant', 'size', 'icon', 'icon-position', 'label', 'url']);
 
     // Base link button classes
     $baseClasses = 'inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border focus:outline-hidden focus:ring-2 transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none no-underline';
