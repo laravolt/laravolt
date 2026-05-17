@@ -26,7 +26,6 @@ trait Bootstrap
     protected function setUp(): void
     {
         parent::setUp();
-        $this->loadLaravelMigrations();
         $this->artisan('migrate', [
             '--path' => realpath(__DIR__.'/../database/migrations'),
             '--realpath' => true,

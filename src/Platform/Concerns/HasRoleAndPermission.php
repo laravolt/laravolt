@@ -21,24 +21,79 @@ trait HasRoleAndPermission
 
     public function permissions(): Collection
     {
-        // save users permissions result for 1 hour (3600 seconds)
-        return Cache::remember(
-            "users.{$this->getKey()}.permissions", 3600, function () {
-                /**
-                 * @var Permission $permissionModel
-                 */
-                $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        $cacheKey = "users.{$this->getKey()}.permissions";
+        $rebuild = function (): array {
+            /**
+             * @var Permission $permissionModel
+             */
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
-                return $permissionModel
-                    ->newModelQuery()
-                    ->selectRaw('acl_permissions.*')
-                    ->join('acl_permission_role', 'acl_permissions.id', '=', 'acl_permission_role.permission_id')
-                    ->join('acl_role_user', 'acl_role_user.role_id', '=', 'acl_permission_role.role_id')
-                    ->join('users', 'users.id', '=', 'acl_role_user.user_id')
-                    ->where('users.id', $this->getKey())
-                    ->get()->unique();
-            }
+            return $permissionModel
+                ->newModelQuery()
+                ->selectRaw('acl_permissions.*')
+                ->join('acl_permission_role', 'acl_permissions.id', '=', 'acl_permission_role.permission_id')
+                ->join('acl_role_user', 'acl_role_user.role_id', '=', 'acl_permission_role.role_id')
+                ->join('users', 'users.id', '=', 'acl_role_user.user_id')
+                ->where('users.id', $this->getKey())
+                ->get()
+                ->unique('id')
+                ->map(fn ($permission) => [
+                    'id' => $permission->getKey(),
+                    'name' => (string) ($permission->name ?? ''),
+                ])
+                ->values()
+                ->all();
+        };
+
+        // Cache primitive arrays (id+name) for 1 hour. Primitive shape survives
+        // class moves / serialization drift; if the cached value is malformed
+        // (e.g. __PHP_Incomplete_Class from a stale Collection), forget+rebuild.
+        $cached = Cache::get($cacheKey);
+
+        if (! $this->isValidPermissionCache($cached)) {
+            Cache::forget($cacheKey);
+            $cached = $rebuild();
+            Cache::put($cacheKey, $cached, 3600);
+        }
+
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        $models = array_map(
+            function (array $row) use ($permissionModel) {
+                $instance = $permissionModel->newInstance([], true);
+                $instance->setRawAttributes(['id' => $row['id'], 'name' => $row['name']], true);
+
+                return $instance;
+            },
+            $cached
         );
+
+        return new Collection($models);
+    }
+
+    /**
+     * Validate the cached permission shape: array of arrays each with id+name.
+     */
+    protected function isValidPermissionCache(mixed $value): bool
+    {
+        if (! is_array($value)) {
+            return false;
+        }
+
+        foreach ($value as $row) {
+            if (! is_array($row)) {
+                return false;
+            }
+
+            if (! array_key_exists('id', $row) || ! array_key_exists('name', $row)) {
+                return false;
+            }
+
+            if (! is_string($row['name'])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function getPermissionsAttribute(): Collection
