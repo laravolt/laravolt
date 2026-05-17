@@ -2,6 +2,7 @@
 composer.lock
 .phpunit.result.cache
 .phpunit.cache
+/phpunit.xml
 node_modules
 public/*
 resources/icons/*
