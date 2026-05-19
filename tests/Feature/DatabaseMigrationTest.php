@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Feature\Acl\Feature;
 
 use Illuminate\Support\Facades\Schema;
-use Laravolt\Tests\Feature\Acl\FeatureTest;
+use Laravolt\Tests\FeatureTest;
 
 class DatabaseMigrationTest extends FeatureTest
 {
