@@ -38,40 +38,54 @@ class Acl
 
     public function syncPermission($refresh = false): Collection
     {
-        return DB::transaction(function () use ($refresh) {
-            if ($refresh) {
-                Schema::disableForeignKeyConstraints();
-                app(config('laravolt.epicentrum.models.permission'))->truncate();
-                Schema::enableForeignKeyConstraints();
-            }
-
-            $items = collect();
-            foreach ($this->permissions() as $name) {
-                $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                $status = 'No Change';
-
-                if (! $permission->exists) {
-                    $permission->save();
-                    $status = 'New';
+        return DB::transaction(
+            function () use ($refresh) {
+                if ($refresh) {
+                    Schema::disableForeignKeyConstraints();
+                    app(config('laravolt.epicentrum.models.permission'))->truncate();
+                    Schema::enableForeignKeyConstraints();
                 }
 
-                $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
+                $items = collect();
+                $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+                // Optimization: Fetch existing permissions in bulk to prevent N+1 SELECT queries
+                $existingPermissions = $permissionModel->whereIn('name', $this->permissions())
+                    ->get()
+                    ->keyBy('name');
+
+                foreach ($this->permissions() as $name) {
+                    $status = 'No Change';
+                    $permission = $existingPermissions->get($name);
+
+                    if (! $permission) {
+                        // Create missing permission
+                        $permission = $permissionModel->create(['name' => $name]);
+                        // Add to existing permissions to avoid duplicate inserts if array contains duplicates
+                        $existingPermissions->put($name, $permission);
+                        $status = 'New';
+                    }
+
+                    $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
+                }
+
+                // delete unused permissions
+                // Bug fix: array_merge properly appends '*' instead of the '+' operator on indexed arrays
+                $permissions = array_merge($this->permissions(), ['*']);
+                $unusedPermissions = $permissionModel->whereNotIn('name', $permissions)->get();
+
+                if ($unusedPermissions->isNotEmpty()) {
+                    foreach ($unusedPermissions as $permission) {
+                        $items->push(['id' => $permission->getKey(), 'name' => $permission->name, 'status' => 'Deleted']);
+                        // We iterate delete() here instead of bulk delete to ensure Model Events (like caching invalidation) fire
+                        $permission->delete();
+                    }
+                }
+
+                $items = $items->sortBy('name');
+
+                return $items;
             }
-
-            // delete unused permissions
-            $permissions = $this->permissions() + ['*'];
-            $unusedPermissions = app(config('laravolt.epicentrum.models.permission'))
-                ->whereNotIn('name', $permissions)
-                ->get();
-
-            foreach ($unusedPermissions as $permission) {
-                $items->push(['id' => $permission->getKey(), 'name' => $permission->name, 'status' => 'Deleted']);
-                $permission->delete();
-            }
-
-            $items = $items->sortBy('name');
-
-            return $items;
-        });
+        );
     }
 }
