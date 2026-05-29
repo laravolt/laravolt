@@ -37,10 +37,12 @@ trait HasRoleAndPermission
                 ->where('users.id', $this->getKey())
                 ->get()
                 ->unique('id')
-                ->map(fn ($permission) => [
+                ->map(
+                    fn ($permission) => [
                     'id' => $permission->getKey(),
                     'name' => (string) ($permission->name ?? ''),
-                ])
+                    ]
+                )
                 ->values()
                 ->all();
         };
@@ -188,39 +190,43 @@ trait HasRoleAndPermission
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
         return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
-                if (is_numeric($role)) {
-                    return (int) $role;
-                }
+            ->map(
+                function ($role) use ($createMissing) {
+                    if (is_numeric($role)) {
+                        return (int) $role;
+                    }
 
-                if (is_string($role) && Str::isUuid($role)) {
+                    if (is_string($role) && Str::isUuid($role)) {
+                        return $role;
+                    }
+
+                    if (is_string($role)) {
+                        $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
+                        $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+
+                        return $role?->getKey();
+                    }
+
+                    if ($role instanceof Model) {
+                        return $role->getKey();
+                    }
+
                     return $role;
                 }
+            )
+            ->filter(
+                function ($id) {
+                    if (is_int($id)) {
+                        return $id > 0;
+                    }
 
-                if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+                    if (is_string($id)) {
+                        return trim($id) !== '';
+                    }
 
-                    return $role?->getKey();
+                    return false;
                 }
-
-                if ($role instanceof Model) {
-                    return $role->getKey();
-                }
-
-                return $role;
-            })
-            ->filter(function ($id) {
-                if (is_int($id)) {
-                    return $id > 0;
-                }
-
-                if (is_string($id)) {
-                    return trim($id) !== '';
-                }
-
-                return false;
-            })
+            )
             ->all();
     }
 
@@ -234,11 +240,12 @@ trait HasRoleAndPermission
         app(AccessControlInvalidator::class)->invalidateUser($this);
     }
 
-    protected function _hasPermission($permission, $checkAll = false): bool
+    protected function _hasPermission($permission, $checkAll = false, $permissionsByName = null): bool
     {
         if (is_array($permission)) {
+            $permissionsByName = $permissionsByName ?? $this->permissions()->keyBy('name');
             foreach ($permission as $perm) {
-                $has = $this->hasPermission($perm);
+                $has = $this->_hasPermission($perm, $checkAll, $permissionsByName);
 
                 if ($checkAll && ! $has) {
                     return false;
@@ -252,20 +259,26 @@ trait HasRoleAndPermission
             return $checkAll;
         }
 
+        if ($permissionsByName !== null && is_string($permission) && !Str::isUuid($permission)) {
+            return $permissionsByName->has($permission);
+        }
+
+        $permissions = $this->permissions();
+
         if (Str::isUuid($permission)) {
-            return $this->permissions()->contains('id', $permission);
+            return $permissions->contains('id', $permission);
         }
 
         if (is_string($permission)) {
-            return $this->permissions()->contains('name', $permission);
+            return $permissions->contains('name', $permission);
         }
 
         if (is_int($permission)) {
-            return $this->permissions()->contains('id', $permission);
+            return $permissions->contains('id', $permission);
         }
 
         if ($permission instanceof Model) {
-            return $this->permissions()->contains($permission->getKeyName(), $permission->getKey());
+            return $permissions->contains($permission->getKeyName(), $permission->getKey());
         }
 
         return false;

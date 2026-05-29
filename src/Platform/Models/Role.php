@@ -57,39 +57,45 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
-        return once(function () use ($permission) {
-            return $this->_hasPermission($permission);
-        });
+        return once(
+            function () use ($permission) {
+                return $this->_hasPermission($permission);
+            }
+        );
     }
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
-            }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        $ids = collect($permissions)->transform(
+            function ($permission) {
+                if (is_string($permission) && str($permission)->isUlid()) {
+                    return $permission;
+                }
+                if (is_numeric($permission)) {
+                    return (int) $permission;
+                }
+                if (is_string($permission)) {
+                    $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
 
-                return $permissionObject->getKey();
+                    return $permissionObject->getKey();
+                }
+                if ($permission instanceof Model) {
+                    return $permission->getKey();
+                }
             }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
-            }
-        })->filter(function ($id) {
-            if (is_int($id)) {
-                return $id > 0;
-            }
+        )->filter(
+            function ($id) {
+                if (is_int($id)) {
+                    return $id > 0;
+                }
 
-            if (is_string($id)) {
-                return trim($id) !== '';
-            }
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
 
-            return false;
-        });
+                return false;
+            }
+        );
 
         $changes = $this->permissions()->sync($ids->toArray());
 
@@ -111,8 +117,25 @@ class Role extends Model
         app(AccessControlInvalidator::class)->invalidateUsers($this->users()->cursor());
     }
 
-    protected function _hasPermission($permission)
+    protected function _hasPermission($permission, $checkAll = false, $permissionsByName = null)
     {
+        if (is_array($permission)) {
+            $permissionsByName = $permissionsByName ?? $this->permissions->keyBy('name');
+            foreach ($permission as $perm) {
+                $has = $this->_hasPermission($perm, $checkAll, $permissionsByName);
+
+                if ($checkAll && ! $has) {
+                    return false;
+                }
+
+                if (! $checkAll && $has) {
+                    return true;
+                }
+            }
+
+            return $checkAll;
+        }
+
         // ⚡ Bolt: Fast-path for checking permissions without instantiating models
         // if the permissions are eager-loaded
         if ($this->relationLoaded('permissions')) {
@@ -131,6 +154,10 @@ class Role extends Model
                     // Try to match key first, fallback to name
                     return $this->permissions->containsStrict($permissionModel->getKeyName(), $permission)
                         || $this->permissions->containsStrict('name', $permission);
+                }
+
+                if ($permissionsByName !== null) {
+                    return $permissionsByName->has($permission);
                 }
 
                 return $this->permissions->containsStrict('name', $permission);
