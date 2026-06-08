@@ -187,8 +187,24 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
+        $rolesArray = is_array($roles) ? $roles : [$roles];
+
+        // ⚡ Bolt: Extract string names to batch fetch existing roles
+        $stringNames = collect($rolesArray)
+            ->filter(fn ($r) => is_string($r) && ! Str::isUuid($r) && ! is_numeric($r))
+            ->values()
+            ->toArray();
+
+        $existingRoles = collect();
+        if (! empty($stringNames)) {
+            $existingRoles = app(config('laravolt.epicentrum.models.role'))
+                ->whereIn('name', $stringNames)
+                ->get()
+                ->keyBy(fn ($item) => strtolower($item->name));
+        }
+
+        return collect($rolesArray)
+            ->map(function ($role) use ($createMissing, $existingRoles) {
                 if (is_numeric($role)) {
                     return (int) $role;
                 }
@@ -198,10 +214,19 @@ trait HasRoleAndPermission
                 }
 
                 if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+                    $lowerName = strtolower($role);
+                    if ($existingRoles->has($lowerName)) {
+                        return $existingRoles->get($lowerName)->getKey();
+                    }
 
-                    return $role?->getKey();
+                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
+                    $roleObj = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+
+                    if ($roleObj) {
+                        $existingRoles->put($lowerName, $roleObj);
+                    }
+
+                    return $roleObj?->getKey();
                 }
 
                 if ($role instanceof Model) {
