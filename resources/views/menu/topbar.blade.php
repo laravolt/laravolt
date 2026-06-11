@@ -64,7 +64,7 @@
                         </button>
 
                         <!-- Account Dropdown -->
-                        <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-white rounded-xl shadow-xl dark:bg-neutral-900"
+                        <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration-200 opacity-0 hidden z-20 bg-white rounded-xl shadow-xl dark:bg-neutral-900"
                             role="menu" aria-orientation="vertical" aria-labelledby="hs-dnad">
                             <div class="border-gray-200 dark:border-neutral-800 p-1">
                                 <div class="py-2 px-3 flex items-center gap-x-3 rounded-lg text-sm text-gray-800 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 dark:text-neutral-300 dark:focus:bg-neutral-800"
