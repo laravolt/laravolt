@@ -1,15 +1,12 @@
 <?php
 
-$app = require_once __DIR__.'/vendor/autoload.php';
-
-use Illuminate\Support\Facades\Facade;
-use Illuminate\Container\Container;
-use Laravolt\Avatar\Avatar;
 use Intervention\Image\Typography\FontFactory;
+require 'vendor/autoload.php';
 
-$container = new Container();
-Facade::setFacadeApplication($container);
-
-$avatar = new Avatar([], null);
-$avatar->create('John Doe')->toBase64();
-echo "Avatar creation OK\n";
+try {
+    $factory = new FontFactory(function() {});
+    $factory->align('left', 'bottom');
+    echo "align('left', 'bottom') OK\n";
+} catch (\Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
