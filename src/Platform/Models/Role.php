@@ -57,39 +57,63 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
-        return once(function () use ($permission) {
-            return $this->_hasPermission($permission);
-        });
+        return once(
+            function () use ($permission) {
+                return $this->_hasPermission($permission);
+            }
+        );
     }
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
+        // ⚡ Bolt: Prevent N+1 queries when resolving string permissions
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        $stringNames = [];
+        foreach ($permissions as $permission) {
+            if (is_string($permission) && ! str($permission)->isUlid() && ! \Illuminate\Support\Str::isUuid($permission)) {
+                $stringNames[] = $permission;
             }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        }
 
-                return $permissionObject->getKey();
-            }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
-            }
-        })->filter(function ($id) {
-            if (is_int($id)) {
-                return $id > 0;
-            }
+        $existingModels = [];
+        if (! empty($stringNames)) {
+            $existingModels = $permissionModel->whereIn('name', $stringNames)->get()->keyBy('name');
+        }
 
-            if (is_string($id)) {
-                return trim($id) !== '';
-            }
+        $ids = collect($permissions)->transform(
+            function ($permission) use ($existingModels, $permissionModel) {
+                if (is_string($permission) && str($permission)->isUlid()) {
+                    return $permission;
+                }
+                if (is_numeric($permission)) {
+                    return (int) $permission;
+                }
+                if (is_string($permission)) {
+                    if (isset($existingModels[$permission])) {
+                        return $existingModels[$permission]->getKey();
+                    }
 
-            return false;
-        });
+                    $permissionObject = $permissionModel->firstOrCreate(['name' => $permission]);
+
+                    return $permissionObject->getKey();
+                }
+                if ($permission instanceof Model) {
+                    return $permission->getKey();
+                }
+            }
+        )->filter(
+            function ($id) {
+                if (is_int($id)) {
+                    return $id > 0;
+                }
+
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
+
+                return false;
+            }
+        );
 
         $changes = $this->permissions()->sync($ids->toArray());
 
