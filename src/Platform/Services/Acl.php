@@ -38,40 +38,53 @@ class Acl
 
     public function syncPermission($refresh = false): Collection
     {
-        return DB::transaction(function () use ($refresh) {
-            if ($refresh) {
-                Schema::disableForeignKeyConstraints();
-                app(config('laravolt.epicentrum.models.permission'))->truncate();
-                Schema::enableForeignKeyConstraints();
-            }
-
-            $items = collect();
-            foreach ($this->permissions() as $name) {
-                $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                $status = 'No Change';
-
-                if (! $permission->exists) {
-                    $permission->save();
-                    $status = 'New';
+        return DB::transaction(
+            function () use ($refresh) {
+                if ($refresh) {
+                    Schema::disableForeignKeyConstraints();
+                    app(config('laravolt.epicentrum.models.permission'))->truncate();
+                    Schema::enableForeignKeyConstraints();
                 }
 
-                $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
+                $items = collect();
+                $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+                // ⚡ Bolt: Resolve N+1 query issue when checking and creating permissions
+                $permissionsList = collect($this->permissions());
+                $existingPermissions = $permissionModel->whereIn('name', $permissionsList)->get()->keyBy('name');
+
+                foreach ($permissionsList as $name) {
+                    $permission = $existingPermissions->get($name);
+                    $status = 'No Change';
+
+                    if (! $permission) {
+                        $permission = $permissionModel->create(['name' => $name]);
+                        $status = 'New';
+                    }
+
+                    $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
+                }
+
+                // delete unused permissions
+                $permissionsToKeep = $this->permissions();
+                $permissionsToKeep[] = '*';
+                $unusedPermissions = $permissionModel
+                    ->whereNotIn('name', $permissionsToKeep)
+                    ->get();
+
+                if ($unusedPermissions->isNotEmpty()) {
+                    foreach ($unusedPermissions as $permission) {
+                        $items->push(['id' => $permission->getKey(), 'name' => $permission->name, 'status' => 'Deleted']);
+                    }
+
+                    // ⚡ Bolt: Batch delete unused permissions to avoid N+1 queries
+                    $permissionModel->whereIn($permissionModel->getKeyName(), $unusedPermissions->modelKeys())->delete();
+                }
+
+                $items = $items->sortBy('name');
+
+                return $items;
             }
-
-            // delete unused permissions
-            $permissions = $this->permissions() + ['*'];
-            $unusedPermissions = app(config('laravolt.epicentrum.models.permission'))
-                ->whereNotIn('name', $permissions)
-                ->get();
-
-            foreach ($unusedPermissions as $permission) {
-                $items->push(['id' => $permission->getKey(), 'name' => $permission->name, 'status' => 'Deleted']);
-                $permission->delete();
-            }
-
-            $items = $items->sortBy('name');
-
-            return $items;
-        });
+        );
     }
 }
