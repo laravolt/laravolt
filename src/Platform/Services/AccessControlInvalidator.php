@@ -22,14 +22,25 @@ class AccessControlInvalidator
 
     public function invalidateUsers(iterable $users): void
     {
+        $userIds = [];
+
         foreach ($users as $user) {
             if ($user instanceof Model) {
-                $this->invalidateUser($user);
+                $userId = $user->getKey();
+                $userIds[] = $userId;
+                Cache::forget("users.{$userId}.permissions");
             }
+        }
+
+        if (!empty($userIds)) {
+            $this->deleteDatabaseSessions($userIds);
         }
     }
 
-    protected function deleteDatabaseSessions(mixed $userId): void
+    /**
+     * @param mixed|array $userIds
+     */
+    protected function deleteDatabaseSessions(mixed $userIds): void
     {
         try {
             $connection = config('session.connection');
@@ -40,7 +51,13 @@ class AccessControlInvalidator
                 return;
             }
 
-            DB::connection($connection)->table($table)->where('user_id', $userId)->delete();
+            $query = DB::connection($connection)->table($table);
+
+            if (is_array($userIds)) {
+                $query->whereIn('user_id', $userIds)->delete();
+            } else {
+                $query->where('user_id', $userIds)->delete();
+            }
         } catch (Throwable) {
             // Session invalidation is best-effort because Laravolt can run with
             // non-database session drivers or applications without session table.
