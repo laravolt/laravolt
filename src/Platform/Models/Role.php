@@ -57,39 +57,69 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
-        return once(function () use ($permission) {
-            return $this->_hasPermission($permission);
-        });
+        return once(
+            function () use ($permission) {
+                return $this->_hasPermission($permission);
+            }
+        );
     }
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
-            }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        $stringPermissions = [];
 
-                return $permissionObject->getKey();
+        // ⚡ Bolt: Extract string names to batch query existing permissions
+        foreach ($permissions as $permission) {
+            if (is_string($permission) && ! str($permission)->isUlid()) {
+                $stringPermissions[] = $permission;
             }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
-            }
-        })->filter(function ($id) {
-            if (is_int($id)) {
-                return $id > 0;
-            }
+        }
 
-            if (is_string($id)) {
-                return trim($id) !== '';
-            }
+        $existingPermissions = [];
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
 
-            return false;
-        });
+        if (! empty($stringPermissions)) {
+            $existingPermissions = $permissionModel->whereIn('name', $stringPermissions)
+                ->get()
+                ->keyBy(fn ($item) => strtolower($item->name))
+                ->all();
+        }
+
+        $ids = collect($permissions)->transform(
+            function ($permission) use ($existingPermissions, $permissionModel) {
+                if (is_string($permission) && str($permission)->isUlid()) {
+                    return $permission;
+                }
+                if (is_numeric($permission)) {
+                    return (int) $permission;
+                }
+                if (is_string($permission)) {
+                    $lowerPermission = strtolower($permission);
+                    if (isset($existingPermissions[$lowerPermission])) {
+                        return $existingPermissions[$lowerPermission]->getKey();
+                    }
+
+                    $permissionObject = $permissionModel->firstOrCreate(['name' => $permission]);
+
+                    return $permissionObject->getKey();
+                }
+                if ($permission instanceof Model) {
+                    return $permission->getKey();
+                }
+            }
+        )->filter(
+            function ($id) {
+                if (is_int($id)) {
+                    return $id > 0;
+                }
+
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
+
+                return false;
+            }
+        );
 
         $changes = $this->permissions()->sync($ids->toArray());
 
