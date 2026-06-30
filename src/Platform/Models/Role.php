@@ -57,41 +57,65 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
-        return once(function () use ($permission) {
-            return $this->_hasPermission($permission);
-        });
+        return once(
+            function () use ($permission) {
+                return $this->_hasPermission($permission);
+            }
+        );
     }
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
+        $permissionIds = [];
+        $permissionNames = [];
+
+        foreach ($permissions as $permission) {
             if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
+                $permissionIds[] = $permission;
+            } elseif (is_numeric($permission)) {
+                $permissionIds[] = (int) $permission;
+            } elseif (is_string($permission)) {
+                $permissionNames[] = $permission;
+            } elseif ($permission instanceof Model) {
+                $permissionIds[] = $permission->getKey();
             }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        }
 
-                return $permissionObject->getKey();
-            }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
-            }
-        })->filter(function ($id) {
-            if (is_int($id)) {
-                return $id > 0;
+        if (!empty($permissionNames)) {
+            $existingPermissions = app(config('laravolt.epicentrum.models.permission'))
+                ->whereIn('name', $permissionNames)
+                ->get();
+
+            $existingPermissionNames = [];
+            foreach ($existingPermissions as $p) {
+                $existingPermissionNames[] = $p->name;
+                $permissionIds[] = $p->getKey();
             }
 
-            if (is_string($id)) {
-                return trim($id) !== '';
+            $missingPermissionNames = array_diff($permissionNames, $existingPermissionNames);
+            foreach ($missingPermissionNames as $missingName) {
+                $newPermission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $missingName]);
+                $permissionIds[] = $newPermission->getKey();
             }
+        }
 
-            return false;
-        });
+        $ids = array_values(
+            array_filter(
+                $permissionIds, function ($id) {
+                    if (is_int($id)) {
+                        return $id > 0;
+                    }
 
-        $changes = $this->permissions()->sync($ids->toArray());
+                    if (is_string($id)) {
+                        return trim($id) !== '';
+                    }
+
+                    return false;
+                }
+            )
+        );
+
+        $changes = $this->permissions()->sync($ids);
 
         if ($this->hasSyncChanges($changes)) {
             $this->unsetRelation('permissions');
