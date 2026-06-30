@@ -42,7 +42,8 @@
         "spatie/laravel-medialibrary": "^11.12.6",
         "spatie/laravel-web-tinker": "^1.10.1",
         "spatie/once": "^3.1.1",
-        "spaze/phpstan-disallowed-calls": "^4.6"
+        "spaze/phpstan-disallowed-calls": "^4.6",
+        "intervention/image": "4.1.4"
     },
     "require-dev": {
         "laravel/pint": "^1.21",
