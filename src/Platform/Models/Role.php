@@ -57,39 +57,72 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
-        return once(function () use ($permission) {
-            return $this->_hasPermission($permission);
-        });
+        return once(
+            function () use ($permission) {
+                return $this->_hasPermission($permission);
+            }
+        );
     }
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
-            }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        $stringNames = collect($permissions)
+            ->filter(fn ($permission) => is_string($permission) && !str($permission)->isUlid())
+            ->values()
+            ->all();
 
-                return $permissionObject->getKey();
-            }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
-            }
-        })->filter(function ($id) {
-            if (is_int($id)) {
-                return $id > 0;
+        $resolvedIdsByName = [];
+
+        if (!empty($stringNames)) {
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+            // ⚡ Bolt: Bulk fetch existing permissions to prevent N+1 queries
+            $existingPermissions = $permissionModel->whereIn('name', $stringNames)->get()->keyBy(fn ($perm) => strtolower($perm->name));
+
+            foreach ($existingPermissions as $perm) {
+                $resolvedIdsByName[strtolower($perm->name)] = $perm->getKey();
             }
 
-            if (is_string($id)) {
-                return trim($id) !== '';
-            }
+            $missingNames = array_udiff(
+                $stringNames,
+                $existingPermissions->pluck('name')->toArray(),
+                'strcasecmp'
+            );
 
-            return false;
-        });
+            foreach ($missingNames as $name) {
+                $permissionObject = $permissionModel->firstOrCreate(['name' => $name]);
+                $resolvedIdsByName[strtolower($permissionObject->name)] = $permissionObject->getKey();
+            }
+        }
+
+        $ids = collect($permissions)->transform(
+            function ($permission) use ($resolvedIdsByName) {
+                if (is_string($permission) && str($permission)->isUlid()) {
+                    return $permission;
+                }
+                if (is_numeric($permission)) {
+                    return (int) $permission;
+                }
+                if (is_string($permission)) {
+                    return $resolvedIdsByName[strtolower($permission)] ?? null;
+                }
+                if ($permission instanceof Model) {
+                    return $permission->getKey();
+                }
+            }
+        )->filter(
+            function ($id) {
+                if (is_int($id)) {
+                    return $id > 0;
+                }
+
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
+
+                return false;
+            }
+        );
 
         $changes = $this->permissions()->sync($ids->toArray());
 
