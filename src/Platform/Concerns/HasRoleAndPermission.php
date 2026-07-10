@@ -187,29 +187,47 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
-                if (is_numeric($role)) {
-                    return (int) $role;
+        $rolesArray = is_array($roles) ? $roles : [$roles];
+
+        $stringNames = [];
+        $resolvedIds = [];
+
+        foreach ($rolesArray as $role) {
+            if (is_numeric($role)) {
+                $resolvedIds[] = (int) $role;
+            } elseif (is_string($role) && Str::isUuid($role)) {
+                $resolvedIds[] = $role;
+            } elseif (is_string($role)) {
+                $stringNames[] = $role;
+            } elseif ($role instanceof Model) {
+                $resolvedIds[] = $role->getKey();
+            } else {
+                $resolvedIds[] = $role;
+            }
+        }
+
+        if (!empty($stringNames)) {
+            $roleModel = app(config('laravolt.epicentrum.models.role'));
+            $existing = $roleModel->whereIn('name', $stringNames)->get();
+
+            foreach ($existing as $roleObj) {
+                $resolvedIds[] = $roleObj->getKey();
+            }
+
+            if ($createMissing) {
+                $existingNames = $existing->pluck('name')->map(fn ($name) => strtolower($name))->toArray();
+                $missingNames = collect($stringNames)->filter(function ($name) use ($existingNames) {
+                    return !in_array(strtolower($name), $existingNames);
+                })->toArray();
+
+                foreach ($missingNames as $missingName) {
+                    $newRole = $roleModel->firstOrCreate(['name' => $missingName]);
+                    $resolvedIds[] = $newRole->getKey();
                 }
+            }
+        }
 
-                if (is_string($role) && Str::isUuid($role)) {
-                    return $role;
-                }
-
-                if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
-
-                    return $role?->getKey();
-                }
-
-                if ($role instanceof Model) {
-                    return $role->getKey();
-                }
-
-                return $role;
-            })
+        return collect($resolvedIds)
             ->filter(function ($id) {
                 if (is_int($id)) {
                     return $id > 0;

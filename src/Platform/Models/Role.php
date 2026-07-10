@@ -64,22 +64,46 @@ class Role extends Model
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
-            }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        $stringNames = [];
+        $resolvedIds = [];
 
-                return $permissionObject->getKey();
+        foreach ($permissions as $permission) {
+            if (is_string($permission) && str($permission)->isUlid()) {
+                $resolvedIds[] = $permission;
+            } elseif (is_numeric($permission)) {
+                $resolvedIds[] = (int) $permission;
+            } elseif (is_string($permission)) {
+                $stringNames[] = $permission;
+            } elseif ($permission instanceof Model) {
+                $resolvedIds[] = $permission->getKey();
             }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
+        }
+
+        if (!empty($stringNames)) {
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+            // Fast lookup of existing
+            $existing = $permissionModel->whereIn('name', $stringNames)->get();
+
+            foreach ($existing as $perm) {
+                $resolvedIds[] = $perm->getKey();
             }
-        })->filter(function ($id) {
+
+            // Fallback for case sensitivity diffs using the original firstOrCreate logic
+            // Since whereIn already fetched the bulk of them, this only hits the DB
+            // for names that string comparison didn't catch or truly missing ones.
+            $existingNames = $existing->pluck('name')->map(fn ($name) => strtolower($name))->toArray();
+            $missingNames = collect($stringNames)->filter(function ($name) use ($existingNames) {
+                return !in_array(strtolower($name), $existingNames);
+            })->toArray();
+
+            foreach ($missingNames as $missingName) {
+                $newPerm = $permissionModel->firstOrCreate(['name' => $missingName]);
+                $resolvedIds[] = $newPerm->getKey();
+            }
+        }
+
+        $ids = collect($resolvedIds)->filter(function ($id) {
             if (is_int($id)) {
                 return $id > 0;
             }
