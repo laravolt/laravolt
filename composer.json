@@ -33,7 +33,7 @@
         "kirschbaum-development/eloquent-power-joins": "^4.1",
         "larastan/larastan": ">=2.9.14",
         "laravel/octane": "^2.12",
-        "laravolt/avatar": "^6.1",
+        "laravolt/avatar": "dev-master",
         "lavary/laravel-menu": "^1.8.4",
         "livewire/blaze": "^1.0",
         "livewire/livewire": "^4.0",
