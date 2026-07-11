@@ -57,39 +57,65 @@ class Role extends Model
 
     public function hasPermission($permission)
     {
-        return once(function () use ($permission) {
-            return $this->_hasPermission($permission);
-        });
+        return once(
+            function () use ($permission) {
+                return $this->_hasPermission($permission);
+            }
+        );
     }
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
-            if (is_string($permission) && str($permission)->isUlid()) {
-                return $permission;
+        $stringNames = collect($permissions)->filter(
+            function ($permission) {
+                return is_string($permission) && ! str($permission)->isUlid() && ! is_numeric($permission);
             }
-            if (is_numeric($permission)) {
-                return (int) $permission;
-            }
-            if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+        )->unique()->values()->all();
 
-                return $permissionObject->getKey();
-            }
-            if ($permission instanceof Model) {
-                return $permission->getKey();
-            }
-        })->filter(function ($id) {
-            if (is_int($id)) {
-                return $id > 0;
-            }
+        $existingPermissions = collect();
+        if (! empty($stringNames)) {
+            $existingPermissions = app(config('laravolt.epicentrum.models.permission'))
+                ->whereIn('name', $stringNames)
+                ->get()
+                ->keyBy(fn ($p) => strtolower((string) $p->name));
+        }
 
-            if (is_string($id)) {
-                return trim($id) !== '';
-            }
+        $ids = collect($permissions)->transform(
+            function ($permission) use ($existingPermissions) {
+                if (is_string($permission) && str($permission)->isUlid()) {
+                    return $permission;
+                }
+                if (is_numeric($permission)) {
+                    return (int) $permission;
+                }
+                if (is_string($permission)) {
+                    $lowerName = strtolower($permission);
+                    if ($existingPermissions->has($lowerName)) {
+                        return $existingPermissions->get($lowerName)->getKey();
+                    }
 
-            return false;
-        });
+                    $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+                    $existingPermissions->put($lowerName, $permissionObject);
+
+                    return $permissionObject->getKey();
+                }
+                if ($permission instanceof Model) {
+                    return $permission->getKey();
+                }
+            }
+        )->filter(
+            function ($id) {
+                if (is_int($id)) {
+                    return $id > 0;
+                }
+
+                if (is_string($id)) {
+                    return trim($id) !== '';
+                }
+
+                return false;
+            }
+        );
 
         $changes = $this->permissions()->sync($ids->toArray());
 
