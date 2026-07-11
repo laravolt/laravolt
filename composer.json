@@ -30,6 +30,7 @@
         "illuminate/console": "^11.0|^12.0|^13.0",
         "illuminate/database": "^11.0|^12.0|^13.0",
         "illuminate/support": "^11.0|^12.0|^13.0",
+        "intervention/image": "^4.0 !=4.2.0",
         "kirschbaum-development/eloquent-power-joins": "^4.1",
         "larastan/larastan": ">=2.9.14",
         "laravel/octane": "^2.12",
