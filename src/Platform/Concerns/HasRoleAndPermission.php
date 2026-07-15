@@ -14,6 +14,11 @@ use Laravolt\Platform\Services\AccessControlInvalidator;
 
 trait HasRoleAndPermission
 {
+    /**
+     * @var \Illuminate\Database\Eloquent\Collection|null
+     */
+    protected $permissionsCacheCollection = null;
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(config('laravolt.epicentrum.models.role'), 'acl_role_user', 'user_id', 'role_id');
@@ -21,6 +26,11 @@ trait HasRoleAndPermission
 
     public function permissions(): Collection
     {
+        // ⚡ Bolt: Return the in-memory cache if available to prevent N+1 model instantiations during repeated permission checks
+        if ($this->permissionsCacheCollection !== null) {
+            return $this->permissionsCacheCollection;
+        }
+
         $cacheKey = "users.{$this->getKey()}.permissions";
         $rebuild = function (): array {
             /**
@@ -37,10 +47,12 @@ trait HasRoleAndPermission
                 ->where('users.id', $this->getKey())
                 ->get()
                 ->unique('id')
-                ->map(fn ($permission) => [
+                ->map(
+                    fn ($permission) => [
                     'id' => $permission->getKey(),
                     'name' => (string) ($permission->name ?? ''),
-                ])
+                    ]
+                )
                 ->values()
                 ->all();
         };
@@ -67,7 +79,9 @@ trait HasRoleAndPermission
             $cached
         );
 
-        return new Collection($models);
+        $this->permissionsCacheCollection = new Collection($models);
+
+        return $this->permissionsCacheCollection;
     }
 
     /**
@@ -188,39 +202,43 @@ trait HasRoleAndPermission
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
         return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
-                if (is_numeric($role)) {
-                    return (int) $role;
-                }
+            ->map(
+                function ($role) use ($createMissing) {
+                    if (is_numeric($role)) {
+                        return (int) $role;
+                    }
 
-                if (is_string($role) && Str::isUuid($role)) {
+                    if (is_string($role) && Str::isUuid($role)) {
+                        return $role;
+                    }
+
+                    if (is_string($role)) {
+                        $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
+                        $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+
+                        return $role?->getKey();
+                    }
+
+                    if ($role instanceof Model) {
+                        return $role->getKey();
+                    }
+
                     return $role;
                 }
+            )
+            ->filter(
+                function ($id) {
+                    if (is_int($id)) {
+                        return $id > 0;
+                    }
 
-                if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+                    if (is_string($id)) {
+                        return trim($id) !== '';
+                    }
 
-                    return $role?->getKey();
+                    return false;
                 }
-
-                if ($role instanceof Model) {
-                    return $role->getKey();
-                }
-
-                return $role;
-            })
-            ->filter(function ($id) {
-                if (is_int($id)) {
-                    return $id > 0;
-                }
-
-                if (is_string($id)) {
-                    return trim($id) !== '';
-                }
-
-                return false;
-            })
+            )
             ->all();
     }
 
@@ -231,6 +249,7 @@ trait HasRoleAndPermission
 
     protected function invalidateAccessControl(): void
     {
+        $this->permissionsCacheCollection = null;
         app(AccessControlInvalidator::class)->invalidateUser($this);
     }
 
