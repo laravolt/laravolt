@@ -35,7 +35,7 @@ class User extends BaseUser implements CanChangePasswordContract, CanResetPasswo
             $service = app('avatar');
             try {
                 $avatar = $service->create($this->name)->toBase64();
-            } catch (\InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException | \Intervention\Image\Exceptions\InvalidArgumentException $e) {
                 // Fallback to default avatar if generation fails due to vendor incompatibilities (e.g. font alignment)
                 $avatar = null;
             }
