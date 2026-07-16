@@ -1,6 +1,3 @@
-## 2024-05-11 - Optimized Permission Check
-**Learning:** Laravolt's `HasRoleAndPermission` and `Role` models do dynamic query checks or `contains` lookups when `hasPermission` is called. Since permissions are eager-loaded, doing a `contains` operation manually can bypass `app(config(...))` overhead and Model instantiation.
-**Action:** Overrode `_hasPermission` in models to utilize eager-loaded relations properly.
-## 2024-05-11 - Optimized Permission Check
-**Learning:** Laravolt's `HasRoleAndPermission` and `Role` models do dynamic query checks or `contains` lookups when `hasPermission` is called. Since permissions are eager-loaded, doing a `contains` operation manually can bypass `app(config(...))` overhead and Model instantiation.
-**Action:** Overrode `_hasPermission` in models to utilize eager-loaded relations properly.
+## 2024-07-16 - Batch Schema Checks in Bulk Operations
+**Learning:** When performing bulk invalidation or cleanup (like `AccessControlInvalidator::deleteDatabaseSessions`), placing schema checks (`Schema::hasTable` and `Schema::hasColumn`) inside the loop creates a silent but significant N+1 query issue, as they trigger separate information schema queries for each iteration.
+**Action:** Extract user IDs into an array, run the schema check exactly once, and use `whereIn()->delete()` to process the entire batch in a single database round-trip.
