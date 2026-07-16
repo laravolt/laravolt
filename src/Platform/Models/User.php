@@ -33,7 +33,12 @@ class User extends BaseUser implements CanChangePasswordContract, CanResetPasswo
         if (! $avatar && app()->bound('avatar')) {
             /** @var \Laravolt\Avatar\Avatar */
             $service = app('avatar');
-            $avatar = $service->create($this->name)->toBase64();
+            try {
+                $avatar = $service->create($this->name)->toBase64();
+            } catch (\InvalidArgumentException $e) {
+                // Fallback to default avatar if generation fails due to vendor incompatibilities (e.g. font alignment)
+                $avatar = null;
+            }
         }
 
         if (! $avatar) {

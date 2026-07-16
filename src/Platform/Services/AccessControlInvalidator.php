@@ -16,7 +16,7 @@ class AccessControlInvalidator
     {
         $userId = $user->getKey();
 
-        Cache::forget("users.{$userId}.permissions");
+        $this->clearUserPermissionCache($userId);
         $this->deleteDatabaseSessions($userId);
     }
 
@@ -26,7 +26,7 @@ class AccessControlInvalidator
         foreach ($users as $user) {
             if ($user instanceof Model) {
                 $userId = $user->getKey();
-                Cache::forget("users.{$userId}.permissions");
+                $this->clearUserPermissionCache($userId);
                 $userIds[] = $userId;
             }
         }
@@ -36,6 +36,11 @@ class AccessControlInvalidator
         if (! empty($userIds)) {
             $this->deleteDatabaseSessions($userIds);
         }
+    }
+
+    protected function clearUserPermissionCache(mixed $userId): void
+    {
+        Cache::forget("users.{$userId}.permissions");
     }
 
     protected function deleteDatabaseSessions(mixed $userIds): void
