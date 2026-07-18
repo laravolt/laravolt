@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Laravolt\Tests\FeatureTest;
 
-uses(\Laravolt\Tests\FeatureTest::class);
+uses(FeatureTest::class);
 
 test('it can visit my profile page', function (): void {
-    $this->actingAs(\Laravolt\Platform\Models\User::factory()->create());
+    $this->actingAs(Laravolt\Platform\Models\User::factory()->create());
 
     $this->get(route('my::profile.edit'))
         ->assertSee('name')
@@ -17,7 +17,7 @@ test('it can visit my profile page', function (): void {
 });
 
 test('it can update my profile', function (): void {
-    $this->actingAs(\Laravolt\Platform\Models\User::factory()->create());
+    $this->actingAs(Laravolt\Platform\Models\User::factory()->create());
     $payload = [
         'name' => 'fulan',
         'timezone' => 'UTC',
@@ -32,7 +32,7 @@ test('it can update my profile', function (): void {
 });
 
 test('it can handle wrong current password', function (): void {
-    $this->actingAs(\Laravolt\Platform\Models\User::factory()->create());
+    $this->actingAs(Laravolt\Platform\Models\User::factory()->create());
     $payload = [
         'password_current' => 'foobar',
         'password' => 'new password',
