@@ -31,7 +31,7 @@ class Role extends Model
 
     public function addPermission($permission): self
     {
-        if (is_string($permission)) {
+        if (is_string($permission) && ! str($permission)->isUlid()) {
             $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
         }
 
@@ -44,7 +44,7 @@ class Role extends Model
 
     public function removePermission($permission): self
     {
-        if (is_string($permission)) {
+        if (is_string($permission) && ! str($permission)->isUlid()) {
             $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
         }
 

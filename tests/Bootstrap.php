@@ -16,10 +16,12 @@ use Laravolt\Platform\Providers\PlatformServiceProvider;
 use Laravolt\Platform\Providers\UiServiceProvider;
 use Lavary\Menu\ServiceProvider;
 use Livewire\LivewireServiceProvider;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use URL;
 
 trait Bootstrap
 {
+    use InteractsWithDatabase;
     /**
      * Setup the test environment.
      */
