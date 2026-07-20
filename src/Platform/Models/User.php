@@ -31,9 +31,13 @@ class User extends BaseUser implements CanChangePasswordContract, CanResetPasswo
         $avatar = null;
 
         if (! $avatar && app()->bound('avatar')) {
-            /** @var \Laravolt\Avatar\Avatar */
-            $service = app('avatar');
-            $avatar = $service->create($this->name)->toBase64();
+            try {
+                /** @var \Laravolt\Avatar\Avatar */
+                $service = app('avatar');
+                $avatar = $service->create($this->name)->toBase64();
+            } catch (\Intervention\Image\Exceptions\InvalidArgumentException $e) {
+                // Ignore exception caused by 'middle' vertical alignment in newer intervention/image versions
+            }
         }
 
         if (! $avatar) {
