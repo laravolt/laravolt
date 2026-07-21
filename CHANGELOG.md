@@ -2,7 +2,7 @@
 
 ## v7.0.0 — Stable
 
-_Pending tag. Drafted 2026-05-17._
+_Released 2026-07-21._
 
 Laravolt v7 graduates to stable. Highlights since `v7.0.0-beta.4`:
 
