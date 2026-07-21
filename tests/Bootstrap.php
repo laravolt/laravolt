@@ -103,12 +103,20 @@ trait Bootstrap
     protected function assertAccessControlInvalidatedFor(User $user): void
     {
         $this->assertFalse(Cache::has("users.{$user->getKey()}.permissions"));
-        $this->assertDatabaseMissing('sessions', ['user_id' => $user->getKey()]);
+        $this->assertSame(
+            0,
+            DB::table('sessions')->where('user_id', $user->getKey())->count(),
+            'Expected no sessions to remain for user.'
+        );
     }
 
     protected function assertAccessControlStillValidFor(User $user): void
     {
         $this->assertTrue(Cache::has("users.{$user->getKey()}.permissions"));
-        $this->assertDatabaseHas('sessions', ['user_id' => $user->getKey()]);
+        $this->assertGreaterThan(
+            0,
+            DB::table('sessions')->where('user_id', $user->getKey())->count(),
+            'Expected sessions to still exist for user.'
+        );
     }
 }

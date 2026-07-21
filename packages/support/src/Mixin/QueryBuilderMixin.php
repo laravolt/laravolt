@@ -21,31 +21,24 @@ class QueryBuilderMixin
         };
     }
 
-    public function whereLike()
-    {
-        return function ($attributes, ?string $searchTerm) {
-            if ($searchTerm !== null && mb_trim($searchTerm) !== '') {
-                $searchTerm = mb_strtolower(mb_trim($searchTerm));
-                $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                    foreach (Arr::wrap($attributes) as $column) {
-                        $query->orWhereRaw(
-                            sprintf('LOWER(%s) LIKE ?', $query->getGrammar()->wrap($column)),
-                            ["%$searchTerm%"]
-                        );
-                    }
-                });
-            }
-
-            return $this;
-        };
-    }
-
     public function autoFilter()
     {
         return function () {
+            // NOTE: Laravel 12+ ships a native Query\Builder::whereLike() which takes
+            // precedence over any mixin method of the same name, and it does NOT wrap
+            // the term in wildcards. We inline the substring-search behavior here so
+            // ?filter[name]=john keeps matching partially and case-insensitively.
             foreach (request('filter', []) as $column => $value) {
-                if ($value) {
-                    $this->whereLike($column, $value);
+                if ($value !== null && mb_trim((string) $value) !== '') {
+                    $searchTerm = mb_strtolower(mb_trim((string) $value));
+                    $this->where(function (Builder $query) use ($column, $searchTerm) {
+                        foreach (Arr::wrap($column) as $col) {
+                            $query->orWhereRaw(
+                                sprintf('LOWER(%s) LIKE ?', $query->getGrammar()->wrap($col)),
+                                ["%$searchTerm%"]
+                            );
+                        }
+                    });
                 }
             }
 

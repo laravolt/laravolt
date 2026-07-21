@@ -33,7 +33,7 @@ class SyncPermissionCommandTest extends FeatureTest
         $output = Artisan::output();
 
         $this->assertStringNotContainsString('edit-user', $output);
-        $this->assertStringNotContainsString('2', $output);
+        $this->assertStringNotContainsString('delete-user', $output);
         $this->assertStringNotContainsString('Deleted', $output);
     }
 

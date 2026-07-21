@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Unit;
 
 use Laravolt\Tests\UnitTest;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use function Laravolt\number_to_rupiah;
 use function Laravolt\number_to_terbilang;
@@ -93,9 +94,7 @@ class HelpersTest extends UnitTest
         $this->assertFileExists($actual);
     }
 
-    /**
-     * @dataProvider provideRupiah
-     */
+    #[DataProvider('provideRupiah')]
     public function test_number_to_rupiah($number, $defaultOutput, $outputWithoutPrefix, $outputWithoutDecimals)
     {
         $this->assertEquals($defaultOutput, number_to_rupiah($number));
@@ -103,17 +102,13 @@ class HelpersTest extends UnitTest
         $this->assertEquals($outputWithoutDecimals, number_to_rupiah($number, 0, true));
     }
 
-    /**
-     * @dataProvider provideTerbilangWithSuffix
-     */
+    #[DataProvider('provideTerbilangWithSuffix')]
     public function test_number_to_terbilang($number, $terbilang)
     {
         $this->assertEquals($terbilang, number_to_terbilang($number));
     }
 
-    /**
-     * @dataProvider provideTerbilangWithoutSuffix
-     */
+    #[DataProvider('provideTerbilangWithoutSuffix')]
     public function test_number_to_terbilang_without_suffix($number, $terbilang)
     {
         $this->assertEquals($terbilang, number_to_terbilang($number, ''));

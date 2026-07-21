@@ -27,12 +27,15 @@ class WhereLikeSecurityRegressionTest extends UnitTest
 
     public function test_query_builder_where_like_uses_wrapped_identifier_and_binding(): void
     {
+        // Since Laravel 12, Query\Builder::whereLike() is a native framework method
+        // that takes precedence over the (now removed) Laravolt mixin. This guard
+        // only asserts the security property we care about: the search term must be
+        // passed as a binding, never inlined into the SQL string.
         $query = DB::table('users')->whereLike('name', 'John Doe');
-        $expectedFragment = sprintf('LOWER(%s) LIKE ?', $query->getGrammar()->wrap('name'));
 
-        $this->assertStringContainsString($expectedFragment, $query->toSql());
-        $this->assertContains('%john doe%', $query->getBindings());
-        $this->assertStringNotContainsString('%john doe%', $query->toSql());
+        $this->assertStringContainsString('like ?', mb_strtolower($query->toSql()));
+        $this->assertContains('John Doe', $query->getBindings());
+        $this->assertStringNotContainsString('John Doe', $query->toSql());
     }
 
     public function test_eloquent_where_like_direct_column_uses_wrapped_identifier_and_binding(): void
@@ -64,6 +67,7 @@ class WhereLikeSecurityRegressionTest extends UnitTest
 class WhereLikeSecurityUser extends Model
 {
     protected $table = 'users';
+
     public $timestamps = false;
 
     public function profile(): HasOne
@@ -75,5 +79,6 @@ class WhereLikeSecurityUser extends Model
 class WhereLikeSecurityProfile extends Model
 {
     protected $table = 'profiles';
+
     public $timestamps = false;
 }

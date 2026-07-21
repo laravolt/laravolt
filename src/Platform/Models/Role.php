@@ -32,7 +32,7 @@ class Role extends Model
     public function addPermission($permission): self
     {
         if (is_string($permission)) {
-            $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+            $permission = $this->resolvePermissionModel($permission, true);
         }
 
         $this->permissions()->attach($permission);
@@ -45,7 +45,11 @@ class Role extends Model
     public function removePermission($permission): self
     {
         if (is_string($permission)) {
-            $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
+            $permission = $this->resolvePermissionModel($permission, false);
+        }
+
+        if ($permission === null) {
+            return $this;
         }
 
         $this->permissions()->detach($permission);
@@ -99,6 +103,23 @@ class Role extends Model
         }
 
         return $changes;
+    }
+
+    protected function resolvePermissionModel(string $permission, bool $createMissing): ?Model
+    {
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+        if ($permissionModel->getKeyType() === 'string' && Str::isUlid($permission)) {
+            $found = $permissionModel->whereKey($permission)->first();
+
+            if ($found !== null) {
+                return $found;
+            }
+        }
+
+        return $createMissing
+            ? $permissionModel->firstOrCreate(['name' => $permission])
+            : $permissionModel->where('name', $permission)->first();
     }
 
     protected function hasSyncChanges(array $changes): bool

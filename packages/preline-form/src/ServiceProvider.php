@@ -28,7 +28,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('preline-form', function ($app) {
-            $builder = new PrelineForm($app['config']->get('laravolt.ui'));
+            $builder = new PrelineForm($app['config']->get('laravolt.ui', []));
             $builder->setErrorStore(new IlluminateErrorStore($app['session.store']));
             $builder->setOldInputProvider(new IlluminateOldInputProvider($app['session.store']));
 

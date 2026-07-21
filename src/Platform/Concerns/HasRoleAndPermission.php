@@ -143,8 +143,10 @@ trait HasRoleAndPermission
             return $checkAll;
         }
 
-        if (Str::isUuid($role)) {
-            return $this->roles->contains('id', $role);
+        if (is_string($role) && (Str::isUlid($role) || Str::isUuid($role))) {
+            return $this->roles->contains(
+                fn ($assigned) => $assigned->getKey() === $role || $assigned->name === $role
+            );
         }
 
         if (is_string($role)) {
@@ -193,7 +195,7 @@ trait HasRoleAndPermission
                     return (int) $role;
                 }
 
-                if (is_string($role) && Str::isUuid($role)) {
+                if (is_string($role) && (Str::isUlid($role) || Str::isUuid($role))) {
                     return $role;
                 }
 
@@ -252,8 +254,10 @@ trait HasRoleAndPermission
             return $checkAll;
         }
 
-        if (Str::isUuid($permission)) {
-            return $this->permissions()->contains('id', $permission);
+        if (is_string($permission) && (Str::isUlid($permission) || Str::isUuid($permission))) {
+            return $this->permissions()->contains(
+                fn ($assigned) => $assigned->getKey() === $permission || $assigned->name === $permission
+            );
         }
 
         if (is_string($permission)) {

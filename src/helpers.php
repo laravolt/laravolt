@@ -121,7 +121,7 @@ if (! function_exists('readable_number')) {
         function number_to_terbilang($number, string $suffix = 'rupiah'): string
         {
             $numberString = Str::of((string) $number);
-            $fraction = $numberString->contains('.') ? $numberString->afterLast('.') : '';
+            $fraction = $numberString->contains('.') ? (string) $numberString->afterLast('.') : '';
             $angka = (int) $number;
 
             $bilangan = [
