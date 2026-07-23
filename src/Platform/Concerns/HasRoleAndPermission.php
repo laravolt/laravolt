@@ -37,10 +37,12 @@ trait HasRoleAndPermission
                 ->where('users.id', $this->getKey())
                 ->get()
                 ->unique('id')
-                ->map(fn ($permission) => [
+                ->map(
+                    fn ($permission) => [
                     'id' => $permission->getKey(),
                     'name' => (string) ($permission->name ?? ''),
-                ])
+                    ]
+                )
                 ->values()
                 ->all();
         };
@@ -189,40 +191,74 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
-                if (is_numeric($role)) {
-                    return (int) $role;
-                }
+        $rolesArray = collect(is_array($roles) ? $roles : [$roles])->all();
 
-                if (is_string($role) && (Str::isUlid($role) || Str::isUuid($role))) {
+        // ⚡ Bolt: Prevent N+1 queries by batch-fetching roles by name
+        $names = collect($rolesArray)
+            ->filter(fn ($r) => is_string($r) && ! is_numeric($r) && ! Str::isUlid($r) && ! Str::isUuid($r))
+            ->values()
+            ->all();
+
+        $resolvedNames = [];
+        if (! empty($names)) {
+            $roleModel = app(config('laravolt.epicentrum.models.role'));
+            $existing = $roleModel->whereIn('name', $names)->get();
+            $existingNames = $existing->pluck('name')->map(fn ($name) => strtolower($name))->toArray();
+
+            $existing->each(
+                function ($r) use (&$resolvedNames) {
+                    $resolvedNames[strtolower($r->name)] = $r->getKey();
+                }
+            );
+
+            if ($createMissing) {
+                $missing = collect($names)
+                    ->filter(fn ($name) => ! in_array(strtolower($name), $existingNames))
+                    ->unique();
+
+                $missing->each(
+                    function ($name) use (&$resolvedNames, $roleModel) {
+                        $resolvedNames[strtolower($name)] = $roleModel->firstOrCreate(['name' => $name])->getKey();
+                    }
+                );
+            }
+        }
+
+        return collect($rolesArray)
+            ->map(
+                function ($role) use ($resolvedNames) {
+                    if (is_numeric($role)) {
+                        return (int) $role;
+                    }
+
+                    if (is_string($role) && (Str::isUlid($role) || Str::isUuid($role))) {
+                        return $role;
+                    }
+
+                    if (is_string($role)) {
+                        return $resolvedNames[strtolower($role)] ?? null;
+                    }
+
+                    if ($role instanceof Model) {
+                        return $role->getKey();
+                    }
+
                     return $role;
                 }
+            )
+            ->filter(
+                function ($id) {
+                    if (is_int($id)) {
+                        return $id > 0;
+                    }
 
-                if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+                    if (is_string($id)) {
+                        return trim($id) !== '';
+                    }
 
-                    return $role?->getKey();
+                    return false;
                 }
-
-                if ($role instanceof Model) {
-                    return $role->getKey();
-                }
-
-                return $role;
-            })
-            ->filter(function ($id) {
-                if (is_int($id)) {
-                    return $id > 0;
-                }
-
-                if (is_string($id)) {
-                    return trim($id) !== '';
-                }
-
-                return false;
-            })
+            )
             ->all();
     }
 
