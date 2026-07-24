@@ -68,7 +68,32 @@ class Role extends Model
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
+        // ⚡ Bolt: Bulk fetch existing permissions to prevent N+1 queries during sync
+        $stringNames = collect($permissions)->filter(function ($permission) {
+            return is_string($permission) && ! str($permission)->isUlid();
+        })->values()->toArray();
+
+        $nameMap = [];
+        if (! empty($stringNames)) {
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+            // Fetch existing
+            $existing = $permissionModel->whereIn('name', $stringNames)->get()->keyBy(fn ($item) => strtolower($item->name));
+
+            // Calculate missing
+            $existingNames = $existing->map(fn ($item) => strtolower($item->name))->toArray();
+            $missingNames = collect($stringNames)->filter(fn ($name) => ! in_array(strtolower($name), $existingNames))->values();
+
+            // Insert missing
+            $missingNames->each(function ($name) use ($permissionModel, $existing) {
+                $created = $permissionModel->firstOrCreate(['name' => $name]);
+                $existing->put(strtolower($name), $created);
+            });
+
+            $nameMap = $existing->map(fn ($item) => $item->getKey())->toArray();
+        }
+
+        $ids = collect($permissions)->transform(function ($permission) use ($nameMap) {
             if (is_string($permission) && str($permission)->isUlid()) {
                 return $permission;
             }
@@ -76,9 +101,7 @@ class Role extends Model
                 return (int) $permission;
             }
             if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
-
-                return $permissionObject->getKey();
+                return $nameMap[strtolower($permission)] ?? null;
             }
             if ($permission instanceof Model) {
                 return $permission->getKey();

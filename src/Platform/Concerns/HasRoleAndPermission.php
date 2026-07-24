@@ -189,8 +189,37 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
+        $rolesArray = is_array($roles) ? $roles : [$roles];
+
+        // ⚡ Bolt: Bulk fetch existing roles to prevent N+1 queries when assigning/syncing roles
+        $stringNames = collect($rolesArray)->filter(function ($role) {
+            return is_string($role) && ! Str::isUlid($role) && ! Str::isUuid($role);
+        })->values()->toArray();
+
+        $nameMap = [];
+        if (! empty($stringNames)) {
+            $roleModel = app(config('laravolt.epicentrum.models.role'));
+
+            // Fetch existing
+            $existing = $roleModel->whereIn('name', $stringNames)->get()->keyBy(fn ($item) => strtolower($item->name));
+
+            if ($createMissing) {
+                // Calculate missing
+                $existingNames = $existing->map(fn ($item) => strtolower($item->name))->toArray();
+                $missingNames = collect($stringNames)->filter(fn ($name) => ! in_array(strtolower($name), $existingNames))->values();
+
+                // Insert missing
+                $missingNames->each(function ($name) use ($roleModel, $existing) {
+                    $created = $roleModel->firstOrCreate(['name' => $name]);
+                    $existing->put(strtolower($name), $created);
+                });
+            }
+
+            $nameMap = $existing->map(fn ($item) => $item->getKey())->toArray();
+        }
+
+        return collect($rolesArray)
+            ->map(function ($role) use ($nameMap) {
                 if (is_numeric($role)) {
                     return (int) $role;
                 }
@@ -200,10 +229,7 @@ trait HasRoleAndPermission
                 }
 
                 if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
-
-                    return $role?->getKey();
+                    return $nameMap[strtolower($role)] ?? null;
                 }
 
                 if ($role instanceof Model) {
