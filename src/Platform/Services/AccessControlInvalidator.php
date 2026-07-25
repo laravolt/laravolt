@@ -16,22 +16,42 @@ class AccessControlInvalidator
     {
         $userId = $user->getKey();
 
-        Cache::forget("users.{$userId}.permissions");
+        $this->clearUserCache($userId);
         $this->deleteDatabaseSessions($userId);
     }
 
     public function invalidateUsers(iterable $users): void
     {
+        $userIds = [];
+
         foreach ($users as $user) {
             if ($user instanceof Model) {
-                $this->invalidateUser($user);
+                $userId = $user->getKey();
+                $this->clearUserCache($userId);
+                $userIds[] = $userId;
             }
+        }
+
+        if (!empty($userIds)) {
+            $this->deleteDatabaseSessions($userIds);
         }
     }
 
-    protected function deleteDatabaseSessions(mixed $userId): void
+    protected function clearUserCache(mixed $userId): void
+    {
+        Cache::forget("users.{$userId}.permissions");
+    }
+
+    protected function deleteDatabaseSessions(mixed $userIds): void
     {
         try {
+            if (is_iterable($userIds)) {
+                $ids = is_array($userIds) ? $userIds : iterator_to_array($userIds);
+                if (empty($ids)) {
+                    return;
+                }
+            }
+
             $connection = config('session.connection');
             $table = config('session.table', 'sessions');
             $schema = Schema::connection($connection);
@@ -40,7 +60,13 @@ class AccessControlInvalidator
                 return;
             }
 
-            DB::connection($connection)->table($table)->where('user_id', $userId)->delete();
+            $query = DB::connection($connection)->table($table);
+
+            if (is_iterable($userIds)) {
+                $query->whereIn('user_id', $ids)->delete();
+            } else {
+                $query->where('user_id', $userIds)->delete();
+            }
         } catch (Throwable) {
             // Session invalidation is best-effort because Laravolt can run with
             // non-database session drivers or applications without session table.
