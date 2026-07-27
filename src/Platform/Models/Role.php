@@ -68,7 +68,27 @@ class Role extends Model
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
+        // ⚡ Bolt: Batch query permissions by string name to prevent N+1 issues
+        $stringNames = collect($permissions)->filter(function ($permission) {
+            return is_string($permission) && ! str($permission)->isUlid();
+        })->values()->all();
+
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        $permissionMap = collect();
+
+        if (! empty($stringNames)) {
+            $existingPermissions = $permissionModel->whereIn('name', $stringNames)->get()->keyBy(fn ($item) => strtolower($item->name));
+
+            $missingNames = collect($stringNames)->filter(fn ($name) => ! $existingPermissions->has(strtolower($name)));
+            foreach ($missingNames as $name) {
+                $newPermission = $permissionModel->firstOrCreate(['name' => $name]);
+                $existingPermissions->put(strtolower($name), $newPermission);
+            }
+
+            $permissionMap = $existingPermissions;
+        }
+
+        $ids = collect($permissions)->transform(function ($permission) use ($permissionMap) {
             if (is_string($permission) && str($permission)->isUlid()) {
                 return $permission;
             }
@@ -76,9 +96,7 @@ class Role extends Model
                 return (int) $permission;
             }
             if (is_string($permission)) {
-                $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
-
-                return $permissionObject->getKey();
+                return $permissionMap->get(strtolower($permission))?->getKey();
             }
             if ($permission instanceof Model) {
                 return $permission->getKey();

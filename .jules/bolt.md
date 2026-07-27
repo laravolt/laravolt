@@ -1,6 +1,3 @@
-## 2024-05-11 - Optimized Permission Check
-**Learning:** Laravolt's `HasRoleAndPermission` and `Role` models do dynamic query checks or `contains` lookups when `hasPermission` is called. Since permissions are eager-loaded, doing a `contains` operation manually can bypass `app(config(...))` overhead and Model instantiation.
-**Action:** Overrode `_hasPermission` in models to utilize eager-loaded relations properly.
-## 2024-05-11 - Optimized Permission Check
-**Learning:** Laravolt's `HasRoleAndPermission` and `Role` models do dynamic query checks or `contains` lookups when `hasPermission` is called. Since permissions are eager-loaded, doing a `contains` operation manually can bypass `app(config(...))` overhead and Model instantiation.
-**Action:** Overrode `_hasPermission` in models to utilize eager-loaded relations properly.
+## 2024-05-14 - Role sync optimization
+**Learning:** `resolveRoleIds` iterates over strings and creates missing roles via `firstOrCreate` one by one, generating N+1 queries.
+**Action:** Use the same optimization logic applied to `Role::syncPermission` (batch-query missing roles and then create them) to prevent N+1 issues when parsing strings.

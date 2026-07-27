@@ -189,8 +189,32 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
+        $rolesArray = is_array($roles) ? $roles : [$roles];
+
+        // ⚡ Bolt: Batch query roles by string name to prevent N+1 issues
+        $stringNames = collect($rolesArray)->filter(function ($role) {
+            return is_string($role) && ! str($role)->isUlid() && ! str($role)->isUuid();
+        })->values()->all();
+
+        $roleModel = app(config('laravolt.epicentrum.models.role'));
+        $roleMap = collect();
+
+        if (! empty($stringNames)) {
+            $existingRoles = $roleModel->whereIn('name', $stringNames)->get()->keyBy(fn ($item) => strtolower($item->name));
+
+            if ($createMissing) {
+                $missingNames = collect($stringNames)->filter(fn ($name) => ! $existingRoles->has(strtolower($name)));
+                foreach ($missingNames as $name) {
+                    $newRole = $roleModel->firstOrCreate(['name' => $name]);
+                    $existingRoles->put(strtolower($name), $newRole);
+                }
+            }
+
+            $roleMap = $existingRoles;
+        }
+
+        return collect($rolesArray)
+            ->map(function ($role) use ($roleMap) {
                 if (is_numeric($role)) {
                     return (int) $role;
                 }
@@ -200,10 +224,7 @@ trait HasRoleAndPermission
                 }
 
                 if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
-
-                    return $role?->getKey();
+                    return $roleMap->get(strtolower($role))?->getKey();
                 }
 
                 if ($role instanceof Model) {
