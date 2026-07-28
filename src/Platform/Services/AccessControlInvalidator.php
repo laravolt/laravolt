@@ -14,23 +14,38 @@ class AccessControlInvalidator
 {
     public function invalidateUser(Model $user): void
     {
-        $userId = $user->getKey();
-
-        Cache::forget("users.{$userId}.permissions");
-        $this->deleteDatabaseSessions($userId);
+        $this->invalidateUserCache($user);
+        $this->deleteDatabaseSessions($user->getKey());
     }
 
     public function invalidateUsers(iterable $users): void
     {
+        $userIds = [];
+
         foreach ($users as $user) {
             if ($user instanceof Model) {
-                $this->invalidateUser($user);
+                $this->invalidateUserCache($user);
+                $userIds[] = $user->getKey();
             }
         }
+
+        if (! empty($userIds)) {
+            $this->deleteDatabaseSessions($userIds);
+        }
+    }
+
+    protected function invalidateUserCache(Model $user): void
+    {
+        $userId = $user->getKey();
+        Cache::forget("users.{$userId}.permissions");
     }
 
     protected function deleteDatabaseSessions(mixed $userId): void
     {
+        if (empty($userId)) {
+            return;
+        }
+
         try {
             $connection = config('session.connection');
             $table = config('session.table', 'sessions');
@@ -40,7 +55,14 @@ class AccessControlInvalidator
                 return;
             }
 
-            DB::connection($connection)->table($table)->where('user_id', $userId)->delete();
+            $query = DB::connection($connection)->table($table);
+
+            if (is_iterable($userId)) {
+                $userIdArray = is_array($userId) ? $userId : iterator_to_array($userId);
+                $query->whereIn('user_id', $userIdArray)->delete();
+            } else {
+                $query->where('user_id', $userId)->delete();
+            }
         } catch (Throwable) {
             // Session invalidation is best-effort because Laravolt can run with
             // non-database session drivers or applications without session table.
