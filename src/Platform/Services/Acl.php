@@ -46,12 +46,22 @@ class Acl
             }
 
             $items = collect();
-            foreach ($this->permissions() as $name) {
-                $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                $status = 'No Change';
+            $permissionNames = $this->permissions();
 
-                if (! $permission->exists) {
-                    $permission->save();
+            // ⚡ Bolt: Fetch all existing permissions in a single query to prevent N+1 queries
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
+            $existingPermissions = $permissionNames ? $permissionModel
+                ->whereIn('name', $permissionNames)
+                ->get()
+                ->keyBy(fn ($item) => strtolower($item->name)) : collect();
+
+            foreach ($permissionNames as $name) {
+                $status = 'No Change';
+                $permission = $existingPermissions->get(strtolower($name));
+
+                if (! $permission) {
+                    $permission = $permissionModel->firstOrCreate(['name' => $name]);
                     $status = 'New';
                 }
 
@@ -59,7 +69,8 @@ class Acl
             }
 
             // delete unused permissions
-            $permissions = $this->permissions() + ['*'];
+            $permissions = $permissionNames;
+            $permissions[] = '*';
             $unusedPermissions = app(config('laravolt.epicentrum.models.permission'))
                 ->whereNotIn('name', $permissions)
                 ->get();
