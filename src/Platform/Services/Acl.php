@@ -39,28 +39,54 @@ class Acl
     public function syncPermission($refresh = false): Collection
     {
         return DB::transaction(function () use ($refresh) {
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
             if ($refresh) {
                 Schema::disableForeignKeyConstraints();
-                app(config('laravolt.epicentrum.models.permission'))->truncate();
+                $permissionModel->truncate();
                 Schema::enableForeignKeyConstraints();
             }
 
             $items = collect();
-            foreach ($this->permissions() as $name) {
-                $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                $status = 'No Change';
+            $permissionNames = $this->permissions();
 
-                if (! $permission->exists) {
-                    $permission->save();
-                    $status = 'New';
+            // Bulk fetch existing permissions to reduce N+1 queries
+            if (! empty($permissionNames)) {
+                $existingPermissions = $permissionModel->whereIn('name', $permissionNames)->get()->keyBy(function ($item) {
+                    return strtolower($item->name);
+                });
+            } else {
+                $existingPermissions = collect();
+            }
+
+            // Find missing names case-insensitively
+            $existingNames = $existingPermissions->pluck('name')->map(function ($name) {
+                return strtolower($name);
+            })->toArray();
+
+            $missingNames = collect($permissionNames)->filter(function ($name) use ($existingNames) {
+                return ! in_array(strtolower($name), $existingNames);
+            })->values();
+
+            // Insert missing permissions via firstOrCreate to preserve events and return IDs
+            foreach ($missingNames as $name) {
+                $permission = $permissionModel->firstOrCreate(['name' => $name]);
+                $existingPermissions->put(strtolower($name), $permission);
+                $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => 'New']);
+            }
+
+            // Add existing permissions that were not newly created
+            foreach ($permissionNames as $name) {
+                if (! $missingNames->containsStrict($name)) {
+                    $permission = $existingPermissions->get(strtolower($name));
+                    $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => 'No Change']);
                 }
-
-                $items->push(['id' => $permission->getKey(), 'name' => $name, 'status' => $status]);
             }
 
             // delete unused permissions
-            $permissions = $this->permissions() + ['*'];
-            $unusedPermissions = app(config('laravolt.epicentrum.models.permission'))
+            $permissions = $this->permissions();
+            $permissions[] = '*';
+            $unusedPermissions = $permissionModel
                 ->whereNotIn('name', $permissions)
                 ->get();
 
