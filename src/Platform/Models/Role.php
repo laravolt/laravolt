@@ -68,7 +68,24 @@ class Role extends Model
 
     public function syncPermission(array $permissions)
     {
-        $ids = collect($permissions)->transform(function ($permission) {
+        // ⚡ Bolt: Fast-path for bulk fetching existing permissions by name to prevent N+1 queries
+        $stringNames = [];
+        foreach ($permissions as $permission) {
+            if (is_string($permission) && ! str($permission)->isUlid()) {
+                $stringNames[] = $permission;
+            }
+        }
+
+        $existingByName = [];
+        if (! empty($stringNames)) {
+            $existingByName = app(config('laravolt.epicentrum.models.permission'))
+                ->whereIn('name', $stringNames)
+                ->get()
+                ->keyBy(fn ($p) => strtolower($p->name))
+                ->all();
+        }
+
+        $ids = collect($permissions)->transform(function ($permission) use ($existingByName) {
             if (is_string($permission) && str($permission)->isUlid()) {
                 return $permission;
             }
@@ -76,6 +93,11 @@ class Role extends Model
                 return (int) $permission;
             }
             if (is_string($permission)) {
+                $key = strtolower($permission);
+                if (isset($existingByName[$key])) {
+                    return $existingByName[$key]->getKey();
+                }
+
                 $permissionObject = app(config('laravolt.epicentrum.models.permission'))->firstOrCreate(['name' => $permission]);
 
                 return $permissionObject->getKey();

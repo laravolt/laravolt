@@ -189,8 +189,27 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
+        $rolesArray = is_array($roles) ? $roles : [$roles];
+
+        // ⚡ Bolt: Fast-path for bulk fetching existing roles by name to prevent N+1 queries
+        $stringNames = [];
+        foreach ($rolesArray as $role) {
+            if (is_string($role) && ! (Str::isUlid($role) || Str::isUuid($role))) {
+                $stringNames[] = $role;
+            }
+        }
+
+        $existingByName = [];
+        if (! empty($stringNames)) {
+            $existingByName = app(config('laravolt.epicentrum.models.role'))
+                ->whereIn('name', $stringNames)
+                ->get()
+                ->keyBy(fn ($r) => strtolower($r->name))
+                ->all();
+        }
+
+        return collect($rolesArray)
+            ->map(function ($role) use ($existingByName, $createMissing) {
                 if (is_numeric($role)) {
                     return (int) $role;
                 }
@@ -200,10 +219,15 @@ trait HasRoleAndPermission
                 }
 
                 if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+                    $key = strtolower($role);
+                    if (isset($existingByName[$key])) {
+                        return $existingByName[$key]->getKey();
+                    }
 
-                    return $role?->getKey();
+                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
+                    $roleObject = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+
+                    return $roleObject?->getKey();
                 }
 
                 if ($role instanceof Model) {
