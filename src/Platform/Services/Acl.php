@@ -39,19 +39,31 @@ class Acl
     public function syncPermission($refresh = false): Collection
     {
         return DB::transaction(function () use ($refresh) {
+            $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+
             if ($refresh) {
                 Schema::disableForeignKeyConstraints();
-                app(config('laravolt.epicentrum.models.permission'))->truncate();
+                $permissionModel->truncate();
                 Schema::enableForeignKeyConstraints();
             }
 
             $items = collect();
-            foreach ($this->permissions() as $name) {
-                $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                $status = 'No Change';
+            $permissionNames = $this->permissions();
 
-                if (! $permission->exists) {
-                    $permission->save();
+            // Bulk fetch existing permissions to prevent N+1 in the loop
+            $existingPermissions = $permissionNames === [] ? collect() : $permissionModel
+                ->whereIn('name', $permissionNames)
+                ->get()
+                ->keyBy(fn ($item) => strtolower($item->name));
+
+            foreach ($permissionNames as $name) {
+                $lowerName = strtolower($name);
+
+                if ($existingPermissions->has($lowerName)) {
+                    $permission = $existingPermissions->get($lowerName);
+                    $status = 'No Change';
+                } else {
+                    $permission = $permissionModel->firstOrCreate(['name' => $name]);
                     $status = 'New';
                 }
 
@@ -59,8 +71,8 @@ class Acl
             }
 
             // delete unused permissions
-            $permissions = $this->permissions() + ['*'];
-            $unusedPermissions = app(config('laravolt.epicentrum.models.permission'))
+            $permissions = array_merge($permissionNames, ['*']);
+            $unusedPermissions = $permissionModel
                 ->whereNotIn('name', $permissions)
                 ->get();
 
