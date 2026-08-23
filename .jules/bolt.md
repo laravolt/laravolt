@@ -10,3 +10,6 @@
 ## 2026-08-04 - Optimization: Batch Database Session Deletion to Prevent N+1 Checks
 **Learning:** Checking database schemas `Schema::hasTable()` inside iterative structures triggering cascading operations silently introduces O(N) hidden database queries.
 **Action:** When updating systems that depend on database meta-checks for multiple users (like invalidating sessions), accumulate the IDs and branch the data pipeline to execute single batched `whereIn()` queries with only a single schema resolution upfront.
+## 2024-05-14 - Batch fetch database check when syncing Acl
+**Learning:** `Acl::syncPermission()` created N+1 queries by executing `firstOrNew` and `save` individually for every string permission retrieved from `$this->permissions()`.
+**Action:** Always batch-fetch existing records using `whereIn()` mapped with `keyBy` and lowercase names before executing loops that create records.

@@ -47,12 +47,22 @@ class Acl
                 }
 
                 $items = collect();
-                foreach ($this->permissions() as $name) {
-                    $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                    $status = 'No Change';
 
-                    if (! $permission->exists) {
-                        $permission->save();
+                // ⚡ Bolt: Fast-path for bulk permission sync to avoid N+1 queries.
+                // We batch-fetch existing permissions and only create missing ones.
+                $permissionNames = $this->permissions();
+                $existingPermissions = app(config('laravolt.epicentrum.models.permission'))
+                    ->whereIn('name', $permissionNames)
+                    ->get()
+                    ->keyBy(fn ($item) => strtolower($item->name));
+
+                foreach ($permissionNames as $name) {
+                    $permission = $existingPermissions->get(strtolower($name));
+
+                    if ($permission) {
+                        $status = 'No Change';
+                    } else {
+                        $permission = app(config('laravolt.epicentrum.models.permission'))->create(['name' => $name]);
                         $status = 'New';
                     }
 
