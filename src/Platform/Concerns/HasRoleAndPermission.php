@@ -189,8 +189,29 @@ trait HasRoleAndPermission
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
     {
-        return collect(is_array($roles) ? $roles : [$roles])
-            ->map(function ($role) use ($createMissing) {
+        $rolesArray = is_array($roles) ? $roles : [$roles];
+
+        // ⚡ Bolt: Fast-path for bulk role sync to avoid N+1 queries.
+        // We extract the string names, do a bulk query to find existing roles,
+        // and only execute firstOrCreate() for the missing ones.
+        $stringNames = [];
+        foreach ($rolesArray as $role) {
+            if (is_string($role) && ! Str::isUlid($role) && ! Str::isUuid($role) && ! is_numeric($role)) {
+                $stringNames[] = $role;
+            }
+        }
+
+        $existingRoles = [];
+        if (! empty($stringNames)) {
+            $existingRoles = app(config('laravolt.epicentrum.models.role'))
+                ->whereIn('name', $stringNames)
+                ->get()
+                ->keyBy(fn ($item) => strtolower($item->name))
+                ->all();
+        }
+
+        return collect($rolesArray)
+            ->map(function ($role) use ($createMissing, &$existingRoles) {
                 if (is_numeric($role)) {
                     return (int) $role;
                 }
@@ -200,10 +221,25 @@ trait HasRoleAndPermission
                 }
 
                 if (is_string($role)) {
-                    $query = app(config('laravolt.epicentrum.models.role'))->where('name', $role);
-                    $role = $createMissing ? $query->firstOrCreate(['name' => $role]) : $query->first();
+                    $lowerName = strtolower($role);
+                    if (isset($existingRoles[$lowerName])) {
+                        return $existingRoles[$lowerName]->getKey();
+                    }
 
-                    return $role?->getKey();
+                    $roleModel = app(config('laravolt.epicentrum.models.role'));
+                    if ($createMissing) {
+                        $roleObject = $roleModel->firstOrCreate(['name' => $role]);
+                        $existingRoles[$lowerName] = $roleObject;
+                        return $roleObject->getKey();
+                    }
+
+                    $roleObject = $roleModel->where('name', $role)->first();
+                    if ($roleObject) {
+                        $existingRoles[$lowerName] = $roleObject;
+                        return $roleObject->getKey();
+                    }
+
+                    return null;
                 }
 
                 if ($role instanceof Model) {
