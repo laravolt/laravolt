@@ -10,3 +10,7 @@
 ## 2026-08-04 - Optimization: Batch Database Session Deletion to Prevent N+1 Checks
 **Learning:** Checking database schemas `Schema::hasTable()` inside iterative structures triggering cascading operations silently introduces O(N) hidden database queries.
 **Action:** When updating systems that depend on database meta-checks for multiple users (like invalidating sessions), accumulate the IDs and branch the data pipeline to execute single batched `whereIn()` queries with only a single schema resolution upfront.
+
+## 2024-05-18 - Avoid bypassing Eloquent events for model deletions
+**Learning:** While bulk deletion using `whereIn()->delete()` prevents N+1 queries, it completely bypasses Eloquent model events (`deleting`/`deleted`). In ACL packages, these events are almost always required to flush permission caches or handle cascading deletions in pivot tables. Bypassing them introduces high risk of stale caches or orphaned DB records.
+**Action:** When deleting models where caching or pivot relation logic might be tied to their lifecycle events, always retain the model-level `$model->delete()` inside the loop unless you can manually handle cache invalidation and cascading.
