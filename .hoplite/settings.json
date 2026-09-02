@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "ports": {"preview": 3000, "additional": {}},
+  "scripts": {
+    "setup": {
+      "enabled": true,
+      "command": "if ! command -v git-lfs >/dev/null 2>&1; then export DEBIAN_FRONTEND=noninteractive; apt-get update -qq; apt-get install -y -qq git-lfs php-cli php-mbstring php-xml php-curl php-zip php-sqlite3 php-bcmath php-gd php-pgsql; fi; if ! command -v composer >/dev/null 2>&1; then php -r \"copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');\" && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --quiet; fi"
+    },
+    "run": {"enabled": true, "command": null},
+    "archive": {"enabled": true, "command": null},
+    "check": {"enabled": true, "command": null}
+  },
+  "mcpServers": []
+}
