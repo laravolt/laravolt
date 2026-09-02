@@ -20,8 +20,6 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "akaunting/laravel-setting": "^1.2.9",
-        "barryvdh/laravel-debugbar": "^4.0",
-        "barryvdh/laravel-dompdf": "^3.1",
         "bensampo/laravel-enum": "^6.12",
         "blade-ui-kit/blade-icons": "^1.8",
         "calebporzio/sushi": "^2.5.3",
@@ -31,8 +29,6 @@
         "illuminate/database": "^11.0|^12.0|^13.0",
         "illuminate/support": "^11.0|^12.0|^13.0",
         "kirschbaum-development/eloquent-power-joins": "^4.1",
-        "larastan/larastan": ">=2.9.14",
-        "laravel/octane": "^2.12",
         "laravolt/avatar": "^6.1",
         "lavary/laravel-menu": "^1.8.4",
         "livewire/blaze": "^1.0",
@@ -40,18 +36,14 @@
         "myclabs/deep-copy": "^1.13",
         "spatie/laravel-backup": "^9.2.7|^10.0",
         "spatie/laravel-medialibrary": "^11.12.6",
-        "spatie/laravel-web-tinker": "^1.10.1",
-        "spatie/once": "^3.1.1",
-        "spaze/phpstan-disallowed-calls": "^4.6"
+        "spatie/once": "^3.1.1"
     },
     "require-dev": {
         "laravel/pint": "^1.21",
         "mockery/mockery": "^1.6.12",
         "orchestra/testbench-browser-kit": ">=8.6",
         "pestphp/pest": "^4.0",
-        "pestphp/pest-plugin-browser": "^4.0",
-        "php-coveralls/php-coveralls": "^2.7",
-        "squizlabs/php_codesniffer": "^3.11.3"
+        "pestphp/pest-plugin-browser": "^4.0"
     },
     "suggest": {
         "anhskohbo/no-captcha": "Required to enable the reCAPTCHA captcha feature (^3.7)"
