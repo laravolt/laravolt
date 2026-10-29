@@ -8,6 +8,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  package-tests:
+
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '8.3', '8.4', '8.5' ]
+        dependency-version: [ prefer-lowest, prefer-stable ]
+
+    name: package-tests (PHP ${{ matrix.php }}, ${{ matrix.dependency-version }})
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, mbstring, pdo_sqlite, sqlite3, tokenizer, xml, zip
+        coverage: none
+    - name: Install Dependencies
+      run: composer update --${{ matrix.dependency-version }} --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Package tests
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: ':memory:'
+      run: vendor/bin/pest -c phpunit.xml.example
+
   laravolt-platform-tests:
 
     runs-on: ubuntu-latest
