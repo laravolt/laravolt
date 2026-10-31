@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravolt\Asset\AssetManager;
 use Laravolt\Platform\Services\MenuBuilder;
@@ -80,7 +79,6 @@ class UiServiceProvider extends BaseServiceProvider
     {
         $this
             ->bootViews()
-            ->buildMenuFromConfig()
             ->ensureAssetsExtracted();
     }
 
@@ -115,19 +113,6 @@ class UiServiceProvider extends BaseServiceProvider
     {
         Paginator::defaultView('laravolt::pagination.default');
         Paginator::defaultSimpleView('laravolt::pagination.simple');
-
-        return $this;
-    }
-
-    protected function buildMenuFromConfig()
-    {
-        View::composer(
-            'laravolt::menu.sidebar',
-            function () {
-                $this->app['laravolt.menu.builder']->loadConfig(config('laravolt.menu', []));
-                $this->app['laravolt.menu.builder']->runCallbacks();
-            }
-        );
 
         return $this;
     }

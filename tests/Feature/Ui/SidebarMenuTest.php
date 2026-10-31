@@ -30,7 +30,7 @@ class SidebarMenuTest extends FeatureTest
         ]]);
     }
 
-    public function test_rendering_the_sidebar_repeatedly_runs_each_callback_once(): void
+    public function test_each_render_runs_each_callback_once(): void
     {
         $calls = 0;
         app('laravolt.menu.builder')->register(function () use (&$calls): void {
@@ -41,9 +41,9 @@ class SidebarMenuTest extends FeatureTest
             $this->composeSidebar();
         }
 
-        app('laravolt.menu.sidebar')->all();
-
-        $this->assertSame(1, $calls);
+        // Once per render. Before the fix, every render re-registered the
+        // callback, so the count grew 1 + 2 + 3 + ... instead.
+        $this->assertSame(3, $calls);
     }
 
     public function test_config_menus_are_loaded_once_however_often_the_sidebar_renders(): void
@@ -74,9 +74,19 @@ class SidebarMenuTest extends FeatureTest
         $this->assertNotContains('Sales', $this->titles());
     }
 
+    /**
+     * What the sidebar view does on every render.
+     */
+    public function test_the_menu_is_built_without_rendering_the_sidebar_view(): void
+    {
+        $this->actingAs($this->user(1));
+
+        $this->assertContains('Stock', $this->titles());
+    }
+
     private function composeSidebar(): void
     {
-        app('view')->callComposer(view('laravolt::menu.sidebar'));
+        app('laravolt.menu.sidebar')->allMenu();
     }
 
     /**
