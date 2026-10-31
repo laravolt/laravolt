@@ -4,7 +4,7 @@
 
 @push('script')
     @once
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="/laravolt/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
     @endonce
     <script>
         (new ApexCharts(document.querySelector("#{{ $this->key }}"), @json($this->options()))).render();

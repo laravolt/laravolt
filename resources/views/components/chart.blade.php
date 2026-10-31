@@ -56,7 +56,7 @@
 <div id="{{ $id }}" {{ $attributes->except(['type', 'series', 'categories', 'height', 'title', 'colors', 'stacked', 'toolbar']) }}></div>
 
 @pushOnce('script')
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="/laravolt/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
 @endPushOnce
 
 @push('script')

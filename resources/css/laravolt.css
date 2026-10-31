@@ -1,0 +1,28 @@
+/* Source for public/assets/css/main.min.css. Rebuild with `npm run build:assets`. */
+@import "tailwindcss" source(none);
+@plugin "@tailwindcss/forms";
+@import "preline/variants.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source "../views";
+@source "../js";
+@source "../../src";
+@source "../../packages";
+@source "../../stubs";
+/* Every class shipped by the pre-v8 prebuilt CSS. Apps render their own views
+   inside Laravolt layouts with this stylesheet only, so none may disappear. */
+@source "./safelist.txt";
+
+@theme {
+  --columns: 12;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@import "./legacy.css";

@@ -8,19 +8,21 @@ class LaravoltBladeDirectives
 {
     public static function scripts($expression)
     {
-        return <<<'HTML'
+        $v = static::assetVersion();
+
+        return <<<HTML
           <!-- Required plugins -->
-          <script src="/laravolt/assets/vendor/preline/dist/index.js?v=4.1.2"></script>
-          <script src="/laravolt/assets/vendor/preline/dist/overlay.js?v=4.1.2"></script>
-          <script src="/laravolt/assets/vendor/preline/dist/datepicker.js?v=4.1.2"></script>
-          <script src="/laravolt/assets/vendor/preline/dist/select.js?v=4.1.2"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/index.js?v={$v}"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/overlay.js?v={$v}"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/datepicker.js?v={$v}"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/select.js?v={$v}"></script>
           <!-- Clipboard -->
           <script src="/laravolt/assets/vendor/clipboard/dist/clipboard.min.js"></script>
           <script src="/laravolt/assets/js/hs-copy-clipboard-helper.js"></script>
           <!-- Apexcharts -->
           <script src="/laravolt/assets/vendor/lodash/lodash.min.js"></script>
           <script src="/laravolt/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
-          <script src="/laravolt/assets/vendor/preline/dist/helper-apexcharts.js"></script>
+          <script src="/laravolt/assets/vendor/preline/dist/helper-apexcharts.js?v={$v}"></script>
           <script src="/laravolt/assets/vendor/basictable/basictable.min.js"></script>
           <!-- JS INITIALIZATIONS -->
           <script>
@@ -30,8 +32,23 @@ class LaravoltBladeDirectives
           </script>
 
           <!-- Vendor -->
-          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+          <script src="/laravolt/assets/vendor/toastify-js/src/toastify.js?v={$v}"></script>
         HTML;
+    }
+
+    /**
+     * Cache-busting token for the files built by `npm run build:assets`.
+     */
+    public static function assetVersion(): string
+    {
+        static $version;
+
+        if ($version === null) {
+            $file = dirname(__DIR__, 3).'/resources/assets.version';
+            $version = is_file($file) ? trim((string) file_get_contents($file)) : '';
+        }
+
+        return $version !== '' ? $version : 'dev';
     }
 
     public static function basictable($expression)
@@ -156,16 +173,17 @@ class LaravoltBladeDirectives
     public static function styles($expression)
     {
         $accent = config('laravolt.ui.colors.'.config('laravolt.ui.color'), '#3b82f6');
+        $v = static::assetVersion();
 
         return <<<HTML
           <!-- Vendor -->
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+          <link rel="stylesheet" href="/laravolt/assets/vendor/toastify-js/src/toastify.css?v={$v}">
 
           <!-- Font -->
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
           <!-- CSS HS -->
-          <link rel="stylesheet" href="/laravolt/assets/css/main.min.css?v=4.1.2">
+          <link rel="stylesheet" href="/laravolt/assets/css/main.min.css?v={$v}">
           <link rel="stylesheet" href="/laravolt/assets/vendor/basictable/basictable.min.css">
 
           <!-- Theme Check and Update -->
