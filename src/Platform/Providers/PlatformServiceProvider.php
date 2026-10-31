@@ -326,6 +326,7 @@ class PlatformServiceProvider extends ServiceProvider
             'panel' => 'laravolt::components.panel',
             'pin-code' => 'laravolt::components.pin-code',
             'popover' => 'laravolt::components.popover',
+            'media-preview' => 'laravolt::components.media-preview',
             'progress' => 'laravolt::components.progress',
             'radio' => 'laravolt::components.radio',
             'range-slider' => 'laravolt::components.range-slider',
