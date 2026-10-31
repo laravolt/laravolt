@@ -13,6 +13,8 @@ class MenuBuilder
 
     protected $registeredCallbacks = [];
 
+    protected bool $configLoaded = false;
+
     public function __construct()
     {
         $this->defaultIcon = config('laravolt.ui.default_menu_icon');
@@ -23,11 +25,38 @@ class MenuBuilder
         $this->registeredCallbacks[] = $callback;
     }
 
+    /**
+     * Hand the registered callbacks over to the sidebar exactly once.
+     *
+     * The sidebar keeps what it receives, so the list is drained here. A
+     * long-running worker (Octane) renders the sidebar on every request
+     * with the same singletons; without draining, each render would append
+     * every callback again and the menu would get slower request by request.
+     */
     public function runCallbacks()
     {
-        foreach ($this->registeredCallbacks as $callback) {
+        $callbacks = $this->registeredCallbacks;
+        $this->registeredCallbacks = [];
+
+        foreach ($callbacks as $callback) {
             app('laravolt.menu.sidebar')->registerCore($callback);
         }
+    }
+
+    /**
+     * Load the `laravolt.menu` config sections once per builder instance.
+     */
+    public function loadConfig(array $menus): void
+    {
+        if ($this->configLoaded) {
+            return;
+        }
+
+        foreach ($menus as $menu) {
+            $this->loadArray($menu);
+        }
+
+        $this->configLoaded = true;
     }
 
     public function loadArray(array $menu)
