@@ -47,12 +47,29 @@ class Acl
                 }
 
                 $items = collect();
-                foreach ($this->permissions() as $name) {
-                    $permission = app(config('laravolt.epicentrum.models.permission'))->firstOrNew(['name' => $name]);
-                    $status = 'No Change';
 
-                    if (! $permission->exists) {
+                // Load existing permissions in one query instead of one firstOrNew() per name.
+                $permissionsToSync = $this->permissions();
+                $existingPermissions = [];
+                if (! empty($permissionsToSync)) {
+                    $existingPermissions = app(config('laravolt.epicentrum.models.permission'))
+                        ->whereIn('name', $permissionsToSync)
+                        ->get()
+                        ->keyBy(fn ($item) => strtolower($item->name))
+                        ->all();
+                }
+
+                foreach ($permissionsToSync as $name) {
+                    $lowerName = strtolower($name);
+
+                    if (isset($existingPermissions[$lowerName])) {
+                        $permission = $existingPermissions[$lowerName];
+                        $status = 'No Change';
+                    } else {
+                        $permission = app(config('laravolt.epicentrum.models.permission'))->newInstance(['name' => $name]);
                         $permission->save();
+                        // Names differing only by case resolve to one row, as firstOrNew() did on case-insensitive collations.
+                        $existingPermissions[$lowerName] = $permission;
                         $status = 'New';
                     }
 
