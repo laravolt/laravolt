@@ -29,7 +29,7 @@
         "illuminate/database": "^12.68|^13.29",
         "illuminate/support": "^12.68|^13.29",
         "kirschbaum-development/eloquent-power-joins": "^4.3",
-        "laravolt/avatar": "^8.0",
+        "laravolt/avatar": "^8.0.1",
         "lavary/laravel-menu": "^1.8.4",
         "livewire/blaze": "^1.0",
         "livewire/livewire": "^4.4",

@@ -1,0 +1,103 @@
+name: Visual
+
+on:
+  pull_request:
+    paths:
+      - resources/**
+      - src/**
+      - packages/**
+      - .github/visual/**
+      - .github/workflows/visual.yml
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        side: [base, head]
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, intl, mbstring, pdo_sqlite, sqlite3, tokenizer, xml, zip
+          coverage: none
+
+      - name: Checkout Laravolt (${{ matrix.side }})
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ matrix.side == 'base' && github.event.pull_request.base.sha || github.event.pull_request.head.sha }}
+          path: laravolt
+
+      - name: Checkout capture scripts (head)
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: tools
+          sparse-checkout: .github/visual
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Create starter-kit app using this Laravolt checkout
+        run: |
+          composer create-project laravolt/laravel-starter-kit:dev-main --no-install --no-interaction --no-scripts --prefer-dist app
+          cd app
+          composer config repositories.laravolt '{"type":"path","url":"../laravolt","options":{"symlink":false,"versions":{"laravolt/laravolt":"8.99.0"}}}'
+          composer update --no-interaction --no-scripts --no-progress --prefer-dist
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan laravolt:install
+          php artisan migrate --force
+          php artisan laravolt:admin Admin admin@laravolt.test password
+
+      - name: Install Playwright
+        run: |
+          cd tools/.github/visual
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.59.1
+          npx playwright install --with-deps chromium
+
+      - name: Capture
+        run: |
+          (cd app && php artisan serve --host=127.0.0.1 --port=8000 > ../serve.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:8000/auth/login && break; sleep 1; done
+          APP_URL=http://127.0.0.1:8000 node tools/.github/visual/capture.mjs shots
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shots-${{ matrix.side }}
+          path: |
+            shots
+            serve.log
+            app/storage/logs
+
+  compare:
+    needs: capture
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: .github/visual
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shots-*
+
+      - run: sudo apt-get install -y imagemagick >/dev/null
+
+      - name: Compare
+        run: |
+          python3 .github/visual/compare.py shots-base/shots shots-head/shots diff
+          cat diff/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff
+          path: diff

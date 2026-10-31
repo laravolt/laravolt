@@ -10,7 +10,7 @@
                 <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80 text-blue-600 dark:text-blue-500 whitespace-nowrap" href="/" aria-label="Preline UI">Preline UI</a>
             </div>
             <div class="w-full flex items-center justify-end ms-auto gap-x-3">
-                <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-400">v4.1.2</span>
+                <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-800/30 dark:text-blue-400">v5.0.0</span>
                 {{-- Theme Toggle --}}
                 <button type="button" class="hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 focus:outline-none focus:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" data-hs-theme-click-value="dark">
                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>

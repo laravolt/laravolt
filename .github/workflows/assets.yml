@@ -1,0 +1,46 @@
+name: Assets
+
+on:
+  pull_request:
+    paths:
+      - resources/css/**
+      - resources/assets.zip
+      - resources/assets.version
+      - scripts/build-assets.mjs
+      - package.json
+      - package-lock.json
+      - .node-version
+      - .github/workflows/assets.yml
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  reproducible:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+
+      - run: npm ci
+
+      - run: npm audit --audit-level=high
+
+      - name: Rebuild assets
+        run: npm run build:assets
+
+      - name: Committed assets match a clean rebuild
+        run: |
+          sha256sum resources/assets.zip resources/assets.version
+          git diff --exit-code --stat resources/assets.zip resources/assets.version
+
+      - name: Hover styles are gated for touch devices
+        run: |
+          unzip -p resources/assets.zip public/assets/css/main.min.css > main.min.css
+          test "$(grep -o '@media (hover:hover)' main.min.css | wc -l)" -gt 0
