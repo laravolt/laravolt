@@ -54,7 +54,7 @@ jobs:
           touch database/database.sqlite
           php artisan laravolt:install
           php artisan migrate --force
-          php artisan laravolt:admin Admin admin@laravolt.test password --no-verify
+          php artisan laravolt:admin Admin admin@laravolt.test password
 
       - name: Install Playwright
         run: |
@@ -76,6 +76,7 @@ jobs:
           path: |
             shots
             serve.log
+            app/storage/logs
 
   compare:
     needs: capture

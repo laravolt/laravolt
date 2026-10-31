@@ -16,6 +16,8 @@
 
 @theme {
   --columns: 12;
+  /* Tailwind 4.3 changed the default stack; keep the one Laravolt shipped with. */
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 @layer base {
