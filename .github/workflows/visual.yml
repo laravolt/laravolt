@@ -50,6 +50,8 @@ jobs:
           composer config repositories.laravolt '{"type":"path","url":"../laravolt","options":{"symlink":false,"versions":{"laravolt/laravolt":"8.99.0"}}}'
           composer update --no-interaction --no-scripts --no-progress --prefer-dist
           cp .env.example .env
+          # Persistent cache stores hit laravolt/avatar#210 (cached DataUri object -> 500).
+          sed -i 's/^CACHE_STORE=.*/CACHE_STORE=array/' .env
           php artisan key:generate
           touch database/database.sqlite
           php artisan laravolt:install
