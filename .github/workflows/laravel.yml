@@ -21,7 +21,7 @@ jobs:
     name: package-tests (PHP ${{ matrix.php }}, ${{ matrix.dependency-version }})
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
@@ -45,8 +45,8 @@ jobs:
         php-version: '8.4'
         extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, mbstring, pdo_sqlite, sockets, sqlite3, tokenizer, xml, zip, xdebug
         coverage: xdebug
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
       with:
         node-version: '22'
     - name: Install Laravel
