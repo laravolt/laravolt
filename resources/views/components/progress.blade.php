@@ -27,8 +27,8 @@
         'info' => 'bg-cyan-600'
     ];
 
-    $progressClasses = 'w-full bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700 transition-all duration-300';
-    $barClasses = 'h-full transition-all duration-500 ease-out rounded-full ' . ($variantClasses[$variant] ?? $variantClasses['primary']);
+    $progressClasses = 'w-full bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700';
+    $barClasses = 'h-full rounded-full ' . ($variantClasses[$variant] ?? $variantClasses['primary']);
 @endphp
 
 <div {{ $attributes->merge(['class' => 'space-y-2']) }}>
@@ -44,7 +44,7 @@
     <div class="{{ $progressClasses }} {{ $sizeClasses[$size] ?? $sizeClasses['md'] }}">
         <div
             class="{{ $barClasses }}"
-            style="width: {{ $percentage }}%"
+            style="width: {{ $percentage }}%; transition: width 300ms cubic-bezier(0.23, 1, 0.32, 1)"
             role="progressbar"
             aria-valuenow="{{ $value }}"
             aria-valuemin="0"
