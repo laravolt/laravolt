@@ -84,4 +84,17 @@ class AclServiceTest extends FeatureTest
 
         $this->assertSame('New', $permissions->first()['status']);
     }
+
+    public function test_sync_permission_keeps_the_wildcard_permission()
+    {
+        $permissionModel = config('laravolt.epicentrum.models.permission');
+        $permissionModel::create(['name' => '*']);
+
+        $service = app('laravolt.acl');
+        $service->registerPermission(['create-user', 'edit-user']);
+        $items = $service->syncPermission(false);
+
+        $this->seeInDatabase('acl_permissions', ['name' => '*']);
+        $this->assertNotContains('*', $items->where('status', 'Deleted')->pluck('name')->all());
+    }
 }

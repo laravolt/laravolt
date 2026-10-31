@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Epicentrum\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class PermissionController extends Controller
 {
@@ -19,9 +20,22 @@ class PermissionController extends Controller
 
     public function update()
     {
-        foreach (request('permission', []) as $key => $description) {
-            config('laravolt.epicentrum.models.permission')::whereId($key)->update(['description' => $description]);
-        }
+        $descriptions = (array) request('permission', []);
+        $permissionModel = config('laravolt.epicentrum.models.permission');
+
+        // One read, then write only the rows whose description changed.
+        DB::transaction(function () use ($descriptions, $permissionModel) {
+            $permissionModel::query()
+                ->whereIn('id', array_keys($descriptions))
+                ->get()
+                ->each(function ($permission) use ($descriptions) {
+                    $permission->description = $descriptions[$permission->getKey()];
+
+                    if ($permission->isDirty('description')) {
+                        $permission->save();
+                    }
+                });
+        });
 
         return redirect()->back()->withSuccess('Permission updated');
     }
