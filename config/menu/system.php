@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+/*
+ * The built-in "System" menu. Once published to config/laravolt/menu/system.php,
+ * your copy replaces this file entirely: entries you remove disappear from the
+ * menu. To add your own sections, create another file in config/laravolt/menu/
+ * instead. Set laravolt.platform.features.enable_default_menu to false to drop
+ * the System menu altogether.
+ */
+
 return [
     'System' => [
         'order' => 99,
@@ -14,7 +22,7 @@ return [
             ],
             'Roles' => [
                 'route' => 'epicentrum::roles.index',
-                'config' => 'epicentrum/roles/*',
+                'active' => 'epicentrum/roles/*',
                 'icon' => 'user-astronaut',
                 'permissions' => [Laravolt\Platform\Enums\Permission::MANAGE_ROLE],
             ],

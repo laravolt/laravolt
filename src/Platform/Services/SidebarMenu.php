@@ -54,6 +54,13 @@ class SidebarMenu extends BaseMenu
 
     public function all()
     {
+        // Built here rather than when the sidebar view renders, so apps that
+        // replace that view (or render the menu elsewhere) still get it.
+        // Both calls are idempotent.
+        $builder = app('laravolt.menu.builder');
+        $builder->loadConfig(config('laravolt.menu', []));
+        $builder->runCallbacks();
+
         // Lavary reuses a builder that already has this name, so without
         // this every call (every request, in a long-running worker) would
         // add all items again.
