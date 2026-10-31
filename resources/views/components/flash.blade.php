@@ -10,7 +10,6 @@
         }
 
         function createToast(bag) {
-            console.log(bag)
             let toastMarkup = '';
 
             // Determine toast type and styling based on bag properties

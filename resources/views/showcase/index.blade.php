@@ -182,7 +182,8 @@
 <script>
 // Copy component usage example
 function copyComponentUsage(component) {
-    const usageExample = '<x-volt' + `-${component} />`;
+    // Built from parts so Blade does not compile the usage example as a real component tag.
+    const usageExample = '<' + 'x-volt-' + component + ' />';
 
     if (navigator.clipboard) {
         navigator.clipboard.writeText(usageExample).then(() => {

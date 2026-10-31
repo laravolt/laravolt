@@ -21,14 +21,3 @@
     </div>
 </div>
 
-@once
-    @push('script')
-        <script>
-            // Initialize Preline UI tabs
-            document.addEventListener('DOMContentLoaded', function() {
-                // Preline UI tabs initialization will be handled by the framework
-                console.log('Tabs initialized');
-            });
-        </script>
-    @endpush
-@endonce
