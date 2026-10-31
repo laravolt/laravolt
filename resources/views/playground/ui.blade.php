@@ -1,7 +1,7 @@
 <x-volt-app title="Preline UI Showcase">
     <div class="mb-4">
         <p class="text-sm text-gray-500 dark:text-neutral-400">
-            Powered by <span class="font-semibold text-blue-600 dark:text-blue-400">Preline UI v4.1.2</span> · Tailwind CSS v4 · Interactive Component Gallery
+            Powered by <span class="font-semibold text-blue-600 dark:text-blue-400">Preline UI v5.0.0</span> · Tailwind CSS v4 · Interactive Component Gallery
         </p>
     </div>
 
