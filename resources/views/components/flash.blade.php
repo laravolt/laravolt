@@ -75,7 +75,7 @@
             @foreach ($bags as $bag)
                 Toastify({
                     text: createToast({!! json_encode($bag) !!}),
-                    className: "hs-toastify-on:opacity-100 opacity-0 fixed bottom-5 end-5 z-[100] transition-all duration-300 w-72 [&>.toast-close]:hidden p-0",
+                    className: "hs-toastify-on:opacity-100 opacity-0 fixed bottom-5 end-5 z-[100] transition-opacity duration-200 w-72 [&>.toast-close]:hidden p-0",
                     duration: {{ $bag['displayTime'] === 'auto' ? $bag['minDisplayTime'] ?? 3000 : $bag['displayTime'] }},
                     close: true,
                     escapeMarkup: false,
@@ -88,7 +88,7 @@
             @foreach ($bags as $bag)
                 (function() {
                     const toastContainer = document.createElement('div');
-                    toastContainer.className = 'fixed bottom-5 end-5 z-[100] transition-all duration-300 w-72';
+                    toastContainer.className = 'fixed bottom-5 end-5 z-[100] transition-opacity duration-200 w-72';
                     toastContainer.innerHTML = createToast({!! json_encode($bag) !!});
 
                     document.body.appendChild(toastContainer);
