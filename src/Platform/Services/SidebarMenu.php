@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laravolt\Platform\Services;
 
 use Closure;
-use Illuminate\Support\Facades\Cache;
 use Lavary\Menu\Builder;
 use Lavary\Menu\Item;
 use Lavary\Menu\Menu as BaseMenu;
@@ -55,6 +54,12 @@ class SidebarMenu extends BaseMenu
 
     public function all()
     {
+        // Lavary reuses a builder that already has this name, so without
+        // this every call (every request, in a long-running worker) would
+        // add all items again.
+        unset($this->menu['sidebar']);
+        $this->collection->forget('sidebar');
+
         /** @var Builder $sidebar */
         $sidebar = app('laravolt.menu.sidebar')->make(
             'sidebar',
@@ -108,14 +113,16 @@ class SidebarMenu extends BaseMenu
         return $result;
     }
 
+    /**
+     * The sidebar for the current user.
+     *
+     * Not cached: items are filtered by the user's roles and permissions,
+     * so one shared cache entry would show every user the menu of whoever
+     * hit the cache first.
+     */
     public function allMenu()
     {
-        $isProduction = app()->isProduction();
-        $items = $isProduction
-            ? Cache::rememberForever('sidebar-items', fn () => $this->all())
-            : $this->all();
-
-        return $items;
+        return $this->all();
     }
 
     protected function filterByVisibility(Item $item)
