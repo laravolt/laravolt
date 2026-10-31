@@ -31,7 +31,6 @@
         "illuminate/database": "^12.68|^13.29",
         "illuminate/support": "^12.68|^13.29",
         "kirschbaum-development/eloquent-power-joins": "^4.3",
-        "larastan/larastan": "^3.13",
         "laravel/octane": "^2.22",
         "laravolt/avatar": "^7.0",
         "lavary/laravel-menu": "^1.8.4",
@@ -41,16 +40,17 @@
         "spatie/laravel-backup": "^10.3",
         "spatie/laravel-medialibrary": "^11.23",
         "spatie/laravel-web-tinker": "^1.10.1",
-        "spatie/once": "^3.1.1",
-        "spaze/phpstan-disallowed-calls": "^4.15"
+        "spatie/once": "^3.1.1"
     },
     "require-dev": {
+        "larastan/larastan": "^3.13",
         "laravel/pint": "^1.32",
         "mockery/mockery": "^1.6.12",
         "orchestra/testbench-browser-kit": "^10.0|^11.0",
         "pestphp/pest": "^4.0|^5.3",
         "pestphp/pest-plugin-browser": "^4.0|^5.1",
         "php-coveralls/php-coveralls": "^2.9",
+        "spaze/phpstan-disallowed-calls": "^4.15",
         "squizlabs/php_codesniffer": "^4.0"
     },
     "suggest": {
