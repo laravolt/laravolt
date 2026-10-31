@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Laravolt\Media\MediaHandler;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
+use Laravolt\Media\MediaDeletion;
 use Laravolt\Media\Upload\ResumableHandler;
 use Laravolt\Platform\Models\Guest;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
@@ -17,9 +17,12 @@ class ChunkedMediaHandler
 {
     public function __invoke(): JsonResponse
     {
-        $action = request('_action', 'upload');
-
-        return $this->{$action}();
+        return match (request('_action', 'upload')) {
+            'upload' => $this->upload(),
+            'status' => $this->status(),
+            'delete' => $this->delete(),
+            default => response()->json(['success' => false, 'message' => 'Unknown action'], 400),
+        };
     }
 
     /**
@@ -126,20 +129,21 @@ class ChunkedMediaHandler
      */
     protected function delete(): JsonResponse
     {
-        try {
-            /** @var Model */
-            $model = config('media-library.media_model');
-            /** @var Media */
-            $media = $model::query()->findOrFail(request('id'));
-            $media->delete();
+        /** @var class-string<Media> $model */
+        $model = config('media-library.media_model');
+        $media = $model::query()->find(request('id'));
 
-            return response()->json(['success' => true]);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 404);
+        if ($media === null) {
+            return response()->json(['success' => false, 'message' => 'Media not found'], 404);
         }
+
+        if (! MediaDeletion::allows($media)) {
+            return response()->json(['success' => false, 'message' => 'Forbidden'], 403);
+        }
+
+        $media->delete();
+
+        return response()->json(['success' => true]);
     }
 
     /**

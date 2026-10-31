@@ -16,3 +16,5 @@ use Laravolt\Tests\UnitTest;
 */
 
 uses(UnitTest::class)->in('Unit/Media');
+
+uses(Laravolt\Tests\PackageTest::class, Illuminate\Foundation\Testing\RefreshDatabase::class)->in('Feature/Media');

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Media\MediaHandler;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Media\MediaDeletion;
 use Laravolt\Platform\Models\Guest;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -13,9 +14,11 @@ class FileuploaderMediaHandler
 {
     public function __invoke()
     {
-        $action = request('_action');
-
-        return $this->{$action}();
+        return match (request('_action')) {
+            'upload' => $this->upload(),
+            'delete' => $this->delete(),
+            default => response()->json(['success' => false, 'message' => 'Unknown action'], 400),
+        };
     }
 
     protected function upload()
@@ -59,7 +62,12 @@ class FileuploaderMediaHandler
         /** @var Model */
         $model = config('media-library.media_model');
         /** @var Media */
-        $media = $model::query()->findOrfail(request('id'));
+        $media = $model::query()->findOrFail(request('id'));
+
+        if (! MediaDeletion::allows($media)) {
+            return response()->json(false, 403);
+        }
+
         $media->delete();
 
         return response()->json(true);

@@ -18,6 +18,7 @@
       <directory suffix="Test.php">./tests/Feature/Password</directory>
     </testsuite>
     <testsuite name="Feature">
+      <directory suffix="Test.php">./tests/Feature/Media</directory>
       <directory suffix="Test.php">./tests/Feature/Ui</directory>
       <directory suffix="Test.php">./tests/Feature/Views</directory>
     </testsuite>

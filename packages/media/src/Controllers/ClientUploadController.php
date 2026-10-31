@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Laravolt\Media\ClientUploadConfig;
 use Laravolt\Platform\Models\Guest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -82,6 +83,8 @@ class ClientUploadController extends Controller
 
             // Simple upload - return presigned PUT URL
             return $this->initiateSimpleUpload($disk, $key, $validated, $media);
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             Log::error('Client upload initiation failed', [
                 'error' => $e->getMessage(),
@@ -129,6 +132,8 @@ class ClientUploadController extends Controller
                 'part_number' => $validated['part_number'],
                 'expires_at' => $expiration->toIso8601String(),
             ]);
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             Log::error('Failed to generate presigned URL for part', [
                 'error' => $e->getMessage(),
@@ -182,6 +187,8 @@ class ClientUploadController extends Controller
                 'urls' => $urls,
                 'expires_at' => $expiration->toIso8601String(),
             ]);
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             Log::error('Failed to generate presigned URLs for parts', [
                 'error' => $e->getMessage(),
@@ -270,6 +277,8 @@ class ClientUploadController extends Controller
                     ],
                 ],
             ]);
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             Log::error('Failed to complete multipart upload', [
                 'error' => $e->getMessage(),
@@ -352,6 +361,8 @@ class ClientUploadController extends Controller
                     ],
                 ],
             ]);
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             Log::error('Failed to complete simple upload', [
                 'error' => $e->getMessage(),
@@ -404,6 +415,8 @@ class ClientUploadController extends Controller
                 'success' => true,
                 'message' => 'Upload aborted',
             ]);
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             Log::error('Failed to abort upload', [
                 'error' => $e->getMessage(),
