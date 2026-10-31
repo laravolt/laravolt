@@ -78,7 +78,8 @@ test('chunked upload can handle file chunks', function () {
 });
 
 test('chunked upload creates media entry in database', function () {
-    $file = UploadedFile::fake()->create('test-document.pdf', 512);
+    // A real PDF header, so the stored MIME type is detected from the content.
+    $file = UploadedFile::fake()->createWithContent('test-document.pdf', "%PDF-1.4\n%%EOF\n");
     /** @var TestCase */
     $test = $this;
     $test->post('/media/chunk', [
@@ -99,26 +100,27 @@ test('chunked upload creates media entry in database', function () {
     expect($media->mime_type)->toBe('application/pdf');
 });
 
-test('chunked upload status endpoint works', function () {
+test('chunked upload status endpoint reports a missing chunk', function () {
     /** @var TestCase */
     $test = $this;
-    $response = $test->get('/media/chunk/status', [
+    $response = $test->get('/media/chunk/status?'.http_build_query([
         'resumableIdentifier' => 'non-existent-file',
         'resumableFilename' => 'test.txt',
-    ]);
+        'resumableChunkNumber' => 1,
+    ]));
 
-    $response->assertSuccessful();
-    $response->assertJsonStructure([
-        'status',
-        'percentage',
-    ]);
+    // 404 tells Resumable.js to send the chunk.
+    $response->assertNotFound();
+    $response->assertJson(['status' => 'not_found', 'percentage' => 0]);
 });
 
 test('chunked upload delete functionality works', function () {
     // First create a media entry
     $file = UploadedFile::fake()->create('delete-test.txt', 100);
+    $user = Laravolt\Platform\Models\User::query()->forceCreate(['name' => 'Uploader', 'email' => 'uploader@example.test', 'password' => 'secret']);
     /** @var TestCase */
     $test = $this;
+    $test->actingAs($user);
     $uploadResponse = $test->post('/media/chunk', [
         'handler' => 'chunked',
         '_action' => 'upload',
@@ -138,7 +140,7 @@ test('chunked upload delete functionality works', function () {
     // Now delete it
     /** @var TestCase */
     $test = $this;
-    $deleteResponse = $test->post('/media/chunk', [
+    $deleteResponse = $test->post('/media/media', [
         'handler' => 'chunked',
         '_action' => 'delete',
         'id' => $media->id,

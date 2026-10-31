@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Media\Controllers;
 
 use Illuminate\Routing\Controller;
+use Laravolt\Media\MediaDeletion;
 use Laravolt\Media\MediaHandler\ChunkedMediaHandler;
 use Laravolt\Media\MediaHandler\FileuploaderMediaHandler;
 use Laravolt\Media\MediaHandler\RedactorMediaHandler;
@@ -35,7 +36,10 @@ class MediaController extends Controller
         /** @var \Illuminate\Database\Eloquent\Model */
         $model = config('media-library.media_model');
         /** @var Media */
-        $media = $model::query()->findOrfail(request('id'));
+        $media = $model::query()->findOrFail($id);
+
+        abort_unless(MediaDeletion::allows($media), 403);
+
         $media->delete();
 
         return redirect()->back()->withSuccess(__('Media deleted'));

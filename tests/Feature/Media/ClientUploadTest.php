@@ -292,26 +292,18 @@ test('client upload complete simple requires upload_token', function () {
     $response->assertJsonValidationErrors(['upload_token']);
 });
 
-test('client upload abort requires key', function () {
+test('client upload abort without a multipart upload is a no-op', function () {
+    // key and upload_id are only needed to abort a multipart upload on S3.
     /** @var TestCase */
     $test = $this;
-    $response = $test->postJson('/media/client-upload/abort', [
-        'upload_id' => 'test-upload-id',
-    ]);
 
-    $response->assertStatus(422);
-    $response->assertJsonValidationErrors(['key']);
-});
+    $test->postJson('/media/client-upload/abort', ['upload_id' => 'test-upload-id'])
+        ->assertOk()
+        ->assertJson(['success' => true]);
 
-test('client upload abort requires upload_id', function () {
-    /** @var TestCase */
-    $test = $this;
-    $response = $test->postJson('/media/client-upload/abort', [
-        'key' => 'uploads/test.jpg',
-    ]);
-
-    $response->assertStatus(422);
-    $response->assertJsonValidationErrors(['upload_id']);
+    $test->postJson('/media/client-upload/abort', ['key' => 'uploads/test.jpg'])
+        ->assertOk()
+        ->assertJson(['success' => true]);
 });
 
 test('client upload complete simple rejects invalid token', function () {

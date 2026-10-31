@@ -14,6 +14,11 @@ class Guest extends Model implements HasMedia
     use InteractsWithMedia;
     use Sushi;
 
+    public function getMediaModel(): string
+    {
+        return GuestMedia::class;
+    }
+
     public function getRows()
     {
         return [
