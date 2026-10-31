@@ -16,9 +16,7 @@ class SyncPermissionCommandTest extends FeatureTest
         Artisan::call('laravolt:sync-permission');
         $output = Artisan::output();
 
-        $this->assertStringContainsString('create-user', $output);
-        $this->assertStringContainsString('1', $output);
-        $this->assertStringContainsString('New', $output);
+        $this->assertMatchesRegularExpression('/\|\s*create-user\s*\|\s*New\s*\|/', $output);
     }
 
     public function test_sync_permission_command_with_refresh()
@@ -48,8 +46,7 @@ class SyncPermissionCommandTest extends FeatureTest
         Artisan::call('laravolt:sync-permission');
         $output = Artisan::output();
 
-        $this->assertStringContainsString('edit-user', $output);
-        $this->assertStringContainsString('2', $output);
-        $this->assertStringContainsString('Deleted', $output);
+        $this->assertMatchesRegularExpression('/\|\s*edit-user\s*\|\s*Deleted\s*\|/', $output);
+        $this->assertMatchesRegularExpression('/\|\s*delete-user\s*\|\s*Deleted\s*\|/', $output);
     }
 }
