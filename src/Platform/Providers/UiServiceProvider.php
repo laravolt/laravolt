@@ -124,10 +124,7 @@ class UiServiceProvider extends BaseServiceProvider
         View::composer(
             'laravolt::menu.sidebar',
             function () {
-                foreach (config('laravolt.menu') as $menu) {
-                    $this->app['laravolt.menu.builder']->loadArray($menu);
-                }
-
+                $this->app['laravolt.menu.builder']->loadConfig(config('laravolt.menu', []));
                 $this->app['laravolt.menu.builder']->runCallbacks();
             }
         );
