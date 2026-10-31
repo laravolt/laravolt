@@ -1,5 +1,38 @@
 # Changelog
 
+## v8.0.0
+
+### Breaking
+
+- **Requires PHP 8.3+ and Laravel 12.68+ or 13.29+.** `illuminate/*` is now `^12.68|^13.29`; Laravel 11 is no longer supported, and the floor excludes framework versions affected by **CVE-2026-114509** / GHSA-f9x3-7vq9-cph6 (critical) (#465, #466).
+- **Requires `laravolt/avatar` ^8.0** (same API, Laravel 12.68+/13.29+ only).
+- **No longer installs `laravel/octane`, `barryvdh/laravel-dompdf`, `barryvdh/laravel-debugbar` or `spatie/laravel-web-tinker`.** Laravolt itself never used them; they reached applications only transitively. They are listed under `suggest`.
+- `larastan/larastan` and `spaze/phpstan-disallowed-calls` moved to `require-dev` (#468).
+
+### Upgrade from v7
+
+1. Make sure the app runs on PHP 8.3+ and Laravel 12.68+ or 13.29+.
+2. If the app uses any of these, require them directly before upgrading:
+   ```bash
+   composer require laravel/octane            # if you serve with Octane
+   composer require barryvdh/laravel-dompdf   # if you use Pdf::
+   composer require --dev barryvdh/laravel-debugbar
+   composer require spatie/laravel-web-tinker
+   composer require --dev larastan/larastan spaze/phpstan-disallowed-calls  # if you run PHPStan
+   ```
+3. `composer require laravolt/laravolt:^8.0`
+
+### Fixed
+
+- `Acl::syncPermission()` loads existing permissions in one query instead of one per permission (#462).
+- Flaky `SyncPermissionCommandTest` assertions (#469).
+
+### Maintenance
+
+- Package test job on PHP 8.3/8.4/8.5 × lowest/stable (#465), Dependabot config (#467), MIT `LICENSE` file (#464).
+
+---
+
 ## v7.0.0 — Stable
 
 _Released 2026-07-21._
