@@ -135,7 +135,7 @@
                                     variant="{{ $example['variant'] }}"
                                     title="{{ $example['title'] }}"
                                     message="{{ $example['message'] }}"
-                                    :dismissible="{{ $example['dismissible'] }}"
+                                    :dismissible="$example['dismissible']"
                                 />
                             </div>
 
@@ -163,7 +163,7 @@
                         @foreach($sampleData['examples'] as $example)
                             <x-volt-button
                                 variant="{{ $example['variant'] }}"
-                                :loading="{{ $example['loading'] ?? false }}"
+                                :loading="$example['loading'] ?? false"
                             >
                                 {{ $example['label'] }}
                             </x-volt-button>
@@ -311,8 +311,8 @@
                                     :max="$example['max'] ?? 5"
                                     :readonly="$example['readonly']"
                                     variant="{{ $example['variant'] ?? 'yellow' }}"
-                                    :show-count="{{ $example['showCount'] ?? false }}"
-                                    :count="{{ $example['count'] ?? null }}"
+                                    :show-count="$example['showCount'] ?? false"
+                                    :count="$example['count'] ?? null"
                                 />
                             </div>
                         </div>
