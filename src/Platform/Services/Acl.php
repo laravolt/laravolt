@@ -48,8 +48,7 @@ class Acl
 
                 $items = collect();
 
-                // ⚡ Bolt: Fast-path to avoid N+1 queries when syncing permissions.
-                // We do a bulk query to find existing permissions, and only execute save() for the missing ones.
+                // Load existing permissions in one query instead of one firstOrNew() per name.
                 $permissionsToSync = $this->permissions();
                 $existingPermissions = [];
                 if (! empty($permissionsToSync)) {
@@ -69,6 +68,8 @@ class Acl
                     } else {
                         $permission = app(config('laravolt.epicentrum.models.permission'))->newInstance(['name' => $name]);
                         $permission->save();
+                        // Names differing only by case resolve to one row, as firstOrNew() did on case-insensitive collations.
+                        $existingPermissions[$lowerName] = $permission;
                         $status = 'New';
                     }
 
