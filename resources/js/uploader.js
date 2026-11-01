@@ -100,7 +100,9 @@
 
         loading = core
             .then(function () {
-                return Promise.all(SCRIPTS.map(loadScript));
+                return Promise.all(SCRIPTS.map(function (path) {
+                    return loadScript(VENDOR + path);
+                }));
             })
             .then(function () {
                 window.FilePond.registerPlugin(
@@ -219,8 +221,11 @@
         }
 
         // FilePond reads options from the element's attributes and lets them
-        // win over the options passed in, so take the name off the element.
+        // win over the options passed in. Take off the name (set below) and
+        // the classes, which style the bare file input and would otherwise
+        // land on FilePond's root.
         input.removeAttribute('name');
+        input.removeAttribute('class');
 
         var options = {
             // With an upload endpoint, only the hidden list input is posted
@@ -238,6 +243,7 @@
             labelFileProcessingError: function (error) {
                 return (error && error.body) || FilePond.getOptions().labelFileProcessingError;
             },
+            className: 'uploader',
             credits: false,
             files: existing,
             onaddfile: sync,
