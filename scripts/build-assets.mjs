@@ -3,6 +3,9 @@
 //   public/assets/vendor/basictable/*.css    <- resources/css/basictable.css
 //   public/assets/vendor/preline/**          <- node_modules/preline
 //   public/assets/vendor/toastify-js/**      <- node_modules/toastify-js
+//   public/assets/vendor/filepond*/**        <- node_modules/filepond, filepond-plugin-*
+//   public/assets/js/uploader.js             <- resources/js/uploader.js
+//   public/assets/css/uploader.css           <- resources/css/uploader.css
 // Every other entry of the zip is kept byte for byte. The zip is written
 // deterministically (sorted entries, fixed timestamps), so running this twice
 // with the same Node version and lockfile gives an identical file.
@@ -29,6 +32,29 @@ const GENERATED_PREFIXES = [
     'public/assets/vendor/basictable/basictable.min.css',
     'public/assets/vendor/preline/',
     'public/assets/vendor/toastify-js/',
+    'public/assets/vendor/filepond/',
+    'public/assets/vendor/filepond-plugin-',
+    'public/assets/js/uploader.js',
+    'public/assets/css/uploader.css',
+];
+
+// Pre-v8 jQuery bundles. Nothing loads them any more, and they carried the
+// proprietary Innostudio Fileuploader, which may not be redistributed.
+const REMOVED = [
+    'public/css/all.css',
+    'public/css/app.css',
+    'public/js/all.js',
+    'public/js/laravolt.js',
+    'public/js/platform.js',
+    'public/js/vendor-spa.js',
+    'public/js/vendor.js',
+];
+
+const FILEPOND_PLUGINS = [
+    'filepond-plugin-file-poster',
+    'filepond-plugin-file-validate-size',
+    'filepond-plugin-file-validate-type',
+    'filepond-plugin-image-preview',
 ];
 
 function crc32(buf) {
@@ -129,7 +155,7 @@ function addTree(entries, srcDir, destPrefix, filter = () => true) {
 
 const entries = readZip(zipPath);
 for (const name of [...entries.keys()]) {
-    if (GENERATED_PREFIXES.some((prefix) => name.startsWith(prefix))) entries.delete(name);
+    if (GENERATED_PREFIXES.some((prefix) => name.startsWith(prefix)) || REMOVED.includes(name)) entries.delete(name);
 }
 
 const tmp = mkdtempSync(join(tmpdir(), 'laravolt-assets-'));
@@ -163,6 +189,31 @@ const toastify = join(root, 'node_modules/toastify-js');
 for (const file of ['src/toastify.js', 'src/toastify.css', 'package.json', 'LICENSE']) {
     entries.set(`public/assets/vendor/toastify-js/${file}`, readFileSync(join(toastify, file)));
 }
+
+// FilePond and the plugins the uploader uses: minified builds, CSS and licenses.
+const filepond = join(root, 'node_modules/filepond');
+for (const file of ['dist/filepond.min.js', 'dist/filepond.min.css', 'package.json', 'LICENSE']) {
+    entries.set(`public/assets/vendor/filepond/${file}`, readFileSync(join(filepond, file)));
+}
+const locales = readdirSync(join(filepond, 'locale'))
+    .filter((f) => f.endsWith('.js'))
+    .sort();
+for (const file of locales) {
+    entries.set(`public/assets/vendor/filepond/locale/${file}`, readFileSync(join(filepond, 'locale', file)));
+}
+for (const plugin of FILEPOND_PLUGINS) {
+    const dir = join(root, 'node_modules', plugin);
+    addTree(entries, join(dir, 'dist'), `public/assets/vendor/${plugin}/dist/`, (f) => /\.min\.(js|css)$/.test(f) && !f.includes('.esm.'));
+    for (const file of ['package.json', 'LICENSE']) {
+        entries.set(`public/assets/vendor/${plugin}/${file}`, readFileSync(join(dir, file)));
+    }
+}
+
+const uploader = readFileSync(join(root, 'resources/js/uploader.js'), 'utf8');
+const localeList = JSON.stringify(locales.map((f) => f.replace(/\.js$/, '')));
+if (!uploader.includes('var LOCALES = [];')) throw new Error('resources/js/uploader.js: LOCALES placeholder not found');
+entries.set('public/assets/js/uploader.js', Buffer.from(uploader.replace('var LOCALES = [];', `var LOCALES = ${localeList};`)));
+entries.set('public/assets/css/uploader.css', readFileSync(join(root, 'resources/css/uploader.css')));
 
 writeZip(zipPath, entries);
 

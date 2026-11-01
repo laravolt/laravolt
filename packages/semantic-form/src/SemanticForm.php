@@ -555,7 +555,7 @@ class SemanticForm
 
     public function uploader($name)
     {
-        $uploader = (new Uploader($name))->data('token', Session::token())->data('fileuploader-listInput', "_$name");
+        $uploader = (new Uploader($name))->data('token', Session::token())->data('list-input', "_$name");
 
         return $uploader;
     }

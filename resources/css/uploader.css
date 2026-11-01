@@ -1,0 +1,66 @@
+/*
+ * Laravolt look for FilePond fields (form()->uploader()), light and dark.
+ * Loaded on demand by public/assets/js/uploader.js. Copied as is into
+ * resources/assets.zip by scripts/build-assets.mjs.
+ */
+.filepond--root {
+    font-family: inherit;
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+
+.filepond--panel-root {
+    background-color: #f9fafb;
+    border: 1px dashed #d1d5db;
+    border-radius: 0.5rem;
+}
+
+.filepond--drop-label {
+    color: #4b5563;
+}
+
+.filepond--label-action {
+    color: var(--accent, #2563eb);
+    text-decoration-color: currentColor;
+}
+
+.filepond--root:focus-within .filepond--panel-root,
+.filepond--root[data-hopper-state='drag-over'] .filepond--panel-root {
+    border-color: var(--accent, #2563eb);
+}
+
+.filepond--item-panel {
+    background-color: #4b5563;
+    border-radius: 0.375rem;
+}
+
+[data-filepond-item-state='processing-complete'] .filepond--item-panel {
+    background-color: #15803d;
+}
+
+[data-filepond-item-state*='error'] .filepond--item-panel,
+[data-filepond-item-state*='invalid'] .filepond--item-panel {
+    background-color: #b91c1c;
+}
+
+.dark .filepond--panel-root {
+    background-color: #262626;
+    border-color: #525252;
+}
+
+.dark .filepond--drop-label {
+    color: #d4d4d4;
+}
+
+.dark .filepond--item-panel {
+    background-color: #525252;
+}
+
+.dark [data-filepond-item-state='processing-complete'] .filepond--item-panel {
+    background-color: #166534;
+}
+
+.dark [data-filepond-item-state*='error'] .filepond--item-panel,
+.dark [data-filepond-item-state*='invalid'] .filepond--item-panel {
+    background-color: #991b1b;
+}

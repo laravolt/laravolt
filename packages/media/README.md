@@ -7,6 +7,7 @@ The Laravolt Media package provides file upload and media management capabilitie
 - **Traditional Upload**: Direct file upload using `RedactorMediaHandler` and `FileuploaderMediaHandler`
 - **Chunked Upload**: Large file upload support using `ChunkedMediaHandler` with server-side chunking
 - **Client-Side Upload**: Direct-to-cloud upload using presigned URLs (S3, R2, MinIO) - ideal for very large files
+- **Form Uploader**: `form()->uploader()` fields become [FilePond](https://pqina.nl/filepond/) (MIT) fields that upload through `FileuploaderMediaHandler`
 - **Multiple Clients**: Support for Resumable.js and FilePond
 - **Guest Support**: Anonymous file uploads using Guest model
 - **Media Library Integration**: Seamless integration with Spatie Media Library
@@ -51,6 +52,30 @@ $response = $this->post('/media/media', [
     'file' => [$uploadedFile1, $uploadedFile2]
 ]);
 ```
+
+### Form uploader
+
+```php
+{!! form()->uploader('avatar')->extensions(['jpg', 'png'])->fileMaxSize(5) !!}
+{!! form()->uploader('attachments')->limit(10) !!}
+{!! form()->uploader('scans')->ajax(false)->limit(5) !!}  {{-- needs a multipart form --}}
+```
+
+`@laravoltScripts` loads `/laravolt/assets/js/uploader.js`, which turns these
+fields into FilePond fields; FilePond itself is loaded only on pages that have
+one. Labels follow `<html lang>` (FilePond's locales, English otherwise).
+
+- **With an upload endpoint** (the default, `media::store` with
+  `handler=fileuploader`), each file is uploaded as soon as it is picked, and
+  "undo" deletes it again. The form then posts `_avatar`: a JSON list of the
+  attached file URLs, which `request()->media('avatar')` reads. Existing files
+  (the field's value: media models or URLs) are listed and kept unless the user
+  removes them; removing one does not delete it on the server.
+- **With `->ajax(false)`**, the files are posted with the form as `scans[]`;
+  `request()->media('scans')->store()` adds them to the media library.
+
+Fields added to the page later (a modal, a fetched fragment) are picked up
+automatically, or call `window.LaravoltUploader.init(element)`.
 
 ### Chunked Upload
 

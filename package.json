@@ -7,6 +7,11 @@
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
     "@tailwindcss/forms": "0.5.11",
+    "filepond": "4.32.12",
+    "filepond-plugin-file-poster": "2.5.2",
+    "filepond-plugin-file-validate-size": "2.2.8",
+    "filepond-plugin-file-validate-type": "1.2.9",
+    "filepond-plugin-image-preview": "4.6.12",
     "preline": "5.0.0",
     "tailwindcss": "4.3.3",
     "toastify-js": "1.12.0"

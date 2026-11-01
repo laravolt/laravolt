@@ -961,7 +961,7 @@ class SemanticFormTest extends PHPUnit\Framework\TestCase
         Illuminate\Support\Facades\Route::shouldReceive('has')->once()->andReturn(true);
 
         $result = (string) $this->form->uploader('avatar');
-        $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
+        $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-list-input="_avatar" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -969,7 +969,7 @@ class SemanticFormTest extends PHPUnit\Framework\TestCase
     public function test_uploader_with_custom_limit()
     {
         $result = (string) $this->form->uploader('avatar')->limit(3);
-        $expected = '<input type="file" class="uploader" data-limit="3" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-media-url="/test">';
+        $expected = '<input type="file" class="uploader" data-limit="3" data-file-max-size="10000" name="avatar" data-token="abc123" data-list-input="_avatar" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
@@ -977,7 +977,7 @@ class SemanticFormTest extends PHPUnit\Framework\TestCase
     public function test_uploader_with_custom_extensions()
     {
         $result = (string) $this->form->uploader('avatar')->extensions(['jpg', 'png']);
-        $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-fileuploader-listInput="_avatar" data-extensions="jpg,png" data-media-url="/test">';
+        $expected = '<input type="file" class="uploader" data-limit="1" data-file-max-size="10000" name="avatar" data-token="abc123" data-list-input="_avatar" data-extensions="jpg,png" data-media-url="/test">';
 
         $this->assertEquals($expected, $result);
     }
