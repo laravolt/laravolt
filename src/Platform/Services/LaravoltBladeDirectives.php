@@ -33,6 +33,8 @@ class LaravoltBladeDirectives
 
           <!-- Vendor -->
           <script src="/laravolt/assets/vendor/toastify-js/src/toastify.js?v={$v}"></script>
+          <!-- form()->uploader(): loads FilePond only on pages that have an uploader -->
+          <script src="/laravolt/assets/js/uploader.js?v={$v}" defer></script>
         HTML;
     }
 

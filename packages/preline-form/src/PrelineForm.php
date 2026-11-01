@@ -7,6 +7,7 @@ namespace Laravolt\PrelineForm;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Collection as BaseCollection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Traits\Macroable;
 use Laravolt\PrelineForm\Elements\Button;
 use Laravolt\PrelineForm\Elements\Checkbox;
@@ -26,6 +27,7 @@ use Laravolt\PrelineForm\Elements\Select;
 use Laravolt\PrelineForm\Elements\SelectMultiple;
 use Laravolt\PrelineForm\Elements\Text;
 use Laravolt\PrelineForm\Elements\TextArea;
+use Laravolt\PrelineForm\Elements\Uploader;
 use Laravolt\PrelineForm\ErrorStore\ErrorStoreInterface;
 use Laravolt\PrelineForm\OldInput\OldInputInterface;
 use Laravolt\PrelineForm\Validation\ClientValidation;
@@ -636,8 +638,28 @@ class PrelineForm
 
     public function uploader($name)
     {
-        // For now, return a file input
-        return $this->file($name);
+        $uploader = (new Uploader($name))
+            ->data('token', Session::token())
+            ->data('list-input', "_{$name}");
+
+        // After a failed validation, show the files the user had attached.
+        $value = $this->hasOldInput()
+            ? $this->getOldInput("_{$name}")
+            : ($this->hasModelValue($name) ? $this->getModelValue($name) : null);
+
+        if (! is_null($value)) {
+            $uploader->value($value);
+        }
+
+        foreach ([$name, "_{$name}"] as $key) {
+            if ($this->hasError($key)) {
+                $uploader->setError($this->errorStore->getError($key));
+
+                break;
+            }
+        }
+
+        return $uploader;
     }
 
     public function rupiah($name, $defaultValue = null)

@@ -14,8 +14,8 @@ class Uploader extends Input
         'type' => 'file',
         'class' => 'uploader',
         'data-limit' => 1,
-        'data-max-size' => 1, // in MB
-        'data-file-max-size' => 1024, // in GB
+        'data-max-size' => 1, // in MB, not used by the uploader script
+        'data-file-max-size' => 1024, // per file, in MB
     ];
 
     protected $ajax = true;
@@ -137,7 +137,7 @@ class Uploader extends Input
             }
         }
 
-        $this->data('fileuploader-files', $data);
+        $this->data('files', $data);
         $this->value = $data;
 
         return $this;

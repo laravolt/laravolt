@@ -69,6 +69,10 @@ jobs:
           for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:8000/auth/login && break; sleep 1; done
           APP_URL=http://127.0.0.1:8000 node tools/.github/visual/capture.mjs shots
 
+      - name: Uploader end-to-end
+        if: matrix.side == 'head'
+        run: APP_URL=http://127.0.0.1:8000 node tools/.github/visual/uploader.mjs shots/uploader
+
       - uses: actions/upload-artifact@v7
         if: always()
         with:
