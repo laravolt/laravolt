@@ -51,123 +51,103 @@ class LaravoltBladeDirectives
         return $version !== '' ? $version : 'dev';
     }
 
+    /**
+     * `@basictable('.selector', ['breakpoint' => 768])`: Basictable with its own defaults.
+     * The arguments are PHP, evaluated when the view renders, so variables work too.
+     */
     public static function basictable($expression)
     {
-        // Parse the expression to get selector and options
-        $params = static::parseExpression($expression);
-
-        $selector = $params[0] ?? '.basictable';
-        $options = isset($params[1]) ? $params[1] : [];
-
-        // Convert options array to JavaScript object
-        $jsOptions = static::arrayToJsObject($options);
-
-        return <<<HTML
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              new basictable('{$selector}', {$jsOptions});
-            });
-          </script>
-        HTML;
+        return static::compileBasictable($expression, []);
     }
 
+    /**
+     * Cards with each label above its value.
+     */
     public static function basictableResponsive($expression)
     {
-        $params = static::parseExpression($expression);
-        $selector = $params[0] ?? '.basictable';
-        $options = isset($params[1]) ? $params[1] : [];
-
-        $defaultOptions = [
+        return static::compileBasictable($expression, [
             'tableWrap' => true,
             'cardStyle' => 'default',
             'forceResponsive' => true,
-        ];
-
-        $mergedOptions = array_merge($defaultOptions, $options);
-        $jsOptions = static::arrayToJsObject($mergedOptions);
-
-        return <<<HTML
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              new basictable('{$selector}', {$jsOptions});
-            });
-          </script>
-        HTML;
+        ]);
     }
 
+    /**
+     * Like basictableResponsive, with less padding.
+     */
     public static function basictableCompact($expression)
     {
-        $params = static::parseExpression($expression);
-        $selector = $params[0] ?? '.basictable';
-        $options = isset($params[1]) ? $params[1] : [];
-
-        $defaultOptions = [
+        return static::compileBasictable($expression, [
             'tableWrap' => true,
             'cardStyle' => 'compact',
             'forceResponsive' => true,
-        ];
-
-        $mergedOptions = array_merge($defaultOptions, $options);
-        $jsOptions = static::arrayToJsObject($mergedOptions);
-
-        return <<<HTML
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              new basictable('{$selector}', {$jsOptions});
-            });
-          </script>
-        HTML;
+        ]);
     }
 
+    /**
+     * Cards with each label beside its value. The base layout applies this to `.basictable`.
+     */
     public static function basictableInline($expression)
     {
-        $params = static::parseExpression($expression);
-        $selector = $params[0] ?? '.basictable';
-        $options = isset($params[1]) ? $params[1] : [];
-
-        $defaultOptions = [
+        return static::compileBasictable($expression, [
             'tableWrap' => true,
             'cardStyle' => 'inline',
             'forceResponsive' => true,
             'inlineSeparator' => 'none',
-        ];
+        ]);
+    }
 
-        $mergedOptions = array_merge($defaultOptions, $options);
-        $jsOptions = static::arrayToJsObject($mergedOptions);
+    /**
+     * `@basictableScrollable('.selector', '300px', [...])`: cards in a box that scrolls past the given height.
+     */
+    public static function basictableScrollable($expression)
+    {
+        $arguments = mb_trim((string) $expression);
+
+        return '<?php echo \\'.static::class.'::basictableScrollableScript('.$arguments.'); ?>';
+    }
+
+    /**
+     * @param  array<string, mixed>  $options
+     */
+    public static function basictableScrollableScript(string $selector = '.basictable', string $maxHeight = '300px', array $options = []): string
+    {
+        return static::basictableScript([
+            'tableWrap' => true,
+            'scrollable' => true,
+            'maxHeight' => $maxHeight,
+            'forceResponsive' => true,
+        ], $selector, $options);
+    }
+
+    /**
+     * @param  array<string, mixed>  $defaults
+     * @param  array<string, mixed>  $options
+     */
+    public static function basictableScript(array $defaults, string $selector = '.basictable', array $options = []): string
+    {
+        $flags = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR;
+        $selector = json_encode($selector, $flags);
+        $options = json_encode((object) array_merge($defaults, $options), $flags);
 
         return <<<HTML
           <script>
             document.addEventListener('DOMContentLoaded', function() {
-              new basictable('{$selector}', {$jsOptions});
+              new basictable({$selector}, {$options});
             });
           </script>
         HTML;
     }
 
-    public static function basictableScrollable($expression)
+    /**
+     * @param  array<string, mixed>  $defaults
+     */
+    protected static function compileBasictable(?string $expression, array $defaults): string
     {
-        $params = static::parseExpression($expression);
-        $selector = $params[0] ?? '.basictable';
-        $maxHeight = $params[1] ?? '300px';
-        $options = isset($params[2]) ? $params[2] : [];
+        $arguments = mb_trim((string) $expression);
+        $arguments = $arguments === '' ? '' : ', '.$arguments;
 
-        $defaultOptions = [
-            'tableWrap' => true,
-            'scrollable' => true,
-            'maxHeight' => $maxHeight,
-            'forceResponsive' => true,
-        ];
-
-        $mergedOptions = array_merge($defaultOptions, $options);
-        $jsOptions = static::arrayToJsObject($mergedOptions);
-
-        return <<<HTML
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              new basictable('{$selector}', {$jsOptions});
-            });
-          </script>
-        HTML;
+        return '<?php echo \\'.static::class.'::basictableScript('.var_export($defaults, true).$arguments.'); ?>';
     }
 
     public static function styles($expression)
@@ -230,127 +210,5 @@ class LaravoltBladeDirectives
             }
           </style>
         HTML;
-    }
-
-    protected static function parseExpression($expression)
-    {
-        // Remove parentheses and trim
-        $expression = mb_trim($expression, '()');
-
-        if (empty($expression)) {
-            return [];
-        }
-
-        // Simple parsing - split by comma and handle arrays
-        $parts = [];
-        $current = '';
-        $bracketCount = 0;
-        $quoteChar = null;
-
-        for ($i = 0; $i < mb_strlen($expression); $i++) {
-            $char = $expression[$i];
-
-            if ($quoteChar !== null) {
-                if ($char === $quoteChar) {
-                    $quoteChar = null;
-                }
-                $current .= $char;
-            } elseif ($char === '"' || $char === "'") {
-                $quoteChar = $char;
-                $current .= $char;
-            } elseif ($char === '[') {
-                $bracketCount++;
-                $current .= $char;
-            } elseif ($char === ']') {
-                $bracketCount--;
-                $current .= $char;
-            } elseif ($char === ',' && $bracketCount === 0) {
-                $parts[] = mb_trim($current);
-                $current = '';
-            } else {
-                $current .= $char;
-            }
-        }
-
-        if (! empty($current)) {
-            $parts[] = mb_trim($current);
-        }
-
-        // Convert string representations to actual values
-        foreach ($parts as &$part) {
-            $part = static::parseValue($part);
-        }
-
-        return $parts;
-    }
-
-    protected static function parseValue($value)
-    {
-        $value = mb_trim($value);
-
-        // Handle arrays
-        if (mb_strpos($value, '[') === 0 && mb_strrpos($value, ']') === mb_strlen($value) - 1) {
-            $arrayContent = mb_trim($value, '[]');
-            if (empty($arrayContent)) {
-                return [];
-            }
-
-            $items = explode(',', $arrayContent);
-            $parsedItems = [];
-
-            foreach ($items as $item) {
-                $parsedItems[] = static::parseValue(mb_trim($item));
-            }
-
-            return $parsedItems;
-        }
-
-        // Handle strings
-        if ((mb_strpos($value, '"') === 0 && mb_strrpos($value, '"') === mb_strlen($value) - 1) ||
-            (mb_strpos($value, "'") === 0 && mb_strrpos($value, "'") === mb_strlen($value) - 1)) {
-            return mb_trim($value, '"\'');
-        }
-
-        // Handle booleans
-        if ($value === 'true') {
-            return true;
-        }
-        if ($value === 'false') {
-            return false;
-        }
-
-        // Handle null
-        if ($value === 'null') {
-            return null;
-        }
-
-        // Handle numbers
-        if (is_numeric($value)) {
-            return mb_strpos($value, '.') !== false ? (float) $value : (int) $value;
-        }
-
-        // Default to string
-        return $value;
-    }
-
-    protected static function arrayToJsObject(array $array): string
-    {
-        $items = [];
-
-        foreach ($array as $key => $value) {
-            if ($value === null) {
-                $items[] = "'{$key}': null";
-            } elseif (is_bool($value)) {
-                $items[] = "'{$key}': ".($value ? 'true' : 'false');
-            } elseif (is_numeric($value)) {
-                $items[] = "'{$key}': {$value}";
-            } elseif (is_string($value)) {
-                $items[] = "'{$key}': '{$value}'";
-            } elseif (is_array($value)) {
-                $items[] = "'{$key}': ".static::arrayToJsObject($value);
-            }
-        }
-
-        return '{'.implode(', ', $items).'}';
     }
 }
