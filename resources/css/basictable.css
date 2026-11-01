@@ -146,8 +146,10 @@ table.bt.bt--no-header tbody td:before {
   padding-top: 0;
 }
 
+/* One label width for every row, so the values line up; long labels wrap. */
 .bt-card-inline table.bt tbody td:before {
   color: #374151;
+  width: 40%;
   flex-shrink: 0;
   font-size: .875rem;
   font-weight: 600;
