@@ -32,6 +32,14 @@ class BrowserTestCommand extends Command
      */
     public function handle(): int
     {
+        $browser = (string) $this->option('browser');
+
+        if (! in_array($browser, ['chrome', 'firefox', 'safari'], true)) {
+            $this->error("Unknown browser [{$browser}]. Use chrome, firefox or safari.");
+
+            return self::FAILURE;
+        }
+
         $command = [base_path('vendor/bin/pest'), (string) $this->argument('path'), '--no-coverage'];
 
         if ($this->option('debug')) {
@@ -39,10 +47,8 @@ class BrowserTestCommand extends Command
             $command[] = '--headed';
         }
 
-        if ($browser = $this->option('browser')) {
-            $command[] = '--browser';
-            $command[] = (string) $browser;
-        }
+        $command[] = '--browser';
+        $command[] = $browser;
 
         if ($this->option('parallel')) {
             $command[] = '--parallel';

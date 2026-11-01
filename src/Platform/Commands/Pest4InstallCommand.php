@@ -6,7 +6,7 @@ namespace Laravolt\Platform\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Process;
 
 use function Laravolt\platform_path;
 
@@ -106,14 +106,10 @@ class Pest4InstallCommand extends Command
      */
     private function runComposerCommand(array $command): bool
     {
-        $process = new Process(array_merge(['composer'], $command), base_path());
-        $process->setTimeout(300); // 5 minutes timeout
-
-        $process->run(function ($type, $buffer) {
-            $this->output->write($buffer);
-        });
-
-        return $process->isSuccessful();
+        return Process::path(base_path())
+            ->timeout(300)
+            ->run(['composer', ...$command], fn (string $type, string $buffer) => $this->output->write($buffer))
+            ->successful();
     }
 
     /**
@@ -124,6 +120,7 @@ class Pest4InstallCommand extends Command
         // Create tests/Pest.php
         $pestConfigPath = base_path('tests/Pest.php');
         if (! File::exists($pestConfigPath)) {
+            File::ensureDirectoryExists(dirname($pestConfigPath));
             File::copy(platform_path('stubs/tests/Pest.php'), $pestConfigPath);
             $this->line('   ✅ Created tests/Pest.php');
         }
@@ -136,7 +133,7 @@ class Pest4InstallCommand extends Command
             $this->line('   ✅ Created tests/Browser/LoginTest.php');
         }
 
-        // Create pest.xml (replacing phpunit.xml for Pest)
+        // Create phpunit.xml, which Pest reads
         $pestXmlPath = base_path('phpunit.xml');
         if (! File::exists($pestXmlPath)) {
             $pestXml = <<<'XML'
@@ -195,7 +192,7 @@ class Pest4InstallCommand extends Command
 XML;
 
             File::put($pestXmlPath, $pestXml);
-            $this->line('   ✅ Created pest.xml');
+            $this->line('   ✅ Created phpunit.xml');
         }
     }
 
