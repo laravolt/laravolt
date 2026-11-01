@@ -157,7 +157,7 @@ const failed = results.filter((r) => !r.ok);
 const summary = [
     '### Uploader end-to-end',
     '',
-    ...results.map((r) => `- ${r.ok ? '✅' : '❌'} ${r.message.replace(/\|/g, '\\|')}`),
+    ...results.map((r) => `- ${r.ok ? '✅' : '❌'} ${r.message.replace(/[\\|]/g, '\\$&')}`),
     '',
 ].join('\n');
 if (process.env.GITHUB_STEP_SUMMARY) writeFileSync(process.env.GITHUB_STEP_SUMMARY, summary, { flag: 'a' });
