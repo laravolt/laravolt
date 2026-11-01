@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravolt\Tests\PackageTest;
 use Laravolt\Tests\UnitTest;
 
 /*
@@ -17,4 +19,6 @@ use Laravolt\Tests\UnitTest;
 
 uses(UnitTest::class)->in('Unit/Media');
 
-uses(Laravolt\Tests\PackageTest::class, Illuminate\Foundation\Testing\RefreshDatabase::class)->in('Feature/Media');
+uses(PackageTest::class, RefreshDatabase::class)->in('Feature/Media');
+
+uses(PackageTest::class)->in('Feature/Commands');
