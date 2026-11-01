@@ -1,5 +1,6 @@
 // Rebuilds the generated parts of resources/assets.zip:
 //   public/assets/css/main.min.css           <- resources/css/laravolt.css (Tailwind)
+//   public/assets/vendor/basictable/*.css    <- resources/css/basictable.css
 //   public/assets/vendor/preline/**          <- node_modules/preline
 //   public/assets/vendor/toastify-js/**      <- node_modules/toastify-js
 // Every other entry of the zip is kept byte for byte. The zip is written
@@ -25,6 +26,7 @@ const DOS_DATE = ((2020 - 1980) << 9) | (1 << 5) | 1;
 
 const GENERATED_PREFIXES = [
     'public/assets/css/main.min.css',
+    'public/assets/vendor/basictable/basictable.min.css',
     'public/assets/vendor/preline/',
     'public/assets/vendor/toastify-js/',
 ];
@@ -139,6 +141,14 @@ try {
         { cwd: root, stdio: 'inherit' },
     );
     entries.set('public/assets/css/main.min.css', readFileSync(css));
+
+    const basictable = join(tmp, 'basictable.min.css');
+    execFileSync(
+        join(root, 'node_modules/.bin/tailwindcss'),
+        ['--input', join(root, 'resources/css/basictable.css'), '--output', basictable, '--minify'],
+        { cwd: root, stdio: 'inherit' },
+    );
+    entries.set('public/assets/vendor/basictable/basictable.min.css', readFileSync(basictable));
 } finally {
     rmSync(tmp, { recursive: true, force: true });
 }

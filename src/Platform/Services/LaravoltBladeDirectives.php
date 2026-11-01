@@ -23,7 +23,7 @@ class LaravoltBladeDirectives
           <script src="/laravolt/assets/vendor/lodash/lodash.min.js"></script>
           <script src="/laravolt/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
           <script src="/laravolt/assets/vendor/preline/dist/helper-apexcharts.js?v={$v}"></script>
-          <script src="/laravolt/assets/vendor/basictable/basictable.min.js"></script>
+          <script src="/laravolt/assets/vendor/basictable/basictable.min.js?v={$v}"></script>
           <!-- JS INITIALIZATIONS -->
           <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -184,7 +184,7 @@ class LaravoltBladeDirectives
 
           <!-- CSS HS -->
           <link rel="stylesheet" href="/laravolt/assets/css/main.min.css?v={$v}">
-          <link rel="stylesheet" href="/laravolt/assets/vendor/basictable/basictable.min.css">
+          <link rel="stylesheet" href="/laravolt/assets/vendor/basictable/basictable.min.css?v={$v}">
 
           <!-- Theme Check and Update -->
           <script>
@@ -226,9 +226,6 @@ class LaravoltBladeDirectives
             @media (max-width: 568px) {
               table.basictable {
                 border: unset
-              }
-              .bt-card-inline table.bt tbody td .bt-content > span {
-                color: #9ca3af !important;
               }
             }
           </style>
