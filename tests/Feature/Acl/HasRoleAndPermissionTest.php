@@ -259,6 +259,20 @@ class HasRoleAndPermissionTest extends FeatureTest
         $this->assertFalse($user->hasPermission('edit'));
     }
 
+    public function test_the_lookup_follows_the_user_key(): void
+    {
+        $user = $this->createUser();
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $admin->addPermission('create');
+        $user->assignRole($admin);
+
+        $other = new (config('laravolt.epicentrum.models.user'));
+        $this->assertFalse($other->hasPermission('create'));
+
+        $other->forceFill(['id' => $user->getKey()]);
+        $this->assertTrue($other->hasPermission('create'));
+    }
+
     public function test_has_permission_by_key_and_model(): void
     {
         $user = $this->createUser();

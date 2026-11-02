@@ -54,7 +54,9 @@ trait HasRoleAndPermission
      */
     protected function permissionLookup(): array
     {
-        $key = $this->getKey();
+        // The raw attribute is enough to notice a new key; getKey() goes
+        // through casts and accessors and would double the cost of a check.
+        $key = $this->attributes[$this->getKeyName()] ?? null;
         $generation = AccessControlInvalidator::generation();
         $memo = $this->laravoltPermissionLookup;
 
@@ -305,7 +307,7 @@ trait HasRoleAndPermission
 
         if (is_string($permission)) {
             return isset($lookup['names'][$permission])
-                || ((Str::isUlid($permission) || Str::isUuid($permission)) && isset($lookup['ids'][$permission]));
+                || (isset($lookup['ids'][$permission]) && (Str::isUlid($permission) || Str::isUuid($permission)));
         }
 
         if (is_int($permission)) {
