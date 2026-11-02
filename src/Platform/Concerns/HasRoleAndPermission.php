@@ -14,12 +14,74 @@ use Laravolt\Platform\Services\AccessControlInvalidator;
 
 trait HasRoleAndPermission
 {
+    /**
+     * @var array{key: mixed, generation: int, lookup: array{rows: list<array{id: int|string, name: string}>, ids: array<int|string, true>, names: array<string, true>}}|null
+     */
+    protected ?array $laravoltPermissionLookup = null;
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(config('laravolt.epicentrum.models.role'), 'acl_role_user', 'user_id', 'role_id');
     }
 
     public function permissions(): Collection
+    {
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        $models = array_map(
+            function (array $row) use ($permissionModel) {
+                $instance = $permissionModel->newInstance([], true);
+                $instance->setRawAttributes(['id' => $row['id'], 'name' => $row['name']], true);
+
+                return $instance;
+            },
+            $this->permissionLookup()['rows']
+        );
+
+        return new Collection($models);
+    }
+
+    /**
+     * The user's permissions (id + name), indexed for hasPermission().
+     *
+     * Read from the cache once per model instance, so a page that checks
+     * twenty permissions (sidebar items, gates, policies) reads the cache once
+     * instead of twenty times. Reloaded when the user's key changes or when
+     * AccessControlInvalidator invalidates any user in this process (role or
+     * permission changes), so a change made earlier in the same request or
+     * job is seen right away.
+     *
+     * @return array{rows: list<array{id: int|string, name: string}>, ids: array<int|string, true>, names: array<string, true>}
+     */
+    protected function permissionLookup(): array
+    {
+        // The raw attribute is enough to notice a new key; getKey() goes
+        // through casts and accessors and would double the cost of a check.
+        $key = $this->attributes[$this->getKeyName()] ?? null;
+        $generation = AccessControlInvalidator::generation();
+        $memo = $this->laravoltPermissionLookup;
+
+        if ($memo !== null && $memo['key'] === $key && $memo['generation'] === $generation) {
+            return $memo['lookup'];
+        }
+
+        $rows = $this->cachedPermissionRows();
+        $lookup = ['rows' => $rows, 'ids' => [], 'names' => []];
+        foreach ($rows as $row) {
+            if (is_int($row['id']) || is_string($row['id'])) {
+                $lookup['ids'][$row['id']] = true;
+            }
+            $lookup['names'][$row['name']] = true;
+        }
+
+        $this->laravoltPermissionLookup = ['key' => $key, 'generation' => $generation, 'lookup' => $lookup];
+
+        return $lookup;
+    }
+
+    /**
+     * @return list<array{id: int|string, name: string}>
+     */
+    protected function cachedPermissionRows(): array
     {
         $cacheKey = "users.{$this->getKey()}.permissions";
         $rebuild = function (): array {
@@ -56,18 +118,7 @@ trait HasRoleAndPermission
             Cache::put($cacheKey, $cached, 3600);
         }
 
-        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
-        $models = array_map(
-            function (array $row) use ($permissionModel) {
-                $instance = $permissionModel->newInstance([], true);
-                $instance->setRawAttributes(['id' => $row['id'], 'name' => $row['name']], true);
-
-                return $instance;
-            },
-            $cached
-        );
-
-        return new Collection($models);
+        return array_values($cached);
     }
 
     /**
@@ -178,13 +229,7 @@ trait HasRoleAndPermission
 
     public function hasPermission($permission, $checkAll = false): bool
     {
-        $result = once(
-            function () use ($permission, $checkAll) {
-                return $this->_hasPermission($permission, $checkAll);
-            }
-        );
-
-        return $result;
+        return $this->_hasPermission($permission, $checkAll);
     }
 
     protected function resolveRoleIds($roles, bool $createMissing = false): array
@@ -254,22 +299,25 @@ trait HasRoleAndPermission
             return $checkAll;
         }
 
-        if (is_string($permission) && (Str::isUlid($permission) || Str::isUuid($permission))) {
-            return $this->permissions()->contains(
-                fn ($assigned) => $assigned->getKey() === $permission || $assigned->name === $permission
-            );
+        if ($permission instanceof Model && $permission->getKeyName() !== 'id') {
+            return $this->permissions()->contains($permission->getKeyName(), $permission->getKey());
         }
 
+        $lookup = $this->permissionLookup();
+
         if (is_string($permission)) {
-            return $this->permissions()->contains('name', $permission);
+            return isset($lookup['names'][$permission])
+                || (isset($lookup['ids'][$permission]) && (Str::isUlid($permission) || Str::isUuid($permission)));
         }
 
         if (is_int($permission)) {
-            return $this->permissions()->contains('id', $permission);
+            return isset($lookup['ids'][$permission]);
         }
 
         if ($permission instanceof Model) {
-            return $this->permissions()->contains($permission->getKeyName(), $permission->getKey());
+            $key = $permission->getKey();
+
+            return (is_int($key) || is_string($key)) && isset($lookup['ids'][$key]);
         }
 
         return false;

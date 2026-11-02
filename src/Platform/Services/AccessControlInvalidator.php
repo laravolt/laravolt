@@ -12,8 +12,20 @@ use Throwable;
 
 class AccessControlInvalidator
 {
+    /**
+     * Bumped on every invalidation. Users hold their permission lookup in
+     * memory (HasRoleAndPermission) and reload it when this changes.
+     */
+    protected static int $generation = 0;
+
+    public static function generation(): int
+    {
+        return static::$generation;
+    }
+
     public function invalidateUser(Model $user): void
     {
+        static::$generation++;
         $userId = $user->getKey();
 
         Cache::forget("users.{$userId}.permissions");
@@ -22,6 +34,7 @@ class AccessControlInvalidator
 
     public function invalidateUsers(iterable $users): void
     {
+        static::$generation++;
         $userIds = [];
 
         foreach ($users as $user) {
