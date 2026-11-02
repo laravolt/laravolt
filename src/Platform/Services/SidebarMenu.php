@@ -19,6 +19,9 @@ class SidebarMenu extends BaseMenu
     /** @var array<string, string> */
     private static array $icons = [];
 
+    /** @var array<string, bool> Gate answers for the menu being built. */
+    private array $abilityChecks = [];
+
     public static function setVisible($children, $visible = 'visible')
     {
         foreach ($children as $child) {
@@ -93,8 +96,10 @@ class SidebarMenu extends BaseMenu
         unset($this->menu['sidebar']);
         $this->collection->forget('sidebar');
 
+        $this->abilityChecks = [];
+
         // make() fills a builder already registered under the name, so the
-        // sidebar gets the builder with indexed children lookups.
+        // sidebar gets the builder with the cheaper lookups.
         $this->menu['sidebar'] = new SidebarBuilder('sidebar', $this->loadConf('sidebar'));
 
         /** @var Builder $sidebar */
@@ -180,16 +185,33 @@ class SidebarMenu extends BaseMenu
             // It means, user only need to have one of the permissions
             if (is_array($permission)) {
                 foreach ($permission as $perm) {
-                    if (auth()->check() && auth()->user()->can($perm)) {
+                    if ($this->userCan($perm)) {
                         $permissionCheck = true;
                         break;
                     }
                 }
             } else {
-                $permissionCheck = auth()->check() && auth()->user()->can($permission);
+                $permissionCheck = $this->userCan($permission);
             }
         }
 
         return $permissionCheck && $rolesCheck;
+    }
+
+    /**
+     * Gate check for the current user, once per ability while the menu is
+     * built: menu items often share a permission.
+     */
+    protected function userCan($ability): bool
+    {
+        if (! auth()->check()) {
+            return false;
+        }
+
+        if (! is_string($ability)) {
+            return auth()->user()->can($ability);
+        }
+
+        return $this->abilityChecks[$ability] ??= auth()->user()->can($ability);
     }
 }

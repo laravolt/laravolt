@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Feature\Ui;
 
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request as RequestFacade;
 use Laravolt\Platform\Services\SidebarBuilder;
 use Laravolt\Tests\FeatureTest;
 
@@ -115,6 +117,25 @@ class SidebarMenuTest extends FeatureTest
         $this->assertSame(['This year', 'Older'], $archive->children()->pluck('title')->all());
         $sidebar->filter(fn ($item) => $item->title !== 'This year');
         $this->assertSame(['Older'], $archive->children()->pluck('title')->all());
+    }
+
+    public function test_items_are_activated_by_the_request_url(): void
+    {
+        $this->actingAs($this->user(1));
+        $this->app->instance('request', Request::create('http://localhost/reports/stock?page=2'));
+        RequestFacade::clearResolvedInstance('request');
+        app('laravolt.menu.builder')->register(function ($menu): void {
+            $menu->add('Exact', 'reports/stock?page=2');
+            $menu->add('Pinned', ['url' => 'reports/stock', 'disableActivationByURL' => true]);
+        });
+
+        app('laravolt.menu.sidebar')->allMenu();
+        $active = app('laravolt.menu.sidebar')->get('sidebar')->all()
+            ->filter(fn ($item) => $item->isActive)->pluck('title')->sort()->values()->all();
+
+        // Stock matches the URL, Exact the URL with its query string, and
+        // Reports is Stock's parent. Pinned opted out of URL activation.
+        $this->assertSame(['Exact', 'Reports', 'Stock'], $active);
     }
 
     private function composeSidebar(): void
