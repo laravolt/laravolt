@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Services;
 
 use Closure;
 use Lavary\Menu\Builder;
+use Lavary\Menu\Collection;
 use Lavary\Menu\Item;
 use Lavary\Menu\Menu as BaseMenu;
 
@@ -14,6 +15,12 @@ class SidebarMenu extends BaseMenu
     protected $callbacksCore = [];
 
     protected $callbacks = [];
+
+    /** @var array<string, string> */
+    private static array $icons = [];
+
+    /** @var array<string, bool> Gate answers for the menu being built. */
+    private array $abilityChecks = [];
 
     public static function setVisible($children, $visible = 'visible')
     {
@@ -42,6 +49,28 @@ class SidebarMenu extends BaseMenu
         return '';
     }
 
+    /**
+     * An icon's SVG markup for the sidebar.
+     *
+     * Kept for the life of the process (a whole Octane worker): the markup
+     * depends only on the icon and its attributes, so there is no need to
+     * have blade-icons merge the attributes and rebuild it on every render.
+     */
+    public static function icon(string $name, array $attributes = []): string
+    {
+        $key = $name."\0".serialize($attributes);
+
+        if (! isset(self::$icons[$key])) {
+            if (count(self::$icons) >= 500) {
+                self::$icons = [];
+            }
+
+            self::$icons[$key] = svg($name, null, $attributes)->toHtml();
+        }
+
+        return self::$icons[$key];
+    }
+
     public function registerCore(Closure $callback)
     {
         $this->callbacksCore[] = $callback;
@@ -67,6 +96,12 @@ class SidebarMenu extends BaseMenu
         unset($this->menu['sidebar']);
         $this->collection->forget('sidebar');
 
+        $this->abilityChecks = [];
+
+        // make() fills a builder already registered under the name, so the
+        // sidebar gets the builder with the cheaper lookups.
+        $this->menu['sidebar'] = new SidebarBuilder('sidebar', $this->loadConf('sidebar'));
+
         /** @var Builder $sidebar */
         $sidebar = app('laravolt.menu.sidebar')->make(
             'sidebar',
@@ -83,7 +118,7 @@ class SidebarMenu extends BaseMenu
             call_user_func($callback, $sidebar);
         }
 
-        /** @var \Lavary\Menu\Collection */
+        /** @var Collection */
         $sidebarAll = $sidebar->all();
         $items = $sidebarAll->map(function (Item $item) {
             $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! ($item->link->path['url'] ?? true)));
@@ -107,7 +142,7 @@ class SidebarMenu extends BaseMenu
                 return true;
             });
 
-        /** @var \Lavary\Menu\Collection */
+        /** @var Collection */
         $result = $this->get('sidebar')->topMenu()->all();
         $result = $result->sortBy(function (Item $item) {
             if ($item->title === 'System') {
@@ -150,16 +185,33 @@ class SidebarMenu extends BaseMenu
             // It means, user only need to have one of the permissions
             if (is_array($permission)) {
                 foreach ($permission as $perm) {
-                    if (auth()->check() && auth()->user()->can($perm)) {
+                    if ($this->userCan($perm)) {
                         $permissionCheck = true;
                         break;
                     }
                 }
             } else {
-                $permissionCheck = auth()->check() && auth()->user()->can($permission);
+                $permissionCheck = $this->userCan($permission);
             }
         }
 
         return $permissionCheck && $rolesCheck;
+    }
+
+    /**
+     * Gate check for the current user, once per ability while the menu is
+     * built: menu items often share a permission.
+     */
+    protected function userCan($ability): bool
+    {
+        if (! auth()->check()) {
+            return false;
+        }
+
+        if (! is_string($ability)) {
+            return auth()->user()->can($ability);
+        }
+
+        return $this->abilityChecks[$ability] ??= auth()->user()->can($ability);
     }
 }
