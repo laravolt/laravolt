@@ -6,6 +6,8 @@ namespace Laravolt\Tests\Feature\Acl;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Epicentrum\Repositories\EloquentRepository;
 use Laravolt\Tests\FeatureTest;
@@ -212,5 +214,67 @@ class HasRoleAndPermissionTest extends FeatureTest
         $user->assignRole('Admin')->assignRole('Operator');
 
         $this->assertTrue($user->hasRole(['Admin', 'Operator'], true));
+    }
+
+    public function test_permissions_are_read_once_per_user_instance(): void
+    {
+        $user = $this->createUser();
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $admin->addPermission('create');
+        $admin->addPermission('edit');
+        $user->assignRole($admin);
+
+        $this->assertTrue($user->hasPermission('create'));
+
+        // Later checks on the same instance use the lookup it already holds:
+        // no cache read and no query, even for a permission not checked yet.
+        Cache::put("users.{$user->getKey()}.permissions", 'garbage', 3600);
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $this->assertTrue($user->hasPermission('edit'));
+        $this->assertFalse($user->hasPermission('delete'));
+        $this->assertTrue($user->permissions()->contains('name', 'edit'));
+        $this->assertSame('garbage', Cache::get("users.{$user->getKey()}.permissions"));
+        $this->assertSame([], DB::getQueryLog());
+    }
+
+    public function test_permission_changes_are_seen_by_users_already_checked(): void
+    {
+        $user = $this->createUser();
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $admin->addPermission('create');
+        $user->assignRole($admin);
+
+        $this->assertTrue($user->hasPermission('create'));
+        $this->assertFalse($user->hasPermission('edit'));
+
+        $admin->addPermission('edit');
+        $this->assertTrue($user->hasPermission('edit'));
+
+        $admin->removePermission('create');
+        $this->assertFalse($user->hasPermission('create'));
+
+        $user->revokeRole($admin);
+        $this->assertFalse($user->hasPermission('edit'));
+    }
+
+    public function test_has_permission_by_key_and_model(): void
+    {
+        $user = $this->createUser();
+        $admin = app(config('laravolt.epicentrum.models.role'))->create(['name' => 'Admin']);
+        $admin->addPermission('create');
+        $user->assignRole($admin);
+        $permissionModel = app(config('laravolt.epicentrum.models.permission'));
+        $create = $permissionModel->where('name', 'create')->first();
+        $other = $permissionModel->create(['name' => 'other']);
+
+        $this->assertTrue($user->hasPermission($create));
+        $this->assertTrue($user->hasPermission($create->getKey()));
+        $this->assertFalse($user->hasPermission($other));
+        $this->assertFalse($user->hasPermission($other->getKey()));
+        $this->assertFalse($user->hasPermission(null));
+        $this->assertTrue($user->hasPermission([], true));
+        $this->assertFalse($user->hasPermission([]));
     }
 }
