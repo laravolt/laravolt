@@ -21,9 +21,12 @@
      * @param int $level
      * @param string $pathKey unique path accumulator for IDs
      */
+    $iconset = config('laravolt.ui.iconset');
+
     $renderItems = function ($list, int $level = 0, string $pathKey = 'root') use (
         &$renderItems,
         $isExpandedRecursive,
+        $iconset,
     ) {
         $sorted = collect($list)->sortBy(fn($i) => $i->data('order'));
         foreach ($sorted as $loopIndex => $item) {
@@ -47,9 +50,9 @@
                     '">';
                 // Icon (if any)
                 if ($icon = $item->data('icon')) {
-                    echo svg(config('laravolt.ui.iconset') . '-' . $icon, null, [
+                    echo \Laravolt\Platform\Services\SidebarMenu::icon($iconset . '-' . $icon, [
                         'class' => 'shrink-0 mt-0.5 size-4',
-                    ])->toHtml();
+                    ]);
                 }
                 echo '<span>' . e($item->title) . '</span>';
                 echo '<svg class="hs-accordion-active:-rotate-180 shrink-0 mt-1 size-3.5 ms-auto transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>';
@@ -84,10 +87,10 @@
                     $activeClasses .
                     '">';
                 if ($icon = $item->data('icon')) {
-                    echo svg(config('laravolt.ui.iconset') . '-' . $icon, null, [
+                    echo \Laravolt\Platform\Services\SidebarMenu::icon($iconset . '-' . $icon, [
                         'class' => 'shrink-0 mt-0.5 size-4 dark:fill-white',
                         ' fill' => 'currentColor',
-                    ])->toHtml();
+                    ]);
                 }
                 echo '<span>' . e($item->title) . '</span>';
                 echo '</a>';

@@ -1,3 +1,8 @@
+@php
+    // Shown twice (small and large screens): render it once.
+    $breadcrumbHtml = $__env->make('laravolt::menu.breadcrumb', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render();
+@endphp
+
 <header
     class="lg:ms-65 fixed top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 bg-white border-b border-gray-200 dark:bg-neutral-800 dark:border-neutral-700">
     <div class="flex justify-between xl:grid xl:grid-cols-3 basis-full items-center w-full py-2.5 px-2 sm:px-5">
@@ -16,7 +21,7 @@
                 </button>
                 <!-- End Sidebar Toggle -->
 
-                @include('laravolt::menu.breadcrumb')
+                {!! $breadcrumbHtml !!}
             </div>
 
             <div class="hidden lg:block min-w-80 xl:w-full">
@@ -24,7 +29,7 @@
 
                 <!-- TODO: End Search Input -->
 
-                @include('laravolt::menu.breadcrumb')
+                {!! $breadcrumbHtml !!}
             </div>
         </div>
 

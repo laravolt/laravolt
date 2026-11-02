@@ -6,6 +6,7 @@ namespace Laravolt\Platform\Services;
 
 use Closure;
 use Lavary\Menu\Builder;
+use Lavary\Menu\Collection;
 use Lavary\Menu\Item;
 use Lavary\Menu\Menu as BaseMenu;
 
@@ -14,6 +15,9 @@ class SidebarMenu extends BaseMenu
     protected $callbacksCore = [];
 
     protected $callbacks = [];
+
+    /** @var array<string, string> */
+    private static array $icons = [];
 
     public static function setVisible($children, $visible = 'visible')
     {
@@ -42,6 +46,28 @@ class SidebarMenu extends BaseMenu
         return '';
     }
 
+    /**
+     * An icon's SVG markup for the sidebar.
+     *
+     * Kept for the life of the process (a whole Octane worker): the markup
+     * depends only on the icon and its attributes, so there is no need to
+     * have blade-icons merge the attributes and rebuild it on every render.
+     */
+    public static function icon(string $name, array $attributes = []): string
+    {
+        $key = $name."\0".serialize($attributes);
+
+        if (! isset(self::$icons[$key])) {
+            if (count(self::$icons) >= 500) {
+                self::$icons = [];
+            }
+
+            self::$icons[$key] = svg($name, null, $attributes)->toHtml();
+        }
+
+        return self::$icons[$key];
+    }
+
     public function registerCore(Closure $callback)
     {
         $this->callbacksCore[] = $callback;
@@ -67,6 +93,10 @@ class SidebarMenu extends BaseMenu
         unset($this->menu['sidebar']);
         $this->collection->forget('sidebar');
 
+        // make() fills a builder already registered under the name, so the
+        // sidebar gets the builder with indexed children lookups.
+        $this->menu['sidebar'] = new SidebarBuilder('sidebar', $this->loadConf('sidebar'));
+
         /** @var Builder $sidebar */
         $sidebar = app('laravolt.menu.sidebar')->make(
             'sidebar',
@@ -83,7 +113,7 @@ class SidebarMenu extends BaseMenu
             call_user_func($callback, $sidebar);
         }
 
-        /** @var \Lavary\Menu\Collection */
+        /** @var Collection */
         $sidebarAll = $sidebar->all();
         $items = $sidebarAll->map(function (Item $item) {
             $item->data('is-parent', $item->hasChildren() || (! $item->hasChildren() && ! ($item->link->path['url'] ?? true)));
@@ -107,7 +137,7 @@ class SidebarMenu extends BaseMenu
                 return true;
             });
 
-        /** @var \Lavary\Menu\Collection */
+        /** @var Collection */
         $result = $this->get('sidebar')->topMenu()->all();
         $result = $result->sortBy(function (Item $item) {
             if ($item->title === 'System') {
