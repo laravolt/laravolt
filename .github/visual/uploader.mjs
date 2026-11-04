@@ -42,9 +42,10 @@ try {
     await Promise.all([page.waitForLoadState('networkidle'), page.click('button[type=submit]')]);
 
     await page.goto(`${baseUrl}/platform/playground/form`, { waitUntil: 'networkidle' });
-    await page.waitForSelector('.filepond--root', { timeout: 10000 });
-    check((await page.locator('.filepond--root').count()) === 3, 'the 3 playground uploaders become FilePond fields');
+    await page.waitForSelector('.filepond--root.filepond', { timeout: 10000 });
+    check((await page.locator('.filepond--root:not(.filepond)').count()) === 3, 'the 3 playground uploaders become FilePond fields');
     check((await page.locator('input[type=file].uploader').count()) === 0, 'no bare uploader input is left');
+    check((await page.locator('.filepond--root.filepond').count()) === 1, 'form()->filepond() becomes a FilePond field from the bundled assets');
 
     // Single file, uploaded as soon as it is picked.
     const uploaded = page.waitForResponse(isUpload);
@@ -117,6 +118,10 @@ try {
         { timeout: 10000 },
     );
 
+    // form()->filepond() without server(): the file is posted with the form.
+    await page.locator('.filepond--root.filepond input.filepond--browser').setInputFiles([text('c.txt')]);
+    await page.locator('.filepond--root.filepond .filepond--item').first().waitFor({ timeout: 10000 });
+
     await page.screenshot({ path: join(outDir, 'uploader--light.png'), fullPage: true });
     await page.evaluate(() => document.documentElement.classList.add('dark'));
     await page.screenshot({ path: join(outDir, 'uploader--dark.png'), fullPage: true });
@@ -134,6 +139,8 @@ try {
     check(field('_documents') === JSON.stringify(['https://example.test/storage/9/old.txt']), `form posts _documents=${field('_documents')}`);
     const files = entries.filter(([key]) => key === 'attachments_non_ajax[]').map(([, value]) => value).sort();
     check(JSON.stringify(files) === JSON.stringify(['file:a.txt', 'file:b.txt']), `form posts attachments_non_ajax[]: ${files.join(', ')}`);
+    const pondFiles = entries.filter(([key]) => key === 'pond').map(([, value]) => value);
+    check(pondFiles.includes('file:c.txt'), `form()->filepond() posts pond: ${pondFiles.join(', ')}`);
     const stray = entries.filter(([key]) => ['avatar', 'attachments', 'documents', ''].includes(key));
     check(stray.length === 0, `FilePond adds no other upload fields${stray.length ? `: ${JSON.stringify(stray)}` : ''}`);
 
@@ -144,7 +151,7 @@ try {
     ]);
     await page.waitForURL(/\/platform\/dump/, { timeout: 10000 });
     const dump = (await page.textContent('body')) ?? '';
-    check(dump.includes(avatar[0]) && dump.includes('a.txt') && dump.includes('b.txt'), 'the server receives the URL list and the posted files');
+    check(dump.includes(avatar[0]) && dump.includes('a.txt') && dump.includes('b.txt') && dump.includes('c.txt'), 'the server receives the URL list and the posted files');
 } catch (e) {
     check(false, `unexpected error: ${e.message.split('\n')[0]}`);
     await page.screenshot({ path: join(outDir, 'uploader--error.png'), fullPage: true }).catch(() => {});

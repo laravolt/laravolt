@@ -387,7 +387,13 @@
         if (window.console) console.error('[laravolt uploader]', e);
     }
 
-    window.LaravoltUploader = { init: init };
+    // Resolves once FilePond can be used, for fields that create their own pond
+    // (form()->filepond()). A copy the page already loaded itself is used as is.
+    function ready() {
+        return loading || (window.FilePond ? Promise.resolve() : loadFilePond());
+    }
+
+    window.LaravoltUploader = { init: init, ready: ready };
 
     function start() {
         init(document).catch(report);

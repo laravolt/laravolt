@@ -12,6 +12,7 @@
     {!! form()->uploader('avatar')->label('Single File Upload') !!}
     {!! form()->uploader('attachments')->limit(10)->label('Multiple File Upload') !!}
     {!! form()->uploader('attachments_non_ajax')->ajax(false)->limit(10)->label('Multiple File Upload Wihout Ajax') !!}
+    {!! form()->filepond('pond')->label('FilePond Field') !!}
 
     <div class="relative my-6">
         <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-neutral-700"></div></div>

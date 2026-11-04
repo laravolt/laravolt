@@ -7,8 +7,13 @@ namespace Laravolt\PrelineForm\Elements;
 /**
  * FilePond file upload component.
  *
- * Renders a FilePond-enhanced file input. Requires FilePond JS/CSS assets
- * to be loaded in the layout (https://pqina.nl/filepond).
+ * Renders a FilePond-enhanced file input (https://pqina.nl/filepond).
+ * `@laravoltScripts` loads the FilePond shipped with Laravolt on demand; a copy
+ * the layout already loaded itself is used as is. Layouts without that directive
+ * must load FilePond themselves.
+ *
+ * Without server() the files are posted with the form, so the form must be
+ * multipart.
  *
  * Usage:
  *   {!! Form::filepond('avatar') !!}
@@ -188,23 +193,31 @@ class Filepond extends FormControl
           (function() {
             document.addEventListener('DOMContentLoaded', function() {
               const inputEl = document.getElementById('{$id}');
-              if (!inputEl || typeof FilePond === 'undefined') return;
+              if (!inputEl) return;
 
-              const plugins = [];
-              if ({$allowPreview} && typeof FilePondPluginImagePreview !== 'undefined') {
-                plugins.push(FilePondPluginImagePreview);
-              }
-              if (typeof FilePondPluginFileValidateType !== 'undefined') {
-                plugins.push(FilePondPluginFileValidateType);
-              }
-              if (typeof FilePondPluginFileValidateSize !== 'undefined') {
-                plugins.push(FilePondPluginFileValidateSize);
-              }
-              if (plugins.length > 0) {
-                FilePond.registerPlugin(...plugins);
-              }
+              const ready = window.LaravoltUploader ? window.LaravoltUploader.ready() : Promise.resolve();
 
-              FilePond.create(inputEl, {$optionsJson});
+              ready.then(function() {
+                if (typeof FilePond === 'undefined') return;
+
+                const plugins = [];
+                if ({$allowPreview} && typeof FilePondPluginImagePreview !== 'undefined') {
+                  plugins.push(FilePondPluginImagePreview);
+                }
+                if (typeof FilePondPluginFileValidateType !== 'undefined') {
+                  plugins.push(FilePondPluginFileValidateType);
+                }
+                if (typeof FilePondPluginFileValidateSize !== 'undefined') {
+                  plugins.push(FilePondPluginFileValidateSize);
+                }
+                if (plugins.length > 0) {
+                  FilePond.registerPlugin(...plugins);
+                }
+
+                FilePond.create(inputEl, {$optionsJson});
+              }).catch(function(e) {
+                console.error('[laravolt filepond]', e);
+              });
             });
           })();
         </script>
@@ -234,6 +247,10 @@ class Filepond extends FormControl
         if ($this->serverUrl !== null) {
             $options['server'] = $this->serverUrl;
             $options['instantUpload'] = $this->instantUpload;
+        } else {
+            // FilePond posts nothing for a file it has not uploaded unless told
+            // to keep it in the file input.
+            $options['storeAsFile'] = true;
         }
 
         if (! $this->allowImagePreview) {
