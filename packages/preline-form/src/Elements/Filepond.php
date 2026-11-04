@@ -195,7 +195,9 @@ class Filepond extends FormControl
               const inputEl = document.getElementById('{$id}');
               if (!inputEl) return;
 
-              const ready = window.LaravoltUploader ? window.LaravoltUploader.ready() : Promise.resolve();
+              // An uploader.js extracted before v8.3.2 has no ready().
+              const loader = window.LaravoltUploader;
+              const ready = loader && loader.ready ? loader.ready() : Promise.resolve();
 
               ready.then(function() {
                 if (typeof FilePond === 'undefined') return;

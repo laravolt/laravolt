@@ -17,11 +17,18 @@ class FilepondTest extends UnitTest
 
         $this->assertStringContainsString('<input type="file"', $html);
         $this->assertStringContainsString('class="filepond"', $html);
-        $this->assertStringContainsString('window.LaravoltUploader.ready()', $html);
+        $this->assertStringContainsString('loader.ready()', $html);
         $this->assertLessThan(
             mb_strpos($html, 'FilePond.create('),
-            mb_strpos($html, 'window.LaravoltUploader.ready()'),
+            mb_strpos($html, 'loader.ready()'),
         );
+    }
+
+    public function test_it_tolerates_an_uploader_script_without_ready(): void
+    {
+        $html = (string) new Filepond('avatar');
+
+        $this->assertStringContainsString('loader && loader.ready ? loader.ready() : Promise.resolve()', $html);
     }
 
     public function test_without_a_server_the_file_is_posted_with_the_form(): void
