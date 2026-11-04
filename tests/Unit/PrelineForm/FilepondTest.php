@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\Tests\Unit\PrelineForm;
 
 use Laravolt\PrelineForm\Elements\Filepond;
+use Laravolt\PrelineForm\ErrorStore\IlluminateErrorStore;
 use Laravolt\PrelineForm\PrelineForm;
 use Laravolt\Tests\UnitTest;
 
@@ -41,7 +42,10 @@ class FilepondTest extends UnitTest
 
     public function test_the_form_builder_renders_a_labelled_field(): void
     {
-        $html = (string) (new PrelineForm([]))->filepond('pond')->label('FilePond Field');
+        $form = new PrelineForm([]);
+        $form->setErrorStore(new IlluminateErrorStore(app('session.store')));
+
+        $html = (string) $form->filepond('pond')->label('FilePond Field');
 
         $this->assertStringContainsString('FilePond Field', $html);
         $this->assertStringContainsString('name="pond"', $html);
