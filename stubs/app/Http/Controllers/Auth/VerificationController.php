@@ -11,8 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
-
-use function PHPUnit\Framework\assertInstanceOf;
+use LogicException;
 
 final class VerificationController extends Controller
 {
@@ -30,9 +29,11 @@ final class VerificationController extends Controller
 
     public function store(): RedirectResponse
     {
-        /** @var MustVerifyEmail $user */
         $user = auth()->user();
-        assertInstanceOf(MustVerifyEmail::class, $user);
+
+        if (! $user instanceof MustVerifyEmail) {
+            throw new LogicException(sprintf('The authenticated user must implement %s.', MustVerifyEmail::class));
+        }
 
         return $this->handle($user);
     }
