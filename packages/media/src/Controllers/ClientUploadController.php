@@ -40,6 +40,10 @@ class ClientUploadController extends Controller
      */
     public function initiate(Request $request): JsonResponse
     {
+        if ($rejection = $this->rejectAnonymousWhenRequired()) {
+            return $rejection;
+        }
+
         try {
             $validated = $request->validate([
                 'filename' => 'required|string|max:255',
@@ -103,12 +107,21 @@ class ClientUploadController extends Controller
      */
     public function presignPart(Request $request): JsonResponse
     {
+        if ($rejection = $this->rejectAnonymousWhenRequired()) {
+            return $rejection;
+        }
+
         try {
             $validated = $request->validate([
                 'key' => 'required|string',
                 'upload_id' => 'required|string',
                 'part_number' => 'required|integer|min:1|max:10000',
+                'upload_token' => 'required|string',
             ]);
+
+            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'], $validated['upload_id'])) {
+                return $this->invalidTokenResponse();
+            }
 
             $disk = Storage::disk(ClientUploadConfig::getDisk());
             $client = $disk->getClient();
@@ -151,13 +164,22 @@ class ClientUploadController extends Controller
      */
     public function presignParts(Request $request): JsonResponse
     {
+        if ($rejection = $this->rejectAnonymousWhenRequired()) {
+            return $rejection;
+        }
+
         try {
             $validated = $request->validate([
                 'key' => 'required|string',
                 'upload_id' => 'required|string',
                 'part_numbers' => 'required|array|min:1|max:100',
                 'part_numbers.*' => 'required|integer|min:1|max:10000',
+                'upload_token' => 'required|string',
             ]);
+
+            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'], $validated['upload_id'])) {
+                return $this->invalidTokenResponse();
+            }
 
             $disk = Storage::disk(ClientUploadConfig::getDisk());
             $client = $disk->getClient();
@@ -206,6 +228,10 @@ class ClientUploadController extends Controller
      */
     public function completeMultipart(Request $request): JsonResponse
     {
+        if ($rejection = $this->rejectAnonymousWhenRequired()) {
+            return $rejection;
+        }
+
         try {
             $validated = $request->validate([
                 'key' => 'required|string',
@@ -217,11 +243,8 @@ class ClientUploadController extends Controller
             ]);
 
             // Verify upload token
-            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'])) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid upload token',
-                ], 403);
+            if (! $this->verifyUploadToken($validated['upload_token'], $validated['key'], $validated['upload_id'])) {
+                return $this->invalidTokenResponse();
             }
 
             $disk = Storage::disk(ClientUploadConfig::getDisk());
@@ -297,6 +320,10 @@ class ClientUploadController extends Controller
      */
     public function completeSimple(Request $request): JsonResponse
     {
+        if ($rejection = $this->rejectAnonymousWhenRequired()) {
+            return $rejection;
+        }
+
         try {
             $validated = $request->validate([
                 'key' => 'required|string',
@@ -381,15 +408,24 @@ class ClientUploadController extends Controller
      */
     public function abort(Request $request): JsonResponse
     {
+        if ($rejection = $this->rejectAnonymousWhenRequired()) {
+            return $rejection;
+        }
+
         try {
             $validated = $request->validate([
                 'key' => 'nullable|string',
                 'upload_id' => 'nullable|string',
-                'upload_token' => 'nullable|string', // Optional: to clean up media record
+                'upload_token' => 'nullable|string', // Required to abort a multipart upload; also cleans up the media record
             ]);
 
             // For multipart uploads, abort on S3
             if (! empty($validated['upload_id']) && ! empty($validated['key'])) {
+                if (empty($validated['upload_token'])
+                    || ! $this->verifyUploadToken($validated['upload_token'], $validated['key'], $validated['upload_id'])) {
+                    return $this->invalidTokenResponse();
+                }
+
                 $disk = Storage::disk(ClientUploadConfig::getDisk());
                 $client = $disk->getClient();
                 $bucket = $disk->getConfig()['bucket'];
@@ -670,6 +706,29 @@ class ClientUploadController extends Controller
     }
 
     /**
+     * Honour the security.require_auth setting on every upload endpoint.
+     */
+    protected function rejectAnonymousWhenRequired(): ?JsonResponse
+    {
+        if (ClientUploadConfig::requiresAuth() && ! auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Authentication required',
+            ], 401);
+        }
+
+        return null;
+    }
+
+    protected function invalidTokenResponse(): JsonResponse
+    {
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid upload token',
+        ], 403);
+    }
+
+    /**
      * Generate an upload token containing file metadata
      */
     protected function generateUploadToken(string $key, array $fileData, ?string $uploadId = null, ?int $mediaId = null): string
@@ -695,7 +754,7 @@ class ClientUploadController extends Controller
     /**
      * Verify and decode an upload token
      */
-    protected function verifyUploadToken(string $token, string $key): bool
+    protected function verifyUploadToken(string $token, string $key, ?string $uploadId = null): bool
     {
         Log::debug('verifyUploadToken: Starting verification', [
             'token_length' => mb_strlen($token),
@@ -722,6 +781,20 @@ class ClientUploadController extends Controller
                 'token_key_hex' => bin2hex($tokenData['key']),
                 'request_key_hex' => bin2hex($key),
             ]);
+            return false;
+        }
+
+        // A multipart token is only good for the upload it was issued for.
+        if ($uploadId !== null && ! hash_equals((string) ($tokenData['upload_id'] ?? ''), $uploadId)) {
+            Log::debug('verifyUploadToken: Upload id mismatch');
+
+            return false;
+        }
+
+        // The token belongs to whoever started the upload (null for guests).
+        if ((string) ($tokenData['user_id'] ?? '') !== (string) (auth()->id() ?? '')) {
+            Log::debug('verifyUploadToken: Uploader mismatch');
+
             return false;
         }
 
