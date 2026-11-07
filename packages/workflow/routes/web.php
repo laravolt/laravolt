@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Route;
 use Laravolt\Workflow\Http\Controllers\DefinitionController;
 use Laravolt\Workflow\Http\Controllers\DefinitionXmlController;
 use Laravolt\Workflow\Http\Controllers\EmbedFormController;
@@ -17,7 +18,9 @@ Route::group(
     ],
     function () {
         Route::resource('definitions', DefinitionController::class);
-        Route::resource('module.instances', InstancesController::class)->withoutMiddleware('auth');
+        Route::resource('module.instances', InstancesController::class);
+        // Stays open for the public tracker's task form; TaskController checks that the task
+        // belongs to the module and lets guests submit only the module's tracker tasks.
         Route::resource('module.tasks', TaskController::class)->only('update')->withoutMiddleware('auth');
 
         Route::get('definitions/{definition}/xml', DefinitionXmlController::class)
