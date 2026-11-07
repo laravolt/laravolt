@@ -70,7 +70,6 @@ Route::group(
             ->withoutMiddleware('auth');
 
         Route::get('stream/{media}', Laravolt\Media\Controllers\VideoStreamController::class)
-            ->withoutMiddleware('auth')
             ->name('stream');
     }
 );
