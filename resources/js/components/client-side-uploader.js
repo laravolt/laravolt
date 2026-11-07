@@ -501,7 +501,8 @@ class ClientSideUploader {
                 body: JSON.stringify({
                     key: upload.key,
                     upload_id: upload.multipartUploadId,
-                    part_number: part.partNumber
+                    part_number: part.partNumber,
+                    upload_token: upload.uploadToken
                 })
             });
 
