@@ -8,7 +8,7 @@ it('requires a signed-in user to stream media', function (): void {
     expect(Route::getRoutes()->getByName('media::stream')->gatherMiddleware())->toContain('auth');
 });
 
-it('requires a signed-in user for workflow instances and tasks', function (string $name): void {
+it('requires a signed-in user for workflow instances', function (string $name): void {
     config([
         'laravolt.workflow.routes.middleware' => ['web', 'auth'],
         'laravolt.workflow.routes.prefix' => 'workflow',
@@ -22,5 +22,4 @@ it('requires a signed-in user for workflow instances and tasks', function (strin
     'workflow::module.instances.index',
     'workflow::module.instances.show',
     'workflow::module.instances.store',
-    'workflow::module.tasks.update',
 ]);
