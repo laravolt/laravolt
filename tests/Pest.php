@@ -22,3 +22,5 @@ uses(UnitTest::class)->in('Unit/Media');
 uses(PackageTest::class, RefreshDatabase::class)->in('Feature/Media');
 
 uses(PackageTest::class)->in('Feature/Commands');
+
+uses(PackageTest::class, RefreshDatabase::class)->in('Feature/Platform');

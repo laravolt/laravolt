@@ -5,6 +5,7 @@ declare(strict_types=1);
 /** @var Illuminate\Routing\Router $router */
 
 use Laravolt\Platform\Controllers\DumpRequestController;
+use Laravolt\Platform\Enums\Permission;
 
 /** @var Illuminate\Support\Facades\Route $router */
 $router = app('router');
@@ -39,8 +40,12 @@ $router->group(
             $router->get('/', [Laravolt\Platform\Controllers\ComponentShowcaseController::class, 'index'])->name('index');
             $router->get('/{component}', [Laravolt\Platform\Controllers\ComponentShowcaseController::class, 'component'])->name('show');
         });
-        $router->get('settings', [Laravolt\Platform\Controllers\SettingsController::class, 'edit'])->name('settings.edit');
-        $router->put('settings', [Laravolt\Platform\Controllers\SettingsController::class, 'update'])->name('settings.update');
+        $router->get('settings', [Laravolt\Platform\Controllers\SettingsController::class, 'edit'])
+            ->middleware('can:'.Permission::MANAGE_SETTINGS)
+            ->name('settings.edit');
+        $router->put('settings', [Laravolt\Platform\Controllers\SettingsController::class, 'update'])
+            ->middleware('can:'.Permission::MANAGE_SETTINGS)
+            ->name('settings.update');
 
         $router->view('check', 'laravolt::platform.check')->name('check');
         $router->any('dump', DumpRequestController::class)->name('dump');
