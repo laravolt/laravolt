@@ -21,6 +21,7 @@
       <directory suffix="Test.php">./tests/Feature/Commands</directory>
       <directory suffix="Test.php">./tests/Feature/Media</directory>
       <directory suffix="Test.php">./tests/Feature/Platform</directory>
+      <directory suffix="Test.php">./tests/Feature/SemanticForm</directory>
       <directory suffix="Test.php">./tests/Feature/Ui</directory>
       <directory suffix="Test.php">./tests/Feature/Views</directory>
       <file>./tests/Feature/DatabaseMigrationTest.php</file>
