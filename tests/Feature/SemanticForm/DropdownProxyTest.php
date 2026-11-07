@@ -8,8 +8,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Testing\TestResponse;
+use Laravolt\SemanticForm\DbProxy;
 use Laravolt\Tests\PackageTest;
 
 class DropdownProxyTest extends PackageTest
@@ -19,6 +21,10 @@ class DropdownProxyTest extends PackageTest
     protected function setUp(): void
     {
         parent::setUp();
+
+        // The package test app does not boot the semantic-form provider, so
+        // register its dropdown route the same way packages/semantic-form/routes/web.php does.
+        Route::middleware('web')->post('laravolt/api/dropdown', DbProxy::class);
 
         Schema::create('dropdown_people', function (Blueprint $table): void {
             $table->increments('id');
