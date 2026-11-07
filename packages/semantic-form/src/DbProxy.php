@@ -16,11 +16,11 @@ class DbProxy
             $results = [];
             $term = request('term');
 
-            if ($term) {
+            if (is_string($term) && $term) {
                 $payload = decrypt(request('payload'));
-                $query = sprintf($payload['query'], mb_trim($term));
+                [$query, $bindings] = DbProxyQuery::bind($payload['query'], mb_trim($term));
                 $connection = $payload['connection'] ?? config('database.default');
-                $results = collect(DB::connection($connection)->select($query))->transform(function ($item) use ($payload) {
+                $results = collect(DB::connection($connection)->select($query, $bindings))->transform(function ($item) use ($payload) {
                     $item = (array) $item;
 
                     return [
@@ -34,7 +34,9 @@ class DbProxy
 
             return response()->json($json);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            report($e);
+
+            return response()->json(['success' => false, 'message' => __('Unable to load the options.')]);
         }
     }
 }
