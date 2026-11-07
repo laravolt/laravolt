@@ -42,9 +42,34 @@ class FilepondTest extends UnitTest
     {
         $html = (string) (new Filepond('avatar'))->server('/upload')->instantUpload();
 
-        $this->assertStringContainsString('"server":"/upload"', $html);
+        $this->assertStringContainsString('"/upload"', $html);
         $this->assertStringContainsString('"instantUpload":true', $html);
         $this->assertStringNotContainsString('storeAsFile', $html);
+    }
+
+    public function test_a_server_on_this_site_gets_the_csrf_token(): void
+    {
+        app('session.store')->put('_token', 'pond-csrf-token');
+
+        $relative = (string) (new Filepond('avatar'))->server('/upload');
+        $absolute = (string) (new Filepond('avatar'))->server(url('/upload'));
+
+        $this->assertStringContainsString(
+            '"server":{"url":"/upload","headers":{"X-CSRF-TOKEN":"pond-csrf-token"}}',
+            $relative,
+        );
+        $this->assertStringContainsString('"X-CSRF-TOKEN":"pond-csrf-token"', $absolute);
+    }
+
+    public function test_a_server_on_another_origin_never_gets_the_csrf_token(): void
+    {
+        app('session.store')->put('_token', 'pond-csrf-token');
+
+        foreach (['https://uploads.example.net/process', '//uploads.example.net/process', '/\\uploads.example.net/process'] as $url) {
+            $html = (string) (new Filepond('avatar'))->server($url);
+
+            $this->assertStringNotContainsString('pond-csrf-token', $html, $url);
+        }
     }
 
     public function test_the_form_builder_renders_a_labelled_field(): void
