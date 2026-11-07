@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laravolt\PrelineForm\Elements;
 
+use RuntimeException;
+
 /**
  * FilePond file upload component.
  *
@@ -13,7 +15,8 @@ namespace Laravolt\PrelineForm\Elements;
  * must load FilePond themselves.
  *
  * Without server() the files are posted with the form, so the form must be
- * multipart.
+ * multipart. With server() on this site, FilePond sends the session CSRF token
+ * as X-CSRF-TOKEN, so a route in the web group accepts the upload.
  *
  * Usage:
  *   {!! Form::filepond('avatar') !!}
@@ -247,7 +250,7 @@ class Filepond extends FormControl
         }
 
         if ($this->serverUrl !== null) {
-            $options['server'] = $this->serverUrl;
+            $options['server'] = $this->serverOption();
             $options['instantUpload'] = $this->instantUpload;
         } else {
             // FilePond posts nothing for a file it has not uploaded unless told
@@ -260,5 +263,64 @@ class Filepond extends FormControl
         }
 
         return json_encode($options, JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * FilePond sends no CSRF token of its own, so a Laravel route in the web
+     * group answers 419. Send the session token as X-CSRF-TOKEN, but only to
+     * this site; another origin must never receive it.
+     *
+     * @return string|array{url: string, headers: array<string, string>}
+     */
+    protected function serverOption(): string|array
+    {
+        $token = $this->csrfToken();
+
+        if ($token === null || ! $this->isSameOrigin($this->serverUrl)) {
+            return $this->serverUrl;
+        }
+
+        return [
+            'url' => $this->serverUrl,
+            'headers' => ['X-CSRF-TOKEN' => $token],
+        ];
+    }
+
+    protected function csrfToken(): ?string
+    {
+        try {
+            $token = csrf_token();
+        } catch (RuntimeException) {
+            return null;
+        }
+
+        return is_string($token) && $token !== '' ? $token : null;
+    }
+
+    protected function isSameOrigin(string $url): bool
+    {
+        // Browsers read "/\host" like "//host", so treat any backslash as foreign.
+        if (str_contains($url, '\\')) {
+            return false;
+        }
+
+        $parts = parse_url($url);
+
+        if ($parts === false) {
+            return false;
+        }
+
+        if (! isset($parts['host'])) {
+            // A relative URL stays on this site; "javascript:" and the like do not.
+            return ! isset($parts['scheme']);
+        }
+
+        $request = request();
+        $scheme = mb_strtolower($parts['scheme'] ?? $request->getScheme());
+        $port = $parts['port'] ?? ($scheme === 'https' ? 443 : 80);
+
+        return $scheme === $request->getScheme()
+            && mb_strtolower($parts['host']) === mb_strtolower($request->getHost())
+            && (int) $port === (int) $request->getPort();
     }
 }
