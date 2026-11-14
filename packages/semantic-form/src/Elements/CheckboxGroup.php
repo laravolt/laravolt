@@ -73,13 +73,13 @@ class CheckboxGroup extends Wrapper
         if (is_string($val)) {
             $option = Arr::get($this->options, $val);
 
-            return $option['label'] ?? $option;
+            return static::escapeDisplayValue($option['label'] ?? $option);
         }
 
         if (is_array($val)) {
             $output = '';
             foreach ($val as $v) {
-                $output .= "<div class='ui label $color'>$v</div>";
+                $output .= sprintf("<div class='ui label %s'>%s</div>", e($color), static::escapeDisplayValue($v));
             }
 
             return $output;

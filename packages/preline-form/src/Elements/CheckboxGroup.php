@@ -75,7 +75,7 @@ class CheckboxGroup extends Element
 
         $labels = [];
         foreach ($this->checkedValues as $value) {
-            $labels[] = $this->options[$value] ?? $value;
+            $labels[] = static::escapeDisplayValue($this->options[$value] ?? $value);
         }
 
         return implode(', ', $labels);

@@ -46,7 +46,7 @@ class DatepickerWrapper extends InputWrapper
         try {
             return Carbon::createFromFormat($this->format, $value)->isoFormat($this->withTime ? 'LLL' : 'LL');
         } catch (Exception $e) {
-            return $value;
+            return static::escapeDisplayValue($value);
         }
     }
 

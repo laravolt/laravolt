@@ -62,17 +62,16 @@ class Uploader extends Input
     {
         if (is_array($this->value)) {
             $output = "<div class='ui list'>";
-            $output .= '</div>';
 
             foreach ($this->value as $media) {
                 $output .= sprintf(
-                    "<div class='item'><a href='%s' target='_blank'>%s <i class='icon paperclip'></i></a></div>",
-                    $media['file'],
-                    $media['name']
+                    "<div class='item'><a href='%s' target='_blank' rel='noopener'>%s <i class='icon paperclip'></i></a></div>",
+                    e($media['file']),
+                    e($media['name'])
                 );
             }
 
-            return $output;
+            return $output.'</div>';
         }
 
         return null;
