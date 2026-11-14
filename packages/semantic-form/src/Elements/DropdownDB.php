@@ -59,7 +59,7 @@ class DropdownDB extends Select
 
             $this->beforeRender();
 
-            return Arr::get($this->options, $this->value);
+            return static::escapeDisplayValue(Arr::get($this->options, $this->value));
         }
 
         return $this->value;
