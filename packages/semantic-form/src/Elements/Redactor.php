@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laravolt\SemanticForm\Elements;
 
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
 class Redactor extends TextArea
 {
@@ -17,6 +19,26 @@ class Redactor extends TextArea
         $this->mediaUrl = $url;
 
         return $this;
+    }
+
+    /**
+     * Redactor stores rich text, so the display table keeps its formatting but
+     * drops anything that can run script (event handlers, script, javascript: links).
+     */
+    public function displayValue()
+    {
+        $value = $this->getValue();
+
+        if (! is_string($value)) {
+            return parent::displayValue();
+        }
+
+        $config = (new HtmlSanitizerConfig)
+            ->allowSafeElements()
+            ->allowRelativeLinks()
+            ->allowRelativeMedias();
+
+        return (new HtmlSanitizer($config))->sanitize($value);
     }
 
     public function render()

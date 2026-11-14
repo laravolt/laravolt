@@ -73,7 +73,7 @@ class RadioGroup extends Element
             return '';
         }
 
-        return $this->options[$this->checkedValue] ?? $this->checkedValue;
+        return static::escapeDisplayValue($this->options[$this->checkedValue] ?? $this->checkedValue);
     }
 
     public function render()

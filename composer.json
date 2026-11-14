@@ -36,7 +36,8 @@
         "myclabs/deep-copy": "^1.13",
         "spatie/laravel-backup": "^10.3",
         "spatie/laravel-medialibrary": "^11.23",
-        "spatie/once": "^3.1.1"
+        "spatie/once": "^3.1.1",
+        "symfony/html-sanitizer": "^7.4.23|^8.1.11"
     },
     "require-dev": {
         "larastan/larastan": "^3.13",

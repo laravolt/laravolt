@@ -60,7 +60,7 @@ class RadioButton extends Checkbox
 
     public function displayValue()
     {
-        return $this->isChecked ? $this->value : '';
+        return $this->isChecked ? static::escapeDisplayValue($this->value) : '';
     }
 
     public function render()

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Laravolt\PrelineForm\Elements;
 
+use BackedEnum;
 use Closure;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ViewErrorBag;
 use Laravolt\PrelineForm\Validation\ClientValidation;
+use Stringable;
 
 abstract class Element
 {
@@ -205,7 +207,20 @@ abstract class Element
 
     public function displayValue()
     {
-        return nl2br($this->getValue() ?? '');
+        return nl2br(static::escapeDisplayValue($this->getValue()));
+    }
+
+    /**
+     * Escape a stored value for the read-only display table. Values come from
+     * bound models or form submissions, so they are text, not markup.
+     */
+    protected static function escapeDisplayValue($value)
+    {
+        if ($value === null || is_scalar($value) || $value instanceof Stringable || $value instanceof BackedEnum) {
+            return e($value);
+        }
+
+        return $value;
     }
 
     public function populateValue($values)

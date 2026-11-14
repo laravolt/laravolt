@@ -124,7 +124,7 @@ class Select extends FormControl
     public function displayValue()
     {
         if (is_string($this->selectedValue) || is_int($this->selectedValue)) {
-            return $this->options[$this->selectedValue] ?? $this->selectedValue;
+            return static::escapeDisplayValue($this->options[$this->selectedValue] ?? $this->selectedValue);
         }
 
         return null;

@@ -44,7 +44,7 @@ class Date extends Text
         try {
             return Carbon::createFromIsoFormat(static::$inputFormat, $value)->isoFormat(static::$displayFormat);
         } catch (Exception $e) {
-            return $value;
+            return static::escapeDisplayValue($value);
         }
     }
 }
