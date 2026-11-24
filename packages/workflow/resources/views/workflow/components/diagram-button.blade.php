@@ -5,7 +5,8 @@ $tasks = \Laravolt\Camunda\Http\TaskClient::getByProcessInstanceId($instance->id
 foreach ($tasks as $task) {
     $taskNames[] = $task->taskDefinitionKey;
 }
-$url = route('workflow::definitions.xml', $instance->definition_id ?? $instance->processDefinitionId);
+// Pages for guests pass their own `url` (the tracker's diagram route); definitions.xml needs sign-in.
+$url = $url ?? route('workflow::definitions.xml', $instance->definition_id ?? $instance->processDefinitionId);
 ?>
 
 <button class="ui secondary button {{ $class ?? '' }} {{ config('laravolt.ui.color') }}" camunda-map-button>
