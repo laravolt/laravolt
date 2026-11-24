@@ -1,0 +1,45 @@
+/*
+ * Workbench: Laravolt's own theme. Tidy, certain, a little warm: graphite
+ * surfaces and the brand indigo (#4f46e5) as the one accent.
+ *
+ * Turn it on with LARAVOLT_UI_THEME=workbench (or Settings > Theme); the
+ * layout then renders <html data-theme="theme-workbench">.
+ *
+ * Laravolt views, and most application views, are written in Tailwind's gray-*
+ * and blue-* scales, so the theme repaints those scales as well as Preline's
+ * semantic tokens. Preline's defaults point the tokens at gray-* and blue-*,
+ * so they follow without being listed here. Dark mode keeps the neutral-*
+ * scale, which is already graphite.
+ */
+:root[data-theme="theme-workbench"] {
+  --color-gray-50: var(--color-zinc-50);
+  --color-gray-100: var(--color-zinc-100);
+  --color-gray-200: var(--color-zinc-200);
+  --color-gray-300: var(--color-zinc-300);
+  --color-gray-400: var(--color-zinc-400);
+  --color-gray-500: var(--color-zinc-500);
+  --color-gray-600: var(--color-zinc-600);
+  --color-gray-700: var(--color-zinc-700);
+  --color-gray-800: var(--color-zinc-800);
+  --color-gray-900: var(--color-zinc-900);
+  --color-gray-950: var(--color-zinc-950);
+
+  --color-blue-50: var(--color-indigo-50);
+  --color-blue-100: var(--color-indigo-100);
+  --color-blue-200: var(--color-indigo-200);
+  --color-blue-300: var(--color-indigo-300);
+  --color-blue-400: var(--color-indigo-400);
+  --color-blue-500: var(--color-indigo-500);
+  --color-blue-600: var(--color-indigo-600);
+  --color-blue-700: var(--color-indigo-700);
+  --color-blue-800: var(--color-indigo-800);
+  --color-blue-900: var(--color-indigo-900);
+  --color-blue-950: var(--color-indigo-950);
+
+  /* `laravolt.ui.color` does not apply here: the theme owns the accent. */
+  --accent: var(--color-indigo-600);
+}
+
+:root[data-theme="theme-workbench"].dark {
+  --accent: var(--color-indigo-500);
+}

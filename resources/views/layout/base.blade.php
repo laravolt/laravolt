@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}" class="relative min-h-full">
+@php($theme = config('laravolt.ui.theme'))
+<html lang="{{ config('app.locale') }}" class="relative min-h-full" @if (filled($theme)) data-theme="theme-{{ $theme }}" @endif>
 
 <head>
     <title>{{ $title ?? '' }} | {{ config('app.name') }}</title>
