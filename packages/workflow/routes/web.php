@@ -24,11 +24,14 @@ Route::group(
         Route::resource('module.tasks', TaskController::class)->only('update')->withoutMiddleware('auth');
 
         Route::get('definitions/{definition}/xml', DefinitionXmlController::class)
-            ->name('definitions.xml')
-            ->withoutMiddleware('auth');
+            ->name('definitions.xml');
         Route::resource('{module}/form', EmbedFormController::class)->only(['create', 'store'])
             ->withoutMiddleware('auth');
         Route::resource('{module}/tracker', EmbedTrackingController::class)->only(['index', 'show'])
+            ->withoutMiddleware('auth');
+        // The public tracker's diagram: only for an instance of this module, by its tracking code.
+        Route::get('{module}/tracker/{tracker}/diagram', [EmbedTrackingController::class, 'diagram'])
+            ->name('tracker.diagram')
             ->withoutMiddleware('auth');
     }
 );

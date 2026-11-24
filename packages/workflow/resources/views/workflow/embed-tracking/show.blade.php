@@ -7,7 +7,7 @@
                 <x-volt-panel :title="$module->name" icon="compass">
 
                     <x-slot name="action">
-                        <x-volt-workflow-diagram-button :instance="$instanceHistory"></x-volt-workflow-diagram-button>
+                        <x-volt-workflow-diagram-button :instance="$instanceHistory" :url="route('workflow::tracker.diagram', [$module->id, $trackingCode])"></x-volt-workflow-diagram-button>
                     </x-slot>
 
                     <h3 class="ui header" style="font-family: monospace">
