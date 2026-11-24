@@ -200,6 +200,18 @@ return [
 
         /*
         |--------------------------------------------------------------------------
+        | Max Pending Uploads
+        |--------------------------------------------------------------------------
+        |
+        | Unfinished uploads one user (or guest session) may keep at a time.
+        | Together with max_file_size it bounds the disk one uploader can fill
+        | before stale chunks are cleaned up.
+        |
+        */
+        'max_pending_uploads' => 20,
+
+        /*
+        |--------------------------------------------------------------------------
         | Filename Validation
         |--------------------------------------------------------------------------
         |

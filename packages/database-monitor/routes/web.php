@@ -6,7 +6,10 @@ Route::group(
     [
         'prefix' => config('laravolt.database-monitor.routes.prefix'),
         'as' => 'database-monitor::',
-        'middleware' => config('laravolt.database-monitor.routes.middleware'),
+        'middleware' => [
+            ...(array) config('laravolt.database-monitor.routes.middleware'),
+            'can:'.Laravolt\Platform\Enums\Permission::MANAGE_DB,
+        ],
     ],
     function () {
         Route::get('backup', [Laravolt\DatabaseMonitor\Controllers\BackupController::class, 'index'])
