@@ -20,8 +20,17 @@ jobs:
       matrix:
         php: [ '8.3', '8.4', '8.5' ]
         dependency-version: [ prefer-lowest, prefer-stable ]
+        experimental: [ false ]
+        include:
+          # PHP 8.6 (GA 19 Nov 2026): shown in every run, not yet required.
+          - php: '8.6'
+            dependency-version: prefer-stable
+            experimental: true
 
-    name: package-tests (PHP ${{ matrix.php }}, ${{ matrix.dependency-version }})
+    # An experimental job may fail (its check shows red) without failing the run.
+    continue-on-error: ${{ matrix.experimental }}
+
+    name: package-tests (PHP ${{ matrix.php }}, ${{ matrix.dependency-version }}${{ matrix.experimental && ', experimental' || '' }})
 
     steps:
     - uses: actions/checkout@v7
@@ -31,7 +40,8 @@ jobs:
         extensions: bcmath, ctype, curl, dom, exif, fileinfo, gd, mbstring, pdo_sqlite, sqlite3, tokenizer, xml, zip
         coverage: none
     - name: Install Dependencies
-      run: composer update --${{ matrix.dependency-version }} --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      # Some dependencies may not list the newest PHP yet.
+      run: composer update --${{ matrix.dependency-version }} --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist ${{ matrix.experimental && '--ignore-platform-req=php+' || '' }}
     - name: Package tests
       env:
         DB_CONNECTION: sqlite
