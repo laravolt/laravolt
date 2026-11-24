@@ -39,6 +39,16 @@ return [
             'content' => '<h3 class="ui horizontal divider hidden m-t-3">Tampilan Sidebar</h3>',
         ],
         [
+            'type' => Laravolt\Fields\Field::DROPDOWN,
+            'name' => 'theme',
+            'label' => 'Tema',
+            'options' => [
+                '' => 'Klasik (abu-abu + biru)',
+                'workbench' => 'Workbench (grafit + indigo)',
+            ],
+            'inline' => true,
+        ],
+        [
             'type' => Laravolt\Fields\Field::DROPDOWN_COLOR,
             'name' => 'color',
             'label' => 'Warna Aksen',

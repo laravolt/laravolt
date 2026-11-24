@@ -2,6 +2,11 @@
 @import "tailwindcss" source(none);
 @plugin "@tailwindcss/forms";
 @import "preline/variants.css";
+/* Preline 5 semantic tokens (bg-layer, text-foreground, bg-primary, ...). Their
+   defaults resolve to the colours Laravolt already uses, so nothing changes
+   until a theme sets `data-theme` on <html>. */
+@import "preline/theme.css";
+@import "./themes/workbench.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -21,6 +26,13 @@
 }
 
 @layer base {
+  /* preline/theme.css gives every element `border-color: var(--border)`.
+     Laravolt views were written against Tailwind's default (currentColor);
+     keep it so bare `border` classes render as before. */
+  * {
+    border-color: currentColor;
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;

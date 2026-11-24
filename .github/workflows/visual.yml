@@ -73,13 +73,28 @@ jobs:
         if: matrix.side == 'head'
         run: APP_URL=http://127.0.0.1:8000 node tools/.github/visual/uploader.mjs shots/uploader
 
+      # Not compared: the workbench theme is new, so there is no base to diff
+      # against. The shots are uploaded for review.
+      - name: Capture the workbench theme
+        if: matrix.side == 'head'
+        run: |
+          pkill -f "artisan serve" || true
+          pkill -f -- "-S 127.0.0.1:8000" || true
+          for i in $(seq 1 10); do curl -s -o /dev/null http://127.0.0.1:8000 || break; sleep 1; done
+          echo "LARAVOLT_UI_THEME=workbench" >> app/.env
+          (cd app && php artisan serve --host=127.0.0.1 --port=8000 > ../serve-workbench.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:8000/auth/login && break; sleep 1; done
+          curl -sf http://127.0.0.1:8000/auth/login | grep -q 'data-theme="theme-workbench"'
+          APP_URL=http://127.0.0.1:8000 node tools/.github/visual/capture.mjs shots-workbench
+
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: shots-${{ matrix.side }}
           path: |
             shots
-            serve.log
+            shots-workbench
+            serve*.log
             app/storage/logs
 
   compare:

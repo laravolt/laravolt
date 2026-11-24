@@ -9,7 +9,16 @@ return [
     'brand_description' => env('APP_DESCRIPTION', 'Sample application powered by Laravolt'),
 
     /*
-     * Button color
+     * Theme
+     * null keeps the classic look (gray and blue). 'workbench' is Laravolt's own
+     * theme: graphite surfaces and the brand indigo, in light and dark mode.
+     * Any other name renders <html data-theme="theme-{name}"> for a Preline 5
+     * theme in your own stylesheet.
+     * */
+    'theme' => env('LARAVOLT_UI_THEME'),
+
+    /*
+     * Button color (classic theme only; a theme sets its own accent)
      * Choose one of the following colors that match closely with the theme
      * Available colors: blue, indigo, cyan, teal
      * */
