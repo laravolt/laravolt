@@ -14,6 +14,7 @@ class FileController extends Controller
     {
         $hash = $request->get(config('laravolt.file-manager.query_string'));
         $file = app('laravolt.file-manager')->openFile($hash)->getFilePath();
+        abort_if($file === null, 404);
 
         return response()->download($file);
     }
@@ -21,7 +22,7 @@ class FileController extends Controller
     public function destroy($key)
     {
         $file = app('laravolt.file-manager')->openFile($key)->getFilePath();
-        if (file_exists($file)) {
+        if ($file !== null && file_exists($file)) {
             $filename = pathinfo($file)['basename'] ?? $file;
             File::delete($file);
 

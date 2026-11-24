@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Laravolt\Media\MediaDeletion;
 use Laravolt\Media\Upload\ResumableHandler;
+use Laravolt\Media\Upload\UploadLimitExceeded;
 use Laravolt\Platform\Models\Guest;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -66,6 +67,11 @@ class ChunkedMediaHandler
                 'done' => $handler->getPercentageDone(),
                 'status' => true,
             ]);
+        } catch (UploadLimitExceeded $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], $e->status);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,

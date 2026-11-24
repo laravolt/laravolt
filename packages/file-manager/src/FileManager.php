@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laravolt\FileManager;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
@@ -49,7 +50,12 @@ class FileManager
 
     public function openFile($hash)
     {
-        [$disk, $file] = explode('::', $this->decode($hash));
+        $this->file = null;
+        $parts = explode('::', $this->decode($hash), 2);
+        if (count($parts) !== 2) {
+            abort(404);
+        }
+        [$disk, $file] = $parts;
         $file = config("filesystems.disks.{$disk}.root").DIRECTORY_SEPARATOR.$file;
 
         if (file_exists($file)) {
@@ -148,14 +154,40 @@ class FileManager
         return $this->baseDirectory.DIRECTORY_SEPARATOR.$path;
     }
 
+    /**
+     * Keys are bound to the signed-in user: only the user who was shown the
+     * listing (and so passed whatever guards that page) can download or delete
+     * through them.
+     */
     public function encode($path)
     {
-        return Crypt::encryptString(bin2hex($path));
+        return Crypt::encryptString($this->owner().'|'.bin2hex($path));
     }
 
     public function decode($hash)
     {
-        return hex2bin(Crypt::decryptString($hash));
+        try {
+            $payload = Crypt::decryptString((string) $hash);
+        } catch (DecryptException) {
+            abort(404);
+        }
+
+        $parts = explode('|', $payload, 2);
+        if (count($parts) !== 2 || ! hash_equals($this->owner(), $parts[0])) {
+            abort(404);
+        }
+
+        $path = @hex2bin($parts[1]);
+        if ($path === false) {
+            abort(404);
+        }
+
+        return $path;
+    }
+
+    private function owner(): string
+    {
+        return (string) auth()->id();
     }
 
     public function allFiles(?string $path = null)

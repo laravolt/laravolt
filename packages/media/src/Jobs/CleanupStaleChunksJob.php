@@ -89,8 +89,16 @@ class CleanupStaleChunksJob implements ShouldQueue
         $deletedCount = 0;
         $totalSize = 0;
 
-        // Get all chunk directories
-        $chunkDirs = File::directories($chunksPath);
+        // Uploads live in chunks/{owner}/{identifier}; directories written
+        // before 8.3.5 sit directly in chunks/{identifier}.
+        $chunkDirs = [];
+        foreach (File::directories($chunksPath) as $dir) {
+            if (preg_match('/^(user|guest)-/', basename($dir)) === 1) {
+                array_push($chunkDirs, ...File::directories($dir));
+            } else {
+                $chunkDirs[] = $dir;
+            }
+        }
 
         foreach ($chunkDirs as $chunkDir) {
             $lastModified = File::lastModified($chunkDir);
@@ -108,6 +116,12 @@ class CleanupStaleChunksJob implements ShouldQueue
                     'size' => $dirSize,
                     'last_modified' => date('Y-m-d H:i:s', $lastModified),
                 ]);
+            }
+        }
+
+        foreach (File::directories($chunksPath) as $dir) {
+            if (preg_match('/^(user|guest)-/', basename($dir)) === 1 && File::isEmptyDirectory($dir)) {
+                File::deleteDirectory($dir);
             }
         }
 

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Media\Jobs\CleanupStaleChunksJob;
 use Laravolt\Platform\Models\Guest;
@@ -277,4 +278,84 @@ test('chunked upload returns consistent json structure', function () {
     $file = $data['files'][0];
     expect($file['name'])->toBe('structure-test.txt');
     expect($file['data'])->toHaveKeys(['id', 'url', 'thumbnail']);
+});
+
+function sendChunk(string $identifier, array $overrides = []): Illuminate\Testing\TestResponse
+{
+    return test()->post('/media/chunk', array_merge([
+        'handler' => 'chunked',
+        '_action' => 'upload',
+        'file' => UploadedFile::fake()->createWithContent('part.bin', str_repeat('x', 1024)),
+        'resumableChunkNumber' => 1,
+        'resumableTotalChunks' => 2,
+        'resumableChunkSize' => 1024,
+        'resumableTotalSize' => 2048,
+        'resumableIdentifier' => $identifier,
+        'resumableFilename' => 'part.bin',
+    ], $overrides));
+}
+
+test('chunks are kept apart per uploader', function () {
+    $alice = Laravolt\Platform\Models\User::query()->forceCreate(['name' => 'Alice', 'email' => 'alice@example.test', 'password' => 'secret']);
+    $bob = Laravolt\Platform\Models\User::query()->forceCreate(['name' => 'Bob', 'email' => 'bob@example.test', 'password' => 'secret']);
+
+    $this->actingAs($alice);
+    sendChunk('shared-id')->assertSuccessful()->assertJson(['done' => 50.0]);
+
+    // Bob sends the second chunk under the same identifier: it does not complete Alice's upload.
+    $this->actingAs($bob);
+    sendChunk('shared-id', ['resumableChunkNumber' => 2])->assertSuccessful()->assertJson(['done' => 50.0]);
+
+    expect(is_dir(storage_path('app/chunks/user-'.$alice->getKey().'/shared-id')))->toBeTrue()
+        ->and(is_dir(storage_path('app/chunks/user-'.$bob->getKey().'/shared-id')))->toBeTrue();
+
+    File::deleteDirectory(storage_path('app/chunks'));
+});
+
+test('an upload declared above max_file_size is refused', function () {
+    config(['chunked-upload.max_file_size' => 1024]);
+
+    sendChunk('too-big')->assertStatus(413)->assertJson(['success' => false]);
+});
+
+test('an upload whose chunks grow above max_file_size is discarded', function () {
+    config(['chunked-upload.max_file_size' => 1500]);
+    $this->actingAs(Laravolt\Platform\Models\User::query()->forceCreate(['name' => 'Up', 'email' => 'up@example.test', 'password' => 'secret']));
+
+    sendChunk('grows', ['resumableTotalSize' => 1000])->assertSuccessful();
+    sendChunk('grows', ['resumableTotalSize' => 1000, 'resumableChunkNumber' => 2])->assertStatus(413);
+
+    expect(glob(storage_path('app/chunks/*/grows')))->toBe([]);
+
+    File::deleteDirectory(storage_path('app/chunks'));
+});
+
+test('one uploader can keep only a limited number of unfinished uploads', function () {
+    config(['chunked-upload.validation.max_pending_uploads' => 2]);
+    $this->actingAs(Laravolt\Platform\Models\User::query()->forceCreate(['name' => 'Up', 'email' => 'up@example.test', 'password' => 'secret']));
+
+    sendChunk('first')->assertSuccessful();
+    sendChunk('second')->assertSuccessful();
+    sendChunk('third')->assertStatus(429);
+    // Continuing an upload that already started is still fine.
+    sendChunk('first', ['resumableChunkNumber' => 2])->assertSuccessful();
+
+    File::deleteDirectory(storage_path('app/chunks'));
+});
+
+test('cleanup removes stale uploads under owner directories and old flat ones', function () {
+    $chunks = storage_path('app/chunks');
+    File::ensureDirectoryExists($chunks.'/user-1/old-upload');
+    File::ensureDirectoryExists($chunks.'/legacy-upload');
+    File::put($chunks.'/user-1/old-upload/1', 'x');
+    File::put($chunks.'/legacy-upload/1', 'x');
+    touch($chunks.'/user-1/old-upload', now()->subDays(2)->timestamp);
+    touch($chunks.'/legacy-upload', now()->subDays(2)->timestamp);
+
+    (new CleanupStaleChunksJob(24))->handle();
+
+    expect(is_dir($chunks.'/user-1'))->toBeFalse()
+        ->and(is_dir($chunks.'/legacy-upload'))->toBeFalse();
+
+    File::deleteDirectory($chunks);
 });

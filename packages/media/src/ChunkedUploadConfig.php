@@ -95,6 +95,14 @@ class ChunkedUploadConfig
     }
 
     /**
+     * Get the number of unfinished uploads one uploader may keep
+     */
+    public static function getMaxPendingUploads(): int
+    {
+        return (int) config('chunked-upload.validation.max_pending_uploads', 20);
+    }
+
+    /**
      * Get filename validation pattern
      */
     public static function getFilenamePattern(): string

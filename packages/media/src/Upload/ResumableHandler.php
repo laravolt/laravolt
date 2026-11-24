@@ -24,6 +24,10 @@ class ResumableHandler
 
     protected string $chunksDirectory;
 
+    protected string $owner;
+
+    protected int $declaredSize;
+
     public function __construct(Request $request)
     {
         $maxChunks = max(1, ChunkedUploadConfig::getMaxChunksPerFile());
@@ -38,7 +42,24 @@ class ResumableHandler
         $this->chunkNumber = min($chunkNumber, $this->totalChunks);
 
         $this->filename = $request->input('resumableFilename', $request->input('filename', 'upload'));
-        $this->chunksDirectory = storage_path('app/chunks/'.$this->identifier);
+        $this->declaredSize = max(0, (int) $request->input('resumableTotalSize', $request->input('totalSize', 0)));
+        $this->owner = static::ownerOf($request);
+        $this->chunksDirectory = storage_path('app/chunks/'.$this->owner.'/'.$this->identifier);
+    }
+
+    /**
+     * Chunks live under a directory per uploader, so one uploader cannot add
+     * chunks to, or complete, another's upload by reusing its identifier.
+     */
+    public static function ownerOf(Request $request): string
+    {
+        if (($id = $request->user()?->getAuthIdentifier()) !== null) {
+            return 'user-'.preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $id);
+        }
+
+        $session = $request->hasSession() ? $request->session()->getId() : (string) $request->ip();
+
+        return 'guest-'.substr(hash('sha256', $session), 0, 32);
     }
 
     /**
@@ -46,11 +67,53 @@ class ResumableHandler
      */
     public function saveChunk(UploadedFile $file): void
     {
+        $maxSize = ChunkedUploadConfig::getMaxFileSize();
+        if ($maxSize !== null && $this->declaredSize > $maxSize) {
+            throw new UploadLimitExceeded('The file is larger than the upload limit.', 413);
+        }
+
         if (! is_dir($this->chunksDirectory)) {
+            $this->guardPendingUploads();
             mkdir($this->chunksDirectory, 0750, true);
         }
 
         $file->move($this->chunksDirectory, (string) $this->chunkNumber);
+
+        // The declared size comes from the client: check what is on disk too.
+        if ($maxSize !== null && $this->storedBytes() > $maxSize) {
+            $this->discard();
+
+            throw new UploadLimitExceeded('The file is larger than the upload limit.', 413);
+        }
+    }
+
+    /**
+     * Remove every chunk of this upload.
+     */
+    public function discard(): void
+    {
+        foreach (glob($this->chunksDirectory.'/*') ?: [] as $chunk) {
+            @unlink($chunk);
+        }
+        @rmdir($this->chunksDirectory);
+    }
+
+    protected function guardPendingUploads(): void
+    {
+        $pending = glob(dirname($this->chunksDirectory).'/*', GLOB_ONLYDIR) ?: [];
+        if (count($pending) >= max(1, ChunkedUploadConfig::getMaxPendingUploads())) {
+            throw new UploadLimitExceeded('Too many unfinished uploads. Finish or cancel one first.', 429);
+        }
+    }
+
+    protected function storedBytes(): int
+    {
+        $bytes = 0;
+        foreach (glob($this->chunksDirectory.'/*') ?: [] as $chunk) {
+            $bytes += (int) filesize($chunk);
+        }
+
+        return $bytes;
     }
 
     /**
@@ -82,7 +145,7 @@ class ResumableHandler
     public function assembleChunks(): string
     {
         $safeFilename = basename($this->filename);
-        $finalPath = storage_path('app/chunks/'.$this->identifier.'_assembled_'.$safeFilename);
+        $finalPath = storage_path('app/chunks/'.$this->owner.'--'.$this->identifier.'_assembled_'.$safeFilename);
 
         $destination = fopen($finalPath, 'wb');
         if ($destination === false) {
