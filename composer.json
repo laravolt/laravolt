@@ -1,6 +1,8 @@
 {
     "name": "laravolt/laravolt",
-    "description": "The Laravolt Platform.",
+    "description": "AI-ready Laravel application platform: Thunderclap CRUD scaffolding, admin UI on Preline 5, forms, tables, access control and workflows.",
+    "keywords": ["laravel", "admin-panel", "crud", "scaffolding", "preline", "tailwindcss", "livewire", "workflow"],
+    "homepage": "https://laravolt.dev",
     "license": "MIT",
     "config": {
         "sort-packages": true,
